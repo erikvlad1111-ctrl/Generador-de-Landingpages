@@ -1,0 +1,125 @@
+import Link from 'next/link';
+import { FileText, MoreVertical, Globe, CalendarDays, Sparkles, TrendingUp, Users, ArrowUpRight } from 'lucide-react';
+
+export default function DemoDashboard() {
+  const projects = [
+    { id: 1, name: 'Machu Picchu VIP', status: 'published', date: '2026-09-08', template: 'Premium', views: '1,204' },
+    { id: 2, name: 'Valle Sagrado Aventura', status: 'draft', date: '2026-09-07', template: 'Adventure', views: '-' },
+    { id: 3, name: 'City Tour Cusco', status: 'published', date: '2026-09-05', template: 'Cultural', views: '842' },
+  ];
+
+  return (
+    <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+      
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100/50">
+        <div>
+          <h1 className="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 to-indigo-600">
+            ¡Hola, Equipo Cusco! 👋
+          </h1>
+          <p className="text-slate-500 mt-2 font-medium">Aquí está el rendimiento de tus landing pages hoy.</p>
+        </div>
+        <Link 
+          href="/demo/new" 
+          className="group relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3.5 rounded-full font-bold overflow-hidden transition-all shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-[1.02]"
+        >
+          <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
+          <Sparkles size={18} className="relative z-10" />
+          <span className="relative z-10">Generar Nueva Landing</span>
+        </Link>
+      </div>
+
+      {/* Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {[
+          { title: 'Total Landings', value: '24', icon: <FileText size={24} className="text-blue-500" />, trend: '+3 este mes', color: 'bg-blue-50' },
+          { title: 'Páginas Publicadas', value: '18', icon: <Globe size={24} className="text-emerald-500" />, trend: '75% del total', color: 'bg-emerald-50' },
+          { title: 'Conversiones Estimadas', value: '4.2k', icon: <TrendingUp size={24} className="text-indigo-500" />, trend: '+12% vs ayer', color: 'bg-indigo-50' },
+        ].map((stat, i) => (
+          <div key={i} className="bg-white p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 hover:-translate-y-1 transition-transform duration-300">
+            <div className="flex justify-between items-start mb-4">
+              <div className={`p-3 rounded-2xl ${stat.color}`}>
+                {stat.icon}
+              </div>
+              <span className="flex items-center text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-full">
+                <ArrowUpRight size={14} /> 12%
+              </span>
+            </div>
+            <h3 className="text-slate-500 font-medium mb-1">{stat.title}</h3>
+            <div className="flex items-end gap-3">
+              <p className="text-4xl font-extrabold text-slate-800 tracking-tight">{stat.value}</p>
+              <p className="text-sm font-medium text-slate-400 mb-1">{stat.trend}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Projects Table */}
+      <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100 overflow-hidden">
+        <div className="px-8 py-6 border-b border-slate-100 flex justify-between items-center">
+          <h2 className="text-xl font-bold text-slate-800">Proyectos Recientes</h2>
+          <button className="text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors">Ver todos</button>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-left border-collapse">
+            <thead>
+              <tr className="bg-slate-50/50 text-slate-500 text-xs uppercase tracking-wider font-bold">
+                <th className="px-8 py-5">Landing Page</th>
+                <th className="px-6 py-5">Estilo / Plantilla</th>
+                <th className="px-6 py-5">Visitas</th>
+                <th className="px-6 py-5">Estado</th>
+                <th className="px-6 py-5">Modificado</th>
+                <th className="px-8 py-5 text-right">Acciones</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {projects.map((p, i) => (
+                <tr key={p.id} className="hover:bg-blue-50/50 transition-colors group">
+                  <td className="px-8 py-5">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-500 group-hover:from-blue-100 group-hover:to-blue-200 group-hover:text-blue-600 transition-colors shadow-inner">
+                        <FileText size={20} />
+                      </div>
+                      <div>
+                        <span className="font-bold text-slate-800 block mb-0.5">{p.name}</span>
+                        <span className="text-xs font-medium text-slate-400">cuscocreativos.com/{p.name.toLowerCase().replace(/ /g, '-')}</span>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-5">
+                    <span className="inline-flex items-center px-3 py-1 rounded-lg text-xs font-bold bg-slate-100 text-slate-600">
+                      {p.template}
+                    </span>
+                  </td>
+                  <td className="px-6 py-5">
+                    <div className="flex items-center gap-2 font-medium text-slate-600">
+                      <Users size={16} className="text-slate-400" />
+                      {p.views}
+                    </div>
+                  </td>
+                  <td className="px-6 py-5">
+                    <span className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold ${
+                      p.status === 'published' ? 'bg-emerald-100/80 text-emerald-700' : 'bg-amber-100/80 text-amber-700'
+                    }`}>
+                      <span className={`w-2 h-2 rounded-full ${p.status === 'published' ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse'}`}></span>
+                      {p.status === 'published' ? 'PUBLICADO' : 'BORRADOR'}
+                    </span>
+                  </td>
+                  <td className="px-6 py-5 text-slate-500 text-sm font-medium flex items-center gap-2">
+                    <CalendarDays size={16} className="text-slate-400" />
+                    {p.date}
+                  </td>
+                  <td className="px-8 py-5 text-right">
+                    <button className="p-2.5 text-slate-400 hover:text-blue-600 rounded-xl hover:bg-blue-50 transition-colors">
+                      <MoreVertical size={20} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
