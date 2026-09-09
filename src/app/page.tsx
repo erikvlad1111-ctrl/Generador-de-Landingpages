@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
@@ -9,11 +11,14 @@ export default function Home() {
         
         <div className="space-y-4">
           <p className="text-sm text-center text-slate-600">
-            Bienvenido al sistema interno. Por favor, inicia sesión para continuar.
+            Bienvenido al sistema interno. Explora el panel y generador de landings.
           </p>
-          <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
-            Iniciar Sesión
-          </button>
+          <Link
+            href="/demo"
+            className="block text-center w-full bg-blue-600 text-white font-medium py-2.5 px-4 rounded-lg hover:bg-blue-700 transition-colors shadow-md shadow-blue-500/20"
+          >
+            Entrar al Dashboard / Demo
+          </Link>
         </div>
       </div>
     </div>

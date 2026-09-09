@@ -36,7 +36,7 @@ export interface Section {
   id: string;
   landing_id: string;
   type: string;
-  content: any; // JSONB
+  content: Record<string, unknown>; // JSONB
   order_index: number;
   enabled: boolean;
   created_at: string;
@@ -57,7 +57,7 @@ export interface AIGeneration {
   landing_id: string;
   user_id: string;
   prompt: string;
-  response: any; // JSONB
+  response: Record<string, unknown>; // JSONB
   model: string;
   created_at: string;
 }

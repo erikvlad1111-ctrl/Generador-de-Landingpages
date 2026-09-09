@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { MapPin, Clock, Star, CheckCircle } from 'lucide-react';
 
 interface TemplateProps {
@@ -30,10 +31,13 @@ export default function AdventureTemplate({ data }: TemplateProps) {
       {/* Hero Section */}
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-stone-900/40 z-10" />
-        <img 
+        <Image 
           src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop" 
           alt="Mountain landscape" 
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
         <div className="relative z-20 text-center text-white px-4 max-w-4xl mx-auto flex flex-col items-center">
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-sm font-medium mb-6 backdrop-blur-md">
@@ -94,8 +98,24 @@ export default function AdventureTemplate({ data }: TemplateProps) {
             </p>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <img src="https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop" alt="Machu Picchu 1" className="rounded-2xl shadow-lg w-full h-64 object-cover" />
-            <img src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop" alt="Machu Picchu 2" className="rounded-2xl shadow-lg w-full h-64 object-cover mt-8" />
+            <div className="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+              <Image 
+                src="https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop" 
+                alt="Machu Picchu 1" 
+                fill
+                sizes="(max-width: 768px) 50vw, 300px"
+                className="object-cover" 
+              />
+            </div>
+            <div className="relative h-64 rounded-2xl overflow-hidden shadow-lg mt-8">
+              <Image 
+                src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop" 
+                alt="Machu Picchu 2" 
+                fill
+                sizes="(max-width: 768px) 50vw, 300px"
+                className="object-cover" 
+              />
+            </div>
           </div>
         </div>
       </section>

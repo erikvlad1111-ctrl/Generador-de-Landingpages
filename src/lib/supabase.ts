@@ -1,11 +1,12 @@
 import { createClient } from '@supabase/supabase-js';
 
-// We ensure that we fail fast if env vars are missing during development
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-anon-key';
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('Supabase URL or Anon Key is missing. Ensure you have run "npx supabase start" and populated your .env.local file.');
+if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  if (process.env.NODE_ENV !== 'production') {
+    console.warn('Supabase URL or Anon Key is missing. Ensure you have populated your .env.local file or Vercel Environment Variables.');
+  }
 }
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);

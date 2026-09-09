@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Sparkles, Loader2, Image as ImageIcon } from 'lucide-react';
+import { Sparkles, Loader2 } from 'lucide-react';
 
 export default function NewLandingDemo() {
   const router = useRouter();

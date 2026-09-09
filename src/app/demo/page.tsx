@@ -73,7 +73,7 @@ export default function DemoDashboard() {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {projects.map((p, i) => (
+              {projects.map((p) => (
                 <tr key={p.id} className="hover:bg-blue-50/50 transition-colors group">
                   <td className="px-8 py-5">
                     <div className="flex items-center gap-4">

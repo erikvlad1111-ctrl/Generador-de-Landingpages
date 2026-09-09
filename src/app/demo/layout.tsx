@@ -26,10 +26,10 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
           </a>
         </nav>
         <div className="p-4 border-t border-slate-800">
-          <a href="/" className="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 rounded-lg transition-colors text-sm">
+          <Link href="/" className="flex items-center gap-3 px-4 py-3 hover:bg-slate-800 rounded-lg transition-colors text-sm">
             <LogOut size={18} />
             Cerrar Sesión
-          </a>
+          </Link>
         </div>
       </aside>
       
