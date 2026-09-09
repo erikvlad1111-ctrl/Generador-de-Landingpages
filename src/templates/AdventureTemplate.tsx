@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
-import { MapPin, Clock, Star, CheckCircle, MessageCircle } from 'lucide-react';
+import { MapPin, Clock, Star, CheckCircle, MessageCircle, HelpCircle, FileText } from 'lucide-react';
 import { LandingData } from '@/types/landing';
+import QuoteModal from '@/components/common/QuoteModal';
 
 interface TemplateProps {
-  data: Partial<LandingData> & {
-    hero: { title: string; subtitle: string; cta: string; badge?: string };
-    about: { title: string; content: string };
-    features: { title: string; items: string[] };
-  };
+  data: LandingData;
   isLive?: boolean;
 }
 
 export default function AdventureTemplate({ data }: TemplateProps) {
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+  const isQuote = data.objective === 'quote';
+
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const encodedMsg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, deseo consultar disponibilidad para el tour "${data.name || data.hero.title}".`);
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
+  const heroImg = data.heroImage || 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop';
+  const gallery1 = data.galleryImages?.[0] || 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop';
+  const gallery2 = data.galleryImages?.[1] || 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop';
+
   return (
     <div className="min-h-screen bg-stone-50 font-sans text-stone-900 selection:bg-emerald-500 selection:text-white">
-      {/* Navbar (Static for template) */}
+      {/* Navbar */}
       <nav className="fixed w-full z-40 bg-stone-900/90 backdrop-blur-sm text-white px-8 py-4 flex justify-between items-center">
         <div className="text-xl font-bold tracking-tighter uppercase text-emerald-400 flex items-center gap-2">
           <MapPin size={20} />
@@ -28,24 +32,34 @@ export default function AdventureTemplate({ data }: TemplateProps) {
         <div className="hidden md:flex gap-6 text-sm font-medium">
           <a href="#ruta" className="hover:text-emerald-400 transition-colors">La Ruta</a>
           <a href="#incluye" className="hover:text-emerald-400 transition-colors">¿Qué Incluye?</a>
-          <a href="#contacto" className="hover:text-emerald-400 transition-colors">Reservas</a>
+          <a href="#faq" className="hover:text-emerald-400 transition-colors">Preguntas Frecuentes</a>
         </div>
-        <a 
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-full font-semibold text-sm transition-all shadow-lg hover:shadow-emerald-600/30 flex items-center gap-2"
-        >
-          <MessageCircle size={16} />
-          Reservar Ahora
-        </a>
+        {isQuote ? (
+          <button
+            onClick={() => setIsQuoteOpen(true)}
+            className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-full font-semibold text-sm transition-all shadow-lg flex items-center gap-2"
+          >
+            <FileText size={16} />
+            Solicitar Cotización
+          </button>
+        ) : (
+          <a 
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-full font-semibold text-sm transition-all shadow-lg hover:shadow-emerald-600/30 flex items-center gap-2"
+          >
+            <MessageCircle size={16} />
+            Reservar Ahora
+          </a>
+        )}
       </nav>
 
       {/* Hero Section */}
       <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-stone-900/40 z-10" />
         <Image 
-          src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop" 
+          src={heroImg} 
           alt={data.name || "Mountain landscape"} 
           fill
           priority
@@ -63,15 +77,25 @@ export default function AdventureTemplate({ data }: TemplateProps) {
             {data.hero.subtitle}
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-4">
-            <a 
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-emerald-600 hover:bg-emerald-500 text-white text-lg px-8 py-4 rounded-full font-bold transition-all shadow-xl shadow-emerald-600/20 hover:scale-105 flex items-center gap-2"
-            >
-              <MessageCircle size={22} />
-              {data.hero.cta}
-            </a>
+            {isQuote ? (
+              <button
+                onClick={() => setIsQuoteOpen(true)}
+                className="bg-emerald-600 hover:bg-emerald-500 text-white text-lg px-8 py-4 rounded-full font-bold transition-all shadow-xl shadow-emerald-600/20 hover:scale-105 flex items-center gap-2"
+              >
+                <FileText size={22} />
+                {data.hero.cta || 'Solicitar Cotización'}
+              </button>
+            ) : (
+              <a 
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-emerald-600 hover:bg-emerald-500 text-white text-lg px-8 py-4 rounded-full font-bold transition-all shadow-xl shadow-emerald-600/20 hover:scale-105 flex items-center gap-2"
+              >
+                <MessageCircle size={22} />
+                {data.hero.cta}
+              </a>
+            )}
             {data.price && (
               <div className="bg-stone-900/80 backdrop-blur-md px-5 py-2.5 rounded-full border border-stone-700 text-sm font-semibold">
                 Desde <span className="text-emerald-400 font-bold">{data.price}</span>
@@ -90,7 +114,7 @@ export default function AdventureTemplate({ data }: TemplateProps) {
             </div>
             <div>
               <p className="text-sm text-stone-500 font-medium">Duración</p>
-              <p className="font-bold text-lg">3 Días, 2 Noches</p>
+              <p className="font-bold text-lg">{data.duration || '3 Días, 2 Noches'}</p>
             </div>
           </div>
           <div className="flex items-center gap-4 md:justify-center pt-6 md:pt-0">
@@ -98,8 +122,8 @@ export default function AdventureTemplate({ data }: TemplateProps) {
               <MapPin size={24} />
             </div>
             <div>
-              <p className="text-sm text-stone-500 font-medium">Punto de inicio</p>
-              <p className="font-bold text-lg">Cusco, Perú</p>
+              <p className="text-sm text-stone-500 font-medium">Guía Líder</p>
+              <p className="font-bold text-lg">{data.guideName || 'Cusco, Perú'}</p>
             </div>
           </div>
           <div className="flex items-center gap-4 md:justify-center pt-6 md:pt-0">
@@ -108,14 +132,14 @@ export default function AdventureTemplate({ data }: TemplateProps) {
             </div>
             <div>
               <p className="text-sm text-stone-500 font-medium">Dificultad</p>
-              <p className="font-bold text-lg">Moderada</p>
+              <p className="font-bold text-lg">{data.difficulty || 'Moderada'}</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section className="py-24 px-8 max-w-6xl mx-auto">
+      <section id="ruta" className="py-24 px-8 max-w-6xl mx-auto">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
             <h2 className="text-4xl font-bold mb-6 text-stone-800">{data.about.title}</h2>
@@ -126,8 +150,8 @@ export default function AdventureTemplate({ data }: TemplateProps) {
           <div className="grid grid-cols-2 gap-4">
             <div className="relative h-64 rounded-2xl overflow-hidden shadow-lg">
               <Image 
-                src="https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop" 
-                alt="Machu Picchu 1" 
+                src={gallery1} 
+                alt="Tour Gallery 1" 
                 fill
                 sizes="(max-width: 768px) 50vw, 300px"
                 className="object-cover" 
@@ -135,8 +159,8 @@ export default function AdventureTemplate({ data }: TemplateProps) {
             </div>
             <div className="relative h-64 rounded-2xl overflow-hidden shadow-lg mt-8">
               <Image 
-                src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop" 
-                alt="Machu Picchu 2" 
+                src={gallery2} 
+                alt="Tour Gallery 2" 
                 fill
                 sizes="(max-width: 768px) 50vw, 300px"
                 className="object-cover" 
@@ -147,7 +171,7 @@ export default function AdventureTemplate({ data }: TemplateProps) {
       </section>
 
       {/* Features/Highlights */}
-      <section className="py-24 bg-stone-900 text-white px-8">
+      <section id="incluye" className="py-24 bg-stone-900 text-white px-8">
         <div className="max-w-6xl mx-auto">
           <h2 className="text-4xl font-bold mb-16 text-center">{data.features.title}</h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -163,11 +187,59 @@ export default function AdventureTemplate({ data }: TemplateProps) {
           </div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      {data.testimonials && data.testimonials.length > 0 && (
+        <section className="py-20 px-8 bg-stone-100">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-stone-900 mb-12">Lo que dicen nuestros viajeros</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {data.testimonials.map((t, idx) => (
+                <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 text-left">
+                  <div className="flex gap-1 text-amber-400 mb-3">
+                    {[...Array(t.rating || 5)].map((_, i) => (
+                      <Star key={i} size={16} fill="currentColor" />
+                    ))}
+                  </div>
+                  <p className="text-stone-600 text-sm italic mb-4">&quot;{t.comment}&quot;</p>
+                  <div>
+                    <h4 className="font-bold text-stone-900 text-sm">{t.name}</h4>
+                    <p className="text-xs text-stone-400">{t.origin}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* FAQs */}
+      {data.faqs && data.faqs.length > 0 && (
+        <section id="faq" className="py-20 px-8 max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-1.5 text-emerald-600 font-bold text-xs uppercase tracking-wider mb-2">
+              <HelpCircle size={16} /> Preguntas Frecuentes
+            </div>
+            <h2 className="text-3xl font-bold text-stone-900">Todo lo que necesitas saber</h2>
+          </div>
+          <div className="space-y-4">
+            {data.faqs.map((faq, idx) => (
+              <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
+                <h3 className="font-bold text-stone-800 text-base mb-2">{faq.q}</h3>
+                <p className="text-stone-600 text-sm leading-relaxed">{faq.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
       
       {/* Simple Footer */}
       <footer className="bg-stone-950 py-12 text-center text-stone-500">
         <p>© 2026 Cusco Creativos S.A.C. Todos los derechos reservados.</p>
       </footer>
+
+      {/* Quote Modal */}
+      <QuoteModal isOpen={isQuoteOpen} onClose={() => setIsQuoteOpen(false)} landing={data} />
     </div>
   );
 }

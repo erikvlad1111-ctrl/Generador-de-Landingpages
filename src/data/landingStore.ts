@@ -17,6 +17,11 @@ export const INITIAL_LANDINGS: LandingData[] = [
     status: 'published',
     date: '2026-09-08',
     views: '1,204',
+    heroImage: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop'
+    ],
     hero: {
       badge: 'Experiencia Exclusiva VIP',
       title: 'Machu Picchu de Lujo con Tren Panorámico',
@@ -35,7 +40,31 @@ export const INITIAL_LANDINGS: LandingData[] = [
         'Gastronomía de Autor:Almuerzo buffet gourmet incluido a las faldas de la ciudadela.',
         'Asistencia 24/7 de Conserjería:Coordinador de viaje disponible permanentemente para cualquier solicitud.'
       ]
-    }
+    },
+    faqs: [
+      {
+        q: '¿Qué incluye exactamente el servicio VIP?',
+        a: 'Incluye boletos de tren de lujo ida y vuelta, entradas circuito preferente a Machu Picchu, guía privado certificado, almuerzo gourmet y transporte privado desde y hacia tu hotel en Cusco.'
+      },
+      {
+        q: '¿Con cuánta anticipación debo reservar?',
+        a: 'Recomendamos reservar con al menos 3 a 4 semanas de antelación debido al cupo limitado diario de los trenes de lujo y accesos a la ciudadela.'
+      }
+    ],
+    testimonials: [
+      {
+        name: 'Alejandro y Marcela',
+        origin: 'Madrid, España',
+        comment: 'La mejor experiencia de nuestra vida en Perú. Carlos, nuestro guía, nos explicó la historia con una pasión que jamás olvidaremos.',
+        rating: 5
+      },
+      {
+        name: 'David Miller',
+        origin: 'California, USA',
+        comment: 'Zero stress, luxury train ride was stunning. Worth every single dollar. 100% recommended!',
+        rating: 5
+      }
+    ]
   },
   {
     id: '2',
@@ -52,6 +81,11 @@ export const INITIAL_LANDINGS: LandingData[] = [
     status: 'draft',
     date: '2026-09-07',
     views: '420',
+    heroImage: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop'
+    ],
     hero: {
       badge: 'Aventura en los Andes',
       title: 'Cuatrimotos y Paisajes en Maras & Moray',
@@ -70,7 +104,25 @@ export const INITIAL_LANDINGS: LandingData[] = [
         'Fotos y Videos en HD:Capturamos tus mejores saltos y postales andinas durante todo el recorrido.',
         'Transporte Privado ida y vuelta:Recojo directo en la puerta de tu hotel en Cusco.'
       ]
-    }
+    },
+    faqs: [
+      {
+        q: '¿Se requiere experiencia previa en cuatrimoto?',
+        a: 'No, antes de partir realizamos una práctica de 20 minutos donde los instructores te enseñan a acelerar, frenar y maniobrar con seguridad.'
+      },
+      {
+        q: '¿Qué ropa debo llevar?',
+        a: 'Ropa cómoda que se pueda ensuciar con polvo, zapatillas o botines, cortavientos, lentes de sol y bloqueador solar.'
+      }
+    ],
+    testimonials: [
+      {
+        name: 'Sofía Valdivia',
+        origin: 'Santiago, Chile',
+        comment: '¡Increíble tour! Las cuatrimotos tienen mucha potencia y los paisajes de las salineras son espectaculares.',
+        rating: 5
+      }
+    ]
   },
   {
     id: '3',
@@ -87,6 +139,11 @@ export const INITIAL_LANDINGS: LandingData[] = [
     status: 'published',
     date: '2026-09-05',
     views: '842',
+    heroImage: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?q=80&w=2074&auto=format&fit=crop'
+    ],
     hero: {
       badge: 'Historia Viva del Tahuantinsuyo',
       title: 'Descubre los Secretos de la Capital Inca',
@@ -105,7 +162,21 @@ export const INITIAL_LANDINGS: LandingData[] = [
         'Grupos Reducidos:Máximo 10 personas para escuchar y preguntar cómodamente al guía.',
         'Degustación Tradicional:Cata de chocolate cusqueño artesanal y hojas sagradas de coca.'
       ]
-    }
+    },
+    faqs: [
+      {
+        q: '¿Incluye el Boleto Turístico del Cusco (BTC)?',
+        a: 'No incluye el BTC general ni la entrada a la Catedral, pero tu guía te asistirá para adquirirlos en la puerta sin filas.'
+      }
+    ],
+    testimonials: [
+      {
+        name: 'Camila Ríos',
+        origin: 'Bogotá, Colombia',
+        comment: 'Lucía sabe muchísimo sobre la cultura inca. Nos resolvió cada duda y nos llevó a los mejores puntos para fotos.',
+        rating: 5
+      }
+    ]
   }
 ];
 
@@ -157,6 +228,8 @@ export function simulateAiGeneration(params: {
   objective: ObjectiveType;
   template: TemplateType;
   language: LanguageType;
+  heroImage?: string;
+  galleryImages?: string[];
 }): LandingData {
   const slug = params.name
     .toLowerCase()
@@ -199,6 +272,46 @@ export function simulateAiGeneration(params: {
     `Confirmación Inmediata:Reserva rápida con tarifa transparente desde ${params.price || 'el mejor precio garantizado'}.`
   ];
 
+  const faqs = isEn ? [
+    {
+      q: `What is included in ${params.name}?`,
+      a: `Includes certified guiding with ${params.guideName || 'our team'}, full safety briefings, and personalized logistics throughout the tour.`
+    },
+    {
+      q: 'How do payments and bookings work?',
+      a: isWhatsapp 
+        ? 'You can confirm your booking instantly via WhatsApp with no hidden fees and flexible date changes.'
+        : 'Submit your request for a customized itinerary and our operations team will send a detailed proposal within 2 hours.'
+    }
+  ] : [
+    {
+      q: `¿Qué incluye el tour ${params.name}?`,
+      a: `Incluye guiado oficial profesional con ${params.guideName || 'nuestro equipo'}, asistencia permanente, transporte autorizado y soporte de viaje antes y durante tu visita.`
+    },
+    {
+      q: '¿Cómo confirmo mi reserva?',
+      a: isWhatsapp 
+        ? 'Puedes coordinar fechas y asegurar tu lugar de inmediato mediante WhatsApp con atención directa del organizador.'
+        : 'Envía tu solicitud de cotización para recibir la propuesta formal detallada con itinerario desglosado.'
+    }
+  ];
+
+  const testimonials = isEn ? [
+    {
+      name: 'Sarah Jenkins',
+      origin: 'London, UK',
+      comment: `Incredible experience with ${params.guideName || 'the team'}. Truly unforgettable landscapes and outstanding organization!`,
+      rating: 5
+    }
+  ] : [
+    {
+      name: 'Martín y Claudia',
+      origin: 'Lima, Perú',
+      comment: `Superó todas nuestras expectativas. La atención de ${params.guideName || 'nuestro guía'} fue impecable de principio a fin.`,
+      rating: 5
+    }
+  ];
+
   return {
     id: Date.now().toString(),
     name: params.name,
@@ -214,6 +327,11 @@ export function simulateAiGeneration(params: {
     status: 'draft',
     date: new Date().toISOString().split('T')[0],
     views: '0',
+    heroImage: params.heroImage || 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
+    galleryImages: params.galleryImages || [
+      'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop'
+    ],
     hero: {
       badge: heroBadge,
       title: heroTitle,
@@ -227,6 +345,8 @@ export function simulateAiGeneration(params: {
     features: {
       title: isEn ? 'What makes this tour exceptional?' : '¿Qué hace inolvidable esta experiencia?',
       items: featuresItems
-    }
+    },
+    faqs,
+    testimonials
   };
 }

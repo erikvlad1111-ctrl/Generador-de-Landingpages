@@ -2,6 +2,18 @@ export type TemplateType = 'adventure' | 'premium' | 'cultural';
 export type ObjectiveType = 'whatsapp' | 'quote';
 export type LanguageType = 'es' | 'en';
 
+export interface FAQItem {
+  q: string;
+  a: string;
+}
+
+export interface TestimonialItem {
+  name: string;
+  origin: string;
+  comment: string;
+  rating: number;
+}
+
 export interface LandingData {
   id: string;
   name: string;
@@ -17,6 +29,8 @@ export interface LandingData {
   status: 'published' | 'draft';
   date: string;
   views: string;
+  heroImage?: string;
+  galleryImages?: string[];
   hero: {
     badge: string;
     title: string;
@@ -31,9 +45,6 @@ export interface LandingData {
     title: string;
     items: string[];
   };
-  itinerary?: {
-    day: string;
-    title: string;
-    desc: string;
-  }[];
+  faqs?: FAQItem[];
+  testimonials?: TestimonialItem[];
 }
