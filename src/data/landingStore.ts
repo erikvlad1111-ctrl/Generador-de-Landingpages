@@ -217,6 +217,28 @@ export function getLandingBySlug(slug: string): LandingData | undefined {
   return list.find(item => item.slug.toLowerCase() === slug.toLowerCase());
 }
 
+export function updateLandingStatus(id: string, status: 'published' | 'draft'): LandingData[] {
+  if (typeof window === 'undefined') return INITIAL_LANDINGS;
+  try {
+    const list = getStoredLandings().map(item => item.id === id ? { ...item, status } : item);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    return list;
+  } catch {
+    return getStoredLandings();
+  }
+}
+
+export function deleteLandingFromStorage(id: string): LandingData[] {
+  if (typeof window === 'undefined') return INITIAL_LANDINGS;
+  try {
+    const list = getStoredLandings().filter(item => item.id !== id);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    return list;
+  } catch {
+    return getStoredLandings();
+  }
+}
+
 export function simulateAiGeneration(params: {
   name: string;
   guideName: string;
