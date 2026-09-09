@@ -315,44 +315,46 @@ export default function DemoDashboard() {
 
                       {/* Action buttons */}
                       <td className="px-6 py-4 text-right">
-                        <div className="flex items-center justify-end gap-1.5">
+                        <div className="flex items-center justify-end gap-2">
+                          
+                          {/* Direct Accessible Open in Chrome */}
+                          <a
+                            href={`/p/${p.slug}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl font-bold text-xs transition-all shadow-sm shadow-emerald-600/20 hover:scale-105"
+                            title="Abrir landing page pública en Chrome"
+                          >
+                            <Globe size={13} />
+                            <span>Abrir en Chrome</span>
+                            <ExternalLink size={12} />
+                          </a>
+
+                          {/* Preview / Edit */}
+                          <Link
+                            href={`/demo/preview?slug=${p.slug}`}
+                            className="inline-flex items-center gap-1 bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 px-2.5 py-1.5 rounded-xl font-semibold text-xs transition-colors"
+                            title="Abrir vista previa y editor"
+                          >
+                            <Eye size={14} />
+                            <span className="hidden sm:inline">Editor</span>
+                          </Link>
+
                           {/* Copy Public Link */}
                           <button
                             onClick={() => handleCopyLink(p.slug)}
-                            className={`p-2 rounded-lg text-xs font-medium transition-all flex items-center gap-1 ${
+                            className={`p-1.5 rounded-xl text-xs font-medium transition-all flex items-center gap-1 ${
                               isCopied ? 'bg-emerald-600 text-white' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
                             }`}
                             title="Copiar link público para clientes"
                           >
                             {isCopied ? <Check size={14} /> : <Copy size={14} />}
-                            <span className="hidden xl:inline">{isCopied ? '¡Copiado!' : 'Copiar'}</span>
                           </button>
-
-                          {/* Preview / Edit */}
-                          <Link
-                            href={`/demo/preview?slug=${p.slug}`}
-                            className="p-2 text-slate-500 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors flex items-center gap-1 text-xs font-medium"
-                            title="Abrir vista previa interactiva"
-                          >
-                            <Eye size={14} />
-                            <span className="hidden xl:inline">Ver</span>
-                          </Link>
-
-                          {/* Public Live Tab */}
-                          <a
-                            href={`/p/${p.slug}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 text-slate-500 hover:text-emerald-600 rounded-lg hover:bg-emerald-50 transition-colors flex items-center gap-1 text-xs font-medium"
-                            title="Abrir página pública final"
-                          >
-                            <ExternalLink size={14} />
-                          </a>
 
                           {/* Delete */}
                           <button
                             onClick={() => handleDelete(p.id, p.name)}
-                            className="p-2 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors text-xs"
+                            className="p-1.5 text-slate-400 hover:text-red-600 rounded-xl hover:bg-red-50 transition-colors text-xs"
                             title="Eliminar proyecto"
                           >
                             <Trash2 size={14} />
