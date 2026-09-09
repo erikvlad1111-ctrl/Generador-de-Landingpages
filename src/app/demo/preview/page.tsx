@@ -122,7 +122,7 @@ function DemoPreviewContent() {
   };
 
   return (
-    <div className="-mx-8 -my-8 bg-slate-950 min-h-screen flex flex-col relative text-slate-100 selection:bg-blue-600 selection:text-white">
+    <div className="w-full bg-slate-950 min-h-screen flex flex-col relative text-slate-100 selection:bg-blue-600 selection:text-white">
       
       {/* Top Professional Control Bar */}
       <header className="bg-slate-900/95 backdrop-blur-md h-16 px-6 border-b border-slate-800 flex items-center justify-between shrink-0 sticky top-0 z-40 shadow-xl">

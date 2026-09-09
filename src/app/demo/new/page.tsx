@@ -260,11 +260,11 @@ export default function NewLandingDemo() {
                 onClick={() => setObjective('whatsapp')}
                 className={`p-4 rounded-2xl border-2 text-left flex items-start gap-3.5 transition-all cursor-pointer ${
                   objective === 'whatsapp' 
-                    ? 'border-blue-600 bg-blue-50/40 ring-4 ring-blue-500/10' 
-                    : 'border-slate-200 hover:border-slate-300 bg-slate-50/40'
+                    ? 'border-blue-600 bg-blue-50/70 shadow-sm' 
+                    : 'border-slate-200 hover:border-slate-300 bg-white'
                 }`}
               >
-                <div className={`p-2.5 rounded-xl shrink-0 ${objective === 'whatsapp' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'bg-white text-slate-600 border border-slate-200'}`}>
+                <div className={`p-2.5 rounded-xl shrink-0 ${objective === 'whatsapp' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'bg-slate-100 text-slate-600 border border-slate-200'}`}>
                   <MessageCircle size={20} />
                 </div>
                 <div>
@@ -280,11 +280,11 @@ export default function NewLandingDemo() {
                 onClick={() => setObjective('quote')}
                 className={`p-4 rounded-2xl border-2 text-left flex items-start gap-3.5 transition-all cursor-pointer ${
                   objective === 'quote' 
-                    ? 'border-blue-600 bg-blue-50/40 ring-4 ring-blue-500/10' 
-                    : 'border-slate-200 hover:border-slate-300 bg-slate-50/40'
+                    ? 'border-blue-600 bg-blue-50/70 shadow-sm' 
+                    : 'border-slate-200 hover:border-slate-300 bg-white'
                 }`}
               >
-                <div className={`p-2.5 rounded-xl shrink-0 ${objective === 'quote' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'bg-white text-slate-600 border border-slate-200'}`}>
+                <div className={`p-2.5 rounded-xl shrink-0 ${objective === 'quote' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'bg-slate-100 text-slate-600 border border-slate-200'}`}>
                   <FileText size={20} />
                 </div>
                 <div>
@@ -469,13 +469,13 @@ export default function NewLandingDemo() {
                   onClick={() => setTemplate(t.id as TemplateType)}
                   className={`p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer ${
                     template === t.id 
-                      ? 'border-blue-600 bg-blue-50/50 ring-2 ring-blue-500/20 font-bold' 
-                      : 'border-slate-200 hover:border-slate-300 bg-slate-50/30'
+                      ? 'border-blue-600 bg-blue-50/70 shadow-sm font-bold' 
+                      : 'border-slate-200 hover:border-slate-300 bg-white'
                   }`}
                 >
                   <span className="text-xl mb-1 block">{t.icon}</span>
                   <span className="text-xs font-bold text-slate-900 block">{t.name}</span>
-                  <span className="text-[10px] text-slate-400 font-normal">{t.desc}</span>
+                  <span className="text-[10px] text-slate-500 font-normal">{t.desc}</span>
                 </button>
               ))}
             </div>
