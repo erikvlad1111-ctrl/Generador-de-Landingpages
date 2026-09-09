@@ -1,31 +1,44 @@
 import React from 'react';
 import Image from 'next/image';
-import { MapPin, Clock, Star, CheckCircle } from 'lucide-react';
+import { MapPin, Clock, Star, CheckCircle, MessageCircle } from 'lucide-react';
+import { LandingData } from '@/types/landing';
 
 interface TemplateProps {
-  data: {
-    hero: { title: string; subtitle: string; cta: string };
+  data: Partial<LandingData> & {
+    hero: { title: string; subtitle: string; cta: string; badge?: string };
     about: { title: string; content: string };
     features: { title: string; items: string[] };
   };
+  isLive?: boolean;
 }
 
 export default function AdventureTemplate({ data }: TemplateProps) {
+  const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
+  const encodedMsg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, deseo consultar disponibilidad para el tour "${data.name || data.hero.title}".`);
+  const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
+
   return (
     <div className="min-h-screen bg-stone-50 font-sans text-stone-900 selection:bg-emerald-500 selection:text-white">
       {/* Navbar (Static for template) */}
-      <nav className="fixed w-full z-50 bg-stone-900/90 backdrop-blur-sm text-white px-8 py-4 flex justify-between items-center">
-        <div className="text-xl font-bold tracking-tighter uppercase text-emerald-400">
+      <nav className="fixed w-full z-40 bg-stone-900/90 backdrop-blur-sm text-white px-8 py-4 flex justify-between items-center">
+        <div className="text-xl font-bold tracking-tighter uppercase text-emerald-400 flex items-center gap-2">
+          <MapPin size={20} />
           TrekExplorer
         </div>
-        <div className="flex gap-6 text-sm font-medium">
-          <a href="#" className="hover:text-emerald-400 transition-colors">La Ruta</a>
-          <a href="#" className="hover:text-emerald-400 transition-colors">Itinerario</a>
-          <a href="#" className="hover:text-emerald-400 transition-colors">Reseñas</a>
+        <div className="hidden md:flex gap-6 text-sm font-medium">
+          <a href="#ruta" className="hover:text-emerald-400 transition-colors">La Ruta</a>
+          <a href="#incluye" className="hover:text-emerald-400 transition-colors">¿Qué Incluye?</a>
+          <a href="#contacto" className="hover:text-emerald-400 transition-colors">Reservas</a>
         </div>
-        <button className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-full font-semibold transition-all shadow-lg hover:shadow-emerald-600/30">
+        <a 
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-full font-semibold text-sm transition-all shadow-lg hover:shadow-emerald-600/30 flex items-center gap-2"
+        >
+          <MessageCircle size={16} />
           Reservar Ahora
-        </button>
+        </a>
       </nav>
 
       {/* Hero Section */}
@@ -33,7 +46,7 @@ export default function AdventureTemplate({ data }: TemplateProps) {
         <div className="absolute inset-0 bg-stone-900/40 z-10" />
         <Image 
           src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop" 
-          alt="Mountain landscape" 
+          alt={data.name || "Mountain landscape"} 
           fill
           priority
           sizes="100vw"
@@ -41,17 +54,30 @@ export default function AdventureTemplate({ data }: TemplateProps) {
         />
         <div className="relative z-20 text-center text-white px-4 max-w-4xl mx-auto flex flex-col items-center">
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-sm font-medium mb-6 backdrop-blur-md">
-            <MapPin size={14} /> Destino Destacado
+            <MapPin size={14} /> {data.hero.badge || 'Aventura Extrema'}
           </span>
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 drop-shadow-lg">
+          <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight mb-6 drop-shadow-lg leading-tight">
             {data.hero.title}
           </h1>
           <p className="text-xl md:text-2xl text-stone-200 mb-10 max-w-2xl font-light drop-shadow">
             {data.hero.subtitle}
           </p>
-          <button className="bg-emerald-600 hover:bg-emerald-500 text-white text-lg px-8 py-4 rounded-full font-bold transition-all shadow-xl shadow-emerald-600/20 hover:scale-105">
-            {data.hero.cta}
-          </button>
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            <a 
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-emerald-600 hover:bg-emerald-500 text-white text-lg px-8 py-4 rounded-full font-bold transition-all shadow-xl shadow-emerald-600/20 hover:scale-105 flex items-center gap-2"
+            >
+              <MessageCircle size={22} />
+              {data.hero.cta}
+            </a>
+            {data.price && (
+              <div className="bg-stone-900/80 backdrop-blur-md px-5 py-2.5 rounded-full border border-stone-700 text-sm font-semibold">
+                Desde <span className="text-emerald-400 font-bold">{data.price}</span>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
