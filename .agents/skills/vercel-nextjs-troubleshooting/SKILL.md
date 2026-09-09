@@ -79,6 +79,12 @@ El comando `npm run build` o `npm run lint` falla en CI/CD con código de salida
 3. **`@typescript-eslint/no-unused-vars`**:
    - *Error:* Variables o imports no utilizados.
    - *Solución:* Eliminar las importaciones o parámetros no referenciados.
+4. **`Type '{ data: LandingData; isLive: boolean; }' is not assignable to type 'IntrinsicAttributes & TemplateProps'`**:
+   - *Error:* Un componente contenedor pasa propiedades adicionales (`isLive`, etc.) a plantillas que no declaran dicha propiedad opcional en su interfaz `TemplateProps`.
+   - *Solución:* Definir explícitamente `isLive?: boolean;` en la interfaz `TemplateProps` de cada plantilla para garantizar compatibilidad con el discriminador de renderizado.
+5. **Windows PowerShell ExecutionPolicy con scripts `.ps1` de npx/vercel**:
+   - *Error:* `npx : No se puede cargar el archivo C:\Program Files\nodejs\npx.ps1 porque la ejecución de scripts está deshabilitada`.
+   - *Solución:* En entornos Windows donde las directivas de PowerShell bloqueen scripts, invocar los comandos a través del intérprete de comandos clásico: `cmd.exe /c "npx vercel --prod --yes"`.
 
 ---
 
