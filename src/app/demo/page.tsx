@@ -268,31 +268,39 @@ export default function DemoDashboard() {
           </div>
         </div>
 
-        {/* Table Scroll Helper & Quick Nav Controls */}
-        <div className="flex flex-wrap items-center justify-between gap-3 px-1 pt-1 pb-0.5">
-          <div className="flex items-center gap-2 text-xs text-slate-500 font-semibold">
-            <span className="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 shadow-2xs">
-              <MoveHorizontal size={14} />
+        {/* Table Controls (Pure Visual UI - No Verbose Words) */}
+        <div className="flex items-center justify-between gap-3 px-1 pt-1 pb-0.5 select-none">
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-bold border border-slate-200/80 shadow-2xs">
+              <MoveHorizontal size={14} className="text-blue-600" />
+              <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">Vista Expandida</span>
             </span>
-            <span>Desplaza horizontalmente para ver todas las columnas del catálogo:</span>
           </div>
 
-          <div className="flex items-center gap-1.5">
+          {/* Visual Icon-Only Navigation Pill */}
+          <div className="flex items-center bg-slate-100/90 p-1 rounded-2xl border border-slate-200/80 shadow-inner">
             <button
               onClick={() => scrollTable('left')}
-              className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border border-slate-200/80 shadow-2xs hover:border-slate-300"
-              title="Desplazar tabla a la izquierda"
+              className="w-8 h-8 rounded-xl flex items-center justify-center bg-white text-slate-700 hover:text-white hover:bg-blue-600 active:scale-95 transition-all shadow-xs border border-slate-200/60 hover:border-blue-600 cursor-pointer"
+              title="Desplazar hacia la izquierda"
+              aria-label="Desplazar hacia la izquierda"
             >
-              <ChevronLeft size={15} />
-              <span className="hidden sm:inline">Desplazar Izq.</span>
+              <ChevronLeft size={18} strokeWidth={2.5} />
             </button>
+
+            <div className="px-2 flex items-center gap-1 text-slate-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+              <MoveHorizontal size={13} className="text-slate-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+            </div>
+
             <button
               onClick={() => scrollTable('right')}
-              className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border border-slate-200/80 shadow-2xs hover:border-slate-300"
-              title="Desplazar tabla a la derecha"
+              className="w-8 h-8 rounded-xl flex items-center justify-center bg-white text-slate-700 hover:text-white hover:bg-blue-600 active:scale-95 transition-all shadow-xs border border-slate-200/60 hover:border-blue-600 cursor-pointer"
+              title="Desplazar hacia la derecha"
+              aria-label="Desplazar hacia la derecha"
             >
-              <span className="hidden sm:inline">Desplazar Der.</span>
-              <ChevronRight size={15} />
+              <ChevronRight size={18} strokeWidth={2.5} />
             </button>
           </div>
         </div>
