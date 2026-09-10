@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { 
   FileText, Globe, CalendarDays, Sparkles, TrendingUp, ArrowUpRight, 
-  ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download
+  ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download,
+  MoveHorizontal, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, LandingData } from '@/data/landingStore';
@@ -16,6 +17,14 @@ export default function DemoDashboard() {
   const [objectiveFilter, setObjectiveFilter] = useState<'all' | 'whatsapp' | 'quote'>('all');
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
   const [selectedLandingForDeploy, setSelectedLandingForDeploy] = useState<LandingData | null>(null);
+  const tableScrollRef = useRef<HTMLDivElement>(null);
+
+  const scrollTable = (direction: 'left' | 'right') => {
+    if (tableScrollRef.current) {
+      const scrollAmount = direction === 'left' ? -350 : 350;
+      tableScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const handleFocus = () => setProjects(getStoredLandings());
@@ -259,8 +268,40 @@ export default function DemoDashboard() {
           </div>
         </div>
 
-        {/* 4. EXPANSIVE & UN-CRAMPED PROJECTS TABLE (Generous width & spacing) */}
-        <div className="overflow-x-auto rounded-2xl border border-slate-200/80">
+        {/* Table Scroll Helper & Quick Nav Controls */}
+        <div className="flex flex-wrap items-center justify-between gap-3 px-1 pt-1 pb-0.5">
+          <div className="flex items-center gap-2 text-xs text-slate-500 font-semibold">
+            <span className="inline-flex items-center justify-center w-6 h-6 rounded-lg bg-blue-50 text-blue-600 border border-blue-100 shadow-2xs">
+              <MoveHorizontal size={14} />
+            </span>
+            <span>Desplaza horizontalmente para ver todas las columnas del catálogo:</span>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => scrollTable('left')}
+              className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border border-slate-200/80 shadow-2xs hover:border-slate-300"
+              title="Desplazar tabla a la izquierda"
+            >
+              <ChevronLeft size={15} />
+              <span className="hidden sm:inline">Desplazar Izq.</span>
+            </button>
+            <button
+              onClick={() => scrollTable('right')}
+              className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer border border-slate-200/80 shadow-2xs hover:border-slate-300"
+              title="Desplazar tabla a la derecha"
+            >
+              <span className="hidden sm:inline">Desplazar Der.</span>
+              <ChevronRight size={15} />
+            </button>
+          </div>
+        </div>
+
+        {/* 4. EXPANSIVE & UN-CRAMPED PROJECTS TABLE (Generous width, tactile large scrollbar) */}
+        <div 
+          ref={tableScrollRef}
+          className="overflow-x-auto rounded-2xl border border-slate-200/80 table-scrollbar bg-white shadow-xs"
+        >
           <table className="w-full min-w-[1080px] text-left border-collapse">
             <thead>
               <tr className="bg-slate-50/90 text-slate-500 text-xs uppercase tracking-wider font-extrabold border-b border-slate-200/80">
