@@ -127,131 +127,151 @@ function DemoPreviewContent() {
   return (
     <div className="w-full bg-slate-950 min-h-screen flex flex-col relative text-slate-100 selection:bg-blue-600 selection:text-white">
       
-      {/* Top Professional Control Bar (Streamlined, non-wrapping, perfectly balanced) */}
-      <header className="bg-slate-900/98 backdrop-blur-md h-16 px-4 sm:px-6 border-b border-slate-800 flex items-center justify-between gap-4 shrink-0 sticky top-0 z-40 shadow-xl select-none">
+      {/* Top Professional Control Bar (Spacious, High-End Studio Toolbar) */}
+      <header className="bg-slate-900/95 backdrop-blur-xl h-20 px-4 sm:px-8 border-b border-slate-800/90 flex items-center justify-between gap-4 shrink-0 sticky top-0 z-40 shadow-2xl shadow-slate-950/70 select-none">
         
-        {/* Left: Back Link & Tour Identity */}
-        <div className="flex items-center gap-3 min-w-0 shrink-0">
+        {/* Left: Back Navigation & Rich Tour Identity */}
+        <div className="flex items-center gap-3.5 min-w-0 shrink-0">
           <Link 
             href="/demo" 
-            className="text-slate-400 hover:text-white transition-colors p-2 rounded-xl hover:bg-slate-800/80 flex items-center gap-1.5 text-xs font-bold border border-slate-800 shrink-0"
+            className="group text-slate-300 hover:text-white transition-all px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 flex items-center gap-2 text-xs font-bold border border-slate-700/70 hover:border-slate-600 shadow-xs shrink-0"
             title="Volver al panel principal"
           >
-            <ArrowLeft size={16} />
+            <ArrowLeft size={16} className="group-hover:-translate-x-0.5 transition-transform" />
             <span className="hidden sm:inline">Panel</span>
           </Link>
 
-          <div className="h-5 w-px bg-slate-800 shrink-0"></div>
+          <div className="h-7 w-px bg-slate-800/90 shrink-0"></div>
 
           <div className="min-w-0">
-            <div className="flex items-center gap-2">
-              <h2 className="font-extrabold text-white text-xs sm:text-sm tracking-tight truncate max-w-[150px] sm:max-w-[220px] md:max-w-xs">
+            <div className="flex items-center gap-2.5">
+              <h2 className="font-black text-white text-sm sm:text-base tracking-tight truncate max-w-[150px] sm:max-w-[240px] md:max-w-xs drop-shadow-xs">
                 {landing.name}
               </h2>
-              <span className={`text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0 ${
-                landing.status === 'published' 
-                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' 
-                  : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
-              }`}>
-                {landing.status === 'published' ? '● Publicado' : '○ Borrador'}
+              {landing.status === 'published' ? (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 shadow-xs shadow-emerald-500/20 shrink-0">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  </span>
+                  Publicado
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/15 text-amber-300 border border-amber-500/30 shadow-xs shrink-0">
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-400"></span>
+                  Borrador
+                </span>
+              )}
+            </div>
+            <div className="flex items-center gap-2 mt-0.5 text-xs text-slate-400 truncate hidden sm:flex">
+              <span className="text-[11px] text-slate-400 font-medium">Plantilla:</span>
+              <span className="px-2 py-0.5 rounded-md bg-slate-800/90 text-blue-400 font-semibold text-[10px] uppercase tracking-wide border border-slate-700/60">
+                {landing.template}
+              </span>
+              <span className="text-slate-600">•</span>
+              <span className="text-[11px] text-slate-400 truncate font-medium">
+                {landing.guideName || 'Cusco Creativos'}
               </span>
             </div>
-            <p className="text-[10px] text-slate-400 truncate hidden sm:block">
-              Plantilla: <strong className="capitalize text-slate-200">{landing.template}</strong> • {landing.guideName || 'Cusco Creativos'}
-            </p>
           </div>
         </div>
 
-        {/* Center: Device Viewport Switcher (Centered & Balanced) */}
-        <div className="hidden md:flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 shadow-inner shrink-0">
+        {/* Center: Device Viewport Switcher (Tactile Studio Segmented Control) */}
+        <div className="hidden lg:flex items-center bg-slate-950/90 p-1.5 rounded-2xl border border-slate-800/90 shadow-inner shadow-black/60 shrink-0">
           <button
             onClick={() => setViewMode('desktop')}
-            className={`px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 font-bold transition-all cursor-pointer ${
-              viewMode === 'desktop' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+            className={`px-3.5 py-2 rounded-xl text-xs flex items-center gap-2 font-extrabold transition-all cursor-pointer ${
+              viewMode === 'desktop' 
+                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
+                : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
             }`}
-            title="Vista Computadora"
+            title="Vista Computadora / Pantalla Completa"
           >
-            <Monitor size={14} /> 
+            <Monitor size={15} /> 
             <span>Desktop</span>
           </button>
           <button
             onClick={() => setViewMode('tablet')}
-            className={`px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 font-bold transition-all cursor-pointer ${
-              viewMode === 'tablet' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+            className={`px-3.5 py-2 rounded-xl text-xs flex items-center gap-2 font-extrabold transition-all cursor-pointer ${
+              viewMode === 'tablet' 
+                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
+                : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
             }`}
-            title="Vista Tablet"
+            title="Vista Tablet / iPad"
           >
-            <Tablet size={14} /> 
+            <Tablet size={15} /> 
             <span>Tablet</span>
           </button>
           <button
             onClick={() => setViewMode('mobile')}
-            className={`px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 font-bold transition-all cursor-pointer ${
-              viewMode === 'mobile' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
+            className={`px-3.5 py-2 rounded-xl text-xs flex items-center gap-2 font-extrabold transition-all cursor-pointer ${
+              viewMode === 'mobile' 
+                ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
+                : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
             }`}
-            title="Vista Móvil"
+            title="Vista Móvil / Smartphone"
           >
-            <Smartphone size={14} /> 
+            <Smartphone size={15} /> 
             <span>Móvil</span>
           </button>
         </div>
 
-        {/* Right: Actions Grouped in 1 Clean Row */}
-        <div className="flex items-center gap-2 shrink-0">
+        {/* Right: Rich Action Controls */}
+        <div className="flex items-center gap-2.5 shrink-0">
           
-          {/* Edit Button */}
+          {/* Edit Texts */}
           <button
             onClick={openEditorWithCurrentData}
-            className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/90 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl transition-all border border-slate-700/80 cursor-pointer shadow-xs"
-            title="Editar textos de esta landing"
+            className="flex items-center gap-2 px-3.5 py-2.5 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-blue-500/40 cursor-pointer shadow-xs hover:shadow-blue-500/10"
+            title="Editar títulos, subtítulos, precio y textos de esta landing"
           >
-            <Edit3 size={14} className="text-blue-400" />
+            <Edit3 size={15} className="text-blue-400" />
             <span className="hidden xl:inline">Editar Textos</span>
           </button>
 
-          {/* QR Code Button */}
+          {/* QR Code */}
           <button
             onClick={() => setIsQrOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/90 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl transition-all border border-slate-700/80 cursor-pointer shadow-xs"
-            title="Probar en tu celular con Código QR"
+            className="flex items-center gap-2 px-3.5 py-2.5 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-indigo-500/40 cursor-pointer shadow-xs hover:shadow-indigo-500/10"
+            title="Escanear con tu smartphone para ver cómo le llega al turista"
           >
-            <QrCode size={14} className="text-indigo-400" />
+            <QrCode size={15} className="text-indigo-400" />
             <span className="hidden xl:inline">QR Móvil</span>
           </button>
 
-          {/* Export & Download Hub Button */}
+          {/* Export & Download Hub */}
           <button
             onClick={() => setIsDeployModalOpen(true)}
-            className="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-amber-500/20 to-amber-600/20 hover:from-amber-500/30 hover:to-amber-600/30 text-amber-300 border border-amber-500/40 font-bold text-xs rounded-xl transition-all shadow-xs cursor-pointer"
-            title="Descargar paquete ZIP/HTML o ver opciones de despliegue en Vercel"
+            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500/15 via-amber-600/10 to-amber-500/15 hover:from-amber-500/25 hover:to-amber-600/25 text-amber-300 hover:text-amber-200 border border-amber-500/40 hover:border-amber-400/60 font-bold text-xs rounded-xl transition-all shadow-sm shadow-amber-500/10 hover:shadow-amber-500/20 cursor-pointer"
+            title="Descargar paquete ZIP autónomo o ver instrucciones de dominio propio en Vercel"
           >
-            <Download size={14} className="text-amber-400" />
+            <Download size={15} className="text-amber-400" />
             <span className="hidden sm:inline">Exportar / ZIP</span>
           </button>
 
-          {/* Copy Link Button */}
+          {/* Copy Public Link */}
           <button
             onClick={handleCopyLink}
-            className={`flex items-center gap-1.5 px-3 py-2 font-bold text-xs rounded-xl transition-all border cursor-pointer ${
+            className={`flex items-center gap-2 px-3.5 py-2.5 font-bold text-xs rounded-xl transition-all border cursor-pointer ${
               copied 
-                ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm' 
-                : 'bg-slate-800/90 hover:bg-slate-700 text-slate-200 border-slate-700/80'
+                ? 'bg-emerald-600 text-white border-emerald-500 shadow-md shadow-emerald-600/30' 
+                : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white border-slate-700/80 hover:border-slate-600 shadow-xs'
             }`}
-            title="Copiar enlace para enviar por WhatsApp al cliente"
+            title="Copiar enlace para compartir con el cliente por WhatsApp"
           >
-            {copied ? <Check size={14} className="text-emerald-300" /> : <Copy size={14} />}
+            {copied ? <Check size={15} className="text-emerald-200" /> : <Copy size={15} />}
             <span className="hidden sm:inline">{copied ? '¡Copiado!' : 'Copiar Link'}</span>
           </button>
 
-          {/* Primary View Live Web Button */}
+          {/* Primary CTA: Open Live Web */}
           <a
             href={`/p/${landing.slug}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-3.5 py-2 rounded-xl font-extrabold text-xs transition-all shadow-md shadow-blue-600/25 hover:scale-102 active:scale-98"
-            title="Abrir landing page pública en una nueva pestaña"
+            className="flex items-center gap-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-500 text-white px-4 py-2.5 rounded-xl font-black text-xs transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 border border-blue-400/30 hover:scale-102 active:scale-98 cursor-pointer"
+            title="Abrir versión web real en una nueva pestaña"
           >
-            <Globe size={14} />
+            <Globe size={15} />
             <span>Ver Web</span>
             <ExternalLink size={13} className="opacity-80" />
           </a>
