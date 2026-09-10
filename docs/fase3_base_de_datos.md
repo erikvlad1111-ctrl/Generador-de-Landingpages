@@ -142,7 +142,7 @@ Utilizaremos Supabase Auth + Row Level Security (RLS) para proteger los datos y 
 No crearemos tablas para CRM, reservas, planes SaaS, ni tiendas online, para mantener el MVP sencillo. Tampoco crearemos tablas como `tours` todavía, porque en la primera versión se almacenarán en el JSONB de `sections.content`. Si luego se requieren filtros complejos, se podrán crear tablas específicas.
 
 ## 3.71. 📋 Entregables de la Fase 3
-1. **Identificación de entidades**: 6 tablas
+1. **Identificación de entidades**: 6 tablas núcleo + soporte para Requisitos de Jefatura (`service_tiers`, `support_tickets`, `support_messages` detallados en [`docs/requisitos_adicionales_planes_y_soporte.md`](file:///c:/Users/copyw/.gemini/antigravity-ide/scratch/cusco-creativos-web/docs/requisitos_adicionales_planes_y_soporte.md))
 2. **Diccionario de datos**
 3. **Relaciones**: 1:N
 4. **Restricciones**: NOT NULL, UNIQUE, CHECK, DEFAULT

@@ -65,3 +65,12 @@ La inteligencia del sistema no es solo enviar datos a ChatGPT. Está en cómo el
 
 ## 5. Medición del éxito para la tesis
 Se medirá la optimización de procesos demostrando cuánto tiempo le tomaba a la agencia la **creación manual** de una landing (X horas) versus la **creación automatizada** con este sistema web (X minutos).
+
+---
+
+## 6. Módulos Adicionales Requeridos por Jefatura
+Documentados en detalle en [`docs/requisitos_adicionales_planes_y_soporte.md`](file:///c:/Users/copyw/.gemini/antigravity-ide/scratch/cusco-creativos-web/docs/requisitos_adicionales_planes_y_soporte.md):
+1. **Plantillas inspiradas en Pinterest:** Diseños adaptados a tendencias estéticas de viajes (ej. `boho-nature`, `family-comfort` sumadas a `adventure`, `premium`, `cultural`).
+2. **Planes de Landing Pages (Servicio Cusco Creativos):** 4 niveles de entrega (`Gratuito`, `Básico`, `Pro`, `Avanzado`) que condicionan las funcionalidades de la landing entregada al cliente.
+3. **Módulo de Soporte / Foro & FAQ:** Canal de atención y resolución de dudas con Cusco Creativos.
+4. **Protección Anti-Spam Multicapa:** Honeypot invisible, validación por tiempo (time-gate) y CAPTCHA para blindar formularios.
