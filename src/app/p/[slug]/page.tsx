@@ -53,7 +53,7 @@ export default function PublicLandingPage() {
       
       {/* Accessible Demo Navigation Bar */}
       {isBannerVisible && (
-        <div className="sticky top-0 z-50 bg-slate-950/90 text-white px-4 py-2 border-b border-slate-800 backdrop-blur-md flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div className="sticky top-0 z-50 bg-slate-950/95 text-white px-4 py-2 border-b border-slate-800 backdrop-blur-md flex flex-wrap items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
             <span className="font-bold text-slate-200">Landing Pública en Vivo:</span>
@@ -63,43 +63,43 @@ export default function PublicLandingPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={handleCopyLink}
-              className="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1 rounded-lg transition-colors flex items-center gap-1 font-medium cursor-pointer"
+              className="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 font-medium cursor-pointer"
               title="Copiar enlace directo"
             >
-              {copied ? <Check size={12} className="text-emerald-400" /> : <Share2 size={12} />}
+              {copied ? <Check size={13} className="text-emerald-400" /> : <Share2 size={13} />}
               <span>{copied ? '¡Copiado!' : 'Compartir'}</span>
             </button>
 
             <button
               onClick={() => setIsDeployModalOpen(true)}
-              className="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 px-3 py-1 rounded-lg transition-all flex items-center gap-1 font-extrabold cursor-pointer shadow-sm"
+              className="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/30 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 font-bold cursor-pointer shadow-xs"
               title="Descargar código ZIP/HTML o ver opciones de despliegue en Vercel"
             >
-              <Download size={12} />
+              <Download size={13} className="text-amber-400" />
               <span>Exportar / ZIP</span>
             </button>
 
             <Link
               href={`/demo/preview?slug=${landing.slug}`}
-              className="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded-lg transition-colors flex items-center gap-1 font-bold"
+              className="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 font-bold"
               title="Abrir editor"
             >
-              <Edit3 size={12} />
+              <Edit3 size={13} />
               <span>Editar</span>
             </Link>
 
             <Link
               href="/demo"
-              className="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded-lg transition-colors flex items-center gap-1 font-medium"
+              className="bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 font-medium"
               title="Ir al panel principal"
             >
-              <LayoutDashboard size={12} />
+              <LayoutDashboard size={13} />
               <span>Panel</span>
             </Link>
 
             <button
               onClick={() => setIsBannerVisible(false)}
-              className="text-slate-500 hover:text-slate-300 px-1 py-0.5 text-xs font-bold"
+              className="text-slate-500 hover:text-slate-300 p-1 text-xs font-bold cursor-pointer"
               title="Ocultar barra de prueba"
             >
               ✕

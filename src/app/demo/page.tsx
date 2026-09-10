@@ -152,6 +152,30 @@ export default function DemoDashboard() {
         </div>
       </div>
 
+      {/* Informative Workflow Guidance Card (UX Upgrade) */}
+      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 text-white shadow-md border border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="space-y-1.5 max-w-2xl">
+          <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-wider">
+            <span>💡 Flujo de Trabajo en Cusco Creativos</span>
+          </div>
+          <h2 className="text-lg font-extrabold text-white">
+            Genera, previsualiza y entrega landings en 3 minutos
+          </h2>
+          <p className="text-xs text-slate-300 leading-relaxed">
+            1. <strong>Crea o edita</strong> los tours con IA. • 2. <strong>Envía el enlace en vivo</strong> al cliente por WhatsApp para su aprobación. • 3. <strong>Exporta:</strong> Conecta su dominio en Vercel (Opción A) o descarga el paquete ZIP/HTML completo para su hosting o WordPress (Opción B).
+          </p>
+        </div>
+        <div className="flex items-center gap-2 shrink-0">
+          <Link
+            href="/demo/new"
+            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-2xl font-extrabold text-xs transition-all shadow-md shadow-blue-600/30"
+          >
+            <Sparkles size={14} />
+            <span>Crear Nueva Landing</span>
+          </Link>
+        </div>
+      </div>
+
       {/* Control Bar: Search & Interactive Filter Tabs */}
       <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 space-y-4">
         <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
@@ -315,48 +339,48 @@ export default function DemoDashboard() {
                         </div>
                       </td>
 
-                      {/* Action buttons */}
+                      {/* Action buttons (Clean, organized & cohesive) */}
                       <td className="px-6 py-4 text-right">
-                        <div className="flex items-center justify-end gap-2">
+                        <div className="flex items-center justify-end gap-1.5">
                           
-                          {/* Direct Accessible Open in Chrome */}
-                          <a
-                            href={`/p/${p.slug}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-xl font-bold text-xs transition-all shadow-sm shadow-emerald-600/20 hover:scale-105"
-                            title="Abrir landing page pública en Chrome"
-                          >
-                            <Globe size={13} />
-                            <span>Abrir en Chrome</span>
-                            <ExternalLink size={12} />
-                          </a>
-
-                          {/* Preview / Edit */}
+                          {/* Primary: Editor / Vista Previa */}
                           <Link
                             href={`/demo/preview?slug=${p.slug}`}
-                            className="inline-flex items-center gap-1 bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 px-2.5 py-1.5 rounded-xl font-semibold text-xs transition-colors"
-                            title="Abrir vista previa y editor"
+                            className="inline-flex items-center gap-1.5 bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white border border-blue-200/80 hover:border-blue-600 px-3 py-1.5 rounded-xl font-bold text-xs transition-all shadow-xs"
+                            title="Abrir editor y previsualizador"
                           >
-                            <Eye size={14} />
-                            <span className="hidden sm:inline">Editor</span>
+                            <Eye size={13} />
+                            <span>Ver / Editar</span>
                           </Link>
 
                           {/* Export / Download / Deploy Options */}
                           <button
                             onClick={() => setSelectedLandingForDeploy(p)}
-                            className="inline-flex items-center gap-1 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 px-2.5 py-1.5 rounded-xl font-bold text-xs transition-colors cursor-pointer"
-                            title="Descargar código ZIP/HTML o ver opciones de despliegue en Vercel"
+                            className="inline-flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 px-2.5 py-1.5 rounded-xl font-bold text-xs transition-colors cursor-pointer"
+                            title="Descargar paquete ZIP/HTML o ver opciones de despliegue en Vercel"
                           >
                             <Download size={13} className="text-amber-700" />
-                            <span className="hidden xl:inline">Exportar</span>
+                            <span className="hidden xl:inline">Exportar / ZIP</span>
                           </button>
+
+                          {/* Direct Accessible Open in Chrome / New Tab (Clean icon button, not a giant messy green block) */}
+                          <a
+                            href={`/p/${p.slug}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center p-2 rounded-xl text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 border border-slate-200/80 hover:border-emerald-200 transition-all text-xs"
+                            title="Abrir landing page pública en una pestaña nueva"
+                          >
+                            <ExternalLink size={14} />
+                          </a>
 
                           {/* Copy Public Link */}
                           <button
                             onClick={() => handleCopyLink(p.slug)}
-                            className={`p-1.5 rounded-xl text-xs font-medium transition-all flex items-center gap-1 ${
-                              isCopied ? 'bg-emerald-600 text-white' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
+                            className={`p-2 rounded-xl text-xs font-medium transition-all border cursor-pointer ${
+                              isCopied 
+                                ? 'bg-emerald-600 text-white border-emerald-600' 
+                                : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100 border-slate-200/80'
                             }`}
                             title="Copiar link público para clientes"
                           >
@@ -366,7 +390,7 @@ export default function DemoDashboard() {
                           {/* Delete */}
                           <button
                             onClick={() => handleDelete(p.id, p.name)}
-                            className="p-1.5 text-slate-400 hover:text-red-600 rounded-xl hover:bg-red-50 transition-colors text-xs"
+                            className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 rounded-xl transition-colors text-xs cursor-pointer"
                             title="Eliminar proyecto"
                           >
                             <Trash2 size={14} />

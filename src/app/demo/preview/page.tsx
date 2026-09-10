@@ -192,77 +192,84 @@ function DemoPreviewContent() {
           </button>
         </div>
 
-        {/* Right: PRIMARY ACCESSIBLE ACTIONS */}
-        <div className="flex items-center gap-2.5">
+        {/* Right: ACTIONS ORGANIZED INTO CLEAN LOGICAL GROUPS */}
+        <div className="flex items-center gap-2 sm:gap-3">
           
-          {/* Quick Edit Drawer */}
-          <button
-            onClick={openEditorWithCurrentData}
-            className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-xs rounded-xl transition-all border border-slate-700 cursor-pointer"
-            title="Editar textos de esta landing"
-          >
-            <Edit3 size={15} className="text-blue-400" />
-            <span className="hidden lg:inline">Editar Textos</span>
-          </button>
-
-          {/* Quick QR Code for Mobile Testing */}
-          <button
-            onClick={() => setIsQrOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-xs rounded-xl transition-all border border-slate-700 cursor-pointer"
-            title="Probar en tu celular con Código QR"
-          >
-            <QrCode size={15} className="text-emerald-400" />
-            <span className="hidden xl:inline">Código QR</span>
-          </button>
-
-          {/* Export & Deployment Hub Button */}
-          <button
-            onClick={() => setIsDeployModalOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-black text-xs rounded-xl transition-all shadow-md shadow-amber-500/20 cursor-pointer"
-            title="Opciones de Despliegue en Vercel y Descarga de Código ZIP/HTML"
-          >
-            <Download size={15} />
-            <span className="hidden md:inline">Descargar / Desplegar</span>
-          </button>
-
-          {/* Copy Link Button */}
-          <button
-            onClick={handleCopyLink}
-            className={`flex items-center gap-1.5 px-3 py-2 font-medium text-xs rounded-xl transition-all border cursor-pointer ${
-              copied 
-                ? 'bg-emerald-600 text-white border-emerald-500' 
-                : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700'
-            }`}
-            title="Copiar enlace para enviar por WhatsApp"
-          >
-            {copied ? <Check size={15} /> : <Copy size={15} />}
-            <span className="hidden sm:inline">{copied ? '¡Copiado!' : 'Copiar Link'}</span>
-          </button>
-
-          {/* Publish / Status Button */}
-          {landing.status !== 'published' && (
+          {/* Group 1: Edit & Testing Tools */}
+          <div className="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 shadow-inner">
             <button
-              onClick={handlePublishInstant}
-              className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white px-3.5 py-2 rounded-xl font-bold text-xs transition-all shadow-lg shadow-blue-600/30 cursor-pointer"
-              title="Publicar landing en línea"
+              onClick={openEditorWithCurrentData}
+              className="flex items-center gap-1.5 px-3 py-1.5 text-slate-300 hover:text-white hover:bg-slate-800/80 font-semibold text-xs rounded-lg transition-colors cursor-pointer"
+              title="Editar textos de esta landing"
             >
-              <Share2 size={15} />
-              <span>Publicar</span>
+              <Edit3 size={14} className="text-blue-400" />
+              <span className="hidden lg:inline">Editar Textos</span>
             </button>
-          )}
 
-          {/* MOST ACCESSIBLE DIRECT ACTION: OPEN IN CHROME / NEW TAB */}
-          <a
-            href={`/p/${landing.slug}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-xl font-extrabold text-xs transition-all shadow-lg shadow-emerald-600/30 hover:scale-105 active:scale-95"
-            title="Abrir la landing page final en una nueva pestaña de Chrome"
-          >
-            <Globe size={16} />
-            <span>Abrir en Chrome</span>
-            <ExternalLink size={14} />
-          </a>
+            <button
+              onClick={() => setIsQrOpen(true)}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 text-slate-300 hover:text-white hover:bg-slate-800/80 font-semibold text-xs rounded-lg transition-colors cursor-pointer"
+              title="Probar en tu celular con Código QR"
+            >
+              <QrCode size={14} className="text-indigo-400" />
+              <span className="hidden xl:inline">Código QR</span>
+            </button>
+          </div>
+
+          <div className="h-6 w-px bg-slate-800 hidden sm:block"></div>
+
+          {/* Group 2: Client Delivery, Export & Live Preview */}
+          <div className="flex items-center gap-2">
+            
+            {/* Export & Deployment Hub Button */}
+            <button
+              onClick={() => setIsDeployModalOpen(true)}
+              className="flex items-center gap-1.5 px-3.5 py-2 bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 font-bold text-xs rounded-xl transition-all shadow-xs cursor-pointer"
+              title="Opciones de Despliegue en Vercel y Descarga de Código ZIP/HTML"
+            >
+              <Download size={14} className="text-amber-400" />
+              <span className="hidden md:inline">Descargar / Desplegar</span>
+            </button>
+
+            {/* Copy Link Button */}
+            <button
+              onClick={handleCopyLink}
+              className={`flex items-center gap-1.5 px-3 py-2 font-semibold text-xs rounded-xl transition-all border cursor-pointer ${
+                copied 
+                  ? 'bg-emerald-600 text-white border-emerald-500' 
+                  : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700'
+              }`}
+              title="Copiar enlace para enviar por WhatsApp al cliente"
+            >
+              {copied ? <Check size={14} className="text-emerald-300" /> : <Copy size={14} />}
+              <span className="hidden sm:inline">{copied ? '¡Copiado!' : 'Copiar Link'}</span>
+            </button>
+
+            {/* Quick Publish if draft */}
+            {landing.status !== 'published' && (
+              <button
+                onClick={handlePublishInstant}
+                className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded-xl font-bold text-xs transition-all shadow-md shadow-blue-600/30 cursor-pointer"
+                title="Publicar landing en línea"
+              >
+                <Share2 size={14} />
+                <span className="hidden sm:inline">Publicar</span>
+              </button>
+            )}
+
+            {/* PRIMARY ACTION: VIEW LIVE WEB (Clean, professional, not messy) */}
+            <a
+              href={`/p/${landing.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-3.5 py-2 rounded-xl font-extrabold text-xs transition-all shadow-md shadow-blue-600/25 hover:scale-102 active:scale-98"
+              title="Abrir landing page en una nueva pestaña"
+            >
+              <Globe size={14} />
+              <span>Ver Web</span>
+              <ExternalLink size={13} className="opacity-80" />
+            </a>
+          </div>
         </div>
       </header>
 
