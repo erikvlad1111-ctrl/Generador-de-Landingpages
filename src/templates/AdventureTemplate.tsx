@@ -24,12 +24,12 @@ export default function AdventureTemplate({ data }: TemplateProps) {
   return (
     <div className="min-h-screen bg-stone-50 font-sans text-stone-900 selection:bg-emerald-500 selection:text-white">
       {/* Navbar */}
-      <nav className="fixed w-full z-40 bg-stone-900/90 backdrop-blur-sm text-white px-8 py-4 flex justify-between items-center">
-        <div className="text-xl font-bold tracking-tighter uppercase text-emerald-400 flex items-center gap-2">
-          <MapPin size={20} />
-          TrekExplorer
+      <nav className="sticky top-0 w-full z-40 bg-stone-900/95 backdrop-blur-sm text-white px-4 sm:px-8 py-3 sm:py-4 flex justify-between items-center gap-3">
+        <div className="text-base sm:text-xl font-bold tracking-tighter uppercase text-emerald-400 flex items-center gap-2 min-w-0">
+          <MapPin size={18} className="shrink-0" />
+          <span className="truncate">TrekExplorer</span>
         </div>
-        <div className="hidden md:flex gap-6 text-sm font-medium">
+        <div className="hidden md:flex gap-6 text-sm font-medium shrink-0">
           <a href="#ruta" className="hover:text-emerald-400 transition-colors">La Ruta</a>
           <a href="#incluye" className="hover:text-emerald-400 transition-colors">¿Qué Incluye?</a>
           <a href="#faq" className="hover:text-emerald-400 transition-colors">Preguntas Frecuentes</a>
@@ -37,20 +37,20 @@ export default function AdventureTemplate({ data }: TemplateProps) {
         {isQuote ? (
           <button
             onClick={() => setIsQuoteOpen(true)}
-            className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-full font-semibold text-sm transition-all shadow-lg flex items-center gap-2"
+            className="shrink-0 bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 sm:px-6 py-2 rounded-full font-semibold text-xs sm:text-sm transition-all shadow-lg flex items-center gap-1.5 sm:gap-2 cursor-pointer"
           >
-            <FileText size={16} />
-            Solicitar Cotización
+            <FileText size={15} />
+            <span>Cotizar</span>
           </button>
         ) : (
           <a 
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-2 rounded-full font-semibold text-sm transition-all shadow-lg hover:shadow-emerald-600/30 flex items-center gap-2"
+            className="shrink-0 bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 sm:px-6 py-2 rounded-full font-semibold text-xs sm:text-sm transition-all shadow-lg hover:shadow-emerald-600/30 flex items-center gap-1.5 sm:gap-2 cursor-pointer"
           >
-            <MessageCircle size={16} />
-            Reservar Ahora
+            <MessageCircle size={15} />
+            <span>Reservar</span>
           </a>
         )}
       </nav>

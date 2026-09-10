@@ -176,11 +176,11 @@ function DemoPreviewContent() {
           </div>
         </div>
 
-        {/* Center: Device Viewport Switcher (Tactile Studio Segmented Control) */}
-        <div className="hidden lg:flex items-center bg-slate-950/90 p-1.5 rounded-2xl border border-slate-800/90 shadow-inner shadow-black/60 shrink-0">
+        {/* Center: Device Viewport Switcher (Tactile Studio Segmented Control - Responsive on all devices) */}
+        <div className="flex items-center bg-slate-950/90 p-1 sm:p-1.5 rounded-xl sm:rounded-2xl border border-slate-800/90 shadow-inner shadow-black/60 shrink-0">
           <button
             onClick={() => setViewMode('desktop')}
-            className={`px-3.5 py-2 rounded-xl text-xs flex items-center gap-2 font-extrabold transition-all cursor-pointer ${
+            className={`px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs flex items-center gap-1.5 sm:gap-2 font-extrabold transition-all cursor-pointer ${
               viewMode === 'desktop' 
                 ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
                 : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
@@ -188,11 +188,11 @@ function DemoPreviewContent() {
             title="Vista Computadora / Pantalla Completa"
           >
             <Monitor size={15} /> 
-            <span>Desktop</span>
+            <span className="hidden md:inline">Desktop</span>
           </button>
           <button
             onClick={() => setViewMode('tablet')}
-            className={`px-3.5 py-2 rounded-xl text-xs flex items-center gap-2 font-extrabold transition-all cursor-pointer ${
+            className={`px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs flex items-center gap-1.5 sm:gap-2 font-extrabold transition-all cursor-pointer ${
               viewMode === 'tablet' 
                 ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
                 : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
@@ -200,11 +200,11 @@ function DemoPreviewContent() {
             title="Vista Tablet / iPad"
           >
             <Tablet size={15} /> 
-            <span>Tablet</span>
+            <span className="hidden md:inline">Tablet</span>
           </button>
           <button
             onClick={() => setViewMode('mobile')}
-            className={`px-3.5 py-2 rounded-xl text-xs flex items-center gap-2 font-extrabold transition-all cursor-pointer ${
+            className={`px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl text-xs flex items-center gap-1.5 sm:gap-2 font-extrabold transition-all cursor-pointer ${
               viewMode === 'mobile' 
                 ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
                 : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
@@ -212,17 +212,17 @@ function DemoPreviewContent() {
             title="Vista Móvil / Smartphone"
           >
             <Smartphone size={15} /> 
-            <span>Móvil</span>
+            <span className="hidden md:inline">Móvil</span>
           </button>
         </div>
 
         {/* Right: Rich Action Controls */}
-        <div className="flex items-center gap-2.5 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           
           {/* Edit Texts */}
           <button
             onClick={openEditorWithCurrentData}
-            className="flex items-center gap-2 px-3.5 py-2.5 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-blue-500/40 cursor-pointer shadow-xs hover:shadow-blue-500/10"
+            className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-2 sm:py-2.5 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-blue-500/40 cursor-pointer shadow-xs hover:shadow-blue-500/10"
             title="Editar títulos, subtítulos, precio y textos de esta landing"
           >
             <Edit3 size={15} className="text-blue-400" />
@@ -232,7 +232,7 @@ function DemoPreviewContent() {
           {/* QR Code */}
           <button
             onClick={() => setIsQrOpen(true)}
-            className="flex items-center gap-2 px-3.5 py-2.5 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-indigo-500/40 cursor-pointer shadow-xs hover:shadow-indigo-500/10"
+            className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3.5 py-2 sm:py-2.5 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-indigo-500/40 cursor-pointer shadow-xs hover:shadow-indigo-500/10"
             title="Escanear con tu smartphone para ver cómo le llega al turista"
           >
             <QrCode size={15} className="text-indigo-400" />
@@ -242,7 +242,7 @@ function DemoPreviewContent() {
           {/* Export & Download Hub */}
           <button
             onClick={() => setIsDeployModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500/15 via-amber-600/10 to-amber-500/15 hover:from-amber-500/25 hover:to-amber-600/25 text-amber-300 hover:text-amber-200 border border-amber-500/40 hover:border-amber-400/60 font-bold text-xs rounded-xl transition-all shadow-sm shadow-amber-500/10 hover:shadow-amber-500/20 cursor-pointer"
+            className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-amber-500/15 via-amber-600/10 to-amber-500/15 hover:from-amber-500/25 hover:to-amber-600/25 text-amber-300 hover:text-amber-200 border border-amber-500/40 hover:border-amber-400/60 font-bold text-xs rounded-xl transition-all shadow-sm shadow-amber-500/10 hover:shadow-amber-500/20 cursor-pointer"
             title="Descargar paquete ZIP autónomo o ver instrucciones de dominio propio en Vercel"
           >
             <Download size={15} className="text-amber-400" />
@@ -252,7 +252,7 @@ function DemoPreviewContent() {
           {/* Copy Public Link */}
           <button
             onClick={handleCopyLink}
-            className={`flex items-center gap-2 px-3.5 py-2.5 font-bold text-xs rounded-xl transition-all border cursor-pointer ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-3.5 py-2 sm:py-2.5 font-bold text-xs rounded-xl transition-all border cursor-pointer ${
               copied 
                 ? 'bg-emerald-600 text-white border-emerald-500 shadow-md shadow-emerald-600/30' 
                 : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white border-slate-700/80 hover:border-slate-600 shadow-xs'
@@ -268,11 +268,11 @@ function DemoPreviewContent() {
             href={`/p/${landing.slug}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-500 text-white px-4 py-2.5 rounded-xl font-black text-xs transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 border border-blue-400/30 hover:scale-102 active:scale-98 cursor-pointer"
+            className="flex items-center gap-2 sm:gap-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-500 text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl font-black text-xs transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 border border-blue-400/30 hover:scale-102 active:scale-98 cursor-pointer"
             title="Abrir versión web real en una nueva pestaña"
           >
             <Globe size={15} />
-            <span>Ver Web</span>
+            <span className="hidden xs:inline sm:inline">Ver Web</span>
             <ExternalLink size={13} className="opacity-80" />
           </a>
         </div>
@@ -280,28 +280,40 @@ function DemoPreviewContent() {
 
       {/* Instant Notification Toast */}
       {publishToast && (
-        <div className="fixed top-20 right-6 z-50 bg-emerald-600 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-in slide-in-from-top-3 duration-300">
+        <div className="fixed top-24 right-6 z-50 bg-emerald-600 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-in slide-in-from-top-3 duration-300">
           <CheckCircle size={20} />
           <div>
             <p className="font-bold text-xs">¡Landing Publicada Exitosamente!</p>
-            <p className="text-[11px] text-emerald-100">Haz clic en &quot;Abrir en Chrome&quot; para ver la versión en vivo.</p>
+            <p className="text-[11px] text-emerald-100">Haz clic en &quot;Ver Web&quot; para ver la versión en vivo.</p>
           </div>
         </div>
       )}
 
       {/* Preview Canvas Area */}
-      <main className="flex-1 overflow-auto bg-slate-950 p-2 sm:p-4 md:p-8 flex justify-center items-start min-h-[calc(100vh-4rem)]">
+      <main className="flex-1 overflow-auto bg-slate-950 p-2 sm:p-4 md:p-8 flex justify-center items-start min-h-[calc(100vh-5rem)]">
         <div 
           className={`bg-white shadow-2xl transition-all duration-300 relative ${
             viewMode === 'mobile' 
-              ? 'w-full max-w-[390px] h-[844px] rounded-[36px] sm:rounded-[48px] ring-4 sm:ring-8 ring-slate-800 border-2 sm:border-4 border-slate-900 overflow-hidden my-2 sm:my-4' 
+              ? 'w-full max-w-[390px] h-[min(844px,calc(100vh-7rem))] sm:h-[844px] rounded-[36px] sm:rounded-[48px] ring-4 sm:ring-8 ring-slate-800 border-2 sm:border-4 border-slate-900 overflow-hidden my-2 sm:my-4 shadow-2xl shadow-black/80' 
               : viewMode === 'tablet'
-              ? 'w-full max-w-[768px] h-[920px] rounded-[24px] sm:rounded-[32px] ring-4 sm:ring-8 ring-slate-800 border-2 sm:border-4 border-slate-900 overflow-hidden my-2 sm:my-4'
-              : 'w-full max-w-[1440px] min-h-[850px] rounded-2xl overflow-hidden border border-slate-800'
+              ? 'w-full max-w-[768px] h-[min(900px,calc(100vh-7rem))] sm:h-[900px] rounded-[24px] sm:rounded-[32px] ring-4 sm:ring-8 ring-slate-800 border-2 sm:border-4 border-slate-900 overflow-hidden my-2 sm:my-4 shadow-2xl shadow-black/80'
+              : 'w-full max-w-[1440px] min-h-[min(850px,calc(100vh-7rem))] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl'
           }`}
         >
-          {/* Scrollable Frame Content */}
-          <div className="w-full h-full overflow-y-auto overflow-x-hidden">
+          {/* Dynamic Island / Camera Notch on Mobile View */}
+          {viewMode === 'mobile' && (
+            <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-24 h-4 bg-slate-950 rounded-full z-50 pointer-events-none flex items-center justify-end px-2 border border-slate-800/80 shadow-md">
+              <div className="w-1.5 h-1.5 rounded-full bg-slate-900 border border-slate-700/60"></div>
+            </div>
+          )}
+
+          {/* Camera Dot on Tablet View */}
+          {viewMode === 'tablet' && (
+            <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-950 rounded-full z-50 pointer-events-none border border-slate-800"></div>
+          )}
+
+          {/* Scrollable Frame Content (Isolated Stacking Context) */}
+          <div className="w-full h-full overflow-y-auto overflow-x-hidden relative isolate table-scrollbar">
             <TemplateRenderer data={landing} />
           </div>
         </div>

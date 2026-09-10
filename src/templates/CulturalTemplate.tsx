@@ -26,12 +26,12 @@ export default function CulturalTemplate({ data }: TemplateProps) {
   return (
     <div className="min-h-screen bg-stone-100 font-sans text-stone-800 selection:bg-amber-700 selection:text-white">
       {/* Navigation */}
-      <nav className="fixed w-full z-40 bg-stone-900/90 backdrop-blur-sm text-stone-200 px-8 py-4 flex justify-between items-center border-b border-amber-900/40">
-        <div className="flex items-center gap-2 text-amber-500 font-bold tracking-tight text-lg">
-          <Landmark size={22} />
-          <span className="font-serif tracking-wider uppercase text-amber-400">Cusco Ancestral</span>
+      <nav className="sticky top-0 w-full z-40 bg-stone-900/95 backdrop-blur-sm text-stone-200 px-4 sm:px-8 py-3 sm:py-4 flex justify-between items-center border-b border-amber-900/40 gap-3">
+        <div className="flex items-center gap-2 text-amber-500 font-bold tracking-tight text-base sm:text-lg min-w-0">
+          <Landmark size={20} className="shrink-0" />
+          <span className="font-serif tracking-wider uppercase text-amber-400 truncate">Cusco Ancestral</span>
         </div>
-        <div className="hidden md:flex gap-6 text-sm font-medium text-stone-300">
+        <div className="hidden md:flex gap-6 text-sm font-medium text-stone-300 shrink-0">
           <a href="#historia" className="hover:text-amber-400 transition-colors">Historia & Ruta</a>
           <a href="#detalles" className="hover:text-amber-400 transition-colors">Detalles del Tour</a>
           <a href="#faq" className="hover:text-amber-400 transition-colors">Preguntas</a>
@@ -39,20 +39,20 @@ export default function CulturalTemplate({ data }: TemplateProps) {
         {isQuote ? (
           <button
             onClick={() => setIsQuoteOpen(true)}
-            className="bg-amber-600 hover:bg-amber-500 text-white px-5 py-2 rounded-lg font-semibold text-xs transition-colors shadow-md flex items-center gap-2"
+            className="shrink-0 bg-amber-600 hover:bg-amber-500 text-white px-3.5 sm:px-5 py-2 rounded-lg font-semibold text-xs transition-colors shadow-md flex items-center gap-1.5 sm:gap-2 cursor-pointer"
           >
-            <FileText size={16} />
-            Solicitar Cotización
+            <FileText size={15} />
+            <span>Cotizar</span>
           </button>
         ) : (
           <a 
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-amber-600 hover:bg-amber-700 text-white px-5 py-2 rounded-lg font-semibold text-xs transition-colors shadow-md flex items-center gap-2"
+            className="shrink-0 bg-amber-600 hover:bg-amber-700 text-white px-3.5 sm:px-5 py-2 rounded-lg font-semibold text-xs transition-colors shadow-md flex items-center gap-1.5 sm:gap-2 cursor-pointer"
           >
-            <MessageCircle size={16} />
-            Consultar
+            <MessageCircle size={15} />
+            <span>Consultar</span>
           </a>
         )}
       </nav>

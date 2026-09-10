@@ -23,14 +23,14 @@ export default function PremiumTemplate({ data }: TemplateProps) {
   return (
     <div className="min-h-screen bg-neutral-950 font-sans text-neutral-100 selection:bg-amber-500 selection:text-black">
       {/* Premium Header */}
-      <header className="fixed w-full z-40 bg-neutral-950/80 backdrop-blur-md border-b border-amber-500/20 px-8 py-4 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <Crown className="text-amber-400" size={22} />
-          <span className="text-lg font-serif tracking-widest uppercase font-bold text-amber-300">
+      <header className="sticky top-0 w-full z-40 bg-neutral-950/90 backdrop-blur-md border-b border-amber-500/20 px-4 sm:px-8 py-3 sm:py-4 flex justify-between items-center gap-3">
+        <div className="flex items-center gap-2 min-w-0">
+          <Crown className="text-amber-400 shrink-0" size={20} />
+          <span className="text-xs sm:text-base md:text-lg font-serif tracking-widest uppercase font-bold text-amber-300 truncate">
             Cusco Luxury Collection
           </span>
         </div>
-        <nav className="hidden md:flex gap-8 text-xs uppercase tracking-widest text-neutral-400">
+        <nav className="hidden md:flex gap-6 lg:gap-8 text-xs uppercase tracking-widest text-neutral-400 shrink-0">
           <a href="#itinerario" className="hover:text-amber-400 transition-colors">La Experiencia</a>
           <a href="#privilegios" className="hover:text-amber-400 transition-colors">Privilegios</a>
           <a href="#faq" className="hover:text-amber-400 transition-colors">FAQ</a>
@@ -38,20 +38,20 @@ export default function PremiumTemplate({ data }: TemplateProps) {
         {isQuote ? (
           <button
             onClick={() => setIsQuoteOpen(true)}
-            className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-neutral-950 px-5 py-2 rounded-full font-bold text-xs uppercase tracking-wider transition-all shadow-lg"
+            className="shrink-0 flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-neutral-950 px-3.5 sm:px-5 py-2 rounded-full font-bold text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg cursor-pointer"
           >
-            <FileText size={15} />
-            Solicitar Cotización
+            <FileText size={14} />
+            <span>Cotizar</span>
           </button>
         ) : (
           <a 
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-neutral-950 px-5 py-2 rounded-full font-bold text-xs uppercase tracking-wider transition-all shadow-lg"
+            className="shrink-0 flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-neutral-950 px-3.5 sm:px-5 py-2 rounded-full font-bold text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg cursor-pointer"
           >
-            <MessageCircle size={15} />
-            Reserva VIP
+            <MessageCircle size={14} />
+            <span>Reserva VIP</span>
           </a>
         )}
       </header>
