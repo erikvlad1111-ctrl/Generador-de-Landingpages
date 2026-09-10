@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, MessageCircle, Edit3, LayoutDashboard, Share2, Check } from 'lucide-react';
+import { ArrowLeft, MessageCircle, Edit3, LayoutDashboard, Share2, Check, Download } from 'lucide-react';
 import TemplateRenderer from '@/templates/TemplateRenderer';
+import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, LandingData } from '@/data/landingStore';
 
 export default function PublicLandingPage() {
@@ -12,6 +13,7 @@ export default function PublicLandingPage() {
   const slug = (params?.slug as string) || '';
   const [copied, setCopied] = useState(false);
   const [isBannerVisible, setIsBannerVisible] = useState(true);
+  const [isDeployModalOpen, setIsDeployModalOpen] = useState(false);
 
   const [landing] = useState<LandingData | null>(() => {
     const landings = getStoredLandings();
@@ -68,6 +70,15 @@ export default function PublicLandingPage() {
               <span>{copied ? '¡Copiado!' : 'Compartir'}</span>
             </button>
 
+            <button
+              onClick={() => setIsDeployModalOpen(true)}
+              className="bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 px-3 py-1 rounded-lg transition-all flex items-center gap-1 font-extrabold cursor-pointer shadow-sm"
+              title="Descargar código ZIP/HTML o ver opciones de despliegue en Vercel"
+            >
+              <Download size={12} />
+              <span>Exportar / ZIP</span>
+            </button>
+
             <Link
               href={`/demo/preview?slug=${landing.slug}`}
               className="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded-lg transition-colors flex items-center gap-1 font-bold"
@@ -113,6 +124,13 @@ export default function PublicLandingPage() {
           ¡Chatea con el Guía!
         </span>
       </a>
+
+      {/* Deployment & Export Modal */}
+      <DeploymentModal
+        isOpen={isDeployModalOpen}
+        onClose={() => setIsDeployModalOpen(false)}
+        landing={landing}
+      />
     </div>
   );
 }

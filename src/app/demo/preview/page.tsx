@@ -18,9 +18,11 @@ import {
   Globe,
   Share2,
   QrCode,
-  CheckCircle
+  CheckCircle,
+  Download
 } from 'lucide-react';
 import TemplateRenderer from '@/templates/TemplateRenderer';
+import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, saveLandingToStorage, LandingData } from '@/data/landingStore';
 
 function DemoPreviewContent() {
@@ -38,6 +40,7 @@ function DemoPreviewContent() {
   const [viewMode, setViewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [isQrOpen, setIsQrOpen] = useState(false);
+  const [isDeployModalOpen, setIsDeployModalOpen] = useState(false);
   const [publishToast, setPublishToast] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -210,6 +213,16 @@ function DemoPreviewContent() {
           >
             <QrCode size={15} className="text-emerald-400" />
             <span className="hidden xl:inline">Código QR</span>
+          </button>
+
+          {/* Export & Deployment Hub Button */}
+          <button
+            onClick={() => setIsDeployModalOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-2 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-400 text-slate-950 font-black text-xs rounded-xl transition-all shadow-md shadow-amber-500/20 cursor-pointer"
+            title="Opciones de Despliegue en Vercel y Descarga de Código ZIP/HTML"
+          >
+            <Download size={15} />
+            <span className="hidden md:inline">Descargar / Desplegar</span>
           </button>
 
           {/* Copy Link Button */}
@@ -462,6 +475,13 @@ function DemoPreviewContent() {
           </div>
         </div>
       )}
+
+      {/* Deployment & Export Modal */}
+      <DeploymentModal
+        isOpen={isDeployModalOpen}
+        onClose={() => setIsDeployModalOpen(false)}
+        landing={landing}
+      />
 
     </div>
   );

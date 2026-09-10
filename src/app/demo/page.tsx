@@ -4,8 +4,9 @@ import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import { 
   FileText, Globe, CalendarDays, Sparkles, TrendingUp, ArrowUpRight, 
-  ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight
+  ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download
 } from 'lucide-react';
+import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, LandingData } from '@/data/landingStore';
 
 export default function DemoDashboard() {
@@ -14,6 +15,7 @@ export default function DemoDashboard() {
   const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft'>('all');
   const [objectiveFilter, setObjectiveFilter] = useState<'all' | 'whatsapp' | 'quote'>('all');
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
+  const [selectedLandingForDeploy, setSelectedLandingForDeploy] = useState<LandingData | null>(null);
 
   useEffect(() => {
     const handleFocus = () => setProjects(getStoredLandings());
@@ -340,6 +342,16 @@ export default function DemoDashboard() {
                             <span className="hidden sm:inline">Editor</span>
                           </Link>
 
+                          {/* Export / Download / Deploy Options */}
+                          <button
+                            onClick={() => setSelectedLandingForDeploy(p)}
+                            className="inline-flex items-center gap-1 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 px-2.5 py-1.5 rounded-xl font-bold text-xs transition-colors cursor-pointer"
+                            title="Descargar código ZIP/HTML o ver opciones de despliegue en Vercel"
+                          >
+                            <Download size={13} className="text-amber-700" />
+                            <span className="hidden xl:inline">Exportar</span>
+                          </button>
+
                           {/* Copy Public Link */}
                           <button
                             onClick={() => handleCopyLink(p.slug)}
@@ -369,6 +381,15 @@ export default function DemoDashboard() {
           </table>
         </div>
       </div>
+
+      {/* Deployment & Export Modal */}
+      {selectedLandingForDeploy && (
+        <DeploymentModal
+          isOpen={!!selectedLandingForDeploy}
+          onClose={() => setSelectedLandingForDeploy(null)}
+          landing={selectedLandingForDeploy}
+        />
+      )}
     </div>
   );
 }
