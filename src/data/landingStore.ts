@@ -252,6 +252,13 @@ export function simulateAiGeneration(params: {
   language: LanguageType;
   heroImage?: string;
   galleryImages?: string[];
+  destination?: string;
+  altitude?: string;
+  groupType?: string;
+  guideCert?: string;
+  guideLanguages?: string;
+  includedServices?: string[];
+  targetAudience?: string;
 }): LandingData {
   const slug = params.name
     .toLowerCase()
@@ -264,13 +271,17 @@ export function simulateAiGeneration(params: {
   const isWhatsapp = params.objective === 'whatsapp';
 
   let heroTitle = `${params.name}: La Experiencia Definitiva en Cusco`;
-  const heroSubtitle = params.description || 'Vive una aventura inolvidable con guías expertos locales y atención de primer nivel.';
+  let heroSubtitle = params.description || 'Vive una aventura inolvidable con guías expertos locales y atención de primer nivel.';
   let heroBadge = params.template === 'premium' ? 'Experiencia Exclusiva VIP' : params.template === 'cultural' ? 'Historia y Cultura Andina' : 'Aventura y Naturaleza';
   let ctaText = isWhatsapp ? 'Reservar Directo por WhatsApp' : 'Solicitar Cotización y Disponibilidad';
 
+  if (params.destination) {
+    heroBadge = `${params.destination} • ${params.duration || 'Cusco'}`;
+  }
+
   if (isEn) {
     heroTitle = `${params.name}: The Ultimate Cusco Experience`;
-    heroBadge = params.template === 'premium' ? 'Exclusive VIP Tour' : params.template === 'cultural' ? 'Inca Heritage & Culture' : 'Adventure & Nature Trek';
+    heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : (params.template === 'premium' ? 'Exclusive VIP Tour' : params.template === 'cultural' ? 'Inca Heritage & Culture' : 'Adventure & Nature Trek');
     ctaText = isWhatsapp ? 'Book via WhatsApp' : 'Request Instant Quote';
   }
 
@@ -279,20 +290,27 @@ export function simulateAiGeneration(params: {
     : `¿Por qué elegir ${params.name}?`;
 
   const aboutContent = params.description 
-    ? `${params.description} Diseñado especialmente para viajeros que buscan autenticidad, confort y una inmersión completa guiados por ${params.guideName || 'especialistas certificados'}.`
-    : `Descubre los parajes más impresionantes de la región imperial. Esta expedición combina paisajes de ensueño, servicio de alta gama y atención cercana orientada a cada viajero.`;
+    ? `${params.description} ${params.altitude ? `Alcanza una altitud máxima de ${params.altitude}.` : ''} ${params.groupType ? `Modalidad: ${params.groupType}.` : ''} Diseñado especialmente para ${params.targetAudience || 'viajeros exigentes'} guiados por ${params.guideName || 'especialistas certificados'} (${params.guideCert || 'Guía Oficial DIRCETUR'}).`
+    : `Descubre los parajes más impresionantes de ${params.destination || 'la región imperial'}. Esta expedición combina paisajes de ensueño, servicio de alta gama y atención cercana orientada a cada viajero.`;
 
-  const featuresItems = isEn ? [
-    `Certified Expert Guide:Led by ${params.guideName || 'top local specialists'} with years of mountain & cultural experience.`,
+  const customServices = params.includedServices && params.includedServices.length > 0 
+    ? params.includedServices.map(s => `${s}:Servicio 100% coordinado y garantizado con estándares de seguridad turística.`)
+    : [];
+
+  const defaultItems = isEn ? [
+    `Certified Expert Guide:Led by ${params.guideName || 'top local specialists'} (${params.guideCert || 'Licensed Tour Guide'}) fluent in ${params.guideLanguages || 'English & Spanish'}.`,
     `All-Inclusive Comfort:Roundtrip transportation, entrance tickets, safety gear, and high-altitude assistance.`,
     `Small Group Guarantee:Personalized attention ensuring unforgettable moments without crowds.`,
     `Instant Confirmation:Quick booking with transparent rates of ${params.price || 'best price guaranteed'}.`
   ] : [
-    `Guía Oficial Certificado:Acompañado por ${params.guideName || 'especialistas locales'} con amplio conocimiento de la ruta.`,
-    `Servicio Todo Incluido:Transporte garantizado, boletos de acceso y asistencia médica preventiva para la altura.`,
-    `Grupos Reducidos:Atención personalizada para que disfrutes a tu propio ritmo y tomes las mejores fotografías.`,
-    `Confirmación Inmediata:Reserva rápida con tarifa transparente desde ${params.price || 'el mejor precio garantizado'}.`
+    `Guía Oficial Certificado:Acompañado por ${params.guideName || 'especialistas locales'} (${params.guideCert || 'Licenciado DIRCETUR'}) con dominio de ${params.guideLanguages || 'Español e Inglés'}.`,
+    `Servicio Garantizado:Transporte autorizado, boletos de acceso oficiales y asistencia médica para la altura.`,
+    `Modalidad ${params.groupType || 'Grupos Reducidos'}:Atención personalizada para que disfrutes a tu propio ritmo.`,
+    `Confirmación Inmediata:Reserva rápida con tarifa transparente de ${params.price || 'el mejor precio garantizado'}.`
   ];
+
+  const featuresItems = customServices.length > 0 ? [...customServices, ...defaultItems.slice(0, 2)] : defaultItems;
+
 
   const faqs = isEn ? [
     {

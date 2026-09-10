@@ -7,74 +7,135 @@ import Image from 'next/image';
 import { 
   Sparkles, Loader2, Compass, MessageCircle, FileText, ArrowLeft, 
   Globe, DollarSign, Clock, User, Phone, 
-  Check, Zap, Eye, CheckCircle2, MapPin
+  Check, Zap, Eye, CheckCircle2, MapPin,
+  Shield, Award, Mountain, Users, Languages, CheckSquare, Square
 } from 'lucide-react';
 import { ObjectiveType, TemplateType, LanguageType } from '@/types/landing';
 import { simulateAiGeneration, saveLandingToStorage } from '@/data/landingStore';
 import { SAMPLE_TOUR_IMAGES } from '@/data/sampleImages';
 
-// Quick Preset Tours for 1-click loading
+// Quick Preset Tours for 1-click loading with richer technical tour data
 const PRESET_TOURS = [
   {
     id: 'salkantay',
     label: '🏔️ Salkantay Trek 5D',
-    name: 'Tour Salkantay Trek Clásico',
-    guideName: 'Raúl Quispe (Guía Oficial)',
+    name: 'Tour Salkantay Trek Clásico hacia Machu Picchu',
+    destination: 'Machu Picchu & Cordillera Vilcabamba',
+    guideName: 'Raúl Quispe',
+    guideCert: 'Licenciado en Turismo DIRCETUR (10 años exp.)',
+    guideLanguages: 'Español, Inglés y Quechua',
     whatsapp: '+51984112233',
     price: '$350 USD',
     duration: '5 Días / 4 Noches',
     difficulty: 'Moderada - Alta',
+    altitude: '4,630 msnm (Paso Salkantay)',
+    groupType: 'Grupo Reducido (Máx. 8 pers.)',
+    targetAudience: 'Aventureros y Amantes del Trekking',
+    includedServices: [
+      'Transporte turístico Cusco - Mollepata',
+      'Domos de cristal y campamentos equipados',
+      'Alimentación nutritiva de montaña',
+      'Entradas y boleto a Machu Picchu',
+      'Balón de oxígeno y botiquín de altura'
+    ],
     objective: 'whatsapp' as ObjectiveType,
     template: 'adventure' as TemplateType,
     language: 'es' as LanguageType,
     imageIndex: 2, // Humantay
-    description: 'Un trekking de alta montaña hacia Machu Picchu cruzando el nevado Salkantay a 4,630 msnm. Incluye domos transparentes, alimentación nutritiva y guía oficial en español e inglés.'
+    description: 'Un trekking legendario de alta montaña cruzando nevados imponentes, ceja de selva y plantaciones de café hasta la ciudadela inca de Machu Picchu.'
   },
   {
     id: 'machu-picchu-vip',
     label: '✨ Machu Picchu VIP',
-    name: 'Machu Picchu Exclusivo en Tren Hiram Bingham',
-    guideName: 'Carlos Mendoza (Guía Senior)',
+    name: 'Machu Picchu Exclusivo en Tren Panorámico Hiram Bingham',
+    destination: 'Santuario Histórico de Machu Picchu',
+    guideName: 'Carlos Mendoza',
+    guideCert: 'Guía Historiador Senior DIRCETUR',
+    guideLanguages: 'Español e Inglés bilingüe nativo',
     whatsapp: '+51984123456',
     price: '$890 USD',
     duration: 'Full Day Exclusivo',
-    difficulty: 'Fácil (Familiar)',
+    difficulty: 'Fácil (Confort familiar)',
+    altitude: '2,430 msnm',
+    groupType: 'Tour Privado Exclusivo',
+    targetAudience: 'Parejas, Lunas de Miel y Viajeros Confort',
+    includedServices: [
+      'Vagón de lujo con almuerzo gourmet',
+      'Boletos de tren ida y vuelta preferente',
+      'Entradas oficiales Circuito 1 o 2',
+      'Guía privado exclusivo durante todo el día',
+      'Traslados en minivan ejecutiva puerta a puerta'
+    ],
     objective: 'quote' as ObjectiveType,
     template: 'premium' as TemplateType,
     language: 'en' as LanguageType,
     imageIndex: 0, // MP 1
-    description: 'Experiencia de lujo hacia la maravilla del mundo. Incluye tren de alta gama con coctelería a bordo, almuerzo gourmet en Belmond Sanctuary Lodge y guiado privado.'
+    description: 'Experiencia cinco estrellas diseñada para quienes valoran la privacidad, gastronomía andina de autor y el acceso preferencial sin colas.'
   },
   {
     id: 'city-tour',
     label: '🏛️ City Tour & Sacsayhuamán',
-    name: 'City Tour Cusco Ancestral & 4 Ruinas',
-    guideName: 'Lucía Condori (Arqueóloga)',
+    name: 'City Tour Cusco Ancestral & 4 Ruinas Arqueológicas',
+    destination: 'Cusco Histórico & Sacsayhuamán',
+    guideName: 'Lucía Condori',
+    guideCert: 'Arqueóloga Colegiada & Guía Oficial',
+    guideLanguages: 'Español, Inglés y Francés',
     whatsapp: '+51984778899',
-    price: 'S/ 75 PEN',
-    duration: 'Media Jornada (4h)',
-    difficulty: 'Fácil (Familiar)',
+    price: 'S/ 85 PEN',
+    duration: 'Media Jornada (4.5 Horas)',
+    difficulty: 'Fácil (Apto para todas las edades)',
+    altitude: '3,400 msnm',
+    groupType: 'Grupo Reducido (Máx. 12 pers.)',
+    targetAudience: 'Familias con Niños y Adultos Mayores',
+    includedServices: [
+      'Transporte turístico con aire acondicionado',
+      'Guía oficial arqueóloga especialista',
+      'Ingreso preferencial a Qorikancha',
+      'Degustación de chocolate andino y pisco sour'
+    ],
     objective: 'whatsapp' as ObjectiveType,
     template: 'cultural' as TemplateType,
     language: 'es' as LanguageType,
     imageIndex: 1, // Terrazas
-    description: 'Recorrido histórico por el Templo del Sol Qorikancha, la Catedral del Cusco y la imponente fortaleza ciclópea de Sacsayhuamán con guía historiador.'
+    description: 'Descubre los enigmas de la arquitectura megalítica inca en Sacsayhuamán, Q’enqo, Puka Pukara y Tambomachay junto a una arqueóloga experta.'
   },
   {
     id: 'vinicunca',
     label: '🌈 Montaña 7 Colores',
-    name: 'Expedición Vinicunca & Valle Rojo',
-    guideName: 'Carlos Mendoza (Guía Aventura)',
+    name: 'Expedición Vinicunca & Mirador del Valle Rojo',
+    destination: 'Cordillera Vilcanota (Vinicunca)',
+    guideName: 'Marco Antonio Flores',
+    guideCert: 'Guía de Alta Montaña Certificado',
+    guideLanguages: 'Español, Inglés y Quechua',
     whatsapp: '+51984123456',
-    price: 'S/ 120 PEN',
-    duration: 'Full Day (14 Horas)',
-    difficulty: 'Exigente / Trekking',
+    price: 'S/ 130 PEN',
+    duration: 'Full Day (13 Horas)',
+    difficulty: 'Exigente (Caminata en altura)',
+    altitude: '5,036 msnm',
+    groupType: 'Grupo Pequeño Garantizado',
+    targetAudience: 'Viajeros activos y amantes de la fotografía',
+    includedServices: [
+      'Desayuno andino y almuerzo buffet campestre',
+      'Transporte turístico de ida y retorno',
+      'Oxímetro, botiquín y balón de oxígeno',
+      'Bastones de trekking ergonómicos',
+      'Guía de montaña certificado en primeros auxilios'
+    ],
     objective: 'whatsapp' as ObjectiveType,
     template: 'adventure' as TemplateType,
     language: 'es' as LanguageType,
     imageIndex: 3, // Rainbow
-    description: 'Conoce los colores minerales de los Andes a más de 5,000 msnm. Incluye desayuno andino, almuerzo buffet, bastones de trekking y oxímetro/oxígeno preventivo.'
+    description: 'Asciende a uno de los paisajes geológicos más asombrosos del planeta con asistencia médica preventiva y paradas fotográficas exclusivas.'
   }
+];
+
+const COMMON_SERVICES = [
+  'Transporte turístico autorizado ida y vuelta',
+  'Entradas y boletos de acceso oficiales',
+  'Almuerzo buffet o comida típica andina',
+  'Balón de oxígeno y botiquín de primeros auxilios',
+  'Bastones de trekking de aluminio',
+  'Recojo directo en el hotel en Cusco'
 ];
 
 export default function NewLandingDemo() {
@@ -82,13 +143,28 @@ export default function NewLandingDemo() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [loadingStep, setLoadingStep] = useState(0);
 
-  // Form states
-  const [name, setName] = useState('Tour Salkantay Trek Clásico');
-  const [guideName, setGuideName] = useState('Raúl Quispe (Guía Oficial)');
+  // Form states - Basic & Rich Tourist Fields
+  const [name, setName] = useState('Tour Salkantay Trek Clásico hacia Machu Picchu');
+  const [destination, setDestination] = useState('Machu Picchu & Cordillera Vilcabamba');
+  const [guideName, setGuideName] = useState('Raúl Quispe');
+  const [guideCert, setGuideCert] = useState('Licenciado en Turismo DIRCETUR (10 años exp.)');
+  const [guideLanguages, setGuideLanguages] = useState('Español, Inglés y Quechua');
   const [whatsapp, setWhatsapp] = useState('+51984112233');
   const [price, setPrice] = useState('$350 USD');
   const [duration, setDuration] = useState('5 Días / 4 Noches');
   const [difficulty, setDifficulty] = useState('Moderada - Alta');
+  const [altitude, setAltitude] = useState('4,630 msnm (Paso Salkantay)');
+  const [groupType, setGroupType] = useState('Grupo Reducido (Máx. 8 pers.)');
+  const [targetAudience, setTargetAudience] = useState('Aventureros y Amantes del Trekking');
+  
+  const [includedServices, setIncludedServices] = useState<string[]>([
+    'Transporte turístico Cusco - Mollepata',
+    'Domos de cristal y campamentos equipados',
+    'Alimentación nutritiva de montaña',
+    'Entradas y boleto a Machu Picchu',
+    'Balón de oxígeno y botiquín de altura'
+  ]);
+
   const [objective, setObjective] = useState<ObjectiveType>('whatsapp');
   const [template, setTemplate] = useState<TemplateType>('adventure');
   const [language, setLanguage] = useState<LanguageType>('es');
@@ -96,31 +172,46 @@ export default function NewLandingDemo() {
   const [customImageUrl, setCustomImageUrl] = useState('');
   const [tone, setTone] = useState<'persuasive' | 'luxury' | 'historical'>('persuasive');
   const [description, setDescription] = useState(
-    'Un trekking de alta montaña hacia Machu Picchu cruzando el nevado Salkantay a 4,630 msnm. Incluye domos transparentes, alimentación nutritiva y guía oficial en español e inglés.'
+    'Un trekking legendario de alta montaña cruzando nevados imponentes, ceja de selva y plantaciones de café hasta la ciudadela inca de Machu Picchu.'
   );
 
   const activeHeroImg = customImageUrl.trim() || selectedHeroImage;
 
   const steps = [
-    "Analizando destino, objetivo comercial y público objetivo...",
-    "Generando copywriting persuasivo con IA para el Hero y Beneficios...",
-    "Optimizando imágenes fotográficas seleccionadas y estructurando JSON...",
-    "Vinculando número de WhatsApp del guía y guardando proyecto..."
+    "Analizando destino, altitud, objetivo y perfil de turista...",
+    "Generando copywriting persuasivo con IA para Hero, Beneficios y Privilegios...",
+    "Estructurando datos del guía oficial (DIRCETUR, idiomas y WhatsApp)...",
+    "Optimizando imágenes fotográficas de alta resolución y ensamblando landing..."
   ];
 
   const handleApplyPreset = (preset: typeof PRESET_TOURS[0]) => {
     setName(preset.name);
+    setDestination(preset.destination);
     setGuideName(preset.guideName);
+    setGuideCert(preset.guideCert);
+    setGuideLanguages(preset.guideLanguages);
     setWhatsapp(preset.whatsapp);
     setPrice(preset.price);
     setDuration(preset.duration);
     setDifficulty(preset.difficulty);
+    setAltitude(preset.altitude);
+    setGroupType(preset.groupType);
+    setTargetAudience(preset.targetAudience);
+    setIncludedServices(preset.includedServices);
     setObjective(preset.objective);
     setTemplate(preset.template);
     setLanguage(preset.language);
     setSelectedHeroImage(SAMPLE_TOUR_IMAGES[preset.imageIndex].url);
     setCustomImageUrl('');
     setDescription(preset.description);
+  };
+
+  const handleToggleService = (service: string) => {
+    setIncludedServices(prev => 
+      prev.includes(service) 
+        ? prev.filter(s => s !== service)
+        : [...prev, service]
+    );
   };
 
   const handleGenerate = (e: React.FormEvent) => {
@@ -148,7 +239,14 @@ export default function NewLandingDemo() {
           template,
           language,
           heroImage: activeHeroImg,
-          galleryImages
+          galleryImages,
+          destination,
+          altitude,
+          groupType,
+          guideCert,
+          guideLanguages,
+          includedServices,
+          targetAudience
         });
         saveLandingToStorage(generated);
         router.push(`/demo/preview?slug=${generated.slug}`);
@@ -163,26 +261,26 @@ export default function NewLandingDemo() {
           <Sparkles className="text-blue-600 absolute animate-ping opacity-70" size={48} />
           <Sparkles className="text-blue-600 relative z-10" size={44} />
         </div>
-        <h2 className="text-2xl font-extrabold text-slate-900 mb-2">Motor de IA en Acción</h2>
+        <h2 className="text-2xl font-black text-slate-900 mb-2 tracking-tight">Motor de IA en Acción</h2>
         <p className="text-slate-500 text-sm mb-6">
-          Creando estructura optimizada para <strong>{name}</strong> con plantilla <strong>{template.toUpperCase()}</strong>.
+          Generando landing persuasiva para <strong>{name}</strong> con plantilla <strong>{template.toUpperCase()}</strong>.
         </p>
 
         {/* Dynamic step pills */}
-        <div className="w-full bg-white rounded-2xl border border-slate-200 p-4 shadow-sm mb-6 text-left space-y-2.5">
+        <div className="w-full bg-white rounded-2xl border border-slate-200 p-5 shadow-sm mb-6 text-left space-y-3">
           {steps.map((s, idx) => {
             const isDone = idx < loadingStep;
             const isCurrent = idx === loadingStep;
             return (
               <div key={idx} className="flex items-center gap-3 text-xs">
                 {isDone ? (
-                  <CheckCircle2 size={16} className="text-emerald-500 shrink-0" />
+                  <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
                 ) : isCurrent ? (
-                  <Loader2 size={16} className="text-blue-600 animate-spin shrink-0" />
+                  <Loader2 size={18} className="text-blue-600 animate-spin shrink-0" />
                 ) : (
                   <div className="w-4 h-4 rounded-full border border-slate-300 shrink-0" />
                 )}
-                <span className={isCurrent ? "font-bold text-blue-600" : isDone ? "text-slate-700" : "text-slate-400"}>
+                <span className={isCurrent ? "font-bold text-blue-600" : isDone ? "text-slate-700 font-medium" : "text-slate-400"}>
                   {s}
                 </span>
               </div>
@@ -193,7 +291,7 @@ export default function NewLandingDemo() {
         {/* Progress Bar */}
         <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden shadow-inner">
           <div 
-            className="h-full bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-700 ease-out rounded-full"
+            className="h-full bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 transition-all duration-700 ease-out rounded-full"
             style={{ width: `${Math.min(((loadingStep + 1) / steps.length) * 100, 100)}%` }}
           />
         </div>
@@ -202,35 +300,44 @@ export default function NewLandingDemo() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-6 pb-16 animate-in fade-in duration-500">
+    <div className="w-full max-w-[1600px] mx-auto space-y-7 pb-16 animate-in fade-in duration-500">
       
-      {/* Top Bar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-slate-200/80">
-        <div className="flex items-center gap-3">
-          <Link href="/demo" className="p-2.5 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-100 transition-colors">
-            <ArrowLeft size={20} />
-          </Link>
-          <div>
-            <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-              Generador Inteligente de Landings
-            </h1>
-            <p className="text-slate-500 text-xs mt-0.5">
-              Configura los detalles del tour o carga un tour preestablecido para generar con 1 clic.
-            </p>
+      {/* 1. TOP HEADER & QUICK PRESET BAR */}
+      <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-sm border border-slate-200/80 space-y-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-3.5">
+            <Link 
+              href="/demo" 
+              className="p-2.5 text-slate-400 hover:text-slate-800 rounded-2xl hover:bg-slate-100 transition-colors border border-slate-200"
+              title="Volver al panel"
+            >
+              <ArrowLeft size={20} />
+            </Link>
+            <div>
+              <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-[11px] font-bold mb-1 border border-blue-100">
+                <Sparkles size={12} /> Asistente de Creación Turística
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                Generador Inteligente de Landings con IA
+              </h1>
+              <p className="text-slate-500 text-xs sm:text-sm mt-0.5">
+                Completa los datos técnicos del tour. La IA generará los copys persuasivos y estructurará la página lista para publicar.
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Preset Selector */}
-        <div className="flex items-center gap-1.5 flex-wrap">
-          <span className="text-xs font-bold text-slate-400 flex items-center gap-1 mr-1">
-            <Zap size={14} className="text-amber-500" /> Plantillas Rápidas:
+        {/* Dedicated Quick Preset Pills */}
+        <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center gap-2">
+          <span className="text-xs font-extrabold text-slate-500 flex items-center gap-1.5 mr-1">
+            <Zap size={14} className="text-amber-500" /> Cargar Ficha de Ejemplo Rápida:
           </span>
           {PRESET_TOURS.map((p) => (
             <button
               key={p.id}
               type="button"
               onClick={() => handleApplyPreset(p)}
-              className="text-xs bg-white hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 font-semibold px-3 py-1.5 rounded-xl border border-slate-200 text-slate-700 shadow-sm transition-all cursor-pointer"
+              className="text-xs bg-slate-50 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 font-bold px-3 py-1.5 rounded-xl border border-slate-200 text-slate-700 shadow-2xs transition-all cursor-pointer"
             >
               {p.label}
             </button>
@@ -238,29 +345,30 @@ export default function NewLandingDemo() {
         </div>
       </div>
 
-      {/* Main Grid: Form (Left 7 cols) + Realtime Preview Card (Right 5 cols) */}
+      {/* 2. MAIN WORKSPACE: FORM COLUMN (LEFT 7 COLS) + REALTIME PHONE MOCKUP (RIGHT 5 COLS) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Form Column */}
         <form onSubmit={handleGenerate} className="lg:col-span-7 space-y-6">
           
-          {/* Step 1: Objetivo Comercial */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 space-y-4">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px]">1</span>
-                Objetivo Comercial de la Landing
+          {/* PASO 1: OBJETIVO Y ESTRATEGIA COMERCIAL */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">1</span>
+                Objetivo Comercial & Enfoque de Conversión
               </label>
-              <span className="text-[11px] text-slate-400">Define botones y conversión</span>
+              <span className="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Define la Acción del Turista</span>
             </div>
 
+            {/* Objective Buttons */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
               <button
                 type="button"
                 onClick={() => setObjective('whatsapp')}
                 className={`p-4 rounded-2xl border-2 text-left flex items-start gap-3.5 transition-all cursor-pointer ${
                   objective === 'whatsapp' 
-                    ? 'border-blue-600 bg-blue-50/70 shadow-sm' 
+                    ? 'border-blue-600 bg-blue-50/70 shadow-sm ring-2 ring-blue-500/20' 
                     : 'border-slate-200 hover:border-slate-300 bg-white'
                 }`}
               >
@@ -268,9 +376,9 @@ export default function NewLandingDemo() {
                   <MessageCircle size={20} />
                 </div>
                 <div>
-                  <span className="font-bold text-slate-900 text-sm block">Ventas Directas por WhatsApp</span>
+                  <span className="font-extrabold text-slate-900 text-sm block">Ventas Directas por WhatsApp</span>
                   <span className="text-xs text-slate-500 leading-relaxed block mt-1">
-                    Prioriza contacto directo con el guía o counter para confirmaciones inmediatas.
+                    Prioriza contacto directo por chat con el guía o counter para confirmaciones y reservas al instante.
                   </span>
                 </div>
               </button>
@@ -280,7 +388,7 @@ export default function NewLandingDemo() {
                 onClick={() => setObjective('quote')}
                 className={`p-4 rounded-2xl border-2 text-left flex items-start gap-3.5 transition-all cursor-pointer ${
                   objective === 'quote' 
-                    ? 'border-blue-600 bg-blue-50/70 shadow-sm' 
+                    ? 'border-blue-600 bg-blue-50/70 shadow-sm ring-2 ring-blue-500/20' 
                     : 'border-slate-200 hover:border-slate-300 bg-white'
                 }`}
               >
@@ -288,268 +396,423 @@ export default function NewLandingDemo() {
                   <FileText size={20} />
                 </div>
                 <div>
-                  <span className="font-bold text-slate-900 text-sm block">Cotización y Propuesta Formal</span>
+                  <span className="font-extrabold text-slate-900 text-sm block">Cotización y Propuesta Formal</span>
                   <span className="text-xs text-slate-500 leading-relaxed block mt-1">
-                    Abre el modal de cotización para calcular pasajeros, requerimientos y grupos.
+                    Abre formulario para presupuestos personalizados, número de pasajeros, niños y fechas flexibles.
                   </span>
                 </div>
               </button>
             </div>
-          </div>
 
-          {/* Step 2: Información del Tour */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 space-y-4">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px]">2</span>
-                Información del Tour y Contacto
-              </label>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Language and AI Copy Tone */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Compass size={14} className="text-slate-400" /> Nombre del Tour
-                </label>
-                <input 
-                  type="text" 
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                  placeholder="Ej. Salkantay Trek Clásico"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <User size={14} className="text-slate-400" /> Guía o Counter Asignado
-                </label>
-                <input 
-                  type="text" 
-                  required
-                  value={guideName}
-                  onChange={(e) => setGuideName(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                  placeholder="Ej. Raúl Quispe (Guía Oficial)"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Phone size={14} className="text-slate-400" /> WhatsApp Guía
-                </label>
-                <input 
-                  type="text" 
-                  required
-                  value={whatsapp}
-                  onChange={(e) => setWhatsapp(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-mono"
-                  placeholder="+51984112233"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <DollarSign size={14} className="text-slate-400" /> Tarifa por Persona
-                </label>
-                <input 
-                  type="text" 
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-bold text-slate-800"
-                  placeholder="Ej. $350 USD"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Clock size={14} className="text-slate-400" /> Duración
-                </label>
-                <input 
-                  type="text" 
-                  value={duration}
-                  onChange={(e) => setDuration(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                  placeholder="Ej. 5 Días / 4 Noches"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                Descripción, itinerario clave y valor diferencial para la IA
-              </label>
-              <textarea 
-                rows={3}
-                required
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
-                placeholder="Describe la ruta, qué incluye, qué lo hace especial..."
-              />
-            </div>
-          </div>
-
-          {/* Step 3: Fotografía Hero */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 space-y-4">
-            <div className="flex items-center justify-between">
-              <label className="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px]">3</span>
-                Fotografía Principal de Portada
-              </label>
-              <span className="text-xs text-blue-600 font-semibold">Alta Definición</span>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
-              {SAMPLE_TOUR_IMAGES.map((img) => {
-                const isSelected = selectedHeroImage === img.url && !customImageUrl;
-                return (
-                  <button
-                    key={img.id}
-                    type="button"
-                    onClick={() => {
-                      setSelectedHeroImage(img.url);
-                      setCustomImageUrl('');
-                    }}
-                    className={`group relative h-20 rounded-2xl overflow-hidden border-2 transition-all cursor-pointer ${
-                      isSelected ? 'border-blue-600 ring-4 ring-blue-500/20 scale-[1.03]' : 'border-slate-200 hover:border-slate-400 opacity-75 hover:opacity-100'
-                    }`}
-                  >
-                    <Image 
-                      src={img.url} 
-                      alt={img.title} 
-                      fill 
-                      sizes="150px"
-                      className="object-cover group-hover:scale-105 transition-transform" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                    {isSelected && (
-                      <div className="absolute top-1 right-1 w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center text-white">
-                        <Check size={10} strokeWidth={3} />
-                      </div>
-                    )}
-                    <span className="absolute bottom-1 left-1.5 right-1.5 text-[9px] font-bold text-white line-clamp-1">
-                      {img.title.split(' ')[0]}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="pt-1">
-              <input 
-                type="url"
-                value={customImageUrl}
-                onChange={(e) => setCustomImageUrl(e.target.value)}
-                placeholder="O escribe una URL de imagen personalizada (Unsplash)..."
-                className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none"
-              />
-            </div>
-          </div>
-
-          {/* Step 4: Plantilla e Idioma */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 space-y-4">
-            <label className="text-xs font-extrabold text-slate-800 uppercase tracking-wider flex items-center gap-2">
-              <span className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px]">4</span>
-              Diseño Visual y Tono
-            </label>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {[
-                { id: 'adventure', name: 'Aventura & Trekking', desc: 'Tonos esmeralda y naturaleza', icon: '🏔️' },
-                { id: 'premium', name: 'Lujo & Exclusivo', desc: 'Dorado, oscuro y sofisticado', icon: '👑' },
-                { id: 'cultural', name: 'Cultural Clásico', desc: 'Piedra incaica y ámbar andino', icon: '🏛️' }
-              ].map((t) => (
-                <button
-                  key={t.id}
-                  type="button"
-                  onClick={() => setTemplate(t.id as TemplateType)}
-                  className={`p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer ${
-                    template === t.id 
-                      ? 'border-blue-600 bg-blue-50/70 shadow-sm font-bold' 
-                      : 'border-slate-200 hover:border-slate-300 bg-white'
-                  }`}
-                >
-                  <span className="text-xl mb-1 block">{t.icon}</span>
-                  <span className="text-xs font-bold text-slate-900 block">{t.name}</span>
-                  <span className="text-[10px] text-slate-500 font-normal">{t.desc}</span>
-                </button>
-              ))}
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Globe size={14} className="text-slate-400" /> Idioma
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Globe size={14} className="text-blue-500" /> Idioma de la Landing
                 </label>
                 <select 
                   value={language}
                   onChange={(e) => setLanguage(e.target.value as LanguageType)}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs bg-white font-medium focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs bg-white font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
                 >
-                  <option value="es">Español (Mercado Nacional & Latino)</option>
-                  <option value="en">Inglés (Turismo Receptivo Internacional)</option>
+                  <option value="es">Español (Mercado Nacional, Latino y España)</option>
+                  <option value="en">Inglés (Turismo Receptivo Internacional: USA, Europa, etc.)</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Sparkles size={14} className="text-slate-400" /> Enfoque de Copywriting
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Sparkles size={14} className="text-blue-500" /> Tono de Redacción IA
                 </label>
                 <select 
                   value={tone}
                   onChange={(e) => setTone(e.target.value as 'persuasive' | 'luxury' | 'historical')}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs bg-white font-medium focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs bg-white font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
                 >
-                  <option value="persuasive">Persuasivo de Alta Conversión</option>
-                  <option value="luxury">Exclusivo y Orientado a Confort</option>
+                  <option value="persuasive">Persuasivo & Enérgico (Alta Conversión)</option>
+                  <option value="luxury">Exclusivo, Premium & Sofisticado</option>
                   <option value="historical">Místico, Cultural e Historiográfico</option>
                 </select>
               </div>
             </div>
           </div>
 
-          {/* Submit Button */}
-          <div className="pt-2 flex items-center justify-between">
+          {/* PASO 2: FICHA TÉCNICA DEL TOUR & DESTINO (MÁS DATOS PARA RELLENAR) */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">2</span>
+                Ficha Técnica del Tour & Destino
+              </label>
+              <span className="text-[11px] font-semibold text-slate-400">Datos para enriquecer los textos de la IA</span>
+            </div>
+
+            {/* Name and Destination */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Compass size={14} className="text-blue-500" /> Nombre Comercial del Tour *
+                </label>
+                <input 
+                  type="text" 
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. Salkantay Trek Clásico hacia Machu Picchu"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <MapPin size={14} className="text-blue-500" /> Destino Principal / Región *
+                </label>
+                <input 
+                  type="text" 
+                  required
+                  value={destination}
+                  onChange={(e) => setDestination(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. Machu Picchu & Cordillera Vilcabamba"
+                />
+              </div>
+            </div>
+
+            {/* Price, Duration, Altitude, Difficulty */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <DollarSign size={14} className="text-emerald-600" /> Tarifa por Persona *
+                </label>
+                <input 
+                  type="text" 
+                  required
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-bold text-emerald-700"
+                  placeholder="Ej. $350 USD"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Clock size={14} className="text-slate-500" /> Duración *
+                </label>
+                <input 
+                  type="text" 
+                  required
+                  value={duration}
+                  onChange={(e) => setDuration(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. 5 Días / 4 Noches"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Mountain size={14} className="text-slate-500" /> Altitud Máxima
+                </label>
+                <input 
+                  type="text" 
+                  value={altitude}
+                  onChange={(e) => setAltitude(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. 4,630 msnm"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Award size={14} className="text-slate-500" /> Dificultad Física
+                </label>
+                <select 
+                  value={difficulty}
+                  onChange={(e) => setDifficulty(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs bg-white font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
+                >
+                  <option value="Fácil (Familiar)">Fácil (Familiar / Sin esfuerzo)</option>
+                  <option value="Moderada">Moderada (Caminata ligera)</option>
+                  <option value="Moderada - Alta">Moderada - Alta (Trekking continuo)</option>
+                  <option value="Exigente / Alta Montaña">Exigente (Alta Montaña)</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Group Type & Target Audience */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Users size={14} className="text-slate-500" /> Modalidad / Tamaño de Grupo
+                </label>
+                <input 
+                  type="text" 
+                  value={groupType}
+                  onChange={(e) => setGroupType(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. Grupo Reducido (Máx. 8 pers.) o Tour Privado"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <User size={14} className="text-slate-500" /> Público Ideal / Perfil de Viajero
+                </label>
+                <input 
+                  type="text" 
+                  value={targetAudience}
+                  onChange={(e) => setTargetAudience(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. Parejas, Lunas de Miel, Amantes del Trekking"
+                />
+              </div>
+            </div>
+
+            {/* Description / Highlights */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                Descripción, Itinerario Clave & Valor Diferencial *
+              </label>
+              <textarea 
+                rows={3}
+                required
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed font-normal"
+                placeholder="Describe la ruta, paisajes, qué hace única a esta experiencia..."
+              />
+            </div>
+          </div>
+
+          {/* PASO 3: PERFIL DEL GUÍA TURÍSTICO & SERVICIOS INCLUIDOS */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">3</span>
+                Perfil del Guía & Servicios Incluidos
+              </label>
+              <span className="text-[11px] font-semibold text-slate-400">Genera confianza y credibilidad</span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <User size={14} className="text-blue-500" /> Nombre del Guía o Counter Asignado *
+                </label>
+                <input 
+                  type="text" 
+                  required
+                  value={guideName}
+                  onChange={(e) => setGuideName(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. Raúl Quispe"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Award size={14} className="text-blue-500" /> Acreditación / Certificación
+                </label>
+                <input 
+                  type="text" 
+                  value={guideCert}
+                  onChange={(e) => setGuideCert(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. Licenciado en Turismo DIRCETUR"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Languages size={14} className="text-blue-500" /> Idiomas que domina el Guía
+                </label>
+                <input 
+                  type="text" 
+                  value={guideLanguages}
+                  onChange={(e) => setGuideLanguages(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. Español, Inglés fluido y Quechua"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Phone size={14} className="text-emerald-600" /> WhatsApp Oficial del Guía *
+                </label>
+                <input 
+                  type="text" 
+                  required
+                  value={whatsapp}
+                  onChange={(e) => setWhatsapp(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-mono font-bold text-slate-800"
+                  placeholder="+51984112233"
+                />
+              </div>
+            </div>
+
+            {/* Included Services Checklist */}
+            <div className="pt-2">
+              <label className="block text-xs font-bold text-slate-700 mb-2">
+                Selecciona los Servicios y Privilegios que Incluye:
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {COMMON_SERVICES.map((srv, idx) => {
+                  const isChecked = includedServices.includes(srv);
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => handleToggleService(srv)}
+                      className={`p-2.5 rounded-xl border text-left text-xs flex items-center gap-2.5 transition-all cursor-pointer ${
+                        isChecked 
+                          ? 'bg-blue-50 border-blue-300 text-blue-900 font-semibold' 
+                          : 'bg-slate-50/70 border-slate-200 text-slate-600 hover:bg-slate-100'
+                      }`}
+                    >
+                      {isChecked ? (
+                        <CheckSquare size={16} className="text-blue-600 shrink-0" />
+                      ) : (
+                        <Square size={16} className="text-slate-400 shrink-0" />
+                      )}
+                      <span className="truncate">{srv}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* PASO 4: FOTOGRAFÍA HERO, PLANTILLA & GENERACIÓN */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">4</span>
+                Fotografía de Portada & Plantilla Visual
+              </label>
+              <span className="text-[11px] font-semibold text-slate-400">Diseño adaptable</span>
+            </div>
+
+            {/* Template Selector Cards */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-2">
+                Selecciona la Plantilla de Diseño:
+              </label>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {[
+                  { id: 'adventure', name: 'Aventura & Trekking', desc: 'Tonos esmeralda y montaña', icon: '🏔️' },
+                  { id: 'premium', name: 'Lujo & Exclusivo', desc: 'Dorado, oscuro y sofisticado', icon: '👑' },
+                  { id: 'cultural', name: 'Cultural Ancestral', desc: 'Piedra incaica y ámbar cálido', icon: '🏛️' }
+                ].map((t) => (
+                  <button
+                    key={t.id}
+                    type="button"
+                    onClick={() => setTemplate(t.id as TemplateType)}
+                    className={`p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                      template === t.id 
+                        ? 'border-blue-600 bg-blue-50/70 shadow-sm font-bold ring-2 ring-blue-500/20' 
+                        : 'border-slate-200 hover:border-slate-300 bg-white'
+                    }`}
+                  >
+                    <span className="text-xl mb-1 block">{t.icon}</span>
+                    <span className="text-xs font-bold text-slate-900 block">{t.name}</span>
+                    <span className="text-[10px] text-slate-500 font-normal">{t.desc}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Hero Image Selection */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-2">
+                Selecciona la Imagen de Portada (Hero):
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
+                {SAMPLE_TOUR_IMAGES.map((img) => {
+                  const isSelected = selectedHeroImage === img.url && !customImageUrl;
+                  return (
+                    <button
+                      key={img.id}
+                      type="button"
+                      onClick={() => {
+                        setSelectedHeroImage(img.url);
+                        setCustomImageUrl('');
+                      }}
+                      className={`group relative h-20 rounded-2xl overflow-hidden border-2 transition-all cursor-pointer ${
+                        isSelected ? 'border-blue-600 ring-4 ring-blue-500/20 scale-[1.03]' : 'border-slate-200 hover:border-slate-400 opacity-75 hover:opacity-100'
+                      }`}
+                    >
+                      <Image 
+                        src={img.url} 
+                        alt={img.title} 
+                        fill 
+                        sizes="150px"
+                        className="object-cover group-hover:scale-105 transition-transform" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                      {isSelected && (
+                        <div className="absolute top-1 right-1 w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center text-white">
+                          <Check size={10} strokeWidth={3} />
+                        </div>
+                      )}
+                      <span className="absolute bottom-1 left-1.5 right-1.5 text-[9px] font-bold text-white line-clamp-1">
+                        {img.title.split(' ')[0]}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="pt-2">
+                <input 
+                  type="url"
+                  value={customImageUrl}
+                  onChange={(e) => setCustomImageUrl(e.target.value)}
+                  placeholder="O pega una URL de imagen personalizada (Unsplash)..."
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Submit Action Bar */}
+          <div className="pt-2 flex items-center justify-between gap-4">
             <Link 
               href="/demo" 
-              className="px-6 py-3 text-slate-500 font-semibold hover:bg-slate-100 rounded-2xl transition-colors text-sm"
+              className="px-6 py-3.5 text-slate-500 font-bold hover:bg-slate-100 rounded-2xl transition-colors text-xs"
             >
-              Cancelar
+              Cancelar y Volver
             </Link>
             <button 
               type="submit"
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-xl shadow-blue-600/30 flex items-center gap-2.5 text-sm hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+              className="bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-600 hover:from-blue-500 hover:to-emerald-500 text-white px-9 py-4 rounded-2xl font-black transition-all shadow-xl shadow-blue-600/30 flex items-center gap-2.5 text-sm hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
             >
               <Sparkles size={18} />
-              Generar Landing Page Completa
+              <span>Generar Landing con Inteligencia Artificial</span>
             </button>
           </div>
         </form>
 
-        {/* Realtime Live Preview Column (Sticky) */}
+        {/* Realtime Live Preview Column (Sticky on Desktop) */}
         <div className="lg:col-span-5 sticky top-6 space-y-4">
           <div className="flex items-center justify-between px-2">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-              <Eye size={14} className="text-blue-600" /> Vista Previa en Vivo
+            <span className="text-xs font-black uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+              <Eye size={15} className="text-blue-600" /> Vista Previa en Vivo (Móvil)
             </span>
-            <span className="text-[11px] bg-slate-100 text-slate-600 font-semibold px-2.5 py-0.5 rounded-full border border-slate-200">
+            <span className="text-[11px] bg-slate-100 text-slate-700 font-bold px-2.5 py-0.5 rounded-full border border-slate-200">
               {template.toUpperCase()} • {language.toUpperCase()}
             </span>
           </div>
 
-          {/* Smartphone mockup */}
-          <div className="bg-slate-900 rounded-[36px] p-3 shadow-2xl border-4 border-slate-800 ring-1 ring-slate-900/50 max-w-sm mx-auto">
-            {/* Camera notch */}
-            <div className="w-28 h-4 bg-slate-950 rounded-full mx-auto mb-2" />
+          {/* Smartphone Mockup */}
+          <div className="bg-slate-950 rounded-[42px] p-3 shadow-2xl border-4 border-slate-800 ring-1 ring-slate-900 max-w-sm mx-auto">
+            {/* Dynamic Island / Notch */}
+            <div className="w-24 h-4 bg-slate-900 rounded-full mx-auto mb-2" />
             
-            {/* Screen Content */}
-            <div className="bg-stone-900 rounded-[28px] overflow-hidden text-white relative min-h-[520px] flex flex-col justify-between">
+            {/* Screen View */}
+            <div className="bg-stone-900 rounded-[32px] overflow-hidden text-white relative min-h-[560px] flex flex-col justify-between border border-white/10">
               
-              {/* Mock Hero Image Background */}
+              {/* Background Image */}
               <div className="absolute inset-0 z-0">
                 <Image 
                   src={activeHeroImg} 
@@ -558,57 +821,70 @@ export default function NewLandingDemo() {
                   sizes="400px"
                   className="object-cover opacity-60" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent" />
               </div>
 
-              {/* Mock Topbar */}
+              {/* Topbar inside screen */}
               <div className="relative z-10 p-4 flex justify-between items-center text-xs">
-                <span className="font-extrabold tracking-wider text-emerald-400">
+                <span className="font-black tracking-wider text-emerald-400">
                   {template === 'premium' ? '👑 CUSCO VIP' : template === 'cultural' ? '🏛️ ANCESTRAL' : '🏔️ TREK EXPLORER'}
                 </span>
-                <span className="text-[10px] bg-white/20 backdrop-blur-md px-2 py-0.5 rounded-full">
-                  {price || 'S/ Consultar'}
+                <span className="text-[10px] font-extrabold bg-white/20 backdrop-blur-md px-2.5 py-0.5 rounded-full">
+                  {price || 'Consultar'}
                 </span>
               </div>
 
-              {/* Mock Hero Center Text */}
+              {/* Main Content inside screen */}
               <div className="relative z-10 p-5 mt-auto space-y-3">
-                <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-bold backdrop-blur-md border border-emerald-400/20">
-                  <MapPin size={10} />
-                  {duration || 'Full Day'} • {difficulty}
+                
+                {/* Destination & Altitude badge */}
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-extrabold backdrop-blur-md border border-emerald-400/20">
+                  <MapPin size={11} />
+                  <span>{destination || 'Cusco, Perú'}</span>
                 </div>
 
-                <h3 className="text-xl font-extrabold leading-tight drop-shadow-md">
+                <h3 className="text-xl font-black leading-tight drop-shadow-md">
                   {name || 'Nombre del Tour'}
                 </h3>
+
+                {/* Specs pill */}
+                <div className="flex items-center gap-2 text-[10px] text-stone-300">
+                  <span>⏱️ {duration || 'Full Day'}</span>
+                  <span>•</span>
+                  <span>🏔️ {altitude || 'Andes'}</span>
+                  <span>•</span>
+                  <span>⭐ {difficulty}</span>
+                </div>
 
                 <p className="text-stone-300 text-xs line-clamp-2 leading-relaxed">
                   {description || 'Descripción del tour turístico adaptada por IA.'}
                 </p>
 
-                {/* Mock CTA Button */}
+                {/* WhatsApp or Quote CTA button */}
                 <div className="pt-2">
                   {objective === 'whatsapp' ? (
-                    <div className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2.5 px-4 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-2">
-                      <MessageCircle size={14} />
-                      Reservar con {guideName.split(' ')[0] || 'Guía'}
+                    <div className="w-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-extrabold py-2.5 px-4 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-2">
+                      <MessageCircle size={15} />
+                      <span>Reservar con {guideName.split(' ')[0] || 'Guía'}</span>
                     </div>
                   ) : (
-                    <div className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 px-4 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-2">
-                      <FileText size={14} />
-                      Solicitar Cotización de Grupo
+                    <div className="w-full bg-blue-600 hover:bg-blue-500 text-white font-extrabold py-2.5 px-4 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-2">
+                      <FileText size={15} />
+                      <span>Solicitar Cotización de Grupo</span>
                     </div>
                   )}
                 </div>
 
-                <div className="text-center pt-1">
-                  <span className="text-[10px] text-stone-400">
-                    Guía Asignado: <strong>{guideName || 'Guía Oficial'}</strong>
-                  </span>
+                {/* Guide accreditation footer */}
+                <div className="text-center pt-1 text-[10px] text-stone-400">
+                  <span>Guía Oficial: <strong className="text-white">{guideName || 'Guía Especialista'}</strong></span>
+                  {guideCert && <div className="text-[9px] text-emerald-400 font-semibold">{guideCert}</div>}
                 </div>
               </div>
+
             </div>
           </div>
+
         </div>
 
       </div>
