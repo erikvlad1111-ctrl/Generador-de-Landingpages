@@ -75,7 +75,7 @@ export default function DemoDashboard() {
           <div className="space-y-3 max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold border border-blue-500/30">
               <Sparkles size={14} className="text-blue-400" />
-              <span>Plataforma SaaS • Agencia Cusco Creativos</span>
+              <span>Generador de Landing Pages • Agencia Cusco Creativos</span>
             </div>
 
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight text-white">
