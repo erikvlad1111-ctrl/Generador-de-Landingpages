@@ -7,11 +7,13 @@ import QuoteModal from '@/components/common/QuoteModal';
 interface TemplateProps {
   data: LandingData;
   isLive?: boolean;
+  viewMode?: 'desktop' | 'tablet' | 'mobile';
 }
 
-export default function PremiumTemplate({ data }: TemplateProps) {
+export default function PremiumTemplate({ data, viewMode = 'desktop' }: TemplateProps) {
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const isQuote = data.objective === 'quote';
+  const isMobile = viewMode === 'mobile';
 
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const encodedMsg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, estoy interesado en la experiencia VIP "${data.name}". ¿Podrían brindarme disponibilidad?`);
@@ -25,16 +27,18 @@ export default function PremiumTemplate({ data }: TemplateProps) {
       {/* Premium Header */}
       <header className="sticky top-0 w-full z-40 bg-neutral-950/90 backdrop-blur-md border-b border-amber-500/20 px-4 sm:px-8 py-3 sm:py-4 flex justify-between items-center gap-3">
         <div className="flex items-center gap-2 min-w-0">
-          <Crown className="text-amber-400 shrink-0" size={20} />
-          <span className="text-xs sm:text-base md:text-lg font-serif tracking-widest uppercase font-bold text-amber-300 truncate">
+          <Crown className="text-amber-400 shrink-0" size={isMobile ? 18 : 20} />
+          <span className={`${isMobile ? 'text-xs' : 'text-xs sm:text-base md:text-lg'} font-serif tracking-widest uppercase font-bold text-amber-300 truncate`}>
             Cusco Luxury Collection
           </span>
         </div>
-        <nav className="hidden md:flex gap-6 lg:gap-8 text-xs uppercase tracking-widest text-neutral-400 shrink-0">
-          <a href="#itinerario" className="hover:text-amber-400 transition-colors">La Experiencia</a>
-          <a href="#privilegios" className="hover:text-amber-400 transition-colors">Privilegios</a>
-          <a href="#faq" className="hover:text-amber-400 transition-colors">FAQ</a>
-        </nav>
+        {!isMobile && (
+          <nav className="hidden md:flex gap-6 lg:gap-8 text-xs uppercase tracking-widest text-neutral-400 shrink-0">
+            <a href="#itinerario" className="hover:text-amber-400 transition-colors">La Experiencia</a>
+            <a href="#privilegios" className="hover:text-amber-400 transition-colors">Privilegios</a>
+            <a href="#faq" className="hover:text-amber-400 transition-colors">FAQ</a>
+          </nav>
+        )}
         {isQuote ? (
           <button
             onClick={() => setIsQuoteOpen(true)}
@@ -57,7 +61,7 @@ export default function PremiumTemplate({ data }: TemplateProps) {
       </header>
 
       {/* Hero Section */}
-      <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden pt-20">
+      <section className={`relative ${isMobile ? 'py-12 min-h-[480px]' : 'py-20 min-h-[85vh]'} flex items-center justify-center overflow-hidden`}>
         <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/60 to-neutral-950/30 z-10" />
         <Image 
           src={heroImg} 
@@ -68,25 +72,25 @@ export default function PremiumTemplate({ data }: TemplateProps) {
           className="object-cover opacity-60 scale-105"
         />
         
-        <div className="relative z-20 text-center text-white px-6 max-w-4xl mx-auto flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-400/40 text-amber-300 text-xs tracking-widest uppercase font-semibold mb-6 backdrop-blur-md">
-            <Sparkles size={14} className="text-amber-400" />
+        <div className={`relative z-20 text-center text-white ${isMobile ? 'px-4' : 'px-6'} max-w-4xl mx-auto flex flex-col items-center`}>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/10 border border-amber-400/40 text-amber-300 text-[11px] tracking-widest uppercase font-semibold mb-4 backdrop-blur-md">
+            <Sparkles size={13} className="text-amber-400" />
             {data.hero?.badge || 'Servicio Exclusivo'}
           </div>
-          <h1 className="text-4xl md:text-7xl font-serif tracking-tight mb-6 leading-tight text-neutral-100">
+          <h1 className={`${isMobile ? 'text-2xl leading-tight mb-3' : 'text-3xl sm:text-5xl md:text-7xl leading-tight mb-6'} font-serif tracking-tight text-neutral-100`}>
             {data.hero?.title}
           </h1>
-          <p className="text-lg md:text-xl text-neutral-300 mb-10 max-w-2xl font-light leading-relaxed">
+          <p className={`${isMobile ? 'text-xs leading-relaxed mb-6' : 'text-base sm:text-lg md:text-xl mb-10 leading-relaxed'} text-neutral-300 max-w-2xl font-light`}>
             {data.hero?.subtitle}
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center gap-4">
+          <div className={`flex ${isMobile ? 'flex-col' : 'flex-col sm:flex-row'} items-center gap-3.5 w-full max-w-md justify-center`}>
             {isQuote ? (
               <button
                 onClick={() => setIsQuoteOpen(true)}
-                className="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-neutral-950 text-base px-8 py-4 rounded-full font-bold transition-all shadow-xl shadow-amber-500/20 hover:scale-105 flex items-center gap-3"
+                className={`bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-neutral-950 ${isMobile ? 'w-full py-3 text-sm' : 'text-base px-8 py-4'} rounded-full font-bold transition-all shadow-xl shadow-amber-500/20 hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}
               >
-                <FileText size={20} />
+                <FileText size={18} />
                 {data.hero?.cta || 'Solicitar Cotización Privada'}
               </button>
             ) : (
@@ -94,23 +98,23 @@ export default function PremiumTemplate({ data }: TemplateProps) {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-neutral-950 text-base px-8 py-4 rounded-full font-bold transition-all shadow-xl shadow-amber-500/20 hover:scale-105 flex items-center gap-3"
+                className={`bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-neutral-950 ${isMobile ? 'w-full py-3 text-sm' : 'text-base px-8 py-4'} rounded-full font-bold transition-all shadow-xl shadow-amber-500/20 hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}
               >
-                <MessageCircle size={20} />
+                <MessageCircle size={18} />
                 {data.hero?.cta || 'Consultar Disponibilidad'}
               </a>
             )}
-            <div className="text-left px-4 py-2 border-l border-amber-500/30">
-              <p className="text-xs text-amber-400 uppercase tracking-wider font-semibold">Tarifa Desde</p>
-              <p className="text-xl font-serif font-bold text-white">{data.price || '$450 USD'}</p>
+            <div className={`${isMobile ? 'border-t border-amber-500/30 pt-2 w-full text-center' : 'text-left px-4 py-2 border-l border-amber-500/30'}`}>
+              <p className="text-[10px] text-amber-400 uppercase tracking-wider font-semibold">Tarifa Desde</p>
+              <p className={`${isMobile ? 'text-lg' : 'text-xl'} font-serif font-bold text-white`}>{data.price || '$450 USD'}</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Floating Badges */}
-      <section className="relative z-30 -mt-10 max-w-5xl mx-auto px-4">
-        <div className="bg-neutral-900/90 backdrop-blur-md rounded-2xl border border-amber-500/30 p-6 grid grid-cols-1 md:grid-cols-3 gap-6 shadow-2xl">
+      <section className={`relative z-30 ${isMobile ? 'mt-4 px-3' : '-mt-10 max-w-5xl mx-auto px-4'}`}>
+        <div className={`bg-neutral-900/90 backdrop-blur-md rounded-2xl border border-amber-500/30 ${isMobile ? 'p-4 grid grid-cols-1 gap-3.5' : 'p-6 grid grid-cols-1 md:grid-cols-3 gap-6'} shadow-2xl`}>
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 shrink-0">
               <Award size={24} />
@@ -142,12 +146,12 @@ export default function PremiumTemplate({ data }: TemplateProps) {
       </section>
 
       {/* About Section */}
-      <section id="itinerario" className="py-24 px-8 max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+      <section id="itinerario" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} max-w-6xl mx-auto`}>
+        <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-2 gap-16'} items-center`}>
           <div>
             <span className="text-xs font-semibold text-amber-400 uppercase tracking-widest block mb-2">Exclusividad Andina</span>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-6 text-neutral-100">{data.about?.title}</h2>
-            <p className="text-base text-neutral-300 leading-relaxed font-light mb-8">
+            <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-serif font-bold mb-4 text-neutral-100`}>{data.about?.title}</h2>
+            <p className="text-sm text-neutral-300 leading-relaxed font-light mb-6">
               {data.about?.content}
             </p>
             <div className="p-4 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center gap-4">
@@ -160,7 +164,7 @@ export default function PremiumTemplate({ data }: TemplateProps) {
               </div>
             </div>
           </div>
-          <div className="relative h-80 rounded-2xl overflow-hidden border border-amber-500/20 shadow-2xl">
+          <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden border border-amber-500/20 shadow-2xl">
             <Image 
               src={gallery1} 
               alt="Machu Picchu Luxury" 
@@ -173,22 +177,22 @@ export default function PremiumTemplate({ data }: TemplateProps) {
       </section>
 
       {/* Privilegios / Features */}
-      <section id="privilegios" className="py-24 bg-neutral-900/60 border-y border-neutral-800/80 px-8">
+      <section id="privilegios" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-neutral-900/60 border-y border-neutral-800/80`}>
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+          <div className={`text-center ${isMobile ? 'mb-8' : 'mb-16'}`}>
             <span className="text-xs font-semibold text-amber-400 uppercase tracking-widest block mb-2">Estándares VIP</span>
-            <h2 className="text-3xl md:text-5xl font-serif font-bold text-neutral-100">{data.features?.title}</h2>
+            <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-5xl'} font-serif font-bold text-neutral-100`}>{data.features?.title}</h2>
           </div>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className={`grid ${isMobile ? 'grid-cols-1 gap-3.5' : 'md:grid-cols-2 gap-8'}`}>
             {data.features?.items?.map((item, idx) => (
-              <div key={idx} className="bg-neutral-900 p-8 rounded-2xl border border-neutral-800 hover:border-amber-500/40 transition-colors">
-                <div className="flex items-center gap-3 mb-3">
+              <div key={idx} className={`bg-neutral-900 ${isMobile ? 'p-5' : 'p-8'} rounded-2xl border border-neutral-800 hover:border-amber-500/40 transition-colors`}>
+                <div className="flex items-center gap-3 mb-2">
                   <div className="w-8 h-8 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400">
                     <Sparkles size={16} />
                   </div>
-                  <h3 className="text-xl font-serif font-bold text-neutral-100">{item.split(':')[0]}</h3>
+                  <h3 className={`${isMobile ? 'text-lg' : 'text-xl'} font-serif font-bold text-neutral-100`}>{item.split(':')[0]}</h3>
                 </div>
-                <p className="text-neutral-400 font-light text-sm leading-relaxed pl-11">
+                <p className={`text-neutral-400 font-light text-sm leading-relaxed ${isMobile ? 'pl-0' : 'pl-11'}`}>
                   {item.split(':')[1] || 'Atención premium orientada a la máxima comodidad.'}
                 </p>
               </div>
@@ -199,22 +203,22 @@ export default function PremiumTemplate({ data }: TemplateProps) {
 
       {/* Testimonials */}
       {data.testimonials && data.testimonials.length > 0 && (
-        <section className="py-20 px-8 bg-neutral-900/40 border-b border-neutral-800">
+        <section className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-neutral-900/40 border-b border-neutral-800`}>
           <div className="max-w-4xl mx-auto text-center">
             <span className="text-xs uppercase tracking-widest text-amber-400 block mb-2 font-semibold">Opiniones Destacadas</span>
-            <h2 className="text-3xl font-serif font-bold text-white mb-12">Huéspedes Satisfechos</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <h2 className={`${isMobile ? 'text-2xl mb-6' : 'text-3xl mb-12'} font-serif font-bold text-white`}>Huéspedes Satisfechos</h2>
+            <div className={`grid ${isMobile ? 'grid-cols-1 gap-3.5' : 'grid-cols-1 md:grid-cols-2 gap-8'}`}>
               {data.testimonials.map((t, idx) => (
-                <div key={idx} className="bg-neutral-900 p-6 rounded-2xl border border-amber-500/20 text-left">
-                  <div className="flex gap-1 text-amber-400 mb-3">
+                <div key={idx} className={`bg-neutral-900 ${isMobile ? 'p-4' : 'p-6'} rounded-2xl border border-amber-500/20 text-left`}>
+                  <div className="flex gap-1 text-amber-400 mb-2">
                     {[...Array(t.rating || 5)].map((_, i) => (
-                      <Star key={i} size={15} fill="currentColor" />
+                      <Star key={i} size={14} fill="currentColor" />
                     ))}
                   </div>
-                  <p className="text-neutral-300 text-sm font-light italic mb-4">&quot;{t.comment}&quot;</p>
+                  <p className="text-neutral-300 text-xs sm:text-sm font-light italic mb-3">&quot;{t.comment}&quot;</p>
                   <div>
-                    <h4 className="font-serif font-bold text-amber-300 text-sm">{t.name}</h4>
-                    <p className="text-xs text-neutral-500">{t.origin}</p>
+                    <h4 className="font-serif font-bold text-amber-300 text-xs sm:text-sm">{t.name}</h4>
+                    <p className="text-[11px] text-neutral-500">{t.origin}</p>
                   </div>
                 </div>
               ))}
@@ -225,18 +229,18 @@ export default function PremiumTemplate({ data }: TemplateProps) {
 
       {/* FAQs */}
       {data.faqs && data.faqs.length > 0 && (
-        <section id="faq" className="py-20 px-8 max-w-4xl mx-auto">
-          <div className="text-center mb-12">
+        <section id="faq" className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} max-w-4xl mx-auto`}>
+          <div className={`text-center ${isMobile ? 'mb-6' : 'mb-12'}`}>
             <span className="text-xs uppercase tracking-widest text-amber-400 block mb-2 font-semibold flex items-center justify-center gap-1.5">
               <HelpCircle size={15} /> Asistencia de Viaje
             </span>
-            <h2 className="text-3xl font-serif font-bold text-white">Preguntas Frecuentes</h2>
+            <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-serif font-bold text-white`}>Preguntas Frecuentes</h2>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {data.faqs.map((faq, idx) => (
-              <div key={idx} className="bg-neutral-900 p-6 rounded-2xl border border-neutral-800">
-                <h3 className="font-serif font-bold text-amber-300 text-base mb-2">{faq.q}</h3>
-                <p className="text-neutral-400 text-sm leading-relaxed font-light">{faq.a}</p>
+              <div key={idx} className={`bg-neutral-900 ${isMobile ? 'p-4' : 'p-6'} rounded-2xl border border-neutral-800`}>
+                <h3 className="font-serif font-bold text-amber-300 text-sm sm:text-base mb-1.5">{faq.q}</h3>
+                <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed font-light">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -244,37 +248,37 @@ export default function PremiumTemplate({ data }: TemplateProps) {
       )}
 
       {/* Direct WhatsApp Call to Action */}
-      <section id="contacto" className="py-20 px-8 text-center bg-gradient-to-b from-neutral-900 to-neutral-950">
+      <section id="contacto" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} text-center bg-gradient-to-b from-neutral-900 to-neutral-950`}>
         <div className="max-w-2xl mx-auto">
-          <Crown className="text-amber-400 mx-auto mb-4" size={32} />
-          <h2 className="text-3xl font-serif font-bold mb-4 text-white">¿Listo para vivir una experiencia inolvidable?</h2>
-          <p className="text-neutral-400 font-light mb-8">
+          <Crown className="text-amber-400 mx-auto mb-3" size={28} />
+          <h2 className={`${isMobile ? 'text-xl mb-3' : 'text-3xl mb-4'} font-serif font-bold text-white`}>¿Listo para vivir una experiencia inolvidable?</h2>
+          <p className={`${isMobile ? 'text-xs mb-6' : 'text-base mb-8'} text-neutral-400 font-light`}>
             Comunícate de inmediato con el equipo organizador y reserva tus accesos preferentes con confirmación directa.
           </p>
           {isQuote ? (
             <button
               onClick={() => setIsQuoteOpen(true)}
-              className="inline-flex items-center gap-3 bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-neutral-950 font-bold px-8 py-4 rounded-full shadow-lg transition-all hover:scale-105 text-base"
+              className={`inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-neutral-950 font-bold ${isMobile ? 'w-full py-3 text-sm' : 'px-8 py-4 text-base'} rounded-full shadow-lg transition-all hover:scale-105 cursor-pointer`}
             >
-              <FileText size={22} />
-              Solicitar Cotización Privada
+              <FileText size={18} />
+              <span>Solicitar Cotización Privada</span>
             </button>
           ) : (
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-8 py-4 rounded-full shadow-lg shadow-emerald-600/30 transition-all hover:scale-105 text-base"
+              className={`inline-flex items-center justify-center gap-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold ${isMobile ? 'w-full py-3 text-sm' : 'px-8 py-4 text-base'} rounded-full shadow-lg shadow-emerald-600/30 transition-all hover:scale-105 cursor-pointer`}
             >
-              <MessageCircle size={22} />
-              Hablar por WhatsApp con {data.guideName || 'el Guía'}
+              <MessageCircle size={18} />
+              <span>Hablar por WhatsApp con {data.guideName || 'el Guía'}</span>
             </a>
           )}
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="py-8 text-center text-neutral-600 text-xs border-t border-neutral-900">
+      <footer className="py-6 text-center text-neutral-600 text-xs border-t border-neutral-900">
         <p>© 2026 Cusco Creativos S.A.C. — Edición de Lujo.</p>
       </footer>
 

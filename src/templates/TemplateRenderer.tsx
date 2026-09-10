@@ -7,16 +7,17 @@ import CulturalTemplate from './CulturalTemplate';
 interface TemplateRendererProps {
   data: LandingData;
   isLive?: boolean;
+  viewMode?: 'desktop' | 'tablet' | 'mobile';
 }
 
-export default function TemplateRenderer({ data, isLive = false }: TemplateRendererProps) {
+export default function TemplateRenderer({ data, isLive = false, viewMode = 'desktop' }: TemplateRendererProps) {
   switch (data.template) {
     case 'premium':
-      return <PremiumTemplate data={data} isLive={isLive} />;
+      return <PremiumTemplate data={data} isLive={isLive} viewMode={viewMode} />;
     case 'cultural':
-      return <CulturalTemplate data={data} isLive={isLive} />;
+      return <CulturalTemplate data={data} isLive={isLive} viewMode={viewMode} />;
     case 'adventure':
     default:
-      return <AdventureTemplate data={data} isLive={isLive} />;
+      return <AdventureTemplate data={data} isLive={isLive} viewMode={viewMode} />;
   }
 }

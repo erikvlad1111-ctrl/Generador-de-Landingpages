@@ -7,11 +7,13 @@ import QuoteModal from '@/components/common/QuoteModal';
 interface TemplateProps {
   data: LandingData;
   isLive?: boolean;
+  viewMode?: 'desktop' | 'tablet' | 'mobile';
 }
 
-export default function AdventureTemplate({ data }: TemplateProps) {
+export default function AdventureTemplate({ data, viewMode = 'desktop' }: TemplateProps) {
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const isQuote = data.objective === 'quote';
+  const isMobile = viewMode === 'mobile';
 
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const encodedMsg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, deseo consultar disponibilidad para el tour "${data.name || data.hero.title}".`);
@@ -29,11 +31,13 @@ export default function AdventureTemplate({ data }: TemplateProps) {
           <MapPin size={18} className="shrink-0" />
           <span className="truncate">TrekExplorer</span>
         </div>
-        <div className="hidden md:flex gap-6 text-sm font-medium shrink-0">
-          <a href="#ruta" className="hover:text-emerald-400 transition-colors">La Ruta</a>
-          <a href="#incluye" className="hover:text-emerald-400 transition-colors">¿Qué Incluye?</a>
-          <a href="#faq" className="hover:text-emerald-400 transition-colors">Preguntas Frecuentes</a>
-        </div>
+        {!isMobile && (
+          <div className="hidden md:flex gap-6 text-sm font-medium shrink-0">
+            <a href="#ruta" className="hover:text-emerald-400 transition-colors">La Ruta</a>
+            <a href="#incluye" className="hover:text-emerald-400 transition-colors">¿Qué Incluye?</a>
+            <a href="#faq" className="hover:text-emerald-400 transition-colors">Preguntas Frecuentes</a>
+          </div>
+        )}
         {isQuote ? (
           <button
             onClick={() => setIsQuoteOpen(true)}
@@ -56,7 +60,7 @@ export default function AdventureTemplate({ data }: TemplateProps) {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
+      <section className={`relative ${isMobile ? 'py-12 min-h-[480px]' : 'py-20 h-[90vh]'} flex items-center justify-center overflow-hidden`}>
         <div className="absolute inset-0 bg-stone-900/40 z-10" />
         <Image 
           src={heroImg} 
@@ -66,23 +70,23 @@ export default function AdventureTemplate({ data }: TemplateProps) {
           sizes="100vw"
           className="object-cover"
         />
-        <div className="relative z-20 text-center text-white px-4 max-w-4xl mx-auto flex flex-col items-center">
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-sm font-medium mb-6 backdrop-blur-md">
-            <MapPin size={14} /> {data.hero.badge || 'Aventura Extrema'}
+        <div className={`relative z-20 text-center text-white ${isMobile ? 'px-4' : 'px-4'} max-w-4xl mx-auto flex flex-col items-center`}>
+          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-medium mb-4 backdrop-blur-md">
+            <MapPin size={13} /> {data.hero.badge || 'Aventura Extrema'}
           </span>
-          <h1 className="text-4xl md:text-7xl font-extrabold tracking-tight mb-6 drop-shadow-lg leading-tight">
+          <h1 className={`${isMobile ? 'text-2xl leading-tight mb-3' : 'text-3xl sm:text-5xl md:text-7xl leading-tight mb-6'} font-extrabold tracking-tight drop-shadow-lg`}>
             {data.hero.title}
           </h1>
-          <p className="text-xl md:text-2xl text-stone-200 mb-10 max-w-2xl font-light drop-shadow">
+          <p className={`${isMobile ? 'text-xs mb-6' : 'text-base sm:text-xl md:text-2xl mb-10'} text-stone-200 max-w-2xl font-light drop-shadow`}>
             {data.hero.subtitle}
           </p>
-          <div className="flex flex-col sm:flex-row items-center gap-4">
+          <div className={`flex ${isMobile ? 'flex-col' : 'flex-col sm:flex-row'} items-center gap-3 w-full max-w-md justify-center`}>
             {isQuote ? (
               <button
                 onClick={() => setIsQuoteOpen(true)}
-                className="bg-emerald-600 hover:bg-emerald-500 text-white text-lg px-8 py-4 rounded-full font-bold transition-all shadow-xl shadow-emerald-600/20 hover:scale-105 flex items-center gap-2"
+                className={`bg-emerald-600 hover:bg-emerald-500 text-white ${isMobile ? 'w-full py-3 text-sm' : 'text-lg px-8 py-4'} rounded-full font-bold transition-all shadow-xl shadow-emerald-600/20 hover:scale-105 flex items-center justify-center gap-2 cursor-pointer`}
               >
-                <FileText size={22} />
+                <FileText size={20} />
                 {data.hero.cta || 'Solicitar Cotización'}
               </button>
             ) : (
@@ -90,14 +94,14 @@ export default function AdventureTemplate({ data }: TemplateProps) {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-emerald-600 hover:bg-emerald-500 text-white text-lg px-8 py-4 rounded-full font-bold transition-all shadow-xl shadow-emerald-600/20 hover:scale-105 flex items-center gap-2"
+                className={`bg-emerald-600 hover:bg-emerald-500 text-white ${isMobile ? 'w-full py-3 text-sm' : 'text-lg px-8 py-4'} rounded-full font-bold transition-all shadow-xl shadow-emerald-600/20 hover:scale-105 flex items-center justify-center gap-2 cursor-pointer`}
               >
-                <MessageCircle size={22} />
+                <MessageCircle size={20} />
                 {data.hero.cta}
               </a>
             )}
             {data.price && (
-              <div className="bg-stone-900/80 backdrop-blur-md px-5 py-2.5 rounded-full border border-stone-700 text-sm font-semibold">
+              <div className={`bg-stone-900/80 backdrop-blur-md px-5 py-2.5 rounded-full border border-stone-700 text-xs sm:text-sm font-semibold ${isMobile ? 'w-full text-center' : ''}`}>
                 Desde <span className="text-emerald-400 font-bold">{data.price}</span>
               </div>
             )}
@@ -106,49 +110,49 @@ export default function AdventureTemplate({ data }: TemplateProps) {
       </section>
 
       {/* Quick Stats */}
-      <section className="relative z-30 -mt-12 max-w-5xl mx-auto px-4">
-        <div className="bg-white rounded-2xl shadow-xl p-8 grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-stone-100">
+      <section className={`relative z-30 ${isMobile ? 'mt-4 px-3' : '-mt-12 max-w-5xl mx-auto px-4'}`}>
+        <div className={`bg-white rounded-2xl shadow-xl ${isMobile ? 'p-4 grid grid-cols-1 gap-4' : 'p-8 grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-stone-100'}`}>
           <div className="flex items-center gap-4 md:justify-center">
-            <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+            <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
               <Clock size={24} />
             </div>
             <div>
-              <p className="text-sm text-stone-500 font-medium">Duración</p>
-              <p className="font-bold text-lg">{data.duration || '3 Días, 2 Noches'}</p>
+              <p className="text-xs text-stone-500 font-medium">Duración</p>
+              <p className="font-bold text-base sm:text-lg">{data.duration || '3 Días, 2 Noches'}</p>
             </div>
           </div>
-          <div className="flex items-center gap-4 md:justify-center pt-6 md:pt-0">
-            <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+          <div className={`flex items-center gap-4 md:justify-center ${isMobile ? '' : 'pt-6 md:pt-0'}`}>
+            <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
               <MapPin size={24} />
             </div>
             <div>
-              <p className="text-sm text-stone-500 font-medium">Guía Líder</p>
-              <p className="font-bold text-lg">{data.guideName || 'Cusco, Perú'}</p>
+              <p className="text-xs text-stone-500 font-medium">Guía Líder</p>
+              <p className="font-bold text-base sm:text-lg">{data.guideName || 'Cusco, Perú'}</p>
             </div>
           </div>
-          <div className="flex items-center gap-4 md:justify-center pt-6 md:pt-0">
-            <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+          <div className={`flex items-center gap-4 md:justify-center ${isMobile ? '' : 'pt-6 md:pt-0'}`}>
+            <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
               <Star size={24} />
             </div>
             <div>
-              <p className="text-sm text-stone-500 font-medium">Dificultad</p>
-              <p className="font-bold text-lg">{data.difficulty || 'Moderada'}</p>
+              <p className="text-xs text-stone-500 font-medium">Dificultad</p>
+              <p className="font-bold text-base sm:text-lg">{data.difficulty || 'Moderada'}</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="ruta" className="py-24 px-8 max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+      <section id="ruta" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} max-w-6xl mx-auto`}>
+        <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-2 gap-16'} items-center`}>
           <div>
-            <h2 className="text-4xl font-bold mb-6 text-stone-800">{data.about.title}</h2>
-            <p className="text-lg text-stone-600 leading-relaxed">
+            <h2 className={`${isMobile ? 'text-2xl mb-4' : 'text-4xl mb-6'} font-bold text-stone-800`}>{data.about.title}</h2>
+            <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
               {data.about.content}
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="relative h-64 rounded-2xl overflow-hidden shadow-lg">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="relative h-48 sm:h-64 rounded-2xl overflow-hidden shadow-lg">
               <Image 
                 src={gallery1} 
                 alt="Tour Gallery 1" 
@@ -157,7 +161,7 @@ export default function AdventureTemplate({ data }: TemplateProps) {
                 className="object-cover" 
               />
             </div>
-            <div className="relative h-64 rounded-2xl overflow-hidden shadow-lg mt-8">
+            <div className="relative h-48 sm:h-64 rounded-2xl overflow-hidden shadow-lg mt-4 sm:mt-8">
               <Image 
                 src={gallery2} 
                 alt="Tour Gallery 2" 
@@ -171,15 +175,15 @@ export default function AdventureTemplate({ data }: TemplateProps) {
       </section>
 
       {/* Features/Highlights */}
-      <section id="incluye" className="py-24 bg-stone-900 text-white px-8">
+      <section id="incluye" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-stone-900 text-white`}>
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold mb-16 text-center">{data.features.title}</h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <h2 className={`${isMobile ? 'text-2xl mb-8' : 'text-4xl mb-16'} font-bold text-center`}>{data.features.title}</h2>
+          <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'md:grid-cols-3 gap-8'}`}>
             {data.features.items.map((item, idx) => (
-              <div key={idx} className="bg-stone-800 p-8 rounded-2xl border border-stone-700 hover:border-emerald-500 transition-colors">
-                <CheckCircle className="text-emerald-400 mb-6" size={32} />
-                <h3 className="text-xl font-bold mb-4">{item.split(':')[0]}</h3>
-                <p className="text-stone-400 leading-relaxed">
+              <div key={idx} className={`bg-stone-800 ${isMobile ? 'p-5' : 'p-8'} rounded-2xl border border-stone-700 hover:border-emerald-500 transition-colors`}>
+                <CheckCircle className="text-emerald-400 mb-4" size={28} />
+                <h3 className="text-lg font-bold mb-2">{item.split(':')[0]}</h3>
+                <p className="text-stone-400 text-xs sm:text-sm leading-relaxed">
                   {item.split(':')[1] || "Una experiencia inolvidable que cambiará tu perspectiva."}
                 </p>
               </div>
@@ -190,21 +194,21 @@ export default function AdventureTemplate({ data }: TemplateProps) {
 
       {/* Testimonials */}
       {data.testimonials && data.testimonials.length > 0 && (
-        <section className="py-20 px-8 bg-stone-100">
+        <section className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-stone-100`}>
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-stone-900 mb-12">Lo que dicen nuestros viajeros</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <h2 className={`${isMobile ? 'text-2xl mb-6' : 'text-3xl mb-12'} font-bold text-stone-900`}>Lo que dicen nuestros viajeros</h2>
+            <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-1 md:grid-cols-2 gap-8'}`}>
               {data.testimonials.map((t, idx) => (
-                <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-stone-200 text-left">
-                  <div className="flex gap-1 text-amber-400 mb-3">
+                <div key={idx} className="bg-white p-5 rounded-2xl shadow-xs border border-stone-200 text-left">
+                  <div className="flex gap-1 text-amber-400 mb-2">
                     {[...Array(t.rating || 5)].map((_, i) => (
-                      <Star key={i} size={16} fill="currentColor" />
+                      <Star key={i} size={15} fill="currentColor" />
                     ))}
                   </div>
-                  <p className="text-stone-600 text-sm italic mb-4">&quot;{t.comment}&quot;</p>
+                  <p className="text-stone-600 text-xs sm:text-sm italic mb-3">&quot;{t.comment}&quot;</p>
                   <div>
-                    <h4 className="font-bold text-stone-900 text-sm">{t.name}</h4>
-                    <p className="text-xs text-stone-400">{t.origin}</p>
+                    <h4 className="font-bold text-stone-900 text-xs sm:text-sm">{t.name}</h4>
+                    <p className="text-[11px] text-stone-400">{t.origin}</p>
                   </div>
                 </div>
               ))}
@@ -215,18 +219,18 @@ export default function AdventureTemplate({ data }: TemplateProps) {
 
       {/* FAQs */}
       {data.faqs && data.faqs.length > 0 && (
-        <section id="faq" className="py-20 px-8 max-w-4xl mx-auto">
-          <div className="text-center mb-12">
+        <section id="faq" className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} max-w-4xl mx-auto`}>
+          <div className={`text-center ${isMobile ? 'mb-6' : 'mb-12'}`}>
             <div className="inline-flex items-center gap-1.5 text-emerald-600 font-bold text-xs uppercase tracking-wider mb-2">
-              <HelpCircle size={16} /> Preguntas Frecuentes
+              <HelpCircle size={15} /> Preguntas Frecuentes
             </div>
-            <h2 className="text-3xl font-bold text-stone-900">Todo lo que necesitas saber</h2>
+            <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-bold text-stone-900`}>Todo lo que necesitas saber</h2>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {data.faqs.map((faq, idx) => (
-              <div key={idx} className="bg-white p-6 rounded-2xl shadow-sm border border-stone-200">
-                <h3 className="font-bold text-stone-800 text-base mb-2">{faq.q}</h3>
-                <p className="text-stone-600 text-sm leading-relaxed">{faq.a}</p>
+              <div key={idx} className={`bg-white ${isMobile ? 'p-4' : 'p-6'} rounded-2xl shadow-xs border border-stone-200`}>
+                <h3 className="font-bold text-stone-800 text-sm sm:text-base mb-1.5">{faq.q}</h3>
+                <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -234,7 +238,7 @@ export default function AdventureTemplate({ data }: TemplateProps) {
       )}
       
       {/* Simple Footer */}
-      <footer className="bg-stone-950 py-12 text-center text-stone-500">
+      <footer className="bg-stone-950 py-8 text-center text-stone-500 text-xs">
         <p>© 2026 Cusco Creativos S.A.C. Todos los derechos reservados.</p>
       </footer>
 

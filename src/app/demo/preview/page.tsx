@@ -314,7 +314,7 @@ function DemoPreviewContent() {
 
           {/* Scrollable Frame Content (Isolated Stacking Context) */}
           <div className="w-full h-full overflow-y-auto overflow-x-hidden relative isolate table-scrollbar">
-            <TemplateRenderer data={landing} />
+            <TemplateRenderer data={landing} viewMode={viewMode} />
           </div>
         </div>
       </main>
