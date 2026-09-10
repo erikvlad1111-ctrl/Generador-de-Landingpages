@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Crown, Sparkles, ShieldCheck, Clock, Award, PhoneCall, MessageCircle, FileText, HelpCircle, Star } from 'lucide-react';
+import { Crown, Sparkles, ShieldCheck, Clock, Award, PhoneCall, MessageCircle, FileText, HelpCircle, Star, Calendar, XCircle, Backpack } from 'lucide-react';
 import { LandingData } from '@/types/landing';
 import QuoteModal from '@/components/common/QuoteModal';
 
@@ -145,6 +145,20 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
+      {/* Trust Badges Bar */}
+      {data.trustBadges && data.trustBadges.length > 0 && (
+        <section className="max-w-5xl mx-auto px-4 mt-6">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            {data.trustBadges.map((badge, idx) => (
+              <div key={idx} className="flex items-center gap-1.5 bg-neutral-900/90 border border-amber-500/30 text-amber-300 text-xs px-3.5 py-1.5 rounded-full font-medium shadow-sm backdrop-blur-md">
+                <ShieldCheck size={14} className="text-amber-400 shrink-0" />
+                <span>{badge}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* About Section */}
       <section id="itinerario" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} max-w-6xl mx-auto`}>
         <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-2 gap-16'} items-center`}>
@@ -176,6 +190,34 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
+      {/* Itinerary Timeline */}
+      {data.itinerary && data.itinerary.length > 0 && (
+        <section id="itinerario-timeline" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-neutral-900/40 border-t border-neutral-800`}>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-8 sm:mb-14">
+              <span className="text-xs font-semibold text-amber-400 uppercase tracking-widest block mb-2">Cronograma de Lujo</span>
+              <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-5xl'} font-serif font-bold text-neutral-100`}>Itinerario Exclusivo</h2>
+            </div>
+            <div className="space-y-4 sm:space-y-6 relative before:absolute before:inset-0 before:left-4 sm:before:left-5 before:w-0.5 before:bg-amber-500/30">
+              {data.itinerary.map((item, idx) => (
+                <div key={idx} className="relative flex items-start gap-3.5 sm:gap-6 pl-1 sm:pl-2">
+                  <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 text-neutral-950 font-bold flex items-center justify-center text-xs shrink-0 shadow-lg ring-4 ring-neutral-950 z-10">
+                    {idx + 1}
+                  </div>
+                  <div className="bg-neutral-900/90 border border-neutral-800 rounded-2xl p-4 sm:p-6 w-full shadow-lg hover:border-amber-500/30 transition-colors">
+                    <span className="text-[11px] uppercase font-bold tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2.5 py-0.5 rounded-md inline-block mb-2">
+                      {item.step}
+                    </span>
+                    <h3 className="font-serif font-bold text-neutral-100 text-base sm:text-lg mb-1.5">{item.title}</h3>
+                    <p className="text-neutral-400 font-light text-xs sm:text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Privilegios / Features */}
       <section id="privilegios" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-neutral-900/60 border-y border-neutral-800/80`}>
         <div className="max-w-6xl mx-auto">
@@ -200,6 +242,49 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           </div>
         </div>
       </section>
+
+      {/* Logistics: Exclusiones & Equipaje VIP */}
+      {((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
+        <section className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-neutral-950 border-b border-neutral-800`}>
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {/* Qué NO incluye */}
+            {data.notIncluded && data.notIncluded.length > 0 && (
+              <div className="bg-neutral-900/80 p-5 sm:p-6 rounded-2xl border border-neutral-800 shadow-lg">
+                <div className="flex items-center gap-2 text-rose-400 font-bold text-sm sm:text-base mb-3.5">
+                  <XCircle size={20} className="shrink-0" />
+                  <h3 className="font-serif">No Incluido en Tarifa</h3>
+                </div>
+                <ul className="space-y-2 text-xs sm:text-sm text-neutral-400 font-light">
+                  {data.notIncluded.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="text-rose-400 font-bold shrink-0">✕</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Qué llevar */}
+            {data.whatToBring && data.whatToBring.length > 0 && (
+              <div className="bg-neutral-900/80 p-5 sm:p-6 rounded-2xl border border-amber-500/20 shadow-lg">
+                <div className="flex items-center gap-2 text-amber-300 font-bold text-sm sm:text-base mb-3.5">
+                  <Backpack size={20} className="shrink-0" />
+                  <h3 className="font-serif">Recomendaciones de Equipaje</h3>
+                </div>
+                <ul className="space-y-2 text-xs sm:text-sm text-neutral-300 font-light">
+                  {data.whatToBring.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="text-amber-400 font-bold shrink-0">✓</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Testimonials */}
       {data.testimonials && data.testimonials.length > 0 && (

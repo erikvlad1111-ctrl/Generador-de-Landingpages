@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { MapPin, Clock, Star, CheckCircle, MessageCircle, HelpCircle, FileText } from 'lucide-react';
+import { MapPin, Clock, Star, CheckCircle, MessageCircle, HelpCircle, FileText, ShieldCheck, XCircle, Backpack, Calendar } from 'lucide-react';
 import { LandingData } from '@/types/landing';
 import QuoteModal from '@/components/common/QuoteModal';
 
@@ -142,6 +142,20 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </div>
       </section>
 
+      {/* Trust Badges Bar */}
+      {data.trustBadges && data.trustBadges.length > 0 && (
+        <section className="max-w-5xl mx-auto px-4 mt-6">
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+            {data.trustBadges.map((badge, idx) => (
+              <div key={idx} className="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs px-3 py-1.5 rounded-full font-medium shadow-xs">
+                <ShieldCheck size={14} className="text-emerald-600 shrink-0" />
+                <span>{badge}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* About Section */}
       <section id="ruta" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} max-w-6xl mx-auto`}>
         <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-2 gap-16'} items-center`}>
@@ -174,6 +188,38 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </div>
       </section>
 
+      {/* Itinerary Timeline */}
+      {data.itinerary && data.itinerary.length > 0 && (
+        <section id="itinerario" className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-white border-y border-stone-200`}>
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-8 sm:mb-12">
+              <div className="inline-flex items-center gap-1.5 text-emerald-600 font-bold text-xs uppercase tracking-wider mb-2">
+                <Calendar size={15} /> Itinerario Detallado
+              </div>
+              <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl sm:text-4xl'} font-bold text-stone-900`}>
+                Paso a Paso de la Aventura
+              </h2>
+            </div>
+            <div className="space-y-4 sm:space-y-6 relative before:absolute before:inset-0 before:left-4 sm:before:left-5 before:w-0.5 before:bg-emerald-200">
+              {data.itinerary.map((item, idx) => (
+                <div key={idx} className="relative flex items-start gap-3.5 sm:gap-6 pl-1 sm:pl-2">
+                  <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shrink-0 shadow-md ring-4 ring-white z-10">
+                    {idx + 1}
+                  </div>
+                  <div className="bg-stone-50 border border-stone-200 rounded-2xl p-4 sm:p-5 w-full shadow-xs">
+                    <span className="text-[11px] uppercase font-bold tracking-wider text-emerald-700 bg-emerald-100/80 px-2.5 py-0.5 rounded-md inline-block mb-1.5">
+                      {item.step}
+                    </span>
+                    <h3 className="font-bold text-stone-900 text-sm sm:text-base mb-1">{item.title}</h3>
+                    <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Features/Highlights */}
       <section id="incluye" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-stone-900 text-white`}>
         <div className="max-w-6xl mx-auto">
@@ -191,6 +237,49 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           </div>
         </div>
       </section>
+
+      {/* Logistics: Exclusiones & Qué Llevar */}
+      {((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
+        <section className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-stone-100 border-b border-stone-200`}>
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {/* Qué NO incluye */}
+            {data.notIncluded && data.notIncluded.length > 0 && (
+              <div className="bg-white p-5 sm:p-6 rounded-2xl border border-rose-100 shadow-xs">
+                <div className="flex items-center gap-2 text-rose-600 font-bold text-sm sm:text-base mb-3.5">
+                  <XCircle size={20} className="shrink-0" />
+                  <h3>Qué NO está incluido</h3>
+                </div>
+                <ul className="space-y-2 text-xs sm:text-sm text-stone-600">
+                  {data.notIncluded.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="text-rose-500 font-bold shrink-0">✕</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Qué llevar en la mochila */}
+            {data.whatToBring && data.whatToBring.length > 0 && (
+              <div className="bg-white p-5 sm:p-6 rounded-2xl border border-emerald-100 shadow-xs">
+                <div className="flex items-center gap-2 text-emerald-700 font-bold text-sm sm:text-base mb-3.5">
+                  <Backpack size={20} className="shrink-0" />
+                  <h3>Qué llevar en tu mochila</h3>
+                </div>
+                <ul className="space-y-2 text-xs sm:text-sm text-stone-600">
+                  {data.whatToBring.map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="text-emerald-500 font-bold shrink-0">✓</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Testimonials */}
       {data.testimonials && data.testimonials.length > 0 && (

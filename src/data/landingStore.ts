@@ -51,6 +51,37 @@ export const INITIAL_LANDINGS: LandingData[] = [
         a: 'Recomendamos reservar con al menos 3 a 4 semanas de antelación debido al cupo limitado diario de los trenes de lujo y accesos a la ciudadela.'
       }
     ],
+    trustBadges: [
+      'Licencia Oficial DIRCETUR',
+      'Sello Safe Travels',
+      'RUC 20 Formal Verificado',
+      'Atención Médica & Oxígeno'
+    ],
+    notIncluded: [
+      'Vuelos comerciales internacionales o domésticos',
+      'Propinas voluntarias para guía y personal de servicio',
+      'Bebidas alcohólicas premium fuera del menú establecido',
+      'Seguro médico de viaje de alta montaña'
+    ],
+    whatToBring: [
+      'Pasaporte original físico vigente',
+      'Ropa cómoda y abrigadora para la tarde/noche',
+      'Calzado cómodo para caminata ligera',
+      'Bloqueador solar SPF 50+ y repelente de insectos',
+      'Cámara fotográfica o teléfono con batería cargada'
+    ],
+    itinerary: [
+      {
+        step: 'Día 1',
+        title: 'Cusco a Aguas Calientes en Tren Panorámico Vistadome',
+        desc: 'Recojo privado en tu hotel en Cusco hacia la estación de tren en Poroy u Ollantaytambo. Viaje escénico a través de la cuenca del Valle Sagrado con música a bordo y vistas panorámicas. Llegada al pueblo de Machu Picchu e instalación en hotel boutique.'
+      },
+      {
+        step: 'Día 2',
+        title: 'Exploración Mística de Machu Picchu & Almuerzo Gourmet',
+        desc: 'Ascenso en bus exclusivo hacia la ciudadela inca. Visita guiada privada de 3 horas por los recintos sagrados, templos y terrazas. Almuerzo buffet de autor en Belmond Sanctuary Lodge y retorno en tren de primera clase a Cusco con traslado a tu hotel.'
+      }
+    ],
     testimonials: [
       {
         name: 'Alejandro y Marcela',
@@ -122,6 +153,47 @@ export const INITIAL_LANDINGS: LandingData[] = [
         comment: '¡Increíble tour! Las cuatrimotos tienen mucha potencia y los paisajes de las salineras son espectaculares.',
         rating: 5
       }
+    ],
+    trustBadges: [
+      'Licencia DIRCETUR Verificada',
+      'Instructores Certificados Primeros Auxilios',
+      'Cascos y Guantes Profesionales',
+      'Seguro SOAT Turístico Vigente'
+    ],
+    notIncluded: [
+      'Boleto turístico BTG para Moray (S/ 70 PEN parcial)',
+      'Ticket de ingreso a Salineras de Maras (S/ 20 PEN)',
+      'Propinas para mecánicos e instructores',
+      'Almuerzo o bebidas personales'
+    ],
+    whatToBring: [
+      'Documento de identidad o pasaporte original',
+      'Ropa que se pueda ensuciar con polvo y barro',
+      'Lentes de sol o antiparras para el polvo',
+      'Zapatillas cerradas o botines de trekking',
+      'Dinero en efectivo en soles para los boletos de ingreso'
+    ],
+    itinerary: [
+      {
+        step: '08:00 AM',
+        title: 'Recojo en Hotel y Traslado a la Base de Cuatrimotos',
+        desc: 'Viaje en transporte turístico hacia Cruzpata en el Valle Sagrado con vista a los nevados Chicón y Verónica.'
+      },
+      {
+        step: '09:30 AM',
+        title: 'Charla de Seguridad y Práctica de Manejo',
+        desc: 'Equipamiento completo con casco integral, guantes y lentes. 20 minutos de práctica en circuito cerrado para dominar las cuatrimotos.'
+      },
+      {
+        step: '10:30 AM',
+        title: 'Ruta Off-Road hacia Moray y Salineras de Maras',
+        desc: 'Travesía por senderos andinos descubriendo los laboratorios agrícolas incas de Moray y las más de 3,000 pozas de sal de Maras.'
+      },
+      {
+        step: '01:30 PM',
+        title: 'Retorno y Llegada al Centro Histórico de Cusco',
+        desc: 'Despedida del equipo y traslado de regreso al centro de Cusco cerca a la Plaza de Armas.'
+      }
     ]
   },
   {
@@ -163,6 +235,47 @@ export const INITIAL_LANDINGS: LandingData[] = [
         'Degustación Tradicional:Cata de chocolate cusqueño artesanal y hojas sagradas de coca.'
       ]
     },
+    trustBadges: [
+      'Guía Colegiada Licenciada en Arqueología',
+      'DIRCETUR Cusco Registro N° 4589',
+      'Audio-guías sanitizadas para grupos',
+      'Agencia Formal RUC 20'
+    ],
+    notIncluded: [
+      'Boleto Turístico del Cusco (BTC circuito arqueológico)',
+      'Boleto de entrada al Convento de Santo Domingo / Qorikancha',
+      'Propinas voluntarias al guía',
+      'Snacks y gastos personales'
+    ],
+    whatToBring: [
+      'Boleto turístico BTC vigente (o dinero en efectivo para comprarlo en puerta)',
+      'Casaca cortavientos o abrigo para la tarde cusqueña',
+      'Zapatos cómodos con buen agarre para empedrados',
+      'Sombrero o gorro para el sol y bloqueador solar',
+      'Botella de agua recargable'
+    ],
+    itinerary: [
+      {
+        step: '13:30 PM',
+        title: 'Encuentro en Qorikancha (Templo del Sol)',
+        desc: 'Inicio del recorrido apreciando la perfección de la cantería inca imperial recubierta antiguamente por planchas de oro macizo.'
+      },
+      {
+        step: '15:00 PM',
+        title: 'Fortaleza Ceremonial de Sacsayhuamán',
+        desc: 'Caminata guiada entre los megalitos ciclópeos y explicaciones de la fiesta sagrada del Inti Raymi.'
+      },
+      {
+        step: '16:30 PM',
+        title: 'Santuarios de Qenqo, Puka Pukara y Tambomachay',
+        desc: 'Recorrido por las galerías subterráneas de momificación y el templo sagrado dedicado al culto del agua.'
+      },
+      {
+        step: '18:00 PM',
+        title: 'Retorno a la Plaza de Armas de Cusco',
+        desc: 'Conclusión del tour a pasos de los mejores restaurantes y cafés coloniales del centro histórico.'
+      }
+    ],
     faqs: [
       {
         q: '¿Incluye el Boleto Turístico del Cusco (BTC)?',
@@ -259,6 +372,12 @@ export function simulateAiGeneration(params: {
   guideLanguages?: string;
   includedServices?: string[];
   targetAudience?: string;
+  itinerary?: { step: string; title: string; desc: string; }[];
+  notIncluded?: string[];
+  whatToBring?: string[];
+  trustBadges?: string[];
+  aiTone?: string;
+  guideAvatar?: string;
 }): LandingData {
   const slug = params.name
     .toLowerCase()
@@ -386,6 +505,45 @@ export function simulateAiGeneration(params: {
       title: isEn ? 'What makes this tour exceptional?' : '¿Qué hace inolvidable esta experiencia?',
       items: featuresItems
     },
+    itinerary: params.itinerary && params.itinerary.length > 0 ? params.itinerary : (isEn ? [
+      { step: 'Phase 1', title: 'Pick-up and Scenic Transfer', desc: `Private transport pick-up from your accommodation in Cusco heading to the start point with scenic Andean valleys.` },
+      { step: 'Phase 2', title: 'Guided Immersion and Exploration', desc: `Comprehensive guiding led by ${params.guideName || 'licensed specialists'} with time for photography and cultural insights.` },
+      { step: 'Phase 3', title: 'Safe Return to Cusco', desc: `Comfortable return journey drop-off near the historical city center.` }
+    ] : [
+      { step: 'Paso 1', title: 'Recojo en Hotel y Traslado Escénico', desc: `Transporte turístico privado desde tu alojamiento en Cusco hacia la ruta programada cruzando valles y paisajes andinos.` },
+      { step: 'Paso 2', title: 'Exploración Guiada y Momentos Únicos', desc: `Recorrido a ritmo personalizado guiado por ${params.guideName || 'especialistas oficiales'} con tiempo libre para fotos y descanso.` },
+      { step: 'Paso 3', title: 'Retorno Confortable a Cusco', desc: `Viaje de retorno seguro y cómodo con desembarque cerca del centro histórico o tu hotel.` }
+    ]),
+    notIncluded: params.notIncluded && params.notIncluded.length > 0 ? params.notIncluded : (isEn ? [
+      'International or domestic flights',
+      'Optional gratuities for staff and guide',
+      'Personal travel insurance',
+      'Extra alcoholic beverages'
+    ] : [
+      'Vuelos internacionales o domésticos',
+      'Propinas voluntarias para guía y chofer',
+      'Seguro médico de viaje internacional',
+      'Bebidas alcohólicas no detalladas'
+    ]),
+    whatToBring: params.whatToBring && params.whatToBring.length > 0 ? params.whatToBring : (isEn ? [
+      'Valid original passport',
+      'Layered warm and windproof clothing',
+      'Sturdy walking or trekking shoes',
+      'Sunscreen (SPF 50+) and insect repellent',
+      'Cash in local Peruvian Soles'
+    ] : [
+      'Pasaporte original físico vigente',
+      'Ropa abrigadora en capas y cortavientos',
+      'Calzado o zapatillas con buen agarre',
+      'Bloqueador solar (SPF 50+) y repelente',
+      'Dinero en efectivo en soles peruanos'
+    ]),
+    trustBadges: params.trustBadges && params.trustBadges.length > 0 ? params.trustBadges : [
+      'Licencia Oficial DIRCETUR Cusco',
+      'Sello Safe Travels Internacional',
+      'RUC 20 Formal Verificado',
+      'Balón de Oxígeno & Botiquín'
+    ],
     faqs,
     testimonials
   };

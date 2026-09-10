@@ -8,11 +8,21 @@ import {
   Sparkles, Loader2, Compass, MessageCircle, FileText, ArrowLeft, 
   Globe, DollarSign, Clock, User, Phone, 
   Check, Zap, Eye, CheckCircle2, MapPin,
-  Shield, Award, Mountain, Users, Languages, CheckSquare, Square
+  Shield, Award, Mountain, Users, Languages, CheckSquare, Square,
+  Plus, Trash2, XCircle, Backpack, ShieldCheck, Share2, Calendar
 } from 'lucide-react';
-import { ObjectiveType, TemplateType, LanguageType } from '@/types/landing';
+import { ObjectiveType, TemplateType, LanguageType, ItineraryItem } from '@/types/landing';
 import { simulateAiGeneration, saveLandingToStorage } from '@/data/landingStore';
 import { SAMPLE_TOUR_IMAGES } from '@/data/sampleImages';
+
+const AVAILABLE_TRUST_BADGES = [
+  'Licencia Oficial DIRCETUR Cusco',
+  'Sello Internacional Safe Travels',
+  'Agencia Formal RUC 20 Verificado',
+  'Balón de Oxígeno & Botiquín de Altura',
+  'Guía Colegiado Bilingüe',
+  'Seguro contra Accidentes SOAT Turístico'
+];
 
 // Quick Preset Tours for 1-click loading with richer technical tour data
 const PRESET_TOURS = [
@@ -31,12 +41,38 @@ const PRESET_TOURS = [
     altitude: '4,630 msnm (Paso Salkantay)',
     groupType: 'Grupo Reducido (Máx. 8 pers.)',
     targetAudience: 'Aventureros y Amantes del Trekking',
+    aiTone: 'aventurero',
     includedServices: [
       'Transporte turístico Cusco - Mollepata',
       'Domos de cristal y campamentos equipados',
       'Alimentación nutritiva de montaña',
       'Entradas y boleto a Machu Picchu',
       'Balón de oxígeno y botiquín de altura'
+    ],
+    notIncluded: [
+      'Bolsa de dormir térmica (alquiler $20 USD)',
+      'Caballo extra de carga personal',
+      'Propinas para arrieros y cocineros',
+      'Primer desayuno en Mollepata y último almuerzo'
+    ],
+    whatToBring: [
+      'Pasaporte original físico (indispensable para MP)',
+      'Mochila de trekking de 30 a 40 litros',
+      'Ropa térmica en capas (primera capa, polar y cortavientos)',
+      'Zapatos de trekking impermeables ya amoldados',
+      'Pastillas para el mal de altura y bloqueador solar'
+    ],
+    trustBadges: [
+      'Licencia Oficial DIRCETUR Cusco',
+      'Sello Internacional Safe Travels',
+      'Agencia Formal RUC 20 Verificado',
+      'Balón de Oxígeno & Botiquín de Altura'
+    ],
+    itinerary: [
+      { step: 'Día 1', title: 'Cusco - Mollepata - Laguna Humantay', desc: 'Salida de madrugada hacia Mollepata. Ascenso a la mística Laguna Humantay a 4,200 msnm y pernocte en domos de cristal en Soraypampa.' },
+      { step: 'Día 2', title: 'Paso Salkantay (4,630 msnm) - Collpapampa', desc: 'Día cumbre atravesando el imponente nevado Salkantay. Descenso hacia la ceja de selva y baño en aguas termales.' },
+      { step: 'Día 3', title: 'Ruta Cafetalera - Hidroeléctrica - Aguas Calientes', desc: 'Caminata por plantaciones de café y orquídeas andinas. Llegada al pueblo de Machu Picchu y descanso en hotel.' },
+      { step: 'Día 4-5', title: 'Amanecer en Machu Picchu y Retorno a Cusco', desc: 'Visita guiada oficial al Santuario Histórico de Machu Picchu. Retorno escénico en tren a Ollantaytambo y transfer a Cusco.' }
     ],
     objective: 'whatsapp' as ObjectiveType,
     template: 'adventure' as TemplateType,
@@ -59,12 +95,36 @@ const PRESET_TOURS = [
     altitude: '2,430 msnm',
     groupType: 'Tour Privado Exclusivo',
     targetAudience: 'Parejas, Lunas de Miel y Viajeros Confort',
+    aiTone: 'lujo',
     includedServices: [
       'Vagón de lujo con almuerzo gourmet',
       'Boletos de tren ida y vuelta preferente',
       'Entradas oficiales Circuito 1 o 2',
       'Guía privado exclusivo durante todo el día',
       'Traslados en minivan ejecutiva puerta a puerta'
+    ],
+    notIncluded: [
+      'Vuelos comerciales internacionales o domésticos',
+      'Propinas voluntarias para guía y mayordomo de tren',
+      'Bebidas alcohólicas premium adicionales'
+    ],
+    whatToBring: [
+      'Pasaporte original físico vigente',
+      'Ropa elegante y cómoda para tren de lujo',
+      'Lentes de sol y sombrero para la ciudadela',
+      'Cámara o teléfono con buena memoria'
+    ],
+    trustBadges: [
+      'Licencia Oficial DIRCETUR Cusco',
+      'Sello Internacional Safe Travels',
+      'Agencia Formal RUC 20 Verificado',
+      'Guía Colegiado Bilingüe'
+    ],
+    itinerary: [
+      { step: '06:00 AM', title: 'Recojo VIP y Traslado a Estación Poroy', desc: 'Minivan ejecutiva con amenidades a bordo y asistencia personalizada.' },
+      { step: '09:00 AM', title: 'Viaje Hiram Bingham con Brunch Gourmet', desc: 'Música en vivo, cócteles de bienvenida y vistas panorámicas del río Urubamba.' },
+      { step: '12:30 PM', title: 'Acceso Preferente a Machu Picchu', desc: 'Tour privado de 3 horas por los recintos sagrados sin prisas ni aglomeraciones.' },
+      { step: '16:00 PM', title: 'Afternoon Tea en Sanctuary Lodge y Retorno', desc: 'Degustación gourmet a pasos de la ciudadela y retorno en tren de primera clase.' }
     ],
     objective: 'quote' as ObjectiveType,
     template: 'premium' as TemplateType,
@@ -87,11 +147,34 @@ const PRESET_TOURS = [
     altitude: '3,400 msnm',
     groupType: 'Grupo Reducido (Máx. 12 pers.)',
     targetAudience: 'Familias con Niños y Adultos Mayores',
+    aiTone: 'cultural',
     includedServices: [
       'Transporte turístico con aire acondicionado',
       'Guía oficial arqueóloga especialista',
       'Ingreso preferencial a Qorikancha',
       'Degustación de chocolate andino y pisco sour'
+    ],
+    notIncluded: [
+      'Boleto Turístico del Cusco (BTC circuito arqueológico)',
+      'Ticket de entrada al Qorikancha (S/ 15 PEN)',
+      'Propinas al guía'
+    ],
+    whatToBring: [
+      'Boleto BTC vigente o efectivo en soles',
+      'Casaca cortavientos para la tarde',
+      'Zapatillas cómodas con agarre para empedrados',
+      'Gorro para el sol y bloqueador solar'
+    ],
+    trustBadges: [
+      'Guía Colegiada Bilingüe',
+      'Licencia Oficial DIRCETUR Cusco',
+      'Agencia Formal RUC 20 Verificado',
+      'Sello Internacional Safe Travels'
+    ],
+    itinerary: [
+      { step: '13:30 PM', title: 'Templo del Sol (Qorikancha)', desc: 'Explicación magistral de la cantería inca imperial y el choque cultural colonial.' },
+      { step: '15:00 PM', title: 'Fortaleza Ceremonial de Sacsayhuamán', desc: 'Paseo entre los megalitos ciclópeos y explicaciones arqueológicas de vanguardia.' },
+      { step: '16:30 PM', title: 'Qenqo, Puka Pukara y Tambomachay', desc: 'Visita a los templos de culto al agua y laberintos ceremoniales incaicos.' }
     ],
     objective: 'whatsapp' as ObjectiveType,
     template: 'cultural' as TemplateType,
@@ -114,12 +197,36 @@ const PRESET_TOURS = [
     altitude: '5,036 msnm',
     groupType: 'Grupo Pequeño Garantizado',
     targetAudience: 'Viajeros activos y amantes de la fotografía',
+    aiTone: 'aventurero',
     includedServices: [
       'Desayuno andino y almuerzo buffet campestre',
       'Transporte turístico de ida y retorno',
       'Oxímetro, botiquín y balón de oxígeno',
       'Bastones de trekking ergonómicos',
       'Guía de montaña certificado en primeros auxilios'
+    ],
+    notIncluded: [
+      'Boleto comunal de ingreso a Vinicunca (S/ 25 extranjeros, S/ 15 nacionales)',
+      'Alquiler opcional de caballo local (aprox. S/ 90 ida y vuelta)',
+      'Agua y snacks energéticos personales'
+    ],
+    whatToBring: [
+      'Documento de identidad o pasaporte original',
+      'Gorro de lana, guantes térmicos y bufanda',
+      'Zapatos de trekking con buena huella',
+      'Dinero en efectivo para compras de comunidades locales'
+    ],
+    trustBadges: [
+      'Balón de Oxígeno & Botiquín de Altura',
+      'Licencia Oficial DIRCETUR Cusco',
+      'Sello Internacional Safe Travels',
+      'Seguro contra Accidentes SOAT Turístico'
+    ],
+    itinerary: [
+      { step: '04:00 AM', title: 'Salida de Cusco y Desayuno Buffet', desc: 'Recojo en hotel y parada gastronómica andina en Cusipata.' },
+      { step: '08:30 AM', title: 'Inicio del Trekking hacia la Cumbre', desc: 'Ascenso a ritmo suave con monitoreo constante de oxígeno y pulsaciones.' },
+      { step: '10:45 AM', title: 'Llegada al Mirador de los 7 Colores (5,036 msnm)', desc: 'Tiempo libre para contemplar las franjas minerales y el nevado sagrado Ausangate.' },
+      { step: '14:00 PM', title: 'Almuerzo Campestre y Retorno a Cusco', desc: 'Almuerzo caliente en restaurante local y retorno al centro histórico.' }
     ],
     objective: 'whatsapp' as ObjectiveType,
     template: 'adventure' as TemplateType,
@@ -165,6 +272,14 @@ export default function NewLandingDemo() {
     'Balón de oxígeno y botiquín de altura'
   ]);
 
+  const [itinerary, setItinerary] = useState<ItineraryItem[]>(PRESET_TOURS[0].itinerary || []);
+  const [notIncluded, setNotIncluded] = useState<string[]>(PRESET_TOURS[0].notIncluded || []);
+  const [newNotIncluded, setNewNotIncluded] = useState('');
+  const [whatToBring, setWhatToBring] = useState<string[]>(PRESET_TOURS[0].whatToBring || []);
+  const [newWhatToBring, setNewWhatToBring] = useState('');
+  const [trustBadges, setTrustBadges] = useState<string[]>(PRESET_TOURS[0].trustBadges || []);
+  const [aiTone, setAiTone] = useState<string>('aventurero');
+
   const [objective, setObjective] = useState<ObjectiveType>('whatsapp');
   const [template, setTemplate] = useState<TemplateType>('adventure');
   const [language, setLanguage] = useState<LanguageType>('es');
@@ -198,6 +313,11 @@ export default function NewLandingDemo() {
     setGroupType(preset.groupType);
     setTargetAudience(preset.targetAudience);
     setIncludedServices(preset.includedServices);
+    setItinerary(preset.itinerary || []);
+    setNotIncluded(preset.notIncluded || []);
+    setWhatToBring(preset.whatToBring || []);
+    setTrustBadges(preset.trustBadges || []);
+    if (preset.aiTone) setAiTone(preset.aiTone);
     setObjective(preset.objective);
     setTemplate(preset.template);
     setLanguage(preset.language);
@@ -212,6 +332,55 @@ export default function NewLandingDemo() {
         ? prev.filter(s => s !== service)
         : [...prev, service]
     );
+  };
+
+  const handleToggleTrustBadge = (badge: string) => {
+    setTrustBadges(prev => 
+      prev.includes(badge) ? prev.filter(b => b !== badge) : [...prev, badge]
+    );
+  };
+
+  const handleAddItineraryStep = () => {
+    setItinerary(prev => [
+      ...prev,
+      {
+        step: `Día ${prev.length + 1}`,
+        title: 'Nueva etapa del recorrido',
+        desc: 'Detalle de las actividades, paradas y atractivos visitados.'
+      }
+    ]);
+  };
+
+  const handleUpdateItinerary = (index: number, field: keyof ItineraryItem, val: string) => {
+    setItinerary(prev => {
+      const next = [...prev];
+      next[index] = { ...next[index], [field]: val };
+      return next;
+    });
+  };
+
+  const handleRemoveItineraryStep = (index: number) => {
+    setItinerary(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleAddNotIncluded = () => {
+    if (!newNotIncluded.trim()) return;
+    setNotIncluded(prev => [...prev, newNotIncluded.trim()]);
+    setNewNotIncluded('');
+  };
+
+  const handleRemoveNotIncluded = (index: number) => {
+    setNotIncluded(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleAddWhatToBring = () => {
+    if (!newWhatToBring.trim()) return;
+    setWhatToBring(prev => [...prev, newWhatToBring.trim()]);
+    setNewWhatToBring('');
+  };
+
+  const handleRemoveWhatToBring = (index: number) => {
+    setWhatToBring(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleGenerate = (e: React.FormEvent) => {
@@ -246,7 +415,12 @@ export default function NewLandingDemo() {
           guideCert,
           guideLanguages,
           includedServices,
-          targetAudience
+          targetAudience,
+          itinerary,
+          notIncluded,
+          whatToBring,
+          trustBadges,
+          aiTone
         });
         saveLandingToStorage(generated);
         router.push(`/demo/preview?slug=${generated.slug}`);
@@ -683,11 +857,207 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 4: FOTOGRAFÍA HERO, PLANTILLA & GENERACIÓN */}
+          {/* PASO 4: ITINERARIO DÍA A DÍA / HORAS */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                 <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">4</span>
+                Itinerario Detallado del Tour
+              </label>
+              <button
+                type="button"
+                onClick={handleAddItineraryStep}
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-xl transition-colors cursor-pointer"
+              >
+                <Plus size={14} /> Añadir Etapa
+              </button>
+            </div>
+
+            <p className="text-xs text-slate-500">
+              Desglosa el cronograma paso a paso. Los viajeros compran más rápido cuando conocen los horarios y actividades exactas.
+            </p>
+
+            <div className="space-y-4">
+              {itinerary.map((item, idx) => (
+                <div key={idx} className="bg-slate-50/80 border border-slate-200/90 rounded-2xl p-4 space-y-3 relative group">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="w-32 sm:w-40 shrink-0">
+                      <input 
+                        type="text"
+                        value={item.step}
+                        onChange={(e) => handleUpdateItinerary(idx, 'step', e.target.value)}
+                        placeholder="Ej. Día 1 o 08:00 AM"
+                        className="w-full bg-white border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs font-bold text-slate-800 outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <input 
+                        type="text"
+                        value={item.title}
+                        onChange={(e) => handleUpdateItinerary(idx, 'title', e.target.value)}
+                        placeholder="Título de la etapa o atractivo principal"
+                        className="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-semibold text-slate-900 outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                    {itinerary.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveItineraryStep(idx)}
+                        className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors shrink-0 cursor-pointer"
+                        title="Eliminar etapa"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    )}
+                  </div>
+                  <div>
+                    <textarea 
+                      rows={2}
+                      value={item.desc}
+                      onChange={(e) => handleUpdateItinerary(idx, 'desc', e.target.value)}
+                      placeholder="Breve descripción de lo que vivirá el turista en esta etapa..."
+                      className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs text-slate-700 outline-none focus:ring-2 focus:ring-blue-500 resize-none leading-relaxed"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* PASO 5: TRANSPARENCIA & EQUIPAJE (QUÉ NO INCLUYE Y QUÉ LLEVAR) */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-6">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">5</span>
+                Exclusiones Claras & Checklist de Mochila
+              </label>
+              <span className="text-[11px] font-semibold text-slate-400">Reduce objeciones de clientes</span>
+            </div>
+
+            {/* Qué NO incluye */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-2 flex items-center gap-1.5 text-rose-700">
+                <XCircle size={15} /> Qué NO está incluido (Evita reclamos y sorpresas):
+              </label>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {notIncluded.map((item, idx) => (
+                  <span 
+                    key={idx} 
+                    className="inline-flex items-center gap-1.5 bg-rose-50 border border-rose-200 text-rose-800 text-xs px-2.5 py-1 rounded-full font-medium"
+                  >
+                    <span>{item}</span>
+                    <button 
+                      type="button" 
+                      onClick={() => handleRemoveNotIncluded(idx)} 
+                      className="hover:text-rose-900 cursor-pointer font-bold ml-1 text-xs"
+                    >
+                      ✕
+                    </button>
+                  </span>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <input 
+                  type="text"
+                  value={newNotIncluded}
+                  onChange={(e) => setNewNotIncluded(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddNotIncluded(); } }}
+                  placeholder="Añadir ítem no incluido (ej. Propinas, Bebidas extras)..."
+                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-blue-500 font-normal"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddNotIncluded}
+                  className="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 font-bold px-3.5 py-2 rounded-xl text-xs shrink-0 cursor-pointer"
+                >
+                  Agregar
+                </button>
+              </div>
+            </div>
+
+            {/* Qué llevar en la mochila */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-2 flex items-center gap-1.5 text-emerald-800">
+                <Backpack size={15} /> Qué debe llevar el viajero en su mochila (Checklist):
+              </label>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {whatToBring.map((item, idx) => (
+                  <span 
+                    key={idx} 
+                    className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-medium"
+                  >
+                    <span>✓ {item}</span>
+                    <button 
+                      type="button" 
+                      onClick={() => handleRemoveWhatToBring(idx)} 
+                      className="hover:text-emerald-950 cursor-pointer font-bold ml-1 text-xs"
+                    >
+                      ✕
+                    </button>
+                  </span>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <input 
+                  type="text"
+                  value={newWhatToBring}
+                  onChange={(e) => setNewWhatToBring(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddWhatToBring(); } }}
+                  placeholder="Añadir equipaje recomendado (ej. Ropa térmica, Bloqueador)..."
+                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-blue-500 font-normal"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddWhatToBring}
+                  className="bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 font-bold px-3.5 py-2 rounded-xl text-xs shrink-0 cursor-pointer"
+                >
+                  Agregar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* PASO 6: SELLOS DE CONFIANZA & GARANTÍAS TURÍSTICAS */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">6</span>
+                Distintivos Oficiales & Sellos de Confianza
+              </label>
+              <span className="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Seguridad para el Cliente</span>
+            </div>
+
+            <p className="text-xs text-slate-500">
+              Selecciona los sellos de acreditación que se exhibirán con orgullo en la cabecera y el pie de la landing.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              {AVAILABLE_TRUST_BADGES.map((badge, idx) => {
+                const isSelected = trustBadges.includes(badge);
+                return (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => handleToggleTrustBadge(badge)}
+                    className={`p-3 rounded-2xl border text-left text-xs flex items-center gap-3 transition-all cursor-pointer ${
+                      isSelected 
+                        ? 'bg-emerald-50/80 border-emerald-300 text-emerald-900 font-bold shadow-xs' 
+                        : 'bg-slate-50/70 border-slate-200 text-slate-600 hover:bg-slate-100'
+                    }`}
+                  >
+                    <ShieldCheck size={18} className={isSelected ? "text-emerald-600 shrink-0" : "text-slate-400 shrink-0"} />
+                    <span className="truncate">{badge}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* PASO 7: FOTOGRAFÍA HERO, PLANTILLA & GENERACIÓN */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">7</span>
                 Fotografía de Portada & Plantilla Visual
               </label>
               <span className="text-[11px] font-semibold text-slate-400">Diseño adaptable</span>
@@ -797,11 +1167,48 @@ export default function NewLandingDemo() {
         <div className="lg:col-span-5 sticky top-6 space-y-4">
           <div className="flex items-center justify-between px-2">
             <span className="text-xs font-black uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-              <Eye size={15} className="text-blue-600" /> Vista Previa en Vivo (Móvil)
+              <Eye size={15} className="text-blue-600" /> Vista Previa en Vivo
             </span>
             <span className="text-[11px] bg-slate-100 text-slate-700 font-bold px-2.5 py-0.5 rounded-full border border-slate-200">
               {template.toUpperCase()} • {language.toUpperCase()}
             </span>
+          </div>
+
+          {/* WhatsApp Link Share Preview Simulator */}
+          <div className="bg-[#EFEAE2] p-3.5 rounded-3xl border border-slate-300 shadow-sm space-y-2">
+            <div className="flex items-center justify-between text-[11px] font-bold text-slate-600 px-1">
+              <span className="flex items-center gap-1.5 text-emerald-800 font-extrabold">
+                <Share2 size={13} /> Vista al Enviar por WhatsApp
+              </span>
+              <span className="text-[10px] text-slate-500">Previsualización de Enlace</span>
+            </div>
+
+            {/* WhatsApp Chat Bubble */}
+            <div className="bg-white rounded-2xl p-2.5 shadow-sm border border-slate-200/80 max-w-sm ml-auto space-y-2">
+              <div className="relative h-32 rounded-xl overflow-hidden bg-slate-100">
+                <Image 
+                  src={activeHeroImg} 
+                  alt="WhatsApp Preview" 
+                  fill 
+                  sizes="350px"
+                  className="object-cover" 
+                />
+                <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                  {price || '$350 USD'}
+                </div>
+              </div>
+              <div className="space-y-0.5 px-1">
+                <p className="text-[10px] font-mono text-slate-400 truncate">agenciacusco.pe/p/{name.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 24)}</p>
+                <h4 className="text-xs font-black text-slate-900 line-clamp-1">{name || 'Tour en Cusco'}</h4>
+                <p className="text-[11px] text-slate-500 line-clamp-2 leading-tight">
+                  {description || 'Vive la mejor experiencia guiada en Cusco con reserva directa y tarifas transparentes.'}
+                </p>
+              </div>
+              <div className="flex items-center justify-end gap-1 text-[10px] text-slate-400 pt-0.5 px-1">
+                <span>12:45 PM</span>
+                <span className="text-blue-500 font-bold">✓✓</span>
+              </div>
+            </div>
           </div>
 
           {/* Smartphone Mockup */}

@@ -2,6 +2,12 @@ export type TemplateType = 'adventure' | 'premium' | 'cultural';
 export type ObjectiveType = 'whatsapp' | 'quote';
 export type LanguageType = 'es' | 'en';
 
+export interface ItineraryItem {
+  step: string;
+  title: string;
+  desc: string;
+}
+
 export interface FAQItem {
   q: string;
   a: string;
@@ -19,6 +25,13 @@ export interface LandingData {
   name: string;
   slug: string;
   guideName: string;
+  guideAvatar?: string;
+  guideCert?: string;
+  guideLanguages?: string;
+  destination?: string;
+  altitude?: string;
+  groupType?: string;
+  aiTone?: string;
   whatsapp: string;
   price: string;
   duration: string;
@@ -45,6 +58,10 @@ export interface LandingData {
     title: string;
     items: string[];
   };
+  itinerary?: ItineraryItem[];
+  notIncluded?: string[];
+  whatToBring?: string[];
+  trustBadges?: string[];
   faqs?: FAQItem[];
   testimonials?: TestimonialItem[];
 }
