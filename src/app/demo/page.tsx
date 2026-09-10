@@ -63,33 +63,62 @@ export default function DemoDashboard() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-3 duration-500">
+    <div className="w-full max-w-[1600px] mx-auto space-y-7 animate-in fade-in slide-in-from-bottom-3 duration-500">
       
-      {/* Header Section */}
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 bg-white p-8 rounded-3xl shadow-sm border border-slate-200/80">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold mb-3 border border-blue-100">
-            <Sparkles size={14} /> Panel de Control Turístico
+      {/* 1. TOP HERO HEADER WITH WORKFLOW EXPLANATION & CTA (UX Upgrade: Located at the very top) */}
+      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 p-7 sm:p-8 rounded-3xl shadow-xl border border-slate-800 text-white relative overflow-hidden">
+        {/* Background decorative glow */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+        <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+          <div className="space-y-3 max-w-3xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold border border-blue-500/30">
+              <Sparkles size={14} className="text-blue-400" />
+              <span>Plataforma SaaS • Agencia Cusco Creativos</span>
+            </div>
+
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight text-white">
+              Gestor de Landings de Alto Rendimiento
+            </h1>
+
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+              Crea páginas web para guías de turismo en 3 minutos con Inteligencia Artificial. Comparte el enlace en vivo para aprobación inmediata por WhatsApp y exporta con dominio propio o en archivo ZIP.
+            </p>
+
+            {/* 3 Step Workflow Badges */}
+            <div className="pt-1 flex flex-wrap items-center gap-2 text-xs">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700/80 text-slate-300 font-semibold shadow-xs">
+                <span className="w-5 h-5 rounded-lg bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-[11px]">1</span>
+                <span>Genera datos con IA</span>
+              </span>
+              <span className="text-slate-600">→</span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700/80 text-slate-300 font-semibold shadow-xs">
+                <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-[11px]">2</span>
+                <span>Previsualiza y aprueba en vivo</span>
+              </span>
+              <span className="text-slate-600">→</span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700/80 text-slate-300 font-semibold shadow-xs">
+                <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center text-[11px]">3</span>
+                <span>Vercel (Dominio) o ZIP</span>
+              </span>
+            </div>
           </div>
-          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
-            Gestor de Landings de Alto Rendimiento
-          </h1>
-          <p className="text-slate-500 mt-1 text-sm max-w-2xl">
-            Monitorea el tráfico de tus tours, actualiza estados en tiempo real y genera landings persuasivas con IA en segundos.
-          </p>
-        </div>
-        <div className="flex items-center gap-3 w-full lg:w-auto">
-          <Link 
-            href="/demo/new" 
-            className="w-full lg:w-auto inline-flex items-center justify-center gap-2.5 bg-blue-600 hover:bg-blue-700 text-white px-7 py-3.5 rounded-2xl font-bold transition-all shadow-lg shadow-blue-600/25 hover:shadow-blue-600/40 hover:scale-[1.02] active:scale-[0.98] text-sm"
-          >
-            <Sparkles size={18} />
-            <span>Nueva Landing con IA</span>
-          </Link>
+
+          {/* Primary Action Button */}
+          <div className="shrink-0 w-full lg:w-auto">
+            <Link 
+              href="/demo/new" 
+              className="w-full lg:w-auto inline-flex items-center justify-center gap-2.5 bg-blue-600 hover:bg-blue-500 text-white px-7 py-3.5 rounded-2xl font-extrabold transition-all shadow-lg shadow-blue-600/30 hover:scale-102 active:scale-98 text-sm"
+            >
+              <Sparkles size={18} />
+              <span>Nueva Landing con IA</span>
+            </Link>
+          </div>
         </div>
       </div>
 
-      {/* Interactive Metric Cards */}
+      {/* 2. INTERACTIVE METRIC CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-blue-300 transition-all group">
           <div className="flex justify-between items-center mb-3">
@@ -152,31 +181,7 @@ export default function DemoDashboard() {
         </div>
       </div>
 
-      {/* Informative Workflow Guidance Card (UX Upgrade) */}
-      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-3xl p-6 text-white shadow-md border border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-        <div className="space-y-1.5 max-w-2xl">
-          <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-wider">
-            <span>💡 Flujo de Trabajo en Cusco Creativos</span>
-          </div>
-          <h2 className="text-lg font-extrabold text-white">
-            Genera, previsualiza y entrega landings en 3 minutos
-          </h2>
-          <p className="text-xs text-slate-300 leading-relaxed">
-            1. <strong>Crea o edita</strong> los tours con IA. • 2. <strong>Envía el enlace en vivo</strong> al cliente por WhatsApp para su aprobación. • 3. <strong>Exporta:</strong> Conecta su dominio en Vercel (Opción A) o descarga el paquete ZIP/HTML completo para su hosting o WordPress (Opción B).
-          </p>
-        </div>
-        <div className="flex items-center gap-2 shrink-0">
-          <Link
-            href="/demo/new"
-            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-2xl font-extrabold text-xs transition-all shadow-md shadow-blue-600/30"
-          >
-            <Sparkles size={14} />
-            <span>Crear Nueva Landing</span>
-          </Link>
-        </div>
-      </div>
-
-      {/* Control Bar: Search & Interactive Filter Tabs */}
+      {/* 3. CONTROL BAR: SEARCH & INTERACTIVE FILTER TABS */}
       <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 space-y-4">
         <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
           
@@ -187,7 +192,7 @@ export default function DemoDashboard() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Buscar por nombre del tour, guía o ruta..."
+              placeholder="Buscar por tour, guía, destino o ruta..."
               className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
             />
             {searchQuery && (
@@ -200,34 +205,49 @@ export default function DemoDashboard() {
             )}
           </div>
 
-          {/* Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-xs font-medium text-slate-600">
-              <span className="px-2 text-slate-400 flex items-center gap-1"><Filter size={12} /> Estado:</span>
-              <button 
+          {/* Interactive Filter Pills */}
+          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto text-xs">
+            
+            {/* Status Filter */}
+            <div className="flex items-center bg-slate-100 p-1 rounded-xl">
+              <span className="px-2 text-slate-400 font-semibold flex items-center gap-1">
+                <Filter size={12} /> Estado:
+              </span>
+              <button
                 onClick={() => setStatusFilter('all')}
-                className={`px-3 py-1.5 rounded-lg transition-all ${statusFilter === 'all' ? 'bg-white text-slate-900 shadow-sm font-bold' : 'hover:text-slate-900'}`}
+                className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
+                  statusFilter === 'all' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                }`}
               >
                 Todos ({projects.length})
               </button>
-              <button 
+              <button
                 onClick={() => setStatusFilter('published')}
-                className={`px-3 py-1.5 rounded-lg transition-all ${statusFilter === 'published' ? 'bg-white text-emerald-700 shadow-sm font-bold' : 'hover:text-slate-900'}`}
+                className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
+                  statusFilter === 'published' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                }`}
               >
-                Publicados ({projects.filter(p => p.status === 'published').length})
+                Publicados ({totalPublished})
               </button>
-              <button 
+              <button
                 onClick={() => setStatusFilter('draft')}
-                className={`px-3 py-1.5 rounded-lg transition-all ${statusFilter === 'draft' ? 'bg-white text-amber-700 shadow-sm font-bold' : 'hover:text-slate-900'}`}
+                className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
+                  statusFilter === 'draft' ? 'bg-white text-amber-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                }`}
               >
-                Borradores ({projects.filter(p => p.status === 'draft').length})
+                Borradores ({projects.length - totalPublished})
               </button>
             </div>
 
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-xs font-medium text-slate-600">
-              <button 
-                onClick={() => setObjectiveFilter(objectiveFilter === 'all' ? 'whatsapp' : objectiveFilter === 'whatsapp' ? 'quote' : 'all')}
-                className="px-3 py-1.5 rounded-lg bg-white shadow-sm font-bold text-slate-800 flex items-center gap-1.5"
+            {/* Objective Filter Toggle */}
+            <div className="flex items-center bg-slate-100 p-1 rounded-xl">
+              <button
+                onClick={() => {
+                  if (objectiveFilter === 'all') setObjectiveFilter('whatsapp');
+                  else if (objectiveFilter === 'whatsapp') setObjectiveFilter('quote');
+                  else setObjectiveFilter('all');
+                }}
+                className="px-3 py-1.5 rounded-lg bg-white shadow-sm font-bold text-slate-800 flex items-center gap-1.5 cursor-pointer"
                 title="Alternar filtro por objetivo comercial"
               >
                 <span>Obj:</span>
@@ -239,18 +259,18 @@ export default function DemoDashboard() {
           </div>
         </div>
 
-        {/* Projects Table */}
-        <div className="overflow-x-auto rounded-2xl border border-slate-100">
-          <table className="w-full text-left border-collapse">
+        {/* 4. EXPANSIVE & UN-CRAMPED PROJECTS TABLE (Generous width & spacing) */}
+        <div className="overflow-x-auto rounded-2xl border border-slate-200/80">
+          <table className="w-full min-w-[1080px] text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50/80 text-slate-500 text-xs uppercase tracking-wider font-bold border-b border-slate-200/60">
-                <th className="px-6 py-4">Tour & Guía Asignado</th>
-                <th className="px-4 py-4">Plantilla</th>
-                <th className="px-4 py-4">Objetivo</th>
-                <th className="px-4 py-4">Estado</th>
-                <th className="px-4 py-4">Vistas</th>
-                <th className="px-4 py-4">Fecha</th>
-                <th className="px-6 py-4 text-right">Acciones Rápidas</th>
+              <tr className="bg-slate-50/90 text-slate-500 text-xs uppercase tracking-wider font-extrabold border-b border-slate-200/80">
+                <th className="px-6 py-4 min-w-[320px]">Tour & Guía Asignado</th>
+                <th className="px-4 py-4 min-w-[120px] whitespace-nowrap">Plantilla</th>
+                <th className="px-4 py-4 min-w-[140px] whitespace-nowrap">Objetivo</th>
+                <th className="px-4 py-4 min-w-[140px] whitespace-nowrap">Estado</th>
+                <th className="px-4 py-4 min-w-[90px] whitespace-nowrap text-center">Vistas</th>
+                <th className="px-4 py-4 min-w-[120px] whitespace-nowrap">Fecha</th>
+                <th className="px-6 py-4 min-w-[280px] whitespace-nowrap text-right">Acciones Rápidas</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 text-sm">
@@ -261,7 +281,7 @@ export default function DemoDashboard() {
                     <p className="text-xs mt-1">Intenta limpiar la búsqueda o cambiar los filtros seleccionados.</p>
                     <button 
                       onClick={() => { setSearchQuery(''); setStatusFilter('all'); setObjectiveFilter('all'); }}
-                      className="mt-3 text-xs text-blue-600 font-bold hover:underline"
+                      className="mt-3 text-xs text-blue-600 font-bold hover:underline cursor-pointer"
                     >
                       Restablecer Filtros
                     </button>
@@ -275,78 +295,82 @@ export default function DemoDashboard() {
                   return (
                     <tr key={p.id} className="hover:bg-slate-50/80 transition-colors group">
                       
-                      {/* Tour Name & Guide */}
-                      <td className="px-6 py-4">
+                      {/* Tour Name & Guide (Roomy & Never Squished) */}
+                      <td className="px-6 py-4.5">
                         <div className="flex items-center gap-3.5">
-                          <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 font-bold text-xs border border-blue-100">
+                          <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 font-bold text-xs border border-blue-100 shadow-xs">
                             {p.template === 'adventure' ? '🏔️' : p.template === 'premium' ? '✨' : '🏛️'}
                           </div>
-                          <div>
+                          <div className="min-w-0">
                             <Link 
                               href={`/demo/preview?slug=${p.slug}`} 
-                              className="font-bold text-slate-900 hover:text-blue-600 transition-colors block line-clamp-1"
+                              className="font-extrabold text-slate-900 hover:text-blue-600 transition-colors block text-sm leading-snug whitespace-nowrap"
                             >
                               {p.name}
                             </Link>
-                            <span className="text-xs text-slate-400 block mt-0.5">
-                              Guía: <strong className="text-slate-600 font-medium">{p.guideName || 'No asignado'}</strong> • {p.price || 'S/ Consultar'}
+                            <span className="text-xs text-slate-400 block mt-0.5 whitespace-nowrap">
+                              Guía: <strong className="text-slate-600 font-medium">{p.guideName || 'No asignado'}</strong> • <span className="text-emerald-700 font-semibold">{p.price || 'S/ Consultar'}</span>
                             </span>
                           </div>
                         </div>
                       </td>
 
                       {/* Template */}
-                      <td className="px-4 py-4">
-                        <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold capitalize bg-slate-100 text-slate-700">
+                      <td className="px-4 py-4.5 whitespace-nowrap">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold capitalize bg-slate-100 text-slate-700 border border-slate-200/60">
                           {p.template}
                         </span>
                       </td>
 
                       {/* Objective */}
-                      <td className="px-4 py-4">
-                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold ${
-                          p.objective === 'whatsapp' ? 'bg-emerald-50 text-emerald-700' : 'bg-blue-50 text-blue-700'
+                      <td className="px-4 py-4.5 whitespace-nowrap">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold ${
+                          p.objective === 'whatsapp' 
+                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' 
+                            : 'bg-blue-50 text-blue-700 border border-blue-200/60'
                         }`}>
                           {p.objective === 'whatsapp' ? '💬 WhatsApp' : '📋 Cotización'}
                         </span>
                       </td>
 
                       {/* Status with interactive Toggle */}
-                      <td className="px-4 py-4">
+                      <td className="px-4 py-4.5 whitespace-nowrap">
                         <button
                           onClick={() => handleToggleStatus(p.id, p.status)}
-                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                            isPublished ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-amber-100 text-amber-800 hover:bg-amber-200'
+                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold transition-all cursor-pointer shadow-2xs ${
+                            isPublished 
+                              ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200 border border-emerald-300/60' 
+                              : 'bg-amber-100 text-amber-800 hover:bg-amber-200 border border-amber-300/60'
                           }`}
-                          title="Clic para cambiar estado"
+                          title="Clic para alternar estado"
                         >
                           <span className={`w-2 h-2 rounded-full ${isPublished ? 'bg-emerald-500' : 'bg-amber-500'}`} />
                           <span>{isPublished ? 'PUBLICADO' : 'BORRADOR'}</span>
-                          {isPublished ? <ToggleRight size={14} className="text-emerald-700" /> : <ToggleLeft size={14} className="text-amber-700" />}
+                          {isPublished ? <ToggleRight size={15} className="text-emerald-700" /> : <ToggleLeft size={15} className="text-amber-700" />}
                         </button>
                       </td>
 
                       {/* Views */}
-                      <td className="px-4 py-4 text-xs font-mono font-bold text-slate-600">
+                      <td className="px-4 py-4.5 text-xs font-mono font-extrabold text-slate-700 whitespace-nowrap text-center">
                         {p.views || '0'}
                       </td>
 
-                      {/* Date */}
-                      <td className="px-4 py-4 text-xs text-slate-400 font-medium">
+                      {/* Date (Never breaks into two lines) */}
+                      <td className="px-4 py-4.5 text-xs text-slate-500 font-medium whitespace-nowrap">
                         <div className="flex items-center gap-1.5">
-                          <CalendarDays size={14} />
-                          {p.date}
+                          <CalendarDays size={14} className="text-slate-400" />
+                          <span>{p.date}</span>
                         </div>
                       </td>
 
-                      {/* Action buttons (Clean, organized & cohesive) */}
-                      <td className="px-6 py-4 text-right">
-                        <div className="flex items-center justify-end gap-1.5">
+                      {/* Action buttons (Harmonious, spacious & perfectly aligned) */}
+                      <td className="px-6 py-4.5 text-right whitespace-nowrap">
+                        <div className="flex items-center justify-end gap-2">
                           
                           {/* Primary: Editor / Vista Previa */}
                           <Link
                             href={`/demo/preview?slug=${p.slug}`}
-                            className="inline-flex items-center gap-1.5 bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white border border-blue-200/80 hover:border-blue-600 px-3 py-1.5 rounded-xl font-bold text-xs transition-all shadow-xs"
+                            className="inline-flex items-center gap-1.5 bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white border border-blue-200 hover:border-blue-600 px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all shadow-xs"
                             title="Abrir editor y previsualizador"
                           >
                             <Eye size={13} />
@@ -356,19 +380,19 @@ export default function DemoDashboard() {
                           {/* Export / Download / Deploy Options */}
                           <button
                             onClick={() => setSelectedLandingForDeploy(p)}
-                            className="inline-flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 px-2.5 py-1.5 rounded-xl font-bold text-xs transition-colors cursor-pointer"
+                            className="inline-flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 px-3 py-1.5 rounded-xl font-bold text-xs transition-colors cursor-pointer shadow-xs"
                             title="Descargar paquete ZIP/HTML o ver opciones de despliegue en Vercel"
                           >
                             <Download size={13} className="text-amber-700" />
-                            <span className="hidden xl:inline">Exportar / ZIP</span>
+                            <span>Exportar / ZIP</span>
                           </button>
 
-                          {/* Direct Accessible Open in Chrome / New Tab (Clean icon button, not a giant messy green block) */}
+                          {/* Direct Accessible Open in Chrome / New Tab */}
                           <a
                             href={`/p/${p.slug}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center p-2 rounded-xl text-slate-500 hover:text-emerald-700 hover:bg-emerald-50 border border-slate-200/80 hover:border-emerald-200 transition-all text-xs"
+                            className="inline-flex items-center justify-center p-2 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 transition-all text-xs"
                             title="Abrir landing page pública en una pestaña nueva"
                           >
                             <ExternalLink size={14} />
@@ -380,7 +404,7 @@ export default function DemoDashboard() {
                             className={`p-2 rounded-xl text-xs font-medium transition-all border cursor-pointer ${
                               isCopied 
                                 ? 'bg-emerald-600 text-white border-emerald-600' 
-                                : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100 border-slate-200/80'
+                                : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100 border-slate-200'
                             }`}
                             title="Copiar link público para clientes"
                           >
