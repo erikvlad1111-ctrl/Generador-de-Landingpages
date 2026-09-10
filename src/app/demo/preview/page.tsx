@@ -127,47 +127,51 @@ function DemoPreviewContent() {
   return (
     <div className="w-full bg-slate-950 min-h-screen flex flex-col relative text-slate-100 selection:bg-blue-600 selection:text-white">
       
-      {/* Top Professional Control Bar */}
-      <header className="bg-slate-900/95 backdrop-blur-md h-auto sm:h-16 py-2.5 sm:py-0 px-3 sm:px-6 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 shrink-0 sticky top-0 z-40 shadow-xl">
+      {/* Top Professional Control Bar (Streamlined, non-wrapping, perfectly balanced) */}
+      <header className="bg-slate-900/98 backdrop-blur-md h-16 px-4 sm:px-6 border-b border-slate-800 flex items-center justify-between gap-4 shrink-0 sticky top-0 z-40 shadow-xl select-none">
         
-        {/* Left: Back & Tour Meta */}
-        <div className="flex items-center gap-2 sm:gap-4">
+        {/* Left: Back Link & Tour Identity */}
+        <div className="flex items-center gap-3 min-w-0 shrink-0">
           <Link 
             href="/demo" 
-            className="text-slate-400 hover:text-white transition-colors p-2 rounded-xl hover:bg-slate-800 flex items-center gap-1.5 text-xs font-semibold"
-            title="Volver al panel"
+            className="text-slate-400 hover:text-white transition-colors p-2 rounded-xl hover:bg-slate-800/80 flex items-center gap-1.5 text-xs font-bold border border-slate-800 shrink-0"
+            title="Volver al panel principal"
           >
-            <ArrowLeft size={18} />
+            <ArrowLeft size={16} />
             <span className="hidden sm:inline">Panel</span>
           </Link>
-          <div className="h-6 w-px bg-slate-800"></div>
-          <div>
+
+          <div className="h-5 w-px bg-slate-800 shrink-0"></div>
+
+          <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <h2 className="font-bold text-white text-sm leading-tight max-w-[200px] sm:max-w-xs md:max-w-md truncate">
+              <h2 className="font-extrabold text-white text-xs sm:text-sm tracking-tight truncate max-w-[150px] sm:max-w-[220px] md:max-w-xs">
                 {landing.name}
               </h2>
-              <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider ${
-                landing.status === 'published' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+              <span className={`text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0 ${
+                landing.status === 'published' 
+                  ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' 
+                  : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
               }`}>
                 {landing.status === 'published' ? '● Publicado' : '○ Borrador'}
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 font-medium">
-              Plantilla: <strong className="capitalize text-slate-200">{landing.template}</strong> • Guía: {landing.guideName || 'Cusco Creativos'}
+            <p className="text-[10px] text-slate-400 truncate hidden sm:block">
+              Plantilla: <strong className="capitalize text-slate-200">{landing.template}</strong> • {landing.guideName || 'Cusco Creativos'}
             </p>
           </div>
         </div>
 
-        {/* Center: Device Viewport Switcher */}
-        <div className="hidden md:flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 shadow-inner">
+        {/* Center: Device Viewport Switcher (Centered & Balanced) */}
+        <div className="hidden md:flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 shadow-inner shrink-0">
           <button
             onClick={() => setViewMode('desktop')}
             className={`px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 font-bold transition-all cursor-pointer ${
               viewMode === 'desktop' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
             }`}
-            title="Vista Completa de Computadora"
+            title="Vista Computadora"
           >
-            <Monitor size={15} /> 
+            <Monitor size={14} /> 
             <span>Desktop</span>
           </button>
           <button
@@ -175,9 +179,9 @@ function DemoPreviewContent() {
             className={`px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 font-bold transition-all cursor-pointer ${
               viewMode === 'tablet' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
             }`}
-            title="Vista Tablet / iPad"
+            title="Vista Tablet"
           >
-            <Tablet size={15} /> 
+            <Tablet size={14} /> 
             <span>Tablet</span>
           </button>
           <button
@@ -185,91 +189,72 @@ function DemoPreviewContent() {
             className={`px-3 py-1.5 rounded-lg text-xs flex items-center gap-1.5 font-bold transition-all cursor-pointer ${
               viewMode === 'mobile' ? 'bg-blue-600 text-white shadow-md' : 'text-slate-400 hover:text-white'
             }`}
-            title="Vista Móvil (Smartphones)"
+            title="Vista Móvil"
           >
-            <Smartphone size={15} /> 
+            <Smartphone size={14} /> 
             <span>Móvil</span>
           </button>
         </div>
 
-        {/* Right: ACTIONS ORGANIZED INTO CLEAN LOGICAL GROUPS */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        {/* Right: Actions Grouped in 1 Clean Row */}
+        <div className="flex items-center gap-2 shrink-0">
           
-          {/* Group 1: Edit & Testing Tools */}
-          <div className="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 shadow-inner">
-            <button
-              onClick={openEditorWithCurrentData}
-              className="flex items-center gap-1.5 px-3 py-1.5 text-slate-300 hover:text-white hover:bg-slate-800/80 font-semibold text-xs rounded-lg transition-colors cursor-pointer"
-              title="Editar textos de esta landing"
-            >
-              <Edit3 size={14} className="text-blue-400" />
-              <span className="hidden lg:inline">Editar Textos</span>
-            </button>
+          {/* Edit Button */}
+          <button
+            onClick={openEditorWithCurrentData}
+            className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/90 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl transition-all border border-slate-700/80 cursor-pointer shadow-xs"
+            title="Editar textos de esta landing"
+          >
+            <Edit3 size={14} className="text-blue-400" />
+            <span className="hidden xl:inline">Editar Textos</span>
+          </button>
 
-            <button
-              onClick={() => setIsQrOpen(true)}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 text-slate-300 hover:text-white hover:bg-slate-800/80 font-semibold text-xs rounded-lg transition-colors cursor-pointer"
-              title="Probar en tu celular con Código QR"
-            >
-              <QrCode size={14} className="text-indigo-400" />
-              <span className="hidden xl:inline">Código QR</span>
-            </button>
-          </div>
+          {/* QR Code Button */}
+          <button
+            onClick={() => setIsQrOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-2 bg-slate-800/90 hover:bg-slate-700 text-slate-200 font-bold text-xs rounded-xl transition-all border border-slate-700/80 cursor-pointer shadow-xs"
+            title="Probar en tu celular con Código QR"
+          >
+            <QrCode size={14} className="text-indigo-400" />
+            <span className="hidden xl:inline">QR Móvil</span>
+          </button>
 
-          <div className="h-6 w-px bg-slate-800 hidden sm:block"></div>
+          {/* Export & Download Hub Button */}
+          <button
+            onClick={() => setIsDeployModalOpen(true)}
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-gradient-to-r from-amber-500/20 to-amber-600/20 hover:from-amber-500/30 hover:to-amber-600/30 text-amber-300 border border-amber-500/40 font-bold text-xs rounded-xl transition-all shadow-xs cursor-pointer"
+            title="Descargar paquete ZIP/HTML o ver opciones de despliegue en Vercel"
+          >
+            <Download size={14} className="text-amber-400" />
+            <span className="hidden sm:inline">Exportar / ZIP</span>
+          </button>
 
-          {/* Group 2: Client Delivery, Export & Live Preview */}
-          <div className="flex items-center gap-2">
-            
-            {/* Export & Deployment Hub Button */}
-            <button
-              onClick={() => setIsDeployModalOpen(true)}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 font-bold text-xs rounded-xl transition-all shadow-xs cursor-pointer"
-              title="Opciones de Despliegue en Vercel y Descarga de Código ZIP/HTML"
-            >
-              <Download size={14} className="text-amber-400" />
-              <span className="hidden md:inline">Descargar / Desplegar</span>
-            </button>
+          {/* Copy Link Button */}
+          <button
+            onClick={handleCopyLink}
+            className={`flex items-center gap-1.5 px-3 py-2 font-bold text-xs rounded-xl transition-all border cursor-pointer ${
+              copied 
+                ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm' 
+                : 'bg-slate-800/90 hover:bg-slate-700 text-slate-200 border-slate-700/80'
+            }`}
+            title="Copiar enlace para enviar por WhatsApp al cliente"
+          >
+            {copied ? <Check size={14} className="text-emerald-300" /> : <Copy size={14} />}
+            <span className="hidden sm:inline">{copied ? '¡Copiado!' : 'Copiar Link'}</span>
+          </button>
 
-            {/* Copy Link Button */}
-            <button
-              onClick={handleCopyLink}
-              className={`flex items-center gap-1.5 px-3 py-2 font-semibold text-xs rounded-xl transition-all border cursor-pointer ${
-                copied 
-                  ? 'bg-emerald-600 text-white border-emerald-500' 
-                  : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700'
-              }`}
-              title="Copiar enlace para enviar por WhatsApp al cliente"
-            >
-              {copied ? <Check size={14} className="text-emerald-300" /> : <Copy size={14} />}
-              <span className="hidden sm:inline">{copied ? '¡Copiado!' : 'Copiar Link'}</span>
-            </button>
-
-            {/* Quick Publish if draft */}
-            {landing.status !== 'published' && (
-              <button
-                onClick={handlePublishInstant}
-                className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded-xl font-bold text-xs transition-all shadow-md shadow-blue-600/30 cursor-pointer"
-                title="Publicar landing en línea"
-              >
-                <Share2 size={14} />
-                <span className="hidden sm:inline">Publicar</span>
-              </button>
-            )}
-
-            {/* PRIMARY ACTION: VIEW LIVE WEB (Clean, professional, not messy) */}
-            <a
-              href={`/p/${landing.slug}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-3.5 py-2 rounded-xl font-extrabold text-xs transition-all shadow-md shadow-blue-600/25 hover:scale-102 active:scale-98"
-              title="Abrir landing page en una nueva pestaña"
-            >
-              <Globe size={14} />
-              <span>Ver Web</span>
-              <ExternalLink size={13} className="opacity-80" />
-            </a>
-          </div>
+          {/* Primary View Live Web Button */}
+          <a
+            href={`/p/${landing.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white px-3.5 py-2 rounded-xl font-extrabold text-xs transition-all shadow-md shadow-blue-600/25 hover:scale-102 active:scale-98"
+            title="Abrir landing page pública en una nueva pestaña"
+          >
+            <Globe size={14} />
+            <span>Ver Web</span>
+            <ExternalLink size={13} className="opacity-80" />
+          </a>
         </div>
       </header>
 
