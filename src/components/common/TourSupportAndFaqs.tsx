@@ -174,8 +174,31 @@ export default function TourSupportAndFaqs({
       activeFaq: 'border-amber-400/50 bg-neutral-850',
       subtext: 'text-neutral-400',
       supportCard: 'bg-neutral-900 border border-amber-500/30 text-white'
+    },
+    'agency-portal': {
+      bg: 'bg-[#F9F7F4]',
+      border: 'border-stone-200',
+      badge: 'bg-[#FF5500]/15 text-[#FF5500] border-[#FF5500]/30',
+      heading: 'text-stone-900 font-sans',
+      cardBg: 'bg-white',
+      accentText: 'text-[#FF5500]',
+      accentBg: 'bg-[#FF5500] hover:bg-[#E04B00] text-white',
+      activeFaq: 'border-[#FF5500]/40 bg-[#FFF6F0]',
+      subtext: 'text-stone-600',
+      supportCard: 'bg-stone-900 text-white'
     }
-  }[theme];
+  }[theme] || {
+    bg: 'bg-stone-50',
+    border: 'border-stone-200',
+    badge: 'bg-emerald-500/15 text-emerald-700 border-emerald-500/30',
+    heading: 'text-stone-900 font-sans',
+    cardBg: 'bg-white',
+    accentText: 'text-emerald-600',
+    accentBg: 'bg-emerald-600 hover:bg-emerald-500 text-white',
+    activeFaq: 'border-emerald-500/40 bg-emerald-50/20',
+    subtext: 'text-stone-600',
+    supportCard: 'bg-stone-900 text-white'
+  };
 
   return (
     <section id="soporte-faq" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} ${themeStyles.bg} transition-colors duration-300`}>

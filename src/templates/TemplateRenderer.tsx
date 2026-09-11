@@ -4,6 +4,7 @@ import AdventureTemplate from './AdventureTemplate';
 import PremiumTemplate from './PremiumTemplate';
 import CulturalTemplate from './CulturalTemplate';
 import BohoTemplate from './BohoTemplate';
+import AgencyPortalTemplate from './AgencyPortalTemplate';
 
 interface TemplateRendererProps {
   data: LandingData;
@@ -13,6 +14,8 @@ interface TemplateRendererProps {
 
 export default function TemplateRenderer({ data, isLive = false, viewMode = 'desktop' }: TemplateRendererProps) {
   switch (data.template) {
+    case 'agency-portal':
+      return <AgencyPortalTemplate data={data} isLive={isLive} viewMode={viewMode} />;
     case 'premium':
       return <PremiumTemplate data={data} isLive={isLive} viewMode={viewMode} />;
     case 'cultural':
@@ -24,3 +27,4 @@ export default function TemplateRenderer({ data, isLive = false, viewMode = 'des
       return <AdventureTemplate data={data} isLive={isLive} viewMode={viewMode} />;
   }
 }
+

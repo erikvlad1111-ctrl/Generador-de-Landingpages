@@ -13,7 +13,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
     duration: '2 Días / 1 Noche',
     difficulty: 'Fácil - Confort',
     objective: 'quote',
-    template: 'premium',
+    template: 'agency-portal',
     language: 'es',
     status: 'published',
     date: '2026-09-08',
@@ -435,7 +435,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
   }
 ];
 
-const STORAGE_KEY = 'cusco_creativos_landings_v1';
+const STORAGE_KEY = 'cusco_creativos_landings_v2';
 
 export function getStoredLandings(): LandingData[] {
   if (typeof window === 'undefined') return INITIAL_LANDINGS;
