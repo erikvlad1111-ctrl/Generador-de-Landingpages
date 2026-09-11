@@ -95,6 +95,12 @@ export const INITIAL_LANDINGS: LandingData[] = [
         origin: 'California, USA',
         comment: 'Zero stress, luxury train ride was stunning. Worth every single dollar. 100% recommended!',
         rating: 5
+      },
+      {
+        name: 'Camila & Laurent Fournier',
+        origin: 'Lyon, Francia',
+        comment: 'Organización impecable de principio a fin. El equipo siempre atento con el oxígeno y los boletos puntuales. ¡Machu Picchu superó todas nuestras expectativas!',
+        rating: 5
       }
     ]
   },
@@ -435,7 +441,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
   }
 ];
 
-const STORAGE_KEY = 'cusco_creativos_landings_v2';
+const STORAGE_KEY = 'cusco_creativos_landings_v3';
 
 export function getStoredLandings(): LandingData[] {
   if (typeof window === 'undefined') return INITIAL_LANDINGS;

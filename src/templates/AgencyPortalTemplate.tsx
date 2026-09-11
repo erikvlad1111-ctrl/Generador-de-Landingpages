@@ -654,59 +654,75 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           </div>
 
           {/* Reviews Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {(data?.testimonials && data.testimonials.length > 0 ? data.testimonials : [
+          {(() => {
+            const fallbackReviews = [
               {
-                name: 'Clara Fernández',
-                origin: 'Madrid, España • Hace 3 días en TripAdvisor',
-                comment: 'Vinicunca y Machu Picchu de ensueño. Nos recogieron en punto en el hotel, el guía súper atento con el oxígeno y el almuerzo riquísimo. 100% recomendados!',
+                name: 'Alejandro y Marcela',
+                origin: 'Madrid, España',
+                comment: 'La mejor experiencia de nuestra vida en Perú. Carlos, nuestro guía, nos explicó la historia con una pasión que jamás olvidaremos.',
                 rating: 5
               },
               {
-                name: 'Mark & Sophie Miller',
-                origin: 'London, UK • Hace 1 semana en Google Reviews',
-                comment: 'Outstanding organization in Peru! Everything flowed smoothly from our airport pickup in Cusco to the breathtaking train journey to Machu Picchu. Very caring guides.',
+                name: 'David Miller',
+                origin: 'California, USA',
+                comment: 'Zero stress, luxury train ride was stunning. Worth every single dollar. 100% recommended!',
                 rating: 5
               },
               {
-                name: 'Diego Navarro & Familia',
-                origin: 'Santiago, Chile • Hace 2 semanas en Facebook Reviews',
-                comment: 'Hicimos el paquete de 4 días en familia. Nos transmitieron mucha confianza con sus licencias DIRCETUR y la atención rápida por WhatsApp. Inolvidable experiencia.',
+                name: 'Camila & Laurent Fournier',
+                origin: 'Lyon, Francia',
+                comment: 'Organización impecable de principio a fin. El equipo siempre atento con el oxígeno y los boletos puntuales. ¡Machu Picchu superó todas nuestras expectativas!',
                 rating: 5
               }
-            ]).map((t, idx) => (
-              <div
-                key={idx}
-                className="bg-[#1F1C1A] p-6 sm:p-7 rounded-2xl border border-stone-800 space-y-4 flex flex-col justify-between hover:border-[#FF5500]/50 transition-all duration-300 shadow-lg"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1 text-amber-400">
-                      {[...Array(t.rating || 5)].map((_, i) => (
-                        <Star key={i} size={15} fill="currentColor" />
-                      ))}
-                    </div>
-                    <span className="text-[10px] font-bold text-stone-400 uppercase tracking-wider bg-white/5 px-2 py-0.5 rounded">
-                      Verificado
-                    </span>
-                  </div>
-                  <p className="text-xs sm:text-sm text-stone-300 leading-relaxed italic">
-                    &quot;{t.comment}&quot;
-                  </p>
-                </div>
+            ];
 
-                <div className="pt-4 border-t border-stone-800/80 flex items-center justify-between">
-                  <div>
-                    <h4 className="font-extrabold text-xs text-white">{t.name}</h4>
-                    <p className="text-[10px] text-stone-400">{t.origin}</p>
+            const list = (data?.testimonials && data.testimonials.length > 0)
+              ? [...data.testimonials]
+              : fallbackReviews;
+
+            // Garantizar que la cuadrícula de 3 columnas siempre tenga la 3era tarjeta completa
+            while (list.length < 3) {
+              const nextFallback = fallbackReviews[list.length] || fallbackReviews[0];
+              list.push(nextFallback);
+            }
+
+            return (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {list.map((t, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-[#1F1C1A] p-6 sm:p-7 rounded-2xl border border-stone-800 space-y-4 flex flex-col justify-between hover:border-[#FF5500]/50 transition-all duration-300 shadow-lg"
+                  >
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1 text-amber-400">
+                          {[...Array(t.rating || 5)].map((_, i) => (
+                            <Star key={i} size={15} fill="currentColor" />
+                          ))}
+                        </div>
+                        <span className="text-[10px] font-bold text-stone-400 uppercase tracking-wider bg-white/5 px-2 py-0.5 rounded">
+                          Verificado
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-stone-300 leading-relaxed italic">
+                        &quot;{t.comment}&quot;
+                      </p>
+                    </div>
+
+                    <div className="pt-4 border-t border-stone-800/80 flex items-center justify-between">
+                      <div>
+                        <h4 className="font-extrabold text-xs text-white">{t.name}</h4>
+                        <p className="text-[10px] text-stone-400">{t.origin}</p>
+                      </div>
+                      <div className="w-8 h-8 rounded-full bg-[#FF5500]/20 flex items-center justify-center text-[#FF5500] font-bold text-xs">
+                        ★
+                      </div>
+                    </div>
                   </div>
-                  <div className="w-8 h-8 rounded-full bg-[#FF5500]/20 flex items-center justify-center text-[#FF5500] font-bold text-xs">
-                    ★
-                  </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
+            );
+          })()}
 
           {/* Social Proof Strip */}
           <div className="flex flex-wrap items-center justify-center gap-6 pt-2 text-xs text-stone-400 border-t border-stone-800/60">
