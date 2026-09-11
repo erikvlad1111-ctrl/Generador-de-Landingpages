@@ -106,7 +106,26 @@ Para almacenar información adicional de las personas que utilizan el sistema (s
 
 ## 3.10. 📐 Tabla `templates`
 Contiene las plantillas disponibles. Una plantilla es una estructura prediseñada.
-- `id`, `name`, `description`, `status`
+- `id` (UUID - Primary Key)
+- `code` (TEXT - UNIQUE, ej. `'agency-portal'`, `'adventure'`, `'cultural'`, `'premium'`, `'boho-nature'`)
+- `name` (TEXT - Nombre público)
+- `description` (TEXT - Detalle del estilo y propósito comercial)
+- `status` (TEXT - 'active' / 'inactive')
+
+### Catálogo de Plantillas Iniciales Registradas:
+1. **`agency-portal` (Opción 1 Pinterest - Plantilla Oficial de Alta Conversión):**
+   - **Hero:** Portada Vinicunca con botones dinámicos con efecto shimmer y badges de calificación flotantes.
+   - **Métricas:** Barra de impacto numérico (+10,000 viajeros, 10+ años, 4.9/5).
+   - **Catálogo de Tours:** Filtros por categoría en vivo (Trekking, Machu Picchu, Valle Sagrado, Adrenalina).
+   - **¿Por qué elegirnos?:** Credenciales de guías con baliza en vivo + 4 Pilares de Calidad ("Creando Conexiones").
+   - **Paquetes:** Circuitos completos multi-día con botón de itinerario.
+   - **Reseñas Verificadas:** Fila de 3 tarjetas oscuras con verificación y puntuación 5 estrellas.
+   - **Soporte & FAQ:** Foro de ayuda y mesa de consultas con protección anti-spam multicapa.
+   - **CTA Gigante & Sellos:** Banner de contacto rápido y acreditaciones MINCETUR/DIRCETUR.
+2. **`adventure`:** Aventura & Trekking andino.
+3. **`cultural`:** Tradición histórica y circuitos arqueológicos.
+4. **`premium`:** Experiencias de lujo y confort VIP.
+5. **`boho-nature`:** Ecoturismo y naturaleza relajada.
 
 ## 3.12. 🌐 Tabla `landings`
 Representa una landing concreta (ej. Machu Picchu Full Day).
