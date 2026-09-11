@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { 
   FileText, Globe, CalendarDays, Sparkles, TrendingUp, ArrowUpRight, 
   ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download,
-  MoveHorizontal, ChevronLeft, ChevronRight, Layers, LifeBuoy, Pin
+  MoveHorizontal, ChevronLeft, ChevronRight, Layers, Pin
 } from 'lucide-react';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, LandingData } from '@/data/landingStore';
@@ -191,7 +191,7 @@ export default function DemoDashboard() {
       </div>
 
       {/* Quick Services & Inspiration Access Banner */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Card 1: Inspiración Pinterest */}
         <Link 
           href="/demo/pinterest"
@@ -223,27 +223,10 @@ export default function DemoDashboard() {
             </div>
             <div>
               <span className="text-xs font-bold text-slate-800 block group-hover:text-blue-600 transition-colors">Guía de Estructura y Niveles</span>
-              <span className="text-[11px] text-slate-500">Qué secciones se activan (Gratis, Básico, Pro, Advance)</span>
+              <span className="text-[11px] text-slate-500">Manual técnico del creador: qué secciones se activan en cada versión</span>
             </div>
           </div>
           <span className="text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">Ver matriz →</span>
-        </Link>
-
-        {/* Card 3: Soporte & FAQ */}
-        <Link 
-          href="/demo/support"
-          className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-emerald-300 hover:shadow-xs transition-all flex items-center justify-between group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-105 transition-transform">
-              <LifeBuoy size={20} />
-            </div>
-            <div>
-              <span className="text-xs font-bold text-slate-800 block group-hover:text-emerald-600 transition-colors">Mesa de Ayuda & FAQ</span>
-              <span className="text-[11px] text-slate-500">Soporte con Anti-Spam (Honeypot & Time-gate)</span>
-            </div>
-          </div>
-          <span className="text-xs font-bold text-emerald-600 group-hover:translate-x-1 transition-transform">Abrir soporte →</span>
         </Link>
       </div>
 

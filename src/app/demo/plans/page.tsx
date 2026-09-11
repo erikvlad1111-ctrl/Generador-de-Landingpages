@@ -346,11 +346,11 @@ export default function PlansPage() {
         </div>
 
         <Link
-          href="/demo/support"
-          className="bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 px-5 py-3 rounded-xl font-bold text-xs transition-all shadow-sm flex items-center gap-2 shrink-0 cursor-pointer"
+          href="/demo/new"
+          className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-3 rounded-xl font-bold text-xs transition-all shadow-md shadow-blue-600/30 flex items-center gap-2 shrink-0 cursor-pointer"
         >
-          <HelpCircle size={16} className="text-blue-400" />
-          <span>Consultar FAQ / Soporte</span>
+          <Sparkles size={16} className="text-white" />
+          <span>Ir al Generador</span>
         </Link>
       </div>
 

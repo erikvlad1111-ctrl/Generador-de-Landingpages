@@ -12,7 +12,6 @@ import {
   X,
   Compass,
   Layers,
-  LifeBuoy,
   Pin
 } from 'lucide-react';
 import Link from 'next/link';
@@ -26,7 +25,6 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
   const isNewLanding = pathname === '/demo/new';
   const isPinterest = pathname === '/demo/pinterest';
   const isPlans = pathname === '/demo/plans';
-  const isSupport = pathname === '/demo/support';
   const isSettings = pathname === '/demo/settings';
   const isPreview = pathname.startsWith('/demo/preview');
 
@@ -34,7 +32,6 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
   if (isNewLanding) pageTitle = 'Generador de Landings';
   else if (isPinterest) pageTitle = 'Inspiración Pinterest (6 Diseños)';
   else if (isPlans) pageTitle = 'Guía de Estructura de Páginas';
-  else if (isSupport) pageTitle = 'Mesa de Ayuda & Soporte FAQ';
   else if (isSettings) pageTitle = 'Configuración';
   else if (isPreview) pageTitle = 'Previsualizador';
 
@@ -115,18 +112,6 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
           >
             <Layers size={18} />
             <span>Guía de Niveles</span>
-          </Link>
-
-          <Link 
-            href="/demo/support" 
-            className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-all ${
-              isSupport 
-                ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30' 
-                : 'text-slate-400 hover:text-white hover:bg-slate-900'
-            }`}
-          >
-            <LifeBuoy size={18} />
-            <span>Soporte & FAQ</span>
           </Link>
 
           <Link 
@@ -253,17 +238,6 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
               >
                 <Layers size={18} />
                 <span>Guía de Niveles</span>
-              </Link>
-
-              <Link
-                href="/demo/support"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`p-3 rounded-xl flex items-center gap-2.5 text-xs font-bold ${
-                  isSupport ? 'bg-blue-600 text-white' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
-                }`}
-              >
-                <LifeBuoy size={18} />
-                <span>Soporte & FAQ</span>
               </Link>
 
               <Link

@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, MessageCircle, Edit3, LayoutDashboard, Share2, Check, Download } from 'lucide-react';
+import { ArrowLeft, MessageCircle, Edit3, LayoutDashboard, Share2, Check, Download, HelpCircle } from 'lucide-react';
 import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, LandingData } from '@/data/landingStore';
@@ -92,6 +92,15 @@ export default function PublicLandingPage() {
             >
               <Edit3 size={13} />
               <span>Editar</span>
+            </Link>
+
+            <Link
+              href={`/p/${landing.slug}/support`}
+              className="bg-emerald-600 hover:bg-emerald-500 text-white px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 font-bold shadow-xs cursor-pointer"
+              title="Ver página dedicada de Soporte y Preguntas Frecuentes de este tour"
+            >
+              <HelpCircle size={13} />
+              <span>Soporte & FAQ</span>
             </Link>
 
             <Link
