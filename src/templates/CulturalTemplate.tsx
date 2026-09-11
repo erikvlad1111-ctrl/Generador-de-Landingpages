@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { Landmark, Compass, Users, CheckCircle2, MessageCircle, MapPin, Calendar, Star, HelpCircle, FileText, ShieldCheck, XCircle, Backpack } from 'lucide-react';
 import { LandingData } from '@/types/landing';
 import QuoteModal from '@/components/common/QuoteModal';
+import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
+import PinterestPinboard from '@/components/common/PinterestPinboard';
 
 interface TemplateProps {
   data: LandingData;
@@ -44,7 +46,8 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           <div className="hidden md:flex gap-6 text-sm font-medium text-stone-300 shrink-0">
             <a href="#historia" className="hover:text-amber-400 transition-colors">Historia & Ruta</a>
             <a href="#detalles" className="hover:text-amber-400 transition-colors">Detalles del Tour</a>
-            <a href="#faq" className="hover:text-amber-400 transition-colors">Preguntas</a>
+            <a href="#galeria" className="hover:text-amber-400 transition-colors">Pines Culturales</a>
+            <a href="#soporte-faq" className="hover:text-amber-400 transition-colors">Soporte & FAQ</a>
           </div>
         )}
         {isQuote ? (
@@ -301,6 +304,18 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </section>
       )}
 
+      {/* Pinterest Pinboard Gallery - AVAILABLE ACROSS ALL TIERS (Free: 1 pin, Basic: 2 pins, Pro: 6 pins, Advance: 8+ pins) */}
+      {!isFree && (
+        <PinterestPinboard
+          images={data.galleryImages}
+          destination={data.destination || 'Cusco Histórico'}
+          tourName={data.name || data.hero?.title || 'Tour Cultural'}
+          tier={tier}
+          theme="cultural"
+          isMobile={isMobile}
+        />
+      )}
+
       {/* Testimonials - ADVANCE ONLY */}
       {isAdvance && data.testimonials && data.testimonials.length > 0 && (
         <section className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-white border-b border-stone-200`}>
@@ -327,25 +342,17 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </section>
       )}
 
-      {/* FAQs (Preguntas Frecuentes del Tour) - ADVANCE ONLY */}
-      {isAdvance && data.faqs && data.faqs.length > 0 && (
-        <section id="faq" className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} max-w-4xl mx-auto`}>
-          <div className={`text-center ${isMobile ? 'mb-6' : 'mb-12'}`}>
-            <div className="inline-flex items-center gap-1.5 text-amber-700 font-bold text-xs uppercase tracking-wider mb-2">
-              <HelpCircle size={15} /> Preguntas Frecuentes del Tour
-            </div>
-            <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-serif font-bold text-stone-900`}>Resolvemos tus dudas</h2>
-          </div>
-          <div className="space-y-3">
-            {data.faqs.map((faq, idx) => (
-              <div key={idx} className={`bg-white ${isMobile ? 'p-4' : 'p-6'} rounded-2xl shadow-xs border border-stone-200`}>
-                <h3 className="font-bold text-stone-900 text-sm sm:text-base mb-1.5">{faq.q}</h3>
-                <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">{faq.a}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Tour Support & FAQs - AVAILABLE ACROSS ALL TIERS (Free, Basic, Pro, Advance) */}
+      <TourSupportAndFaqs
+        faqs={data.faqs}
+        tourName={data.name || data.hero?.title || 'Tour Cultural'}
+        whatsapp={data.whatsapp}
+        guideName={data.guideName}
+        destination={data.destination || 'Cusco'}
+        tier={tier}
+        theme="cultural"
+        isMobile={isMobile}
+      />
 
       {/* Action / Contact Section - BASIC, PRO & ADVANCE */}
       {!isFree && (

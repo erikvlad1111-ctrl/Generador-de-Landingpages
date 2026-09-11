@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { MapPin, Clock, Star, CheckCircle, MessageCircle, HelpCircle, FileText, ShieldCheck, XCircle, Backpack, Calendar } from 'lucide-react';
 import { LandingData } from '@/types/landing';
 import QuoteModal from '@/components/common/QuoteModal';
+import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
+import PinterestPinboard from '@/components/common/PinterestPinboard';
 
 interface TemplateProps {
   data: LandingData;
@@ -40,7 +42,8 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           <div className="hidden md:flex gap-6 text-sm font-medium shrink-0">
             <a href="#ruta" className="hover:text-emerald-400 transition-colors">La Ruta</a>
             <a href="#incluye" className="hover:text-emerald-400 transition-colors">¿Qué Incluye?</a>
-            <a href="#faq" className="hover:text-emerald-400 transition-colors">Preguntas Frecuentes</a>
+            <a href="#galeria" className="hover:text-emerald-400 transition-colors">Pines de Aventura</a>
+            <a href="#soporte-faq" className="hover:text-emerald-400 transition-colors">Soporte & FAQ</a>
           </div>
         )}
         {isQuote ? (
@@ -247,6 +250,18 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </section>
       )}
 
+      {/* Pinterest Pinboard Gallery - AVAILABLE ACROSS ALL TIERS (Free: 1 pin, Basic: 2 pins, Pro: 6 pins, Advance: 8+ pins) */}
+      {!isFree && (
+        <PinterestPinboard
+          images={data.galleryImages}
+          destination={data.destination || 'Cusco, Perú'}
+          tourName={data.name || data.hero?.title || 'Expedición de Aventura'}
+          tier={tier}
+          theme="adventure"
+          isMobile={isMobile}
+        />
+      )}
+
       {/* Logistics: Exclusiones & Qué Llevar - PRO & ADVANCE ONLY */}
       {(isPro || isAdvance) && ((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
         <section className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-stone-100 border-b border-stone-200`}>
@@ -315,25 +330,17 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </section>
       )}
 
-      {/* FAQs (Preguntas Frecuentes del Tour) - ADVANCE ONLY */}
-      {isAdvance && data.faqs && data.faqs.length > 0 && (
-        <section id="faq" className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} max-w-4xl mx-auto`}>
-          <div className={`text-center ${isMobile ? 'mb-6' : 'mb-12'}`}>
-            <div className="inline-flex items-center gap-1.5 text-emerald-600 font-bold text-xs uppercase tracking-wider mb-2">
-              <HelpCircle size={15} /> Preguntas Frecuentes del Tour
-            </div>
-            <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-bold text-stone-900`}>Todo lo que necesitas saber</h2>
-          </div>
-          <div className="space-y-3">
-            {data.faqs.map((faq, idx) => (
-              <div key={idx} className={`bg-white ${isMobile ? 'p-4' : 'p-6'} rounded-2xl shadow-xs border border-stone-200`}>
-                <h4 className="font-bold text-stone-900 text-sm sm:text-base mb-1.5">{faq.q}</h4>
-                <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">{faq.a}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Tour Support & FAQs - AVAILABLE ACROSS ALL TIERS (Free, Basic, Pro, Advance) */}
+      <TourSupportAndFaqs
+        faqs={data.faqs}
+        tourName={data.name || data.hero?.title || 'Tour de Aventura'}
+        whatsapp={data.whatsapp}
+        guideName={data.guideName}
+        destination={data.destination || 'Cusco'}
+        tier={tier}
+        theme="adventure"
+        isMobile={isMobile}
+      />
 
       {/* Simple Footer */}
       <footer className="bg-stone-950 py-8 text-center text-stone-500 text-xs">

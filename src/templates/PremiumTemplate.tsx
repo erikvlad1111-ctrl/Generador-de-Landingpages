@@ -3,6 +3,8 @@ import Image from 'next/image';
 import { Crown, Sparkles, ShieldCheck, Clock, Award, PhoneCall, MessageCircle, FileText, HelpCircle, Star, Calendar, XCircle, Backpack } from 'lucide-react';
 import { LandingData } from '@/types/landing';
 import QuoteModal from '@/components/common/QuoteModal';
+import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
+import PinterestPinboard from '@/components/common/PinterestPinboard';
 
 interface TemplateProps {
   data: LandingData;
@@ -41,7 +43,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           <nav className="hidden md:flex gap-6 lg:gap-8 text-xs uppercase tracking-widest text-neutral-400 shrink-0">
             <a href="#itinerario" className="hover:text-amber-400 transition-colors">La Experiencia</a>
             <a href="#privilegios" className="hover:text-amber-400 transition-colors">Privilegios</a>
-            <a href="#faq" className="hover:text-amber-400 transition-colors">FAQ</a>
+            <a href="#galeria" className="hover:text-amber-400 transition-colors">Pines VIP</a>
+            <a href="#soporte-faq" className="hover:text-amber-400 transition-colors">Soporte & FAQ</a>
           </nav>
         )}
         {isQuote ? (
@@ -295,6 +298,18 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
+      {/* Pinterest Pinboard Gallery - AVAILABLE ACROSS ALL TIERS (Free: 1 pin, Basic: 2 pins, Pro: 6 pins, Advance: 8+ pins) */}
+      {!isFree && (
+        <PinterestPinboard
+          images={data.galleryImages}
+          destination={data.destination || 'Cusco VIP'}
+          tourName={data.name || data.hero?.title || 'Experiencia Premium'}
+          tier={tier}
+          theme="premium"
+          isMobile={isMobile}
+        />
+      )}
+
       {/* Testimonials - ADVANCE ONLY */}
       {isAdvance && data.testimonials && data.testimonials.length > 0 && (
         <section className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-neutral-900/40 border-b border-neutral-800`}>
@@ -321,25 +336,17 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* FAQs (Preguntas Frecuentes del Tour) - ADVANCE ONLY */}
-      {isAdvance && data.faqs && data.faqs.length > 0 && (
-        <section id="faq" className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} max-w-4xl mx-auto`}>
-          <div className={`text-center ${isMobile ? 'mb-6' : 'mb-12'}`}>
-            <span className="text-xs uppercase tracking-widest text-amber-400 block mb-2 font-semibold flex items-center justify-center gap-1.5">
-              <HelpCircle size={15} /> Asistencia de Viaje
-            </span>
-            <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-serif font-bold text-white`}>Preguntas Frecuentes del Tour</h2>
-          </div>
-          <div className="space-y-3">
-            {data.faqs.map((faq, idx) => (
-              <div key={idx} className={`bg-neutral-900 ${isMobile ? 'p-4' : 'p-6'} rounded-2xl border border-neutral-800`}>
-                <h3 className="font-serif font-bold text-amber-300 text-sm sm:text-base mb-1.5">{faq.q}</h3>
-                <p className="text-neutral-400 text-xs sm:text-sm leading-relaxed font-light">{faq.a}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* Tour Support & FAQs - AVAILABLE ACROSS ALL TIERS (Free, Basic, Pro, Advance) */}
+      <TourSupportAndFaqs
+        faqs={data.faqs}
+        tourName={data.name || data.hero?.title || 'Experiencia VIP'}
+        whatsapp={data.whatsapp}
+        guideName={data.guideName}
+        destination={data.destination || 'Cusco'}
+        tier={tier}
+        theme="premium"
+        isMobile={isMobile}
+      />
 
       {/* Direct WhatsApp Call to Action - BASIC, PRO & ADVANCE */}
       {!isFree && (

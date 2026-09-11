@@ -22,6 +22,8 @@ import {
 } from 'lucide-react';
 import { LandingData } from '@/types/landing';
 import QuoteModal from '@/components/common/QuoteModal';
+import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
+import PinterestPinboard from '@/components/common/PinterestPinboard';
 
 interface TemplateProps {
   data: LandingData;
@@ -78,7 +80,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             <a href="#itinerario" className="hover:text-[#C86D51] transition-colors">Bitácora</a>
             <a href="#galeria" className="hover:text-[#C86D51] transition-colors">Pines & Fotos</a>
             <a href="#mochila" className="hover:text-[#C86D51] transition-colors">Mochila</a>
-            <a href="#faq" className="hover:text-[#C86D51] transition-colors">Dudas</a>
+            <a href="#soporte-faq" className="hover:text-[#C86D51] transition-colors">Soporte & FAQ</a>
           </nav>
         )}
 
@@ -254,48 +256,16 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </section>
       )}
 
-      {/* Section: Masonry Photo Grid - BASIC (2 photos), PRO & ADVANCE (Full) */}
+      {/* Section: Pinterest Pinboard Gallery - AVAILABLE ACROSS ALL TIERS (Free, Basic, Pro, Advance) */}
       {!isFree && (
-        <section id="galeria" className="py-12 sm:py-16 px-4 sm:px-8 max-w-6xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-            <span className="text-xs uppercase tracking-widest font-serif font-semibold text-[#C86D51]">
-              Galería Fotográfica {isBasic ? '(Vista Preliminar)' : isAdvance ? 'HD Completa' : ''}
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-serif text-stone-900">
-              Postales & Recuerdos del Recorrido
-            </h2>
-            <p className="text-xs sm:text-sm text-stone-500">
-              Cada rincón de esta ruta ofrece composiciones naturales únicas para fotografía y contemplación.
-            </p>
-          </div>
-
-          {/* Masonry / Pinterest Pin Cards */}
-          <div className="columns-1 sm:columns-2 md:columns-3 gap-6 space-y-6">
-            {displayedGallery.map((imgUrl, i) => (
-              <div 
-                key={i}
-                className="break-inside-avoid bg-white p-3 pb-5 rounded-2xl border border-stone-200/90 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
-                style={{ transform: i % 2 === 0 ? 'rotate(-0.8deg)' : 'rotate(0.8deg)' }}
-              >
-                <div className="relative rounded-xl overflow-hidden bg-stone-100 aspect-[4/5]">
-                  <Image
-                    src={imgUrl}
-                    alt={`Pin de viaje ${i + 1}`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute bottom-2 left-2 bg-stone-900/60 backdrop-blur-xs text-white text-[10px] px-2 py-0.5 rounded-md flex items-center gap-1">
-                    <Bookmark size={10} /> Pin #{i + 1}
-                  </div>
-                </div>
-                <p className="mt-2.5 text-xs font-serif italic text-stone-600 text-center">
-                  {i === 0 ? 'Vistas panorámicas andinas' : i === 1 ? 'Llegada al punto más alto' : i === 2 ? 'Flora y lagunas sagradas' : 'Encuentro con la cultura local'}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
+        <PinterestPinboard
+          images={data.galleryImages}
+          destination={data.destination || 'Cusco, Perú'}
+          tourName={data.name || data.hero?.title || 'Tour Cusco'}
+          tier={tier}
+          theme="boho-nature"
+          isMobile={isMobile}
+        />
       )}
 
       {/* Section: Itinerary (Visual Travel Journal by Day) - PRO & ADVANCE ONLY */}
@@ -414,39 +384,17 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </section>
       )}
 
-      {/* FAQ Section (Preguntas Frecuentes del Tour) - ADVANCE ONLY */}
-      {isAdvance && (
-        <section id="faq" className="py-12 px-4 sm:px-8 bg-white border-t border-stone-200">
-          <div className="max-w-3xl mx-auto space-y-6">
-            <div className="text-center space-y-1">
-              <span className="text-xs uppercase tracking-widest font-serif font-semibold text-stone-500">
-                Preguntas Frecuentes del Tour
-              </span>
-              <h2 className="text-xl sm:text-2xl font-serif text-stone-900">
-                Todo lo que necesitas saber antes de ir
-              </h2>
-            </div>
-
-            <div className="space-y-3">
-              {(data.faqs || [
-                { q: '¿Se requiere experiencia previa en caminatas?', a: 'No es indispensable, pero recomendamos haber pasado al menos 24 horas previas en Cusco para aclimatarse a la altura.' },
-                { q: '¿Qué pasa si el clima cambia durante el tour?', a: 'Nuestros guías monitorean el pronóstico satelital andino y cuentan con capas de contingencia para asegurar una experiencia segura.' },
-                { q: '¿Puedo alquilar caballo de emergencia?', a: 'Sí, las comunidades locales ofrecen caballos de alquiler en el punto de inicio para quienes prefieran evitar el ascenso a pie.' }
-              ]).map((faq, i) => (
-                <div key={i} className="p-4 rounded-xl bg-stone-50 border border-stone-200">
-                  <p className="font-serif font-semibold text-xs sm:text-sm text-stone-800 flex items-center gap-2">
-                    <HelpCircle size={15} className="text-[#C86D51] shrink-0" />
-                    {faq.q}
-                  </p>
-                  <p className="text-xs text-stone-600 mt-1 pl-6 leading-relaxed">
-                    {faq.a}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      {/* Tour Support & FAQs - AVAILABLE ACROSS ALL TIERS (Free, Basic, Pro, Advance) */}
+      <TourSupportAndFaqs
+        faqs={data.faqs}
+        tourName={data.name || data.hero?.title || 'Tour Cusco'}
+        whatsapp={data.whatsapp}
+        guideName={data.guideName}
+        destination={data.destination || 'Cusco'}
+        tier={tier}
+        theme="boho-nature"
+        isMobile={isMobile}
+      />
 
       {/* Bottom CTA Banner */}
       <footer className="bg-stone-900 text-stone-300 py-10 px-4 sm:px-8 text-center space-y-5">

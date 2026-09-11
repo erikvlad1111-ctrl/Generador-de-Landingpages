@@ -61,6 +61,9 @@ export default function PublicLandingPage() {
             <span className="text-[10px] font-black uppercase tracking-wider bg-slate-800 text-slate-300 border border-slate-700 px-2 py-0.5 rounded-md">
               Plan {landing.tier || 'advance'}
             </span>
+            <span className="text-[10px] font-black uppercase tracking-wider bg-blue-950 text-blue-300 border border-blue-800 px-2 py-0.5 rounded-md">
+              {landing.template}
+            </span>
           </div>
 
           <div className="flex items-center gap-2">
