@@ -1,271 +1,272 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { 
   Sparkles, 
   Check, 
   X, 
-  HelpCircle, 
-  MessageCircle, 
   ArrowRight, 
   ShieldCheck, 
   Crown, 
   Compass, 
-  Layers,
-  Zap,
-  Globe,
-  Camera,
+  Layers, 
+  Zap, 
   CheckCircle2,
-  FileText
+  Info,
+  HelpCircle
 } from 'lucide-react';
+import { PlanTier } from '@/types/landing';
 
-interface PlanTier {
-  id: string;
+interface TierSpec {
+  id: PlanTier;
   name: string;
   badge?: string;
   popular?: boolean;
-  price: string;
-  period: string;
-  description: string;
+  targetTour: string;
+  scope: string;
+  sectionsCount: string;
   icon: React.ReactNode;
-  highlights: string[];
+  activeSections: string[];
+  recommendedUse: string;
   ctaText: string;
-  ctaType: 'whatsapp' | 'contact';
 }
 
-const PLANS: PlanTier[] = [
+const TIER_SPECS: TierSpec[] = [
   {
     id: 'free',
     name: 'Gratuito',
-    price: 'S/ 0',
-    period: 'Prueba sin costo',
-    description: 'Página de 1 sola sección para validar presencia digital rápida.',
-    icon: <Compass className="text-slate-500" size={24} />,
-    highlights: [
-      '1 sección esencial con información clave del tour',
-      'Botón directo a WhatsApp personal',
-      '1 fotografía principal de portada fija',
-      '1 plantilla estándar responsiva',
-      'Subdominio demo en cusco-creativos.com',
-      'Soporte comunitario por correo'
+    badge: 'Express',
+    targetTour: 'Free Tours y Campañas Rápidas',
+    scope: '1 sección directa de captación',
+    sectionsCount: '1 Sección',
+    icon: <Compass className="text-stone-600" size={24} />,
+    activeSections: [
+      'Hero principal con foto de portada y título comercial',
+      'Badge de destino y altitud referencial',
+      'Botón directo de contacto / reserva a WhatsApp',
+      'Precio de referencia o "A base de propinas"',
+      'Pie de página minimalista institucional'
     ],
-    ctaText: 'Comenzar Gratis',
-    ctaType: 'contact'
+    recommendedUse: 'Ideal para promociones flash, captación rápida de leads en redes sociales o Free Walking Tours en el centro histórico.',
+    ctaText: 'Crear Landing Gratuita'
   },
   {
     id: 'basic',
     name: 'Básico',
-    price: 'S/ 149',
-    period: 'Pago único por tour',
-    description: 'Lo básico de una página web profesional: información esencial, contacto y presentación.',
-    icon: <Zap className="text-blue-500" size={24} />,
-    highlights: [
-      'Estructura clásica: Hero + Acerca del tour + Datos clave',
-      'Presentación limpia con 1 a 2 fotos del destino',
-      'Botón de contacto directo por WhatsApp',
-      'Formulario básico de consulta simple',
-      '2 plantillas: Aventura & Cultural',
-      'Subdominio con el nombre de tu agencia',
-      'Soporte estándar en horario de oficina'
+    badge: 'Estándar',
+    targetTour: 'Tours Tradicionales de 1/2 Jornada',
+    scope: 'Estructura web esencial para presencia formal',
+    sectionsCount: '4 Secciones',
+    icon: <Zap className="text-emerald-600" size={24} />,
+    activeSections: [
+      'Cabecera de navegación fija y Hero con CTA',
+      'Ficha técnica: Duración, dificultad y guía asignado',
+      'Módulo "Acerca del Tour" (descripción cultural y paisajística)',
+      'Módulo "Qué Incluye el Servicio" con viñetas claras',
+      'Galería básica de muestra (1 a 2 fotos del destino)',
+      'Sección de contacto directo a WhatsApp'
     ],
-    ctaText: 'Solicitar Plan Básico',
-    ctaType: 'whatsapp'
+    recommendedUse: 'Recomendado para agencias con recorridos clásicos que necesitan una página web limpia sin sobrecargar al visitante (ej. City Tour, Valle Sagrado Clásico, Maras-Moray).',
+    ctaText: 'Crear Landing Básica'
   },
   {
     id: 'pro',
-    name: 'Plan Pro',
-    badge: 'Más Popular',
+    name: 'Pro',
+    badge: 'Recomendado',
     popular: true,
-    price: 'S/ 299',
-    period: 'Pago único por tour',
-    description: 'Para agencias receptivas que buscan altas conversiones con itinerario y sellos de confianza.',
-    icon: <Sparkles className="text-amber-500" size={24} />,
-    highlights: [
-      'Todo lo del Plan Básico incluido',
-      'Todas las plantillas: Lujo, Aventura, Cultural y Boho Pinterest',
-      'Itinerario detallado día por día con horarios y actividades',
-      'Módulo de Exclusiones y Checklist de Mochila de viaje',
-      'Distintivos oficiales de confianza: DIRCETUR y Safe Travels',
-      'Selector de idiomas: Español e Inglés con IA',
-      'Galería interactiva tipo Pinterest (hasta 6 fotos)',
-      'Soporte prioritario por WhatsApp'
+    targetTour: 'Aventura, Trekking y Full Days',
+    scope: 'Alta conversión con itinerario y logística clara',
+    sectionsCount: '7 Secciones',
+    icon: <Sparkles className="text-blue-600" size={24} />,
+    activeSections: [
+      'Todo lo incluido en el Nivel Básico',
+      'Itinerario cronológico detallado paso a paso (día a día u hora por hora)',
+      'Módulo "Qué NO Incluye" (previene malentendidos con el turista)',
+      'Checklist "Qué llevar en tu mochila" (calzado, abrigo, pastillas)',
+      'Distintivos oficiales de acreditación: DIRCETUR Cusco y Safe Travels',
+      'Galería fotográfica interactiva (hasta 6 fotos en alta definición)',
+      'Selector interactivo de idioma (Español / Inglés con IA)'
     ],
-    ctaText: 'Elegir Plan Pro',
-    ctaType: 'whatsapp'
+    recommendedUse: 'El estándar de oro para excursiones de 1 o 2 días donde el cliente necesita conocer el cronograma exacto y las recomendaciones de altura (ej. Vinicunca, Humantay, Salkantay 2D).',
+    ctaText: 'Crear Landing Pro'
   },
   {
-    id: 'vip',
-    name: 'Avanzado / VIP',
-    badge: 'Máximo Impacto',
-    price: 'S/ 590',
-    period: 'Pago único por tour',
-    description: 'Landing page completa de alto rendimiento con reservas, FAQs, testimonios y dominio propio.',
-    icon: <Crown className="text-purple-500" size={24} />,
-    highlights: [
-      'Todo lo del Plan Pro incluido',
-      'Dominio propio personalizado (ej. tuagencia.pe o .com)',
-      'Galería fotográfica HD completa e ilimitada',
-      'Módulo interactivo de Consultas y Preguntas Frecuentes (FAQs)',
-      'Flujo de Reservas directas y cotizaciones para grupos por WhatsApp',
-      'Más secciones: Testimonios de clientes, Mapa/Rutas y Políticas de viaje',
-      'Soporte técnico preferente 24/7 y asistencia prioritaria'
+    id: 'advance',
+    name: 'Advance',
+    badge: 'Máxima Conversión',
+    targetTour: 'Expediciones Multidía y Tours VIP',
+    scope: 'Experiencia completa de alto rendimiento y reservas',
+    sectionsCount: '9+ Secciones',
+    icon: <Crown className="text-purple-600" size={24} />,
+    activeSections: [
+      'Todo lo incluido en el Nivel Pro',
+      'Galería fotográfica HD completa e ilimitada (formato Pinterest masonry)',
+      'Módulo interactivo de Preguntas Frecuentes (FAQs) del Tour para el viajero',
+      'Módulo de Testimonios con reseñas reales y calificación de estrellas',
+      'Flujo de Reservas por WhatsApp con mensaje pre-estructurado y fechas',
+      'Integración con modalidades de cotización para grupos privados',
+      'Estructura multisección completa y mapa/perfil de ruta'
     ],
-    ctaText: 'Cotizar Plan VIP',
-    ctaType: 'whatsapp'
+    recommendedUse: 'Diseñado para paquetes premium, treks legendarios de varios días y servicios exclusivos que demandan máxima confianza y detalle (ej. Machu Picchu VIP Hiram Bingham, Salkantay Trek 5D, Ausangate).',
+    ctaText: 'Crear Landing Advance'
   }
 ];
 
-const COMPARISON_ROWS = [
-  { feature: 'Plantillas disponibles', free: '1 Estándar', basic: '2 Plantillas', pro: 'Todas (4 plantillas)', vip: 'Personalizada a medida' },
-  { feature: 'Estilo Pinterest (Boho Journal)', free: false, basic: false, pro: true, vip: true },
-  { feature: 'Copywriting persuasivo con IA', free: 'Básico', basic: 'Completo', pro: 'Multi-tono (Lujo, Aventura)', vip: 'Copywriter dedicado' },
-  { feature: 'Enlace directo a WhatsApp', free: true, basic: true, pro: true, vip: true },
-  { feature: 'Galería de fotos', free: '1 foto fija', basic: '1-2 fotos', pro: 'Hasta 6 fotos interactiva', vip: 'Galería HD Ilimitada' },
-  { feature: 'Itinerario detallado con horarios', free: false, basic: false, pro: 'Día a día con horarios', vip: 'Interactivo con mapa' },
-  { feature: 'Checklist de mochila & Exclusiones', free: false, basic: false, pro: true, vip: true },
-  { feature: 'Sellos de confianza (DIRCETUR, Safe Travels)', free: false, basic: false, pro: true, vip: true },
-  { feature: 'Selector de idiomas (ES / EN)', free: false, basic: false, pro: true, vip: true },
-  { feature: 'Centro de Consultas & FAQs', free: false, basic: false, pro: 'Básico (3 FAQs)', vip: 'Módulo completo de FAQs' },
-  { feature: 'Flujo de Reservas y Cotizaciones', free: false, basic: 'Contacto simple', pro: 'Modal de cotización', vip: 'Reservas por WhatsApp + Grupos' },
-  { feature: 'Más secciones (Testimonios, Mapa, Políticas)', free: false, basic: false, pro: 'Secciones Pro', vip: 'Página completa multisección' },
-  { feature: 'Alojamiento web y Dominio', free: 'Subdominio demo', basic: 'Subdominio agencia', pro: 'Subdominio optimizado', vip: 'Dominio propio .pe o .com' },
-  { feature: 'Soporte y Mantenimiento', free: 'Comunitario', basic: 'Estándar', pro: 'Prioritario WhatsApp', vip: 'Dedicado 24/7' }
+const COMPARISON_MATRIX = [
+  { module: 'Hero de Portada con Título y Badge', free: 'Sí (Completo)', basic: 'Sí (Completo)', pro: 'Sí (Completo)', advance: 'Sí (HD Premium)' },
+  { module: 'Botón Directo a WhatsApp del Guía', free: true, basic: true, pro: true, advance: true },
+  { module: 'Ficha Rápida (Duración, Dificultad, Guía)', free: 'Básica', basic: true, pro: true, advance: true },
+  { module: 'Módulo "Acerca del Tour" (Descripción)', free: false, basic: true, pro: true, advance: true },
+  { module: 'Módulo "Qué Incluye el Servicio"', free: false, basic: true, pro: true, advance: true },
+  { module: 'Galería Fotográfica del Destino', free: '1 Foto fija', basic: '2 Fotos', pro: 'Hasta 6 Fotos', advance: 'Galería HD Completa' },
+  { module: 'Itinerario Cronológico Detallado', free: false, basic: false, pro: 'Paso a paso con horas', advance: 'Día a día interactivo' },
+  { module: 'Logística: Qué NO Incluye el Tour', free: false, basic: false, pro: true, advance: true },
+  { module: 'Logística: Mochila de Viaje & Recomendaciones', free: false, basic: false, pro: true, advance: true },
+  { module: 'Sellos de Confianza (DIRCETUR, Safe Travels)', free: false, basic: false, pro: true, advance: true },
+  { module: 'Selector de Idiomas (Español / Inglés)', free: false, basic: false, pro: true, advance: true },
+  { module: 'Preguntas Frecuentes (FAQs del Tour)', free: false, basic: false, pro: false, advance: 'Acordeón Interactivo' },
+  { module: 'Testimonios y Reseñas con Estrellas', free: false, basic: false, pro: false, advance: true },
+  { module: 'Flujo de Reservas y Cotización de Grupo', free: 'Chat directo', basic: 'Chat directo', pro: 'Modal cotizador', advance: 'Reserva + Grupos VIP' }
 ];
 
 export default function PlansPage() {
-  const [billingNote] = useState('Los precios corresponden al desarrollo e implementación de landing pages turísticas profesionales por Cusco Creativos S.A.C.');
-
-  const getWhatsAppLink = (planName: string) => {
-    const phone = '51984123456';
-    const msg = encodeURIComponent(`Hola Cusco Creativos, estoy interesado en contratar el "${planName}" para las landing pages de mi agencia de turismo.`);
-    return `https://wa.me/${phone}?text=${msg}`;
-  };
-
   return (
     <div className="p-4 sm:p-8 max-w-7xl mx-auto space-y-12 selection:bg-blue-600 selection:text-white">
       
-      {/* Header Banner */}
+      {/* Header Banner - Guía Técnica Interna */}
       <div className="text-center max-w-3xl mx-auto space-y-4 pt-2">
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold">
           <Layers size={14} className="text-blue-600" />
-          Niveles de Servicio para Agencias & Guías
+          Guía Técnica de Generación de Páginas
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-          Elige el nivel de landing page ideal para tus tours en Cusco
+        <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+          Manual de Niveles y Estructura de Páginas Turísticas
         </h1>
 
         <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-          Diseños de alta conversión creados por <strong>Cusco Creativos S.A.C.</strong> para impulsar tus reservas directas de WhatsApp sin intermediarios ni comisiones de terceros.
+          Referencia oficial para el equipo de <strong>Cusco Creativos S.A.C.</strong> Consulta qué secciones, módulos y funcionalidades se activan en la página del cliente según el nivel seleccionado al crear el tour en el software.
         </p>
 
-        <p className="text-xs text-slate-500 bg-slate-100 p-2.5 rounded-xl border border-slate-200 inline-block">
-          💡 {billingNote}
-        </p>
+        <div className="flex items-center justify-center gap-2 text-xs text-slate-600 bg-slate-100/90 py-2.5 px-4 rounded-2xl border border-slate-200 max-w-2xl mx-auto">
+          <Info size={15} className="text-blue-600 shrink-0" />
+          <span>
+            <strong>Herramienta de uso interno:</strong> Selecciona el nivel adecuado en el generador según la complejidad del tour (promoción flash, salidas diarias o paquetes multidía).
+          </span>
+        </div>
       </div>
 
-      {/* Pricing Cards Grid */}
+      {/* Grid de 4 Niveles de Landing (Sin precios) */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-        {PLANS.map((plan) => {
-          const isPro = plan.popular;
+        {TIER_SPECS.map((spec) => {
+          const isPro = spec.popular;
           return (
             <div
-              key={plan.id}
+              key={spec.id}
               className={`rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 relative ${
                 isPro
                   ? 'bg-white border-2 border-blue-600 shadow-xl shadow-blue-500/10 ring-4 ring-blue-500/10 -translate-y-1'
                   : 'bg-white border border-slate-200/90 shadow-sm hover:shadow-md'
               }`}
             >
-              {/* Badge if Popular or VIP */}
-              {plan.badge && (
+              {/* Badge */}
+              {spec.badge && (
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
                   <span className={`text-[11px] font-extrabold px-3 py-1 rounded-full text-white uppercase tracking-wider shadow-sm flex items-center gap-1 ${
-                    isPro ? 'bg-blue-600' : 'bg-purple-600'
+                    isPro ? 'bg-blue-600' : spec.id === 'advance' ? 'bg-purple-600' : 'bg-slate-700'
                   }`}>
                     {isPro && <Sparkles size={12} />}
-                    {plan.badge}
+                    {spec.badge}
                   </span>
                 </div>
               )}
 
               <div className="space-y-4">
-                {/* Plan Header */}
+                {/* Header de Nivel */}
                 <div className="flex items-center justify-between">
                   <div className="p-3 rounded-2xl bg-slate-50 border border-slate-100 shadow-2xs">
-                    {plan.icon}
+                    {spec.icon}
                   </div>
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                    Nivel {plan.name}
+                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider bg-slate-100 px-2.5 py-1 rounded-lg">
+                    {spec.sectionsCount}
                   </span>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900">{plan.name}</h3>
-                  <p className="text-xs text-slate-500 mt-1 min-h-[36px] leading-relaxed">
-                    {plan.description}
+                  <h3 className="text-xl font-black text-slate-900">Nivel {spec.name}</h3>
+                  <p className="text-xs font-semibold text-blue-600 mt-0.5">
+                    {spec.targetTour}
+                  </p>
+                  <p className="text-xs text-slate-500 mt-2 leading-relaxed">
+                    {spec.scope}
                   </p>
                 </div>
 
-                {/* Price Display */}
-                <div className="pt-2 border-t border-slate-100">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">{plan.price}</span>
-                    <span className="text-xs font-semibold text-slate-500">PEN</span>
-                  </div>
-                  <span className="text-[11px] text-slate-400 block font-medium mt-0.5">{plan.period}</span>
-                </div>
-
-                {/* Key Features List */}
-                <div className="pt-3 space-y-2.5">
-                  <span className="text-[11px] font-bold text-slate-700 uppercase tracking-wider block">
-                    Incluye en este nivel:
+                {/* Secciones que se activan */}
+                <div className="pt-3 border-t border-slate-100 space-y-2.5">
+                  <span className="text-[11px] font-extrabold text-slate-800 uppercase tracking-wider block">
+                    Secciones que activa el software:
                   </span>
                   <ul className="space-y-2">
-                    {plan.highlights.map((feat, idx) => (
+                    {spec.activeSections.map((sec, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-xs text-slate-600 leading-snug">
-                        <Check size={15} className="text-emerald-500 shrink-0 mt-0.5" />
-                        <span>{feat}</span>
+                        <Check size={14} className="text-emerald-500 shrink-0 mt-0.5" />
+                        <span>{sec}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
+
+                {/* Recomendación de Uso */}
+                <div className="pt-3 border-t border-slate-100 bg-slate-50/70 p-3 rounded-xl border border-slate-100">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 block mb-1">
+                    Cuándo usar este nivel:
+                  </span>
+                  <p className="text-[11px] text-slate-600 leading-relaxed">
+                    {spec.recommendedUse}
+                  </p>
+                </div>
               </div>
 
-              {/* Action Button */}
-              <div className="pt-6 mt-4 border-t border-slate-100">
-                <a
-                  href={getWhatsAppLink(plan.name)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`w-full py-3 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer ${
+              {/* Action Button: Enlace directo al generador con el nivel preseleccionado */}
+              <div className="pt-5 mt-4 border-t border-slate-100">
+                <Link
+                  href={`/demo/new?tier=${spec.id}`}
+                  className={`w-full py-3 px-4 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 cursor-pointer ${
                     isPro
                       ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/30'
+                      : spec.id === 'advance'
+                      ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-md shadow-purple-600/30'
                       : 'bg-slate-900 hover:bg-slate-800 text-white shadow-sm'
                   }`}
                 >
-                  <MessageCircle size={15} />
-                  <span>{plan.ctaText}</span>
-                </a>
+                  <span>{spec.ctaText}</span>
+                  <ArrowRight size={14} />
+                </Link>
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* Feature Matrix Table */}
+      {/* Matriz Comparativa de Arquitectura de Secciones */}
       <div className="bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
           <div>
-            <h2 className="text-xl font-bold text-slate-900">Matriz Comparativa de Funcionalidades</h2>
-            <p className="text-xs text-slate-500 mt-0.5">Compara a detalle las características técnicas incluidas en cada entrega.</p>
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">
+              <CheckCircle2 size={15} /> Arquitectura Técnica Comparativa
+            </div>
+            <h2 className="text-xl font-bold text-slate-900">Módulos y Secciones Activas por Nivel</h2>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Revisa exactamente qué elementos se muestran en la plantilla según la opción elegida por el operador.
+            </p>
           </div>
           <Link
             href="/demo/new"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 px-3.5 py-2 rounded-xl border border-blue-200"
+            className="inline-flex items-center gap-1.5 text-xs font-extrabold text-white bg-blue-600 hover:bg-blue-700 px-4 py-2.5 rounded-xl shadow-sm transition-colors"
           >
-            <span>Probar Generador Demo</span>
+            <span>Ir al Generador</span>
             <ArrowRight size={14} />
           </Link>
         </div>
@@ -273,25 +274,25 @@ export default function PlansPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
-              <tr className="border-b border-slate-200 text-slate-400 font-bold uppercase tracking-wider">
-                <th className="py-3 px-4 text-slate-700">Módulo / Característica</th>
+              <tr className="border-b border-slate-200 text-slate-400 font-extrabold uppercase tracking-wider">
+                <th className="py-3 px-4 text-slate-700">Módulo / Sección de la Landing</th>
                 <th className="py-3 px-4 text-center">Gratuito</th>
                 <th className="py-3 px-4 text-center">Básico</th>
                 <th className="py-3 px-4 text-center text-blue-600 bg-blue-50/50 rounded-t-xl">Pro (Recomendado)</th>
-                <th className="py-3 px-4 text-center">Avanzado / VIP</th>
+                <th className="py-3 px-4 text-center text-purple-700 bg-purple-50/30 rounded-t-xl">Advance (VIP)</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {COMPARISON_ROWS.map((row, idx) => (
+              {COMPARISON_MATRIX.map((row, idx) => (
                 <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
-                  <td className="py-3.5 px-4 font-semibold text-slate-800">{row.feature}</td>
+                  <td className="py-3.5 px-4 font-semibold text-slate-800">{row.module}</td>
                   
                   {/* Free */}
                   <td className="py-3.5 px-4 text-center text-slate-600">
                     {typeof row.free === 'boolean' ? (
                       row.free ? <Check size={16} className="text-emerald-500 mx-auto" /> : <X size={16} className="text-slate-300 mx-auto" />
                     ) : (
-                      <span>{row.free}</span>
+                      <span className="font-medium text-[11px]">{row.free}</span>
                     )}
                   </td>
 
@@ -300,7 +301,7 @@ export default function PlansPage() {
                     {typeof row.basic === 'boolean' ? (
                       row.basic ? <Check size={16} className="text-emerald-500 mx-auto" /> : <X size={16} className="text-slate-300 mx-auto" />
                     ) : (
-                      <span>{row.basic}</span>
+                      <span className="font-medium text-[11px]">{row.basic}</span>
                     )}
                   </td>
 
@@ -309,16 +310,16 @@ export default function PlansPage() {
                     {typeof row.pro === 'boolean' ? (
                       row.pro ? <Check size={16} className="text-blue-600 mx-auto" /> : <X size={16} className="text-slate-300 mx-auto" />
                     ) : (
-                      <span>{row.pro}</span>
+                      <span className="font-bold text-[11px] text-blue-800">{row.pro}</span>
                     )}
                   </td>
 
-                  {/* VIP */}
-                  <td className="py-3.5 px-4 text-center font-semibold text-purple-900">
-                    {typeof row.vip === 'boolean' ? (
-                      row.vip ? <Check size={16} className="text-purple-600 mx-auto" /> : <X size={16} className="text-slate-300 mx-auto" />
+                  {/* Advance */}
+                  <td className="py-3.5 px-4 text-center font-bold text-purple-900 bg-purple-50/20">
+                    {typeof row.advance === 'boolean' ? (
+                      row.advance ? <Check size={16} className="text-purple-600 mx-auto" /> : <X size={16} className="text-slate-300 mx-auto" />
                     ) : (
-                      <span>{row.vip}</span>
+                      <span className="font-bold text-[11px] text-purple-800">{row.advance}</span>
                     )}
                   </td>
                 </tr>
@@ -328,31 +329,29 @@ export default function PlansPage() {
         </div>
       </div>
 
-      {/* Trust & Guarantees Banner */}
-      <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
+      {/* Direct Guidance Footer */}
+      <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
         <div className="flex items-center gap-4">
           <div className="w-12 h-12 rounded-2xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-400 shrink-0">
             <ShieldCheck size={28} />
           </div>
           <div>
             <h3 className="font-bold text-base sm:text-lg text-white">
-              Garantía de Optimización Turística Cusco Creativos
+              ¿Dudas sobre qué nivel aplicar para un tour específico?
             </h3>
             <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-xl">
-              Cada landing page es revisada por nuestro equipo técnico para certificar velocidad de carga menor a 1.8 segundos, enlaces funcionales de WhatsApp y compatibilidad móvil total.
+              Recuerda que una vez creada la landing, puedes cambiar el nivel en cualquier momento desde el botón <strong>Editar</strong> en el previsualizador en vivo para activar o desactivar secciones al instante.
             </p>
           </div>
         </div>
 
-        <a
-          href={getWhatsAppLink('Asesoría Especializada')}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="bg-emerald-500 hover:bg-emerald-600 text-white px-5 py-3 rounded-xl font-bold text-xs transition-all shadow-md flex items-center gap-2 shrink-0 cursor-pointer"
+        <Link
+          href="/demo/support"
+          className="bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white border border-slate-700 px-5 py-3 rounded-xl font-bold text-xs transition-all shadow-sm flex items-center gap-2 shrink-0 cursor-pointer"
         >
-          <MessageCircle size={16} />
-          <span>Hablar con un Asesor</span>
-        </a>
+          <HelpCircle size={16} className="text-blue-400" />
+          <span>Consultar FAQ / Soporte</span>
+        </Link>
       </div>
 
     </div>

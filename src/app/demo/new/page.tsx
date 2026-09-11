@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -389,6 +389,15 @@ export default function NewLandingDemo() {
   const [trustBadges, setTrustBadges] = useState<string[]>(PRESET_TOURS[0].trustBadges || []);
   const [aiTone, setAiTone] = useState<string>('aventurero');
   const [tier, setTier] = useState<PlanTier>('pro');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const qTier = new URLSearchParams(window.location.search).get('tier') as PlanTier;
+      if (qTier && ['free', 'basic', 'pro', 'advance'].includes(qTier)) {
+        setTier(qTier);
+      }
+    }
+  }, []);
 
   const [objective, setObjective] = useState<ObjectiveType>('whatsapp');
   const [template, setTemplate] = useState<TemplateType>('adventure');
