@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { 
   FileText, Globe, CalendarDays, Sparkles, TrendingUp, ArrowUpRight, 
   ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download,
-  MoveHorizontal, ChevronLeft, ChevronRight
+  MoveHorizontal, ChevronLeft, ChevronRight, Layers, LifeBuoy
 } from 'lucide-react';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, LandingData } from '@/data/landingStore';
@@ -188,6 +188,41 @@ export default function DemoDashboard() {
           </div>
           <p className="text-xs text-slate-500 mt-2">Clicks directos a contacto</p>
         </div>
+      </div>
+
+      {/* Quick Services Access Banner */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Link 
+          href="/demo/plans"
+          className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-blue-300 hover:shadow-xs transition-all flex items-center justify-between group"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Layers size={20} />
+            </div>
+            <div>
+              <span className="text-xs font-bold text-slate-800 block group-hover:text-blue-600 transition-colors">Planes de Servicio Cusco Creativos</span>
+              <span className="text-[11px] text-slate-500">Compara los 4 niveles (Gratuito, Básico, Pro y VIP)</span>
+            </div>
+          </div>
+          <span className="text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">Ver matriz →</span>
+        </Link>
+
+        <Link 
+          href="/demo/support"
+          className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-emerald-300 hover:shadow-xs transition-all flex items-center justify-between group"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <LifeBuoy size={20} />
+            </div>
+            <div>
+              <span className="text-xs font-bold text-slate-800 block group-hover:text-emerald-600 transition-colors">Mesa de Ayuda & Preguntas Frecuentes</span>
+              <span className="text-[11px] text-slate-500">Soporte con Anti-Spam (Honeypot & Time-gate)</span>
+            </div>
+          </div>
+          <span className="text-xs font-bold text-emerald-600 group-hover:translate-x-1 transition-transform">Abrir soporte →</span>
+        </Link>
       </div>
 
       {/* 3. CONTROL BAR: SEARCH & INTERACTIVE FILTER TABS */}

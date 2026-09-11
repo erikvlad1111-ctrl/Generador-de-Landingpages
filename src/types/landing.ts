@@ -1,4 +1,4 @@
-export type TemplateType = 'adventure' | 'premium' | 'cultural';
+export type TemplateType = 'adventure' | 'premium' | 'cultural' | 'boho-nature';
 export type ObjectiveType = 'whatsapp' | 'quote';
 export type LanguageType = 'es' | 'en';
 

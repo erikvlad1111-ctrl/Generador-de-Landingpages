@@ -233,6 +233,58 @@ const PRESET_TOURS = [
     language: 'es' as LanguageType,
     imageIndex: 3, // Rainbow
     description: 'Asciende a uno de los paisajes geológicos más asombrosos del planeta con asistencia médica preventiva y paradas fotográficas exclusivas.'
+  },
+  {
+    id: 'humantay-boho',
+    label: '📷 Laguna Humantay (Boho Journal)',
+    name: 'Laguna Humantay — Bitácora Fotográfica & Paisajismo',
+    destination: 'Laguna Humantay & Glaciar Soraypampa',
+    guideName: 'Camila Valdivia',
+    guideCert: 'Guía Especialista en Fotografía Andina',
+    guideLanguages: 'Español, Inglés y Francés',
+    whatsapp: '+51984556677',
+    price: 'S/ 160 PEN',
+    duration: 'Full Day Fotográfico',
+    difficulty: 'Moderada (Caminata escénica)',
+    altitude: '4,200 msnm',
+    groupType: 'Grupo Reducido (Máx. 10 pers.)',
+    targetAudience: 'Creadores de contenido, parejas y amantes de la fotografía',
+    aiTone: 'cultural',
+    includedServices: [
+      'Transporte turístico privado con wifi a bordo',
+      'Desayuno orgánico y almuerzo campestre en domos',
+      'Asesoría de composición fotográfica durante el ascenso',
+      'Bastones de trekking y botiquín con oxígeno'
+    ],
+    notIncluded: [
+      'Ticket comunal de ingreso a Mollepata (S/ 20 PEN)',
+      'Caballo de alquiler opcional para el tramo empinado',
+      'Propinas y gastos personales'
+    ],
+    whatToBring: [
+      'Cámara fotográfica o smartphone con batería cargada',
+      'Ropa abrigadora en capas y cortaviento térmico',
+      'Lentes de sol con protección UV400 y bloqueador',
+      'Calzado de trekking con buen agarre'
+    ],
+    trustBadges: [
+      'Licencia Oficial DIRCETUR Cusco',
+      'Sello Internacional Safe Travels',
+      'Agencia Formal RUC 20 Verificado',
+      'Guía Colegiada Especialista'
+    ],
+    itinerary: [
+      { step: '04:30 AM', title: 'Partida desde Cusco en Mini-Van Privada', desc: 'Recojo en hotel y viaje escénico hacia el valle de Limatambo.' },
+      { step: '07:00 AM', title: 'Desayuno en Domos de Mollepata', desc: 'Degustación de panes andinos, frutas frescas y café de Quillabamba.' },
+      { step: '09:30 AM', title: 'Ascenso Guiado a la Laguna Esmeralda', desc: 'Caminata pausada con paradas estratégicas para capturar postales inolvidables.' },
+      { step: '12:00 PM', title: 'Tiempo Libre para Fotos y Mindfulness', desc: 'Momento de desconexión contemplando las aguas turquesas del nevado Humantay.' },
+      { step: '17:30 PM', title: 'Llegada a Cusco', desc: 'Retorno confortable a la plaza de armas o tu alojamiento.' }
+    ],
+    objective: 'whatsapp' as ObjectiveType,
+    template: 'boho-nature' as TemplateType,
+    language: 'es' as LanguageType,
+    imageIndex: 2, // Humantay
+    description: 'Una expedición pensada al detalle para amantes de la fotografía estética, paletas andinas y viajes con sentido.'
   }
 ];
 
@@ -1068,11 +1120,12 @@ export default function NewLandingDemo() {
               <label className="block text-xs font-bold text-slate-700 mb-2">
                 Selecciona la Plantilla de Diseño:
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 {[
                   { id: 'adventure', name: 'Aventura & Trekking', desc: 'Tonos esmeralda y montaña', icon: '🏔️' },
                   { id: 'premium', name: 'Lujo & Exclusivo', desc: 'Dorado, oscuro y sofisticado', icon: '👑' },
-                  { id: 'cultural', name: 'Cultural Ancestral', desc: 'Piedra incaica y ámbar cálido', icon: '🏛️' }
+                  { id: 'cultural', name: 'Cultural Ancestral', desc: 'Piedra incaica y ámbar cálido', icon: '🏛️' },
+                  { id: 'boho-nature', name: 'Boho Journal', desc: 'Pinterest, lino andino & polaroids', icon: '📷' }
                 ].map((t) => (
                   <button
                     key={t.id}

@@ -39,28 +39,31 @@ Representan los **niveles de servicio que Cusco Creativos S.A.C. cotiza y desarr
           ┌──────────────────┬───────────┴──────────┬──────────────────┐
           ▼                  ▼                      ▼                  ▼
     [ GRATUITO ]        [ BÁSICO ]              [ PRO ]           [ AVANZADO ]
-  • 1 sección        • Hero + Galería       • Todo lo anterior • Todo lo anterior
-  • Botón WhatsApp   • Info del tour        • Itinerario 5D    • Dominio propio (.pe)
+  • 1 sección        • Lo básico de web     • Todo lo anterior • Todo lo anterior
+  • Botón WhatsApp   • Hero + Info tour     • Itinerario día   • Dominio (.pe / .com)
   • Subdominio demo  • Botón WhatsApp       • No Incluye / Bag • Galería HD ilimitada
-                     • Formulario básico    • Idiomas (ES/EN)  • Cotizador avanzado
-                                            • Sellos confianza • Soporte prioritario
+                     • Formulario simple    • Idiomas (ES/EN)  • FAQs / Consultas
+                                            • Sellos confianza • Reservas WhatsApp
+                                                               • Más secciones
 ```
 
 ### 2.2. Matriz Detallada de Funcionalidades por Plan
 
 | Característica / Módulo | Gratuito | Básico | Pro (Recomendado) | Avanzado / VIP |
 | :--- | :---: | :---: | :---: | :---: |
-| **Plantillas disponibles** | Estándar (1) | Estándar + Adventure | Todas las plantillas (5) | Personalización total a medida |
+| **Plantillas disponibles** | Estándar (1) | Estándar + Adventure | Todas las plantillas (4) | Personalización total a medida |
 | **Hero y Copys persuasivos con IA** | ✅ Sí | ✅ Sí | ✅ Sí (Multi-tono) | ✅ Sí (Copywriter dedicado) |
-| **Botón de contacto directo WhatsApp** | ✅ Sí | ✅ Sí | ✅ Sí (Mensaje dinámico) | ✅ Sí (Multi-agente) |
-| **Galería fotográfica** | 1 foto fija | Hasta 3 fotos | Galería interactiva (6 fotos) | Galería HD sin límite + Video |
-| **Itinerario día a día detallado** | ❌ No | Resumido (1 día) | ✅ Sí (Día por día con horarios) | ✅ Sí (Interactivo con mapa) |
+| **Botón de contacto directo WhatsApp** | ✅ Sí | ✅ Sí | ✅ Sí (Mensaje dinámico) | ✅ Sí (Flujo de Reservas) |
+| **Galería fotográfica** | 1 foto fija | 1 a 2 fotos | Galería interactiva (6 fotos) | Galería HD completa e ilimitada |
+| **Itinerario día a día detallado** | ❌ No | ❌ No | ✅ Sí (Día por día con horarios) | ✅ Sí (Interactivo con mapa) |
 | **Exclusiones y Checklist de Mochila** | ❌ No | ❌ No | ✅ Sí | ✅ Sí |
-| **Sellos de confianza (DIRCETUR, Safe Travels)**| ❌ No | ❌ No | ✅ Sí | ✅ Sí (Verificación notarial) |
-| **Selector multi-idioma (Español / Inglés)** | ❌ No | ❌ No | ✅ Sí | ✅ Sí (Traducción humana PRO) |
-| **Modal de Cotizaciones formales** | ❌ No | Básico | ✅ Sí con resumen PDF | ✅ Sí integrado a CRM |
-| **Alojamiento y Dominio** | Subdominio demo | Subdominio agencia | Subdominio optimizado | Dominio propio (`tudominio.pe`) |
-| **Soporte técnico y mantenimiento** | Comunitario | Estándar | Prioritario WhatsApp | Dedicado 24/7 SLA |
+| **Sellos de confianza (DIRCETUR, Safe Travels)**| ❌ No | ❌ No | ✅ Sí | ✅ Sí |
+| **Selector multi-idioma (Español / Inglés)** | ❌ No | ❌ No | ✅ Sí | ✅ Sí |
+| **Centro de Consultas & FAQs** | ❌ No | ❌ No | Básico (3 FAQs) | ✅ Sí (Módulo completo) |
+| **Flujo de Reservas y Cotizaciones** | ❌ No | Contacto simple | ✅ Sí (Modal cotizador) | ✅ Sí (Reservas directas y grupos) |
+| **Más secciones (Testimonios, Mapa, Políticas)** | ❌ No | ❌ No | Secciones Pro | ✅ Sí (Multisección completa) |
+| **Alojamiento y Dominio** | Subdominio demo | Subdominio agencia | Subdominio optimizado | Dominio propio (`tudominio.pe` o `.com`) |
+| **Soporte técnico y mantenimiento** | Comunitario | Estándar | Prioritario WhatsApp | Dedicado 24/7 |
 
 ---
 

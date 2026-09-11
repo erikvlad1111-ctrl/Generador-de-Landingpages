@@ -290,6 +290,106 @@ export const INITIAL_LANDINGS: LandingData[] = [
         rating: 5
       }
     ]
+  },
+  {
+    id: '4',
+    name: 'Laguna Humantay Boho Journal',
+    slug: 'laguna-humantay-boho',
+    guideName: 'Camila Valdivia',
+    whatsapp: '+51984556677',
+    price: 'S/ 160 PEN',
+    duration: 'Full Day Fotográfico',
+    difficulty: 'Moderada',
+    objective: 'whatsapp',
+    template: 'boho-nature',
+    language: 'es',
+    status: 'published',
+    date: '2026-09-10',
+    views: '618',
+    heroImage: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop'
+    ],
+    hero: {
+      badge: 'Edición Travel Journal • Pinterest Style',
+      title: 'Laguna Humantay: Bitácora Visual Andina',
+      subtitle: 'Una expedición pausada hacia las aguas turquesas del nevado Humantay, diseñada para amantes de la fotografía, el paisajismo y los viajes auténticos.',
+      cta: 'Consultar Fechas por WhatsApp'
+    },
+    about: {
+      title: 'Una experiencia visual inolvidable en los Andes',
+      content: 'Diseñada bajo la estética de cuaderno de viaje: recorre senderos andinos, degusta café orgánico de altura y captura postales irrepetibles junto a un guía especializado en fotografía de montaña.'
+    },
+    features: {
+      title: 'Detalles de la Bitácora de Viaje',
+      items: [
+        'Transporte Turístico Climatizado:Viaje placentero con vistas panorámicas del valle de Limatambo.',
+        'Desayuno y Almuerzo Andino Orgánico:Platos preparados con insumos locales en domos de montaña.',
+        'Asistencia Fotográfica Continua:Consejos de composición para lograr las mejores tomas de viaje.',
+        'Seguridad Integral:Botiquín de primeros auxilios y balón de oxígeno medicinal permanente.'
+      ]
+    },
+    trustBadges: [
+      'Licencia Oficial DIRCETUR Cusco',
+      'Sello Internacional Safe Travels',
+      'Agencia Formal RUC 20 Verificado',
+      'Guía Colegiada Especialista'
+    ],
+    notIncluded: [
+      'Ticket comunal de ingreso a Mollepata (S/ 20 PEN)',
+      'Caballo de auxilio opcional',
+      'Propinas voluntarias'
+    ],
+    whatToBring: [
+      'Cámara o teléfono con buena memoria',
+      'Casaca cortavientos y ropa térmica en capas',
+      'Zapatos de trekking cómodos',
+      'Lentes de sol UV400 y bloqueador'
+    ],
+    itinerary: [
+      {
+        step: '04:30 AM',
+        title: 'Recojo en Hotel y Partida',
+        desc: 'Traslado en mini-van ejecutiva desde Cusco hacia Mollepata a través de pintorescos valles.'
+      },
+      {
+        step: '07:30 AM',
+        title: 'Desayuno Campestre en Soraypampa',
+        desc: 'Energía nutritiva con café de altura y panes andinos antes de iniciar el sendero.'
+      },
+      {
+        step: '09:30 AM',
+        title: 'Ascenso a la Laguna Humantay',
+        desc: 'Caminata a ritmo suave con paradas estratégicas para capturar postales de revista.'
+      },
+      {
+        step: '12:00 PM',
+        title: 'Contemplación frente a la Laguna Turquesa',
+        desc: 'Tiempo libre para descansar, conectar con la naturaleza y tomar fotografías.'
+      },
+      {
+        step: '17:30 PM',
+        title: 'Llegada a Cusco',
+        desc: 'Retorno seguro a la ciudad de Cusco para descansar.'
+      }
+    ],
+    faqs: [
+      {
+        q: '¿Se necesita condición física avanzada?',
+        a: 'La caminata es de nivel moderado. Recomendamos al menos 1 día previo de aclimatación en Cusco.'
+      }
+    ],
+    testimonials: [
+      {
+        name: 'Valeria & Mateo',
+        origin: 'Santiago, Chile',
+        comment: 'La estética del tour y el ritmo pausado fue perfecto para nosotros que amamos la fotografía.',
+        rating: 5
+      }
+    ]
   }
 ];
 
@@ -303,7 +403,22 @@ export function getStoredLandings(): LandingData[] {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_LANDINGS));
       return INITIAL_LANDINGS;
     }
-    return JSON.parse(data);
+    const parsed: LandingData[] = JSON.parse(data);
+    if (Array.isArray(parsed)) {
+      const existingIds = new Set(parsed.map(item => item.id));
+      let updated = false;
+      for (const init of INITIAL_LANDINGS) {
+        if (!existingIds.has(init.id)) {
+          parsed.push(init);
+          updated = true;
+        }
+      }
+      if (updated) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(parsed));
+      }
+      return parsed;
+    }
+    return INITIAL_LANDINGS;
   } catch {
     return INITIAL_LANDINGS;
   }

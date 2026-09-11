@@ -10,7 +10,9 @@ import {
   Sparkles, 
   Menu, 
   X,
-  Compass
+  Compass,
+  Layers,
+  LifeBuoy
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -21,11 +23,15 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
 
   const isDashboard = pathname === '/demo';
   const isNewLanding = pathname === '/demo/new';
+  const isPlans = pathname === '/demo/plans';
+  const isSupport = pathname === '/demo/support';
   const isSettings = pathname === '/demo/settings';
   const isPreview = pathname.startsWith('/demo/preview');
 
   let pageTitle = 'Panel Principal';
   if (isNewLanding) pageTitle = 'Generador de Landings';
+  else if (isPlans) pageTitle = 'Niveles de Planes de Servicio';
+  else if (isSupport) pageTitle = 'Mesa de Ayuda & Soporte FAQ';
   else if (isSettings) pageTitle = 'Configuración';
   else if (isPreview) pageTitle = 'Previsualizador';
 
@@ -80,6 +86,30 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
           )}
 
           <Link 
+            href="/demo/plans" 
+            className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-all ${
+              isPlans 
+                ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30' 
+                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+            }`}
+          >
+            <Layers size={18} />
+            <span>Planes de Servicio</span>
+          </Link>
+
+          <Link 
+            href="/demo/support" 
+            className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-all ${
+              isSupport 
+                ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30' 
+                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+            }`}
+          >
+            <LifeBuoy size={18} />
+            <span>Soporte & FAQ</span>
+          </Link>
+
+          <Link 
             href="/demo/settings" 
             className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-all ${
               isSettings 
@@ -98,7 +128,10 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
             <span className="font-bold text-slate-200 block mb-0.5 flex items-center gap-1.5">
               <Sparkles size={12} className="text-amber-400" /> Plan Pro Agencia
             </span>
-            <span>3 Plantillas activadas y generación con IA.</span>
+            <span>4 Plantillas activadas (incl. Boho Pinterest).</span>
+            <Link href="/demo/plans" className="text-blue-400 hover:text-blue-300 font-semibold block mt-1.5 transition-colors">
+              Ver todos los planes →
+            </Link>
           </div>
 
           <Link 
@@ -173,6 +206,28 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
               >
                 <FilePlus2 size={18} />
                 <span>Nueva Landing</span>
+              </Link>
+
+              <Link
+                href="/demo/plans"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`p-3 rounded-xl flex items-center gap-2.5 text-xs font-bold ${
+                  isPlans ? 'bg-blue-600 text-white' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
+                }`}
+              >
+                <Layers size={18} />
+                <span>Planes de Servicio</span>
+              </Link>
+
+              <Link
+                href="/demo/support"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`p-3 rounded-xl flex items-center gap-2.5 text-xs font-bold ${
+                  isSupport ? 'bg-blue-600 text-white' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
+                }`}
+              >
+                <LifeBuoy size={18} />
+                <span>Soporte & FAQ</span>
               </Link>
 
               <Link

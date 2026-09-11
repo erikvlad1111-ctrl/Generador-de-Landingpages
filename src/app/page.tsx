@@ -68,7 +68,7 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 gap-3 pt-2">
             <div className="flex items-center gap-2.5 text-sm text-slate-300 bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
               <CheckCircle2 size={18} className="text-emerald-400 shrink-0" />
-              <span>3 Plantillas: Aventura, Lujo y Cultural</span>
+              <span>4 Plantillas: Aventura, Lujo, Cultural y Boho Pinterest</span>
             </div>
             <div className="flex items-center gap-2.5 text-sm text-slate-300 bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
               <CheckCircle2 size={18} className="text-emerald-400 shrink-0" />

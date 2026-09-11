@@ -24,6 +24,7 @@ import {
 import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, saveLandingToStorage, LandingData } from '@/data/landingStore';
+import { TemplateType } from '@/types/landing';
 
 function DemoPreviewContent() {
   const searchParams = useSearchParams();
@@ -52,7 +53,7 @@ function DemoPreviewContent() {
   const [editAboutContent, setEditAboutContent] = useState(() => landing?.about?.content || '');
   const [editPrice, setEditPrice] = useState(() => landing?.price || '');
   const [editWhatsapp, setEditWhatsapp] = useState(() => landing?.whatsapp || '');
-  const [editTemplate, setEditTemplate] = useState<'adventure' | 'premium' | 'cultural'>(() => landing?.template || 'adventure');
+  const [editTemplate, setEditTemplate] = useState<TemplateType>(() => landing?.template || 'adventure');
 
   if (!landing) {
     return (
@@ -363,12 +364,13 @@ function DemoPreviewContent() {
                 </label>
                 <select
                   value={editTemplate}
-                  onChange={(e) => setEditTemplate(e.target.value as 'adventure' | 'premium' | 'cultural')}
+                  onChange={(e) => setEditTemplate(e.target.value as TemplateType)}
                   className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white font-medium focus:ring-2 focus:ring-blue-500 outline-none"
                 >
                   <option value="adventure">Aventura (Trekking y Naturaleza)</option>
                   <option value="premium">Premium / Lujo (Exclusivo VIP)</option>
                   <option value="cultural">Cultural Clásico (Historia e Incas)</option>
+                  <option value="boho-nature">Boho Journal (Pinterest & Polaroids)</option>
                 </select>
               </div>
 
