@@ -30,6 +30,7 @@ import {
   Check
 } from 'lucide-react';
 import { LandingData } from '@/types/landing';
+import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 
 interface AgencyPortalTemplateProps {
   data?: Partial<LandingData>;
@@ -38,7 +39,6 @@ interface AgencyPortalTemplateProps {
 }
 
 export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 'desktop' }: AgencyPortalTemplateProps) {
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
   const isMobile = viewMode === 'mobile';
 
   const brandName = data?.name || 'Cusco Tours';
@@ -565,74 +565,17 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </section>
 
-      {/* 8. FAQ ACCORDION */}
-      <section id="preguntas" className="py-14 sm:py-20 px-4 sm:px-6 max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-          <span className="text-xs font-black uppercase tracking-widest text-[#FF5500]">
-            Mesa de Ayuda
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-black text-stone-900 tracking-tight">
-            ¿Tienes preguntas?
-          </h2>
-          <p className="text-xs sm:text-sm text-stone-500">
-            Resolvemos las dudas más frecuentes antes de tu viaje a Cusco y Machu Picchu.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          <div className="lg:col-span-7 space-y-3">
-            {faqs.map((faq, idx) => {
-              const isOpen = openFaq === idx;
-              return (
-                <div
-                  key={idx}
-                  className="bg-white border border-stone-200 rounded-2xl overflow-hidden transition-all shadow-xs"
-                >
-                  <button
-                    onClick={() => setOpenFaq(isOpen ? null : idx)}
-                    className="w-full p-4 sm:p-5 text-left font-bold text-xs sm:text-sm text-stone-900 flex items-center justify-between gap-4 cursor-pointer hover:text-[#FF5500]"
-                  >
-                    <span>{faq.q}</span>
-                    {isOpen ? <ChevronUp size={16} className="text-[#FF5500] shrink-0" /> : <ChevronDown size={16} className="text-stone-400 shrink-0" />}
-                  </button>
-
-                  {isOpen && (
-                    <div className="px-4 pb-5 sm:px-5 text-xs text-stone-600 leading-relaxed border-t border-stone-100 pt-3">
-                      {faq.a}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="lg:col-span-5 bg-[#F9F7F4] p-6 sm:p-8 rounded-3xl border border-stone-200 space-y-5">
-            <div className="relative h-44 rounded-2xl overflow-hidden shadow-md">
-              <Image
-                src="https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop"
-                alt="Atención Turística Cusco"
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-3 left-3 text-white">
-                <span className="text-xs font-bold">Asistencia con {guideName}</span>
-                <p className="text-[11px] text-stone-200">Respondemos en menos de 15 minutos</p>
-              </div>
-            </div>
-
-            <a
-              href={`https://wa.me/${whatsappNumber}?text=Hola,%20tengo%20una%20consulta%20especial%20sobre%20los%20tours`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full bg-[#FF5500] hover:bg-[#E04B00] text-white py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md shadow-[#FF5500]/30 cursor-pointer"
-            >
-              <MessageCircle size={16} />
-              <span>Chatear con un Asesor</span>
-            </a>
-          </div>
-        </div>
-      </section>
+      {/* 8. FORO DE AYUDA, MESA DE CONSULTAS & FAQ CON PROTECCIÓN ANTI-SPAM MULTICAPA */}
+      <TourSupportAndFaqs
+        faqs={data?.faqs}
+        tourName={data?.name || 'Vinicunca Montaña 7 Colores & Machu Picchu VIP'}
+        whatsapp={whatsappNumber}
+        guideName={guideName}
+        destination={data?.destination || 'Cusco'}
+        tier={data?.tier || 'advance'}
+        theme="agency-portal"
+        isMobile={isMobile}
+      />
 
       {/* 9. GIANT ORANGE CTA BANNER */}
       <section className="bg-[#FF5500] text-white py-14 sm:py-18 px-4 sm:px-6 text-center shadow-xl">
