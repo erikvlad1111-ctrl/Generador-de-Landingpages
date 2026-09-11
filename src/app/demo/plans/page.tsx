@@ -45,7 +45,7 @@ const TIER_SPECS: TierSpec[] = [
       'Hero principal con foto de portada y título comercial',
       'Badge de destino y altitud referencial',
       'Botón directo de contacto / reserva a WhatsApp',
-      'Precio de referencia o "A base de propinas"',
+      'Modalidad del tour (ej. "Free Tour" o "A base de propinas")',
       'Pie de página minimalista institucional'
     ],
     recommendedUse: 'Ideal para promociones flash, captación rápida de leads en redes sociales o Free Walking Tours en el centro histórico.',
@@ -136,23 +136,23 @@ export default function PlansPage() {
       
       {/* Header Banner - Guía Técnica Interna */}
       <div className="text-center max-w-3xl mx-auto space-y-4 pt-2">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold">
           <Layers size={14} className="text-blue-600" />
-          Guía Técnica de Generación de Páginas
+          Guía de Creación de Páginas Turísticas
         </div>
 
         <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-          Manual de Niveles y Estructura de Páginas Turísticas
+          Manual de Estructura y Niveles de Página
         </h1>
 
         <p className="text-sm sm:text-base text-slate-600 leading-relaxed">
-          Referencia oficial para el equipo de <strong>Cusco Creativos S.A.C.</strong> Consulta qué secciones, módulos y funcionalidades se activan en la página del cliente según el nivel seleccionado al crear el tour en el software.
+          Guía práctica para el creador web en <strong>Cusco Creativos S.A.C.</strong> Te orienta sobre qué secciones, módulos interactivos y elementos visuales se activan en la página según la versión elegida para el tour.
         </p>
 
-        <div className="flex items-center justify-center gap-2 text-xs text-slate-600 bg-slate-100/90 py-2.5 px-4 rounded-2xl border border-slate-200 max-w-2xl mx-auto">
-          <Info size={15} className="text-blue-600 shrink-0" />
+        <div className="flex items-center justify-center gap-2 text-xs text-slate-600 bg-amber-50/80 text-amber-900 py-2.5 px-4 rounded-2xl border border-amber-200/80 max-w-2xl mx-auto">
+          <Info size={15} className="text-amber-600 shrink-0" />
           <span>
-            <strong>Herramienta de uso interno:</strong> Selecciona el nivel adecuado en el generador según la complejidad del tour (promoción flash, salidas diarias o paquetes multidía).
+            <strong>Uso interno:</strong> Esta guía no es para vender planes a clientes (no contiene precios ni suscripciones). Su objetivo es ayudarte a seleccionar la estructura idónea al generar la web con el software.
           </span>
         </div>
       </div>

@@ -30,7 +30,7 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
 
   let pageTitle = 'Panel Principal';
   if (isNewLanding) pageTitle = 'Generador de Landings';
-  else if (isPlans) pageTitle = 'Niveles de Planes de Servicio';
+  else if (isPlans) pageTitle = 'Guía de Estructura de Páginas';
   else if (isSupport) pageTitle = 'Mesa de Ayuda & Soporte FAQ';
   else if (isSettings) pageTitle = 'Configuración';
   else if (isPreview) pageTitle = 'Previsualizador';
@@ -94,7 +94,7 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
             }`}
           >
             <Layers size={18} />
-            <span>Planes de Servicio</span>
+            <span>Guía de Niveles</span>
           </Link>
 
           <Link 
@@ -216,7 +216,7 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
                 }`}
               >
                 <Layers size={18} />
-                <span>Planes de Servicio</span>
+                <span>Guía de Niveles</span>
               </Link>
 
               <Link

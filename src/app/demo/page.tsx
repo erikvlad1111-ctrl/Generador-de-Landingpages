@@ -201,8 +201,8 @@ export default function DemoDashboard() {
               <Layers size={20} />
             </div>
             <div>
-              <span className="text-xs font-bold text-slate-800 block group-hover:text-blue-600 transition-colors">Planes de Servicio Cusco Creativos</span>
-              <span className="text-[11px] text-slate-500">Compara los 4 niveles (Gratuito, Básico, Pro y VIP)</span>
+              <span className="text-xs font-bold text-slate-800 block group-hover:text-blue-600 transition-colors">Guía de Estructura y Niveles</span>
+              <span className="text-[11px] text-slate-500">Manual técnico del creador: qué secciones se activan en cada versión (Gratuito, Básico, Pro, Advance)</span>
             </div>
           </div>
           <span className="text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">Ver matriz →</span>
