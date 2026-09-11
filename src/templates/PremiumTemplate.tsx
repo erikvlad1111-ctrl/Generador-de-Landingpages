@@ -16,6 +16,11 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
   const isMobile = viewMode === 'mobile';
 
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
+  const tier = data.tier || 'advance';
+  const isFree = tier === 'free';
+  const isBasic = tier === 'basic';
+  const isPro = tier === 'pro';
+  const isAdvance = tier === 'advance';
   const encodedMsg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, estoy interesado en la experiencia VIP "${data.name}". ¿Podrían brindarme disponibilidad?`);
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
@@ -145,8 +150,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* Trust Badges Bar */}
-      {data.trustBadges && data.trustBadges.length > 0 && (
+      {/* Trust Badges Bar - PRO & ADVANCE ONLY */}
+      {(isPro || isAdvance) && data.trustBadges && data.trustBadges.length > 0 && (
         <section className="max-w-5xl mx-auto px-4 mt-6">
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             {data.trustBadges.map((badge, idx) => (
@@ -159,39 +164,41 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* About Section */}
-      <section id="itinerario" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} max-w-6xl mx-auto`}>
-        <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-2 gap-16'} items-center`}>
-          <div>
-            <span className="text-xs font-semibold text-amber-400 uppercase tracking-widest block mb-2">Exclusividad Andina</span>
-            <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-serif font-bold mb-4 text-neutral-100`}>{data.about?.title}</h2>
-            <p className="text-sm text-neutral-300 leading-relaxed font-light mb-6">
-              {data.about?.content}
-            </p>
-            <div className="p-4 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-amber-400/20 flex items-center justify-center text-amber-400">
-                <PhoneCall size={18} />
-              </div>
-              <div>
-                <p className="text-xs text-neutral-400">Atención Personalizada Directa</p>
-                <p className="font-bold text-sm text-neutral-200">{data.whatsapp || '+51 984 123 456'}</p>
+      {/* About Section - BASIC, PRO & ADVANCE */}
+      {!isFree && (
+        <section id="itinerario" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} max-w-6xl mx-auto`}>
+          <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-2 gap-16'} items-center`}>
+            <div>
+              <span className="text-xs font-semibold text-amber-400 uppercase tracking-widest block mb-2">Exclusividad Andina</span>
+              <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-4xl'} font-serif font-bold mb-4 text-neutral-100`}>{data.about?.title}</h2>
+              <p className="text-sm text-neutral-300 leading-relaxed font-light mb-6">
+                {data.about?.content}
+              </p>
+              <div className="p-4 rounded-xl bg-neutral-900 border border-neutral-800 flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-amber-400/20 flex items-center justify-center text-amber-400">
+                  <PhoneCall size={18} />
+                </div>
+                <div>
+                  <p className="text-xs text-neutral-400">Atención Personalizada Directa</p>
+                  <p className="font-bold text-sm text-neutral-200">{data.whatsapp || '+51 984 123 456'}</p>
+                </div>
               </div>
             </div>
+            <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden border border-amber-500/20 shadow-2xl">
+              <Image 
+                src={gallery1} 
+                alt="Machu Picchu Luxury" 
+                fill
+                sizes="(max-width: 768px) 100vw, 500px"
+                className="object-cover" 
+              />
+            </div>
           </div>
-          <div className="relative h-64 sm:h-80 rounded-2xl overflow-hidden border border-amber-500/20 shadow-2xl">
-            <Image 
-              src={gallery1} 
-              alt="Machu Picchu Luxury" 
-              fill
-              sizes="(max-width: 768px) 100vw, 500px"
-              className="object-cover"
-            />
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Itinerary Timeline */}
-      {data.itinerary && data.itinerary.length > 0 && (
+      {/* Itinerary Timeline - PRO & ADVANCE ONLY */}
+      {(isPro || isAdvance) && data.itinerary && data.itinerary.length > 0 && (
         <section id="itinerario-timeline" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-neutral-900/40 border-t border-neutral-800`}>
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8 sm:mb-14">
@@ -218,33 +225,35 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* Privilegios / Features */}
-      <section id="privilegios" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-neutral-900/60 border-y border-neutral-800/80`}>
-        <div className="max-w-6xl mx-auto">
-          <div className={`text-center ${isMobile ? 'mb-8' : 'mb-16'}`}>
-            <span className="text-xs font-semibold text-amber-400 uppercase tracking-widest block mb-2">Estándares VIP</span>
-            <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-5xl'} font-serif font-bold text-neutral-100`}>{data.features?.title}</h2>
-          </div>
-          <div className={`grid ${isMobile ? 'grid-cols-1 gap-3.5' : 'md:grid-cols-2 gap-8'}`}>
-            {data.features?.items?.map((item, idx) => (
-              <div key={idx} className={`bg-neutral-900 ${isMobile ? 'p-5' : 'p-8'} rounded-2xl border border-neutral-800 hover:border-amber-500/40 transition-colors`}>
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="w-8 h-8 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400">
-                    <Sparkles size={16} />
+      {/* Privilegios / Features - BASIC, PRO & ADVANCE */}
+      {!isFree && (
+        <section id="privilegios" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-neutral-900/60 border-y border-neutral-800/80`}>
+          <div className="max-w-6xl mx-auto">
+            <div className={`text-center ${isMobile ? 'mb-8' : 'mb-16'}`}>
+              <span className="text-xs font-semibold text-amber-400 uppercase tracking-widest block mb-2">Estándares VIP</span>
+              <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl md:text-5xl'} font-serif font-bold text-neutral-100`}>{data.features?.title}</h2>
+            </div>
+            <div className={`grid ${isMobile ? 'grid-cols-1 gap-3.5' : 'md:grid-cols-2 gap-8'}`}>
+              {data.features?.items?.map((item, idx) => (
+                <div key={idx} className={`bg-neutral-900 ${isMobile ? 'p-5' : 'p-8'} rounded-2xl border border-neutral-800 hover:border-amber-500/40 transition-colors`}>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-8 h-8 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-400">
+                      <Sparkles size={16} />
+                    </div>
+                    <h3 className={`${isMobile ? 'text-lg' : 'text-xl'} font-serif font-bold text-neutral-100`}>{item.split(':')[0]}</h3>
                   </div>
-                  <h3 className={`${isMobile ? 'text-lg' : 'text-xl'} font-serif font-bold text-neutral-100`}>{item.split(':')[0]}</h3>
+                  <p className={`text-neutral-400 font-light text-sm leading-relaxed ${isMobile ? 'pl-0' : 'pl-11'}`}>
+                    {item.split(':')[1] || 'Atención premium orientada a la máxima comodidad.'}
+                  </p>
                 </div>
-                <p className={`text-neutral-400 font-light text-sm leading-relaxed ${isMobile ? 'pl-0' : 'pl-11'}`}>
-                  {item.split(':')[1] || 'Atención premium orientada a la máxima comodidad.'}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Logistics: Exclusiones & Equipaje VIP */}
-      {((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
+      {/* Logistics: Exclusiones & Equipaje VIP - PRO & ADVANCE ONLY */}
+      {(isPro || isAdvance) && ((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
         <section className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-neutral-950 border-b border-neutral-800`}>
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {/* Qué NO incluye */}
@@ -286,8 +295,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* Testimonials */}
-      {data.testimonials && data.testimonials.length > 0 && (
+      {/* Testimonials - ADVANCE ONLY */}
+      {isAdvance && data.testimonials && data.testimonials.length > 0 && (
         <section className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-neutral-900/40 border-b border-neutral-800`}>
           <div className="max-w-4xl mx-auto text-center">
             <span className="text-xs uppercase tracking-widest text-amber-400 block mb-2 font-semibold">Opiniones Destacadas</span>
@@ -312,14 +321,14 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* FAQs */}
-      {data.faqs && data.faqs.length > 0 && (
+      {/* FAQs (Preguntas Frecuentes del Tour) - ADVANCE ONLY */}
+      {isAdvance && data.faqs && data.faqs.length > 0 && (
         <section id="faq" className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} max-w-4xl mx-auto`}>
           <div className={`text-center ${isMobile ? 'mb-6' : 'mb-12'}`}>
             <span className="text-xs uppercase tracking-widest text-amber-400 block mb-2 font-semibold flex items-center justify-center gap-1.5">
               <HelpCircle size={15} /> Asistencia de Viaje
             </span>
-            <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-serif font-bold text-white`}>Preguntas Frecuentes</h2>
+            <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-serif font-bold text-white`}>Preguntas Frecuentes del Tour</h2>
           </div>
           <div className="space-y-3">
             {data.faqs.map((faq, idx) => (
@@ -332,35 +341,37 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* Direct WhatsApp Call to Action */}
-      <section id="contacto" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} text-center bg-gradient-to-b from-neutral-900 to-neutral-950`}>
-        <div className="max-w-2xl mx-auto">
-          <Crown className="text-amber-400 mx-auto mb-3" size={28} />
-          <h2 className={`${isMobile ? 'text-xl mb-3' : 'text-3xl mb-4'} font-serif font-bold text-white`}>¿Listo para vivir una experiencia inolvidable?</h2>
-          <p className={`${isMobile ? 'text-xs mb-6' : 'text-base mb-8'} text-neutral-400 font-light`}>
-            Comunícate de inmediato con el equipo organizador y reserva tus accesos preferentes con confirmación directa.
-          </p>
-          {isQuote ? (
-            <button
-              onClick={() => setIsQuoteOpen(true)}
-              className={`inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-neutral-950 font-bold ${isMobile ? 'w-full py-3 text-sm' : 'px-8 py-4 text-base'} rounded-full shadow-lg transition-all hover:scale-105 cursor-pointer`}
-            >
-              <FileText size={18} />
-              <span>Solicitar Cotización Privada</span>
-            </button>
-          ) : (
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`inline-flex items-center justify-center gap-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold ${isMobile ? 'w-full py-3 text-sm' : 'px-8 py-4 text-base'} rounded-full shadow-lg shadow-emerald-600/30 transition-all hover:scale-105 cursor-pointer`}
-            >
-              <MessageCircle size={18} />
-              <span>Hablar por WhatsApp con {data.guideName || 'el Guía'}</span>
-            </a>
-          )}
-        </div>
-      </section>
+      {/* Direct WhatsApp Call to Action - BASIC, PRO & ADVANCE */}
+      {!isFree && (
+        <section id="contacto" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} text-center bg-gradient-to-b from-neutral-900 to-neutral-950`}>
+          <div className="max-w-2xl mx-auto">
+            <Crown className="text-amber-400 mx-auto mb-3" size={28} />
+            <h2 className={`${isMobile ? 'text-xl mb-3' : 'text-3xl mb-4'} font-serif font-bold text-white`}>¿Listo para vivir una experiencia inolvidable?</h2>
+            <p className={`${isMobile ? 'text-xs mb-6' : 'text-base mb-8'} text-neutral-400 font-light`}>
+              Comunícate de inmediato con el equipo organizador y reserva tus accesos preferentes con confirmación directa.
+            </p>
+            {isQuote ? (
+              <button
+                onClick={() => setIsQuoteOpen(true)}
+                className={`inline-flex items-center justify-center gap-2.5 bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-neutral-950 font-bold ${isMobile ? 'w-full py-3 text-sm' : 'px-8 py-4 text-base'} rounded-full shadow-lg transition-all hover:scale-105 cursor-pointer`}
+              >
+                <FileText size={18} />
+                <span>Solicitar Cotización Privada</span>
+              </button>
+            ) : (
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`inline-flex items-center justify-center gap-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold ${isMobile ? 'w-full py-3 text-sm' : 'px-8 py-4 text-base'} rounded-full shadow-lg shadow-emerald-600/30 transition-all hover:scale-105 cursor-pointer`}
+              >
+                <MessageCircle size={18} />
+                <span>Hablar por WhatsApp con {data.guideName || 'el Guía'}</span>
+              </a>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Footer */}
       <footer className="py-6 text-center text-neutral-600 text-xs border-t border-neutral-900">

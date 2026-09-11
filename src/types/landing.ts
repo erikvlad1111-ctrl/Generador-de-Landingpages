@@ -1,6 +1,7 @@
 export type TemplateType = 'adventure' | 'premium' | 'cultural' | 'boho-nature';
 export type ObjectiveType = 'whatsapp' | 'quote';
 export type LanguageType = 'es' | 'en';
+export type PlanTier = 'free' | 'basic' | 'pro' | 'advance';
 
 export interface ItineraryItem {
   step: string;
@@ -24,6 +25,7 @@ export interface LandingData {
   id: string;
   name: string;
   slug: string;
+  tier?: PlanTier;
   guideName: string;
   guideAvatar?: string;
   guideCert?: string;

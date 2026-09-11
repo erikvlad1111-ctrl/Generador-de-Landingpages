@@ -14,9 +14,14 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const isQuote = data.objective === 'quote';
   const isMobile = viewMode === 'mobile';
+  const tier = data.tier || 'advance';
+  const isFree = tier === 'free';
+  const isBasic = tier === 'basic';
+  const isPro = tier === 'pro';
+  const isAdvance = tier === 'advance';
 
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
-  const encodedMsg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, deseo consultar disponibilidad para el tour "${data.name || data.hero.title}".`);
+  const encodedMsg = encodeURIComponent(`Hola ${data.guideName || 'Guía de Trekking'}, me interesa el tour "${data.name || data.hero?.title}". ¿Tienen disponibilidad?`);
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
   const heroImg = data.heroImage || 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop';
@@ -142,8 +147,8 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </div>
       </section>
 
-      {/* Trust Badges Bar */}
-      {data.trustBadges && data.trustBadges.length > 0 && (
+      {/* Trust Badges Bar - PRO & ADVANCE ONLY */}
+      {(isPro || isAdvance) && data.trustBadges && data.trustBadges.length > 0 && (
         <section className="max-w-5xl mx-auto px-4 mt-6">
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             {data.trustBadges.map((badge, idx) => (
@@ -156,40 +161,42 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </section>
       )}
 
-      {/* About Section */}
-      <section id="ruta" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} max-w-6xl mx-auto`}>
-        <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-2 gap-16'} items-center`}>
-          <div>
-            <h2 className={`${isMobile ? 'text-2xl mb-4' : 'text-4xl mb-6'} font-bold text-stone-800`}>{data.about.title}</h2>
-            <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
-              {data.about.content}
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div className="relative h-48 sm:h-64 rounded-2xl overflow-hidden shadow-lg">
-              <Image 
-                src={gallery1} 
-                alt="Tour Gallery 1" 
-                fill
-                sizes="(max-width: 768px) 50vw, 300px"
-                className="object-cover" 
-              />
+      {/* About Section - BASIC, PRO & ADVANCE */}
+      {!isFree && (
+        <section id="ruta" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} max-w-6xl mx-auto`}>
+          <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-2 gap-16'} items-center`}>
+            <div>
+              <h2 className={`${isMobile ? 'text-2xl mb-4' : 'text-4xl mb-6'} font-bold text-stone-800`}>{data.about.title}</h2>
+              <p className="text-sm sm:text-base text-stone-600 leading-relaxed">
+                {data.about.content}
+              </p>
             </div>
-            <div className="relative h-48 sm:h-64 rounded-2xl overflow-hidden shadow-lg mt-4 sm:mt-8">
-              <Image 
-                src={gallery2} 
-                alt="Tour Gallery 2" 
-                fill
-                sizes="(max-width: 768px) 50vw, 300px"
-                className="object-cover" 
-              />
+            <div className="grid grid-cols-2 gap-3">
+              <div className="relative h-48 sm:h-64 rounded-2xl overflow-hidden shadow-lg">
+                <Image 
+                  src={gallery1} 
+                  alt="Tour Gallery 1" 
+                  fill
+                  sizes="(max-width: 768px) 50vw, 300px"
+                  className="object-cover" 
+                />
+              </div>
+              <div className="relative h-48 sm:h-64 rounded-2xl overflow-hidden shadow-lg mt-4 sm:mt-8">
+                <Image 
+                  src={gallery2} 
+                  alt="Tour Gallery 2" 
+                  fill
+                  sizes="(max-width: 768px) 50vw, 300px"
+                  className="object-cover" 
+                />
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Itinerary Timeline */}
-      {data.itinerary && data.itinerary.length > 0 && (
+      {/* Itinerary Timeline - PRO & ADVANCE ONLY */}
+      {(isPro || isAdvance) && data.itinerary && data.itinerary.length > 0 && (
         <section id="itinerario" className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-white border-y border-stone-200`}>
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8 sm:mb-12">
@@ -220,26 +227,28 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </section>
       )}
 
-      {/* Features/Highlights */}
-      <section id="incluye" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-stone-900 text-white`}>
-        <div className="max-w-6xl mx-auto">
-          <h2 className={`${isMobile ? 'text-2xl mb-8' : 'text-4xl mb-16'} font-bold text-center`}>{data.features.title}</h2>
-          <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'md:grid-cols-3 gap-8'}`}>
-            {data.features.items.map((item, idx) => (
-              <div key={idx} className={`bg-stone-800 ${isMobile ? 'p-5' : 'p-8'} rounded-2xl border border-stone-700 hover:border-emerald-500 transition-colors`}>
-                <CheckCircle className="text-emerald-400 mb-4" size={28} />
-                <h3 className="text-lg font-bold mb-2">{item.split(':')[0]}</h3>
-                <p className="text-stone-400 text-xs sm:text-sm leading-relaxed">
-                  {item.split(':')[1] || "Una experiencia inolvidable que cambiará tu perspectiva."}
-                </p>
-              </div>
-            ))}
+      {/* Features/Highlights - BASIC, PRO & ADVANCE */}
+      {!isFree && (
+        <section id="incluye" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-stone-900 text-white`}>
+          <div className="max-w-6xl mx-auto">
+            <h2 className={`${isMobile ? 'text-2xl mb-8' : 'text-4xl mb-16'} font-bold text-center`}>{data.features.title}</h2>
+            <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'md:grid-cols-3 gap-8'}`}>
+              {data.features.items.map((item, idx) => (
+                <div key={idx} className={`bg-stone-800 ${isMobile ? 'p-5' : 'p-8'} rounded-2xl border border-stone-700 hover:border-emerald-500 transition-colors`}>
+                  <CheckCircle className="text-emerald-400 mb-4" size={28} />
+                  <h3 className="text-lg font-bold mb-2">{item.split(':')[0]}</h3>
+                  <p className="text-stone-400 text-xs sm:text-sm leading-relaxed">
+                    {item.split(':')[1] || "Una experiencia inolvidable que cambiará tu perspectiva."}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Logistics: Exclusiones & Qué Llevar */}
-      {((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
+      {/* Logistics: Exclusiones & Qué Llevar - PRO & ADVANCE ONLY */}
+      {(isPro || isAdvance) && ((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
         <section className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-stone-100 border-b border-stone-200`}>
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {/* Qué NO incluye */}
@@ -281,8 +290,8 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </section>
       )}
 
-      {/* Testimonials */}
-      {data.testimonials && data.testimonials.length > 0 && (
+      {/* Testimonials - ADVANCE ONLY */}
+      {isAdvance && data.testimonials && data.testimonials.length > 0 && (
         <section className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-stone-100`}>
           <div className="max-w-4xl mx-auto text-center">
             <h2 className={`${isMobile ? 'text-2xl mb-6' : 'text-3xl mb-12'} font-bold text-stone-900`}>Lo que dicen nuestros viajeros</h2>
@@ -306,26 +315,26 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </section>
       )}
 
-      {/* FAQs */}
-      {data.faqs && data.faqs.length > 0 && (
+      {/* FAQs (Preguntas Frecuentes del Tour) - ADVANCE ONLY */}
+      {isAdvance && data.faqs && data.faqs.length > 0 && (
         <section id="faq" className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} max-w-4xl mx-auto`}>
           <div className={`text-center ${isMobile ? 'mb-6' : 'mb-12'}`}>
             <div className="inline-flex items-center gap-1.5 text-emerald-600 font-bold text-xs uppercase tracking-wider mb-2">
-              <HelpCircle size={15} /> Preguntas Frecuentes
+              <HelpCircle size={15} /> Preguntas Frecuentes del Tour
             </div>
             <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-bold text-stone-900`}>Todo lo que necesitas saber</h2>
           </div>
           <div className="space-y-3">
             {data.faqs.map((faq, idx) => (
               <div key={idx} className={`bg-white ${isMobile ? 'p-4' : 'p-6'} rounded-2xl shadow-xs border border-stone-200`}>
-                <h3 className="font-bold text-stone-800 text-sm sm:text-base mb-1.5">{faq.q}</h3>
+                <h4 className="font-bold text-stone-900 text-sm sm:text-base mb-1.5">{faq.q}</h4>
                 <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">{faq.a}</p>
               </div>
             ))}
           </div>
         </section>
       )}
-      
+
       {/* Simple Footer */}
       <footer className="bg-stone-950 py-8 text-center text-stone-500 text-xs">
         <p>© 2026 Cusco Creativos S.A.C. Todos los derechos reservados.</p>

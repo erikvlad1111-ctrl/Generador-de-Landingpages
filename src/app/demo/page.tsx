@@ -383,15 +383,28 @@ export default function DemoDashboard() {
                       <td className="px-6 py-4.5">
                         <div className="flex items-center gap-3.5">
                           <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 font-bold text-xs border border-blue-100 shadow-xs">
-                            {p.template === 'adventure' ? '🏔️' : p.template === 'premium' ? '✨' : '🏛️'}
+                            {p.template === 'adventure' ? '🏔️' : p.template === 'premium' ? '✨' : p.template === 'boho-nature' ? '📷' : '🏛️'}
                           </div>
                           <div className="min-w-0">
-                            <Link 
-                              href={`/demo/preview?slug=${p.slug}`} 
-                              className="font-extrabold text-slate-900 hover:text-blue-600 transition-colors block text-sm leading-snug whitespace-nowrap"
-                            >
-                              {p.name}
-                            </Link>
+                            <div className="flex items-center gap-2">
+                              <Link 
+                                href={`/demo/preview?slug=${p.slug}`} 
+                                className="font-extrabold text-slate-900 hover:text-blue-600 transition-colors block text-sm leading-snug whitespace-nowrap"
+                              >
+                                {p.name}
+                              </Link>
+                              <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border ${
+                                (p.tier || 'advance') === 'advance'
+                                  ? 'bg-purple-50 text-purple-700 border-purple-200'
+                                  : (p.tier || 'advance') === 'pro'
+                                  ? 'bg-blue-50 text-blue-700 border-blue-200'
+                                  : (p.tier || 'advance') === 'basic'
+                                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                                  : 'bg-stone-100 text-stone-700 border-stone-300'
+                              }`}>
+                                {p.tier || 'advance'}
+                              </span>
+                            </div>
                             <span className="text-xs text-slate-400 block mt-0.5 whitespace-nowrap">
                               Guía: <strong className="text-slate-600 font-medium">{p.guideName || 'No asignado'}</strong> • <span className="text-emerald-700 font-semibold">{p.price || 'S/ Consultar'}</span>
                             </span>

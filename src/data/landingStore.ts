@@ -1,4 +1,4 @@
-import { LandingData, ObjectiveType, TemplateType, LanguageType } from '@/types/landing';
+import { LandingData, ObjectiveType, TemplateType, LanguageType, PlanTier } from '@/types/landing';
 export type { LandingData };
 
 export const INITIAL_LANDINGS: LandingData[] = [
@@ -6,6 +6,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
     id: '1',
     name: 'Machu Picchu VIP',
     slug: 'machu-picchu-vip',
+    tier: 'advance',
     guideName: 'Carlos Quispe',
     whatsapp: '+51984123456',
     price: '$450 USD',
@@ -101,6 +102,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
     id: '2',
     name: 'Valle Sagrado Aventura',
     slug: 'valle-sagrado-aventura',
+    tier: 'pro',
     guideName: 'Marcos Mendoza',
     whatsapp: '+51984654321',
     price: '$120 USD',
@@ -200,6 +202,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
     id: '3',
     name: 'City Tour Cusco & Templos',
     slug: 'city-tour-cusco',
+    tier: 'basic',
     guideName: 'Lucía Condori',
     whatsapp: '+51984778899',
     price: 'S/ 70 PEN',
@@ -295,6 +298,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
     id: '4',
     name: 'Laguna Humantay Boho Journal',
     slug: 'laguna-humantay-boho',
+    tier: 'advance',
     guideName: 'Camila Valdivia',
     whatsapp: '+51984556677',
     price: 'S/ 160 PEN',
@@ -390,6 +394,44 @@ export const INITIAL_LANDINGS: LandingData[] = [
         rating: 5
       }
     ]
+  },
+  {
+    id: '5',
+    name: 'Free Walking Tour Cusco',
+    slug: 'free-walking-tour-cusco',
+    tier: 'free',
+    guideName: 'Renzo Farfán',
+    whatsapp: '+51984001122',
+    price: 'Gratuito (Propinas)',
+    duration: '2.5 Horas',
+    difficulty: 'Fácil',
+    objective: 'whatsapp',
+    template: 'cultural',
+    language: 'es',
+    status: 'published',
+    date: '2026-09-11',
+    views: '320',
+    heroImage: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop'
+    ],
+    hero: {
+      badge: 'Caminata Histórica Diaria',
+      title: 'Free Tour por el Centro Histórico de Cusco',
+      subtitle: 'Conoce los callejones incas, la Piedra de los 12 Ángulos y la Plaza de Armas con un guía local apasionado. Salidas diarias 10:00 AM y 15:00 PM.',
+      cta: 'Unirme Gratis por WhatsApp'
+    },
+    about: {
+      title: 'Explora Cusco a pie y a tu propio ritmo',
+      content: 'El recorrido esencial para recién llegados a la capital del Tahuantinsuyo. Te orientamos sobre seguridad, aclimatación a la altura y gastronomía típica.'
+    },
+    features: {
+      title: 'Puntos Clave del Recorrido',
+      items: [
+        'Plaza de Armas:Historia y arquitectura colonial sobre palacios incas.',
+        'Piedra de los 12 Ángulos:Ingeniería milimétrica incaica.'
+      ]
+    }
   }
 ];
 
@@ -478,6 +520,7 @@ export function simulateAiGeneration(params: {
   objective: ObjectiveType;
   template: TemplateType;
   language: LanguageType;
+  tier?: PlanTier;
   heroImage?: string;
   galleryImages?: string[];
   destination?: string;
@@ -590,6 +633,7 @@ export function simulateAiGeneration(params: {
     id: Date.now().toString(),
     name: params.name,
     slug: slug || 'tour-nuevo',
+    tier: params.tier || 'advance',
     guideName: params.guideName || 'Guía Cusco Creativos',
     whatsapp: params.whatsapp || '+51984000000',
     price: params.price || 'Consultar',

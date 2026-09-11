@@ -33,6 +33,11 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const isQuote = data.objective === 'quote';
   const isMobile = viewMode === 'mobile';
+  const tier = data.tier || 'advance';
+  const isFree = tier === 'free';
+  const isBasic = tier === 'basic';
+  const isPro = tier === 'pro';
+  const isAdvance = tier === 'advance';
 
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const encodedMsg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, vi su bitácora de viaje de "${data.name || data.hero?.title}" y me gustaría consultar disponibilidad.`);
@@ -47,6 +52,8 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=2070&auto=format&fit=crop',
         'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop'
       ];
+
+  const displayedGallery = isBasic ? gallery.slice(0, 2) : gallery;
 
   return (
     <div className="min-h-screen bg-[#FAF7F2] font-sans text-stone-800 selection:bg-[#C86D51] selection:text-white">
@@ -210,8 +217,8 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </div>
       </section>
 
-      {/* Trust Badges Bar (DIRCETUR, Safe Travels) */}
-      {data.trustBadges && data.trustBadges.length > 0 && (
+      {/* Trust Badges Bar (DIRCETUR, Safe Travels) - PRO & ADVANCE ONLY */}
+      {(isPro || isAdvance) && data.trustBadges && data.trustBadges.length > 0 && (
         <section className="bg-white/80 border-y border-stone-200/80 py-4 px-4 sm:px-8">
           <div className="max-w-5xl mx-auto flex flex-wrap justify-center sm:justify-between items-center gap-4">
             <div className="flex items-center gap-2 text-stone-600 text-xs font-serif italic">
@@ -230,191 +237,216 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </section>
       )}
 
-      {/* Section: Masonry Photo Grid ("Pinterest Travel Pins") */}
-      <section id="galeria" className="py-12 sm:py-16 px-4 sm:px-8 max-w-6xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-          <span className="text-xs uppercase tracking-widest font-serif font-semibold text-[#C86D51]">
-            Galería Fotográfica
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-serif text-stone-900">
-            Postales & Recuerdos del Recorrido
-          </h2>
-          <p className="text-xs sm:text-sm text-stone-500">
-            Cada rincón de esta ruta ofrece composiciones naturales únicas para fotografía y contemplación.
-          </p>
-        </div>
+      {/* About Section - For BASIC, PRO, ADVANCE */}
+      {!isFree && data.about?.content && (
+        <section className="py-10 px-4 sm:px-8 max-w-4xl mx-auto">
+          <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-xs space-y-3">
+            <span className="text-xs uppercase tracking-widest font-serif font-semibold text-[#C86D51]">
+              Información del Tour
+            </span>
+            <h2 className="text-xl sm:text-2xl font-serif text-stone-900">
+              {data.about.title || 'Detalles de la Experiencia'}
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+              {data.about.content}
+            </p>
+          </div>
+        </section>
+      )}
 
-        {/* Masonry / Pinterest Pin Cards */}
-        <div className="columns-1 sm:columns-2 md:columns-3 gap-6 space-y-6">
-          {gallery.map((imgUrl, i) => (
-            <div 
-              key={i}
-              className="break-inside-avoid bg-white p-3 pb-5 rounded-2xl border border-stone-200/90 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
-              style={{ transform: i % 2 === 0 ? 'rotate(-0.8deg)' : 'rotate(0.8deg)' }}
-            >
-              <div className="relative rounded-xl overflow-hidden bg-stone-100 aspect-[4/5]">
-                <Image
-                  src={imgUrl}
-                  alt={`Pin de viaje ${i + 1}`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute bottom-2 left-2 bg-stone-900/60 backdrop-blur-xs text-white text-[10px] px-2 py-0.5 rounded-md flex items-center gap-1">
-                  <Bookmark size={10} /> Pin #{i + 1}
-                </div>
-              </div>
-              <p className="mt-2.5 text-xs font-serif italic text-stone-600 text-center">
-                {i === 0 ? 'Vistas panorámicas andinas' : i === 1 ? 'Llegada al punto más alto' : i === 2 ? 'Flora y lagunas sagradas' : 'Encuentro con la cultura local'}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Section: Itinerary (Visual Travel Journal by Day) */}
-      <section id="itinerario" className="py-12 sm:py-16 px-4 sm:px-8 bg-[#F3EFEA] border-y border-stone-200">
-        <div className="max-w-4xl mx-auto space-y-8">
-          <div className="text-center space-y-2">
-            <span className="text-xs uppercase tracking-widest font-serif font-semibold text-[#588157]">
-              Hoja de Ruta
+      {/* Section: Masonry Photo Grid - BASIC (2 photos), PRO & ADVANCE (Full) */}
+      {!isFree && (
+        <section id="galeria" className="py-12 sm:py-16 px-4 sm:px-8 max-w-6xl mx-auto">
+          <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
+            <span className="text-xs uppercase tracking-widest font-serif font-semibold text-[#C86D51]">
+              Galería Fotográfica {isBasic ? '(Vista Preliminar)' : isAdvance ? 'HD Completa' : ''}
             </span>
             <h2 className="text-2xl sm:text-3xl font-serif text-stone-900">
-              Itinerario Detallado de la Experiencia
+              Postales & Recuerdos del Recorrido
             </h2>
-            <p className="text-xs sm:text-sm text-stone-600">
-              Tiempos calculados para disfrutar sin prisa, con paradas fotográficas y explicación histórica.
+            <p className="text-xs sm:text-sm text-stone-500">
+              Cada rincón de esta ruta ofrece composiciones naturales únicas para fotografía y contemplación.
             </p>
           </div>
 
-          <div className="space-y-4">
-            {(data.itinerary || [
-              { step: '04:30 AM', title: 'Partida desde el Hotel en Cusco', desc: 'Recojo privado en movilidad turística climatizada para iniciar el viaje hacia el valle.' },
-              { step: '07:30 AM', title: 'Desayuno Campestre Orgánico', desc: 'Parada en pintoresco poblado andino con insumos locales frescos y café de altura.' },
-              { step: '09:30 AM', title: 'Comienzo de la Caminata con Guía', desc: 'Ascenso a ritmo suave con bastones, paradas explicativas y tiempo para fotos.' },
-              { step: '12:30 PM', title: 'Llegada y Contemplación', desc: 'Tiempo libre para descansar frente al paisaje, sesión fotográfica y refrigerio.' },
-              { step: '05:00 PM', title: 'Retorno a la Ciudad del Cusco', desc: 'Regreso tranquilo al centro de la ciudad para descansar.' }
-            ]).map((item, idx) => (
+          {/* Masonry / Pinterest Pin Cards */}
+          <div className="columns-1 sm:columns-2 md:columns-3 gap-6 space-y-6">
+            {displayedGallery.map((imgUrl, i) => (
               <div 
-                key={idx}
-                className="bg-white p-5 rounded-2xl border border-stone-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center gap-4 hover:border-[#C86D51]/50 transition-colors"
+                key={i}
+                className="break-inside-avoid bg-white p-3 pb-5 rounded-2xl border border-stone-200/90 shadow-sm hover:shadow-md transition-all duration-300 transform hover:-translate-y-1"
+                style={{ transform: i % 2 === 0 ? 'rotate(-0.8deg)' : 'rotate(0.8deg)' }}
               >
-                <div className="w-24 shrink-0 px-3 py-1.5 rounded-xl bg-[#FAF7F2] border border-stone-200 text-center">
-                  <span className="font-serif font-semibold text-xs text-[#C86D51] block">{item.step}</span>
+                <div className="relative rounded-xl overflow-hidden bg-stone-100 aspect-[4/5]">
+                  <Image
+                    src={imgUrl}
+                    alt={`Pin de viaje ${i + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute bottom-2 left-2 bg-stone-900/60 backdrop-blur-xs text-white text-[10px] px-2 py-0.5 rounded-md flex items-center gap-1">
+                    <Bookmark size={10} /> Pin #{i + 1}
+                  </div>
                 </div>
-                <div className="flex-1">
-                  <h3 className="text-sm sm:text-base font-serif font-semibold text-stone-900">{item.title}</h3>
-                  <p className="text-xs text-stone-600 mt-0.5 leading-relaxed">{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Inclusiones & Exclusiones & Mochila */}
-      <section id="mochila" className="py-12 sm:py-16 px-4 sm:px-8 max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-3 gap-6">
-          
-          {/* Incluye */}
-          <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs space-y-4">
-            <div className="flex items-center gap-2 text-[#588157]">
-              <CheckCircle2 size={18} />
-              <h3 className="font-serif font-semibold text-base text-stone-900">¿Qué Incluye?</h3>
-            </div>
-            <ul className="space-y-2.5 text-xs text-stone-600">
-              {(data.features?.items || [
-                'Guía profesional colegiado bilingüe',
-                'Transporte turístico ida y vuelta',
-                'Desayuno y almuerzo buffet andino',
-                'Botiquín de primeros auxilios y balón de oxígeno',
-                'Bastones de trekking para la caminata'
-              ]).map((item, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <span className="text-[#588157] font-bold">✓</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* No Incluye */}
-          <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs space-y-4">
-            <div className="flex items-center gap-2 text-stone-500">
-              <XCircle size={18} />
-              <h3 className="font-serif font-semibold text-base text-stone-900">No Incluye</h3>
-            </div>
-            <ul className="space-y-2.5 text-xs text-stone-600">
-              {(data.notIncluded || [
-                'Boleto turístico o entradas comunales',
-                'Caballos de auxilio (opcional en el punto)',
-                'Snacks personales o bebidas adicionales',
-                'Propinas voluntarias para el equipo'
-              ]).map((item, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <span className="text-stone-400 font-bold">✕</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Mochila / Esenciales */}
-          <div className="bg-[#FAF7F2] p-6 rounded-2xl border border-[#C86D51]/30 shadow-xs space-y-4">
-            <div className="flex items-center gap-2 text-[#C86D51]">
-              <Backpack size={18} />
-              <h3 className="font-serif font-semibold text-base text-stone-900">Mochila de Viaje</h3>
-            </div>
-            <ul className="space-y-2.5 text-xs text-stone-700">
-              {(data.whatToBring || [
-                'Casaca cortaviento y ropa abrigadora',
-                'Bloqueador solar y lentes con filtro UV',
-                'Zapatillas de trekking con buen agarre',
-                'Botella de agua recargable',
-                'Efectivo en soles para compras locales'
-              ]).map((item, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <span className="text-[#C86D51] font-bold">•</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section id="faq" className="py-12 px-4 sm:px-8 bg-white border-t border-stone-200">
-        <div className="max-w-3xl mx-auto space-y-6">
-          <div className="text-center space-y-1">
-            <span className="text-xs uppercase tracking-widest font-serif font-semibold text-stone-500">
-              Preguntas Frecuentes
-            </span>
-            <h2 className="text-xl sm:text-2xl font-serif text-stone-900">
-              Todo lo que necesitas saber antes de ir
-            </h2>
-          </div>
-
-          <div className="space-y-3">
-            {(data.faqs || [
-              { q: '¿Se requiere experiencia previa en caminatas?', a: 'No es indispensable, pero recomendamos haber pasado al menos 24 horas previas en Cusco para aclimatarse a la altura.' },
-              { q: '¿Qué pasa si el clima cambia durante el tour?', a: 'Nuestros guías monitorean el pronóstico satelital andino y cuentan con capas de contingencia para asegurar una experiencia segura.' },
-              { q: '¿Puedo alquilar caballo de emergencia?', a: 'Sí, las comunidades locales ofrecen caballos de alquiler en el punto de inicio para quienes prefieran evitar el ascenso a pie.' }
-            ]).map((faq, i) => (
-              <div key={i} className="p-4 rounded-xl bg-stone-50 border border-stone-200">
-                <p className="font-serif font-semibold text-xs sm:text-sm text-stone-800 flex items-center gap-2">
-                  <HelpCircle size={15} className="text-[#C86D51] shrink-0" />
-                  {faq.q}
-                </p>
-                <p className="text-xs text-stone-600 mt-1 pl-6 leading-relaxed">
-                  {faq.a}
+                <p className="mt-2.5 text-xs font-serif italic text-stone-600 text-center">
+                  {i === 0 ? 'Vistas panorámicas andinas' : i === 1 ? 'Llegada al punto más alto' : i === 2 ? 'Flora y lagunas sagradas' : 'Encuentro con la cultura local'}
                 </p>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {/* Section: Itinerary (Visual Travel Journal by Day) - PRO & ADVANCE ONLY */}
+      {(isPro || isAdvance) && (
+        <section id="itinerario" className="py-12 sm:py-16 px-4 sm:px-8 bg-[#F3EFEA] border-y border-stone-200">
+          <div className="max-w-4xl mx-auto space-y-8">
+            <div className="text-center space-y-2">
+              <span className="text-xs uppercase tracking-widest font-serif font-semibold text-[#588157]">
+                Hoja de Ruta
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-serif text-stone-900">
+                Itinerario Detallado de la Experiencia
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-600">
+                Tiempos calculados para disfrutar sin prisa, con paradas fotográficas y explicación histórica.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {(data.itinerary || [
+                { step: '04:30 AM', title: 'Partida desde el Hotel en Cusco', desc: 'Recojo privado en movilidad turística climatizada para iniciar el viaje hacia el valle.' },
+                { step: '07:30 AM', title: 'Desayuno Campestre Orgánico', desc: 'Parada en pintoresco poblado andino con insumos locales frescos y café de altura.' },
+                { step: '09:30 AM', title: 'Comienzo de la Caminata con Guía', desc: 'Ascenso a ritmo suave con bastones, paradas explicativas y tiempo para fotos.' },
+                { step: '12:30 PM', title: 'Llegada y Contemplación', desc: 'Tiempo libre para descansar frente al paisaje, sesión fotográfica y refrigerio.' },
+                { step: '05:00 PM', title: 'Retorno a la Ciudad del Cusco', desc: 'Regreso tranquilo al centro de la ciudad para descansar.' }
+              ]).map((item, idx) => (
+                <div 
+                  key={idx}
+                  className="bg-white p-5 rounded-2xl border border-stone-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center gap-4 hover:border-[#C86D51]/50 transition-colors"
+                >
+                  <div className="w-24 shrink-0 px-3 py-1.5 rounded-xl bg-[#FAF7F2] border border-stone-200 text-center">
+                    <span className="font-serif font-semibold text-xs text-[#C86D51] block">{item.step}</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-sm sm:text-base font-serif font-semibold text-stone-900">{item.title}</h3>
+                    <p className="text-xs text-stone-600 mt-0.5 leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Inclusiones & Exclusiones & Mochila - PRO & ADVANCE ONLY */}
+      {(isPro || isAdvance) && (
+        <section id="mochila" className="py-12 sm:py-16 px-4 sm:px-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6">
+            
+            {/* Incluye */}
+            <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs space-y-4">
+              <div className="flex items-center gap-2 text-[#588157]">
+                <CheckCircle2 size={18} />
+                <h3 className="font-serif font-semibold text-base text-stone-900">¿Qué Incluye?</h3>
+              </div>
+              <ul className="space-y-2.5 text-xs text-stone-600">
+                {(data.features?.items || [
+                  'Guía profesional colegiado bilingüe',
+                  'Transporte turístico ida y vuelta',
+                  'Desayuno y almuerzo buffet andino',
+                  'Botiquín de primeros auxilios y balón de oxígeno',
+                  'Bastones de trekking para la caminata'
+                ]).map((item, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-[#588157] font-bold">✓</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* No Incluye */}
+            <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs space-y-4">
+              <div className="flex items-center gap-2 text-stone-500">
+                <XCircle size={18} />
+                <h3 className="font-serif font-semibold text-base text-stone-900">No Incluye</h3>
+              </div>
+              <ul className="space-y-2.5 text-xs text-stone-600">
+                {(data.notIncluded || [
+                  'Boleto turístico o entradas comunales',
+                  'Caballos de auxilio (opcional en el punto)',
+                  'Snacks personales o bebidas adicionales',
+                  'Propinas voluntarias para el equipo'
+                ]).map((item, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-stone-400 font-bold">✕</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Mochila / Esenciales */}
+            <div className="bg-[#FAF7F2] p-6 rounded-2xl border border-[#C86D51]/30 shadow-xs space-y-4">
+              <div className="flex items-center gap-2 text-[#C86D51]">
+                <Backpack size={18} />
+                <h3 className="font-serif font-semibold text-base text-stone-900">Mochila de Viaje</h3>
+              </div>
+              <ul className="space-y-2.5 text-xs text-stone-700">
+                {(data.whatToBring || [
+                  'Casaca cortaviento y ropa abrigadora',
+                  'Bloqueador solar y lentes con filtro UV',
+                  'Zapatillas de trekking con buen agarre',
+                  'Botella de agua recargable',
+                  'Efectivo en soles para compras locales'
+                ]).map((item, i) => (
+                  <li key={i} className="flex items-start gap-2">
+                    <span className="text-[#C86D51] font-bold">•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+        </section>
+      )}
+
+      {/* FAQ Section (Preguntas Frecuentes del Tour) - ADVANCE ONLY */}
+      {isAdvance && (
+        <section id="faq" className="py-12 px-4 sm:px-8 bg-white border-t border-stone-200">
+          <div className="max-w-3xl mx-auto space-y-6">
+            <div className="text-center space-y-1">
+              <span className="text-xs uppercase tracking-widest font-serif font-semibold text-stone-500">
+                Preguntas Frecuentes del Tour
+              </span>
+              <h2 className="text-xl sm:text-2xl font-serif text-stone-900">
+                Todo lo que necesitas saber antes de ir
+              </h2>
+            </div>
+
+            <div className="space-y-3">
+              {(data.faqs || [
+                { q: '¿Se requiere experiencia previa en caminatas?', a: 'No es indispensable, pero recomendamos haber pasado al menos 24 horas previas en Cusco para aclimatarse a la altura.' },
+                { q: '¿Qué pasa si el clima cambia durante el tour?', a: 'Nuestros guías monitorean el pronóstico satelital andino y cuentan con capas de contingencia para asegurar una experiencia segura.' },
+                { q: '¿Puedo alquilar caballo de emergencia?', a: 'Sí, las comunidades locales ofrecen caballos de alquiler en el punto de inicio para quienes prefieran evitar el ascenso a pie.' }
+              ]).map((faq, i) => (
+                <div key={i} className="p-4 rounded-xl bg-stone-50 border border-stone-200">
+                  <p className="font-serif font-semibold text-xs sm:text-sm text-stone-800 flex items-center gap-2">
+                    <HelpCircle size={15} className="text-[#C86D51] shrink-0" />
+                    {faq.q}
+                  </p>
+                  <p className="text-xs text-stone-600 mt-1 pl-6 leading-relaxed">
+                    {faq.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Bottom CTA Banner */}
       <footer className="bg-stone-900 text-stone-300 py-10 px-4 sm:px-8 text-center space-y-5">

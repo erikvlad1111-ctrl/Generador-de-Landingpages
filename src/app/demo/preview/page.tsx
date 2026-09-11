@@ -24,7 +24,7 @@ import {
 import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, saveLandingToStorage, LandingData } from '@/data/landingStore';
-import { TemplateType } from '@/types/landing';
+import { TemplateType, PlanTier } from '@/types/landing';
 
 function DemoPreviewContent() {
   const searchParams = useSearchParams();
@@ -54,6 +54,7 @@ function DemoPreviewContent() {
   const [editPrice, setEditPrice] = useState(() => landing?.price || '');
   const [editWhatsapp, setEditWhatsapp] = useState(() => landing?.whatsapp || '');
   const [editTemplate, setEditTemplate] = useState<TemplateType>(() => landing?.template || 'adventure');
+  const [editTier, setEditTier] = useState<PlanTier>(() => landing?.tier || 'advance');
 
   if (!landing) {
     return (
@@ -81,6 +82,7 @@ function DemoPreviewContent() {
     setEditPrice(landing.price || '');
     setEditWhatsapp(landing.whatsapp || '');
     setEditTemplate(landing.template || 'adventure');
+    setEditTier(landing.tier || 'advance');
     setIsEditorOpen(true);
   };
 
@@ -89,6 +91,7 @@ function DemoPreviewContent() {
     const updated: LandingData = {
       ...landing,
       template: editTemplate,
+      tier: editTier,
       price: editPrice,
       whatsapp: editWhatsapp,
       hero: {
@@ -276,6 +279,21 @@ function DemoPreviewContent() {
                 {landing.template}
               </span>
             </div>
+            <span className="text-slate-700 hidden sm:inline">•</span>
+            <div className="hidden sm:flex items-center gap-1.5 shrink-0">
+              <span className="text-[11px] text-slate-400">Nivel:</span>
+              <span className={`px-2 py-0.5 rounded-md font-extrabold text-[10px] uppercase tracking-wide border ${
+                (landing.tier || 'advance') === 'advance'
+                  ? 'bg-purple-500/15 text-purple-300 border-purple-500/30'
+                  : (landing.tier || 'advance') === 'pro'
+                  ? 'bg-blue-500/15 text-blue-300 border-blue-500/30'
+                  : (landing.tier || 'advance') === 'basic'
+                  ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                  : 'bg-stone-500/15 text-stone-300 border-stone-500/30'
+              }`}>
+                {landing.tier || 'advance'}
+              </span>
+            </div>
             {landing.guideName && (
               <>
                 <span className="text-slate-700 hidden md:inline">•</span>
@@ -357,21 +375,39 @@ function DemoPreviewContent() {
             </div>
 
             <form onSubmit={handleSaveEdits} className="flex-1 overflow-y-auto p-6 space-y-5">
-              {/* Plantilla Selector */}
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Layers size={14} className="text-blue-600" /> Plantilla Visual
-                </label>
-                <select
-                  value={editTemplate}
-                  onChange={(e) => setEditTemplate(e.target.value as TemplateType)}
-                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white font-medium focus:ring-2 focus:ring-blue-500 outline-none"
-                >
-                  <option value="adventure">Aventura (Trekking y Naturaleza)</option>
-                  <option value="premium">Premium / Lujo (Exclusivo VIP)</option>
-                  <option value="cultural">Cultural Clásico (Historia e Incas)</option>
-                  <option value="boho-nature">Boho Journal (Pinterest & Polaroids)</option>
-                </select>
+              {/* Template & Tier Selector */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1.5">
+                    <Layers size={14} className="text-blue-600" /> Plantilla Visual
+                  </label>
+                  <select
+                    value={editTemplate}
+                    onChange={(e) => setEditTemplate(e.target.value as TemplateType)}
+                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white font-medium focus:ring-2 focus:ring-blue-500 outline-none"
+                  >
+                    <option value="adventure">Aventura (Trekking y Naturaleza)</option>
+                    <option value="premium">Premium / Lujo (Exclusivo VIP)</option>
+                    <option value="cultural">Cultural Clásico (Historia e Incas)</option>
+                    <option value="boho-nature">Boho Journal (Pinterest & Polaroids)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1.5">
+                    <CheckCircle size={14} className="text-emerald-600" /> Nivel / Plan
+                  </label>
+                  <select
+                    value={editTier}
+                    onChange={(e) => setEditTier(e.target.value as PlanTier)}
+                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white font-bold text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none"
+                  >
+                    <option value="free">Gratuito (Hero + WhatsApp)</option>
+                    <option value="basic">Básico (Hero + Ficha + Incluye)</option>
+                    <option value="pro">Pro (Itinerario + Exclusiones + Sellos)</option>
+                    <option value="advance">Advance (HD + FAQs + Testimonios + Reservas)</option>
+                  </select>
+                </div>
               </div>
 
               {/* Pricing & WhatsApp */}

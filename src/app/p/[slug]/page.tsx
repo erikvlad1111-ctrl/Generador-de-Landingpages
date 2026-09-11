@@ -58,6 +58,9 @@ export default function PublicLandingPage() {
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
             <span className="font-bold text-slate-200">Landing Pública en Vivo:</span>
             <span className="text-emerald-400 font-semibold truncate max-w-[200px] sm:max-w-xs">{landing.name}</span>
+            <span className="text-[10px] font-black uppercase tracking-wider bg-slate-800 text-slate-300 border border-slate-700 px-2 py-0.5 rounded-md">
+              Plan {landing.tier || 'advance'}
+            </span>
           </div>
 
           <div className="flex items-center gap-2">

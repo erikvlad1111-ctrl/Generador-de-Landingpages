@@ -11,7 +11,7 @@ import {
   Shield, Award, Mountain, Users, Languages, CheckSquare, Square,
   Plus, Trash2, XCircle, Backpack, ShieldCheck, Share2, Calendar
 } from 'lucide-react';
-import { ObjectiveType, TemplateType, LanguageType, ItineraryItem } from '@/types/landing';
+import { ObjectiveType, TemplateType, LanguageType, ItineraryItem, PlanTier } from '@/types/landing';
 import { simulateAiGeneration, saveLandingToStorage } from '@/data/landingStore';
 import { SAMPLE_TOUR_IMAGES } from '@/data/sampleImages';
 
@@ -77,6 +77,7 @@ const PRESET_TOURS = [
     objective: 'whatsapp' as ObjectiveType,
     template: 'adventure' as TemplateType,
     language: 'es' as LanguageType,
+    tier: 'pro' as PlanTier,
     imageIndex: 2, // Humantay
     description: 'Un trekking legendario de alta montaña cruzando nevados imponentes, ceja de selva y plantaciones de café hasta la ciudadela inca de Machu Picchu.'
   },
@@ -98,21 +99,23 @@ const PRESET_TOURS = [
     aiTone: 'lujo',
     includedServices: [
       'Vagón de lujo con almuerzo gourmet',
-      'Boletos de tren ida y vuelta preferente',
-      'Entradas oficiales Circuito 1 o 2',
-      'Guía privado exclusivo durante todo el día',
-      'Traslados en minivan ejecutiva puerta a puerta'
+      'Boletos de tren ida y vuelta Hiram Bingham',
+      'Entradas preferentes a la ciudadela inca',
+      'Guía privado historiador oficial',
+      'Traslado privado hotel Cusco - estación'
     ],
     notIncluded: [
-      'Vuelos comerciales internacionales o domésticos',
-      'Propinas voluntarias para guía y mayordomo de tren',
-      'Bebidas alcohólicas premium adicionales'
+      'Boleto aéreo internacional o nacional a Cusco',
+      'Alojamiento en Aguas Calientes (opcional pernocte)',
+      'Propinas voluntarias para la tripulación del tren',
+      'Seguro médico de viaje'
     ],
     whatToBring: [
-      'Pasaporte original físico vigente',
-      'Ropa elegante y cómoda para tren de lujo',
-      'Lentes de sol y sombrero para la ciudadela',
-      'Cámara o teléfono con buena memoria'
+      'Pasaporte original físico (obligatorio para el tren y Machu Picchu)',
+      'Ropa elegante sport pero cómoda para caminar',
+      'Zapatos confortables o zapatillas con buen agarre',
+      'Cámara fotográfica o smartphone con batería recargable',
+      'Lentes de sol y protector solar'
     ],
     trustBadges: [
       'Licencia Oficial DIRCETUR Cusco',
@@ -121,7 +124,7 @@ const PRESET_TOURS = [
       'Guía Colegiado Bilingüe'
     ],
     itinerary: [
-      { step: '06:00 AM', title: 'Recojo VIP y Traslado a Estación Poroy', desc: 'Minivan ejecutiva con amenidades a bordo y asistencia personalizada.' },
+      { step: '06:00 AM', title: 'Recojo Privado en Hotel de Cusco o Valle Sagrado', desc: 'Vehículo premium privado con amenidades a bordo rumbo a la estación de trenes.' },
       { step: '09:00 AM', title: 'Viaje Hiram Bingham con Brunch Gourmet', desc: 'Música en vivo, cócteles de bienvenida y vistas panorámicas del río Urubamba.' },
       { step: '12:30 PM', title: 'Acceso Preferente a Machu Picchu', desc: 'Tour privado de 3 horas por los recintos sagrados sin prisas ni aglomeraciones.' },
       { step: '16:00 PM', title: 'Afternoon Tea en Sanctuary Lodge y Retorno', desc: 'Degustación gourmet a pasos de la ciudadela y retorno en tren de primera clase.' }
@@ -129,6 +132,7 @@ const PRESET_TOURS = [
     objective: 'quote' as ObjectiveType,
     template: 'premium' as TemplateType,
     language: 'en' as LanguageType,
+    tier: 'advance' as PlanTier,
     imageIndex: 0, // MP 1
     description: 'Experiencia cinco estrellas diseñada para quienes valoran la privacidad, gastronomía andina de autor y el acceso preferencial sin colas.'
   },
@@ -143,42 +147,47 @@ const PRESET_TOURS = [
     whatsapp: '+51984778899',
     price: 'S/ 85 PEN',
     duration: 'Media Jornada (4.5 Horas)',
-    difficulty: 'Fácil (Apto para todas las edades)',
-    altitude: '3,400 msnm',
+    difficulty: 'Fácil (Apto para toda la familia)',
+    altitude: '3,400 msnm - 3,700 msnm',
     groupType: 'Grupo Reducido (Máx. 12 pers.)',
-    targetAudience: 'Familias con Niños y Adultos Mayores',
+    targetAudience: 'Familias, historiadores y viajeros culturales',
     aiTone: 'cultural',
     includedServices: [
-      'Transporte turístico con aire acondicionado',
-      'Guía oficial arqueóloga especialista',
-      'Ingreso preferencial a Qorikancha',
-      'Degustación de chocolate andino y pisco sour'
+      'Transporte turístico privado con aire acondicionado',
+      'Guiado oficial por arqueóloga colegiada',
+      'Visita guiada al Templo del Sol (Qorikancha)',
+      'Recorrido en Sacsayhuamán, Q’enqo, Puka Pukara y Tambomachay',
+      'Balón de oxígeno y botiquín a bordo'
     ],
     notIncluded: [
-      'Boleto Turístico del Cusco (BTC circuito arqueológico)',
-      'Ticket de entrada al Qorikancha (S/ 15 PEN)',
-      'Propinas al guía'
+      'Boleto Turístico del Cusco (BTC)',
+      'Boleto de entrada al Qorikancha (S/ 15 PEN)',
+      'Propinas para el guía y conductor',
+      'Agua embotellada y snacks personales'
     ],
     whatToBring: [
-      'Boleto BTC vigente o efectivo en soles',
-      'Casaca cortavientos para la tarde',
-      'Zapatillas cómodas con agarre para empedrados',
-      'Gorro para el sol y bloqueador solar'
+      'Boleto Turístico físico o dinero en efectivo para comprarlo',
+      'Documento de identidad o pasaporte original',
+      'Gorro para el sol y lentes con protección UV',
+      'Casaca ligera o cortavientos para la tarde',
+      'Calzado cómodo para caminar sobre caminos empedrados'
     ],
     trustBadges: [
-      'Guía Colegiada Bilingüe',
       'Licencia Oficial DIRCETUR Cusco',
+      'Sello Internacional Safe Travels',
       'Agencia Formal RUC 20 Verificado',
-      'Sello Internacional Safe Travels'
+      'Guía Colegiado Bilingüe'
     ],
     itinerary: [
-      { step: '13:30 PM', title: 'Templo del Sol (Qorikancha)', desc: 'Explicación magistral de la cantería inca imperial y el choque cultural colonial.' },
-      { step: '15:00 PM', title: 'Fortaleza Ceremonial de Sacsayhuamán', desc: 'Paseo entre los megalitos ciclópeos y explicaciones arqueológicas de vanguardia.' },
-      { step: '16:30 PM', title: 'Qenqo, Puka Pukara y Tambomachay', desc: 'Visita a los templos de culto al agua y laberintos ceremoniales incaicos.' }
+      { step: '13:00 PM', title: 'Punto de Encuentro y Qorikancha', desc: 'Inicio en el Templo del Sol admirando la arquitectura inca y los lienzos de la escuela cusqueña.' },
+      { step: '14:30 PM', title: 'Fortaleza Ceremonial de Sacsayhuamán', desc: 'Exploración de los colosales baluartes líticos de más de 120 toneladas con vista panorámica de la ciudad.' },
+      { step: '16:30 PM', title: 'Complejos de Q’enqo, Puka Pukara y Tambomachay', desc: 'Inmersión en los templos ceremoniales dedicados a la fertilidad de la tierra y los cultos al agua.' },
+      { step: '18:00 PM', title: 'Retorno a la Plaza de Armas', desc: 'Despedida a pasos de los mejores restaurantes y cafés coloniales del centro histórico.' }
     ],
     objective: 'whatsapp' as ObjectiveType,
     template: 'cultural' as TemplateType,
     language: 'es' as LanguageType,
+    tier: 'basic' as PlanTier,
     imageIndex: 1, // Terrazas
     description: 'Descubre los enigmas de la arquitectura megalítica inca en Sacsayhuamán, Q’enqo, Puka Pukara y Tambomachay junto a una arqueóloga experta.'
   },
@@ -231,6 +240,7 @@ const PRESET_TOURS = [
     objective: 'whatsapp' as ObjectiveType,
     template: 'adventure' as TemplateType,
     language: 'es' as LanguageType,
+    tier: 'pro' as PlanTier,
     imageIndex: 3, // Rainbow
     description: 'Asciende a uno de los paisajes geológicos más asombrosos del planeta con asistencia médica preventiva y paradas fotográficas exclusivas.'
   },
@@ -283,8 +293,55 @@ const PRESET_TOURS = [
     objective: 'whatsapp' as ObjectiveType,
     template: 'boho-nature' as TemplateType,
     language: 'es' as LanguageType,
+    tier: 'advance' as PlanTier,
     imageIndex: 2, // Humantay
     description: 'Una expedición pensada al detalle para amantes de la fotografía estética, paletas andinas y viajes con sentido.'
+  },
+  {
+    id: 'free-tour',
+    label: '🚶 Free Walking Tour (Gratis)',
+    name: 'Free Tour Cusco Histórico & Leyendas Incas',
+    destination: 'Centro Histórico de Cusco',
+    guideName: 'Renzo Farfán',
+    guideCert: 'Guía Local Apasionado DIRCETUR',
+    guideLanguages: 'Español e Inglés',
+    whatsapp: '+51984001122',
+    price: 'Gratuito (A base de propinas)',
+    duration: '2.5 Horas',
+    difficulty: 'Fácil (Caminata urbana)',
+    altitude: '3,400 msnm',
+    groupType: 'Abierto / Salidas Diarias',
+    targetAudience: 'Mochileros, parejas y recién llegados a Cusco',
+    aiTone: 'cultural',
+    includedServices: [
+      'Guiado oficial a pie por callejones incas',
+      'Orientación sobre seguridad y aclimatación',
+      'Recomendaciones gastronómicas tradicionales'
+    ],
+    notIncluded: [
+      'Ingresos a templos de pago o museos',
+      'Propinas voluntarias para el guía al finalizar'
+    ],
+    whatToBring: [
+      'Zapatos cómodos para caminar en adoquín',
+      'Gorro para el sol o paraguas según clima',
+      'Monedas o efectivo en soles para propina voluntaria'
+    ],
+    trustBadges: [
+      'Licencia Oficial DIRCETUR Cusco',
+      'Sello Internacional Safe Travels'
+    ],
+    itinerary: [
+      { step: '10:00 AM', title: 'Plaza de Armas & Catedral', desc: 'Encuentro frente a la fuente de agua y reseña del imperio inca.' },
+      { step: '11:00 AM', title: 'Piedra de los 12 Ángulos', desc: 'Muestra de arquitectura incaica megalítica antisísmica.' },
+      { step: '12:30 PM', title: 'Mirador de San Blas', desc: 'Conclusión con vista a los tejados cusqueños y recomendaciones locales.' }
+    ],
+    objective: 'whatsapp' as ObjectiveType,
+    template: 'cultural' as TemplateType,
+    language: 'es' as LanguageType,
+    tier: 'free' as PlanTier,
+    imageIndex: 1,
+    description: 'El tour esencial para recién llegados a Cusco. Conoce leyendas, templos y los mejores datos locales sin costo fijo.'
   }
 ];
 
@@ -331,6 +388,7 @@ export default function NewLandingDemo() {
   const [newWhatToBring, setNewWhatToBring] = useState('');
   const [trustBadges, setTrustBadges] = useState<string[]>(PRESET_TOURS[0].trustBadges || []);
   const [aiTone, setAiTone] = useState<string>('aventurero');
+  const [tier, setTier] = useState<PlanTier>('pro');
 
   const [objective, setObjective] = useState<ObjectiveType>('whatsapp');
   const [template, setTemplate] = useState<TemplateType>('adventure');
@@ -370,6 +428,7 @@ export default function NewLandingDemo() {
     setWhatToBring(preset.whatToBring || []);
     setTrustBadges(preset.trustBadges || []);
     if (preset.aiTone) setAiTone(preset.aiTone);
+    if (preset.tier) setTier(preset.tier);
     setObjective(preset.objective);
     setTemplate(preset.template);
     setLanguage(preset.language);
@@ -459,6 +518,7 @@ export default function NewLandingDemo() {
           objective,
           template,
           language,
+          tier,
           heroImage: activeHeroImg,
           galleryImages,
           destination,
@@ -660,6 +720,103 @@ export default function NewLandingDemo() {
                   <option value="historical">Místico, Cultural e Historiográfico</option>
                 </select>
               </div>
+            </div>
+          </div>
+
+          {/* NIVEL DE SERVICIO / VERSIÓN DE LA LANDING (TIER) */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-purple-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
+                  ★
+                </span>
+                Nivel de Servicio / Versión de Landing (Tier)
+              </label>
+              <span className="text-[11px] font-semibold text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded-md border border-purple-100">
+                Define las secciones que se activarán
+              </span>
+            </div>
+
+            <p className="text-xs text-slate-500">
+              Selecciona el nivel de página que generarás para este cliente o tour turístico:
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {/* Gratuito */}
+              <button
+                type="button"
+                onClick={() => setTier('free')}
+                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                  tier === 'free'
+                    ? 'border-stone-700 bg-stone-50 shadow-sm ring-2 ring-stone-400/20'
+                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-xs font-black text-stone-900 uppercase tracking-wider">Gratuito</span>
+                  <span className="text-[10px] bg-stone-200 text-stone-800 font-extrabold px-2 py-0.5 rounded-md">1 SECCIÓN</span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Hero de alto impacto + botón directo a WhatsApp. Ideal para captación exprés o free tours.
+                </p>
+              </button>
+
+              {/* Básico */}
+              <button
+                type="button"
+                onClick={() => setTier('basic')}
+                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                  tier === 'basic'
+                    ? 'border-emerald-600 bg-emerald-50/80 shadow-sm ring-2 ring-emerald-500/20'
+                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-xs font-black text-emerald-900 uppercase tracking-wider">Básico</span>
+                  <span className="text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-2 py-0.5 rounded-md">ESTÁNDAR</span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Hero + Sobre el tour + Qué incluye + Formulario de contacto y botón WhatsApp.
+                </p>
+              </button>
+
+              {/* Pro */}
+              <button
+                type="button"
+                onClick={() => setTier('pro')}
+                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                  tier === 'pro'
+                    ? 'border-blue-600 bg-blue-50/80 shadow-sm ring-2 ring-blue-500/20'
+                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-xs font-black text-blue-900 uppercase tracking-wider">Pro</span>
+                  <span className="text-[10px] bg-blue-100 text-blue-800 font-extrabold px-2 py-0.5 rounded-md">RECOMENDADO</span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Todo en Básico + Itinerario detallado día a día + Exclusiones & Qué llevar + Sellos oficiales DIRCETUR.
+                </p>
+              </button>
+
+              {/* Advance */}
+              <button
+                type="button"
+                onClick={() => setTier('advance')}
+                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                  tier === 'advance'
+                    ? 'border-purple-600 bg-purple-50/80 shadow-sm ring-2 ring-purple-500/20'
+                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-xs font-black text-purple-900 uppercase tracking-wider">Advance</span>
+                  <span className="text-[10px] bg-purple-100 text-purple-800 font-extrabold px-2 py-0.5 rounded-md">ALTA CONVERSIÓN</span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Todo en Pro + Galería completa + Preguntas Frecuentes (FAQs) del Tour + Testimonios de clientes + Reservas WhatsApp.
+                </p>
+              </button>
             </div>
           </div>
 
@@ -1222,9 +1379,22 @@ export default function NewLandingDemo() {
             <span className="text-xs font-black uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
               <Eye size={15} className="text-blue-600" /> Vista Previa en Vivo
             </span>
-            <span className="text-[11px] bg-slate-100 text-slate-700 font-bold px-2.5 py-0.5 rounded-full border border-slate-200">
-              {template.toUpperCase()} • {language.toUpperCase()}
-            </span>
+            <div className="flex items-center gap-1.5">
+              <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full border ${
+                tier === 'advance'
+                  ? 'bg-purple-50 text-purple-700 border-purple-200'
+                  : tier === 'pro'
+                  ? 'bg-blue-50 text-blue-700 border-blue-200'
+                  : tier === 'basic'
+                  ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                  : 'bg-stone-100 text-stone-700 border-stone-300'
+              }`}>
+                Plan {tier}
+              </span>
+              <span className="text-[10px] bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded-full border border-slate-200">
+                {template.toUpperCase()} • {language.toUpperCase()}
+              </span>
+            </div>
           </div>
 
           {/* WhatsApp Link Share Preview Simulator */}
