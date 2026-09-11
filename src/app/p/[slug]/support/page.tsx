@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -19,7 +19,9 @@ import {
   Calendar,
   HeartHandshake,
   Compass,
-  FileText
+  FileText,
+  Bot,
+  AlertTriangle
 } from 'lucide-react';
 import { getStoredLandings, LandingData } from '@/data/landingStore';
 
@@ -40,6 +42,16 @@ export default function TourPublicSupportPage() {
   const [senderName, setSenderName] = useState('');
   const [senderContact, setSenderContact] = useState('');
   const [senderQuestion, setSenderQuestion] = useState('');
+  const [category, setCategory] = useState('Logística y Horarios de Recojo');
+  const [ticketId, setTicketId] = useState('');
+
+  // Anti-Spam Multilayer States
+  const formLoadTime = useRef<number>(Date.now());
+  const [honeypot, setHoneypot] = useState(''); // Campo trampa invisible
+  const [mathNum1] = useState(() => Math.floor(Math.random() * 5) + 3);
+  const [mathNum2] = useState(() => Math.floor(Math.random() * 4) + 2);
+  const [mathAnswer, setMathAnswer] = useState('');
+  const [spamError, setSpamError] = useState<string | null>(null);
 
   if (!landing) {
     return (
@@ -72,6 +84,10 @@ export default function TourPublicSupportPage() {
       a: 'Puedes coordinar directamente por WhatsApp. Aceptamos transferencias bancarias nacionales (BCP, Interbank), Yape, Plin y tarjetas de crédito internacionales sin cobros ocultos.'
     },
     {
+      q: '¿Por qué es seguro reservar con nosotros? (Sellos y Licencias)',
+      a: 'Somos agencia formal con RUC 20 activo, acreditación oficial DIRCETUR Cusco y sello internacional Safe Travels. Tus reservas están 100% garantizadas y emitimos comprobantes oficiales.'
+    },
+    {
       q: '¿Qué precauciones recomiendan para el mal de altura (soroche)?',
       a: `Recomendamos descansar las primeras 24 horas tras llegar a Cusco, beber mate de coca o muña y mantenerse hidratado. Nuestro guía cuenta con botiquín y balón de oxígeno para altitudes de ${landing.altitude || '3,400 msnm'}.`
     },
@@ -87,10 +103,33 @@ export default function TourPublicSupportPage() {
 
   const handleQuickInquiry = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!senderContact.trim()) return;
+    setSpamError(null);
+
+    // 1. Capa 1 Anti-Spam: Honeypot invisible
+    if (honeypot.trim().length > 0) {
+      setSpamError('Detección Anti-Spam: Envío bloqueado por actividad automatizada.');
+      return;
+    }
+
+    // 2. Capa 2 Anti-Spam: Time-Gate (Validar si se envió en menos de 2.5 segundos)
+    const elapsed = Date.now() - formLoadTime.current;
+    if (elapsed < 2500) {
+      setSpamError('Envío demasiado rápido (menos de 2.5 segundos). Por favor tómate un momento para revisar tu consulta.');
+      return;
+    }
+
+    // 3. Capa 3 Anti-Spam: Desafío de seguridad
+    const expected = mathNum1 + mathNum2;
+    if (parseInt(mathAnswer.trim(), 10) !== expected) {
+      setSpamError(`Desafío incorrecto: ¿Cuánto es ${mathNum1} + ${mathNum2}? Por favor introduce el número correcto.`);
+      return;
+    }
+
     setIsSubmitting(true);
     setTimeout(() => {
       setIsSubmitting(false);
+      const genId = `CONS-${Math.floor(1000 + Math.random() * 9000)}`;
+      setTicketId(genId);
       setFormSubmitted(true);
     }, 600);
   };
@@ -166,7 +205,7 @@ export default function TourPublicSupportPage() {
         </div>
       </section>
 
-      {/* Main Content: FAQs Accordion + Support Desk */}
+      {/* Main Content: FAQs Accordion + Support Desk with Anti-Spam */}
       <main className="max-w-5xl mx-auto px-4 sm:px-8 py-12 space-y-12">
         
         {/* FAQs Accordion */}
@@ -219,9 +258,9 @@ export default function TourPublicSupportPage() {
           </div>
         </div>
 
-        {/* Tourist Help Desk & Live Contact */}
+        {/* Tourist Help Desk & Live Contact with Anti-Spam */}
         <div className="bg-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-xl relative overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             
             {/* Left Column: Direct Attention */}
             <div className="lg:col-span-7 space-y-4">
@@ -270,28 +309,34 @@ export default function TourPublicSupportPage() {
               </div>
             </div>
 
-            {/* Right Column: Quick Consultation Form */}
-            <div className="lg:col-span-5 bg-white/10 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-white/15 text-white">
-              <h4 className="text-sm font-bold text-white mb-1 flex items-center gap-2">
-                <Send size={15} className="text-blue-400" />
-                Envíanos tu Consulta
-              </h4>
-              <p className="text-[11px] text-slate-300 mb-4">
-                Te responderemos directamente por WhatsApp a la brevedad.
-              </p>
+            {/* Right Column: Quick Consultation Form with Anti-Spam */}
+            <div className="lg:col-span-5 bg-white/10 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-white/15 text-white space-y-3">
+              <div className="flex items-center justify-between pb-2 border-b border-white/10">
+                <h4 className="text-sm font-bold text-white flex items-center gap-2">
+                  <Send size={15} className="text-blue-400" />
+                  Envíanos tu Consulta
+                </h4>
+                <span className="text-[10px] text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-400/30 flex items-center gap-1">
+                  <ShieldCheck size={11} /> Anti-Spam Activo
+                </span>
+              </div>
 
               {formSubmitted ? (
                 <div className="bg-emerald-500/20 border border-emerald-400/40 p-4 rounded-xl text-center space-y-2 animate-in zoom-in-95 duration-200">
                   <CheckCircle2 size={24} className="text-emerald-400 mx-auto" />
-                  <h5 className="text-xs font-bold text-white">¡Consulta Enviada!</h5>
+                  <h5 className="text-xs font-bold text-white">¡Consulta Registrada!</h5>
+                  <span className="inline-block bg-white/20 text-white font-mono text-[11px] px-2.5 py-0.5 rounded-md">
+                    Ticket #{ticketId}
+                  </span>
                   <p className="text-[11px] text-slate-200">
-                    Gracias {senderName || 'viajero'}. Te escribiremos al número {senderContact} en los próximos minutos.
+                    Gracias {senderName || 'viajero'}. Te escribiremos al WhatsApp {senderContact} en breve.
                   </p>
                   <button
                     type="button"
                     onClick={() => {
                       setFormSubmitted(false);
                       setSenderQuestion('');
+                      setMathAnswer('');
                     }}
                     className="text-[10px] text-emerald-300 hover:text-white underline pt-1 cursor-pointer"
                   >
@@ -300,32 +345,63 @@ export default function TourPublicSupportPage() {
                 </div>
               ) : (
                 <form onSubmit={handleQuickInquiry} className="space-y-3">
+                  
+                  {/* Honeypot invisible trap */}
+                  <input
+                    type="text"
+                    name="website_url_trap"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                    className="hidden absolute -left-[9999px]"
+                  />
+
+                  {/* Category selector */}
                   <div>
                     <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-300 mb-1">
-                      Tu Nombre
+                      Categoría
                     </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="Ej. Mateo Rojas"
-                      value={senderName}
-                      onChange={(e) => setSenderName(e.target.value)}
-                      className="w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-400"
-                    />
+                    <select
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      className="w-full bg-slate-900 border border-white/20 rounded-xl px-3 py-2 text-xs text-white outline-none focus:ring-2 focus:ring-blue-400"
+                    >
+                      <option value="Logística y Horarios de Recojo">Logística y Horarios de Recojo</option>
+                      <option value="Aclimatación y Altitud (Soroche)">Aclimatación y Altitud (Soroche)</option>
+                      <option value="Reserva Directa y Métodos de Pago">Reserva Directa y Métodos de Pago</option>
+                      <option value="Requerimiento Especial / Grupo Privado">Requerimiento Especial / Grupo Privado</option>
+                    </select>
                   </div>
 
-                  <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-300 mb-1">
-                      WhatsApp o Teléfono
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="Ej. +51 984 000 000"
-                      value={senderContact}
-                      onChange={(e) => setSenderContact(e.target.value)}
-                      className="w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-400"
-                    />
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-300 mb-1">
+                        Tu Nombre
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Ej. Mateo Rojas"
+                        value={senderName}
+                        onChange={(e) => setSenderName(e.target.value)}
+                        className="w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-400"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-300 mb-1">
+                        WhatsApp
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="+51 984..."
+                        value={senderContact}
+                        onChange={(e) => setSenderContact(e.target.value)}
+                        className="w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-blue-400"
+                      />
+                    </div>
                   </div>
 
                   <div>
@@ -342,13 +418,39 @@ export default function TourPublicSupportPage() {
                     />
                   </div>
 
+                  {/* Anti-Spam Math Security Challenge */}
+                  <div className="bg-white/10 p-2.5 rounded-xl border border-white/15 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <Bot size={15} className="text-blue-300 shrink-0" />
+                      <span className="text-[11px] text-slate-200 font-semibold">
+                        Verificación: ¿Cuánto es <strong>{mathNum1} + {mathNum2}</strong>?
+                      </span>
+                    </div>
+                    <input
+                      type="number"
+                      required
+                      placeholder="?"
+                      value={mathAnswer}
+                      onChange={(e) => setMathAnswer(e.target.value)}
+                      className="w-14 bg-white/20 border border-white/30 rounded-lg px-2 py-1 text-xs text-center font-bold text-white outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                  </div>
+
+                  {/* Spam Error Alert */}
+                  {spamError && (
+                    <div className="p-2.5 rounded-xl bg-rose-500/20 border border-rose-400/40 text-rose-200 text-xs flex items-center gap-2">
+                      <AlertTriangle size={15} className="shrink-0 text-rose-300" />
+                      <span>{spamError}</span>
+                    </div>
+                  )}
+
                   <button
                     type="submit"
                     disabled={isSubmitting}
                     className="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     {isSubmitting ? (
-                      <span>Enviando consulta...</span>
+                      <span>Validando y enviando...</span>
                     ) : (
                       <>
                         <Send size={14} />
