@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { 
   FileText, Globe, CalendarDays, Sparkles, TrendingUp, ArrowUpRight, 
   ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download,
-  MoveHorizontal, ChevronLeft, ChevronRight, Layers, LifeBuoy
+  MoveHorizontal, ChevronLeft, ChevronRight, Layers, LifeBuoy, Pin
 } from 'lucide-react';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, LandingData } from '@/data/landingStore';
@@ -190,8 +190,29 @@ export default function DemoDashboard() {
         </div>
       </div>
 
-      {/* Quick Services Access Banner */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Quick Services & Inspiration Access Banner */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* Card 1: Inspiración Pinterest */}
+        <Link 
+          href="/demo/pinterest"
+          className="p-4 rounded-2xl bg-white border border-rose-200/90 shadow-2xs hover:border-red-400 hover:shadow-md transition-all flex items-center justify-between group"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Pin size={20} className="rotate-45" />
+            </div>
+            <div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-xs font-bold text-slate-800 block group-hover:text-red-600 transition-colors">Inspiración Pinterest</span>
+                <span className="text-[9px] font-extrabold bg-red-100 text-red-700 px-1.5 py-0.2 rounded-md">6 Diseños</span>
+              </div>
+              <span className="text-[11px] text-slate-500">Catálogo de tableros, polaroids y moodboards</span>
+            </div>
+          </div>
+          <span className="text-xs font-bold text-red-600 group-hover:translate-x-1 transition-transform">Explorar →</span>
+        </Link>
+
+        {/* Card 2: Guía de Niveles */}
         <Link 
           href="/demo/plans"
           className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-blue-300 hover:shadow-xs transition-all flex items-center justify-between group"
@@ -202,12 +223,13 @@ export default function DemoDashboard() {
             </div>
             <div>
               <span className="text-xs font-bold text-slate-800 block group-hover:text-blue-600 transition-colors">Guía de Estructura y Niveles</span>
-              <span className="text-[11px] text-slate-500">Manual técnico del creador: qué secciones se activan en cada versión (Gratuito, Básico, Pro, Advance)</span>
+              <span className="text-[11px] text-slate-500">Qué secciones se activan (Gratis, Básico, Pro, Advance)</span>
             </div>
           </div>
           <span className="text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">Ver matriz →</span>
         </Link>
 
+        {/* Card 3: Soporte & FAQ */}
         <Link 
           href="/demo/support"
           className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-emerald-300 hover:shadow-xs transition-all flex items-center justify-between group"
@@ -217,7 +239,7 @@ export default function DemoDashboard() {
               <LifeBuoy size={20} />
             </div>
             <div>
-              <span className="text-xs font-bold text-slate-800 block group-hover:text-emerald-600 transition-colors">Mesa de Ayuda & Preguntas Frecuentes</span>
+              <span className="text-xs font-bold text-slate-800 block group-hover:text-emerald-600 transition-colors">Mesa de Ayuda & FAQ</span>
               <span className="text-[11px] text-slate-500">Soporte con Anti-Spam (Honeypot & Time-gate)</span>
             </div>
           </div>

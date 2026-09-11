@@ -12,7 +12,8 @@ import {
   X,
   Compass,
   Layers,
-  LifeBuoy
+  LifeBuoy,
+  Pin
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -23,6 +24,7 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
 
   const isDashboard = pathname === '/demo';
   const isNewLanding = pathname === '/demo/new';
+  const isPinterest = pathname === '/demo/pinterest';
   const isPlans = pathname === '/demo/plans';
   const isSupport = pathname === '/demo/support';
   const isSettings = pathname === '/demo/settings';
@@ -30,6 +32,7 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
 
   let pageTitle = 'Panel Principal';
   if (isNewLanding) pageTitle = 'Generador de Landings';
+  else if (isPinterest) pageTitle = 'Inspiración Pinterest (6 Diseños)';
   else if (isPlans) pageTitle = 'Guía de Estructura de Páginas';
   else if (isSupport) pageTitle = 'Mesa de Ayuda & Soporte FAQ';
   else if (isSettings) pageTitle = 'Configuración';
@@ -84,6 +87,23 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
               <span>Editor Activo</span>
             </div>
           )}
+
+          <Link 
+            href="/demo/pinterest" 
+            className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-all ${
+              isPinterest 
+                ? 'bg-red-600 text-white shadow-sm shadow-red-600/30' 
+                : 'text-slate-400 hover:text-white hover:bg-slate-900'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <Pin size={18} className="rotate-45 text-rose-400" />
+              <span>Inspiración Pinterest</span>
+            </div>
+            <span className="text-[10px] font-extrabold bg-rose-500/20 text-rose-300 px-1.5 py-0.5 rounded-md border border-rose-500/30">
+              6 Diseños
+            </span>
+          </Link>
 
           <Link 
             href="/demo/plans" 
@@ -206,6 +226,22 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
               >
                 <FilePlus2 size={18} />
                 <span>Nueva Landing</span>
+              </Link>
+
+              <Link
+                href="/demo/pinterest"
+                onClick={() => setMobileMenuOpen(false)}
+                className={`p-3 rounded-xl flex items-center justify-between text-xs font-bold ${
+                  isPinterest ? 'bg-red-600 text-white' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
+                }`}
+              >
+                <div className="flex items-center gap-2.5">
+                  <Pin size={18} className="rotate-45 text-rose-400" />
+                  <span>Inspiración Pinterest</span>
+                </div>
+                <span className="text-[10px] bg-rose-500/20 text-rose-300 px-1.5 py-0.5 rounded-md border border-rose-500/30">
+                  6 Diseños
+                </span>
               </Link>
 
               <Link
