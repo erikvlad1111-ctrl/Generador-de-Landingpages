@@ -426,74 +426,143 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </section>
 
-      {/* 6. ¿POR QUÉ ELEGIRNOS? */}
-      <section id="por-que-nosotros" className="py-14 sm:py-20 bg-[#F9F7F4] border-y border-stone-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      {/* 6. ¿POR QUÉ ELEGIRNOS? (CONFIANZA, GUÍAS & FORMALIDAD) */}
+      <section id="por-que-nosotros" className="py-16 sm:py-24 bg-[#F9F7F4] border-y border-stone-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 space-y-16">
+          
+          {/* Main 2-Column Split: Real Guides Photo + Benefits */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
+            
+            {/* Left Photo with Floating Badge */}
             <div className="relative">
-              <div className="relative h-80 sm:h-96 rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
+              <div className="relative h-80 sm:h-[420px] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
                 <Image
                   src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop"
                   alt="Guías Oficiales en Machu Picchu"
                   fill
                   className="object-cover"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
               </div>
 
-              <div className="absolute -bottom-5 -right-3 sm:right-6 bg-white p-4 rounded-2xl shadow-xl border border-stone-200 flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-[#FF5500]/10 flex items-center justify-center text-[#FF5500] font-black text-base">
+              {/* Floating Satisfaction Badge */}
+              <div className="absolute -bottom-5 -right-3 sm:right-6 bg-white p-4 sm:p-5 rounded-2xl shadow-xl border border-stone-200 flex items-center gap-3.5">
+                <div className="w-13 h-13 rounded-2xl bg-[#FF5500]/10 flex items-center justify-center text-[#FF5500] font-black text-lg">
                   100%
                 </div>
                 <div>
-                  <p className="font-extrabold text-xs text-stone-900">Satisfacción Garantizada</p>
-                  <p className="text-[11px] text-stone-400">Guías colegiados bilingües</p>
+                  <p className="font-extrabold text-xs sm:text-sm text-stone-900">Satisfacción Garantizada</p>
+                  <p className="text-[11px] text-stone-400">Guías colegiados bilingües DIRCETUR</p>
                 </div>
               </div>
             </div>
 
+            {/* Right Pillars */}
             <div className="space-y-6">
               <div className="space-y-2">
-                <span className="text-xs font-black uppercase tracking-widest text-[#FF5500]">
-                  Confianza & Formalidad
-                </span>
+                <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-[#FF5500]">
+                  <ShieldCheck size={16} />
+                  <span>Confianza, Experiencia & Seguridad</span>
+                </div>
                 <h2 className="text-2xl sm:text-4xl font-black text-stone-900 tracking-tight">
                   ¿Por qué viajar con <span className="text-[#FF5500]">{brandName}</span>?
                 </h2>
                 <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-                  Somos una agencia local acreditada con más de 10 años organizando viajes inolvidables. Cuidamos cada detalle desde tu llegada al aeropuerto hasta tu retorno a casa.
+                  Somos una agencia local acreditada con más de 10 años organizando viajes inolvidables en Cusco y todo el Perú. Cuidamos cada detalle desde tu llegada al aeropuerto hasta tu retorno a casa.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <div className="flex items-center gap-2 text-xs font-bold text-stone-800">
-                  <CheckCircle2 size={16} className="text-[#FF5500] shrink-0" />
+              {/* Check Benefits Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+                <div className="flex items-center gap-2.5 text-xs font-bold text-stone-800 bg-white p-3 rounded-xl border border-stone-200 shadow-2xs">
+                  <CheckCircle2 size={17} className="text-[#FF5500] shrink-0" />
                   <span>Guías Oficiales Acreditados</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs font-bold text-stone-800">
-                  <CheckCircle2 size={16} className="text-[#FF5500] shrink-0" />
+                <div className="flex items-center gap-2.5 text-xs font-bold text-stone-800 bg-white p-3 rounded-xl border border-stone-200 shadow-2xs">
+                  <CheckCircle2 size={17} className="text-[#FF5500] shrink-0" />
                   <span>Balón de Oxígeno & Botiquín</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs font-bold text-stone-800">
-                  <CheckCircle2 size={16} className="text-[#FF5500] shrink-0" />
+                <div className="flex items-center gap-2.5 text-xs font-bold text-stone-800 bg-white p-3 rounded-xl border border-stone-200 shadow-2xs">
+                  <CheckCircle2 size={17} className="text-[#FF5500] shrink-0" />
                   <span>Salidas Diarias Garantizadas</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs font-bold text-stone-800">
-                  <CheckCircle2 size={16} className="text-[#FF5500] shrink-0" />
+                <div className="flex items-center gap-2.5 text-xs font-bold text-stone-800 bg-white p-3 rounded-xl border border-stone-200 shadow-2xs">
+                  <CheckCircle2 size={17} className="text-[#FF5500] shrink-0" />
                   <span>Atención 24/7 por WhatsApp</span>
                 </div>
               </div>
 
-              <div className="bg-[#FFF6F0] p-6 rounded-2xl border border-[#FFD9C2] space-y-3">
+              {/* Highlight Safety Box */}
+              <div className="bg-[#FFF6F0] p-6 rounded-2xl border border-[#FFD9C2] space-y-2.5 shadow-xs">
                 <h4 className="font-extrabold text-sm text-stone-900 flex items-center gap-2">
                   <Award size={18} className="text-[#FF5500]" />
-                  <span>Compromiso de Altura y Seguridad</span>
+                  <span>Compromiso de Altura y Asistencia Médica Preventiva</span>
                 </h4>
                 <p className="text-xs text-stone-600 leading-relaxed">
-                  Sabemos lo desafiante que puede ser la altitud andina. Por ello, todos nuestros itinerarios respetan los tiempos recomendados de aclimatación y monitoreamos el bienestar de cada viajero durante todo el recorrido.
+                  Sabemos lo desafiante que puede ser la altitud andina. Por ello, todos nuestros itinerarios respetan los tiempos recomendados de aclimatación y monitoreamos el bienestar y oxigenación de cada viajero durante todo el recorrido.
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Creando Conexiones con el Mundo (4 Círculos de Confianza del Diseño Original) */}
+          <div className="pt-8 border-t border-stone-200/80 space-y-10">
+            <div className="text-center max-w-xl mx-auto space-y-2">
+              <div className="inline-flex items-center gap-1.5 text-[#FF5500] text-xs font-extrabold uppercase tracking-widest">
+                <Globe2 size={15} /> <span>Nuestros Pilares de Calidad</span>
+              </div>
+              <h3 className="text-xl sm:text-3xl font-black text-stone-900 tracking-tight">
+                Creando Conexiones con el Mundo
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-500">
+                La fórmula que convierte tu viaje a Cusco en la mejor experiencia de tu vida.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs hover:shadow-lg transition-all text-center space-y-3 group hover:-translate-y-1">
+                <div className="w-14 h-14 rounded-full bg-[#FF5500]/10 text-[#FF5500] flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                  <ShieldCheck size={26} />
+                </div>
+                <h4 className="font-extrabold text-sm text-stone-900">Agencia Formal</h4>
+                <p className="text-xs text-stone-500 leading-relaxed">
+                  Registrados ante DIRCETUR y MINCETUR con RUC 20 formal verificado y facturación legal.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs hover:shadow-lg transition-all text-center space-y-3 group hover:-translate-y-1">
+                <div className="w-14 h-14 rounded-full bg-[#FF5500]/10 text-[#FF5500] flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                  <Heart size={26} />
+                </div>
+                <h4 className="font-extrabold text-sm text-stone-900">Pasión & Amor</h4>
+                <p className="text-xs text-stone-500 leading-relaxed">
+                  Guías locales cusqueños que transmiten el legado incaico con autenticidad y calidez humana.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs hover:shadow-lg transition-all text-center space-y-3 group hover:-translate-y-1">
+                <div className="w-14 h-14 rounded-full bg-[#FF5500]/10 text-[#FF5500] flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                  <Clock size={26} />
+                </div>
+                <h4 className="font-extrabold text-sm text-stone-900">Cero Estrés</h4>
+                <p className="text-xs text-stone-500 leading-relaxed">
+                  Recojo puntual en la puerta de tu hotel, boletos asegurados sin colas y logística impecable.
+                </p>
+              </div>
+
+              <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs hover:shadow-lg transition-all text-center space-y-3 group hover:-translate-y-1">
+                <div className="w-14 h-14 rounded-full bg-[#FF5500]/10 text-[#FF5500] flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                  <Star size={26} />
+                </div>
+                <h4 className="font-extrabold text-sm text-stone-900">Calidad 5 Estrellas</h4>
+                <p className="text-xs text-stone-500 leading-relaxed">
+                  Más de 500 testimonios reales en Google y TripAdvisor con calificación de 4.9/5.
                 </p>
               </div>
             </div>
           </div>
+
         </div>
       </section>
 
