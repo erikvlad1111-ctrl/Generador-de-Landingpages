@@ -356,17 +356,17 @@ export default function TourSupportAndFaqs({
   };
 
   return (
-    <section id="soporte-faq" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-6 sm:px-8'} bg-[#F9F7F4] border-t border-stone-200 transition-colors duration-300`}>
-      <div className="max-w-5xl mx-auto space-y-10">
+    <section id="soporte-faq" className={`${isMobile ? 'py-8 px-3' : 'py-20 px-6 sm:px-8'} bg-[#F9F7F4] border-t border-stone-200 transition-colors duration-300`}>
+      <div className="max-w-5xl mx-auto space-y-6 sm:space-y-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider bg-[#FF5500]/10 text-[#FF5500] border border-[#FF5500]/20">
-            <HelpCircle size={15} />
-            <span>Centro de Ayuda, Foro Comunitario & Soporte</span>
+        <div className="text-center max-w-2xl mx-auto space-y-2 sm:space-y-3 px-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider bg-[#FF5500]/10 text-[#FF5500] border border-[#FF5500]/20">
+            <HelpCircle size={14} />
+            <span>Centro de Ayuda, Foro & Soporte</span>
           </div>
 
-          <h2 className={`${isMobile ? 'text-2xl' : 'text-3xl sm:text-4xl'} font-black tracking-tight text-stone-900`}>
+          <h2 className={`${isMobile ? 'text-xl' : 'text-3xl sm:text-4xl'} font-black tracking-tight text-stone-900`}>
             ¿En qué podemos <span className="text-[#FF5500]">ayudarte</span>?
           </h2>
 
@@ -376,19 +376,23 @@ export default function TourSupportAndFaqs({
         </div>
 
         {/* Navigation Tabs Bar */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 p-1.5 bg-stone-200/70 rounded-2xl max-w-2xl mx-auto">
+        <div className={`bg-stone-200/70 rounded-2xl max-w-2xl mx-auto p-1 sm:p-1.5 ${
+          isMobile ? 'grid grid-cols-3 gap-1' : 'flex flex-wrap items-center justify-center gap-2 sm:gap-3'
+        }`}>
           <button
             type="button"
             onClick={() => { setActiveTab('forum'); setActiveQuestionId(null); }}
-            className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
+            className={`flex items-center justify-center gap-1 sm:gap-2 ${
+              isMobile ? 'px-1.5 py-2 text-[10px] flex-col text-center' : 'px-4 sm:px-5 py-2.5 text-xs'
+            } rounded-xl font-black transition-all cursor-pointer ${
               activeTab === 'forum'
-                ? 'bg-white text-stone-900 shadow-md shadow-stone-300/50 scale-102'
-                : 'text-stone-600 hover:text-stone-900 hover:bg-white/40'
+                ? 'bg-white text-stone-900 shadow-md scale-102'
+                : 'text-stone-600 hover:text-stone-900'
             }`}
           >
-            <MessageSquare size={15} className={activeTab === 'forum' ? 'text-[#FF5500]' : ''} />
-            <span>Foro de Ayuda & Comunidad</span>
-            <span className="bg-[#FF5500]/15 text-[#FF5500] text-[10px] px-2 py-0.5 rounded-full font-bold">
+            <MessageSquare size={14} className={activeTab === 'forum' ? 'text-[#FF5500]' : ''} />
+            <span>{isMobile ? 'Foro' : 'Foro de Ayuda & Comunidad'}</span>
+            <span className="bg-[#FF5500]/15 text-[#FF5500] text-[9px] px-1.5 py-0.2 rounded-full font-bold">
               {forumQuestions.length}
             </span>
           </button>
@@ -396,27 +400,31 @@ export default function TourSupportAndFaqs({
           <button
             type="button"
             onClick={() => setActiveTab('faq')}
-            className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
+            className={`flex items-center justify-center gap-1 sm:gap-2 ${
+              isMobile ? 'px-1.5 py-2 text-[10px] flex-col text-center' : 'px-4 sm:px-5 py-2.5 text-xs'
+            } rounded-xl font-black transition-all cursor-pointer ${
               activeTab === 'faq'
-                ? 'bg-white text-stone-900 shadow-md shadow-stone-300/50 scale-102'
-                : 'text-stone-600 hover:text-stone-900 hover:bg-white/40'
+                ? 'bg-white text-stone-900 shadow-md scale-102'
+                : 'text-stone-600 hover:text-stone-900'
             }`}
           >
-            <HelpCircle size={15} className={activeTab === 'faq' ? 'text-[#FF5500]' : ''} />
-            <span>Preguntas Frecuentes (FAQ)</span>
+            <HelpCircle size={14} className={activeTab === 'faq' ? 'text-[#FF5500]' : ''} />
+            <span>{isMobile ? 'FAQs' : 'Preguntas Frecuentes (FAQ)'}</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('ticket')}
-            className={`flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
+            className={`flex items-center justify-center gap-1 sm:gap-2 ${
+              isMobile ? 'px-1.5 py-2 text-[10px] flex-col text-center' : 'px-4 sm:px-5 py-2.5 text-xs'
+            } rounded-xl font-black transition-all cursor-pointer ${
               activeTab === 'ticket'
-                ? 'bg-white text-stone-900 shadow-md shadow-stone-300/50 scale-102'
-                : 'text-stone-600 hover:text-stone-900 hover:bg-white/40'
+                ? 'bg-white text-stone-900 shadow-md scale-102'
+                : 'text-stone-600 hover:text-stone-900'
             }`}
           >
-            <ShieldCheck size={15} className={activeTab === 'ticket' ? 'text-[#FF5500]' : ''} />
-            <span>Mesa de Ayuda Privada</span>
+            <ShieldCheck size={14} className={activeTab === 'ticket' ? 'text-[#FF5500]' : ''} />
+            <span>{isMobile ? 'Mesa Ayuda' : 'Mesa de Ayuda Privada'}</span>
           </button>
         </div>
 
@@ -424,19 +432,19 @@ export default function TourSupportAndFaqs({
         {/* TAB 1: FORO DE AYUDA DE LA COMUNIDAD (DISEÑO REQUERIDO) */}
         {/* ======================================================== */}
         {activeTab === 'forum' && (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             
             {/* Foro Top Action Card */}
-            <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-xs space-y-6">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div className={`bg-white ${isMobile ? 'p-4 rounded-2xl space-y-3' : 'p-6 sm:p-8 rounded-3xl space-y-6'} border border-stone-200 shadow-xs`}>
+              <div className={`flex ${isMobile ? 'flex-col items-stretch gap-3' : 'flex-col sm:flex-row items-start sm:items-center justify-between gap-4'}`}>
                 <div className="space-y-1">
-                  <div className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-wider text-[#FF5500]">
-                    <Sparkles size={14} /> <span>Conversación Pública y Asistencia</span>
+                  <div className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-black uppercase tracking-wider text-[#FF5500]">
+                    <Sparkles size={13} /> <span>Conversación Pública y Asistencia</span>
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
+                  <h3 className={`${isMobile ? 'text-lg' : 'text-lg sm:text-2xl'} font-black text-stone-900 tracking-tight`}>
                     Foro de Ayuda
                   </h3>
-                  <p className="text-xs sm:text-sm text-stone-500">
+                  <p className="text-xs sm:text-sm text-stone-500 leading-relaxed">
                     Publica tu pregunta o problema y recibe respuestas del administrador, diseñadores y guías.
                   </p>
                 </div>
@@ -444,20 +452,22 @@ export default function TourSupportAndFaqs({
                 <button
                   type="button"
                   onClick={() => setShowNewQuestionModal(true)}
-                  className="shimmer-btn bg-gradient-to-r from-[#FF5500] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white px-5 py-3 rounded-2xl font-black text-xs uppercase tracking-wider shadow-md shadow-[#FF5500]/30 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer shrink-0"
+                  className={`shimmer-btn bg-gradient-to-r from-[#FF5500] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white ${
+                    isMobile ? 'w-full py-2.5 px-4 justify-center text-xs' : 'px-5 py-3 text-xs'
+                  } rounded-xl sm:rounded-2xl font-black uppercase tracking-wider shadow-md shadow-[#FF5500]/30 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer shrink-0`}
                 >
-                  <Plus size={16} />
-                  <span>+ Nueva Pregunta</span>
+                  <Plus size={15} />
+                  <span>Nueva Pregunta</span>
                 </button>
               </div>
 
               {/* Search & Category Filter */}
-              <div className="pt-2 border-t border-stone-100 flex flex-col md:flex-row items-stretch md:items-center gap-3">
+              <div className={`pt-2 border-t border-stone-100 flex ${isMobile ? 'flex-col gap-2.5' : 'flex-col md:flex-row items-stretch md:items-center gap-3'}`}>
                 <div className="relative flex-1">
                   <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
                   <input
                     type="text"
-                    placeholder="🔎 Buscar en el foro (ej. imágenes, soroche, cancelaciones)..."
+                    placeholder={isMobile ? "🔎 Buscar en el foro..." : "🔎 Buscar en el foro (ej. imágenes, soroche, cancelaciones)..."}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full bg-stone-50 border border-stone-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-stone-900 placeholder:text-stone-400 outline-none focus:ring-2 focus:ring-[#FF5500]/30 focus:border-[#FF5500]"
@@ -472,13 +482,13 @@ export default function TourSupportAndFaqs({
                   )}
                 </div>
 
-                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none w-full">
                   {['Todas', 'Editor & Diseño', 'Salud & Altura', 'Políticas & Reservas'].map((cat) => (
                     <button
                       key={cat}
                       type="button"
                       onClick={() => setSelectedCategory(cat)}
-                      className={`px-3 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                      className={`px-3 py-1.5 sm:py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
                         selectedCategory === cat
                           ? 'bg-stone-900 text-white'
                           : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
@@ -493,11 +503,11 @@ export default function TourSupportAndFaqs({
 
             {/* Modal / Panel: Formulario "+ Nueva Pregunta" */}
             {showNewQuestionModal && (
-              <div className="bg-white p-6 sm:p-8 rounded-3xl border-2 border-[#FF5500]/40 shadow-xl space-y-5 animate-in fade-in zoom-in-95 duration-200">
+              <div className={`bg-white ${isMobile ? 'p-4 rounded-2xl' : 'p-6 sm:p-8 rounded-3xl'} border-2 border-[#FF5500]/40 shadow-xl space-y-4 animate-in fade-in zoom-in-95 duration-200`}>
                 <div className="flex items-center justify-between pb-3 border-b border-stone-100">
-                  <h4 className="font-extrabold text-base text-stone-900 flex items-center gap-2">
-                    <MessageSquare size={18} className="text-[#FF5500]" />
-                    <span>Crear una Nueva Pregunta en el Foro</span>
+                  <h4 className="font-extrabold text-sm sm:text-base text-stone-900 flex items-center gap-2">
+                    <MessageSquare size={16} className="text-[#FF5500]" />
+                    <span>Crear Nueva Pregunta en el Foro</span>
                   </h4>
                   <button
                     onClick={() => setShowNewQuestionModal(false)}
@@ -507,16 +517,16 @@ export default function TourSupportAndFaqs({
                   </button>
                 </div>
 
-                <form onSubmit={handlePublishQuestion} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div className="sm:col-span-2">
+                <form onSubmit={handlePublishQuestion} className="space-y-3 sm:space-y-4">
+                  <div className={`grid ${isMobile ? 'grid-cols-1 gap-3' : 'grid-cols-1 sm:grid-cols-3 gap-3'}`}>
+                    <div className={isMobile ? 'col-span-1' : 'sm:col-span-2'}>
                       <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 mb-1">
                         Título de la Pregunta
                       </label>
                       <input
                         type="text"
                         required
-                        placeholder="Ej. ¿Cómo puedo cambiar las imágenes de mi landing?"
+                        placeholder="Ej. ¿Cómo cambiar las imágenes de mi landing?"
                         value={newTitle}
                         onChange={(e) => setNewTitle(e.target.value)}
                         className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:ring-2 focus:ring-[#FF5500]/30 focus:border-[#FF5500]"
@@ -589,7 +599,7 @@ export default function TourSupportAndFaqs({
 
             {/* Vista Individual del Hilo Seleccionado (Pregunta + Respuestas Públicas) */}
             {activeQuestion ? (
-              <div className="bg-white rounded-3xl border border-stone-200 p-6 sm:p-8 shadow-md space-y-6 animate-in fade-in duration-200">
+              <div className={`bg-white ${isMobile ? 'p-4 rounded-2xl space-y-4' : 'p-6 sm:p-8 rounded-3xl space-y-6'} border border-stone-200 shadow-md animate-in fade-in duration-200`}>
                 <button
                   type="button"
                   onClick={() => setActiveQuestionId(null)}
@@ -600,8 +610,8 @@ export default function TourSupportAndFaqs({
                 </button>
 
                 {/* Pregunta Principal */}
-                <div className="space-y-3 pb-6 border-b border-stone-200">
-                  <div className="flex items-center gap-2 text-xs text-stone-500">
+                <div className="space-y-3 pb-4 sm:pb-6 border-b border-stone-200">
+                  <div className={`flex ${isMobile ? 'flex-wrap gap-1.5' : 'items-center gap-2'} text-xs text-stone-500`}>
                     <span className="bg-[#FF5500]/10 text-[#FF5500] px-2.5 py-0.5 rounded-full font-bold text-[10px]">
                       {activeQuestion.category}
                     </span>
@@ -617,23 +627,23 @@ export default function TourSupportAndFaqs({
                     </span>
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
+                  <h3 className={`${isMobile ? 'text-lg' : 'text-xl sm:text-2xl'} font-black text-stone-900 tracking-tight`}>
                     {activeQuestion.title}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-stone-700 leading-relaxed bg-stone-50 p-4 rounded-2xl border border-stone-100">
+                  <p className="text-xs sm:text-sm text-stone-700 leading-relaxed bg-stone-50 p-3 sm:p-4 rounded-2xl border border-stone-100">
                     {activeQuestion.description}
                   </p>
                 </div>
 
                 {/* Listado de Respuestas Públicas */}
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-extrabold text-sm text-stone-900 flex items-center gap-2 uppercase tracking-wider">
+                    <h4 className="font-extrabold text-xs sm:text-sm text-stone-900 flex items-center gap-2 uppercase tracking-wider">
                       <MessageCircle size={16} className="text-[#FF5500]" />
-                      <span>Respuestas en este Hilo ({activeQuestion.replies.length})</span>
+                      <span>Respuestas ({activeQuestion.replies.length})</span>
                     </h4>
-                    <span className="text-[11px] text-stone-400">Conversación comunitaria</span>
+                    <span className="text-[10px] sm:text-[11px] text-stone-400">Comunidad</span>
                   </div>
 
                   {activeQuestion.replies.length === 0 ? (
@@ -641,31 +651,31 @@ export default function TourSupportAndFaqs({
                       Aún no hay respuestas en esta pregunta. ¡Sé el primero en responder!
                     </p>
                   ) : (
-                    <div className="space-y-3">
+                    <div className="space-y-2.5 sm:space-y-3">
                       {activeQuestion.replies.map((reply) => (
                         <div
                           key={reply.id}
-                          className="bg-stone-50 p-4 sm:p-5 rounded-2xl border border-stone-200/80 space-y-2 hover:border-stone-300 transition-colors"
+                          className="bg-stone-50 p-3.5 sm:p-5 rounded-2xl border border-stone-200/80 space-y-2 hover:border-stone-300 transition-colors"
                         >
                           <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2.5">
-                              <div className={`w-7 h-7 rounded-full ${reply.avatarBg || 'bg-stone-700'} text-white flex items-center justify-center font-bold text-xs`}>
+                            <div className="flex items-center gap-2">
+                              <div className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full ${reply.avatarBg || 'bg-stone-700'} text-white flex items-center justify-center font-bold text-[10px] sm:text-xs`}>
                                 {reply.author.charAt(0)}
                               </div>
                               <div>
                                 <span className="font-extrabold text-xs text-stone-900 block leading-tight">
                                   {reply.author}
                                 </span>
-                                <span className="text-[10px] text-stone-500 font-medium">
+                                <span className="text-[9px] sm:text-[10px] text-stone-500 font-medium">
                                   {reply.roleLabel}
                                 </span>
                               </div>
                             </div>
 
-                            <span className="text-[10px] text-stone-400">{reply.timeAgo}</span>
+                            <span className="text-[9px] sm:text-[10px] text-stone-400">{reply.timeAgo}</span>
                           </div>
 
-                          <p className="text-xs sm:text-sm text-stone-700 leading-relaxed pl-9">
+                          <p className="text-xs sm:text-sm text-stone-700 leading-relaxed pl-8 sm:pl-9">
                             {reply.content}
                           </p>
                         </div>
@@ -675,22 +685,22 @@ export default function TourSupportAndFaqs({
                 </div>
 
                 {/* Formulario para Agregar Respuesta */}
-                <div className="pt-4 border-t border-stone-200 space-y-3">
+                <div className="pt-3 border-t border-stone-200 space-y-3">
                   <h5 className="font-bold text-xs text-stone-900 uppercase tracking-wider">
-                    Escribir una Respuesta en este tema
+                    Escribir Respuesta
                   </h5>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
-                    <div className="sm:col-span-1">
+                  <div className={`grid ${isMobile ? 'grid-cols-1 gap-2.5' : 'grid-cols-1 sm:grid-cols-4 gap-3'}`}>
+                    <div className={isMobile ? 'col-span-1' : 'sm:col-span-1'}>
                       <input
                         type="text"
-                        placeholder="Tu Nombre (ej. Erik)"
+                        placeholder="Tu Nombre"
                         value={replyAuthor}
                         onChange={(e) => setReplyAuthor(e.target.value)}
                         className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-xs text-stone-900 outline-none focus:ring-2 focus:ring-[#FF5500]/30"
                       />
                     </div>
-                    <div className="sm:col-span-3">
+                    <div className={isMobile ? 'col-span-1' : 'sm:col-span-3'}>
                       <input
                         type="text"
                         placeholder="Escribe tu respuesta pública..."
@@ -711,7 +721,7 @@ export default function TourSupportAndFaqs({
                     <button
                       type="button"
                       onClick={() => handleAddReply(activeQuestion.id)}
-                      className="shimmer-btn bg-stone-900 hover:bg-[#FF5500] text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer flex items-center gap-2"
+                      className={`shimmer-btn bg-stone-900 hover:bg-[#FF5500] text-white ${isMobile ? 'w-full justify-center' : 'px-5'} py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer flex items-center gap-2`}
                     >
                       <Send size={13} />
                       <span>Responder</span>
@@ -724,7 +734,7 @@ export default function TourSupportAndFaqs({
               /* Lista de Preguntas del Foro (Cards) */
               <div className="space-y-3">
                 {filteredQuestions.length === 0 ? (
-                  <div className="bg-white p-8 rounded-3xl border border-stone-200 text-center space-y-3">
+                  <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 text-center space-y-3">
                     <p className="text-xs text-stone-500">
                       No encontramos preguntas con el término &quot;{searchQuery}&quot;.
                     </p>
@@ -740,11 +750,11 @@ export default function TourSupportAndFaqs({
                     <div
                       key={q.id}
                       onClick={() => setActiveQuestionId(q.id)}
-                      className="bg-white p-5 sm:p-6 rounded-3xl border border-stone-200/80 shadow-xs hover:shadow-lg hover:border-[#FF5500]/40 transition-all duration-200 cursor-pointer group space-y-2.5"
+                      className={`bg-white ${isMobile ? 'p-4 rounded-2xl' : 'p-5 sm:p-6 rounded-3xl'} border border-stone-200/80 shadow-xs hover:shadow-lg hover:border-[#FF5500]/40 transition-all duration-200 cursor-pointer group space-y-2.5`}
                     >
-                      <div className="flex items-center justify-between text-xs text-stone-500">
-                        <div className="flex items-center gap-2">
-                          <span className="bg-[#FF5500]/10 text-[#FF5500] text-[10px] font-extrabold px-2.5 py-0.5 rounded-full">
+                      <div className={`flex ${isMobile ? 'flex-col gap-1 items-start' : 'items-center justify-between'} text-xs text-stone-500`}>
+                        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                          <span className="bg-[#FF5500]/10 text-[#FF5500] text-[10px] font-extrabold px-2 py-0.5 rounded-full">
                             {q.category}
                           </span>
                           <span>•</span>
@@ -768,13 +778,13 @@ export default function TourSupportAndFaqs({
                         {q.description}
                       </p>
 
-                      <div className="pt-2 flex items-center justify-between text-xs border-t border-stone-100">
-                        <span className="text-[11px] font-bold text-stone-700 flex items-center gap-1.5">
+                      <div className={`pt-2 flex ${isMobile ? 'flex-col gap-1.5 items-start' : 'items-center justify-between'} text-xs border-t border-stone-100`}>
+                        <span className="text-[11px] font-bold text-stone-700 flex flex-wrap items-center gap-1.5">
                           <MessageCircle size={14} className="text-[#FF5500]" />
                           <span>{q.replies.length} respuestas</span>
                           {q.replies.some(r => r.role === 'admin') && (
-                            <span className="bg-emerald-500/10 text-emerald-700 text-[10px] px-2 py-0.5 rounded-full font-bold ml-1">
-                              ✓ Respondido por Administrador
+                            <span className="bg-emerald-500/10 text-emerald-700 text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-bold">
+                              ✓ Respondido por Admin
                             </span>
                           )}
                         </span>
@@ -796,7 +806,7 @@ export default function TourSupportAndFaqs({
         {/* TAB 2: PREGUNTAS FRECUENTES (FAQ OFICIAL) */}
         {/* ======================================================== */}
         {activeTab === 'faq' && (
-          <div className="space-y-3 max-w-3xl mx-auto">
+          <div className="space-y-2.5 sm:space-y-3 max-w-3xl mx-auto">
             {displayFaqs.map((faq, idx) => {
               const isOpen = openIndex === idx;
               return (
@@ -809,23 +819,23 @@ export default function TourSupportAndFaqs({
                   <button
                     type="button"
                     onClick={() => setOpenIndex(isOpen ? null : idx)}
-                    className="w-full text-left p-4 sm:p-5 flex items-center justify-between gap-4 cursor-pointer"
+                    className="w-full text-left p-3.5 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 cursor-pointer"
                   >
-                    <span className="text-xs sm:text-sm font-bold text-stone-900 flex items-center gap-2.5">
-                      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-mono shrink-0 ${
+                    <span className="text-xs sm:text-sm font-bold text-stone-900 flex items-center gap-2 sm:gap-2.5">
+                      <span className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-[10px] sm:text-[11px] font-mono shrink-0 ${
                         isOpen ? 'bg-[#FF5500] text-white' : 'bg-stone-100 text-stone-500'
                       }`}>
                         {idx + 1}
                       </span>
-                      {faq.q}
+                      <span className="leading-snug">{faq.q}</span>
                     </span>
                     <div className={`shrink-0 ${isOpen ? 'text-[#FF5500]' : 'text-stone-400'}`}>
-                      {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                      {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                     </div>
                   </button>
 
                   {isOpen && (
-                    <div className="px-4 pb-4 sm:px-5 sm:pb-5 pt-0 text-xs sm:text-sm text-stone-600 leading-relaxed pl-12">
+                    <div className="px-3.5 pb-3.5 sm:px-5 sm:pb-5 pt-0 text-xs sm:text-sm text-stone-600 leading-relaxed pl-10 sm:pl-12">
                       {faq.a}
                     </div>
                   )}
@@ -839,19 +849,19 @@ export default function TourSupportAndFaqs({
         {/* TAB 3: MESA DE ATENCIÓN PRIVADA CON ANTI-SPAM MULTICAPA */}
         {/* ======================================================== */}
         {activeTab === 'ticket' && (
-          <div className="rounded-3xl p-6 sm:p-10 shadow-xl bg-stone-900 text-white relative overflow-hidden">
+          <div className={`rounded-2xl sm:rounded-3xl ${isMobile ? 'p-4' : 'p-6 sm:p-10'} shadow-xl bg-stone-900 text-white relative overflow-hidden`}>
             <div className="absolute top-0 right-0 w-64 h-64 bg-[#FF5500]/10 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start relative z-10">
+            <div className={`flex flex-col ${isMobile ? 'space-y-6' : 'lg:grid lg:grid-cols-12 gap-8'} items-start relative z-10 w-full`}>
               
               {/* Left Column: Direct Agency Attention */}
-              <div className="lg:col-span-7 space-y-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-emerald-300 text-[11px] font-bold uppercase tracking-wider">
+              <div className={`${isMobile ? 'w-full' : 'lg:col-span-7'} space-y-4`}>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-emerald-300 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                   Mesa de Ayuda Local en Cusco
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+                <h3 className={`${isMobile ? 'text-lg leading-snug' : 'text-xl sm:text-2xl'} font-bold tracking-tight text-white`}>
                   ¿Necesitas asistencia o tienes una solicitud especial?
                 </h3>
 
@@ -860,10 +870,10 @@ export default function TourSupportAndFaqs({
                 </p>
 
                 {/* Service Features Badges */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                <div className={`grid ${isMobile ? 'grid-cols-1 gap-2' : 'grid-cols-1 sm:grid-cols-2 gap-3'} pt-2`}>
                   <div className="flex items-center gap-2.5 text-xs text-stone-300 bg-white/5 p-2.5 rounded-xl border border-white/10">
                     <PhoneCall size={16} className="text-emerald-400 shrink-0" />
-                    <span>Central Cusco: <strong>{whatsapp || '+51 984 123 456'}</strong></span>
+                    <span className="truncate">Central Cusco: <strong>{whatsapp || '+51 984 123 456'}</strong></span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-stone-300 bg-white/5 p-2.5 rounded-xl border border-white/10">
                     <Clock size={16} className="text-amber-400 shrink-0" />
@@ -875,7 +885,7 @@ export default function TourSupportAndFaqs({
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-stone-300 bg-white/5 p-2.5 rounded-xl border border-white/10">
                     <HeartHandshake size={16} className="text-rose-400 shrink-0" />
-                    <span>Guía Oficial: <strong>{guideName}</strong></span>
+                    <span className="truncate">Guía Oficial: <strong>{guideName}</strong></span>
                   </div>
                 </div>
 
@@ -884,7 +894,7 @@ export default function TourSupportAndFaqs({
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-[#25D366] hover:bg-[#20bd5a] text-white px-5 py-3 rounded-xl font-bold text-xs sm:text-sm transition-all shadow-md inline-flex items-center gap-2 cursor-pointer hover:scale-102"
+                    className={`bg-[#25D366] hover:bg-[#20bd5a] text-white ${isMobile ? 'w-full justify-center text-xs py-3' : 'px-5 py-3 text-xs sm:text-sm'} rounded-xl font-bold transition-all shadow-md inline-flex items-center gap-2 cursor-pointer hover:scale-102`}
                   >
                     <MessageCircle size={18} />
                     <span>Chatear por WhatsApp con {guideName}</span>
@@ -893,9 +903,9 @@ export default function TourSupportAndFaqs({
               </div>
 
               {/* Right Column: Form with Anti-Spam Multicapa */}
-              <div className="lg:col-span-5 bg-white/10 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-white/15 text-white space-y-3">
+              <div className={`${isMobile ? 'w-full' : 'lg:col-span-5'} bg-white/10 backdrop-blur-md p-4 sm:p-6 rounded-2xl border border-white/15 text-white space-y-3`}>
                 <div className="flex items-center justify-between pb-2 border-b border-white/10">
-                  <h4 className="text-sm font-bold text-white flex items-center gap-2">
+                  <h4 className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
                     <Send size={15} className="text-[#FF5500]" />
                     Consulta Privada Protegida
                   </h4>
@@ -957,7 +967,7 @@ export default function TourSupportAndFaqs({
                       </select>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2.5">
+                    <div className={`grid ${isMobile ? 'grid-cols-1 gap-2' : 'grid-cols-2 gap-2.5'}`}>
                       <div>
                         <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-300 mb-1">
                           Tu Nombre
@@ -1005,7 +1015,7 @@ export default function TourSupportAndFaqs({
                     <div className="bg-white/10 p-2.5 rounded-xl border border-white/15 flex items-center justify-between gap-3">
                       <div className="flex items-center gap-2">
                         <Bot size={15} className="text-[#FF8844] shrink-0" />
-                        <span className="text-[11px] text-stone-200 font-semibold">
+                        <span className="text-[10px] sm:text-[11px] text-stone-200 font-semibold">
                           Seguridad: ¿Cuánto es <strong>{mathNum1} + {mathNum2}</strong>?
                         </span>
                       </div>
