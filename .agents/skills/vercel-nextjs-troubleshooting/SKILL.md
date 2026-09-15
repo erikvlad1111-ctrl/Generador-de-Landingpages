@@ -145,6 +145,41 @@ Advertencia `@next/next/no-img-element` o error de host no configurado en Next.j
 
 ---
 
+## 6. Bloqueo de Despliegue en Plan Hobby por Autor de Commit (Repositorio Privado)
+
+### Síntoma
+Vercel cancela el despliegue automático con el mensaje:
+```text
+The deployment was blocked because the commit author did not have contributing access to the project on Vercel.
+The Hobby Plan does not support collaboration for private repositories. Please upgrade to Pro to add team members.
+```
+
+### Causa Raíz
+En el plan Hobby gratuito de Vercel, si un repositorio de GitHub está configurado como **Privado**, Vercel exige estrictamente que el autor del commit (`git config user.email`) coincida exactamente con la cuenta de GitHub propietaria de la cuenta de Vercel. Si el commit fue firmado por otra cuenta o bot de desarrollo, Vercel lo interpreta como "colaborador externo" y bloquea el despliegue exigiendo un plan Pro de pago.
+
+### Diagnóstico Rápido
+```bash
+git config user.name ; git config user.email ; git log -n 1 --pretty=format:"%h %an <%ae> %s"
+```
+
+### Soluciones
+1. **Solución A (Inmediata sin tocar código ni pagar Pro):**
+   - Cambiar la visibilidad del repositorio en GitHub a **Public** (Settings -> Danger Zone -> Change repository visibility -> Public).
+   - En repositorios públicos, el plan Hobby de Vercel no aplica restricciones de colaboradores ni autores.
+2. **Solución B (Manteniendo el repositorio Privado):**
+   - Configurar la identidad local de Git para que coincida exactamente con la cuenta propietaria del repositorio:
+     ```bash
+     git config user.name "<usuario-propietario>"
+     git config user.email "<usuario-propietario>@users.noreply.github.com"
+     ```
+   - Re-firmar el último commit y hacer push forzado:
+     ```bash
+     git commit --amend --allow-empty --author="<usuario-propietario> <email-propietario>" --no-edit
+     git push --force origin main
+     ```
+
+---
+
 ## Lista de Verificación Antes de Desplegar
 - [ ] Ejecutar `npm run lint` y verificar que salga con código 0.
 - [ ] Ejecutar `npm run build` localmente y comprobar que todas las rutas se generen sin errores.
