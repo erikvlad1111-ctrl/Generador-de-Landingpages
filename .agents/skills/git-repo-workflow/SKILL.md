@@ -6,7 +6,7 @@ description: Guía de sincronización y configuración persistente del repositor
 # Git Repository Workflow & Memory
 
 ## Información del Repositorio Oficial
-- **URL Remota HTTPS:** `https://github.com/erik1111111/Demo-LandingGenerador.git`
+- **URL Remota HTTPS:** `https://github.com/erikvlad1111-ctrl/Generador-de-Landingpages.git`
 - **Rama Principal:** `main`
 - **Ruta Local:** `c:\Users\copyw\.gemini\antigravity-ide\scratch\cusco-creativos-web`
 - **Entorno de Ejecución:** Windows PowerShell (ejecutar comandos Git o npm mediante `powershell -ExecutionPolicy Bypass -Command "..."` o `cmd.exe /c "..."`).

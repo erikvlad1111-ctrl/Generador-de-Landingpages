@@ -5,4 +5,4 @@ $git = "C:\Program Files\Git\cmd\git.exe"
 & $git add .
 & $git commit -m "Demo interactiva del Dashboard"
 & $git branch -M main
-& $git remote add origin https://github.com/erik1111111/Demo-LandingGenerador.git
+& $git remote add origin https://github.com/erikvlad1111-ctrl/Generador-de-Landingpages.git
