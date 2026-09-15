@@ -327,7 +327,7 @@ function DemoPreviewContent() {
       {/* Preview Canvas Area */}
       <main className="flex-1 overflow-auto bg-slate-950 p-2 sm:p-4 md:p-8 flex justify-center items-start min-h-[calc(100vh-5rem)]">
         <div 
-          className={`bg-white shadow-2xl transition-all duration-300 relative ${
+          className={`bg-white shadow-2xl transition-all duration-300 relative [transform:translateZ(0)] ${
             viewMode === 'mobile' 
               ? 'w-full max-w-[390px] h-[min(844px,calc(100vh-7rem))] sm:h-[844px] rounded-[36px] sm:rounded-[48px] ring-4 sm:ring-8 ring-slate-800 border-2 sm:border-4 border-slate-900 overflow-hidden my-2 sm:my-4 shadow-2xl shadow-black/80' 
               : viewMode === 'tablet'
@@ -348,7 +348,7 @@ function DemoPreviewContent() {
           )}
 
           {/* Scrollable Frame Content (Isolated Stacking Context) */}
-          <div className="w-full h-full overflow-y-auto overflow-x-hidden relative isolate table-scrollbar">
+          <div className="w-full h-full overflow-y-auto overflow-x-hidden relative isolate table-scrollbar overscroll-x-none touch-pan-y">
             <TemplateRenderer data={landing} viewMode={viewMode} />
           </div>
         </div>

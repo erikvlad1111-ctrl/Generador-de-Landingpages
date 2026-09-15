@@ -272,7 +272,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   };
 
   return (
-    <div className={`min-h-screen bg-[#FDFDFD] text-stone-900 font-sans selection:bg-[#FF5500] selection:text-white w-full overflow-x-hidden ${isMobile ? 'text-xs max-w-[420px] mx-auto' : ''}`}>
+    <div className={`min-h-screen bg-[#FDFDFD] text-stone-900 font-sans selection:bg-[#FF5500] selection:text-white w-full max-w-full overflow-x-hidden ${isMobile ? 'text-xs' : ''}`}>
       
       {/* 1. TOP ANNOUNCEMENT BAR (RESPONSIVE) */}
       <div className="bg-[#1C1917] text-white text-[10px] sm:text-xs py-1.5 sm:py-2 px-3 sm:px-4 border-b border-stone-800">
@@ -484,7 +484,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
         {/* Filtro interactivo */}
         {!isFree && !isBasic && (
-          <div className={`flex items-center gap-1.5 sm:gap-3 ${isMobile ? 'overflow-x-auto no-scrollbar pb-3 mb-6' : 'overflow-x-auto sm:flex-wrap sm:justify-center mb-6 sm:mb-10'} -mx-3 px-3 sm:mx-0 sm:px-0`}>
+          <div className={`flex items-center gap-1.5 sm:gap-3 ${isMobile ? 'overflow-x-auto no-scrollbar pb-3 mb-6 px-1' : 'overflow-x-auto sm:flex-wrap sm:justify-center mb-6 sm:mb-10'} w-full`}>
             {[
               { key: 'all', label: t.filterAll, icon: Globe2 },
               { key: 'trekking', label: t.filterTrek, icon: MapPin },
@@ -932,14 +932,14 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </footer>
 
-      {/* 15. FLOATING WHATSAPP BUTTON */}
-      <div className={`z-40 flex items-center gap-2 ${isMobile ? 'absolute bottom-3 right-3' : 'fixed bottom-5 right-5'}`}>
+      {/* 15. FLOATING WHATSAPP BUTTON (PLANTADO Y FIJO) */}
+      <div className={`z-40 flex items-center gap-2 fixed ${isMobile ? 'bottom-5 right-5' : 'bottom-6 right-6'} pointer-events-auto select-none`}>
         {showWaTooltip && !isMobile && (
-          <div className="hidden md:flex items-center gap-2 bg-white text-stone-900 text-xs font-bold px-3.5 py-2 rounded-2xl shadow-xl border border-stone-200">
+          <div className="hidden md:flex items-center gap-2 bg-white text-stone-900 text-xs font-bold px-3.5 py-2 rounded-2xl shadow-xl border border-stone-200 animate-in fade-in slide-in-from-right-2">
             <span>💬 {isEn ? 'Questions? Chat live' : '¿Dudas? Habla con un asesor'}</span>
             <button
               onClick={() => setShowWaTooltip(false)}
-              className="text-stone-400 hover:text-stone-700 text-xs p-0.5"
+              className="text-stone-400 hover:text-stone-700 text-xs p-0.5 cursor-pointer"
             >
               ✕
             </button>
@@ -948,11 +948,10 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
         <button
           onClick={() => handleActionClick()}
-          className="relative group bg-[#25D366] hover:bg-[#20bd5a] text-white p-3 sm:p-4 rounded-full shadow-lg shadow-[#25D366]/40 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer"
+          className="relative bg-[#25D366] hover:bg-[#20bd5a] text-white p-3 sm:p-3.5 rounded-full shadow-xl shadow-[#25D366]/40 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer ring-4 ring-[#25D366]/20"
           aria-label="WhatsApp"
         >
-          <span className="animate-ping absolute inset-0 rounded-full bg-[#25D366]/30 pointer-events-none"></span>
-          <MessageCircle size={isMobile ? 22 : 26} className="fill-white relative z-10" />
+          <MessageCircle size={isMobile ? 22 : 24} className="fill-white relative z-10" />
         </button>
       </div>
 
