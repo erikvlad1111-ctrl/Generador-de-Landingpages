@@ -14,7 +14,6 @@ import {
   Phone, 
   Mail, 
   Sparkles,
-  Heart,
   Award,
   Globe2,
   ArrowRight,
@@ -273,9 +272,9 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   };
 
   return (
-    <div className={`min-h-screen bg-[#FDFDFD] text-stone-900 font-sans selection:bg-[#FF5500] selection:text-white w-full overflow-x-hidden ${isMobile ? 'text-xs' : ''}`}>
+    <div className={`min-h-screen bg-[#FDFDFD] text-stone-900 font-sans selection:bg-[#FF5500] selection:text-white w-full overflow-x-hidden ${isMobile ? 'text-xs max-w-[420px] mx-auto' : ''}`}>
       
-      {/* 1. TOP ANNOUNCEMENT BAR (RESPONSIVE: COMPACTO EN MÓVIL) */}
+      {/* 1. TOP ANNOUNCEMENT BAR (RESPONSIVE) */}
       <div className="bg-[#1C1917] text-white text-[10px] sm:text-xs py-1.5 sm:py-2 px-3 sm:px-4 border-b border-stone-800">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-1.5">
           <div className="flex items-center gap-2 sm:gap-4 truncate">
@@ -283,15 +282,19 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               <Phone size={12} className="text-[#FF5500] shrink-0" />
               <span className="truncate font-mono">+{whatsappNumber}</span>
             </span>
-            <span className="hidden md:flex items-center gap-1.5 text-stone-400 truncate">
-              <Mail size={12} className="text-[#FF5500] shrink-0" /> reservas@{brandName.toLowerCase().replace(/\s+/g, '')}.pe
-            </span>
+            {!isMobile && (
+              <span className="hidden md:flex items-center gap-1.5 text-stone-400 truncate">
+                <Mail size={12} className="text-[#FF5500] shrink-0" /> reservas@{brandName.toLowerCase().replace(/\s+/g, '')}.pe
+              </span>
+            )}
           </div>
           
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
-            <span className="hidden sm:inline-block bg-[#FF5500]/20 text-[#FF8844] font-bold px-2 py-0.5 rounded text-[10px] border border-[#FF5500]/40 truncate">
-              {t.officialBar}
-            </span>
+            {!isMobile && (
+              <span className="hidden sm:inline-block bg-[#FF5500]/20 text-[#FF8844] font-bold px-2 py-0.5 rounded text-[10px] border border-[#FF5500]/40 truncate">
+                {t.officialBar}
+              </span>
+            )}
 
             {/* Selector interactivo de Idioma (ES / EN) */}
             <div className="flex items-center bg-stone-800 rounded-lg p-0.5 border border-stone-700">
@@ -318,7 +321,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </div>
 
-      {/* 2. MAIN HEADER (RESPONSIVE: COMPACTO, SIN DESBORDES) */}
+      {/* 2. MAIN HEADER (RESPONSIVE) */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-xs">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 h-14 sm:h-18 flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 truncate">
@@ -329,13 +332,15 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               <span className="font-extrabold text-sm sm:text-xl tracking-tight text-stone-900 block leading-tight truncate">
                 {brandName.toUpperCase()}
               </span>
-              <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block -mt-0.5 truncate hidden xs:block">
-                {isEn ? 'Official Operator' : 'Agencia Oficial'}
-              </span>
+              {!isMobile && (
+                <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block -mt-0.5 truncate hidden sm:block">
+                  {isEn ? 'Official Operator' : 'Agencia Oficial'}
+                </span>
+              )}
             </div>
           </div>
 
-          {!isFree && (
+          {!isFree && !isMobile && (
             <nav className="hidden lg:flex items-center gap-7 text-xs font-bold text-stone-700 uppercase tracking-wider">
               <a href="#tours" className="hover:text-[#FF5500] transition-colors">{t.navTours}</a>
               {!isBasic && <a href="#paquetes" className="hover:text-[#FF5500] transition-colors">{t.navPackages}</a>}
@@ -348,7 +353,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={() => handleActionClick()}
-              className="shimmer-btn bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3500] hover:from-[#E04B00] hover:to-[#FF5500] text-white text-[11px] sm:text-xs font-extrabold px-3 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-md shadow-[#FF5500]/25 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer group shrink-0"
+              className="shimmer-btn bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3500] hover:from-[#E04B00] hover:to-[#FF5500] text-white text-[11px] sm:text-xs font-extrabold px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-full shadow-md shadow-[#FF5500]/25 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer group shrink-0"
             >
               <MessageCircle size={14} className="group-hover:rotate-12 transition-transform duration-300 shrink-0" />
               <span>{objective === 'quote' ? t.ctaHeroQuote : t.ctaHeader}</span>
@@ -357,8 +362,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </header>
 
-      {/* 3. HERO SECTION (RESPONSIVE: PADDING Y TIPOGRAFÍA ESCALADA) */}
-      <section className="relative min-h-[400px] sm:min-h-[520px] lg:min-h-[600px] flex items-center justify-center overflow-hidden px-4 sm:px-6">
+      {/* 3. HERO SECTION (RESPONSIVE) */}
+      <section className={`relative ${isMobile ? 'min-h-[380px] py-8 px-3' : 'min-h-[420px] sm:min-h-[520px] lg:min-h-[600px] py-10 sm:py-16 px-4 sm:px-6'} flex items-center justify-center overflow-hidden`}>
         <div className="absolute inset-0 z-0">
           <Image
             src={heroImage}
@@ -371,8 +376,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/40" />
         </div>
 
-        {/* Glass Cards Flotantes Ambientales (Solo pantallas grandes para evitar ruido en móvil) */}
-        {!isFree && (
+        {/* Ambient Glass Cards solo en Desktop */}
+        {!isFree && !isMobile && (
           <>
             <div className="hidden xl:flex animate-float-slow absolute left-8 top-1/3 z-20 bg-black/45 backdrop-blur-xl border border-white/20 p-3.5 rounded-2xl items-center gap-3 shadow-2xl hover:scale-105 transition-transform">
               <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center font-black">
@@ -396,20 +401,20 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           </>
         )}
 
-        <div className="relative z-10 max-w-4xl mx-auto text-center text-white py-10 sm:py-16 space-y-4 sm:space-y-6 w-full">
+        <div className="relative z-10 max-w-4xl mx-auto text-center text-white space-y-4 sm:space-y-6 w-full">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[10px] sm:text-xs font-extrabold uppercase tracking-widest border border-white/30 shadow-lg">
             <Sparkles size={12} className="text-[#FF8844]" />
             <span>{heroBadge}</span>
           </div>
 
-          <h1 className="text-2xl xs:text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight drop-shadow-2xl leading-tight uppercase px-2">
+          <h1 className={`${isMobile ? 'text-2xl leading-tight' : 'text-2xl xs:text-3xl sm:text-5xl lg:text-6xl leading-tight'} font-black tracking-tight drop-shadow-2xl uppercase px-2`}>
             {heroTitle}
           </h1>
-          <p className="text-xs sm:text-lg lg:text-xl font-light text-stone-100 max-w-2xl mx-auto drop-shadow-md leading-relaxed px-2 line-clamp-3 sm:line-clamp-none">
+          <p className={`${isMobile ? 'text-xs line-clamp-3' : 'text-xs sm:text-lg lg:text-xl line-clamp-3 sm:line-clamp-none'} font-light text-stone-100 max-w-2xl mx-auto drop-shadow-md leading-relaxed px-2`}>
             {heroSubtitle}
           </p>
 
-          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-4 max-w-md mx-auto sm:max-w-none">
+          <div className={`pt-2 flex ${isMobile ? 'flex-col' : 'flex-col sm:flex-row'} items-center justify-center gap-2.5 sm:gap-4 max-w-md mx-auto sm:max-w-none`}>
             <button
               onClick={() => handleActionClick()}
               className="shimmer-btn w-full sm:w-auto bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-[#FF5500]/40 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group ring-2 ring-white/25"
@@ -431,30 +436,30 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </section>
 
-      {/* 4. BARRA DE MÉTRICAS (GRID 2x2 EN MÓVIL CON ESPACIO LIMPIO) */}
+      {/* 4. BARRA DE MÉTRICAS */}
       <section className="bg-white border-b border-stone-200 py-4 sm:py-8 shadow-xs">
         <div className="max-w-6xl mx-auto px-3 sm:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-6 divide-x-0 md:divide-x divide-stone-100 text-center">
+          <div className={`grid ${isMobile ? 'grid-cols-2 gap-2.5' : 'grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-6'} divide-x-0 md:divide-x divide-stone-100 text-center`}>
             <div className="p-2 sm:p-3 rounded-2xl bg-stone-50/60 sm:bg-transparent space-y-0.5 sm:space-y-1">
-              <span className="text-xl sm:text-4xl font-black text-stone-900 tracking-tight block">+10,000</span>
+              <span className="text-lg sm:text-4xl font-black text-stone-900 tracking-tight block">+10,000</span>
               <span className="text-[11px] sm:text-sm font-bold text-stone-700 block">{t.statTravelers}</span>
               <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{guideName}</span>
             </div>
 
             <div className="p-2 sm:p-3 rounded-2xl bg-stone-50/60 sm:bg-transparent space-y-0.5 sm:space-y-1">
-              <span className="text-xl sm:text-4xl font-black text-[#FF5500] tracking-tight block">10+</span>
+              <span className="text-lg sm:text-4xl font-black text-[#FF5500] tracking-tight block">10+</span>
               <span className="text-[11px] sm:text-sm font-bold text-stone-700 block">{t.statExperience}</span>
               <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{destination}</span>
             </div>
 
             <div className="p-2 sm:p-3 rounded-2xl bg-stone-50/60 sm:bg-transparent space-y-0.5 sm:space-y-1">
-              <span className="text-xl sm:text-4xl font-black text-stone-900 tracking-tight block">50+</span>
+              <span className="text-lg sm:text-4xl font-black text-stone-900 tracking-tight block">50+</span>
               <span className="text-[11px] sm:text-sm font-bold text-stone-700 block">{t.statRoutes}</span>
               <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{isEn ? 'Peru' : 'Perú'}</span>
             </div>
 
             <div className="p-2 sm:p-3 rounded-2xl bg-stone-50/60 sm:bg-transparent space-y-0.5 sm:space-y-1">
-              <span className="text-xl sm:text-4xl font-black text-[#FF5500] tracking-tight block">4.9 ★</span>
+              <span className="text-lg sm:text-4xl font-black text-[#FF5500] tracking-tight block">4.9 ★</span>
               <span className="text-[11px] sm:text-sm font-bold text-stone-700 block">{t.statRating}</span>
               <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">Google Reviews</span>
             </div>
@@ -462,8 +467,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </section>
 
-      {/* 5. TOURS DESTACADOS (CATEGORÍAS CON SCROLL HORIZONTAL EN MÓVIL) */}
-      <section id="tours" className="py-10 sm:py-20 px-3 sm:px-6 max-w-7xl mx-auto">
+      {/* 5. TOURS DESTACADOS (1 COLUMNA ESTRICTA EN MÓVIL) */}
+      <section id="tours" className={`py-8 sm:py-20 px-3 sm:px-6 max-w-7xl mx-auto`}>
         <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 space-y-2 sm:space-y-3 px-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF5500]/10 text-[#FF5500] text-[10px] sm:text-xs font-black uppercase tracking-widest">
             <Sparkles size={12} />
@@ -477,9 +482,9 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           </p>
         </div>
 
-        {/* Filtro interactivo con scroll horizontal suave en móviles */}
+        {/* Filtro interactivo */}
         {!isFree && !isBasic && (
-          <div className="flex items-center gap-1.5 sm:gap-3 overflow-x-auto no-scrollbar pb-3 sm:pb-0 sm:flex-wrap sm:justify-center mb-6 sm:mb-10 -mx-3 px-3 sm:mx-0 sm:px-0">
+          <div className={`flex items-center gap-1.5 sm:gap-3 ${isMobile ? 'overflow-x-auto no-scrollbar pb-3 mb-6' : 'overflow-x-auto sm:flex-wrap sm:justify-center mb-6 sm:mb-10'} -mx-3 px-3 sm:mx-0 sm:px-0`}>
             {[
               { key: 'all', label: t.filterAll, icon: Globe2 },
               { key: 'trekking', label: t.filterTrek, icon: MapPin },
@@ -507,17 +512,25 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           </div>
         )}
 
-        {/* Grilla de Tours */}
-        <div className={`grid gap-4 sm:gap-8 ${isFree ? 'max-w-md mx-auto grid-cols-1' : isBasic ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
+        {/* Grilla de Tours: En isMobile se fuerza 1 columna (w-full max-w-sm mx-auto) */}
+        <div className={`grid gap-5 sm:gap-8 ${
+          isMobile 
+            ? 'grid-cols-1 max-w-sm mx-auto' 
+            : isFree 
+            ? 'max-w-md mx-auto grid-cols-1' 
+            : isBasic 
+            ? 'grid-cols-1 md:grid-cols-3' 
+            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+        }`}>
           {displayTours
             .filter(t => isFree || isBasic || activeCategory === 'all' || t.categoryKey === activeCategory)
             .map((tour) => (
               <div
                 key={tour.id}
-                className="bg-white rounded-2xl sm:rounded-3xl border border-stone-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-[#FF5500]/40 transition-all duration-300 flex flex-col justify-between group"
+                className="bg-white rounded-2xl sm:rounded-3xl border border-stone-200 overflow-hidden shadow-xs hover:shadow-xl hover:border-[#FF5500]/40 transition-all duration-300 flex flex-col justify-between group w-full"
               >
                 <div>
-                  <div className="relative h-44 sm:h-56 w-full bg-stone-100 overflow-hidden">
+                  <div className="relative h-48 sm:h-56 w-full bg-stone-100 overflow-hidden">
                     <Image
                       src={tour.image}
                       alt={tour.title}
@@ -527,41 +540,41 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     
-                    <div className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-md px-2.5 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-black text-stone-900 flex items-center gap-1 shadow-md">
-                      <Star size={11} className="text-amber-500 fill-amber-500" />
+                    <div className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-black text-stone-900 flex items-center gap-1 shadow-md">
+                      <Star size={12} className="text-amber-500 fill-amber-500" />
                       <span>{tour.badge}</span>
                     </div>
 
                     {tour.tag && (
-                      <div className="absolute top-2.5 right-2.5 bg-[#FF5500] text-white px-2.5 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-wider shadow-md">
+                      <div className="absolute top-2.5 right-2.5 bg-[#FF5500] text-white px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-md">
                         {tour.tag}
                       </div>
                     )}
 
                     <div className="absolute bottom-2.5 left-2.5 text-white">
-                      <span className="text-[10px] sm:text-[11px] font-bold text-stone-200 block uppercase tracking-wider">
+                      <span className="text-[11px] font-bold text-stone-200 block uppercase tracking-wider">
                         {tour.category}
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-4 sm:p-6 space-y-2.5 sm:space-y-3.5">
-                    <h3 className="font-extrabold text-sm sm:text-lg text-stone-900 leading-snug group-hover:text-[#FF5500] transition-colors line-clamp-2">
+                  <div className="p-4 sm:p-6 space-y-3">
+                    <h3 className="font-extrabold text-base sm:text-lg text-stone-900 leading-snug group-hover:text-[#FF5500] transition-colors">
                       {tour.title}
                     </h3>
 
-                    <div className="flex items-center justify-between text-[11px] sm:text-xs text-stone-500 pt-0.5">
-                      <span className="flex items-center gap-1 truncate">
-                        <Clock size={12} className="text-stone-400 shrink-0" /> {tour.duration}
+                    <div className="flex items-center justify-between text-xs text-stone-500 pt-0.5">
+                      <span className="flex items-center gap-1">
+                        <Clock size={13} className="text-stone-400 shrink-0" /> {tour.duration}
                       </span>
                       <span className="flex items-center gap-1 shrink-0">
-                        <MapPin size={12} className="text-[#FF5500] shrink-0" /> {tour.location}
+                        <MapPin size={13} className="text-[#FF5500] shrink-0" /> {tour.location}
                       </span>
                     </div>
 
                     <div className="pt-2 sm:pt-3 flex items-baseline justify-between border-t border-stone-100">
-                      <span className="text-[11px] sm:text-xs text-stone-400">{t.pricePerPerson}</span>
-                      <span className="text-lg sm:text-xl font-black text-[#FF5500]">{tour.price}</span>
+                      <span className="text-xs text-stone-400">{t.pricePerPerson}</span>
+                      <span className="text-xl font-black text-[#FF5500]">{tour.price}</span>
                     </div>
                   </div>
                 </div>
@@ -569,7 +582,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                 <div className="p-4 sm:p-6 pt-0">
                   <button
                     onClick={() => handleActionClick(tour.title)}
-                    className="shimmer-btn w-full bg-gradient-to-r from-[#FF5500] to-[#FF3500] hover:from-[#E04500] hover:to-[#FF5500] text-white py-2.5 sm:py-3.5 rounded-xl sm:rounded-2xl font-black text-[11px] sm:text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all duration-300 shadow-md shadow-[#FF5500]/20 active:scale-95 cursor-pointer"
+                    className="shimmer-btn w-full bg-gradient-to-r from-[#FF5500] to-[#FF3500] hover:from-[#E04500] hover:to-[#FF5500] text-white py-3 rounded-xl sm:rounded-2xl font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-md shadow-[#FF5500]/20 active:scale-95 cursor-pointer"
                   >
                     <span>{objective === 'quote' ? t.quoteTour : t.bookTour}</span>
                     <ArrowRight size={14} />
@@ -604,7 +617,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                 { step: '01:30 PM', title: isEn ? 'Buffet Lunch & Safe Return' : 'Almuerzo Campestre & Retorno a Cusco', desc: isEn ? 'Celebratory buffet lunch followed by scenic drive returning around 5:00 PM.' : 'Almuerzo buffet campestre en valle andino y retorno cómodo a la ciudad de Cusco.' }
               ].map((it, i) => (
                 <div key={i} className="flex gap-3 p-3.5 sm:p-5 rounded-2xl bg-stone-800/80 border border-stone-700 items-start">
-                  <div className="shrink-0 bg-[#FF5500] text-white px-2 sm:px-3 py-1 rounded-lg font-mono text-[10px] sm:text-xs font-black">
+                  <div className="shrink-0 bg-[#FF5500] text-white px-2.5 sm:px-3 py-1 rounded-lg font-mono text-[10px] sm:text-xs font-black">
                     {it.step}
                   </div>
                   <div>
@@ -618,12 +631,12 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </section>
       )}
 
-      {/* 7. ¿POR QUÉ ELEGIRNOS? (CONFIANZA, GUÍAS & FORMALIDAD) */}
+      {/* 7. ¿POR QUÉ ELEGIRNOS? */}
       <section id="por-que-nosotros" className="py-10 sm:py-24 bg-[#F9F7F4] border-y border-stone-200">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 space-y-8 sm:space-y-16">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+          <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14'} items-center`}>
             
-            {/* Foto con Badge Seguro sin desbordar en móvil */}
+            {/* Foto con Badge Seguro */}
             <div className="relative">
               <div className="relative h-60 sm:h-[420px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border-2 sm:border-4 border-white group">
                 <Image
@@ -644,7 +657,6 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                 </div>
               </div>
 
-              {/* Badge posicionado seguro adentro de la pantalla */}
               <div className="mt-3 sm:mt-0 sm:absolute sm:-bottom-5 sm:right-6 bg-white p-3 sm:p-5 rounded-xl sm:rounded-2xl shadow-lg border border-stone-200 flex items-center gap-3">
                 <div className="w-10 h-10 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#FF5500]/15 to-[#FF8800]/20 flex items-center justify-center text-[#FF5500] font-black text-sm sm:text-lg shrink-0">
                   100%
@@ -671,7 +683,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3.5 pt-1">
+              <div className={`grid ${isMobile ? 'grid-cols-1 gap-2' : 'grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3.5'} pt-1`}>
                 {(data?.features?.items || [
                   isEn ? 'Official Certified Guides' : 'Guías Oficiales Acreditados',
                   isEn ? 'Emergency Oxygen & First Aid' : 'Balón de Oxígeno & Botiquín',
@@ -702,7 +714,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </section>
 
-      {/* 8. PAQUETES TURÍSTICOS (HABILITADO PARA PLANES PRO Y AVANZADO) */}
+      {/* 8. PAQUETES TURÍSTICOS (1 COLUMNA EN MÓVIL) */}
       {!isFree && !isBasic && (
         <section id="paquetes" className="py-10 sm:py-20 bg-stone-50 border-t border-stone-200">
           <div className="max-w-7xl mx-auto px-3 sm:px-6">
@@ -718,14 +730,14 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
+            <div className={`grid gap-4 sm:gap-8 ${isMobile ? 'grid-cols-1 max-w-sm mx-auto' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
               {PACK_TOURS.map((tour) => (
                 <div
                   key={tour.id}
-                  className="bg-white rounded-2xl sm:rounded-3xl border border-stone-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between"
+                  className="bg-white rounded-2xl sm:rounded-3xl border border-stone-200 overflow-hidden shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between w-full"
                 >
                   <div>
-                    <div className="relative h-40 sm:h-48 w-full bg-stone-100 overflow-hidden">
+                    <div className="relative h-44 sm:h-48 w-full bg-stone-100 overflow-hidden">
                       <Image
                         src={tour.image}
                         alt={tour.title}
@@ -742,15 +754,15 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                       <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-[#FF5500]">
                         {tour.category}
                       </span>
-                      <h3 className="font-extrabold text-sm sm:text-base text-stone-900 leading-snug line-clamp-2">
+                      <h3 className="font-extrabold text-base text-stone-900 leading-snug">
                         {tour.title}
                       </h3>
-                      <p className="text-[11px] sm:text-xs text-stone-500 flex items-center gap-1">
+                      <p className="text-xs text-stone-500 flex items-center gap-1">
                         <Clock size={12} className="text-stone-400" /> {tour.duration}
                       </p>
                       <div className="pt-2 flex items-baseline justify-between border-t border-stone-100">
-                        <span className="text-[11px] text-stone-400">{isEn ? 'From' : 'Desde'}</span>
-                        <span className="text-base sm:text-lg font-black text-stone-900">{tour.price}</span>
+                        <span className="text-xs text-stone-400">{isEn ? 'From' : 'Desde'}</span>
+                        <span className="text-lg font-black text-stone-900">{tour.price}</span>
                       </div>
                     </div>
                   </div>
@@ -758,7 +770,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   <div className="p-4 sm:p-6 pt-0">
                     <button
                       onClick={() => handleActionClick(tour.title)}
-                      className="shimmer-btn w-full bg-stone-900 hover:bg-[#FF5500] text-white py-2.5 rounded-xl font-black text-[11px] sm:text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all duration-300 active:scale-95 cursor-pointer"
+                      className="shimmer-btn w-full bg-stone-900 hover:bg-[#FF5500] text-white py-2.5 rounded-xl font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all duration-300 active:scale-95 cursor-pointer"
                     >
                       <span>{objective === 'quote' ? t.quoteTour : (isEn ? 'View Itinerary' : 'Ver Itinerario')}</span>
                       <ArrowRight size={13} />
@@ -771,7 +783,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </section>
       )}
 
-      {/* 9. TESTIMONIOS VERIFICADOS */}
+      {/* 9. TESTIMONIOS VERIFICADOS (1 COLUMNA EN MÓVIL) */}
       {!isFree && !isBasic && (
         <section id="resenas" className="py-10 sm:py-20 bg-[#141211] text-white relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-3 sm:px-6 relative z-10 space-y-6 sm:space-y-10">
@@ -788,7 +800,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-6">
+            <div className={`grid gap-4 sm:gap-6 ${isMobile ? 'grid-cols-1 max-w-sm mx-auto' : 'grid-cols-1 md:grid-cols-3'}`}>
               {(data?.testimonials && data.testimonials.length > 0 ? data.testimonials : [
                 {
                   name: 'Alejandro y Marcela',
@@ -811,7 +823,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               ]).slice(0, 3).map((rev, idx) => (
                 <div
                   key={idx}
-                  className="bg-gradient-to-b from-[#1F1C1A] to-[#151311] p-4 sm:p-7 rounded-2xl sm:rounded-3xl border border-stone-800 space-y-3 flex flex-col justify-between shadow-md"
+                  className="bg-gradient-to-b from-[#1F1C1A] to-[#151311] p-4 sm:p-7 rounded-2xl sm:rounded-3xl border border-stone-800 space-y-3 flex flex-col justify-between shadow-md w-full"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
@@ -894,7 +906,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             <p className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-stone-400">
               {isEn ? 'Official Certifications' : 'Acreditaciones Oficiales'}
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-14 opacity-80">
+            <div className={`flex flex-wrap items-center justify-center ${isMobile ? 'gap-4' : 'gap-4 sm:gap-14'} opacity-80`}>
               <div className="flex items-center gap-1.5 text-stone-700 font-extrabold text-[11px] sm:text-xs">
                 <ShieldCheck size={16} className="text-[#FF5500]" />
                 <span>MINCETUR</span>
@@ -920,7 +932,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </footer>
 
-      {/* 15. FLOATING WHATSAPP BUTTON (OPTIMIZADO PARA MÓVIL) */}
+      {/* 15. FLOATING WHATSAPP BUTTON */}
       <div className={`z-40 flex items-center gap-2 ${isMobile ? 'absolute bottom-3 right-3' : 'fixed bottom-5 right-5'}`}>
         {showWaTooltip && !isMobile && (
           <div className="hidden md:flex items-center gap-2 bg-white text-stone-900 text-xs font-bold px-3.5 py-2 rounded-2xl shadow-xl border border-stone-200">
