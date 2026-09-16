@@ -27,6 +27,59 @@ const AVAILABLE_TRUST_BADGES = [
 // Quick Preset Tours for 1-click loading with richer technical tour data
 const PRESET_TOURS = [
   {
+    id: 'peru-portal-agency',
+    label: '🔥 Portal Agencia (Pinterest #1)',
+    name: 'Portal Oficial de Agencia de Viajes Perú',
+    destination: 'Cusco, Machu Picchu & Rutas del Perú',
+    guideName: 'Carlos Mendoza',
+    guideCert: 'Licenciado DIRCETUR & Operador Autorizado',
+    guideLanguages: 'Español, Inglés y Portugués',
+    whatsapp: '+51984123456',
+    price: '$380 USD',
+    duration: 'Catálogo Multidía & Full Days',
+    difficulty: 'Fácil - Moderada',
+    altitude: '2,430 msnm - 5,036 msnm',
+    groupType: 'Tours Privados & Compartidos VIP',
+    targetAudience: 'Viajeros Internacionales, Parejas y Familias',
+    aiTone: 'lujo',
+    includedServices: [
+      'Transporte turístico privado con aire acondicionado',
+      'Boletos de tren panorámico y entradas oficiales',
+      'Guía oficial bilingüe DIRCETUR en todas las excursiones',
+      'Asistencia y monitoreo 24/7 con oxígeno a bordo',
+      'Almuerzo buffet y degustaciones gastronómicas'
+    ],
+    notIncluded: [
+      'Vuelos internacionales o nacionales',
+      'Propinas voluntarias para guías y choferes',
+      'Seguro médico personal de viaje'
+    ],
+    whatToBring: [
+      'Pasaporte original físico vigente',
+      'Ropa en capas para clima andino y ceja de selva',
+      'Calzado cómodo de trekking o senderismo',
+      'Protector solar, lentes UV y gorro'
+    ],
+    trustBadges: [
+      'Licencia Oficial DIRCETUR Cusco',
+      'Sello Internacional Safe Travels',
+      'Agencia Formal RUC 20 Verificado',
+      'Guía Colegiado Bilingüe',
+      'Balón de Oxígeno & Botiquín de Altura'
+    ],
+    itinerary: [
+      { step: 'Día 1', title: 'Llegada a Cusco, Aclimatación & City Tour Ancestral', desc: 'Recepción en el aeropuerto, traslado a hotel de lujo y recorrido por los recintos arqueológicos sagrados.' },
+      { step: 'Día 2', title: 'Valle Sagrado de los Incas & Tren Panorámico', desc: 'Exploración de Pisac y Ollantaytambo con almuerzo campestre buffet frente a los andenes andinos.' },
+      { step: 'Día 3', title: 'Amanecer en Machu Picchu & Santuario Histórico', desc: 'Acceso preferente con guía privado historiador y tiempo para capturar las postales icónicas.' }
+    ],
+    objective: 'quote' as ObjectiveType,
+    template: 'agency-portal' as TemplateType,
+    language: 'es' as LanguageType,
+    tier: 'advance' as PlanTier,
+    imageIndex: 0,
+    description: 'Portal completo de agencia turística con catálogo de excursiones, métricas de satisfacción, itinerarios multidía y atención personalizada.'
+  },
+  {
     id: 'salkantay',
     label: '🏔️ Salkantay Trek 5D',
     name: 'Tour Salkantay Trek Clásico hacia Machu Picchu',
@@ -1399,8 +1452,9 @@ export default function NewLandingDemo() {
               <label className="block text-xs font-bold text-slate-700 mb-2">
                 Selecciona la Plantilla de Diseño:
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
                 {[
+                  { id: 'agency-portal', name: 'Portal Agencia Pinterest', desc: 'Naranja viral, métricas y alta conversión', icon: '🔥' },
                   { id: 'adventure', name: 'Aventura & Trekking', desc: 'Tonos esmeralda y montaña', icon: '🏔️' },
                   { id: 'premium', name: 'Lujo & Exclusivo', desc: 'Dorado, oscuro y sofisticado', icon: '👑' },
                   { id: 'cultural', name: 'Cultural Ancestral', desc: 'Piedra incaica y ámbar cálido', icon: '🏛️' },

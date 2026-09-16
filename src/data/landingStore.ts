@@ -555,7 +555,7 @@ export function simulateAiGeneration(params: {
 
   let heroTitle = `${params.name}: La Experiencia Definitiva en Cusco`;
   let heroSubtitle = params.description || 'Vive una aventura inolvidable con guías expertos locales y atención de primer nivel.';
-  let heroBadge = params.template === 'premium' ? 'Experiencia Exclusiva VIP' : params.template === 'cultural' ? 'Historia y Cultura Andina' : 'Aventura y Naturaleza';
+  let heroBadge = params.template === 'agency-portal' ? 'Portal Oficial de Agencia' : params.template === 'premium' ? 'Experiencia Exclusiva VIP' : params.template === 'cultural' ? 'Historia y Cultura Andina' : 'Aventura y Naturaleza';
   let ctaText = isWhatsapp ? 'Reservar Directo por WhatsApp' : 'Solicitar Cotización y Disponibilidad';
 
   if (params.destination) {
@@ -564,7 +564,7 @@ export function simulateAiGeneration(params: {
 
   if (isEn) {
     heroTitle = `${params.name}: The Ultimate Cusco Experience`;
-    heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : (params.template === 'premium' ? 'Exclusive VIP Tour' : params.template === 'cultural' ? 'Inca Heritage & Culture' : 'Adventure & Nature Trek');
+    heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : (params.template === 'agency-portal' ? 'Official Agency Portal' : params.template === 'premium' ? 'Exclusive VIP Tour' : params.template === 'cultural' ? 'Inca Heritage & Culture' : 'Adventure & Nature Trek');
     ctaText = isWhatsapp ? 'Book via WhatsApp' : 'Request Instant Quote';
   }
 
