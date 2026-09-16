@@ -989,124 +989,11 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* SELECTOR VISUAL DE PLANTILLA DE DISEÑO (CON DESTACADO PINTEREST) */}
+          {/* PASO 3: FICHA TÉCNICA DEL TOUR & DESTINO (MÁS DATOS PARA RELLENAR) */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-pink-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
-                  📌
-                </span>
-                Plantilla de Diseño Visual & Formato de Pines
-              </label>
-              <span className="text-[11px] font-semibold text-pink-700 bg-pink-50 px-2.5 py-0.5 rounded-md border border-pink-100">
-                Incluye Plantilla Pinterest
-              </span>
-            </div>
-
-            <p className="text-xs text-slate-500">
-              Elige el estilo visual que mejor conecta con el público del tour. Cada plantilla adapta sus tableros de fotos, pines y paleta estética:
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              {/* 1. Boho Journal (Pinterest) */}
-              <button
-                type="button"
-                onClick={() => setTemplate('boho-nature')}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer relative overflow-hidden ${
-                  template === 'boho-nature'
-                    ? 'border-[#C86D51] bg-[#FAF7F2] shadow-sm ring-2 ring-[#C86D51]/30 -translate-y-0.5'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-black text-[#C86D51] uppercase tracking-wider flex items-center gap-1.5">
-                    <span>📌</span> Boho Journal (Pinterest)
-                  </span>
-                  <span className="text-[10px] bg-[#C86D51]/15 text-[#C86D51] font-extrabold px-2 py-0.5 rounded-md">
-                    POPULAR PINTEREST
-                  </span>
-                </div>
-                <p className="text-xs text-stone-600 leading-relaxed">
-                  Bitácora de viaje editorial, polaroids con cinta washi, tableros de fotos masonry, estética Pinterest en tonos arena y terracota.
-                </p>
-              </button>
-
-              {/* 2. Adventure */}
-              <button
-                type="button"
-                onClick={() => setTemplate('adventure')}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
-                  template === 'adventure'
-                    ? 'border-emerald-600 bg-emerald-50/70 shadow-sm ring-2 ring-emerald-500/20 -translate-y-0.5'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-black text-emerald-800 uppercase tracking-wider flex items-center gap-1.5">
-                    <span>🏔️</span> Aventura & Trekking
-                  </span>
-                  <span className="text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-2 py-0.5 rounded-md">
-                    OUTDOOR
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Estilo de expedición dinámico, tarjetas de altitud y clima, galería de pines de montaña y paleta esmeralda.
-                </p>
-              </button>
-
-              {/* 3. Cultural */}
-              <button
-                type="button"
-                onClick={() => setTemplate('cultural')}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
-                  template === 'cultural'
-                    ? 'border-amber-600 bg-amber-50/70 shadow-sm ring-2 ring-amber-500/20 -translate-y-0.5'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-black text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
-                    <span>🏛️</span> Patrimonio & Cultura Andina
-                  </span>
-                  <span className="text-[10px] bg-amber-100 text-amber-900 font-extrabold px-2 py-0.5 rounded-md">
-                    ANCESTRAL
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Estética andina artesanal, sellos incas, notas históricas, pines culturales y tonos cálidos de terracota.
-                </p>
-              </button>
-
-              {/* 4. Premium */}
-              <button
-                type="button"
-                onClick={() => setTemplate('premium')}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
-                  template === 'premium'
-                    ? 'border-purple-600 bg-purple-50/70 shadow-sm ring-2 ring-purple-500/20 -translate-y-0.5'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-black text-purple-900 uppercase tracking-wider flex items-center gap-1.5">
-                    <span>✨</span> Exclusivo VIP & High-End
-                  </span>
-                  <span className="text-[10px] bg-purple-100 text-purple-900 font-extrabold px-2 py-0.5 rounded-md">
-                    LUXURY
-                  </span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Modo oscuro luxury refinado, pines fotográficos de alta gama, tipografía de prestigio y detalles en oro/champán.
-                </p>
-              </button>
-            </div>
-          </div>
-
-          {/* PASO 2: FICHA TÉCNICA DEL TOUR & DESTINO (MÁS DATOS PARA RELLENAR) */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">2</span>
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">3</span>
                 Ficha Técnica del Tour & Destino
               </label>
               <span className="text-[11px] font-semibold text-slate-400">Datos para enriquecer los textos de la IA</span>
@@ -1248,11 +1135,11 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 3: PERFIL DEL GUÍA TURÍSTICO & SERVICIOS INCLUIDOS */}
+          {/* PASO 4: PERFIL DEL GUÍA TURÍSTICO & SERVICIOS INCLUIDOS */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">3</span>
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">4</span>
                 Perfil del Guía & Servicios Incluidos
               </label>
               <span className="text-[11px] font-semibold text-slate-400">Genera confianza y credibilidad</span>
@@ -1348,11 +1235,11 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 4: ITINERARIO DÍA A DÍA / HORAS */}
+          {/* PASO 5: ITINERARIO DÍA A DÍA / HORAS */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">4</span>
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">5</span>
                 Itinerario Detallado del Tour
               </label>
               <button
@@ -1415,11 +1302,11 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 5: TRANSPARENCIA & EQUIPAJE (QUÉ NO INCLUYE Y QUÉ LLEVAR) */}
+          {/* PASO 6: TRANSPARENCIA & EQUIPAJE (QUÉ NO INCLUYE Y QUÉ LLEVAR) */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-6">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">5</span>
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">6</span>
                 Exclusiones Claras & Checklist de Mochila
               </label>
               <span className="text-[11px] font-semibold text-slate-400">Reduce objeciones de clientes</span>
@@ -1508,11 +1395,11 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 6: SELLOS DE CONFIANZA & GARANTÍAS TURÍSTICAS */}
+          {/* PASO 7: SELLOS DE CONFIANZA & GARANTÍAS TURÍSTICAS */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">6</span>
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">7</span>
                 Distintivos Oficiales & Sellos de Confianza
               </label>
               <span className="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Seguridad para el Cliente</span>
@@ -1544,11 +1431,11 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 7: FOTOGRAFÍA DE PORTADA (HERO) */}
+          {/* PASO 8: FOTOGRAFÍA DE PORTADA (HERO) */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">7</span>
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">8</span>
                 Fotografía de Portada (Hero)
               </label>
               <span className="text-[11px] font-semibold text-slate-400">Impacto visual</span>
