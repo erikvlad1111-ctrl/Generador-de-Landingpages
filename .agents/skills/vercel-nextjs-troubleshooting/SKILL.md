@@ -180,8 +180,42 @@ git config user.name ; git config user.email ; git log -n 1 --pretty=format:"%h 
 
 ---
 
+## 6. Desbordamiento Horizontal en Celular y Desborde de Botón Flotante (Layout Shift & Blank Margins)
+
+### Síntoma
+En teléfonos móviles o viewports estrechos (320px–430px), la página "se mueve hacia los lados", tiemblan los bordes al deslizar verticalmente, aparecen franjas blancas vacías a la derecha de las secciones con fondo oscuro (`bg-[#1C1917]`, etc.), y el botón flotante de WhatsApp sobrepasa el borde derecho de la pantalla o se duplica sobre sí mismo.
+
+### Causa Raíz
+1. **Desbordamiento por Elementos Fijos o Flex sin Ajuste:** Barras de control fijas (`sticky top-0`) con filas de botones sin `flex-wrap` o sin `overflow-x-auto` fuerzan un ancho de más de 500px, ensanchando todo el `<html>` y `<body>`.
+2. **Animaciones con `scale` sin corte:** Imágenes del Hero o contenedores absolutos con `scale-105` sin `overflow-hidden` filtran píxeles hacia los laterales.
+3. **Botón Flotante Duplicado y Expansión Hacia Afuera:** Coexistencia de botones flotantes simultáneos (uno en el layout/página principal y otro dentro de la plantilla) en `bottom-6 right-6`, y etiquetas que se despliegan hacia la derecha (`right`) fuera del límite de la pantalla al hacer hover/touch en lugar de desplegarse hacia adentro (`left`).
+
+### Comando de Diagnóstico
+```javascript
+// Ejecutar en la consola del navegador en viewport móvil (ej. 390px):
+console.log('Ancho Scroll vs Cliente:', document.documentElement.scrollWidth, document.documentElement.clientWidth);
+Array.from(document.querySelectorAll('*'))
+  .filter(el => el.getBoundingClientRect().right > window.innerWidth || el.getBoundingClientRect().left < 0)
+  .map(el => ({ tag: el.tagName, class: el.className, right: el.getBoundingClientRect().right }));
+```
+
+### Solución Paso a Paso
+1. **Blindar el Contenedor Raíz:**
+   Agregar `w-full max-w-full overflow-x-hidden` al wrapper principal de la página (`src/app/p/[slug]/page.tsx`).
+2. **Hacer Compacta la Barra Superior en Móvil:**
+   Ocultar textos largos en pantallas pequeñas (`hidden sm:inline`), aplicar `overflow-hidden` y usar botones compactos para que nunca superen el 100% del viewport.
+3. **Contener la Escala del Hero:**
+   Añadir `overflow-hidden` en el contenedor `absolute inset-0 z-0` de la imagen de cabecera.
+4. **Unificar y Asegurar el Botón Flotante de WhatsApp:**
+   - Evitar que la página pública renderice un segundo botón flotante cuando la plantilla (`agency-portal`) ya lo incluye.
+   - Posicionar a `bottom-5 right-5` (20px de resguardo) con `max-w-[calc(100vw-2.5rem)]`.
+   - Ocultar tooltips horizontales en móviles (`hidden sm:flex`) para mostrar solo el botón circular limpio, o expandirlos hacia el interior (`flex-row-reverse`).
+
+---
+
 ## Lista de Verificación Antes de Desplegar
 - [ ] Ejecutar `npm run lint` y verificar que salga con código 0.
 - [ ] Ejecutar `npm run build` localmente y comprobar que todas las rutas se generen sin errores.
 - [ ] Confirmar que el repositorio remoto en `main` esté actualizado (`git status` limpio).
 - [ ] Verificar que el Framework Preset en Vercel sea `Next.js`.
+- [ ] Validar que en celular (375px) `document.documentElement.scrollWidth === document.documentElement.clientWidth`.
