@@ -363,8 +363,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       </header>
 
       {/* 3. HERO SECTION (RESPONSIVE) */}
-      <section className={`relative ${isMobile ? 'min-h-[380px] py-8 px-3' : 'min-h-[420px] sm:min-h-[520px] lg:min-h-[600px] py-10 sm:py-16 px-4 sm:px-6'} flex items-center justify-center overflow-hidden`}>
-        <div className="absolute inset-0 z-0">
+      <section className={`relative ${isMobile ? 'min-h-[380px] py-8 px-3' : 'min-h-[420px] sm:min-h-[520px] lg:min-h-[600px] py-10 sm:py-16 px-4 sm:px-6'} flex items-center justify-center overflow-hidden w-full max-w-full`}>
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
             src={heroImage}
             alt={heroTitle}
@@ -484,7 +484,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
         {/* Filtro interactivo */}
         {!isFree && !isBasic && (
-          <div className={`flex items-center gap-1.5 sm:gap-3 ${isMobile ? 'overflow-x-auto no-scrollbar pb-3 mb-6 px-1' : 'overflow-x-auto sm:flex-wrap sm:justify-center mb-6 sm:mb-10'} w-full`}>
+          <div className={`flex items-center gap-1.5 sm:gap-3 overflow-x-auto sm:flex-wrap sm:justify-center mb-6 sm:mb-10 w-full max-w-full pb-2 ${isMobile ? 'no-scrollbar px-1' : ''}`}>
             {[
               { key: 'all', label: t.filterAll, icon: Globe2 },
               { key: 'trekking', label: t.filterTrek, icon: MapPin },
@@ -610,19 +610,19 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             </div>
 
             <div className="space-y-2.5 sm:space-y-4">
-              {[
+              {(data?.itinerary && data.itinerary.length > 0 ? data.itinerary : [
                 { step: '04:30 AM', title: isEn ? 'Hotel Pickup & Transfer' : 'Recojo en Hotel & Traslado Panorámico', desc: isEn ? 'Private vehicle pick-up in Cusco center with warm coca tea provided.' : 'Recojo puntual en tu alojamiento con asistencia médica preventiva y refrigerio ligero.' },
                 { step: '07:30 AM', title: isEn ? 'Buffet Breakfast in Cusipata' : 'Desayuno Buffet Andino Energético', desc: isEn ? 'Traditional Andean breakfast with fresh fruit, eggs and artisan breads.' : 'Desayuno preparado por cocineros locales para cargar energías antes del ascenso.' },
                 { step: '09:30 AM', title: isEn ? 'Ascent to Vinicunca Summit (5,036 m)' : 'Ascenso Guiado a la Cumbre de Vinicunca (5,036 m)', desc: isEn ? 'Accompanied at all times by official guide equipped with oxygen tank.' : 'Caminata con ritmo dosificado, paradas fotográficas y asistencia permanente de oxígeno.' },
                 { step: '01:30 PM', title: isEn ? 'Buffet Lunch & Safe Return' : 'Almuerzo Campestre & Retorno a Cusco', desc: isEn ? 'Celebratory buffet lunch followed by scenic drive returning around 5:00 PM.' : 'Almuerzo buffet campestre en valle andino y retorno cómodo a la ciudad de Cusco.' }
-              ].map((it, i) => (
-                <div key={i} className="flex gap-3 p-3.5 sm:p-5 rounded-2xl bg-stone-800/80 border border-stone-700 items-start">
+              ]).map((it, i) => (
+                <div key={i} className="flex flex-col xs:flex-row gap-2.5 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-stone-800/80 border border-stone-700 items-start w-full">
                   <div className="shrink-0 bg-[#FF5500] text-white px-2.5 sm:px-3 py-1 rounded-lg font-mono text-[10px] sm:text-xs font-black">
                     {it.step}
                   </div>
-                  <div>
-                    <h4 className="font-extrabold text-xs sm:text-base text-white">{it.title}</h4>
-                    <p className="text-[11px] sm:text-xs text-stone-300 mt-0.5 leading-relaxed">{it.desc}</p>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="font-extrabold text-xs sm:text-base text-white break-words">{it.title}</h4>
+                    <p className="text-[11px] sm:text-xs text-stone-300 mt-0.5 leading-relaxed break-words">{it.desc}</p>
                   </div>
                 </div>
               ))}
@@ -933,9 +933,9 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       </footer>
 
       {/* 15. FLOATING WHATSAPP BUTTON (PLANTADO Y FIJO) */}
-      <div className={`z-40 flex items-center gap-2 fixed ${isMobile ? 'bottom-5 right-5' : 'bottom-6 right-6'} pointer-events-auto select-none`}>
+      <div className="z-40 flex items-center gap-2 fixed bottom-5 right-5 sm:bottom-6 sm:right-6 pointer-events-auto select-none max-w-[calc(100vw-2.5rem)]">
         {showWaTooltip && !isMobile && (
-          <div className="hidden md:flex items-center gap-2 bg-white text-stone-900 text-xs font-bold px-3.5 py-2 rounded-2xl shadow-xl border border-stone-200 animate-in fade-in slide-in-from-right-2">
+          <div className="hidden sm:flex items-center gap-2 bg-white text-stone-900 text-xs font-bold px-3.5 py-2 rounded-2xl shadow-xl border border-stone-200 animate-in fade-in slide-in-from-right-2">
             <span>💬 {isEn ? 'Questions? Chat live' : '¿Dudas? Habla con un asesor'}</span>
             <button
               onClick={() => setShowWaTooltip(false)}
@@ -948,10 +948,10 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
         <button
           onClick={() => handleActionClick()}
-          className="relative bg-[#25D366] hover:bg-[#20bd5a] text-white p-3 sm:p-3.5 rounded-full shadow-xl shadow-[#25D366]/40 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer ring-4 ring-[#25D366]/20"
+          className="relative bg-[#25D366] hover:bg-[#20bd5a] text-white p-3 sm:p-3.5 rounded-full shadow-xl shadow-[#25D366]/40 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center cursor-pointer ring-4 ring-[#25D366]/20 shrink-0"
           aria-label="WhatsApp"
         >
-          <MessageCircle size={isMobile ? 22 : 24} className="fill-white relative z-10" />
+          <MessageCircle size={22} className="fill-white relative z-10 sm:w-6 sm:h-6" />
         </button>
       </div>
 

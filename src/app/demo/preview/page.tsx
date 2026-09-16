@@ -334,6 +334,7 @@ function DemoPreviewContent() {
               ? 'w-full max-w-[768px] h-[min(900px,calc(100vh-7rem))] sm:h-[900px] rounded-[24px] sm:rounded-[32px] ring-4 sm:ring-8 ring-slate-800 border-2 sm:border-4 border-slate-900 overflow-hidden my-2 sm:my-4 shadow-2xl shadow-black/80'
               : 'w-full max-w-[1440px] min-h-[min(850px,calc(100vh-7rem))] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl'
           }`}
+          style={{ transform: 'translateZ(0)' }}
         >
           {/* Dynamic Island / Camera Notch on Mobile View */}
           {viewMode === 'mobile' && (
