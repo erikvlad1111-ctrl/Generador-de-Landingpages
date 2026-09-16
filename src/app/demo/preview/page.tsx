@@ -134,120 +134,122 @@ function DemoPreviewContent() {
       {/* Top Professional Control Bar (Clean Toolbar + Dedicated Tour Info Sub-Bar) */}
       <div className="sticky top-0 z-40 select-none shadow-xl shadow-slate-950/70 shrink-0">
         
-        {/* Row 1: Actions Toolbar */}
-        <header className="bg-slate-900/95 backdrop-blur-xl h-14 sm:h-16 px-3 sm:px-6 border-b border-slate-800/80 flex items-center justify-between gap-3">
-          
-          {/* Left: Back Navigation */}
-          <div className="flex items-center gap-2 shrink-0">
-            <Link 
-              href="/demo" 
-              className="group text-slate-300 hover:text-white transition-all px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 flex items-center gap-2 text-xs font-bold border border-slate-700/70 hover:border-slate-600 shadow-xs shrink-0 cursor-pointer"
-              title="Volver al panel principal"
-            >
-              <ArrowLeft size={16} className="group-hover:-translate-x-0.5 transition-transform" />
-              <span>Panel</span>
-            </Link>
-          </div>
-
-          {/* Center: Device Viewport Switcher */}
-          <div className="flex items-center bg-slate-950/90 p-1 rounded-xl sm:rounded-2xl border border-slate-800/90 shadow-inner shadow-black/60 shrink-0">
-            <button
-              onClick={() => setViewMode('desktop')}
-              className={`px-2.5 sm:px-3.5 py-1.5 rounded-lg sm:rounded-xl text-xs flex items-center gap-1.5 sm:gap-2 font-extrabold transition-all cursor-pointer ${
-                viewMode === 'desktop' 
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
-                  : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
-              }`}
-              title="Vista Computadora / Pantalla Completa"
-            >
-              <Monitor size={15} /> 
-              <span className="hidden md:inline">Desktop</span>
-            </button>
-            <button
-              onClick={() => setViewMode('tablet')}
-              className={`px-2.5 sm:px-3.5 py-1.5 rounded-lg sm:rounded-xl text-xs flex items-center gap-1.5 sm:gap-2 font-extrabold transition-all cursor-pointer ${
-                viewMode === 'tablet' 
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
-                  : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
-              }`}
-              title="Vista Tablet / iPad"
-            >
-              <Tablet size={15} /> 
-              <span className="hidden md:inline">Tablet</span>
-            </button>
-            <button
-              onClick={() => setViewMode('mobile')}
-              className={`px-2.5 sm:px-3.5 py-1.5 rounded-lg sm:rounded-xl text-xs flex items-center gap-1.5 sm:gap-2 font-extrabold transition-all cursor-pointer ${
-                viewMode === 'mobile' 
-                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
-                  : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
-              }`}
-              title="Vista Móvil / Smartphone"
-            >
-              <Smartphone size={15} /> 
-              <span className="hidden md:inline">Móvil</span>
-            </button>
-          </div>
-
-          {/* Right: Rich Action Controls */}
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        {/* Row 1: Actions Toolbar (Fluid Horizontal Track) */}
+        <header className="bg-slate-900/95 backdrop-blur-xl h-14 sm:h-16 px-3 sm:px-6 border-b border-slate-800/80 w-full max-w-full overflow-x-auto no-scrollbar touch-pan-x">
+          <div className="flex items-center justify-between gap-2 sm:gap-4 min-w-max w-full h-full">
             
-            {/* Edit Texts */}
-            <button
-              onClick={openEditorWithCurrentData}
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-blue-500/40 cursor-pointer shadow-xs"
-              title="Editar títulos, subtítulos, precio y textos de esta landing"
-            >
-              <Edit3 size={15} className="text-blue-400" />
-              <span className="hidden sm:inline">Editar</span>
-            </button>
+            {/* Left: Back Navigation */}
+            <div className="flex items-center gap-2 shrink-0">
+              <Link 
+                href="/demo" 
+                className="group text-slate-300 hover:text-white transition-all px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 flex items-center gap-1.5 sm:gap-2 text-xs font-bold border border-slate-700/70 hover:border-slate-600 shadow-xs shrink-0 cursor-pointer"
+                title="Volver al panel principal"
+              >
+                <ArrowLeft size={15} className="group-hover:-translate-x-0.5 transition-transform shrink-0" />
+                <span className="hidden sm:inline">Panel</span>
+              </Link>
+            </div>
 
-            {/* QR Code */}
-            <button
-              onClick={() => setIsQrOpen(true)}
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-indigo-500/40 cursor-pointer shadow-xs"
-              title="Escanear con tu smartphone para ver cómo le llega al turista"
-            >
-              <QrCode size={15} className="text-indigo-400" />
-              <span className="hidden md:inline">QR Móvil</span>
-            </button>
+            {/* Center: Device Viewport Switcher */}
+            <div className="flex items-center bg-slate-950/90 p-1 rounded-xl sm:rounded-2xl border border-slate-800/90 shadow-inner shadow-black/60 shrink-0">
+              <button
+                onClick={() => setViewMode('desktop')}
+                className={`px-2.5 sm:px-3.5 py-1.5 rounded-lg sm:rounded-xl text-xs flex items-center gap-1.5 sm:gap-2 font-extrabold transition-all cursor-pointer ${
+                  viewMode === 'desktop' 
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
+                    : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
+                }`}
+                title="Vista Computadora / Pantalla Completa"
+              >
+                <Monitor size={15} /> 
+                <span className="hidden md:inline">Desktop</span>
+              </button>
+              <button
+                onClick={() => setViewMode('tablet')}
+                className={`px-2.5 sm:px-3.5 py-1.5 rounded-lg sm:rounded-xl text-xs flex items-center gap-1.5 sm:gap-2 font-extrabold transition-all cursor-pointer ${
+                  viewMode === 'tablet' 
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
+                    : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
+                }`}
+                title="Vista Tablet / iPad"
+              >
+                <Tablet size={15} /> 
+                <span className="hidden md:inline">Tablet</span>
+              </button>
+              <button
+                onClick={() => setViewMode('mobile')}
+                className={`px-2.5 sm:px-3.5 py-1.5 rounded-lg sm:rounded-xl text-xs flex items-center gap-1.5 sm:gap-2 font-extrabold transition-all cursor-pointer ${
+                  viewMode === 'mobile' 
+                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
+                    : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
+                }`}
+                title="Vista Móvil / Smartphone"
+              >
+                <Smartphone size={15} /> 
+                <span className="hidden md:inline">Móvil</span>
+              </button>
+            </div>
 
-            {/* Export & Download Hub */}
-            <button
-              onClick={() => setIsDeployModalOpen(true)}
-              className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 bg-gradient-to-r from-amber-500/15 via-amber-600/10 to-amber-500/15 hover:from-amber-500/25 hover:to-amber-600/25 text-amber-300 hover:text-amber-200 border border-amber-500/40 hover:border-amber-400/60 font-bold text-xs rounded-xl transition-all shadow-xs cursor-pointer"
-              title="Descargar paquete ZIP autónomo o ver instrucciones de dominio propio en Vercel"
-            >
-              <Download size={15} className="text-amber-400" />
-              <span className="hidden sm:inline">Exportar / ZIP</span>
-            </button>
+            {/* Right: Rich Action Controls */}
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              
+              {/* Edit Texts */}
+              <button
+                onClick={openEditorWithCurrentData}
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-blue-500/40 cursor-pointer shadow-xs shrink-0"
+                title="Editar títulos, subtítulos, precio y textos de esta landing"
+              >
+                <Edit3 size={15} className="text-blue-400 shrink-0" />
+                <span className="hidden sm:inline">Editar</span>
+              </button>
 
-            {/* Copy Public Link */}
-            <button
-              onClick={handleCopyLink}
-              className={`flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 font-bold text-xs rounded-xl transition-all border cursor-pointer ${
-                copied 
-                  ? 'bg-emerald-600 text-white border-emerald-500 shadow-md shadow-emerald-600/30' 
-                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white border-slate-700/80 hover:border-slate-600 shadow-xs'
-              }`}
-              title="Copiar enlace para compartir con el cliente por WhatsApp"
-            >
-              {copied ? <Check size={15} className="text-emerald-200" /> : <Copy size={15} />}
-              <span className="hidden sm:inline">{copied ? '¡Copiado!' : 'Copiar Link'}</span>
-            </button>
+              {/* QR Code */}
+              <button
+                onClick={() => setIsQrOpen(true)}
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-indigo-500/40 cursor-pointer shadow-xs shrink-0"
+                title="Escanear con tu smartphone para ver cómo le llega al turista"
+              >
+                <QrCode size={15} className="text-indigo-400 shrink-0" />
+                <span className="hidden md:inline">QR</span>
+              </button>
 
-            {/* Primary CTA: Open Live Web */}
-            <a
-              href={`/p/${landing.slug}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl font-black text-xs transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 border border-blue-400/30 hover:scale-102 active:scale-98 cursor-pointer"
-              title="Abrir versión web real en una nueva pestaña"
-            >
-              <Globe size={15} />
-              <span className="hidden xs:inline">Ver Web</span>
-              <ExternalLink size={13} className="opacity-80" />
-            </a>
+              {/* Export & Download Hub */}
+              <button
+                onClick={() => setIsDeployModalOpen(true)}
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-gradient-to-r from-amber-500/15 via-amber-600/10 to-amber-500/15 hover:from-amber-500/25 hover:to-amber-600/25 text-amber-300 hover:text-amber-200 border border-amber-500/40 hover:border-amber-400/60 font-bold text-xs rounded-xl transition-all shadow-xs cursor-pointer shrink-0"
+                title="Descargar paquete ZIP autónomo o ver instrucciones de dominio propio en Vercel"
+              >
+                <Download size={15} className="text-amber-400 shrink-0" />
+                <span className="hidden sm:inline">Exportar</span>
+              </button>
+
+              {/* Copy Public Link */}
+              <button
+                onClick={handleCopyLink}
+                className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 font-bold text-xs rounded-xl transition-all border cursor-pointer shrink-0 ${
+                  copied 
+                    ? 'bg-emerald-600 text-white border-emerald-500 shadow-md shadow-emerald-600/30' 
+                    : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white border-slate-700/80 hover:border-slate-600 shadow-xs'
+                }`}
+                title="Copiar enlace para compartir con el cliente por WhatsApp"
+              >
+                {copied ? <Check size={15} className="text-emerald-200 shrink-0" /> : <Copy size={15} className="shrink-0" />}
+                <span className="hidden md:inline">{copied ? '¡Copiado!' : 'Copiar'}</span>
+              </button>
+
+              {/* Primary CTA: Open Live Web (Always Visible & Accessible) */}
+              <a
+                href={`/p/${landing.slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl font-black text-xs transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 border border-blue-400/30 hover:scale-102 active:scale-98 cursor-pointer shrink-0"
+                title="Abrir versión web real en una nueva pestaña"
+              >
+                <Globe size={15} className="shrink-0" />
+                <span>Ver Web</span>
+                <ExternalLink size={13} className="opacity-80 shrink-0 hidden xs:inline" />
+              </a>
+            </div>
           </div>
         </header>
 

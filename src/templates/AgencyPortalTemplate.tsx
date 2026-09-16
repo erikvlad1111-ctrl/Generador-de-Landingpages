@@ -100,14 +100,133 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const isPro = planTier === 'pro';
   const isAdvance = planTier === 'advance';
 
-  // 5. Datos dinámicos para Hero con Fallbacks inteligentes
-  const heroTitle = data?.hero?.title || (isEn ? 'DISCOVER CUSCO' : 'VINICUNCA & MACHU PICCHU');
-  const heroSubtitle = data?.hero?.subtitle || (isEn 
-    ? 'Rainbow Mountain, Sacred Valley & World Wonders • Live the authentic Andean journey with accredited experts.' 
-    : 'Montaña de 7 Colores & Valle Rojo • Vive la magia de los Andes con operadores colegiados y salidas diarias.');
-  const heroBadge = data?.hero?.badge || t.seasonBadge;
+  // 5. Helpers de traducción bilingüe completa (ES / EN)
+  const getBilingualHeroTitle = (originalTitle?: string) => {
+    if (!isEn) return originalTitle || 'VINICUNCA & MACHU PICCHU';
+    if (!originalTitle) return 'LUXURY MACHU PICCHU & SCENIC PANORAMIC TRAIN';
+    const lower = originalTitle.toLowerCase();
+    if (lower.includes('machu picchu') || lower.includes('lujo') || lower.includes('tren') || lower.includes('vip')) {
+      return 'LUXURY MACHU PICCHU & SCENIC PANORAMIC TRAIN';
+    }
+    if (lower.includes('vinicunca') || lower.includes('7 colores') || lower.includes('colores')) {
+      return 'RAINBOW MOUNTAIN & RED VALLEY VIP EXPEDITION';
+    }
+    if (lower.includes('humantay')) {
+      return 'TURQUOISE HUMANTAY LAKE & GLACIER VIP TREK';
+    }
+    if (lower.includes('valle sagrado')) {
+      return 'SACRED VALLEY OF THE INCAS VIP CULTURAL JOURNEY';
+    }
+    return originalTitle;
+  };
+
+  const getBilingualHeroSubtitle = (originalSubtitle?: string) => {
+    if (!isEn) {
+      return originalSubtitle || 'Montaña de 7 Colores & Valle Rojo • Vive la magia de los Andes con operadores colegiados y salidas diarias.';
+    }
+    if (!originalSubtitle) {
+      return 'Discover the Wonder of the World with private luxury transfers, 5-star comfort and an official certified historian guide dedicated exclusively to you.';
+    }
+    const lower = originalSubtitle.toLowerCase();
+    if (lower.includes('maravilla') || lower.includes('machu picchu') || lower.includes('traslados') || lower.includes('familia')) {
+      return 'Discover the Wonder of the World with private luxury transfers, 5-star comfort and an official certified historian guide dedicated exclusively to you and your family.';
+    }
+    if (lower.includes('montaña') || lower.includes('vinicunca') || lower.includes('colores')) {
+      return 'Rainbow Mountain, Red Valley & Andean Wonders • Live the authentic Andean journey with accredited official experts and daily departures.';
+    }
+    return 'Live the authentic Andean journey with accredited official experts, private transfers and full medical oxygen assistance.';
+  };
+
+  const getBilingualHeroBadge = (originalBadge?: string) => {
+    if (!isEn) return originalBadge || t.seasonBadge;
+    if (!originalBadge) return t.seasonBadge;
+    const lower = originalBadge.toLowerCase();
+    if (lower.includes('vip') || lower.includes('exclusiv')) {
+      return 'Exclusive VIP Experience • 2026 Season';
+    }
+    return t.seasonBadge;
+  };
+
+  const getBilingualFeatures = (items?: string[]) => {
+    if (!isEn) {
+      return items || [
+        'Guías Oficiales Acreditados',
+        'Balón de Oxígeno & Botiquín',
+        'Salidas Diarias Garantizadas',
+        'Atención 24/7 por WhatsApp'
+      ];
+    }
+    if (!items || items.length === 0) {
+      return [
+        'Official Certified Historian Guides',
+        'Emergency Medical Oxygen & First Aid Kit',
+        'Guaranteed Daily Departures',
+        '24/7 Dedicated WhatsApp Support'
+      ];
+    }
+    return items.map(item => {
+      const lower = item.toLowerCase();
+      if (lower.includes('hiram bingham') || lower.includes('vistadome')) {
+        return 'Hiram Bingham / Vistadome Luxury Train: Live Andean music, welcome cocktail and panoramic observatory windows.';
+      }
+      if (lower.includes('guía') || lower.includes('historiador')) {
+        return 'Private Certified Historian Guide: Deep, tailored narrative at your own personal pace.';
+      }
+      if (lower.includes('gastronomía') || lower.includes('almuerzo') || lower.includes('buffet')) {
+        return 'Signature Andean Gastronomy: Gourmet buffet lunch included at the foothills of the citadel.';
+      }
+      if (lower.includes('conserjería') || lower.includes('24/7') || lower.includes('coordinador')) {
+        return '24/7 Dedicated Travel Concierge: Dedicated trip coordinator permanently on call for any request.';
+      }
+      if (lower.includes('oxígeno')) {
+        return 'Emergency Medical Oxygen & Andean Altitude First Aid Kit in all vehicles.';
+      }
+      return item;
+    });
+  };
+
+  const getBilingualItinerary = (itinerary?: { step: string; title: string; desc: string }[]) => {
+    if (!isEn) {
+      return itinerary && itinerary.length > 0 ? itinerary : [
+        { step: '04:30 AM', title: 'Recojo en Hotel & Traslado Panorámico', desc: 'Recojo puntual en tu alojamiento con asistencia médica preventiva y refrigerio ligero.' },
+        { step: '07:30 AM', title: 'Desayuno Buffet Andino Energético', desc: 'Desayuno preparado por cocineros locales para cargar energías antes del ascenso.' },
+        { step: '09:30 AM', title: 'Ascenso Guiado a la Cumbre de Vinicunca (5,036 m)', desc: 'Caminata con ritmo dosificado, paradas fotográficas y asistencia permanente de oxígeno.' },
+        { step: '01:30 PM', title: 'Almuerzo Campestre & Retorno a Cusco', desc: 'Almuerzo buffet campestre en valle andino y retorno cómodo a la ciudad de Cusco.' }
+      ];
+    }
+    if (itinerary && itinerary.length > 0) {
+      return itinerary.map(it => {
+        const lower = (it.title + ' ' + it.desc).toLowerCase();
+        let step = it.step.replace(/Día/gi, 'Day').replace(/Paso/gi, 'Step');
+        let title = it.title;
+        let desc = it.desc;
+        if (lower.includes('aguas calientes') || lower.includes('vistadome') || lower.includes('tren')) {
+          step = 'Day 1';
+          title = 'Cusco to Aguas Calientes via Vistadome Panoramic Train';
+          desc = 'Private pickup from your hotel in Cusco to Ollantaytambo station. Scenic railway journey through the Sacred Valley with live onboard performance. Check-in at boutique hotel in Machu Picchu Pueblo.';
+        } else if (lower.includes('exploración') || lower.includes('machu picchu') || lower.includes('belmond')) {
+          step = 'Day 2';
+          title = 'Mystical Exploration of Machu Picchu & Gourmet Buffet';
+          desc = 'Exclusive bus ascent to the Inca citadel. 3-hour private guided exploration through temples, royal enclosures and terraces. Gourmet buffet lunch at Belmond Sanctuary Lodge and first-class train back to Cusco.';
+        }
+        return { step, title, desc };
+      });
+    }
+    return [
+      { step: '04:30 AM', title: 'Hotel Pickup & Scenic Transfer', desc: 'Prompt pickup at your accommodation with preventative altitude assistance and light refreshments.' },
+      { step: '07:30 AM', title: 'High-Energy Andean Buffet Breakfast', desc: 'Nutritious breakfast prepared with local Andean ingredients to fuel your morning ascent.' },
+      { step: '09:30 AM', title: 'Guided Trek to Vinicunca Summit (5,036 m)', desc: 'Paced hike with photo stops, breathtaking mountain vistas and continuous medical oxygen support.' },
+      { step: '01:30 PM', title: 'Valley Buffet Lunch & Comfortable Return', desc: 'Celebratory country buffet lunch followed by a smooth scenic drive returning to Cusco around 5:00 PM.' }
+    ];
+  };
+
+  const heroTitle = getBilingualHeroTitle(data?.hero?.title);
+  const heroSubtitle = getBilingualHeroSubtitle(data?.hero?.subtitle);
+  const heroBadge = getBilingualHeroBadge(data?.hero?.badge);
   const heroImage = data?.heroImage || 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop';
-  const heroCtaLabel = data?.hero?.cta || (objective === 'quote' ? t.ctaHeroQuote : t.ctaHeroWa);
+  const heroCtaLabel = isEn 
+    ? (objective === 'quote' ? 'Request Private VIP Quote' : 'Book on WhatsApp') 
+    : (data?.hero?.cta || (objective === 'quote' ? t.ctaHeroQuote : t.ctaHeroWa));
 
   // 6. Lista de Tours Destacados
   const DEFAULT_FEATURED_TOURS = [
@@ -610,12 +729,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             </div>
 
             <div className="space-y-2.5 sm:space-y-4">
-              {(data?.itinerary && data.itinerary.length > 0 ? data.itinerary : [
-                { step: '04:30 AM', title: isEn ? 'Hotel Pickup & Transfer' : 'Recojo en Hotel & Traslado Panorámico', desc: isEn ? 'Private vehicle pick-up in Cusco center with warm coca tea provided.' : 'Recojo puntual en tu alojamiento con asistencia médica preventiva y refrigerio ligero.' },
-                { step: '07:30 AM', title: isEn ? 'Buffet Breakfast in Cusipata' : 'Desayuno Buffet Andino Energético', desc: isEn ? 'Traditional Andean breakfast with fresh fruit, eggs and artisan breads.' : 'Desayuno preparado por cocineros locales para cargar energías antes del ascenso.' },
-                { step: '09:30 AM', title: isEn ? 'Ascent to Vinicunca Summit (5,036 m)' : 'Ascenso Guiado a la Cumbre de Vinicunca (5,036 m)', desc: isEn ? 'Accompanied at all times by official guide equipped with oxygen tank.' : 'Caminata con ritmo dosificado, paradas fotográficas y asistencia permanente de oxígeno.' },
-                { step: '01:30 PM', title: isEn ? 'Buffet Lunch & Safe Return' : 'Almuerzo Campestre & Retorno a Cusco', desc: isEn ? 'Celebratory buffet lunch followed by scenic drive returning around 5:00 PM.' : 'Almuerzo buffet campestre en valle andino y retorno cómodo a la ciudad de Cusco.' }
-              ]).map((it, i) => (
+              {getBilingualItinerary(data?.itinerary).map((it, i) => (
                 <div key={i} className="flex flex-col xs:flex-row gap-2.5 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-stone-800/80 border border-stone-700 items-start w-full">
                   <div className="shrink-0 bg-[#FF5500] text-white px-2.5 sm:px-3 py-1 rounded-lg font-mono text-[10px] sm:text-xs font-black">
                     {it.step}
@@ -684,12 +798,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </div>
 
               <div className={`grid ${isMobile ? 'grid-cols-1 gap-2' : 'grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3.5'} pt-1`}>
-                {(data?.features?.items || [
-                  isEn ? 'Official Certified Guides' : 'Guías Oficiales Acreditados',
-                  isEn ? 'Emergency Oxygen & First Aid' : 'Balón de Oxígeno & Botiquín',
-                  isEn ? 'Daily Guaranteed Departures' : 'Salidas Diarias Garantizadas',
-                  isEn ? '24/7 Dedicated WhatsApp Support' : 'Atención 24/7 por WhatsApp'
-                ]).map((feat, idx) => (
+                {getBilingualFeatures(data?.features?.items).map((feat, idx) => (
                   <div key={idx} className="flex items-center gap-2 text-xs font-bold text-stone-800 bg-white p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-stone-200 shadow-2xs">
                     <CheckCircle2 size={15} className="text-[#FF5500] shrink-0" />
                     <span className="truncate">{feat}</span>
@@ -865,6 +974,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           tier={planTier}
           theme="agency-portal"
           isMobile={isMobile}
+          lang={lang}
         />
       )}
 

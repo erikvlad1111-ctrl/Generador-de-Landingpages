@@ -22,7 +22,7 @@ import {
   ArrowLeft,
   HeartHandshake
 } from 'lucide-react';
-import { FAQItem, PlanTier, TemplateType } from '@/types/landing';
+import { FAQItem, PlanTier, TemplateType, LanguageType } from '@/types/landing';
 
 interface ForumReply {
   id: string;
@@ -54,6 +54,7 @@ interface TourSupportAndFaqsProps {
   tier?: PlanTier;
   theme?: TemplateType;
   isMobile?: boolean;
+  lang?: LanguageType;
 }
 
 const INITIAL_FORUM_QUESTIONS: ForumQuestion[] = [
@@ -145,22 +146,25 @@ export default function TourSupportAndFaqs({
   destination = 'Cusco',
   tier = 'advance',
   theme = 'agency-portal',
-  isMobile = false
+  isMobile = false,
+  lang = 'es'
 }: TourSupportAndFaqsProps) {
+  const isEn = lang === 'en';
+
   // Navigation Tabs: 'forum' (Comunidad) | 'faq' (Preguntas Frecuentes) | 'ticket' (Mesa Privada)
   const [activeTab, setActiveTab] = useState<'forum' | 'faq' | 'ticket'>('forum');
 
   // Forum Threads State
   const [forumQuestions, setForumQuestions] = useState<ForumQuestion[]>(INITIAL_FORUM_QUESTIONS);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('Todas');
+  const [selectedCategory, setSelectedCategory] = useState(isEn ? 'All' : 'Todas');
   const [activeQuestionId, setActiveQuestionId] = useState<string | null>(null);
   const [showNewQuestionModal, setShowNewQuestionModal] = useState(false);
 
   // New Question Form
   const [newTitle, setNewTitle] = useState('');
   const [newAuthor, setNewAuthor] = useState('');
-  const [newCategory, setNewCategory] = useState('Editor & Diseño');
+  const [newCategory, setNewCategory] = useState(isEn ? 'Editor & Design' : 'Editor & Diseño');
   const [newDescription, setNewDescription] = useState('');
 
   // New Reply Form
@@ -176,7 +180,7 @@ export default function TourSupportAndFaqs({
   const [senderName, setSenderName] = useState('');
   const [senderContact, setSenderContact] = useState('');
   const [senderQuestion, setSenderQuestion] = useState('');
-  const [ticketCategory, setTicketCategory] = useState('Logística y Horarios de Recojo');
+  const [ticketCategory, setTicketCategory] = useState(isEn ? 'Logistics & Hotel Pickup' : 'Logística y Horarios de Recojo');
   const [ticketId, setTicketId] = useState('');
 
   // Anti-Spam Multilayer States
@@ -214,37 +218,84 @@ export default function TourSupportAndFaqs({
 
   const cleanPhone = (whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const encodedMsg = encodeURIComponent(
-    `Hola ${guideName}, tengo una consulta sobre el tour "${tourName}" en ${destination}. ¿Me podrían brindar asistencia?`
+    isEn 
+      ? `Hello ${guideName}, I have an inquiry regarding the "${tourName}" tour in ${destination}. Could you please assist me?`
+      : `Hola ${guideName}, tengo una consulta sobre el tour "${tourName}" en ${destination}. ¿Me podrían brindar asistencia?`
   );
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
-  // Complete official FAQs
-  const displayFaqs: FAQItem[] = faqs && faqs.length > 0 ? faqs : [
+  // Default English FAQs
+  const defaultEnFaqs: FAQItem[] = [
     {
-      q: `¿Qué incluye exactamente el servicio del tour "${tourName}"?`,
-      a: `Incluye transporte turístico autorizado ida y vuelta, guiado oficial profesional bilingüe acreditado por DIRCETUR Cusco, balón de oxígeno para la altitud, botiquín de primeros auxilios y atención personalizada.`
+      q: `What exactly does the "${tourName}" tour service include?`,
+      a: 'Includes official licensed tourist transport, professional bilingual guide accredited by DIRCETUR Cusco, emergency oxygen tank for altitude, complete first aid kit, and personalized concierge.'
     },
     {
-      q: '¿Cómo funciona la confirmación de reserva y qué métodos de pago aceptan?',
-      a: 'La confirmación es inmediata vía WhatsApp. Puedes asegurar tu cupo mediante transferencia bancaria (BCP, Interbank, BBVA), Yape, Plin o tarjetas de crédito/débito internacionales sin cargos ocultos.'
+      q: 'How does booking confirmation work and what payment methods are accepted?',
+      a: 'Confirmation is instant via WhatsApp or private quote. You can secure your slot with international credit/debit cards, bank transfer or digital payments with zero hidden fees.'
     },
     {
-      q: '¿Por qué es seguro reservar con nosotros? (Sellos y Licencias)',
-      a: 'Somos agencia formal con RUC 20 activo, acreditación oficial DIRCETUR Cusco y sello internacional Safe Travels. Tus reservas están 100% garantizadas y emitimos comprobantes oficiales.'
+      q: 'Why is booking with us completely safe? (Licenses & Badges)',
+      a: 'We are a formal registered Peruvian tourism agency with active tax ID (RUC), official DIRCETUR Cusco license, and international Safe Travels seal. All bookings are 100% legally backed.'
     },
     {
-      q: '¿Qué precauciones y protocolos aplican para el mal de altura (soroche)?',
-      a: `Recomendamos aclimatarse al menos 24 a 48 horas en Cusco antes del tour. Nuestro guía monitorea el ritmo cardíaco y oxigenación, disponiendo de botiquín andino y balón de oxígeno medicinal para altitudes de ${destination}.`
+      q: 'What altitude sickness (soroche) protocols and care do you provide?',
+      a: `We recommend acclimatizing 24 to 48 hours in Cusco before the tour. Our official guide monitors oxygenation with a pulse oximeter, and carries portable medical oxygen throughout ${destination}.`
     },
     {
-      q: '¿Cuál es la política de reprogramación o cancelación por clima o imprevistos?',
-      a: 'Ofrecemos reprogramación sin penalidad avisando con 24 horas de anticipación ante inclemencias climáticas, huelgas o motivos médicos justificados.'
+      q: 'What is your rescheduling and cancellation policy?',
+      a: 'We offer hassle-free rescheduling with 24-hour notice in case of adverse weather, public strikes or justified medical circumstances.'
     },
     {
-      q: '¿Dónde es el punto de encuentro y a qué hora inicia el recorrido?',
-      a: 'Brindamos servicio de recojo directo en la puerta de tu hotel o alojamiento ubicado dentro del centro histórico de Cusco, coordinando la hora exacta por WhatsApp la noche anterior.'
+      q: 'Where is the pickup point and what time does the journey start?',
+      a: 'We provide direct door-to-door pickup from your hotel or accommodation located in Cusco historic center, reconfirming the exact time the evening prior.'
     }
   ];
+
+  // Complete official FAQs with Bilingual Support
+  const displayFaqs: FAQItem[] = isEn
+    ? (faqs && faqs.length > 0 ? faqs.map(f => {
+        const lower = f.q.toLowerCase();
+        if (lower.includes('incluye')) {
+          return {
+            q: `What exactly does the VIP service include?`,
+            a: 'Includes round-trip luxury train tickets, preferred circuit entrances to Machu Picchu, private certified historian guide, gourmet buffet lunch and door-to-door private transport.'
+          };
+        }
+        if (lower.includes('anticipación') || lower.includes('reservar')) {
+          return {
+            q: 'How far in advance should I book?',
+            a: 'We recommend booking at least 3 to 4 weeks in advance due to strictly limited daily capacity on luxury trains and citadel access.'
+          };
+        }
+        return f;
+      }) : defaultEnFaqs)
+    : (faqs && faqs.length > 0 ? faqs : [
+        {
+          q: `¿Qué incluye exactamente el servicio del tour "${tourName}"?`,
+          a: `Incluye transporte turístico autorizado ida y vuelta, guiado oficial profesional bilingüe acreditado por DIRCETUR Cusco, balón de oxígeno para la altitud, botiquín de primeros auxilios y atención personalizada.`
+        },
+        {
+          q: '¿Cómo funciona la confirmación de reserva y qué métodos de pago aceptan?',
+          a: 'La confirmación es inmediata vía WhatsApp. Puedes asegurar tu cupo mediante transferencia bancaria (BCP, Interbank, BBVA), Yape, Plin o tarjetas de crédito/débito internacionales sin cargos ocultos.'
+        },
+        {
+          q: '¿Por qué es seguro reservar con nosotros? (Sellos y Licencias)',
+          a: 'Somos agencia formal con RUC 20 activo, acreditación oficial DIRCETUR Cusco y sello internacional Safe Travels. Tus reservas están 100% garantizadas y emitimos comprobantes oficiales.'
+        },
+        {
+          q: '¿Qué precauciones y protocolos aplican para el mal de altura (soroche)?',
+          a: `Recomendamos aclimatarse al menos 24 a 48 horas en Cusco antes del tour. Nuestro guía monitorea el ritmo cardíaco y oxigenación, disponiendo de botiquín andino y balón de oxígeno medicinal para altitudes de ${destination}.`
+        },
+        {
+          q: '¿Cuál es la política de reprogramación o cancelación por clima o imprevistos?',
+          a: 'Ofrecemos reprogramación sin penalidad avisando con 24 horas de anticipación ante inclemencias climáticas, huelgas o motivos médicos justificados.'
+        },
+        {
+          q: '¿Dónde es el punto de encuentro y a qué hora inicia el recorrido?',
+          a: 'Brindamos servicio de recojo directo en la puerta de tu hotel o alojamiento ubicado dentro del centro histórico de Cusco, coordinando la hora exacta por WhatsApp la noche anterior.'
+        }
+      ]);
 
   // Handler for New Question
   const handlePublishQuestion = (e: React.FormEvent) => {
@@ -363,15 +414,21 @@ export default function TourSupportAndFaqs({
         <div className="text-center max-w-2xl mx-auto space-y-2 sm:space-y-3 px-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider bg-[#FF5500]/10 text-[#FF5500] border border-[#FF5500]/20">
             <HelpCircle size={14} />
-            <span>Centro de Ayuda, Foro & Soporte</span>
+            <span>{isEn ? 'Help Center, Community & FAQs' : 'Centro de Ayuda, Foro & Soporte'}</span>
           </div>
 
           <h2 className={`${isMobile ? 'text-xl' : 'text-3xl sm:text-4xl'} font-black tracking-tight text-stone-900`}>
-            ¿En qué podemos <span className="text-[#FF5500]">ayudarte</span>?
+            {isEn ? (
+              <>How can we <span className="text-[#FF5500]">help you</span>?</>
+            ) : (
+              <>¿En qué podemos <span className="text-[#FF5500]">ayudarte</span>?</>
+            )}
           </h2>
 
           <p className="text-xs sm:text-sm text-stone-600 leading-relaxed max-w-xl mx-auto">
-            Participa en nuestro foro de consultas públicas con respuestas del equipo oficial o consulta nuestras preguntas frecuentes verificadas.
+            {isEn 
+              ? 'Join our community questions forum with verified guide answers or browse our official FAQs.' 
+              : 'Participa en nuestro foro de consultas públicas con respuestas del equipo oficial o consulta nuestras preguntas frecuentes verificadas.'}
           </p>
         </div>
 
@@ -391,7 +448,7 @@ export default function TourSupportAndFaqs({
             }`}
           >
             <MessageSquare size={14} className={activeTab === 'forum' ? 'text-[#FF5500]' : ''} />
-            <span>{isMobile ? 'Foro' : 'Foro de Ayuda & Comunidad'}</span>
+            <span>{isEn ? (isMobile ? 'Forum' : 'Community Forum') : (isMobile ? 'Foro' : 'Foro de Ayuda & Comunidad')}</span>
             <span className="bg-[#FF5500]/15 text-[#FF5500] text-[9px] px-1.5 py-0.2 rounded-full font-bold">
               {forumQuestions.length}
             </span>
@@ -409,7 +466,7 @@ export default function TourSupportAndFaqs({
             }`}
           >
             <HelpCircle size={14} className={activeTab === 'faq' ? 'text-[#FF5500]' : ''} />
-            <span>{isMobile ? 'FAQs' : 'Preguntas Frecuentes (FAQ)'}</span>
+            <span>{isEn ? (isMobile ? 'FAQs' : 'Verified FAQs') : (isMobile ? 'FAQs' : 'Preguntas Frecuentes (FAQ)')}</span>
           </button>
 
           <button
@@ -424,7 +481,7 @@ export default function TourSupportAndFaqs({
             }`}
           >
             <ShieldCheck size={14} className={activeTab === 'ticket' ? 'text-[#FF5500]' : ''} />
-            <span>{isMobile ? 'Mesa Ayuda' : 'Mesa de Ayuda Privada'}</span>
+            <span>{isEn ? (isMobile ? 'Helpdesk' : 'Private Helpdesk') : (isMobile ? 'Mesa Ayuda' : 'Mesa de Ayuda Privada')}</span>
           </button>
         </div>
 
@@ -858,34 +915,36 @@ export default function TourSupportAndFaqs({
               <div className={`${isMobile ? 'w-full' : 'lg:col-span-7'} space-y-4`}>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-emerald-300 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  Mesa de Ayuda Local en Cusco
+                  {isEn ? 'Local Cusco Support Desk' : 'Mesa de Ayuda Local en Cusco'}
                 </div>
 
                 <h3 className={`${isMobile ? 'text-lg leading-snug' : 'text-xl sm:text-2xl'} font-bold tracking-tight text-white`}>
-                  ¿Necesitas asistencia o tienes una solicitud especial?
+                  {isEn ? 'Need assistance or have a special request?' : '¿Necesitas asistencia o tienes una solicitud especial?'}
                 </h3>
 
                 <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
-                  Estamos disponibles para coordinar recojo en tu hotel, dietas especiales, aclimatación a la altura y reservas de último minuto.
+                  {isEn 
+                    ? 'We are on call to coordinate hotel pickups, special dietary requirements, altitude acclimatization and last-minute reservations.'
+                    : 'Estamos disponibles para coordinar recojo en tu hotel, dietas especiales, aclimatación a la altura y reservas de último minuto.'}
                 </p>
 
                 {/* Service Features Badges */}
                 <div className={`grid ${isMobile ? 'grid-cols-1 gap-2' : 'grid-cols-1 sm:grid-cols-2 gap-3'} pt-2`}>
                   <div className="flex items-center gap-2.5 text-xs text-stone-300 bg-white/5 p-2.5 rounded-xl border border-white/10">
                     <PhoneCall size={16} className="text-emerald-400 shrink-0" />
-                    <span className="truncate">Central Cusco: <strong>{whatsapp || '+51 984 123 456'}</strong></span>
+                    <span className="truncate">{isEn ? 'Cusco Office: ' : 'Central Cusco: '}<strong>{whatsapp || '+51 984 123 456'}</strong></span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-stone-300 bg-white/5 p-2.5 rounded-xl border border-white/10">
                     <Clock size={16} className="text-amber-400 shrink-0" />
-                    <span>Atención: <strong>06:00 AM - 09:30 PM</strong></span>
+                    <span>{isEn ? 'Hours: ' : 'Atención: '}<strong>06:00 AM - 09:30 PM</strong></span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-stone-300 bg-white/5 p-2.5 rounded-xl border border-white/10">
                     <ShieldCheck size={16} className="text-blue-400 shrink-0" />
-                    <span>Acreditación <strong>DIRCETUR Cusco</strong></span>
+                    <span>{isEn ? 'Official License ' : 'Acreditación '}<strong>DIRCETUR Cusco</strong></span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-stone-300 bg-white/5 p-2.5 rounded-xl border border-white/10">
                     <HeartHandshake size={16} className="text-rose-400 shrink-0" />
-                    <span className="truncate">Guía Oficial: <strong>{guideName}</strong></span>
+                    <span className="truncate">{isEn ? 'Official Guide: ' : 'Guía Oficial: '}<strong>{guideName}</strong></span>
                   </div>
                 </div>
 
@@ -897,7 +956,7 @@ export default function TourSupportAndFaqs({
                     className={`bg-[#25D366] hover:bg-[#20bd5a] text-white ${isMobile ? 'w-full justify-center text-xs py-3' : 'px-5 py-3 text-xs sm:text-sm'} rounded-xl font-bold transition-all shadow-md inline-flex items-center gap-2 cursor-pointer hover:scale-102`}
                   >
                     <MessageCircle size={18} />
-                    <span>Chatear por WhatsApp con {guideName}</span>
+                    <span>{isEn ? `Chat on WhatsApp with ${guideName}` : `Chatear por WhatsApp con ${guideName}`}</span>
                   </a>
                 </div>
               </div>
