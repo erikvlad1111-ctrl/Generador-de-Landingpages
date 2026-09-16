@@ -121,3 +121,31 @@ body {
   animation: shimmerSweep 0.85s ease-in-out forwards;
 }
 
+/* Mobile Friendly Micro-Animations for Numbers and Interactive Arrows */
+@keyframes bounceX {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+@keyframes pulseSubtle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes numberGlow {
+  0%, 100% { filter: drop-shadow(0 0 0px rgba(255, 85, 0, 0)); }
+  50% { filter: drop-shadow(0 0 8px rgba(255, 85, 0, 0.45)); }
+}
+
+.animate-bounce-x {
+  animation: bounceX 1.4s ease-in-out infinite;
+}
+
+.animate-pulse-subtle {
+  animation: pulseSubtle 2.2s ease-in-out infinite;
+}
+
+.animate-number-glow {
+  animation: numberGlow 2.8s ease-in-out infinite;
+}
+
