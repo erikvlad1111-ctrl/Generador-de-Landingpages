@@ -59,7 +59,7 @@ const PINTEREST_DESIGNS: PinterestDesign[] = [
     name: '1. Portal Oficial de Agencia Perú (Vinicunca Orange)',
     subtitle: 'El diseño viral #1: Alta conversión con acentos naranja, métricas, FAQ y sellos DIRCETUR',
     category: 'Alta Conversión & Portal Oficial',
-    template: 'adventure',
+    template: 'agency-portal',
     recommendedTier: 'advance',
     targetTour: 'Vinicunca 7 Colores, Catálogo Completo de Tours, Paquetes Multidía',
     demoSlug: 'salkantay-trek-machu-picchu',

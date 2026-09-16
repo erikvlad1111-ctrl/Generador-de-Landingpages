@@ -445,9 +445,17 @@ export default function NewLandingDemo() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const qTier = new URLSearchParams(window.location.search).get('tier') as PlanTier;
+      const searchParams = new URLSearchParams(window.location.search);
+      const qTier = searchParams.get('tier') as PlanTier;
       if (qTier && ['free', 'basic', 'pro', 'advance'].includes(qTier)) {
         setTier(qTier);
+      }
+      const qTemplate = searchParams.get('template') as TemplateType;
+      if (qTemplate && ['agency-portal', 'adventure', 'premium', 'cultural', 'boho-nature'].includes(qTemplate)) {
+        setTemplate(qTemplate);
+        if (qTemplate === 'agency-portal') {
+          handleApplyPreset(PRESET_TOURS[0]);
+        }
       }
     }
   }, []);
@@ -699,11 +707,110 @@ export default function NewLandingDemo() {
         {/* Form Column */}
         <form onSubmit={handleGenerate} className="lg:col-span-7 space-y-6">
           
-          {/* PASO 1: OBJETIVO Y ESTRATEGIA COMERCIAL */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+          {/* PASO 1: SELECCIONA LA PLANTILLA DE DISEÑO & ESTILO VISUAL */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-4 ring-2 ring-blue-500/10">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                 <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">1</span>
+                Elige la Plantilla de Diseño Visual
+              </label>
+              <span className="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
+                Estructura & Estilo
+              </span>
+            </div>
+
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Selecciona el estilo visual con el que la IA estructurará y presentará el contenido de tu tour:
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {[
+                { 
+                  id: 'agency-portal', 
+                  name: 'Portal Agencia (Pinterest #1)', 
+                  desc: 'Naranja viral, métricas +10k, catálogo de tours, FAQ y WhatsApp con radar.', 
+                  icon: '🔥',
+                  badge: 'Viral Pinterest #1',
+                  badgeClass: 'bg-[#FF5500] text-white'
+                },
+                { 
+                  id: 'boho-nature', 
+                  name: 'Boho Travel Journal', 
+                  desc: 'Estilo Pinterest con fotos polaroid inclinadas, cinta washi y notas de campo.', 
+                  icon: '📷',
+                  badge: 'Pinterest Aesthetic',
+                  badgeClass: 'bg-amber-600 text-white'
+                },
+                { 
+                  id: 'premium', 
+                  name: 'Lujo & Exclusivo (VIP)', 
+                  desc: 'Dorado y negro profundo. Ideal para experiencias Hiram Bingham y 5 estrellas.', 
+                  icon: '👑',
+                  badge: 'High-End VIP',
+                  badgeClass: 'bg-stone-900 text-amber-300'
+                },
+                { 
+                  id: 'adventure', 
+                  name: 'Aventura & Trekking', 
+                  desc: 'Tonos esmeralda y montaña. Diseñado para rutas de alta dificultad y caminatas.', 
+                  icon: '🏔️',
+                  badge: 'Trekking & Outdoor',
+                  badgeClass: 'bg-emerald-600 text-white'
+                },
+                { 
+                  id: 'cultural', 
+                  name: 'Cultural & Ancestral', 
+                  desc: 'Piedra incaica y ámbar cálido. Para City Tours, Sacsayhuamán y arqueología.', 
+                  icon: '🏛️',
+                  badge: 'Heritage & History',
+                  badgeClass: 'bg-amber-700 text-white'
+                }
+              ].map((t) => {
+                const isSelected = template === t.id;
+                return (
+                  <button
+                    key={t.id}
+                    type="button"
+                    onClick={() => {
+                      setTemplate(t.id as TemplateType);
+                      if (t.id === 'agency-portal' && name === PRESET_TOURS[1]?.name) {
+                        handleApplyPreset(PRESET_TOURS[0]);
+                      }
+                    }}
+                    className={`relative p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
+                      isSelected 
+                        ? 'border-blue-600 bg-blue-50/70 shadow-md ring-2 ring-blue-500/20 scale-[1.01]' 
+                        : 'border-slate-200 hover:border-slate-300 bg-white hover:shadow-xs'
+                    }`}
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-xl">{t.icon}</span>
+                        <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md ${t.badgeClass}`}>
+                          {t.badge}
+                        </span>
+                      </div>
+                      <span className="text-xs font-black text-slate-900 block">{t.name}</span>
+                      <span className="text-[11px] text-slate-500 font-normal mt-1 block leading-snug">{t.desc}</span>
+                    </div>
+
+                    {isSelected && (
+                      <div className="mt-2.5 pt-2 border-t border-blue-200/80 flex items-center justify-between text-blue-700 text-[10px] font-bold">
+                        <span>Plantilla Activa</span>
+                        <Check size={14} className="text-blue-600" />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* PASO 2: OBJETIVO Y ESTRATEGIA COMERCIAL */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">2</span>
                 Objetivo Comercial & Enfoque de Conversión
               </label>
               <span className="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Define la Acción del Turista</span>
@@ -1437,51 +1544,20 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 7: FOTOGRAFÍA HERO, PLANTILLA & GENERACIÓN */}
+          {/* PASO 7: FOTOGRAFÍA DE PORTADA (HERO) */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                 <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">7</span>
-                Fotografía de Portada & Plantilla Visual
+                Fotografía de Portada (Hero)
               </label>
-              <span className="text-[11px] font-semibold text-slate-400">Diseño adaptable</span>
-            </div>
-
-            {/* Template Selector Cards */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-2">
-                Selecciona la Plantilla de Diseño:
-              </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-                {[
-                  { id: 'agency-portal', name: 'Portal Agencia Pinterest', desc: 'Naranja viral, métricas y alta conversión', icon: '🔥' },
-                  { id: 'adventure', name: 'Aventura & Trekking', desc: 'Tonos esmeralda y montaña', icon: '🏔️' },
-                  { id: 'premium', name: 'Lujo & Exclusivo', desc: 'Dorado, oscuro y sofisticado', icon: '👑' },
-                  { id: 'cultural', name: 'Cultural Ancestral', desc: 'Piedra incaica y ámbar cálido', icon: '🏛️' },
-                  { id: 'boho-nature', name: 'Boho Journal', desc: 'Pinterest, lino andino & polaroids', icon: '📷' }
-                ].map((t) => (
-                  <button
-                    key={t.id}
-                    type="button"
-                    onClick={() => setTemplate(t.id as TemplateType)}
-                    className={`p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer ${
-                      template === t.id 
-                        ? 'border-blue-600 bg-blue-50/70 shadow-sm font-bold ring-2 ring-blue-500/20' 
-                        : 'border-slate-200 hover:border-slate-300 bg-white'
-                    }`}
-                  >
-                    <span className="text-xl mb-1 block">{t.icon}</span>
-                    <span className="text-xs font-bold text-slate-900 block">{t.name}</span>
-                    <span className="text-[10px] text-slate-500 font-normal">{t.desc}</span>
-                  </button>
-                ))}
-              </div>
+              <span className="text-[11px] font-semibold text-slate-400">Impacto visual</span>
             </div>
 
             {/* Hero Image Selection */}
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-2">
-                Selecciona la Imagen de Portada (Hero):
+                Selecciona la Fotografía Principal:
               </label>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
                 {SAMPLE_TOUR_IMAGES.map((img) => {
