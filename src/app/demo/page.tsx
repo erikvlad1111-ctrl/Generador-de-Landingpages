@@ -121,7 +121,7 @@ export default function DemoDashboard() {
               className="w-full lg:w-auto inline-flex items-center justify-center gap-2.5 bg-blue-600 hover:bg-blue-500 text-white px-7 py-3.5 rounded-2xl font-extrabold transition-all shadow-lg shadow-blue-600/30 hover:scale-102 active:scale-98 text-sm"
             >
               <Sparkles size={18} />
-              <span>Nueva Landing con IA</span>
+              <span>Generador de Landing con IA</span>
             </Link>
           </div>
         </div>
@@ -202,10 +202,7 @@ export default function DemoDashboard() {
               <LayoutTemplate size={20} />
             </div>
             <div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs font-bold text-slate-800 block group-hover:text-blue-600 transition-colors">Diseños Disponibles Landing Pages</span>
-                <span className="text-[9px] font-extrabold bg-blue-100 text-blue-700 px-1.5 py-0.2 rounded-md">7 Diseños</span>
-              </div>
+              <span className="text-xs font-bold text-slate-800 block group-hover:text-blue-600 transition-colors">Diseños Disponibles Landing Pages</span>
               <span className="text-[11px] text-slate-500">Beneficios, paletas de colores, tipografía y estilos visuales</span>
             </div>
           </div>

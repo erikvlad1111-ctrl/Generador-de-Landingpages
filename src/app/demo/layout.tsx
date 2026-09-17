@@ -76,7 +76,7 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
             }`}
           >
             <FilePlus2 size={18} />
-            <span>Nueva Landing</span>
+            <span>Generador de Landing</span>
           </Link>
 
           {isPreview && (
@@ -88,19 +88,14 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
 
           <Link 
             href="/demo/pinterest" 
-            className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-all ${
+            className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-all ${
               isPinterest 
                 ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30' 
                 : 'text-slate-400 hover:text-white hover:bg-slate-900'
             }`}
           >
-            <div className="flex items-center gap-3">
-              <LayoutTemplate size={18} className={isPinterest ? 'text-white' : 'text-blue-400'} />
-              <span>Diseños Disponibles</span>
-            </div>
-            <span className="text-[10px] font-extrabold bg-blue-500/30 text-blue-100 px-1.5 py-0.5 rounded-md border border-blue-400/30">
-              7 Diseños
-            </span>
+            <LayoutTemplate size={18} className={isPinterest ? 'text-white' : 'text-blue-400'} />
+            <span>Diseños Disponibles</span>
           </Link>
 
           <Link 
@@ -211,23 +206,18 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
                 }`}
               >
                 <FilePlus2 size={18} />
-                <span>Nueva Landing</span>
+                <span>Generador de Landing</span>
               </Link>
 
               <Link
                 href="/demo/pinterest"
                 onClick={() => setMobileMenuOpen(false)}
-                className={`p-3 rounded-xl flex items-center justify-between text-xs font-bold ${
+                className={`p-3 rounded-xl flex items-center gap-2.5 text-xs font-bold ${
                   isPinterest ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
                 }`}
               >
-                <div className="flex items-center gap-2.5">
-                  <LayoutTemplate size={18} className={isPinterest ? 'text-white' : 'text-blue-400'} />
-                  <span>Diseños Disponibles</span>
-                </div>
-                <span className="text-[10px] bg-blue-500/30 text-blue-100 px-1.5 py-0.5 rounded-md border border-blue-400/30">
-                  7 Diseños
-                </span>
+                <LayoutTemplate size={18} className={isPinterest ? 'text-white' : 'text-blue-400'} />
+                <span>Diseños Disponibles</span>
               </Link>
 
               <Link
