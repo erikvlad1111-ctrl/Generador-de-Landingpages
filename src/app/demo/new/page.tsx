@@ -1037,8 +1037,11 @@ export default function NewLandingDemo() {
                   onChange={(e) => setLanguage(e.target.value as LanguageType)}
                   className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs bg-white font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
                 >
-                  <option value="es">Español (Mercado Nacional, Latino y España)</option>
-                  <option value="en">Inglés (Turismo Receptivo Internacional: USA, Europa, etc.)</option>
+                  <option value="en">Inglés (English - Turismo Receptivo: USA, Europa, etc.)</option>
+                  <option value="es">Español (Mercado Nacional, Latinoamericano y España)</option>
+                  <option value="pt">Portugués (Português - Turismo Brasil y Portugal)</option>
+                  <option value="fr">Francés (Français - Turismo Francia, Bélgica y Suiza)</option>
+                  <option value="it">Italiano (Italiano - Turismo Italia y Europa)</option>
                 </select>
               </div>
 

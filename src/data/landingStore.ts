@@ -550,27 +550,41 @@ export function simulateAiGeneration(params: {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)+/g, "");
 
-  const isEn = params.language === 'en';
+  const lang = params.language || 'es';
+  const isEn = lang === 'en';
+  const isPt = lang === 'pt';
+  const isFr = lang === 'fr';
+  const isIt = lang === 'it';
   const isWhatsapp = params.objective === 'whatsapp';
   const isBoth = params.objective === 'both';
 
   let heroTitle = `${params.name}: La Experiencia Definitiva en Cusco`;
   let heroSubtitle = params.description || 'Vive una aventura inolvidable con guías expertos locales y atención de primer nivel.';
-  let heroBadge = params.template === 'agency-portal' ? 'Portal Oficial de Agencia' : params.template === 'premium' ? 'Experiencia Exclusiva VIP' : params.template === 'cultural' ? 'Historia y Cultura Andina' : 'Aventura y Naturaleza';
+  let heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : (params.template === 'agency-portal' ? 'Portal Oficial de Agencia' : params.template === 'premium' ? 'Experiencia Exclusiva VIP' : params.template === 'cultural' ? 'Historia y Cultura Andina' : 'Aventura y Naturaleza');
   let ctaText = isBoth 
     ? 'WhatsApp & Cotizar Online' 
     : (isWhatsapp ? 'Reservar Directo por WhatsApp' : 'Solicitar Cotización y Disponibilidad');
 
-  if (params.destination) {
-    heroBadge = `${params.destination} • ${params.duration || 'Cusco'}`;
-  }
-
   if (isEn) {
     heroTitle = `${params.name}: The Ultimate Cusco Experience`;
-    heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : (params.template === 'agency-portal' ? 'Official Agency Portal' : params.template === 'premium' ? 'Exclusive VIP Tour' : params.template === 'cultural' ? 'Inca Heritage & Culture' : 'Adventure & Nature Trek');
-    ctaText = isBoth 
-      ? 'WhatsApp & Online Quote' 
-      : (isWhatsapp ? 'Book via WhatsApp' : 'Request Instant Quote');
+    heroSubtitle = params.description || 'Live an unforgettable Andean adventure with top certified local guides and premium service.';
+    heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : 'Official Agency Portal';
+    ctaText = isBoth ? 'WhatsApp & Online Quote' : (isWhatsapp ? 'Book via WhatsApp' : 'Request Instant Quote');
+  } else if (isPt) {
+    heroTitle = `${params.name}: A Experiência Definitiva em Cusco`;
+    heroSubtitle = params.description || 'Viva uma aventura andina inesquecível com guias locais certificados e atendimento de primeiro nível.';
+    heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : 'Portal Oficial da Agência';
+    ctaText = isBoth ? 'WhatsApp & Orçamento Online' : (isWhatsapp ? 'Reservar pelo WhatsApp' : 'Solicitar Orçamento Grátis');
+  } else if (isFr) {
+    heroTitle = `${params.name}: L'Expérience Ultime à Cusco`;
+    heroSubtitle = params.description || 'Vivez une aventure inoubliable avec des guides locaux experts et une assistance sur mesure.';
+    heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : "Portail Officiel de l'Agence";
+    ctaText = isBoth ? 'WhatsApp & Devis en Ligne' : (isWhatsapp ? 'Réserver via WhatsApp' : 'Demander un Devis Gratuit');
+  } else if (isIt) {
+    heroTitle = `${params.name}: L'Esperienza Definitiva a Cusco`;
+    heroSubtitle = params.description || "Vivi un'avventura indimenticabile sulle Ande con guide locali certificate e massima assistenza.";
+    heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : "Portale Ufficiale dell'Agenzia";
+    ctaText = isBoth ? 'WhatsApp & Preventivo Online' : (isWhatsapp ? 'Prenota su WhatsApp' : 'Richiedi Preventivo Gratuito');
   }
 
   const aboutTitle = isEn

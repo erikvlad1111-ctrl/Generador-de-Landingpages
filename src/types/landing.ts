@@ -1,6 +1,6 @@
 export type TemplateType = 'adventure' | 'premium' | 'cultural' | 'boho-nature' | 'agency-portal';
 export type ObjectiveType = 'whatsapp' | 'quote' | 'both';
-export type LanguageType = 'es' | 'en';
+export type LanguageType = 'es' | 'en' | 'pt' | 'fr' | 'it';
 export type PlanTier = 'free' | 'basic' | 'pro' | 'advance';
 
 export interface ItineraryItem {

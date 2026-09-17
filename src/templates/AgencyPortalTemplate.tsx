@@ -417,26 +417,20 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </span>
             )}
 
-            {/* Selector interactivo de Idioma (ES / EN) */}
+            {/* Selector interactivo de Idioma (ES / EN / PT / FR / IT) */}
             <div className="flex items-center bg-stone-800 rounded-lg p-0.5 border border-stone-700">
-              <button
-                onClick={() => setLang('es')}
-                className={`px-1.5 sm:px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-extrabold transition-all cursor-pointer ${
-                  lang === 'es' ? 'bg-[#FF5500] text-white shadow-xs' : 'text-stone-400 hover:text-white'
-                }`}
-                title="Español"
-              >
-                ES
-              </button>
-              <button
-                onClick={() => setLang('en')}
-                className={`px-1.5 sm:px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-extrabold transition-all cursor-pointer ${
-                  lang === 'en' ? 'bg-[#FF5500] text-white shadow-xs' : 'text-stone-400 hover:text-white'
-                }`}
-                title="English"
-              >
-                EN
-              </button>
+              {(['es', 'en', 'pt', 'fr', 'it'] as LanguageType[]).map((l) => (
+                <button
+                  key={l}
+                  onClick={() => setLang(l)}
+                  className={`px-1.5 sm:px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-extrabold uppercase transition-all cursor-pointer ${
+                    lang === l ? 'bg-[#FF5500] text-white shadow-xs' : 'text-stone-400 hover:text-white'
+                  }`}
+                  title={l === 'es' ? 'Español' : l === 'en' ? 'English' : l === 'pt' ? 'Português' : l === 'fr' ? 'Français' : 'Italiano'}
+                >
+                  {l.toUpperCase()}
+                </button>
+              ))}
             </div>
           </div>
         </div>
