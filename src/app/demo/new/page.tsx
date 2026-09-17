@@ -683,23 +683,6 @@ export default function NewLandingDemo() {
             </div>
           </div>
         </div>
-
-        {/* Dedicated Quick Preset Pills */}
-        <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center gap-2">
-          <span className="text-xs font-extrabold text-slate-500 flex items-center gap-1.5 mr-1">
-            <Zap size={14} className="text-amber-500" /> Cargar Ficha de Ejemplo Rápida:
-          </span>
-          {PRESET_TOURS.map((p) => (
-            <button
-              key={p.id}
-              type="button"
-              onClick={() => handleApplyPreset(p)}
-              className="text-xs bg-slate-50 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-300 font-bold px-3 py-1.5 rounded-xl border border-slate-200 text-slate-700 shadow-2xs transition-all cursor-pointer"
-            >
-              {p.label}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* 2. MAIN WORKSPACE: FORM COLUMN (LEFT 7 COLS) + REALTIME PHONE MOCKUP (RIGHT 5 COLS) */}
