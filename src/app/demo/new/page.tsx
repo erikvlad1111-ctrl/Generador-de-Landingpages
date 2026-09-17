@@ -790,102 +790,79 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 2: OBJETIVO Y ESTRATEGIA COMERCIAL */}
+          {/* PASO 2: FOTOGRAFÍA DE PORTADA (HERO) */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                 <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">2</span>
-                Objetivo Comercial & Enfoque de Conversión
+                Fotografía de Portada (Hero)
               </label>
-              <span className="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Define la Acción del Turista</span>
+              <span className="text-[11px] font-semibold text-slate-400">Impacto visual</span>
             </div>
 
-            {/* Objective Buttons */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              <button
-                type="button"
-                onClick={() => setObjective('whatsapp')}
-                className={`p-4 rounded-2xl border-2 text-left flex items-start gap-3.5 transition-all cursor-pointer ${
-                  objective === 'whatsapp' 
-                    ? 'border-blue-600 bg-blue-50/70 shadow-sm ring-2 ring-blue-500/20' 
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`}
-              >
-                <div className={`p-2.5 rounded-xl shrink-0 ${objective === 'whatsapp' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'bg-slate-100 text-slate-600 border border-slate-200'}`}>
-                  <MessageCircle size={20} />
-                </div>
-                <div>
-                  <span className="font-extrabold text-slate-900 text-sm block">Ventas Directas por WhatsApp</span>
-                  <span className="text-xs text-slate-500 leading-relaxed block mt-1">
-                    Prioriza contacto directo por chat con el guía o counter para confirmaciones y reservas al instante.
-                  </span>
-                </div>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setObjective('quote')}
-                className={`p-4 rounded-2xl border-2 text-left flex items-start gap-3.5 transition-all cursor-pointer ${
-                  objective === 'quote' 
-                    ? 'border-blue-600 bg-blue-50/70 shadow-sm ring-2 ring-blue-500/20' 
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`}
-              >
-                <div className={`p-2.5 rounded-xl shrink-0 ${objective === 'quote' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'bg-slate-100 text-slate-600 border border-slate-200'}`}>
-                  <FileText size={20} />
-                </div>
-                <div>
-                  <span className="font-extrabold text-slate-900 text-sm block">Cotización y Propuesta Formal</span>
-                  <span className="text-xs text-slate-500 leading-relaxed block mt-1">
-                    Abre formulario para presupuestos personalizados, número de pasajeros, niños y fechas flexibles.
-                  </span>
-                </div>
-              </button>
-            </div>
-
-            {/* Language and AI Copy Tone */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Globe size={14} className="text-blue-500" /> Idioma de la Landing
-                </label>
-                <select 
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value as LanguageType)}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs bg-white font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
-                >
-                  <option value="es">Español (Mercado Nacional, Latino y España)</option>
-                  <option value="en">Inglés (Turismo Receptivo Internacional: USA, Europa, etc.)</option>
-                </select>
+            {/* Hero Image Selection */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-2">
+                Selecciona la Fotografía Principal:
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
+                {SAMPLE_TOUR_IMAGES.map((img) => {
+                  const isSelected = selectedHeroImage === img.url && !customImageUrl;
+                  return (
+                    <button
+                      key={img.id}
+                      type="button"
+                      onClick={() => {
+                        setSelectedHeroImage(img.url);
+                        setCustomImageUrl('');
+                      }}
+                      className={`group relative h-20 rounded-2xl overflow-hidden border-2 transition-all cursor-pointer ${
+                        isSelected ? 'border-blue-600 ring-4 ring-blue-500/20 scale-[1.03]' : 'border-slate-200 hover:border-slate-400 opacity-75 hover:opacity-100'
+                      }`}
+                    >
+                      <Image 
+                        src={img.url} 
+                        alt={img.title} 
+                        fill 
+                        sizes="150px"
+                        className="object-cover group-hover:scale-105 transition-transform" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                      {isSelected && (
+                        <div className="absolute top-1 right-1 w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center text-white">
+                          <Check size={10} strokeWidth={3} />
+                        </div>
+                      )}
+                      <span className="absolute bottom-1 left-1.5 right-1.5 text-[9px] font-bold text-white line-clamp-1">
+                        {img.title.split(' ')[0]}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Sparkles size={14} className="text-blue-500" /> Tono de Redacción IA
-                </label>
-                <select 
-                  value={tone}
-                  onChange={(e) => setTone(e.target.value as 'persuasive' | 'luxury' | 'historical')}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs bg-white font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
-                >
-                  <option value="persuasive">Persuasivo & Enérgico (Alta Conversión)</option>
-                  <option value="luxury">Exclusivo, Premium & Sofisticado</option>
-                  <option value="historical">Místico, Cultural e Historiográfico</option>
-                </select>
+              <div className="pt-2">
+                <input 
+                  type="url"
+                  value={customImageUrl}
+                  onChange={(e) => setCustomImageUrl(e.target.value)}
+                  placeholder="O pega una URL de imagen personalizada (Unsplash)..."
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none"
+                />
               </div>
             </div>
           </div>
 
-          {/* NIVEL DE SERVICIO / VERSIÓN DE LA LANDING (TIER) */}
+          {/* PASO 3: NIVEL DE SERVICIO / VERSIÓN DE LA LANDING (TIER) */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-purple-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
-                  ★
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
+                  3
                 </span>
                 Nivel de Servicio / Versión de Landing (Tier)
               </label>
-              <span className="text-[11px] font-semibold text-purple-700 bg-purple-50 px-2.5 py-0.5 rounded-md border border-purple-100">
+              <span className="text-[11px] font-semibold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-100">
                 Define las secciones que se activarán
               </span>
             </div>
@@ -973,11 +950,97 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 3: FICHA TÉCNICA DEL TOUR & DESTINO (MÁS DATOS PARA RELLENAR) */}
+          {/* PASO 4: OBJETIVO Y ESTRATEGIA COMERCIAL */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">3</span>
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">4</span>
+                Objetivo Comercial & Enfoque de Conversión
+              </label>
+              <span className="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Define la Acción del Turista</span>
+            </div>
+
+            {/* Objective Buttons */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              <button
+                type="button"
+                onClick={() => setObjective('whatsapp')}
+                className={`p-4 rounded-2xl border-2 text-left flex items-start gap-3.5 transition-all cursor-pointer ${
+                  objective === 'whatsapp' 
+                    ? 'border-blue-600 bg-blue-50/70 shadow-sm ring-2 ring-blue-500/20' 
+                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                }`}
+              >
+                <div className={`p-2.5 rounded-xl shrink-0 ${objective === 'whatsapp' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'bg-slate-100 text-slate-600 border border-slate-200'}`}>
+                  <MessageCircle size={20} />
+                </div>
+                <div>
+                  <span className="font-extrabold text-slate-900 text-sm block">Ventas Directas por WhatsApp</span>
+                  <span className="text-xs text-slate-500 leading-relaxed block mt-1">
+                    Prioriza contacto directo por chat con el guía o counter para confirmaciones y reservas al instante.
+                  </span>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setObjective('quote')}
+                className={`p-4 rounded-2xl border-2 text-left flex items-start gap-3.5 transition-all cursor-pointer ${
+                  objective === 'quote' 
+                    ? 'border-blue-600 bg-blue-50/70 shadow-sm ring-2 ring-blue-500/20' 
+                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                }`}
+              >
+                <div className={`p-2.5 rounded-xl shrink-0 ${objective === 'quote' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'bg-slate-100 text-slate-600 border border-slate-200'}`}>
+                  <FileText size={20} />
+                </div>
+                <div>
+                  <span className="font-extrabold text-slate-900 text-sm block">Cotización y Propuesta Formal</span>
+                  <span className="text-xs text-slate-500 leading-relaxed block mt-1">
+                    Abre formulario para presupuestos personalizados, número de pasajeros, niños y fechas flexibles.
+                  </span>
+                </div>
+              </button>
+            </div>
+
+            {/* Language and AI Copy Tone */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Globe size={14} className="text-blue-500" /> Idioma de la Landing
+                </label>
+                <select 
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value as LanguageType)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs bg-white font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
+                >
+                  <option value="es">Español (Mercado Nacional, Latino y España)</option>
+                  <option value="en">Inglés (Turismo Receptivo Internacional: USA, Europa, etc.)</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Sparkles size={14} className="text-blue-500" /> Tono de Redacción IA
+                </label>
+                <select 
+                  value={tone}
+                  onChange={(e) => setTone(e.target.value as 'persuasive' | 'luxury' | 'historical')}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs bg-white font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
+                >
+                  <option value="persuasive">Persuasivo & Enérgico (Alta Conversión)</option>
+                  <option value="luxury">Exclusivo, Premium & Sofisticado</option>
+                  <option value="historical">Místico, Cultural e Historiográfico</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {/* PASO 5: FICHA TÉCNICA DEL TOUR & DESTINO (MÁS DATOS PARA RELLENAR) */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">5</span>
                 Ficha Técnica del Tour & Destino
               </label>
               <span className="text-[11px] font-semibold text-slate-400">Datos para enriquecer los textos de la IA</span>
@@ -1119,11 +1182,11 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 4: PERFIL DEL GUÍA TURÍSTICO & SERVICIOS INCLUIDOS */}
+          {/* PASO 6: PERFIL DEL GUÍA TURÍSTICO & SERVICIOS INCLUIDOS */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">4</span>
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">6</span>
                 Perfil del Guía & Servicios Incluidos
               </label>
               <span className="text-[11px] font-semibold text-slate-400">Genera confianza y credibilidad</span>
@@ -1219,11 +1282,11 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 5: ITINERARIO DÍA A DÍA / HORAS */}
+          {/* PASO 7: ITINERARIO DÍA A DÍA / HORAS */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">5</span>
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">7</span>
                 Itinerario Detallado del Tour
               </label>
               <button
@@ -1286,11 +1349,11 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 6: TRANSPARENCIA & EQUIPAJE (QUÉ NO INCLUYE Y QUÉ LLEVAR) */}
+          {/* PASO 8: TRANSPARENCIA & EQUIPAJE (QUÉ NO INCLUYE Y QUÉ LLEVAR) */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-6">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">6</span>
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">8</span>
                 Exclusiones Claras & Checklist de Mochila
               </label>
               <span className="text-[11px] font-semibold text-slate-400">Reduce objeciones de clientes</span>
@@ -1379,11 +1442,11 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 7: SELLOS DE CONFIANZA & GARANTÍAS TURÍSTICAS */}
+          {/* PASO 9: DISTINTIVOS OFICIALES & SELLOS DE CONFIANZA */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">7</span>
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">9</span>
                 Distintivos Oficiales & Sellos de Confianza
               </label>
               <span className="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Seguridad para el Cliente</span>
@@ -1412,69 +1475,6 @@ export default function NewLandingDemo() {
                   </button>
                 );
               })}
-            </div>
-          </div>
-
-          {/* PASO 8: FOTOGRAFÍA DE PORTADA (HERO) */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">8</span>
-                Fotografía de Portada (Hero)
-              </label>
-              <span className="text-[11px] font-semibold text-slate-400">Impacto visual</span>
-            </div>
-
-            {/* Hero Image Selection */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-2">
-                Selecciona la Fotografía Principal:
-              </label>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
-                {SAMPLE_TOUR_IMAGES.map((img) => {
-                  const isSelected = selectedHeroImage === img.url && !customImageUrl;
-                  return (
-                    <button
-                      key={img.id}
-                      type="button"
-                      onClick={() => {
-                        setSelectedHeroImage(img.url);
-                        setCustomImageUrl('');
-                      }}
-                      className={`group relative h-20 rounded-2xl overflow-hidden border-2 transition-all cursor-pointer ${
-                        isSelected ? 'border-blue-600 ring-4 ring-blue-500/20 scale-[1.03]' : 'border-slate-200 hover:border-slate-400 opacity-75 hover:opacity-100'
-                      }`}
-                    >
-                      <Image 
-                        src={img.url} 
-                        alt={img.title} 
-                        fill 
-                        sizes="150px"
-                        className="object-cover group-hover:scale-105 transition-transform" 
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                      {isSelected && (
-                        <div className="absolute top-1 right-1 w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center text-white">
-                          <Check size={10} strokeWidth={3} />
-                        </div>
-                      )}
-                      <span className="absolute bottom-1 left-1.5 right-1.5 text-[9px] font-bold text-white line-clamp-1">
-                        {img.title.split(' ')[0]}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="pt-2">
-                <input 
-                  type="url"
-                  value={customImageUrl}
-                  onChange={(e) => setCustomImageUrl(e.target.value)}
-                  placeholder="O pega una URL de imagen personalizada (Unsplash)..."
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none"
-                />
-              </div>
             </div>
           </div>
 
