@@ -14,7 +14,7 @@ export default function DemoDashboard() {
   const [projects, setProjects] = useState<LandingData[]>(() => getStoredLandings());
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft'>('all');
-  const [objectiveFilter, setObjectiveFilter] = useState<'all' | 'whatsapp' | 'quote'>('all');
+  const [objectiveFilter, setObjectiveFilter] = useState<'all' | 'whatsapp' | 'quote' | 'both'>('all');
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
   const [selectedLandingForDeploy, setSelectedLandingForDeploy] = useState<LandingData | null>(null);
   const tableScrollRef = useRef<HTMLDivElement>(null);
@@ -294,6 +294,7 @@ export default function DemoDashboard() {
                 onClick={() => {
                   if (objectiveFilter === 'all') setObjectiveFilter('whatsapp');
                   else if (objectiveFilter === 'whatsapp') setObjectiveFilter('quote');
+                  else if (objectiveFilter === 'quote') setObjectiveFilter('both');
                   else setObjectiveFilter('all');
                 }}
                 className="px-3 py-1.5 rounded-lg bg-white shadow-sm font-bold text-slate-800 flex items-center gap-1.5 cursor-pointer"
@@ -301,7 +302,7 @@ export default function DemoDashboard() {
               >
                 <span>Obj:</span>
                 <span className="text-blue-600">
-                  {objectiveFilter === 'all' ? 'Todos' : objectiveFilter === 'whatsapp' ? 'WhatsApp' : 'Cotización'}
+                  {objectiveFilter === 'all' ? 'Todos' : objectiveFilter === 'whatsapp' ? 'WhatsApp' : objectiveFilter === 'quote' ? 'Cotización' : 'Ambos'}
                 </span>
               </button>
             </div>
@@ -427,11 +428,13 @@ export default function DemoDashboard() {
                       {/* Objective */}
                       <td className="px-4 py-4.5 whitespace-nowrap">
                         <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold ${
-                          p.objective === 'whatsapp' 
-                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' 
-                            : 'bg-blue-50 text-blue-700 border border-blue-200/60'
+                          p.objective === 'both'
+                            ? 'bg-purple-50 text-purple-700 border border-purple-200/60'
+                            : p.objective === 'whatsapp' 
+                              ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' 
+                              : 'bg-blue-50 text-blue-700 border border-blue-200/60'
                         }`}>
-                          {p.objective === 'whatsapp' ? '💬 WhatsApp' : '📋 Cotización'}
+                          {p.objective === 'both' ? '⚡ Híbrido (Ambos)' : p.objective === 'whatsapp' ? '💬 WhatsApp' : '📋 Cotización'}
                         </span>
                       </td>
 

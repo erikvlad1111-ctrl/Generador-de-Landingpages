@@ -10,7 +10,7 @@ import {
   Check, Zap, Eye, CheckCircle2, MapPin,
   Shield, Award, Mountain, Users, Languages, CheckSquare, Square,
   Plus, Trash2, XCircle, Backpack, ShieldCheck, Share2, Calendar,
-  Star, ArrowRight, Camera, Crown, ChevronDown
+  Star, ArrowRight, Camera, Crown, ChevronDown, Layers
 } from 'lucide-react';
 import { ObjectiveType, TemplateType, LanguageType, ItineraryItem, PlanTier } from '@/types/landing';
 import { simulateAiGeneration, saveLandingToStorage } from '@/data/landingStore';
@@ -961,22 +961,22 @@ export default function NewLandingDemo() {
             </div>
 
             {/* Objective Buttons */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
               <button
                 type="button"
                 onClick={() => setObjective('whatsapp')}
-                className={`p-4 rounded-2xl border-2 text-left flex items-start gap-3.5 transition-all cursor-pointer ${
+                className={`p-4 rounded-2xl border-2 text-left flex items-start gap-3 transition-all cursor-pointer ${
                   objective === 'whatsapp' 
                     ? 'border-blue-600 bg-blue-50/70 shadow-sm ring-2 ring-blue-500/20' 
                     : 'border-slate-200 hover:border-slate-300 bg-white'
                 }`}
               >
                 <div className={`p-2.5 rounded-xl shrink-0 ${objective === 'whatsapp' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'bg-slate-100 text-slate-600 border border-slate-200'}`}>
-                  <MessageCircle size={20} />
+                  <MessageCircle size={18} />
                 </div>
                 <div>
-                  <span className="font-extrabold text-slate-900 text-sm block">Ventas Directas por WhatsApp</span>
-                  <span className="text-xs text-slate-500 leading-relaxed block mt-1">
+                  <span className="font-extrabold text-slate-900 text-xs sm:text-sm block">Ventas por WhatsApp</span>
+                  <span className="text-[11px] text-slate-500 leading-relaxed block mt-1">
                     Prioriza contacto directo por chat con el guía o counter para confirmaciones y reservas al instante.
                   </span>
                 </div>
@@ -985,19 +985,42 @@ export default function NewLandingDemo() {
               <button
                 type="button"
                 onClick={() => setObjective('quote')}
-                className={`p-4 rounded-2xl border-2 text-left flex items-start gap-3.5 transition-all cursor-pointer ${
+                className={`p-4 rounded-2xl border-2 text-left flex items-start gap-3 transition-all cursor-pointer ${
                   objective === 'quote' 
                     ? 'border-blue-600 bg-blue-50/70 shadow-sm ring-2 ring-blue-500/20' 
                     : 'border-slate-200 hover:border-slate-300 bg-white'
                 }`}
               >
                 <div className={`p-2.5 rounded-xl shrink-0 ${objective === 'quote' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'bg-slate-100 text-slate-600 border border-slate-200'}`}>
-                  <FileText size={20} />
+                  <FileText size={18} />
                 </div>
                 <div>
-                  <span className="font-extrabold text-slate-900 text-sm block">Cotización y Propuesta Formal</span>
-                  <span className="text-xs text-slate-500 leading-relaxed block mt-1">
+                  <span className="font-extrabold text-slate-900 text-xs sm:text-sm block">Cotización y Propuesta</span>
+                  <span className="text-[11px] text-slate-500 leading-relaxed block mt-1">
                     Abre formulario para presupuestos personalizados, número de pasajeros, niños y fechas flexibles.
+                  </span>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setObjective('both')}
+                className={`p-4 rounded-2xl border-2 text-left flex items-start gap-3 transition-all cursor-pointer ${
+                  objective === 'both' 
+                    ? 'border-blue-600 bg-blue-50/70 shadow-sm ring-2 ring-blue-500/20' 
+                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                }`}
+              >
+                <div className={`p-2.5 rounded-xl shrink-0 ${objective === 'both' ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30' : 'bg-slate-100 text-slate-600 border border-slate-200'}`}>
+                  <Layers size={18} />
+                </div>
+                <div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="font-extrabold text-slate-900 text-xs sm:text-sm block">Ambos (Híbrido)</span>
+                    <span className="text-[9px] bg-blue-100 text-blue-700 font-extrabold px-1.5 py-0.5 rounded">2 EN 1</span>
+                  </div>
+                  <span className="text-[11px] text-slate-500 leading-relaxed block mt-1">
+                    Activa ambos canales: botón directo a WhatsApp para dudas rápidas y formulario de cotización.
                   </span>
                 </div>
               </button>
@@ -1580,7 +1603,7 @@ export default function NewLandingDemo() {
 
                       <div className="pt-1">
                         <div className="w-full bg-gradient-to-r from-[#FF5500] to-[#FF3000] text-white font-black py-2 px-3 rounded-xl text-center text-[11px] shadow-md shadow-[#FF5500]/40 flex items-center justify-center gap-1.5">
-                          <span>{objective === 'quote' ? 'SOLICITAR COTIZACIÓN' : 'RESERVAR CON GUÍA'}</span>
+                          <span>{objective === 'quote' ? 'SOLICITAR COTIZACIÓN' : objective === 'both' ? 'WHATSAPP & COTIZACIÓN' : 'RESERVAR CON GUÍA'}</span>
                           <ArrowRight size={13} className="animate-bounce-x" />
                         </div>
                       </div>
@@ -1683,7 +1706,7 @@ export default function NewLandingDemo() {
 
                     <div className="w-full bg-[#C86D51] hover:bg-[#b05d43] text-white font-bold py-2.5 px-3 rounded-xl text-center text-xs shadow-md flex items-center justify-center gap-1.5">
                       <Camera size={14} />
-                      <span>{objective === 'quote' ? 'Consultar Cupo' : 'Reservar por WhatsApp'}</span>
+                      <span>{objective === 'quote' ? 'Consultar Cupo' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Reservar por WhatsApp'}</span>
                     </div>
 
                     <p className="text-center text-[9px] text-stone-400">
@@ -1734,7 +1757,7 @@ export default function NewLandingDemo() {
                     </div>
                     <div className="w-full bg-gradient-to-r from-amber-500 to-amber-700 text-stone-950 font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
                       <Crown size={14} />
-                      <span>{objective === 'quote' ? 'Solicitar Propuesta VIP' : 'Asesor Privado en Vivo'}</span>
+                      <span>{objective === 'quote' ? 'Solicitar Propuesta VIP' : objective === 'both' ? 'WhatsApp & Propuesta VIP' : 'Asesor Privado en Vivo'}</span>
                     </div>
                   </div>
                 </div>
@@ -1779,7 +1802,7 @@ export default function NewLandingDemo() {
                     </div>
                     <div className="w-full bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
                       <Mountain size={14} />
-                      <span>{objective === 'quote' ? 'Cotizar Expedición' : 'Reservar por WhatsApp'}</span>
+                      <span>{objective === 'quote' ? 'Cotizar Expedición' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Reservar por WhatsApp'}</span>
                     </div>
                   </div>
                 </div>
@@ -1822,7 +1845,7 @@ export default function NewLandingDemo() {
                     </div>
                     <div className="w-full bg-[#D97706] hover:bg-[#b45309] text-white font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
                       <Compass size={14} />
-                      <span>{objective === 'quote' ? 'Solicitar Horarios' : 'Confirmar por WhatsApp'}</span>
+                      <span>{objective === 'quote' ? 'Solicitar Horarios' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Confirmar por WhatsApp'}</span>
                     </div>
                   </div>
                 </div>

@@ -18,7 +18,8 @@ import {
   Globe2,
   ArrowRight,
   Zap,
-  Calendar
+  Calendar,
+  FileText
 } from 'lucide-react';
 import { LandingData, PlanTier, ObjectiveType, LanguageType } from '@/types/landing';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
@@ -225,8 +226,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const heroBadge = getBilingualHeroBadge(data?.hero?.badge);
   const heroImage = data?.heroImage || 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop';
   const heroCtaLabel = isEn 
-    ? (objective === 'quote' ? 'Request Private VIP Quote' : 'Book on WhatsApp') 
-    : (data?.hero?.cta || (objective === 'quote' ? t.ctaHeroQuote : t.ctaHeroWa));
+    ? (objective === 'quote' ? 'Request Private VIP Quote' : objective === 'both' ? 'Book on WhatsApp or Quote' : 'Book on WhatsApp') 
+    : (data?.hero?.cta || (objective === 'quote' ? t.ctaHeroQuote : objective === 'both' ? 'WhatsApp & Cotizar Online' : t.ctaHeroWa));
 
   // 6. Lista de Tours Destacados
   const DEFAULT_FEATURED_TOURS = [
@@ -345,8 +346,9 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   ];
 
   // 8. Manejo de clics en acciones según el objetivo
-  const handleActionClick = (tourName?: string) => {
-    if (objective === 'quote') {
+  const handleActionClick = (tourName?: string, actionType?: 'whatsapp' | 'quote') => {
+    const targetType = actionType || (objective === 'both' ? 'whatsapp' : objective);
+    if (targetType === 'quote') {
       setSelectedTourForQuote(tourName || brandName);
       setIsQuoteOpen(true);
     } else {
@@ -470,13 +472,32 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           )}
 
           <div className="flex items-center gap-2 shrink-0">
-            <button
-              onClick={() => handleActionClick()}
-              className="shimmer-btn bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3500] hover:from-[#E04B00] hover:to-[#FF5500] text-white text-[11px] sm:text-xs font-extrabold px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-full shadow-md shadow-[#FF5500]/25 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer group shrink-0"
-            >
-              <MessageCircle size={14} className="group-hover:rotate-12 transition-transform duration-300 shrink-0" />
-              <span>{objective === 'quote' ? t.ctaHeroQuote : t.ctaHeader}</span>
-            </button>
+            {objective === 'both' ? (
+              <>
+                <button
+                  onClick={() => handleActionClick(undefined, 'whatsapp')}
+                  className="shimmer-btn bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-[11px] sm:text-xs font-extrabold px-3 sm:px-4 py-1.5 sm:py-2.5 rounded-full shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
+                >
+                  <MessageCircle size={14} />
+                  <span>WhatsApp</span>
+                </button>
+                <button
+                  onClick={() => handleActionClick(undefined, 'quote')}
+                  className="shimmer-btn bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3500] hover:from-[#E04B00] hover:to-[#FF5500] text-white text-[11px] sm:text-xs font-extrabold px-3 sm:px-4 py-1.5 sm:py-2.5 rounded-full shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
+                >
+                  <FileText size={14} />
+                  <span>{t.ctaHeroQuote}</span>
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={() => handleActionClick()}
+                className="shimmer-btn bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3500] hover:from-[#E04B00] hover:to-[#FF5500] text-white text-[11px] sm:text-xs font-extrabold px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-full shadow-md shadow-[#FF5500]/25 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer group shrink-0"
+              >
+                {objective === 'quote' ? <FileText size={14} /> : <MessageCircle size={14} className="group-hover:rotate-12 transition-transform duration-300 shrink-0" />}
+                <span>{objective === 'quote' ? t.ctaHeroQuote : t.ctaHeader}</span>
+              </button>
+            )}
           </div>
         </div>
       </header>
@@ -534,13 +555,32 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           </p>
 
           <div className={`pt-2 flex ${isMobile ? 'flex-col' : 'flex-col sm:flex-row'} items-center justify-center gap-2.5 sm:gap-4 max-w-md mx-auto sm:max-w-none`}>
-            <button
-              onClick={() => handleActionClick()}
-              className="shimmer-btn w-full sm:w-auto bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-[#FF5500]/40 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group ring-2 ring-white/25"
-            >
-              <span>{heroCtaLabel}</span>
-              <ArrowRight size={15} className="group-hover:translate-x-1.5 transition-transform duration-200 animate-bounce-x" />
-            </button>
+            {objective === 'both' ? (
+              <>
+                <button
+                  onClick={() => handleActionClick(undefined, 'whatsapp')}
+                  className="shimmer-btn w-full sm:w-auto bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-emerald-600/30 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group ring-2 ring-white/25"
+                >
+                  <MessageCircle size={16} />
+                  <span>{isEn ? 'Book on WhatsApp' : t.ctaHeroWa}</span>
+                </button>
+                <button
+                  onClick={() => handleActionClick(undefined, 'quote')}
+                  className="shimmer-btn w-full sm:w-auto bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-[#FF5500]/40 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group ring-2 ring-white/25"
+                >
+                  <FileText size={16} />
+                  <span>{isEn ? 'Request VIP Quote' : t.ctaHeroQuote}</span>
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={() => handleActionClick()}
+                className="shimmer-btn w-full sm:w-auto bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-[#FF5500]/40 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group ring-2 ring-white/25"
+              >
+                <span>{heroCtaLabel}</span>
+                <ArrowRight size={15} className="group-hover:translate-x-1.5 transition-transform duration-200 animate-bounce-x" />
+              </button>
+            )}
 
             {!isFree && (
               <a

@@ -85,7 +85,7 @@ export function generateStandaloneHtml(data: LandingData): string {
         rel="noopener noreferrer"
         class="bg-${primaryColor} hover:bg-${primaryHover} text-white px-4 sm:px-5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md flex items-center gap-2"
       >
-        <span>${isQuote ? 'Cotizar por WhatsApp' : 'Reservar Ahora'}</span>
+        <span>${data.objective === 'both' ? 'WhatsApp & Cotizar' : isQuote ? 'Cotizar por WhatsApp' : 'Reservar Ahora'}</span>
         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.699c.971.534 1.771.815 2.796.815 3.181 0 5.767-2.586 5.768-5.766 0-3.18-2.587-5.766-5.768-5.766zm6.386 8.784c-.267.75-1.545 1.436-2.148 1.528-.59.09-1.341.135-3.844-.9-3.203-1.325-5.263-4.577-5.424-4.792-.158-.214-1.293-1.721-1.293-3.283 0-1.562.818-2.33 1.107-2.652.289-.322.632-.403.842-.403.21 0 .421.002.607.011.196.01.458-.074.717.549.267.643.914 2.228.994 2.39.08.163.134.354.027.568-.108.214-.162.348-.322.535-.16.188-.337.419-.481.563-.16.16-.328.334-.141.655.188.321.834 1.374 1.79 2.226 1.232 1.097 2.271 1.437 2.592 1.598.322.16.51.134.7-.08.188-.215.805-.939 1.02-1.26.214-.322.429-.268.724-.161.295.107 1.874.884 2.196 1.045.322.161.536.241.617.375.08.134.08.777-.187 1.527z"/></svg>
       </a>
     </div>

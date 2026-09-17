@@ -46,7 +46,26 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
             <a href="#soporte-faq" className="hover:text-emerald-400 transition-colors">Soporte & FAQ</a>
           </div>
         )}
-        {isQuote ? (
+        {data.objective === 'both' ? (
+          <div className="flex items-center gap-2">
+            <a 
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 bg-emerald-600 hover:bg-emerald-500 text-white px-3 sm:px-4 py-2 rounded-full font-semibold text-xs sm:text-sm transition-all shadow-lg flex items-center gap-1.5 cursor-pointer"
+            >
+              <MessageCircle size={14} />
+              <span>WhatsApp</span>
+            </a>
+            <button
+              onClick={() => setIsQuoteOpen(true)}
+              className="shrink-0 bg-teal-700 hover:bg-teal-600 text-white px-3 sm:px-4 py-2 rounded-full font-semibold text-xs sm:text-sm transition-all shadow-lg flex items-center gap-1.5 cursor-pointer"
+            >
+              <FileText size={14} />
+              <span>Cotizar</span>
+            </button>
+          </div>
+        ) : isQuote ? (
           <button
             onClick={() => setIsQuoteOpen(true)}
             className="shrink-0 bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 sm:px-6 py-2 rounded-full font-semibold text-xs sm:text-sm transition-all shadow-lg flex items-center gap-1.5 sm:gap-2 cursor-pointer"
@@ -89,7 +108,26 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
             {data.hero.subtitle}
           </p>
           <div className={`flex ${isMobile ? 'flex-col' : 'flex-col sm:flex-row'} items-center gap-3 w-full max-w-md justify-center`}>
-            {isQuote ? (
+            {data.objective === 'both' ? (
+              <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                <a 
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`bg-emerald-600 hover:bg-emerald-500 text-white ${isMobile ? 'w-full py-3 text-sm' : 'text-base px-7 py-4'} rounded-full font-bold transition-all shadow-xl shadow-emerald-600/30 hover:scale-105 flex items-center justify-center gap-2 cursor-pointer`}
+                >
+                  <MessageCircle size={18} />
+                  <span>Reservar por WhatsApp</span>
+                </a>
+                <button
+                  onClick={() => setIsQuoteOpen(true)}
+                  className={`bg-teal-700 hover:bg-teal-600 text-white ${isMobile ? 'w-full py-3 text-sm' : 'text-base px-7 py-4'} rounded-full font-bold transition-all shadow-xl shadow-teal-700/30 hover:scale-105 flex items-center justify-center gap-2 cursor-pointer`}
+                >
+                  <FileText size={18} />
+                  <span>Cotizar Expedición</span>
+                </button>
+              </div>
+            ) : isQuote ? (
               <button
                 onClick={() => setIsQuoteOpen(true)}
                 className={`bg-emerald-600 hover:bg-emerald-500 text-white ${isMobile ? 'w-full py-3 text-sm' : 'text-lg px-8 py-4'} rounded-full font-bold transition-all shadow-xl shadow-emerald-600/20 hover:scale-105 flex items-center justify-center gap-2 cursor-pointer`}

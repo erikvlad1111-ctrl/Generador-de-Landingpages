@@ -47,7 +47,26 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             <a href="#soporte-faq" className="hover:text-amber-400 transition-colors">Soporte & FAQ</a>
           </nav>
         )}
-        {isQuote ? (
+        {data.objective === 'both' ? (
+          <div className="flex items-center gap-2">
+            <a 
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-neutral-950 px-3 sm:px-4 py-2 rounded-full font-bold text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg cursor-pointer"
+            >
+              <MessageCircle size={14} />
+              <span>WhatsApp</span>
+            </a>
+            <button
+              onClick={() => setIsQuoteOpen(true)}
+              className="shrink-0 flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-neutral-950 px-3 sm:px-4 py-2 rounded-full font-bold text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg cursor-pointer"
+            >
+              <FileText size={14} />
+              <span>Cotizar</span>
+            </button>
+          </div>
+        ) : isQuote ? (
           <button
             onClick={() => setIsQuoteOpen(true)}
             className="shrink-0 flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-neutral-950 px-3.5 sm:px-5 py-2 rounded-full font-bold text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg cursor-pointer"
@@ -93,7 +112,26 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           </p>
 
           <div className={`flex ${isMobile ? 'flex-col' : 'flex-col sm:flex-row'} items-center gap-3.5 w-full max-w-md justify-center`}>
-            {isQuote ? (
+            {data.objective === 'both' ? (
+              <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                <a 
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white ${isMobile ? 'w-full py-3 text-xs' : 'text-sm px-6 py-3.5'} rounded-full font-bold transition-all shadow-xl shadow-emerald-500/20 hover:scale-105 flex items-center justify-center gap-2 cursor-pointer`}
+                >
+                  <MessageCircle size={17} />
+                  <span>WhatsApp VIP</span>
+                </a>
+                <button
+                  onClick={() => setIsQuoteOpen(true)}
+                  className={`bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-neutral-950 ${isMobile ? 'w-full py-3 text-xs' : 'text-sm px-6 py-3.5'} rounded-full font-bold transition-all shadow-xl shadow-amber-500/20 hover:scale-105 flex items-center justify-center gap-2 cursor-pointer`}
+                >
+                  <FileText size={17} />
+                  <span>Cotizar Privado</span>
+                </button>
+              </div>
+            ) : isQuote ? (
               <button
                 onClick={() => setIsQuoteOpen(true)}
                 className={`bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-neutral-950 ${isMobile ? 'w-full py-3 text-sm' : 'text-base px-8 py-4'} rounded-full font-bold transition-all shadow-xl shadow-amber-500/20 hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}

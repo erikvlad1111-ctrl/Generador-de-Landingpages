@@ -85,7 +85,26 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         )}
 
         <div className="flex items-center gap-2">
-          {isQuote ? (
+          {data.objective === 'both' ? (
+            <>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#588157] hover:bg-[#476846] text-white px-3 sm:px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+              >
+                <MessageCircle size={14} />
+                <span>WhatsApp</span>
+              </a>
+              <button
+                onClick={() => setIsQuoteOpen(true)}
+                className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-3 sm:px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+              >
+                <FileText size={14} />
+                <span>Cotizar</span>
+              </button>
+            </>
+          ) : isQuote ? (
             <button
               onClick={() => setIsQuoteOpen(true)}
               className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
@@ -150,7 +169,26 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 <span className="text-xs text-stone-500 ml-1">/ viajero</span>
               </div>
 
-              {isQuote ? (
+              {data.objective === 'both' ? (
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-[#588157] hover:bg-[#476846] text-white px-5 sm:px-6 py-3.5 rounded-2xl font-semibold text-sm transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+                  >
+                    <MessageCircle size={17} />
+                    <span>Reservar por WhatsApp</span>
+                  </a>
+                  <button
+                    onClick={() => setIsQuoteOpen(true)}
+                    className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-5 sm:px-6 py-3.5 rounded-2xl font-semibold text-sm transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+                  >
+                    <FileText size={17} />
+                    <span>Cotizar Experiencia</span>
+                  </button>
+                </div>
+              ) : isQuote ? (
                 <button
                   onClick={() => setIsQuoteOpen(true)}
                   className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-6 py-3.5 rounded-2xl font-semibold text-sm transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"

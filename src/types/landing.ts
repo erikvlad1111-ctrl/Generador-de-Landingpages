@@ -1,5 +1,5 @@
 export type TemplateType = 'adventure' | 'premium' | 'cultural' | 'boho-nature' | 'agency-portal';
-export type ObjectiveType = 'whatsapp' | 'quote';
+export type ObjectiveType = 'whatsapp' | 'quote' | 'both';
 export type LanguageType = 'es' | 'en';
 export type PlanTier = 'free' | 'basic' | 'pro' | 'advance';
 
