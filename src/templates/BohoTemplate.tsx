@@ -257,8 +257,8 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </div>
       </section>
 
-      {/* Trust Badges Bar (DIRCETUR, Safe Travels) - PRO & ADVANCE ONLY */}
-      {(isPro || isAdvance) && data.trustBadges && data.trustBadges.length > 0 && (
+      {/* Trust Badges Bar (DIRCETUR, Safe Travels) */}
+      {data.trustBadges && data.trustBadges.length > 0 && (
         <section className="bg-white/80 border-y border-stone-200/80 py-4 px-4 sm:px-8">
           <div className="max-w-5xl mx-auto flex flex-wrap justify-center sm:justify-between items-center gap-4">
             <div className="flex items-center gap-2 text-stone-600 text-xs font-serif italic">
@@ -306,8 +306,8 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         />
       )}
 
-      {/* Section: Itinerary (Visual Travel Journal by Day) - PRO & ADVANCE ONLY */}
-      {(isPro || isAdvance) && (
+      {/* Section: Itinerary (Visual Travel Journal by Day) */}
+      {(data.itinerary && data.itinerary.length > 0) && (
         <section id="itinerario" className="py-12 sm:py-16 px-4 sm:px-8 bg-[#F3EFEA] border-y border-stone-200">
           <div className="max-w-4xl mx-auto space-y-8">
             <div className="text-center space-y-2">
@@ -348,8 +348,8 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </section>
       )}
 
-      {/* Inclusiones & Exclusiones & Mochila - PRO & ADVANCE ONLY */}
-      {(isPro || isAdvance) && (
+      {/* Inclusiones & Exclusiones & Mochila */}
+      {((data.features?.items && data.features.items.length > 0) || (data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
         <section id="mochila" className="py-12 sm:py-16 px-4 sm:px-8 max-w-6xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
             

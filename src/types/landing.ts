@@ -33,6 +33,8 @@ export interface LandingData {
   destination?: string;
   altitude?: string;
   groupType?: string;
+  targetAudience?: string;
+  includedServices?: string[];
   aiTone?: string;
   whatsapp: string;
   price: string;

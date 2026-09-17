@@ -19,7 +19,13 @@ import {
   ArrowRight,
   Zap,
   Calendar,
-  FileText
+  FileText,
+  Mountain,
+  Users,
+  Target,
+  BadgeCheck,
+  XCircle,
+  Backpack
 } from 'lucide-react';
 import { LandingData, PlanTier, ObjectiveType, LanguageType } from '@/types/landing';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
@@ -149,6 +155,9 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   };
 
   const getBilingualFeatures = (items?: string[]) => {
+    if (data?.includedServices && data.includedServices.length > 0) {
+      return data.includedServices;
+    }
     if (!isEn) {
       return items || [
         'Guías Oficiales Acreditados',
@@ -232,16 +241,16 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   // 6. Lista de Tours Destacados
   const DEFAULT_FEATURED_TOURS = [
     {
-      id: '1',
-      title: isEn ? 'Rainbow Mountain Vinicunca Classic' : 'Vinicunca Montaña 7 Colores Clásico',
-      category: isEn ? 'Adventure & Trekking' : 'Aventura & Trekking',
-      categoryKey: 'trekking',
-      location: 'Cusco, Perú',
-      duration: 'Full Day (04:30 - 17:30)',
-      price: '$45 USD',
+      id: 'tour-creado-usuario',
+      title: data?.name || (isEn ? 'Signature Andean Tour Experience' : 'Tour Principal Seleccionado'),
+      category: isEn ? 'Featured Signature Tour' : 'Tour Principal Destacado',
+      categoryKey: 'all',
+      location: destination,
+      duration: data?.duration || 'Full Day',
+      price: data?.price || '$45 USD',
       rating: 4.9,
-      image: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop',
-      tag: isEn ? 'Most Popular' : 'Más Popular',
+      image: heroImage,
+      tag: isEn ? 'Selected Tour' : 'Tour Seleccionado',
       badge: '4.9 ★'
     },
     {
@@ -620,6 +629,127 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </section>
 
+      {/* 4.5 FICHA TÉCNICA DEL TOUR & PERFIL DEL GUÍA OFICIAL */}
+      <section className="py-8 sm:py-14 bg-gradient-to-b from-stone-50 to-white border-b border-stone-200">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+            
+            {/* Left: Especificaciones Técnicas (7 cols) */}
+            <div className="lg:col-span-7 bg-white rounded-3xl p-5 sm:p-7 border border-stone-200 shadow-xs flex flex-col justify-between space-y-5">
+              <div>
+                <div className="flex flex-wrap items-center gap-2 mb-2">
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FF5500]/10 text-[#FF5500] text-[10px] font-black uppercase tracking-wider">
+                    <Compass size={12} /> {isEn ? 'Official Tour Technical Sheet' : 'Ficha Técnica Oficial del Tour'}
+                  </span>
+                  <span className="text-[10px] bg-stone-100 text-stone-700 font-extrabold px-2.5 py-0.5 rounded-full border border-stone-200">
+                    {data?.name || brandName}
+                  </span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
+                  {isEn ? 'Technical Specifications & Adventure Details' : 'Especificaciones Técnicas del Recorrido'}
+                </h3>
+                <p className="text-xs text-stone-500 mt-1.5 leading-relaxed">
+                  {data?.about?.content || data?.hero?.subtitle || (isEn ? 'Key parameters to ensure your safety and enjoyment across the Peruvian Andes.' : 'Parámetros certificados para garantizar tu seguridad, confort y disfrute en la ruta.')}
+                </p>
+              </div>
+
+              {/* Grid 6 Specs */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1">
+                <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
+                  <div className="flex items-center gap-1.5 text-stone-400 mb-1">
+                    <Mountain size={14} className="text-[#FF5500]" />
+                    <span className="text-[10px] font-bold uppercase">{isEn ? 'Max Altitude' : 'Altitud Máxima'}</span>
+                  </div>
+                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block">{data?.altitude || '3,400 msnm'}</span>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
+                  <div className="flex items-center gap-1.5 text-stone-400 mb-1">
+                    <Clock size={14} className="text-[#FF5500]" />
+                    <span className="text-[10px] font-bold uppercase">{isEn ? 'Duration' : 'Duración'}</span>
+                  </div>
+                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block">{data?.duration || 'Full Day'}</span>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
+                  <div className="flex items-center gap-1.5 text-stone-400 mb-1">
+                    <Award size={14} className="text-[#FF5500]" />
+                    <span className="text-[10px] font-bold uppercase">{isEn ? 'Difficulty' : 'Dificultad'}</span>
+                  </div>
+                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block">{data?.difficulty || 'Moderada'}</span>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
+                  <div className="flex items-center gap-1.5 text-stone-400 mb-1">
+                    <Users size={14} className="text-[#FF5500]" />
+                    <span className="text-[10px] font-bold uppercase">{isEn ? 'Group Type' : 'Modalidad'}</span>
+                  </div>
+                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block truncate">{data?.groupType || 'Grupo Reducido'}</span>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
+                  <div className="flex items-center gap-1.5 text-stone-400 mb-1">
+                    <Target size={14} className="text-[#FF5500]" />
+                    <span className="text-[10px] font-bold uppercase">{isEn ? 'Target Audience' : 'Público'}</span>
+                  </div>
+                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block truncate">{data?.targetAudience || 'Aventureros & Familias'}</span>
+                </div>
+
+                <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
+                  <div className="flex items-center gap-1.5 text-stone-400 mb-1">
+                    <MapPin size={14} className="text-[#FF5500]" />
+                    <span className="text-[10px] font-bold uppercase">{isEn ? 'Destination' : 'Destino'}</span>
+                  </div>
+                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block truncate">{destination}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Perfil del Guía Oficial Colegiado (5 cols) */}
+            <div className="lg:col-span-5 bg-stone-900 text-white rounded-3xl p-5 sm:p-7 border border-stone-800 shadow-xs flex flex-col justify-between space-y-4">
+              <div>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-black uppercase tracking-wider mb-3 border border-emerald-500/30">
+                  <BadgeCheck size={13} /> {isEn ? 'Official Certified Guide' : 'Guía Oficial Colegiado DIRCETUR'}
+                </div>
+                
+                <div className="flex items-center gap-3.5 mb-3">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#FF5500] to-[#FF8800] flex items-center justify-center text-white font-black text-xl shadow-md shrink-0">
+                    {guideName.charAt(0)}
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-black text-white">{guideName}</h4>
+                    <p className="text-xs text-stone-300 font-semibold">{data?.guideCert || 'Guía Oficial de Turismo DIRCETUR'}</p>
+                    <p className="text-[11px] text-[#FF8844] font-medium mt-0.5">🗣️ {data?.guideLanguages || 'Español, Inglés y Francés'}</p>
+                  </div>
+                </div>
+
+                <p className="text-xs text-stone-400 leading-relaxed">
+                  {isEn 
+                    ? 'Accredited local specialist with wilderness first aid certification and specialized high-altitude protocol training.'
+                    : 'Especialista local acreditado con certificación en primeros auxilios en zonas agrestes y protocolo médico para aclimatación.'}
+                </p>
+              </div>
+
+              <div className="pt-3 border-t border-stone-800 flex items-center justify-between gap-3">
+                <div>
+                  <span className="text-[10px] text-stone-400 block">{isEn ? 'Direct Line' : 'Atención Directa'}</span>
+                  <span className="text-xs font-black text-emerald-400">{whatsappNumber ? `+${whatsappNumber}` : '+51 984 123 456'}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleActionClick(undefined, 'whatsapp')}
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 shadow-md shadow-emerald-600/30 transition-all cursor-pointer"
+                >
+                  <MessageCircle size={14} />
+                  <span>WhatsApp</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* 5. TOURS DESTACADOS (1 COLUMNA ESTRICTA EN MÓVIL) */}
       <section id="tours" className={`py-8 sm:py-20 px-3 sm:px-6 max-w-7xl mx-auto`}>
         <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 space-y-2 sm:space-y-3 px-2">
@@ -746,19 +876,19 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </section>
 
-      {/* 6. EXCLUSIVO PLAN AVANZADO: ITINERARIO DÍA A DÍA DETALLADO */}
-      {isAdvance && (
+      {/* 6. ITINERARIO DÍA A DÍA DETALLADO (CRONOGRAMA PASO A PASO) */}
+      {(data?.itinerary && data.itinerary.length > 0) && (
         <section className="py-10 sm:py-20 bg-stone-900 text-white border-y border-stone-800">
           <div className="max-w-5xl mx-auto px-3 sm:px-6 space-y-6 sm:space-y-10">
             <div className="text-center space-y-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-[10px] sm:text-xs font-black uppercase tracking-widest border border-amber-500/30">
-                <Calendar size={12} /> {isEn ? 'Exclusive VIP Itinerary' : 'Itinerario Detallado VIP'}
+                <Calendar size={12} /> {isEn ? 'Official Tour Itinerary' : 'Itinerario Detallado del Tour'}
               </span>
               <h2 className="text-xl sm:text-4xl font-black tracking-tight">
                 {isEn ? 'Day-by-Day Experience Flow' : 'Cronograma y Experiencia Paso a Paso'}
               </h2>
               <p className="text-[11px] sm:text-sm text-stone-400">
-                {isEn ? 'Designed to maximize comfort and acclimatization.' : 'Tiempos planificados al milímetro para favorecer la aclimatación.'}
+                {isEn ? 'Designed to maximize comfort and acclimatization.' : 'Tiempos planificados al milímetro para favorecer la aclimatación y disfrute de la ruta.'}
               </p>
             </div>
 
@@ -775,6 +905,70 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 6.1 LOGÍSTICA: QUÉ NO INCLUYE & QUÉ LLEVAR EN LA MOCHILA */}
+      {((data?.notIncluded && data.notIncluded.length > 0) || (data?.whatToBring && data.whatToBring.length > 0)) && (
+        <section className="py-10 sm:py-16 bg-stone-100 border-b border-stone-200">
+          <div className="max-w-6xl mx-auto px-3 sm:px-6">
+            <div className="text-center max-w-2xl mx-auto mb-8 space-y-1.5">
+              <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#FF5500]">
+                {isEn ? 'Clear Logistics & Preparation' : 'Logística Clara & Equipaje'}
+              </span>
+              <h3 className="text-xl sm:text-3xl font-black text-stone-900 tracking-tight">
+                {isEn ? 'Exclusions & Backpack Checklist' : 'Exclusiones Claras & Checklist de Mochila'}
+              </h3>
+              <p className="text-xs text-stone-500">
+                {isEn ? 'Everything transparent before you depart to the route.' : 'Transparencia total antes de iniciar tu aventura.'}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Qué NO incluye */}
+              <div className="bg-white p-5 sm:p-7 rounded-3xl border border-rose-200/80 shadow-xs space-y-4">
+                <div className="flex items-center gap-2 text-rose-600 font-black text-sm sm:text-base border-b border-rose-100 pb-3">
+                  <XCircle size={20} className="shrink-0" />
+                  <span>{isEn ? 'Not Included in Price' : 'Qué NO está incluido en la tarifa'}</span>
+                </div>
+                <ul className="space-y-2.5 text-xs sm:text-sm text-stone-600">
+                  {(data?.notIncluded && data.notIncluded.length > 0 ? data.notIncluded : [
+                    'Vuelos internacionales o nacionales hacia Cusco',
+                    'Propinas voluntarias para guía y conductor',
+                    'Seguro médico de viaje internacional',
+                    'Gastos o snacks personales no detallados'
+                  ]).map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <span className="text-rose-500 font-bold shrink-0 mt-0.5">✕</span>
+                      <span className="leading-snug">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Qué llevar en la mochila */}
+              <div className="bg-white p-5 sm:p-7 rounded-3xl border border-emerald-200/80 shadow-xs space-y-4">
+                <div className="flex items-center gap-2 text-emerald-700 font-black text-sm sm:text-base border-b border-emerald-100 pb-3">
+                  <Backpack size={20} className="shrink-0" />
+                  <span>{isEn ? 'Recommended Packing List' : 'Qué llevar en tu mochila (Recomendado)'}</span>
+                </div>
+                <ul className="space-y-2.5 text-xs sm:text-sm text-stone-600">
+                  {(data?.whatToBring && data.whatToBring.length > 0 ? data.whatToBring : [
+                    'Pasaporte original físico vigente (obligatorio)',
+                    'Ropa abrigadora en capas y casaca cortavientos',
+                    'Zapatos cómodos o zapatillas con buen agarre',
+                    'Bloqueador solar (SPF 50+), lentes de sol y gorro',
+                    'Dinero en efectivo en soles peruanos'
+                  ]).map((item, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <span className="text-emerald-500 font-bold shrink-0 mt-0.5">✓</span>
+                      <span className="leading-snug">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
         </section>
@@ -851,6 +1045,27 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     ? 'All tours include certified pulse oximeter monitoring and medical oxygen in all transport vehicles.' 
                     : 'Todos nuestros vehículos y guías cuentan permanentemente con balón de oxígeno medicinal y botiquín de primeros auxilios.'}
                 </p>
+              </div>
+
+              {/* Distintivos Oficiales & Sellos de Confianza */}
+              <div className="pt-2 border-t border-stone-200/80">
+                <span className="text-[10px] font-black uppercase tracking-wider text-stone-500 block mb-2.5">
+                  {isEn ? 'Official Certifications & Trust Badges' : 'Distintivos Oficiales & Sellos de Confianza'}
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {(data?.trustBadges && data.trustBadges.length > 0 ? data.trustBadges : [
+                    'Licencia Oficial DIRCETUR Cusco',
+                    'Sello Internacional Safe Travels',
+                    'Agencia Formal RUC 20 Verificado',
+                    'Guía Colegiado Bilingüe',
+                    'Balón de Oxígeno & Botiquín'
+                  ]).map((badge, bIdx) => (
+                    <span key={bIdx} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200 text-xs font-bold text-stone-800 shadow-2xs">
+                      <ShieldCheck size={14} className="text-[#FF5500] shrink-0" />
+                      <span>{badge}</span>
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
 

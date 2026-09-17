@@ -238,8 +238,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* Itinerary Timeline - PRO & ADVANCE ONLY */}
-      {(isPro || isAdvance) && data.itinerary && data.itinerary.length > 0 && (
+      {/* Itinerary Timeline */}
+      {data.itinerary && data.itinerary.length > 0 && (
         <section id="itinerario-timeline" className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-neutral-900/40 border-t border-neutral-800`}>
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8 sm:mb-14">
@@ -293,8 +293,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* Logistics: Exclusiones & Equipaje VIP - PRO & ADVANCE ONLY */}
-      {(isPro || isAdvance) && ((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
+      {/* Logistics: Exclusiones & Equipaje VIP */}
+      {((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
         <section className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-neutral-950 border-b border-neutral-800`}>
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {/* Qué NO incluye */}

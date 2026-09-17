@@ -194,8 +194,8 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </section>
 
-      {/* Trust Badges Bar - PRO & ADVANCE ONLY */}
-      {(isPro || isAdvance) && data.trustBadges && data.trustBadges.length > 0 && (
+      {/* Trust Badges Bar */}
+      {data.trustBadges && data.trustBadges.length > 0 && (
         <section className="max-w-5xl mx-auto px-4 mt-6">
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             {data.trustBadges.map((badge, idx) => (
@@ -246,8 +246,8 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </section>
       )}
 
-      {/* Itinerary Timeline - PRO & ADVANCE ONLY */}
-      {(isPro || isAdvance) && data.itinerary && data.itinerary.length > 0 && (
+      {/* Itinerary Timeline */}
+      {data.itinerary && data.itinerary.length > 0 && (
         <section id="itinerario-cultural" className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-white border-y border-stone-200`}>
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8 sm:mb-12">
@@ -299,8 +299,8 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </section>
       )}
 
-      {/* Logistics: Exclusiones & Qué Llevar - PRO & ADVANCE ONLY */}
-      {(isPro || isAdvance) && ((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
+      {/* Logistics: Exclusiones & Qué Llevar */}
+      {((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
         <section className={`${isMobile ? 'py-10 px-4' : 'py-16 px-8'} bg-stone-100 border-b border-stone-300`}>
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {/* Qué NO incluye */}
