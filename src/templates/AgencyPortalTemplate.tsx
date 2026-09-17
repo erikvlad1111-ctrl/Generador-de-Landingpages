@@ -26,7 +26,9 @@ import {
   BadgeCheck,
   XCircle,
   Backpack,
-  Pin
+  Pin,
+  Menu,
+  X
 } from 'lucide-react';
 import { LandingData, PlanTier, ObjectiveType, LanguageType } from '@/types/landing';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
@@ -52,10 +54,10 @@ const DICTIONARIES = {
     officialBadge: 'MINCETUR & DIRCETUR',
     officialDesc: 'Operador Turístico Oficial',
     officialOperator: 'Agencia Oficial',
-    navTours: 'Tours Destacados',
-    navGallery: 'Galería Pinterest',
+    navTours: 'Tours',
+    navGallery: 'Galería',
     navPackages: 'Paquetes',
-    navWhyUs: '¿Por Qué Nosotros?',
+    navWhyUs: 'Nosotros',
     navReviews: 'Reseñas',
     navFaq: 'FAQ & Soporte',
     ctaHeader: 'WhatsApp',
@@ -133,10 +135,10 @@ const DICTIONARIES = {
     officialBadge: 'MINCETUR & DIRCETUR',
     officialDesc: 'Official Licensed Operator',
     officialOperator: 'Official Agency',
-    navTours: 'Featured Tours',
-    navGallery: 'Pinterest Gallery',
+    navTours: 'Tours',
+    navGallery: 'Gallery',
     navPackages: 'Packages',
-    navWhyUs: 'Why Us?',
+    navWhyUs: 'Why Us',
     navReviews: 'Reviews',
     navFaq: 'FAQ & Support',
     ctaHeader: 'WhatsApp',
@@ -214,10 +216,10 @@ const DICTIONARIES = {
     officialBadge: 'MINCETUR & DIRCETUR',
     officialDesc: 'Operador Turístico Oficial',
     officialOperator: 'Agência Oficial',
-    navTours: 'Passeios em Destaque',
-    navGallery: 'Galeria Pinterest',
+    navTours: 'Passeios',
+    navGallery: 'Galeria',
     navPackages: 'Pacotes',
-    navWhyUs: 'Por Que Nós?',
+    navWhyUs: 'Sobre Nós',
     navReviews: 'Depoimentos',
     navFaq: 'FAQ & Suporte',
     ctaHeader: 'WhatsApp',
@@ -295,10 +297,10 @@ const DICTIONARIES = {
     officialBadge: 'MINCETUR & DIRCETUR',
     officialDesc: 'Opérateur Touristique Officiel',
     officialOperator: 'Agence Officielle',
-    navTours: 'Circuits Populaires',
-    navGallery: 'Galerie Pinterest',
+    navTours: 'Circuits',
+    navGallery: 'Galerie',
     navPackages: 'Forfaits',
-    navWhyUs: 'Pourquoi Nous ?',
+    navWhyUs: 'Pourquoi Nous',
     navReviews: 'Avis',
     navFaq: 'FAQ & Support',
     ctaHeader: 'WhatsApp',
@@ -376,10 +378,10 @@ const DICTIONARIES = {
     officialBadge: 'MINCETUR & DIRCETUR',
     officialDesc: 'Operatore Turistico Ufficiale',
     officialOperator: 'Agenzia Ufficiale',
-    navTours: 'Tour in Evidenza',
-    navGallery: 'Galleria Pinterest',
+    navTours: 'Tour',
+    navGallery: 'Galleria',
     navPackages: 'Pacchetti',
-    navWhyUs: 'Perché Noi?',
+    navWhyUs: 'Perché Noi',
     navReviews: 'Recensioni',
     navFaq: 'FAQ & Supporto',
     ctaHeader: 'WhatsApp',
@@ -463,6 +465,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const [showWaTooltip, setShowWaTooltip] = useState<boolean>(true);
   const [isQuoteOpen, setIsQuoteOpen] = useState<boolean>(false);
   const [selectedTourForQuote, setSelectedTourForQuote] = useState<string>('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   // 2. Parámetros y datos dinámicos
   const brandName = data?.name || 'Cusco Tours';
@@ -826,93 +829,109 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   return (
     <div className={`min-h-screen bg-[#FDFDFD] text-stone-900 font-sans selection:bg-[#FF5500] selection:text-white w-full max-w-full overflow-x-hidden ${isMobile ? 'text-xs' : ''}`}>
       
-      {/* 1. TOP ANNOUNCEMENT BAR CON SELECTOR DE IDIOMAS MULTI-SELECCIÓN (PASO 4) */}
-      <div className="bg-[#1C1917] text-white text-[10px] sm:text-xs py-1.5 sm:py-2 px-3 sm:px-4 border-b border-stone-800">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-1.5">
-          <div className="flex items-center gap-2 sm:gap-4 truncate">
-            <span className="flex items-center gap-1 text-stone-300 truncate">
+      {/* 1. TOP ANNOUNCEMENT BAR CON SELECTOR DE IDIOMAS */}
+      <div className="bg-[#1C1917] text-white text-[11px] py-2 px-3 sm:px-6 border-b border-stone-800">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+          
+          {/* Left: Contact Info */}
+          <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+            <a 
+              href={`https://wa.me/${whatsappNumber}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-stone-300 hover:text-[#FF5500] transition-colors font-mono shrink-0"
+              title="Atención inmediata por WhatsApp"
+            >
               <Phone size={12} className="text-[#FF5500] shrink-0" />
-              <span className="truncate font-mono">+{whatsappNumber}</span>
-            </span>
+              <span className="font-semibold">+{whatsappNumber}</span>
+            </a>
             {!isMobile && (
-              <span className="hidden md:flex items-center gap-1.5 text-stone-400 truncate">
-                <Mail size={12} className="text-[#FF5500] shrink-0" /> reservas@{brandName.toLowerCase().replace(/\s+/g, '')}.pe
+              <span className="hidden md:flex items-center gap-1.5 text-stone-400 truncate text-[10px]">
+                <Mail size={12} className="text-[#FF5500] shrink-0" />
+                <span className="truncate">reservas@{brandName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 16) || 'tours'}.pe</span>
               </span>
             )}
           </div>
           
-          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+          {/* Right: Badge & Language Selector */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {!isMobile && (
-              <span className="hidden sm:inline-block bg-[#FF5500]/20 text-[#FF8844] font-bold px-2 py-0.5 rounded text-[10px] border border-[#FF5500]/40 truncate">
+              <span className="hidden sm:inline-flex items-center gap-1 bg-[#FF5500]/15 text-[#FF8844] font-bold px-2.5 py-0.5 rounded-full text-[10px] border border-[#FF5500]/30 whitespace-nowrap">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                 {t.officialBar}
               </span>
             )}
 
-            {/* Selector interactivo de Idioma (Todos los idiomas elegidos en el Paso 4) */}
-            <div className="flex items-center bg-stone-800 rounded-lg p-0.5 border border-stone-700">
+            {/* Language Selector: Sleek, compact and responsive */}
+            <div className="flex items-center bg-stone-800/90 rounded-lg p-0.5 border border-stone-700/80 shadow-xs">
               {activeLanguages.map((l) => (
                 <button
                   key={l}
                   onClick={() => setLang(l)}
-                  className={`px-1.5 sm:px-2.5 py-0.5 rounded text-[9px] sm:text-[10px] font-extrabold uppercase transition-all cursor-pointer flex items-center gap-1 ${
+                  className={`px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] font-bold uppercase transition-all cursor-pointer flex items-center gap-1 shrink-0 ${
                     lang === l 
-                      ? 'bg-[#FF5500] text-white shadow-xs scale-105 ring-1 ring-white/20' 
+                      ? 'bg-[#FF5500] text-white shadow-xs font-black' 
                       : 'text-stone-400 hover:text-white'
                   }`}
                   title={l === 'es' ? 'Español' : l === 'en' ? 'English' : l === 'pt' ? 'Português' : l === 'fr' ? 'Français' : 'Italiano'}
                 >
-                  <span>{l === 'es' ? '🇵🇪' : l === 'en' ? '🇺🇸' : l === 'pt' ? '🇧🇷' : l === 'fr' ? '🇫🇷' : '🇮🇹'}</span>
-                  <span>{l.toUpperCase()}</span>
+                  <span className="text-xs leading-none">{l === 'es' ? '🇵🇪' : l === 'en' ? '🇺🇸' : l === 'pt' ? '🇧🇷' : l === 'fr' ? '🇫🇷' : '🇮🇹'}</span>
+                  <span className="hidden xs:inline sm:inline text-[9px] sm:text-[10px]">{l.toUpperCase()}</span>
                 </button>
               ))}
             </div>
           </div>
+
         </div>
       </div>
 
       {/* 2. MAIN HEADER (RESPONSIVE) */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-xs">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 h-14 sm:h-18 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 truncate">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-[#FF5500] to-[#FF8800] flex items-center justify-center text-white font-black shadow-md shadow-[#FF5500]/30 shrink-0">
-              <Compass size={18} className="sm:w-[22px] sm:h-[22px]" />
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3">
+          
+          {/* Brand Logo & Name */}
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-[#FF5500] to-[#FF8800] flex items-center justify-center text-white font-black shadow-md shadow-[#FF5500]/30 shrink-0">
+              <Compass size={20} className="sm:w-6 sm:h-6" />
             </div>
-            <div className="truncate">
-              <span className="font-extrabold text-sm sm:text-xl tracking-tight text-stone-900 block leading-tight truncate">
+            <div className="min-w-0 max-w-[170px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[260px] xl:max-w-[320px]">
+              <span className="font-extrabold text-xs sm:text-base md:text-lg tracking-tight text-stone-900 block leading-tight truncate">
                 {brandName.toUpperCase()}
               </span>
-              {!isMobile && (
-                <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block -mt-0.5 truncate hidden sm:block">
-                  {t.officialOperator}
-                </span>
-              )}
+              <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block truncate">
+                {t.officialOperator}
+              </span>
             </div>
           </div>
 
+          {/* Desktop Navigation Links (Always single line with whitespace-nowrap) */}
           {!isFree && !isMobile && (
-            <nav className="hidden lg:flex items-center gap-6 text-xs font-bold text-stone-700 uppercase tracking-wider">
-              <a href="#tours" className="hover:text-[#FF5500] transition-colors">{t.navTours}</a>
-              <a href="#galeria" className="hover:text-[#FF5500] transition-colors">{t.navGallery}</a>
-              {!isBasic && <a href="#paquetes" className="hover:text-[#FF5500] transition-colors">{t.navPackages}</a>}
-              <a href="#por-que-nosotros" className="hover:text-[#FF5500] transition-colors">{t.navWhyUs}</a>
-              {!isBasic && <a href="#resenas" className="hover:text-[#FF5500] transition-colors">{t.navReviews}</a>}
-              <a href="#soporte-faq" className="hover:text-[#FF5500] transition-colors">{t.navFaq}</a>
+            <nav className="hidden lg:flex items-center gap-3.5 xl:gap-6 text-xs xl:text-[13px] font-bold text-stone-700 tracking-wide uppercase">
+              <a href="#tours" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navTours}</a>
+              <a href="#galeria" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navGallery}</a>
+              {!isBasic && <a href="#paquetes" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navPackages}</a>}
+              <a href="#por-que-nosotros" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navWhyUs}</a>
+              {!isBasic && <a href="#resenas" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navReviews}</a>}
+              <a href="#soporte-faq" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navFaq}</a>
             </nav>
           )}
 
+          {/* Right Action Buttons & Mobile Toggle */}
           <div className="flex items-center gap-2 shrink-0">
             {objective === 'both' ? (
               <>
                 <button
+                  type="button"
                   onClick={() => handleActionClick(undefined, 'whatsapp')}
-                  className="shimmer-btn bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-[11px] sm:text-xs font-extrabold px-3 sm:px-4 py-1.5 sm:py-2.5 rounded-full shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
+                  className="hidden sm:flex shimmer-btn bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-extrabold px-3.5 py-2 sm:py-2.5 rounded-full shadow-md transition-all items-center gap-1.5 cursor-pointer shrink-0 whitespace-nowrap"
                 >
                   <MessageCircle size={14} />
                   <span>WhatsApp</span>
                 </button>
                 <button
+                  type="button"
                   onClick={() => handleActionClick(undefined, 'quote')}
-                  className="shimmer-btn bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3500] hover:from-[#E04B00] hover:to-[#FF5500] text-white text-[11px] sm:text-xs font-extrabold px-3 sm:px-4 py-1.5 sm:py-2.5 rounded-full shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
+                  className="shimmer-btn bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3500] hover:from-[#E04B00] hover:to-[#FF5500] text-white text-xs font-extrabold px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full shadow-md transition-all flex items-center gap-1.5 cursor-pointer shrink-0 whitespace-nowrap"
                 >
                   <FileText size={14} />
                   <span>{t.ctaHeroQuote}</span>
@@ -920,15 +939,143 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </>
             ) : (
               <button
+                type="button"
                 onClick={() => handleActionClick()}
-                className="shimmer-btn bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3500] hover:from-[#E04B00] hover:to-[#FF5500] text-white text-[11px] sm:text-xs font-extrabold px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-full shadow-md shadow-[#FF5500]/25 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer group shrink-0"
+                className="shimmer-btn bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3500] hover:from-[#E04B00] hover:to-[#FF5500] text-white text-xs font-extrabold px-3 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-md shadow-[#FF5500]/25 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer group shrink-0 whitespace-nowrap"
               >
                 {objective === 'quote' ? <FileText size={14} /> : <MessageCircle size={14} className="group-hover:rotate-12 transition-transform duration-300 shrink-0" />}
                 <span>{objective === 'quote' ? t.ctaHeroQuote : t.ctaHeader}</span>
               </button>
             )}
+
+            {/* Mobile Hamburger Toggle Button */}
+            {!isFree && (
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 rounded-xl text-stone-700 hover:text-[#FF5500] hover:bg-stone-100 transition-colors cursor-pointer shrink-0 ml-1"
+                aria-label="Menú de navegación"
+              >
+                {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+              </button>
+            )}
           </div>
+
         </div>
+
+        {/* MOBILE NAVIGATION DRAWER (Desplegable limpio y ordenado en Móvil) */}
+        {!isFree && mobileMenuOpen && (
+          <div className="lg:hidden border-t border-stone-200 bg-white/98 backdrop-blur-xl px-4 py-5 shadow-2xl transition-all">
+            <div className="space-y-4">
+              
+              {/* Navigation Links Grid */}
+              <div className="grid grid-cols-2 gap-2">
+                <a
+                  href="#tours"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                >
+                  <MapPin size={15} className="text-[#FF5500] shrink-0" />
+                  <span>{t.navTours}</span>
+                </a>
+                <a
+                  href="#galeria"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                >
+                  <Pin size={15} className="text-[#FF5500] shrink-0" />
+                  <span>{t.navGallery}</span>
+                </a>
+                {!isBasic && (
+                  <a
+                    href="#paquetes"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                  >
+                    <Backpack size={15} className="text-[#FF5500] shrink-0" />
+                    <span>{t.navPackages}</span>
+                  </a>
+                )}
+                <a
+                  href="#por-que-nosotros"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                >
+                  <ShieldCheck size={15} className="text-[#FF5500] shrink-0" />
+                  <span>{t.navWhyUs}</span>
+                </a>
+                {!isBasic && (
+                  <a
+                    href="#resenas"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                  >
+                    <Star size={15} className="text-amber-500 shrink-0" />
+                    <span>{t.navReviews}</span>
+                  </a>
+                )}
+                <a
+                  href="#soporte-faq"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                >
+                  <BadgeCheck size={15} className="text-[#FF5500] shrink-0" />
+                  <span>{t.navFaq}</span>
+                </a>
+              </div>
+
+              {/* Selector de Idiomas en Móvil */}
+              <div className="pt-3 border-t border-stone-100">
+                <span className="text-[10px] font-black uppercase text-stone-400 block mb-2 tracking-wider">
+                  {lang === 'en' ? 'Select Language' : lang === 'pt' ? 'Selecionar Idioma' : lang === 'fr' ? 'Sélectionner la Langue' : lang === 'it' ? 'Seleziona Lingua' : 'Seleccionar Idioma'}
+                </span>
+                <div className="grid grid-cols-5 gap-1.5">
+                  {activeLanguages.map((l) => (
+                    <button
+                      key={l}
+                      type="button"
+                      onClick={() => { setLang(l); setMobileMenuOpen(false); }}
+                      className={`p-2 rounded-xl text-xs font-bold flex flex-col items-center justify-center gap-1 transition-all cursor-pointer ${
+                        lang === l 
+                          ? 'bg-[#FF5500] text-white shadow-md font-black ring-2 ring-[#FF5500]/30' 
+                          : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                      }`}
+                    >
+                      <span className="text-base leading-none">{l === 'es' ? '🇵🇪' : l === 'en' ? '🇺🇸' : l === 'pt' ? '🇧🇷' : l === 'fr' ? '🇫🇷' : '🇮🇹'}</span>
+                      <span className="uppercase text-[10px] font-bold">{l}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Acciones directas en Móvil */}
+              <div className="pt-3 border-t border-stone-100 flex flex-col gap-2">
+                <button
+                  type="button"
+                  onClick={() => { setMobileMenuOpen(false); handleActionClick(undefined, 'whatsapp'); }}
+                  className="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-md cursor-pointer"
+                >
+                  <MessageCircle size={16} />
+                  <span>{lang === 'en' ? 'Chat on WhatsApp' : lang === 'pt' ? 'Conversar no WhatsApp' : lang === 'fr' ? 'Discuter sur WhatsApp' : lang === 'it' ? 'Chatta su WhatsApp' : 'Chatear por WhatsApp'} (+{whatsappNumber})</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => { setMobileMenuOpen(false); handleActionClick(undefined, 'quote'); }}
+                  className="w-full bg-gradient-to-r from-[#FF5500] to-[#FF3500] text-white py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-md cursor-pointer"
+                >
+                  <FileText size={16} />
+                  <span>{t.ctaHeroQuote}</span>
+                </button>
+              </div>
+
+              {/* Distintivo Oficial Safe Travels */}
+              <div className="pt-2 text-center text-[10px] text-stone-400 font-medium">
+                {t.officialBar}
+              </div>
+
+            </div>
+          </div>
+        )}
       </header>
 
       {/* 3. HERO SECTION (PASO 2: FOTOGRAFÍA DE PORTADA & OBJETIVO COMERCIAL) */}
