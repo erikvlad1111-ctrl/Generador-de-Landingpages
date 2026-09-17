@@ -464,12 +464,29 @@ export default function NewLandingDemo() {
   const [objective, setObjective] = useState<ObjectiveType>('whatsapp');
   const [template, setTemplate] = useState<TemplateType>('adventure');
   const [language, setLanguage] = useState<LanguageType>('es');
+  const [selectedLanguages, setSelectedLanguages] = useState<LanguageType[]>(['es', 'en']);
   const [selectedHeroImage, setSelectedHeroImage] = useState<string>(SAMPLE_TOUR_IMAGES[2].url);
   const [customImageUrl, setCustomImageUrl] = useState('');
   const [tone, setTone] = useState<'persuasive' | 'luxury' | 'historical'>('persuasive');
   const [description, setDescription] = useState(
     'Un trekking legendario de alta montaña cruzando nevados imponentes, ceja de selva y plantaciones de café hasta la ciudadela inca de Machu Picchu.'
   );
+
+  const handleToggleLanguage = (langId: LanguageType) => {
+    if (selectedLanguages.includes(langId)) {
+      if (selectedLanguages.length > 1) {
+        const next = selectedLanguages.filter(l => l !== langId);
+        setSelectedLanguages(next);
+        if (language === langId) {
+          setLanguage(next[0]);
+        }
+      }
+    } else {
+      const next = [...selectedLanguages, langId];
+      setSelectedLanguages(next);
+      setLanguage(langId);
+    }
+  };
 
   const activeHeroImg = customImageUrl.trim() || selectedHeroImage;
 
@@ -503,6 +520,7 @@ export default function NewLandingDemo() {
     setObjective(preset.objective);
     setTemplate(preset.template);
     setLanguage(preset.language);
+    setSelectedLanguages([preset.language, preset.language === 'en' ? 'es' : 'en']);
     setSelectedHeroImage(SAMPLE_TOUR_IMAGES[preset.imageIndex].url);
     setCustomImageUrl('');
     setDescription(preset.description);
@@ -589,6 +607,7 @@ export default function NewLandingDemo() {
           objective,
           template,
           language,
+          languages: selectedLanguages,
           tier,
           heroImage: activeHeroImg,
           galleryImages,
@@ -950,35 +969,44 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 4: ELEGIR IDIOMA DE LA LANDING */}
+          {/* PASO 4: ELEGIR IDIOMA DE LA LANDING (MULTI-SELECCIÓN) */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-slate-100 gap-2">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                 <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">4</span>
                 Elegir Idiomas de la Landing
               </label>
-              <span className="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-md flex items-center gap-1 border border-blue-100">
-                <Globe size={13} /> Mercado Internacional & Receptivo
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-extrabold text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200/80 flex items-center gap-1.5">
+                  <Globe size={13} className="text-blue-600" />
+                  {selectedLanguages.length} {selectedLanguages.length === 1 ? 'idioma seleccionado' : 'idiomas seleccionados (Multilenguaje)'}
+                </span>
+              </div>
             </div>
 
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Selecciona el idioma con el que la IA estructurará y redactará los títulos, copys persuasivos, itinerarios y llamados a la acción de tu web:
-            </p>
+            <div className="bg-blue-50/60 border border-blue-200/60 rounded-2xl p-3.5 flex items-start gap-3">
+              <div className="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs mt-0.5">
+                <Check size={16} strokeWidth={3} />
+              </div>
+              <div className="text-xs text-slate-600 leading-relaxed">
+                <strong className="text-slate-900 block mb-0.5">Puedes marcar 2, 3 o los 5 idiomas al mismo tiempo:</strong>
+                Haz clic sobre las tarjetas para marcarlas o desmarcarlas. La landing generada incluirá un selector de banderas interactivo para que los turistas alternen entre los idiomas que hayas seleccionado.
+              </div>
+            </div>
 
-            {/* Language Selection Visual Cards Grid (5 Languages) */}
+            {/* Language Selection Visual Cards Grid (5 Languages Multi-Select) */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
               {[
                 { 
-                  id: 'en', 
+                  id: 'en' as LanguageType, 
                   name: 'Inglés', 
                   native: 'English', 
                   flag: '🇺🇸', 
                   desc: 'Turismo receptivo USA, UK, Europa y global',
-                  badge: 'Alta Conversión'
+                  badge: 'Alta Demanda'
                 },
                 { 
-                  id: 'es', 
+                  id: 'es' as LanguageType, 
                   name: 'Español', 
                   native: 'Español', 
                   flag: '🇵🇪', 
@@ -986,7 +1014,7 @@ export default function NewLandingDemo() {
                   badge: 'Local & Regional'
                 },
                 { 
-                  id: 'pt', 
+                  id: 'pt' as LanguageType, 
                   name: 'Portugués', 
                   native: 'Português', 
                   flag: '🇧🇷', 
@@ -994,7 +1022,7 @@ export default function NewLandingDemo() {
                   badge: 'Mercado VIP'
                 },
                 { 
-                  id: 'fr', 
+                  id: 'fr' as LanguageType, 
                   name: 'Francés', 
                   native: 'Français', 
                   flag: '🇫🇷', 
@@ -1002,7 +1030,7 @@ export default function NewLandingDemo() {
                   badge: 'Cultural'
                 },
                 { 
-                  id: 'it', 
+                  id: 'it' as LanguageType, 
                   name: 'Italiano', 
                   native: 'Italiano', 
                   flag: '🇮🇹', 
@@ -1010,28 +1038,36 @@ export default function NewLandingDemo() {
                   badge: 'Aventura & Arte'
                 }
               ].map((langItem) => {
-                const isSelected = language === langItem.id;
+                const isSelected = selectedLanguages.includes(langItem.id);
+                const isPrimary = language === langItem.id;
                 return (
                   <button
                     key={langItem.id}
                     type="button"
-                    onClick={() => setLanguage(langItem.id as LanguageType)}
+                    onClick={() => handleToggleLanguage(langItem.id)}
                     className={`relative p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                       isSelected
-                        ? 'border-blue-600 bg-blue-50/80 shadow-sm ring-2 ring-blue-500/20 scale-[1.02]'
-                        : 'border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/50'
+                        ? 'border-blue-600 bg-blue-50/90 shadow-md ring-2 ring-blue-500/20 scale-[1.02]'
+                        : 'border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/70'
                     }`}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-2xl">{langItem.flag}</span>
-                        {isSelected && (
-                          <span className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xs">
-                            <Check size={12} strokeWidth={3} />
-                          </span>
+                        <div className={`w-5 h-5 rounded-md flex items-center justify-center border transition-all ${
+                          isSelected 
+                            ? 'bg-blue-600 border-blue-600 text-white shadow-xs' 
+                            : 'border-slate-300 bg-white'
+                        }`}>
+                          {isSelected && <Check size={13} strokeWidth={3} />}
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-xs font-black text-slate-900 block leading-tight">{langItem.name}</span>
+                        {isPrimary && (
+                          <span className="text-[8px] bg-blue-600 text-white font-black px-1 rounded">Base</span>
                         )}
                       </div>
-                      <span className="text-xs font-black text-slate-900 block leading-tight">{langItem.name}</span>
                       <span className="text-[10px] text-slate-400 font-semibold block mt-0.5">{langItem.native}</span>
                       <span className="text-[10px] text-slate-500 font-normal mt-1.5 block leading-tight">{langItem.desc}</span>
                     </div>
@@ -1040,12 +1076,72 @@ export default function NewLandingDemo() {
                       <span className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded ${
                         isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'
                       }`}>
-                        {langItem.badge}
+                        {isSelected ? '✓ Marcado' : '+ Clic para marcar'}
                       </span>
                     </div>
                   </button>
                 );
               })}
+            </div>
+
+            {/* Quick multi-language preset pills */}
+            <div className="pt-2 flex flex-wrap items-center gap-2 text-xs border-t border-slate-100">
+              <span className="text-slate-500 text-[11px] font-bold">Presets rápidos:</span>
+              <button
+                type="button"
+                onClick={() => { setSelectedLanguages(['en', 'es']); setLanguage('es'); }}
+                className={`px-3 py-1.5 rounded-xl text-[11px] font-extrabold border transition-all cursor-pointer ${
+                  selectedLanguages.length === 2 && selectedLanguages.includes('en') && selectedLanguages.includes('es')
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                }`}
+              >
+                2 Idiomas: Bilingüe (🇺🇸 EN + 🇵🇪 ES)
+              </button>
+              <button
+                type="button"
+                onClick={() => { setSelectedLanguages(['en', 'es', 'pt']); setLanguage('es'); }}
+                className={`px-3 py-1.5 rounded-xl text-[11px] font-extrabold border transition-all cursor-pointer ${
+                  selectedLanguages.length === 3 && selectedLanguages.includes('pt') && selectedLanguages.includes('en') && selectedLanguages.includes('es')
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                }`}
+              >
+                3 Idiomas: Trilingüe (🇺🇸 EN + 🇵🇪 ES + 🇧🇷 PT)
+              </button>
+              <button
+                type="button"
+                onClick={() => { setSelectedLanguages(['en', 'es', 'pt', 'fr', 'it']); setLanguage('es'); }}
+                className={`px-3 py-1.5 rounded-xl text-[11px] font-extrabold border transition-all cursor-pointer ${
+                  selectedLanguages.length === 5
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                }`}
+              >
+                Todos los 5 Idiomas 🌐 (EN + ES + PT + FR + IT)
+              </button>
+              <button
+                type="button"
+                onClick={() => { setSelectedLanguages(['es']); setLanguage('es'); }}
+                className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                  selectedLanguages.length === 1 && selectedLanguages[0] === 'es'
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                }`}
+              >
+                Solo Español 🇵🇪
+              </button>
+              <button
+                type="button"
+                onClick={() => { setSelectedLanguages(['en']); setLanguage('en'); }}
+                className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                  selectedLanguages.length === 1 && selectedLanguages[0] === 'en'
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                }`}
+              >
+                Solo Inglés 🇺🇸
+              </button>
             </div>
           </div>
 
@@ -1620,8 +1716,9 @@ export default function NewLandingDemo() {
               }`}>
                 Plan {tier}
               </span>
-              <span className="text-[10px] bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded-full border border-slate-200">
-                {template.toUpperCase()} • {language.toUpperCase()}
+              <span className="text-[10px] bg-blue-50 text-blue-700 font-extrabold px-2.5 py-0.5 rounded-full border border-blue-200 flex items-center gap-1">
+                <Globe size={11} />
+                {selectedLanguages.map(l => l.toUpperCase()).join(' + ')}
               </span>
             </div>
           </div>
@@ -1658,7 +1755,7 @@ export default function NewLandingDemo() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-black/40 to-black/60" />
                     
-                    {/* Top Bar */}
+                    {/* Top Bar with Dynamic Language Switcher */}
                     <div className="absolute top-3 inset-x-3 flex justify-between items-center text-[10px]">
                       <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-emerald-400 font-extrabold flex items-center gap-1.5 border border-white/10">
                         <span className="relative flex h-1.5 w-1.5">
@@ -1667,9 +1764,29 @@ export default function NewLandingDemo() {
                         </span>
                         DIRCETUR Oficial
                       </span>
-                      <span className="bg-white/20 backdrop-blur-md text-white font-bold px-2 py-0.5 rounded-full">
-                        {price || '$380 USD'}
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        {/* Selected Languages Switcher in Preview */}
+                        <div className="flex items-center bg-black/70 backdrop-blur-md rounded-md p-0.5 border border-white/15">
+                          {selectedLanguages.map(l => (
+                            <button
+                              key={l}
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setLanguage(l);
+                              }}
+                              className={`px-1.5 py-0.5 rounded text-[8px] font-black uppercase transition-all ${
+                                l === language ? 'bg-[#FF5500] text-white shadow-xs' : 'text-stone-300 hover:text-white'
+                              }`}
+                            >
+                              {l.toUpperCase()}
+                            </button>
+                          ))}
+                        </div>
+                        <span className="bg-white/20 backdrop-blur-md text-white font-bold px-2 py-0.5 rounded-full">
+                          {price || '$380 USD'}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Hero Content */}

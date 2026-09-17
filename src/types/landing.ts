@@ -41,6 +41,7 @@ export interface LandingData {
   objective: ObjectiveType;
   template: TemplateType;
   language: LanguageType;
+  languages?: LanguageType[];
   status: 'published' | 'draft';
   date: string;
   views: string;

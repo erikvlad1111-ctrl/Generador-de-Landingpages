@@ -417,9 +417,9 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </span>
             )}
 
-            {/* Selector interactivo de Idioma (ES / EN / PT / FR / IT) */}
+            {/* Selector interactivo de Idioma (muestra los idiomas seleccionados) */}
             <div className="flex items-center bg-stone-800 rounded-lg p-0.5 border border-stone-700">
-              {(['es', 'en', 'pt', 'fr', 'it'] as LanguageType[]).map((l) => (
+              {(data?.languages && data.languages.length > 0 ? data.languages : (['es', 'en', 'pt', 'fr', 'it'] as LanguageType[])).map((l) => (
                 <button
                   key={l}
                   onClick={() => setLang(l)}

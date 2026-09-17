@@ -526,6 +526,7 @@ export function simulateAiGeneration(params: {
   objective: ObjectiveType;
   template: TemplateType;
   language: LanguageType;
+  languages?: LanguageType[];
   tier?: PlanTier;
   heroImage?: string;
   galleryImages?: string[];
@@ -667,6 +668,7 @@ export function simulateAiGeneration(params: {
     objective: params.objective,
     template: params.template,
     language: params.language,
+    languages: params.languages && params.languages.length > 0 ? params.languages : [params.language],
     status: 'draft',
     date: new Date().toISOString().split('T')[0],
     views: '0',
