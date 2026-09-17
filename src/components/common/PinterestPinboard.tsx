@@ -13,6 +13,7 @@ import {
   Share2
 } from 'lucide-react';
 import { PlanTier, TemplateType, LanguageType } from '@/types/landing';
+import { translateText } from '@/data/translations';
 
 interface PinterestPinboardProps {
   images?: string[];
@@ -27,8 +28,6 @@ interface PinterestPinboardProps {
 interface PinItem {
   id: number;
   url: string;
-  title: string;
-  category: string;
   likes: number;
   author: string;
   aspect: 'portrait' | 'landscape' | 'square';
@@ -48,9 +47,12 @@ export default function PinterestPinboard({
   const isFr = lang === 'fr';
   const isIt = lang === 'it';
 
+  const localizedDestination = translateText(destination, lang) || destination;
+  const localizedTourName = translateText(tourName, lang) || tourName;
+
   const t = {
     badge: isEn ? 'Inspirational Pinboard' : isPt ? 'Quadro de Inspiração' : isFr ? 'Tableau d’Inspiration' : isIt ? 'Bacheca di Ispirazione' : 'Tablero de Pines de Inspiración',
-    title: isEn ? `Postcards & Moments in ${destination}` : isPt ? `Cartões-Postais & Momentos em ${destination}` : isFr ? `Cartes Postales & Moments à ${destination}` : isIt ? `Cartoline & Momenti a ${destination}` : `Postales & Momentos en ${destination}`,
+    title: isEn ? `Postcards & Moments in ${localizedDestination}` : isPt ? `Cartões-Postais & Momentos em ${localizedDestination}` : isFr ? `Cartes Postales & Moments à ${localizedDestination}` : isIt ? `Cartoline & Momenti a ${localizedDestination}` : `Postales & Momentos en ${localizedDestination}`,
     desc: isEn 
       ? 'Explore authentic high-resolution moments captured along the route. Visual curation inspired by travel journals and Pinterest boards.'
       : isPt
@@ -65,6 +67,72 @@ export default function PinterestPinboard({
     save: isEn ? 'Save' : isPt ? 'Salvar' : isFr ? 'Enregistrer' : isIt ? 'Salva' : 'Guardar',
     saved: isEn ? 'Saved' : isPt ? 'Salvo' : isFr ? 'Enregistré' : isIt ? 'Salvato' : 'Guardado'
   };
+
+  const getLocalizedPinTitle = (idx: number) => {
+    if (idx === 0) {
+      if (isEn) return `Panoramic View of ${localizedDestination}`;
+      if (isPt) return `Panorâmica de ${localizedDestination}`;
+      if (isFr) return `Vue Panoramique de ${localizedDestination}`;
+      if (isIt) return `Panoramica di ${localizedDestination}`;
+      return `Panorámica de ${localizedDestination}`;
+    }
+    if (idx === 1) {
+      if (isEn) return `Magical Moments in ${localizedTourName}`;
+      if (isPt) return `Momentos Mágicos em ${localizedTourName}`;
+      if (isFr) return `Moments Magiques à ${localizedTourName}`;
+      if (isIt) return `Momenti Magici a ${localizedTourName}`;
+      return `Momentos Mágicos en ${localizedTourName}`;
+    }
+    if (idx === 2) {
+      if (isEn) return 'Scenic Andean Perspective';
+      if (isPt) return 'Perspectiva Cênica Andina';
+      if (isFr) return 'Perspective Scénique des Andes';
+      if (isIt) return 'Prospettiva Scenica Andina';
+      return 'Perspectiva Escénica Andina';
+    }
+    if (idx === 3) {
+      if (isEn) return 'Highland Colors & Textures';
+      if (isPt) return 'Cores e Texturas de Altitude';
+      if (isFr) return 'Couleurs et Textures d’Altitude';
+      if (isIt) return 'Colori e Texture d’Altitudine';
+      return 'Colores y Texturas de Altura';
+    }
+    if (idx === 4) {
+      if (isEn) return 'Wildlife & Nature Encounters';
+      if (isPt) return 'Encontros com a Natureza';
+      if (isFr) return 'Rencontres avec la Nature';
+      if (isIt) return 'Incontri con la Natura';
+      return 'Encuentros con la Naturaleza';
+    }
+    if (isEn) return 'Unforgettable Travel Postcard';
+    if (isPt) return 'Cartão Postal Inesquecível';
+    if (isFr) return 'Carte Postale Inoubliable';
+    if (isIt) return 'Cartolina Indimenticabile di Viaggio';
+    return 'Postal Inolvidable de Viaje';
+  };
+
+  const getLocalizedPinCategory = (idx: number) => {
+    if (idx % 3 === 0) {
+      if (isEn) return 'Photography & Landscapes';
+      if (isPt) return 'Fotografia & Paisagens';
+      if (isFr) return 'Photographie & Paysages';
+      if (isIt) return 'Fotografia & Paesaggi';
+      return 'Fotografía & Paisajes';
+    }
+    if (idx % 2 === 0) {
+      if (isEn) return 'Travel Journal';
+      if (isPt) return 'Diário de Viagem';
+      if (isFr) return 'Carnet de Voyage';
+      if (isIt) return 'Diario di Viaggio';
+      return 'Bitácora de Viaje';
+    }
+    if (isEn) return 'Living Culture';
+    if (isPt) return 'Cultura Viva';
+    if (isFr) return 'Culture Vivante';
+    if (isIt) return 'Cultura Viva';
+    return 'Cultura Viva';
+  };
+
   // Pool of fallback curated high-resolution photos of Cusco/Andes
   const defaultImages = [
     'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop', // MP
@@ -87,18 +155,6 @@ export default function PinterestPinboard({
   const initialPins: PinItem[] = activePhotos.map((url, idx) => ({
     id: idx,
     url,
-    title: idx === 0 
-      ? `Panorámica de ${destination}` 
-      : idx === 1 
-      ? `Momentos Mágicos en ${tourName}` 
-      : idx === 2 
-      ? `Perspectiva Escénica Andina` 
-      : idx === 3 
-      ? `Colores y Texturas de Altura` 
-      : idx === 4 
-      ? `Encuentros con la Naturaleza` 
-      : `Postal Inolvidable de Viaje`,
-    category: idx % 3 === 0 ? 'Fotografía & Paisajes' : idx % 2 === 0 ? 'Bitácora de Viaje' : 'Cultura Viva',
     likes: 120 + idx * 37,
     author: '@cuscocreativos',
     aspect: idx % 2 === 0 ? 'portrait' : 'square'
@@ -210,7 +266,7 @@ export default function PinterestPinboard({
                 } rounded-2xl overflow-hidden bg-slate-100`}>
                   <Image
                     src={pin.url}
-                    alt={pin.title}
+                    alt={getLocalizedPinTitle(pin.id)}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -239,7 +295,7 @@ export default function PinterestPinboard({
                   {/* Bottom Pin Category on Hover */}
                   <div className="absolute bottom-3 left-3 right-3 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-between text-white text-[11px]">
                     <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full font-medium">
-                      {pin.category}
+                      {getLocalizedPinCategory(pin.id)}
                     </span>
                     <button
                       type="button"
@@ -259,13 +315,13 @@ export default function PinterestPinboard({
                   <h4 className={`text-xs sm:text-sm font-bold truncate ${
                     isBoho ? 'font-serif text-stone-800' : isPremium ? 'font-serif text-amber-200' : ''
                   }`}>
-                    {pin.title}
+                    {getLocalizedPinTitle(pin.id)}
                   </h4>
 
                   <div className="flex items-center justify-between text-[11px] text-slate-400">
                     <span className="flex items-center gap-1 truncate">
                       <MapPin size={12} className={isPremium ? 'text-amber-400' : isBoho ? 'text-[#C86D51]' : 'text-emerald-500'} />
-                      <span className="truncate">{destination}</span>
+                      <span className="truncate">{localizedDestination}</span>
                     </span>
                     <span className="font-mono text-[10px] opacity-70">
                       {pin.author}

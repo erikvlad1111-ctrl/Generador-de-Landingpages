@@ -218,84 +218,155 @@ export default function TourSupportAndFaqs({
 
   const cleanPhone = (whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const encodedMsg = encodeURIComponent(
-    isEn 
+    lang === 'en' 
       ? `Hello ${guideName}, I have an inquiry regarding the "${tourName}" tour in ${destination}. Could you please assist me?`
+      : lang === 'pt'
+      ? `Olá ${guideName}, tenho uma dúvida sobre o passeio "${tourName}" em ${destination}. Poderia me ajudar?`
+      : lang === 'fr'
+      ? `Bonjour ${guideName}, j’ai une question concernant le circuit "${tourName}" à ${destination}. Pourriez-vous m’aider ?`
+      : lang === 'it'
+      ? `Ciao ${guideName}, ho una domanda riguardo al tour "${tourName}" a ${destination}. Potreste aiutarmi?`
       : `Hola ${guideName}, tengo una consulta sobre el tour "${tourName}" en ${destination}. ¿Me podrían brindar asistencia?`
   );
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
-  // Default English FAQs
-  const defaultEnFaqs: FAQItem[] = [
-    {
-      q: `What exactly does the "${tourName}" tour service include?`,
-      a: 'Includes official licensed tourist transport, professional bilingual guide accredited by DIRCETUR Cusco, emergency oxygen tank for altitude, complete first aid kit, and personalized concierge.'
-    },
-    {
-      q: 'How does booking confirmation work and what payment methods are accepted?',
-      a: 'Confirmation is instant via WhatsApp or private quote. You can secure your slot with international credit/debit cards, bank transfer or digital payments with zero hidden fees.'
-    },
-    {
-      q: 'Why is booking with us completely safe? (Licenses & Badges)',
-      a: 'We are a formal registered Peruvian tourism agency with active tax ID (RUC), official DIRCETUR Cusco license, and international Safe Travels seal. All bookings are 100% legally backed.'
-    },
-    {
-      q: 'What altitude sickness (soroche) protocols and care do you provide?',
-      a: `We recommend acclimatizing 24 to 48 hours in Cusco before the tour. Our official guide monitors oxygenation with a pulse oximeter, and carries portable medical oxygen throughout ${destination}.`
-    },
-    {
-      q: 'What is your rescheduling and cancellation policy?',
-      a: 'We offer hassle-free rescheduling with 24-hour notice in case of adverse weather, public strikes or justified medical circumstances.'
-    },
-    {
-      q: 'Where is the pickup point and what time does the journey start?',
-      a: 'We provide direct door-to-door pickup from your hotel or accommodation located in Cusco historic center, reconfirming the exact time the evening prior.'
-    }
-  ];
+  // 5-Language Default FAQs
+  const ALL_FAQS: Record<LanguageType, FAQItem[]> = {
+    es: [
+      {
+        q: `¿Qué incluye exactamente el servicio del tour "${tourName}"?`,
+        a: `Incluye transporte turístico autorizado ida y vuelta, guiado oficial profesional bilingüe acreditado por DIRCETUR Cusco, balón de oxígeno para la altitud, botiquín de primeros auxilios y atención personalizada.`
+      },
+      {
+        q: '¿Cómo funciona la confirmación de reserva y qué métodos de pago aceptan?',
+        a: 'La confirmación es inmediata vía WhatsApp. Puedes asegurar tu cupo mediante transferencia bancaria (BCP, Interbank, BBVA), Yape, Plin o tarjetas de crédito/débito internacionales sin cargos ocultos.'
+      },
+      {
+        q: '¿Por qué es seguro reservar con nosotros? (Sellos y Licencias)',
+        a: 'Somos agencia formal con RUC 20 activo, acreditación oficial DIRCETUR Cusco y sello internacional Safe Travels. Tus reservas están 100% garantizadas y emitimos comprobantes oficiales.'
+      },
+      {
+        q: '¿Qué precauciones y protocolos aplican para el mal de altura (soroche)?',
+        a: `Recomendamos aclimatarse al menos 24 a 48 horas en Cusco antes del tour. Nuestro guía monitorea el ritmo cardíaco y oxigenación, disponiendo de botiquín andino y balón de oxígeno medicinal para altitudes de ${destination}.`
+      },
+      {
+        q: '¿Cuál es la política de reprogramación o cancelación por clima o imprevistos?',
+        a: 'Ofrecemos reprogramación sin penalidad avisando con 24 horas de anticipación ante inclemencias climáticas, huelgas o motivos médicos justificados.'
+      },
+      {
+        q: '¿Dónde es el punto de encuentro y a qué hora inicia el recorrido?',
+        a: 'Brindamos servicio de recojo directo en la puerta de tu hotel o alojamiento ubicado dentro del centro histórico de Cusco, coordinando la hora exacta por WhatsApp la noche anterior.'
+      }
+    ],
+    en: [
+      {
+        q: `What exactly does the "${tourName}" tour service include?`,
+        a: 'Includes official licensed tourist transport, professional bilingual guide accredited by DIRCETUR Cusco, emergency oxygen tank for altitude, complete first aid kit, and personalized concierge.'
+      },
+      {
+        q: 'How does booking confirmation work and what payment methods are accepted?',
+        a: 'Confirmation is instant via WhatsApp or private quote. You can secure your slot with international credit/debit cards, bank transfer or digital payments with zero hidden fees.'
+      },
+      {
+        q: 'Why is booking with us completely safe? (Licenses & Badges)',
+        a: 'We are a formal registered Peruvian tourism agency with active tax ID (RUC), official DIRCETUR Cusco license, and international Safe Travels seal. All bookings are 100% legally backed.'
+      },
+      {
+        q: 'What altitude sickness (soroche) protocols and care do you provide?',
+        a: `We recommend acclimatizing 24 to 48 hours in Cusco before the tour. Our official guide monitors oxygenation with a pulse oximeter, and carries portable medical oxygen throughout ${destination}.`
+      },
+      {
+        q: 'What is your rescheduling and cancellation policy?',
+        a: 'We offer hassle-free rescheduling with 24-hour notice in case of adverse weather, public strikes or justified medical circumstances.'
+      },
+      {
+        q: 'Where is the pickup point and what time does the journey start?',
+        a: 'We provide direct door-to-door pickup from your hotel or accommodation located in Cusco historic center, reconfirming the exact time the evening prior.'
+      }
+    ],
+    pt: [
+      {
+        q: `O que inclui exatamente o serviço do passeio "${tourName}"?`,
+        a: 'Inclui transporte turístico oficial com ar-condicionado, guia oficial bilíngue credenciado pela DIRCETUR Cusco, balão de oxigênio permanente para altitude, kit de primeiros socorros e atendimento 24/7.'
+      },
+      {
+        q: 'Como funciona a confirmação da reserva e quais formas de pagamento são aceitas?',
+        a: 'Confirmação imediata por WhatsApp ou orçamento privado. Aceitamos cartões internacionais de crédito e débito, transferências ou pagamentos digitais sem taxas ocultas.'
+      },
+      {
+        q: 'Por que é 100% seguro reservar conosco? (Selos e Licenças)',
+        a: 'Somos agência formal registrada com CNPJ/RUC ativo, credencial oficial DIRCETUR Cusco e selo internacional Safe Travels reconhecido mundialmente.'
+      },
+      {
+        q: 'Quais precauções vocês tomam para o mal de altitude (soroche)?',
+        a: `Recomendamos repouso prévio de 24 a 48 horas em Cusco. Nossos veículos contam com balão de oxigênio medicinal, oxímetro de pulso e chá de coca para garantir conforto em ${destination}.`
+      },
+      {
+        q: 'Qual a política de cancelamento ou reagendamento?',
+        a: 'Reagendamento gratuito com aviso prévio de 24 horas diante de condições climáticas adversas ou justificativa médica.'
+      },
+      {
+        q: 'Onde é o ponto de encontro e qual o horário de partida?',
+        a: 'Oferecemos embarque direto na porta do seu hotel no centro histórico de Cusco, reconfirmando o horário exato na noite anterior.'
+      }
+    ],
+    fr: [
+      {
+        q: `Que comprend exactement le service pour le circuit "${tourName}" ?`,
+        a: 'Comprend le transport touristique officiel tout confort, un guide officiel bilingue agréé par la DIRCETUR Cusco, une bouteille d’oxygène pour l’altitude, une trousse de premiers soins et un suivi 24/7.'
+      },
+      {
+        q: 'Comment s’effectue la confirmation et quels sont les moyens de paiement ?',
+        a: 'Confirmation immédiate par WhatsApp ou devis en ligne. Cartes bancaires internationales acceptées, virements bancaires et paiements sécurisés sans frais cachés.'
+      },
+      {
+        q: 'Pourquoi réserver en toute confiance avec nous ? (Agréments & Labels)',
+        a: 'Agence réceptive officielle enregistrée avec licence DIRCETUR Cusco et label mondial Safe Travels. Toutes les prestations sont garanties contractuellement.'
+      },
+      {
+        q: 'Quelles précautions prenez-vous contre le mal des montagnes (soroche) ?',
+        a: `Nous recommandons 24 à 48 heures d’acclimatation à Cusco. Nos guides sont équipés d’un oxymètre et d’oxygène médical permanent tout au long de ${destination}.`
+      },
+      {
+        q: 'Quelle est la politique de modification ou d’annulation ?',
+        a: 'Report sans frais avec un préavis de 24 heures en cas d’intempéries ou de raison médicale justifiée.'
+      },
+      {
+        q: 'Où se situe le point de départ et à quelle heure commence l’excursion ?',
+        a: 'Prise en charge personnalisée à la porte de votre hébergement dans le centre historique de Cusco, heure reconfirmée la veille au soir.'
+      }
+    ],
+    it: [
+      {
+        q: `Cosa include esattamente il servizio del tour "${tourName}"?`,
+        a: 'Include trasporto turistico autorizzato con aria condizionata, guida ufficiale bilingue abilitata DIRCETUR Cusco, bombola di ossigeno per l’altitudine, kit di pronto soccorso e assistenza 24/7.'
+      },
+      {
+        q: 'Come avviene la conferma della prenotazione e quali pagamenti sono accettati?',
+        a: 'Conferma immediata via WhatsApp o preventivo riservato. Accettiamo carte di credito/debito internazionali, bonifici e pagamenti digitali senza costi nascosti.'
+      },
+      {
+        q: 'Perché è sicuro prenotare con noi? (Licenze e Certificazioni)',
+        a: 'Siamo un tour operator formale registrato con partita IVA peruviana (RUC), licenza DIRCETUR Cusco e sigillo internazionale Safe Travels.'
+      },
+      {
+        q: 'Quali precauzioni adottate per il mal di montagna (soroche)?',
+        a: `Consigliamo un’acclimatazione di 24-48 ore a Cusco. La guida monitora costantemente l’ossigenazione e dispone di ossigeno medicale portatile in ${destination}.`
+      },
+      {
+        q: 'Qual è la politica di cancellazione o riprogrammazione?',
+        a: 'Riprogrammazione gratuita con 24 ore di preavviso in caso di maltempo o motivi medici documentati.'
+      },
+      {
+        q: 'Dove si trova il punto di ritrovo e a che ora inizia il tour?',
+        a: 'Offriamo prelievo diretto presso il tuo hotel o alloggio nel centro storico di Cusco, con orario esatto riconfermato la sera precedente.'
+      }
+    ]
+  };
 
-  // Complete official FAQs with Bilingual Support
-  const displayFaqs: FAQItem[] = isEn
-    ? (faqs && faqs.length > 0 ? faqs.map(f => {
-        const lower = f.q.toLowerCase();
-        if (lower.includes('incluye')) {
-          return {
-            q: `What exactly does the VIP service include?`,
-            a: 'Includes round-trip luxury train tickets, preferred circuit entrances to Machu Picchu, private certified historian guide, gourmet buffet lunch and door-to-door private transport.'
-          };
-        }
-        if (lower.includes('anticipación') || lower.includes('reservar')) {
-          return {
-            q: 'How far in advance should I book?',
-            a: 'We recommend booking at least 3 to 4 weeks in advance due to strictly limited daily capacity on luxury trains and citadel access.'
-          };
-        }
-        return f;
-      }) : defaultEnFaqs)
-    : (faqs && faqs.length > 0 ? faqs : [
-        {
-          q: `¿Qué incluye exactamente el servicio del tour "${tourName}"?`,
-          a: `Incluye transporte turístico autorizado ida y vuelta, guiado oficial profesional bilingüe acreditado por DIRCETUR Cusco, balón de oxígeno para la altitud, botiquín de primeros auxilios y atención personalizada.`
-        },
-        {
-          q: '¿Cómo funciona la confirmación de reserva y qué métodos de pago aceptan?',
-          a: 'La confirmación es inmediata vía WhatsApp. Puedes asegurar tu cupo mediante transferencia bancaria (BCP, Interbank, BBVA), Yape, Plin o tarjetas de crédito/débito internacionales sin cargos ocultos.'
-        },
-        {
-          q: '¿Por qué es seguro reservar con nosotros? (Sellos y Licencias)',
-          a: 'Somos agencia formal con RUC 20 activo, acreditación oficial DIRCETUR Cusco y sello internacional Safe Travels. Tus reservas están 100% garantizadas y emitimos comprobantes oficiales.'
-        },
-        {
-          q: '¿Qué precauciones y protocolos aplican para el mal de altura (soroche)?',
-          a: `Recomendamos aclimatarse al menos 24 a 48 horas en Cusco antes del tour. Nuestro guía monitorea el ritmo cardíaco y oxigenación, disponiendo de botiquín andino y balón de oxígeno medicinal para altitudes de ${destination}.`
-        },
-        {
-          q: '¿Cuál es la política de reprogramación o cancelación por clima o imprevistos?',
-          a: 'Ofrecemos reprogramación sin penalidad avisando con 24 horas de anticipación ante inclemencias climáticas, huelgas o motivos médicos justificados.'
-        },
-        {
-          q: '¿Dónde es el punto de encuentro y a qué hora inicia el recorrido?',
-          a: 'Brindamos servicio de recojo directo en la puerta de tu hotel o alojamiento ubicado dentro del centro histórico de Cusco, coordinando la hora exacta por WhatsApp la noche anterior.'
-        }
-      ]);
+  const displayFaqs: FAQItem[] = (faqs && faqs.length > 0)
+    ? faqs
+    : (ALL_FAQS[lang] || ALL_FAQS.es);
 
   // Handler for New Question
   const handlePublishQuestion = (e: React.FormEvent) => {
@@ -406,6 +477,24 @@ export default function TourSupportAndFaqs({
     }, 600);
   };
 
+  const st = {
+    badge: lang === 'en' ? 'Help Center, Community & FAQs' : lang === 'pt' ? 'Central de Ajuda, Fórum & Suporte' : lang === 'fr' ? 'Centre d’Aide, Forum & FAQ' : lang === 'it' ? 'Centro Assistenza, Forum & FAQ' : 'Centro de Ayuda, Foro & Soporte',
+    titlePrefix: lang === 'en' ? 'How can we' : lang === 'pt' ? 'Como podemos' : lang === 'fr' ? 'Comment pouvons-nous vous' : lang === 'it' ? 'Come possiamo' : '¿En qué podemos',
+    titleSuffix: lang === 'en' ? 'help you?' : lang === 'pt' ? 'ajudar você?' : lang === 'fr' ? 'aider ?' : lang === 'it' ? 'aiutarti?' : 'ayudarte?',
+    desc: lang === 'en'
+      ? 'Join our community questions forum with verified guide answers or browse our official FAQs.'
+      : lang === 'pt'
+      ? 'Participe do nosso fórum de dúvidas públicas com respostas da equipe oficial ou consulte as perguntas frequentes verificadas.'
+      : lang === 'fr'
+      ? 'Participez à notre forum de questions publiques avec les réponses de l’équipe officielle ou consultez nos FAQ vérifiées.'
+      : lang === 'it'
+      ? 'Partecipa al nostro forum di domande pubbliche con le risposte del team ufficiale o consulta le nostre FAQ verificate.'
+      : 'Participa en nuestro foro de consultas públicas con respuestas del equipo oficial o consulta nuestras preguntas frecuentes verificadas.',
+    tabForum: isMobile ? (lang === 'en' ? 'Forum' : lang === 'pt' ? 'Fórum' : lang === 'fr' ? 'Forum' : lang === 'it' ? 'Forum' : 'Foro') : (lang === 'en' ? 'Community Forum' : lang === 'pt' ? 'Fórum da Comunidade' : lang === 'fr' ? 'Forum Communautaire' : lang === 'it' ? 'Forum della Community' : 'Foro de Ayuda & Comunidad'),
+    tabFaq: isMobile ? 'FAQs' : (lang === 'en' ? 'Verified FAQs' : lang === 'pt' ? 'Perguntas Frequentes (FAQ)' : lang === 'fr' ? 'Foire Aux Questions (FAQ)' : lang === 'it' ? 'Domande Frequenti (FAQ)' : 'Preguntas Frecuentes (FAQ)'),
+    tabTicket: isMobile ? (lang === 'en' ? 'Helpdesk' : lang === 'pt' ? 'Suporte' : lang === 'fr' ? 'Support' : lang === 'it' ? 'Supporto' : 'Mesa Ayuda') : (lang === 'en' ? 'Private Helpdesk' : lang === 'pt' ? 'Mesa de Ajuda Privada' : lang === 'fr' ? 'Assistance Privée' : lang === 'it' ? 'Assistenza Privata' : 'Mesa de Ayuda Privada')
+  };
+
   return (
     <section id="soporte-faq" className={`${isMobile ? 'py-8 px-3' : 'py-20 px-6 sm:px-8'} bg-[#F9F7F4] border-t border-stone-200 transition-colors duration-300`}>
       <div className="max-w-5xl mx-auto space-y-6 sm:space-y-10">
@@ -414,21 +503,15 @@ export default function TourSupportAndFaqs({
         <div className="text-center max-w-2xl mx-auto space-y-2 sm:space-y-3 px-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider bg-[#FF5500]/10 text-[#FF5500] border border-[#FF5500]/20">
             <HelpCircle size={14} />
-            <span>{isEn ? 'Help Center, Community & FAQs' : 'Centro de Ayuda, Foro & Soporte'}</span>
+            <span>{st.badge}</span>
           </div>
 
           <h2 className={`${isMobile ? 'text-xl' : 'text-3xl sm:text-4xl'} font-black tracking-tight text-stone-900`}>
-            {isEn ? (
-              <>How can we <span className="text-[#FF5500]">help you</span>?</>
-            ) : (
-              <>¿En qué podemos <span className="text-[#FF5500]">ayudarte</span>?</>
-            )}
+            {st.titlePrefix} <span className="text-[#FF5500]">{st.titleSuffix}</span>
           </h2>
 
           <p className="text-xs sm:text-sm text-stone-600 leading-relaxed max-w-xl mx-auto">
-            {isEn 
-              ? 'Join our community questions forum with verified guide answers or browse our official FAQs.' 
-              : 'Participa en nuestro foro de consultas públicas con respuestas del equipo oficial o consulta nuestras preguntas frecuentes verificadas.'}
+            {st.desc}
           </p>
         </div>
 
@@ -448,7 +531,7 @@ export default function TourSupportAndFaqs({
             }`}
           >
             <MessageSquare size={14} className={activeTab === 'forum' ? 'text-[#FF5500]' : ''} />
-            <span>{isEn ? (isMobile ? 'Forum' : 'Community Forum') : (isMobile ? 'Foro' : 'Foro de Ayuda & Comunidad')}</span>
+            <span>{st.tabForum}</span>
             <span className="bg-[#FF5500]/15 text-[#FF5500] text-[9px] px-1.5 py-0.2 rounded-full font-bold">
               {forumQuestions.length}
             </span>
@@ -466,7 +549,7 @@ export default function TourSupportAndFaqs({
             }`}
           >
             <HelpCircle size={14} className={activeTab === 'faq' ? 'text-[#FF5500]' : ''} />
-            <span>{isEn ? (isMobile ? 'FAQs' : 'Verified FAQs') : (isMobile ? 'FAQs' : 'Preguntas Frecuentes (FAQ)')}</span>
+            <span>{st.tabFaq}</span>
           </button>
 
           <button
@@ -481,7 +564,7 @@ export default function TourSupportAndFaqs({
             }`}
           >
             <ShieldCheck size={14} className={activeTab === 'ticket' ? 'text-[#FF5500]' : ''} />
-            <span>{isEn ? (isMobile ? 'Helpdesk' : 'Private Helpdesk') : (isMobile ? 'Mesa Ayuda' : 'Mesa de Ayuda Privada')}</span>
+            <span>{st.tabTicket}</span>
           </button>
         </div>
 

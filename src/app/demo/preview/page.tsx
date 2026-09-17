@@ -29,11 +29,18 @@ import { TemplateType, PlanTier } from '@/types/landing';
 function DemoPreviewContent() {
   const searchParams = useSearchParams();
   const slugQuery = searchParams.get('slug');
+  const templateQuery = searchParams.get('template') as TemplateType | null;
 
   const [landing, setLanding] = useState<LandingData | null>(() => {
     const list = getStoredLandings();
     if (slugQuery) {
-      return list.find(item => item.slug === slugQuery) || list[0] || null;
+      const found = list.find(item => item.slug === slugQuery);
+      if (found) return templateQuery ? { ...found, template: templateQuery } : found;
+    }
+    if (templateQuery) {
+      const foundByTpl = list.find(item => item.template === templateQuery);
+      if (foundByTpl) return foundByTpl;
+      if (list[0]) return { ...list[0], template: templateQuery };
     }
     return list[0] || null;
   });
