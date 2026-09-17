@@ -12,7 +12,8 @@ import {
   X,
   Compass,
   Layers,
-  Pin
+  Pin,
+  LayoutTemplate
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -23,14 +24,14 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
 
   const isDashboard = pathname === '/demo';
   const isNewLanding = pathname === '/demo/new';
-  const isPinterest = pathname === '/demo/pinterest';
+  const isPinterest = pathname === '/demo/pinterest' || pathname === '/demo/disenos';
   const isPlans = pathname === '/demo/plans';
   const isSettings = pathname === '/demo/settings';
   const isPreview = pathname.startsWith('/demo/preview');
 
   let pageTitle = 'Panel Principal';
   if (isNewLanding) pageTitle = 'Generador de Landings';
-  else if (isPinterest) pageTitle = 'Inspiración Pinterest (6 Diseños)';
+  else if (isPinterest) pageTitle = 'Diseños Disponibles Landing Pages';
   else if (isPlans) pageTitle = 'Guía de Estructura de Páginas';
   else if (isSettings) pageTitle = 'Configuración';
   else if (isPreview) pageTitle = 'Previsualizador';
@@ -89,16 +90,16 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
             href="/demo/pinterest" 
             className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-all ${
               isPinterest 
-                ? 'bg-red-600 text-white shadow-sm shadow-red-600/30' 
+                ? 'bg-[#FF5500] text-white shadow-sm shadow-[#FF5500]/30' 
                 : 'text-slate-400 hover:text-white hover:bg-slate-900'
             }`}
           >
             <div className="flex items-center gap-3">
-              <Pin size={18} className="rotate-45 text-rose-400" />
-              <span>Inspiración Pinterest</span>
+              <LayoutTemplate size={18} className={isPinterest ? 'text-white' : 'text-amber-400'} />
+              <span>Diseños Disponibles</span>
             </div>
-            <span className="text-[10px] font-extrabold bg-rose-500/20 text-rose-300 px-1.5 py-0.5 rounded-md border border-rose-500/30">
-              6 Diseños
+            <span className="text-[10px] font-extrabold bg-white/20 text-white px-1.5 py-0.5 rounded-md border border-white/20">
+              7 Diseños
             </span>
           </Link>
 
@@ -217,15 +218,15 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
                 href="/demo/pinterest"
                 onClick={() => setMobileMenuOpen(false)}
                 className={`p-3 rounded-xl flex items-center justify-between text-xs font-bold ${
-                  isPinterest ? 'bg-red-600 text-white' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
+                  isPinterest ? 'bg-[#FF5500] text-white' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
-                  <Pin size={18} className="rotate-45 text-rose-400" />
-                  <span>Inspiración Pinterest</span>
+                  <LayoutTemplate size={18} className={isPinterest ? 'text-white' : 'text-amber-400'} />
+                  <span>Diseños Disponibles</span>
                 </div>
-                <span className="text-[10px] bg-rose-500/20 text-rose-300 px-1.5 py-0.5 rounded-md border border-rose-500/30">
-                  6 Diseños
+                <span className="text-[10px] bg-white/20 text-white px-1.5 py-0.5 rounded-md border border-white/20">
+                  7 Diseños
                 </span>
               </Link>
 

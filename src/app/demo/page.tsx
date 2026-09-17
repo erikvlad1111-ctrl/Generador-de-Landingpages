@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { 
   FileText, Globe, CalendarDays, Sparkles, TrendingUp, ArrowUpRight, 
   ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download,
-  MoveHorizontal, ChevronLeft, ChevronRight, Layers, Pin
+  MoveHorizontal, ChevronLeft, ChevronRight, Layers, Pin, LayoutTemplate
 } from 'lucide-react';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, LandingData } from '@/data/landingStore';
@@ -192,24 +192,24 @@ export default function DemoDashboard() {
 
       {/* Quick Services & Inspiration Access Banner */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Card 1: Inspiración Pinterest */}
+        {/* Card 1: Diseños Disponibles Landing Pages */}
         <Link 
           href="/demo/pinterest"
-          className="p-4 rounded-2xl bg-white border border-rose-200/90 shadow-2xs hover:border-red-400 hover:shadow-md transition-all flex items-center justify-between group"
+          className="p-4 rounded-2xl bg-white border border-amber-200/90 shadow-2xs hover:border-[#FF5500] hover:shadow-md transition-all flex items-center justify-between group"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center group-hover:scale-105 transition-transform">
-              <Pin size={20} className="rotate-45" />
+            <div className="w-10 h-10 rounded-xl bg-orange-50 text-[#FF5500] flex items-center justify-center group-hover:scale-105 transition-transform">
+              <LayoutTemplate size={20} />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="text-xs font-bold text-slate-800 block group-hover:text-red-600 transition-colors">Inspiración Pinterest</span>
-                <span className="text-[9px] font-extrabold bg-red-100 text-red-700 px-1.5 py-0.2 rounded-md">6 Diseños</span>
+                <span className="text-xs font-bold text-slate-800 block group-hover:text-[#FF5500] transition-colors">Diseños Disponibles Landing Pages</span>
+                <span className="text-[9px] font-extrabold bg-orange-100 text-orange-800 px-1.5 py-0.2 rounded-md">7 Diseños</span>
               </div>
-              <span className="text-[11px] text-slate-500">Catálogo de tableros, polaroids y moodboards</span>
+              <span className="text-[11px] text-slate-500">Beneficios, paletas de colores, tipografía y estilos visuales</span>
             </div>
           </div>
-          <span className="text-xs font-bold text-red-600 group-hover:translate-x-1 transition-transform">Explorar →</span>
+          <span className="text-xs font-bold text-[#FF5500] group-hover:translate-x-1 transition-transform">Explorar →</span>
         </Link>
 
         {/* Card 2: Guía de Niveles */}
