@@ -1520,43 +1520,6 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* WhatsApp Link Share Preview Simulator */}
-          <div className="bg-[#EFEAE2] p-3.5 rounded-3xl border border-slate-300 shadow-sm space-y-2">
-            <div className="flex items-center justify-between text-[11px] font-bold text-slate-600 px-1">
-              <span className="flex items-center gap-1.5 text-emerald-800 font-extrabold">
-                <Share2 size={13} /> Vista al Enviar por WhatsApp
-              </span>
-              <span className="text-[10px] text-slate-500">Previsualización de Enlace</span>
-            </div>
-
-            {/* WhatsApp Chat Bubble */}
-            <div className="bg-white rounded-2xl p-2.5 shadow-sm border border-slate-200/80 max-w-sm ml-auto space-y-2">
-              <div className="relative h-32 rounded-xl overflow-hidden bg-slate-100">
-                <Image 
-                  src={activeHeroImg} 
-                  alt="WhatsApp Preview" 
-                  fill 
-                  sizes="350px"
-                  className="object-cover" 
-                />
-                <div className="absolute top-2 right-2 bg-black/70 backdrop-blur-sm text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
-                  {price || '$350 USD'}
-                </div>
-              </div>
-              <div className="space-y-0.5 px-1">
-                <p className="text-[10px] font-mono text-slate-400 truncate">agenciacusco.pe/p/{name.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 24)}</p>
-                <h4 className="text-xs font-black text-slate-900 line-clamp-1">{name || 'Tour en Cusco'}</h4>
-                <p className="text-[11px] text-slate-500 line-clamp-2 leading-tight">
-                  {description || 'Vive la mejor experiencia guiada en Cusco con reserva directa y tarifas transparentes.'}
-                </p>
-              </div>
-              <div className="flex items-center justify-end gap-1 text-[10px] text-slate-400 pt-0.5 px-1">
-                <span>12:45 PM</span>
-                <span className="text-blue-500 font-bold">✓✓</span>
-              </div>
-            </div>
-          </div>
-
           {/* Smartphone Mockup */}
           <div className="bg-slate-950 rounded-[42px] p-3 shadow-2xl border-4 border-slate-800 ring-1 ring-slate-900 max-w-sm mx-auto">
             {/* Dynamic Island / Notch */}
