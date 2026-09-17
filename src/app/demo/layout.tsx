@@ -90,15 +90,15 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
             href="/demo/pinterest" 
             className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-semibold text-xs transition-all ${
               isPinterest 
-                ? 'bg-[#FF5500] text-white shadow-sm shadow-[#FF5500]/30' 
+                ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30' 
                 : 'text-slate-400 hover:text-white hover:bg-slate-900'
             }`}
           >
             <div className="flex items-center gap-3">
-              <LayoutTemplate size={18} className={isPinterest ? 'text-white' : 'text-amber-400'} />
+              <LayoutTemplate size={18} className={isPinterest ? 'text-white' : 'text-blue-400'} />
               <span>Diseños Disponibles</span>
             </div>
-            <span className="text-[10px] font-extrabold bg-white/20 text-white px-1.5 py-0.5 rounded-md border border-white/20">
+            <span className="text-[10px] font-extrabold bg-blue-500/30 text-blue-100 px-1.5 py-0.5 rounded-md border border-blue-400/30">
               7 Diseños
             </span>
           </Link>
@@ -218,14 +218,14 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
                 href="/demo/pinterest"
                 onClick={() => setMobileMenuOpen(false)}
                 className={`p-3 rounded-xl flex items-center justify-between text-xs font-bold ${
-                  isPinterest ? 'bg-[#FF5500] text-white' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
+                  isPinterest ? 'bg-blue-600 text-white shadow-sm shadow-blue-600/30' : 'bg-slate-900 text-slate-300 hover:bg-slate-800'
                 }`}
               >
                 <div className="flex items-center gap-2.5">
-                  <LayoutTemplate size={18} className={isPinterest ? 'text-white' : 'text-amber-400'} />
+                  <LayoutTemplate size={18} className={isPinterest ? 'text-white' : 'text-blue-400'} />
                   <span>Diseños Disponibles</span>
                 </div>
-                <span className="text-[10px] bg-white/20 text-white px-1.5 py-0.5 rounded-md border border-white/20">
+                <span className="text-[10px] bg-blue-500/30 text-blue-100 px-1.5 py-0.5 rounded-md border border-blue-400/30">
                   7 Diseños
                 </span>
               </Link>

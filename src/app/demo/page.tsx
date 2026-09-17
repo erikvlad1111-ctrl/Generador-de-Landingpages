@@ -195,21 +195,21 @@ export default function DemoDashboard() {
         {/* Card 1: Diseños Disponibles Landing Pages */}
         <Link 
           href="/demo/pinterest"
-          className="p-4 rounded-2xl bg-white border border-amber-200/90 shadow-2xs hover:border-[#FF5500] hover:shadow-md transition-all flex items-center justify-between group"
+          className="p-4 rounded-2xl bg-white border border-blue-200/90 shadow-2xs hover:border-blue-400 hover:shadow-md transition-all flex items-center justify-between group"
         >
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-orange-50 text-[#FF5500] flex items-center justify-center group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-105 transition-transform">
               <LayoutTemplate size={20} />
             </div>
             <div>
               <div className="flex items-center gap-1.5">
-                <span className="text-xs font-bold text-slate-800 block group-hover:text-[#FF5500] transition-colors">Diseños Disponibles Landing Pages</span>
-                <span className="text-[9px] font-extrabold bg-orange-100 text-orange-800 px-1.5 py-0.2 rounded-md">7 Diseños</span>
+                <span className="text-xs font-bold text-slate-800 block group-hover:text-blue-600 transition-colors">Diseños Disponibles Landing Pages</span>
+                <span className="text-[9px] font-extrabold bg-blue-100 text-blue-700 px-1.5 py-0.2 rounded-md">7 Diseños</span>
               </div>
               <span className="text-[11px] text-slate-500">Beneficios, paletas de colores, tipografía y estilos visuales</span>
             </div>
           </div>
-          <span className="text-xs font-bold text-[#FF5500] group-hover:translate-x-1 transition-transform">Explorar →</span>
+          <span className="text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">Explorar →</span>
         </Link>
 
         {/* Card 2: Guía de Niveles */}
