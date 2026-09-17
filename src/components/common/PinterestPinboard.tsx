@@ -12,7 +12,7 @@ import {
   Bookmark,
   Share2
 } from 'lucide-react';
-import { PlanTier, TemplateType } from '@/types/landing';
+import { PlanTier, TemplateType, LanguageType } from '@/types/landing';
 
 interface PinterestPinboardProps {
   images?: string[];
@@ -21,6 +21,7 @@ interface PinterestPinboardProps {
   tier?: PlanTier;
   theme?: TemplateType;
   isMobile?: boolean;
+  lang?: LanguageType;
 }
 
 interface PinItem {
@@ -39,8 +40,31 @@ export default function PinterestPinboard({
   tourName,
   tier = 'advance',
   theme = 'boho-nature',
-  isMobile = false
+  isMobile = false,
+  lang = 'es'
 }: PinterestPinboardProps) {
+  const isEn = lang === 'en';
+  const isPt = lang === 'pt';
+  const isFr = lang === 'fr';
+  const isIt = lang === 'it';
+
+  const t = {
+    badge: isEn ? 'Inspirational Pinboard' : isPt ? 'Quadro de Inspiração' : isFr ? 'Tableau d’Inspiration' : isIt ? 'Bacheca di Ispirazione' : 'Tablero de Pines de Inspiración',
+    title: isEn ? `Postcards & Moments in ${destination}` : isPt ? `Cartões-Postais & Momentos em ${destination}` : isFr ? `Cartes Postales & Moments à ${destination}` : isIt ? `Cartoline & Momenti a ${destination}` : `Postales & Momentos en ${destination}`,
+    desc: isEn 
+      ? 'Explore authentic high-resolution moments captured along the route. Visual curation inspired by travel journals and Pinterest boards.'
+      : isPt
+      ? 'Explore momentos autênticos capturados ao longo da rota. Curadoria visual inspirada em diários de viagem e no Pinterest.'
+      : isFr
+      ? 'Explorez les véritables clichés capturés le long du parcours. Sélection visuelle inspirée des carnets de voyage et de Pinterest.'
+      : isIt
+      ? 'Esplora gli scatti autentici catturati lungo il percorso. Curatela visiva ispirata ai diari di viaggio e a Pinterest.'
+      : 'Explora las tomas reales capturadas durante la ruta. Curaduría visual inspirada en la estética de Pinterest y diarios de viaje.',
+    pinSingle: isEn ? 'Pin Available' : isPt ? 'Pin Disponível' : isFr ? 'Épingle Disponible' : isIt ? 'Pin Disponibile' : 'Pin Disponible',
+    pinMulti: isEn ? 'Pins on Board' : isPt ? 'Pins no Quadro' : isFr ? 'Épingles sur le Tableau' : isIt ? 'Pin sulla Bacheca' : 'Pines en el Tablero',
+    save: isEn ? 'Save' : isPt ? 'Salvar' : isFr ? 'Enregistrer' : isIt ? 'Salva' : 'Guardar',
+    saved: isEn ? 'Saved' : isPt ? 'Salvo' : isFr ? 'Enregistré' : isIt ? 'Salvato' : 'Guardado'
+  };
   // Pool of fallback curated high-resolution photos of Cusco/Andes
   const defaultImages = [
     'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop', // MP
@@ -127,17 +151,17 @@ export default function PinterestPinboard({
                 : 'bg-emerald-500/10 text-emerald-700'
             }`}>
               <Pin size={14} className="rotate-45" />
-              <span>Tablero de Pines de Inspiración</span>
+              <span>{t.badge}</span>
             </div>
 
             <h2 className={`text-2xl sm:text-4xl font-bold tracking-tight ${
               isPremium ? 'text-white font-serif' : isBoho ? 'text-stone-900 font-serif' : 'text-slate-900'
             }`}>
-              Postales & Momentos en {destination}
+              {t.title}
             </h2>
 
             <p className={`text-xs sm:text-sm max-w-xl ${isPremium ? 'text-neutral-400' : 'text-stone-600'}`}>
-              Explora las tomas reales capturadas durante la ruta. {isBoho ? 'Inspirado en la estética visual de Pinterest y diarios de viaje.' : 'Imágenes en alta definición para proyectar tu próxima aventura.'}
+              {t.desc}
             </p>
           </div>
 
@@ -145,7 +169,7 @@ export default function PinterestPinboard({
             <span className={`text-xs font-semibold px-3 py-1.5 rounded-xl border ${
               isPremium ? 'bg-neutral-800 text-neutral-300 border-neutral-700' : 'bg-white text-slate-700 border-slate-200 shadow-2xs'
             }`}>
-              {activePhotos.length} {activePhotos.length === 1 ? 'Pin Disponible' : 'Pines en el Tablero'}
+              {activePhotos.length} {activePhotos.length === 1 ? t.pinSingle : t.pinMulti}
             </span>
           </div>
         </div>
@@ -205,10 +229,10 @@ export default function PinterestPinboard({
                           ? 'bg-red-600 text-white' 
                           : 'bg-red-600 hover:bg-red-700 text-white'
                       }`}
-                      title={isSaved ? 'Pin Guardado' : 'Guardar en tu Tablero'}
+                      title={isSaved ? t.saved : t.save}
                     >
                       <Pin size={12} className="rotate-45" />
-                      <span>{isSaved ? 'Guardado' : 'Guardar'}</span>
+                      <span>{isSaved ? t.saved : t.save}</span>
                     </button>
                   </div>
 

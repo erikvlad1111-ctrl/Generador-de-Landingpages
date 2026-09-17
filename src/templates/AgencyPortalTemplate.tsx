@@ -25,9 +25,11 @@ import {
   Target,
   BadgeCheck,
   XCircle,
-  Backpack
+  Backpack,
+  Pin
 } from 'lucide-react';
 import { LandingData, PlanTier, ObjectiveType, LanguageType } from '@/types/landing';
+import PinterestPinboard from '@/components/common/PinterestPinboard';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import QuoteModal from '@/components/common/QuoteModal';
 
@@ -37,6 +39,420 @@ interface AgencyPortalTemplateProps {
   viewMode?: 'desktop' | 'tablet' | 'mobile';
 }
 
+// -------------------------------------------------------------
+// DICCIONARIOS DE IDIOMA COMPLETOS (ES, EN, PT, FR, IT)
+// -------------------------------------------------------------
+const DICTIONARIES = {
+  es: {
+    officialBar: 'DIRCETUR Cusco • Safe Travels',
+    seasonBadge: 'Temporada 2026 • Salidas Diarias Garantizadas',
+    ratingLabel: '4.9 / 5.0 Valoración',
+    reviewsCount: '+500 Opiniones Verificadas',
+    officialBadge: 'MINCETUR & DIRCETUR',
+    officialDesc: 'Operador Turístico Oficial',
+    officialOperator: 'Agencia Oficial',
+    navTours: 'Tours Destacados',
+    navGallery: 'Galería Pinterest',
+    navPackages: 'Paquetes',
+    navWhyUs: '¿Por Qué Nosotros?',
+    navReviews: 'Reseñas',
+    navFaq: 'FAQ & Soporte',
+    ctaHeader: 'WhatsApp',
+    ctaHeroQuote: 'Solicitar Cotización',
+    ctaHeroWa: 'Reservar Ahora',
+    ctaBothWa: 'Reservar en WhatsApp',
+    ctaBothQuote: 'Solicitar Cotización VIP',
+    ctaViewMore: 'Ver Más Tours',
+    statTravelers: 'Viajeros Felices',
+    statExperience: 'Años de Experiencia',
+    statRoutes: 'Rutas & Destinos',
+    statRating: 'Puntuación 4.9/5',
+    techSheetBadge: 'Ficha Técnica Oficial del Tour',
+    techSheetTitle: 'Especificaciones Técnicas del Recorrido',
+    techSheetDesc: 'Parámetros certificados para garantizar tu seguridad, confort y disfrute en la ruta andina.',
+    altitudeLabel: 'Altitud Máxima',
+    durationLabel: 'Duración',
+    difficultyLabel: 'Dificultad',
+    groupTypeLabel: 'Modalidad',
+    targetAudienceLabel: 'Público Ideal',
+    destinationLabel: 'Destino',
+    guideBadge: 'Guía Oficial Colegiado DIRCETUR',
+    guideSpokenLanguages: 'Idiomas que Domina',
+    guideBio: 'Especialista local acreditado con certificación en primeros auxilios en zonas agrestes y protocolo médico para aclimatación.',
+    directLine: 'Atención Directa',
+    includedServicesBadge: 'Servicios & Privilegios Oficiales',
+    includedServicesTitle: 'Servicios Incluidos en tu Experiencia (Punto 7)',
+    includedServicesDesc: 'Todo lo que necesitas para una vivencia cómoda, segura, sin costos ocultos ni preocupaciones.',
+    catalogBadge: 'Catálogo Exclusivo 2026',
+    catalogTitle: 'Tours Destacados en Cusco y Perú',
+    catalogDesc: 'Salidas diarias garantizadas con guías colegiados, traslados oficiales y asistencia médica de emergencia.',
+    filterAll: 'Todos',
+    filterTrek: 'Trekking',
+    filterMachu: 'Machu Picchu',
+    filterCulture: 'Valle Sagrado',
+    filterAdrenaline: 'Adrenalina',
+    pricePerPerson: 'Precio por persona',
+    bookTour: 'Reservar Tour',
+    quoteTour: 'Cotizar Tour',
+    itineraryBadge: 'Itinerario Detallado del Tour',
+    itineraryTitle: 'Cronograma y Experiencia Paso a Paso',
+    itineraryDesc: 'Tiempos planificados al milímetro para favorecer la aclimatación y disfrute de la ruta.',
+    logisticsBadge: 'Logística Clara & Equipaje',
+    logisticsTitle: 'Exclusiones Claras & Checklist de Mochila',
+    logisticsDesc: 'Transparencia total antes de iniciar tu aventura.',
+    notIncludedTitle: 'Qué NO está incluido en la tarifa',
+    whatToBringTitle: 'Qué llevar en tu mochila (Recomendado)',
+    whyTrustBadge: 'Confianza & Seguridad',
+    altitudeProtocolTitle: 'Compromiso de Altura y Asistencia Médica',
+    altitudeProtocolDesc: 'Todos nuestros vehículos y guías cuentan permanentemente con balón de oxígeno medicinal y botiquín de primeros auxilios.',
+    trustBadgesTitle: 'Distintivos Oficiales & Sellos de Confianza',
+    activeGuidesNow: 'Guías Activos Hoy en Cusco',
+    satisfactionGuaranteed: 'Satisfacción Garantizada',
+    packagesBadge: 'Circuitos Multidía',
+    packagesTitle: 'Nuestros Tours & Paquetes',
+    packagesDesc: 'Circuitos completos con alojamiento, traslados y guiado incluidos.',
+    fromPrice: 'Desde',
+    viewItinerary: 'Ver Itinerario',
+    reviewsBadge: 'Experiencias Reales',
+    reviewsTitle: 'Lo que dicen nuestros viajeros',
+    reviewsDesc: 'Opiniones recopiladas de turistas de todo el mundo que confiaron sus vacaciones en Cusco con nuestro equipo oficial.',
+    verifiedReview: 'Verificado',
+    ctaBannerTitle: '¿LISTO PARA TU PRÓXIMA AVENTURA?',
+    ctaBannerDesc: 'Contáctanos hoy mismo para asegurar tus accesos a Machu Picchu y disfrutar del mejor viaje de tu vida en el Perú.',
+    contactNow: 'Contactar Ahora',
+    freeBanner: '⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas',
+    questionsTooltip: '¿Dudas? Habla con un asesor',
+    certificationsTitle: 'Acreditaciones Oficiales'
+  },
+  en: {
+    officialBar: 'DIRCETUR Cusco • Safe Travels',
+    seasonBadge: '2026 Season • Guaranteed Daily Departures',
+    ratingLabel: '4.9 / 5.0 Rating',
+    reviewsCount: '+500 Verified Reviews',
+    officialBadge: 'MINCETUR & DIRCETUR',
+    officialDesc: 'Official Licensed Operator',
+    officialOperator: 'Official Agency',
+    navTours: 'Featured Tours',
+    navGallery: 'Pinterest Gallery',
+    navPackages: 'Packages',
+    navWhyUs: 'Why Us?',
+    navReviews: 'Reviews',
+    navFaq: 'FAQ & Support',
+    ctaHeader: 'WhatsApp',
+    ctaHeroQuote: 'Request Quote',
+    ctaHeroWa: 'Book Now',
+    ctaBothWa: 'Book on WhatsApp',
+    ctaBothQuote: 'Request VIP Quote',
+    ctaViewMore: 'View Tours',
+    statTravelers: 'Happy Travelers',
+    statExperience: 'Years Experience',
+    statRoutes: 'Routes & Destinations',
+    statRating: 'Score 4.9/5',
+    techSheetBadge: 'Official Tour Technical Sheet',
+    techSheetTitle: 'Technical Specifications & Adventure Details',
+    techSheetDesc: 'Certified parameters to ensure your safety, comfort and maximum enjoyment across the Andean route.',
+    altitudeLabel: 'Max Altitude',
+    durationLabel: 'Duration',
+    difficultyLabel: 'Difficulty',
+    groupTypeLabel: 'Group Type',
+    targetAudienceLabel: 'Ideal Audience',
+    destinationLabel: 'Destination',
+    guideBadge: 'Official Certified Tour Guide DIRCETUR',
+    guideSpokenLanguages: 'Spoken Languages',
+    guideBio: 'Accredited local specialist with wilderness first aid certification and specialized high-altitude protocol training.',
+    directLine: 'Direct Line',
+    includedServicesBadge: 'Official Services & Privileges',
+    includedServicesTitle: 'Services Included in your Experience (Point 7)',
+    includedServicesDesc: 'Everything included for a seamless, comfortable and carefree Andean journey without hidden fees.',
+    catalogBadge: 'Exclusive 2026 Catalog',
+    catalogTitle: 'Featured Tours in Cusco & Peru',
+    catalogDesc: 'Guaranteed daily departures with certified guides, official transfers and emergency medical altitude assistance.',
+    filterAll: 'All',
+    filterTrek: 'Trekking',
+    filterMachu: 'Machu Picchu',
+    filterCulture: 'Sacred Valley',
+    filterAdrenaline: 'Adrenaline',
+    pricePerPerson: 'Price per person',
+    bookTour: 'Book Tour',
+    quoteTour: 'Request Quote',
+    itineraryBadge: 'Official Tour Itinerary',
+    itineraryTitle: 'Step-by-Step Experience Schedule',
+    itineraryDesc: 'Paced schedule optimized for altitude acclimatization and scenic immersion.',
+    logisticsBadge: 'Clear Logistics & Packing',
+    logisticsTitle: 'Exclusions & Backpack Checklist',
+    logisticsDesc: 'Complete transparency before beginning your Andean adventure.',
+    notIncludedTitle: 'What is NOT included in the fare',
+    whatToBringTitle: 'What to bring in your backpack (Recommended)',
+    whyTrustBadge: 'Trust & Safety',
+    altitudeProtocolTitle: 'High-Altitude Protocol & Medical Support',
+    altitudeProtocolDesc: 'All our vehicles and guides carry certified medical oxygen tanks and Andean wilderness first aid kits at all times.',
+    trustBadgesTitle: 'Official Certifications & Trust Badges',
+    activeGuidesNow: 'Guides Active Today in Cusco',
+    satisfactionGuaranteed: '100% Guaranteed Satisfaction',
+    packagesBadge: 'Multi-Day Circuits',
+    packagesTitle: 'Curated Travel Packages',
+    packagesDesc: 'Comprehensive circuits including boutique lodging, railway passes, transfers and guided tours.',
+    fromPrice: 'From',
+    viewItinerary: 'View Itinerary',
+    reviewsBadge: 'Verified Stories',
+    reviewsTitle: 'What our travelers say',
+    reviewsDesc: 'Verified testimonials from adventurers around the globe who trusted our official team in Cusco.',
+    verifiedReview: 'Verified',
+    ctaBannerTitle: 'READY FOR YOUR NEXT ADVENTURE?',
+    ctaBannerDesc: 'Contact our team today to lock in your Machu Picchu tickets and personalized Andean itinerary.',
+    contactNow: 'Contact Us Now',
+    freeBanner: '⚡ Created with Cusco Creativos Web — Fast Tourism Landing Builder',
+    questionsTooltip: 'Questions? Chat with an advisor',
+    certificationsTitle: 'Official Certifications'
+  },
+  pt: {
+    officialBar: 'DIRCETUR Cusco • Safe Travels',
+    seasonBadge: 'Temporada 2026 • Saídas Diárias Garantidas',
+    ratingLabel: '4.9 / 5.0 Avaliação',
+    reviewsCount: '+500 Avaliações Verificadas',
+    officialBadge: 'MINCETUR & DIRCETUR',
+    officialDesc: 'Operador Turístico Oficial',
+    officialOperator: 'Agência Oficial',
+    navTours: 'Passeios em Destaque',
+    navGallery: 'Galeria Pinterest',
+    navPackages: 'Pacotes',
+    navWhyUs: 'Por Que Nós?',
+    navReviews: 'Depoimentos',
+    navFaq: 'FAQ & Suporte',
+    ctaHeader: 'WhatsApp',
+    ctaHeroQuote: 'Pedir Orçamento',
+    ctaHeroWa: 'Reservar Agora',
+    ctaBothWa: 'Reservar no WhatsApp',
+    ctaBothQuote: 'Solicitar Orçamento VIP',
+    ctaViewMore: 'Ver Mais Passeios',
+    statTravelers: 'Viajantes Felizes',
+    statExperience: 'Anos de Experiência',
+    statRoutes: 'Rotas & Destinos',
+    statRating: 'Pontuação 4.9/5',
+    techSheetBadge: 'Ficha Técnica Oficial do Tour',
+    techSheetTitle: 'Especificações Técnicas da Rota',
+    techSheetDesc: 'Parâmetros certificados para garantir sua segurança, conforto e aproveitamento máximo nos Andes peruanos.',
+    altitudeLabel: 'Altitude Máxima',
+    durationLabel: 'Duração',
+    difficultyLabel: 'Dificuldade',
+    groupTypeLabel: 'Modalidade',
+    targetAudienceLabel: 'Público Ideal',
+    destinationLabel: 'Destino',
+    guideBadge: 'Guia Oficial Credenciado DIRCETUR',
+    guideSpokenLanguages: 'Idiomas Dominados',
+    guideBio: 'Especialista local credenciado com certificação de primeiros socorros em áreas remotas e protocolo médico de altitude.',
+    directLine: 'Atendimento Direto',
+    includedServicesBadge: 'Serviços & Privilégios Oficiais',
+    includedServicesTitle: 'Serviços Incluídos na sua Experiência (Ponto 7)',
+    includedServicesDesc: 'Tudo o que você precisa para uma viagem confortável, segura e inesquecível sem surpresas.',
+    catalogBadge: 'Catálogo Exclusivo 2026',
+    catalogTitle: 'Passeios em Destaque em Cusco e Peru',
+    catalogDesc: 'Saídas diárias garantidas com guias credenciados, transporte oficial e assistência médica com oxigênio.',
+    filterAll: 'Todos',
+    filterTrek: 'Trekking',
+    filterMachu: 'Machu Picchu',
+    filterCulture: 'Vale Sagrado',
+    filterAdrenaline: 'Adrenalina',
+    pricePerPerson: 'Preço por pessoa',
+    bookTour: 'Reservar Passeio',
+    quoteTour: 'Solicitar Orçamento',
+    itineraryBadge: 'Itinerário Detalhado do Tour',
+    itineraryTitle: 'Cronograma Passo a Passo',
+    itineraryDesc: 'Horários planejados cuidadosamente para favorecer a aclimatação e o conforto do viajante.',
+    logisticsBadge: 'Logística Clara & Bagagem',
+    logisticsTitle: 'Exclusões Claras & Checklist de Mochila',
+    logisticsDesc: 'Total transparência antes de iniciar sua jornada andina.',
+    notIncludedTitle: 'O que NÃO está incluído na tarifa',
+    whatToBringTitle: 'O que levar na mochila (Recomendado)',
+    whyTrustBadge: 'Confiança & Segurança',
+    altitudeProtocolTitle: 'Protocolo de Altitude & Assistência Médica',
+    altitudeProtocolDesc: 'Todos os nossos veículos e guias contam permanentemente com balão de oxigênio medicinal e kit de primeiros socorros.',
+    trustBadgesTitle: 'Distintivos Oficiais & Selos de Confiança',
+    activeGuidesNow: 'Guias Ativos Hoje em Cusco',
+    satisfactionGuaranteed: '100% Satisfação Garantida',
+    packagesBadge: 'Circuitos Multidias',
+    packagesTitle: 'Nossos Pacotes de Viagem',
+    packagesDesc: 'Circuitos completos incluindo hospedagem charmosa, passagens de trem, traslados e passeios com guia.',
+    fromPrice: 'A partir de',
+    viewItinerary: 'Ver Itinerário',
+    reviewsBadge: 'Histórias Verificadas',
+    reviewsTitle: 'O que dizem os nossos viajantes',
+    reviewsDesc: 'Opiniões verificadas de aventureiros de todo o mundo que confiaram suas férias em Cusco à nossa equipe oficial.',
+    verifiedReview: 'Verificado',
+    ctaBannerTitle: 'PRONTO PARA SUA PRÓXIMA AVENTURA?',
+    ctaBannerDesc: 'Fale conosco hoje mesmo para garantir seus ingressos para Machu Picchu e viver a viagem dos seus sonhos no Peru.',
+    contactNow: 'Falar Conosco Agora',
+    freeBanner: '⚡ Criado com Cusco Creativos Web — Gerador Rápido de Landings Turísticas',
+    questionsTooltip: 'Dúvidas? Fale com um consultor',
+    certificationsTitle: 'Acreditações Oficiais'
+  },
+  fr: {
+    officialBar: 'DIRCETUR Cusco • Safe Travels',
+    seasonBadge: 'Saison 2026 • Départs Quotidiens Garantis',
+    ratingLabel: '4.9 / 5.0 Note',
+    reviewsCount: '+500 Avis Vérifiés',
+    officialBadge: 'MINCETUR & DIRCETUR',
+    officialDesc: 'Opérateur Touristique Officiel',
+    officialOperator: 'Agence Officielle',
+    navTours: 'Circuits Populaires',
+    navGallery: 'Galerie Pinterest',
+    navPackages: 'Forfaits',
+    navWhyUs: 'Pourquoi Nous ?',
+    navReviews: 'Avis',
+    navFaq: 'FAQ & Support',
+    ctaHeader: 'WhatsApp',
+    ctaHeroQuote: 'Demander un Devis',
+    ctaHeroWa: 'Réserver',
+    ctaBothWa: 'Réserver sur WhatsApp',
+    ctaBothQuote: 'Demander un Devis VIP',
+    ctaViewMore: 'Voir Plus de Circuits',
+    statTravelers: 'Voyageurs Heureux',
+    statExperience: 'Ans d’Expérience',
+    statRoutes: 'Itinéraires & Destin',
+    statRating: 'Note 4.9/5',
+    techSheetBadge: 'Fiche Technique Officielle du Circuit',
+    techSheetTitle: 'Spécifications Techniques de l’Excursion',
+    techSheetDesc: 'Paramètres certifiés pour assurer votre sécurité, votre confort et votre plaisir à travers les Andes péruviennes.',
+    altitudeLabel: 'Altitude Maximale',
+    durationLabel: 'Durée',
+    difficultyLabel: 'Difficulté',
+    groupTypeLabel: 'Modalité',
+    targetAudienceLabel: 'Public Cible',
+    destinationLabel: 'Destination',
+    guideBadge: 'Guide Officiel Agréé DIRCETUR',
+    guideSpokenLanguages: 'Langues Maîtrisées',
+    guideBio: 'Spécialiste local agréé, formé aux premiers secours en milieu sauvage et aux protocoles médicaux d’acclimatation en altitude.',
+    directLine: 'Ligne Directe',
+    includedServicesBadge: 'Services & Privilèges Officiels',
+    includedServicesTitle: 'Services Inclus dans votre Expérience (Point 7)',
+    includedServicesDesc: 'Tout le nécessaire pour une expérience fluide, confortable et sans stress, sans frais cachés.',
+    catalogBadge: 'Catalogue Exclusif 2026',
+    catalogTitle: 'Circuits Populaires à Cusco et au Pérou',
+    catalogDesc: 'Départs quotidiens garantis avec guides officiels, transferts privés et assistance médicale à l’oxygène.',
+    filterAll: 'Tous',
+    filterTrek: 'Trekking',
+    filterMachu: 'Machu Picchu',
+    filterCulture: 'Vallée Sacrée',
+    filterAdrenaline: 'Adrénaline',
+    pricePerPerson: 'Prix par personne',
+    bookTour: 'Réserver le Circuit',
+    quoteTour: 'Demander un Devis',
+    itineraryBadge: 'Itinéraire Détaillé du Circuit',
+    itineraryTitle: 'Programme Étape par Étape',
+    itineraryDesc: 'Horaires étudiés pour favoriser l’acclimatation en altitude et le confort des voyageurs.',
+    logisticsBadge: 'Logistique & Équipement',
+    logisticsTitle: 'Exclusions Claires & Checklist du Sac à Dos',
+    logisticsDesc: 'Transparence absolue avant d’entamer votre aventure andine.',
+    notIncludedTitle: 'Ce qui N’EST PAS inclus dans le tarif',
+    whatToBringTitle: 'Ce qu’il faut emporter dans son sac (Recommandé)',
+    whyTrustBadge: 'Confiance & Sécurité',
+    altitudeProtocolTitle: 'Protocole d’Altitude & Assistance Médicale',
+    altitudeProtocolDesc: 'Tous nos véhicules et guides disposent en permanence de bouteilles d’oxygène médical et de trousses de premiers secours.',
+    trustBadgesTitle: 'Certifications Officielles & Labels de Confiance',
+    activeGuidesNow: 'Guides Actifs Aujourd’hui à Cusco',
+    satisfactionGuaranteed: '100% Satisfaction Garantie',
+    packagesBadge: 'Circuits Multi-Jours',
+    packagesTitle: 'Nos Forfaits de Voyage',
+    packagesDesc: 'Circuits complets comprenant hébergement de charme, billets de train, transferts et visites guidées.',
+    fromPrice: 'À partir de',
+    viewItinerary: 'Voir l’Itinéraire',
+    reviewsBadge: 'Témoignages Vérifiés',
+    reviewsTitle: 'Ce que disent nos voyageurs',
+    reviewsDesc: 'Avis vérifiés de voyageurs du monde entier ayant fait confiance à notre équipe officielle à Cusco.',
+    verifiedReview: 'Vérifié',
+    ctaBannerTitle: 'PRÊT POUR VOTRE PROCHAINE AVENTURE ?',
+    ctaBannerDesc: 'Contactez notre équipe dès aujourd’hui pour réserver vos accès au Machu Picchu et profiter du voyage de votre vie au Pérou.',
+    contactNow: 'Nous Contacter',
+    freeBanner: '⚡ Créé avec Cusco Creativos Web — Générateur Rapide de Landing Pages',
+    questionsTooltip: 'Des questions ? Échangez avec un conseiller',
+    certificationsTitle: 'Certifications Officielles'
+  },
+  it: {
+    officialBar: 'DIRCETUR Cusco • Safe Travels',
+    seasonBadge: 'Stagione 2026 • Partenze Giornaliere Garantite',
+    ratingLabel: '4.9 / 5.0 Valutazione',
+    reviewsCount: '+500 Recensioni Verificate',
+    officialBadge: 'MINCETUR & DIRCETUR',
+    officialDesc: 'Operatore Turistico Ufficiale',
+    officialOperator: 'Agenzia Ufficiale',
+    navTours: 'Tour in Evidenza',
+    navGallery: 'Galleria Pinterest',
+    navPackages: 'Pacchetti',
+    navWhyUs: 'Perché Noi?',
+    navReviews: 'Recensioni',
+    navFaq: 'FAQ & Supporto',
+    ctaHeader: 'WhatsApp',
+    ctaHeroQuote: 'Richiedi Preventivo',
+    ctaHeroWa: 'Prenota Ora',
+    ctaBothWa: 'Prenota su WhatsApp',
+    ctaBothQuote: 'Richiedi Preventivo VIP',
+    ctaViewMore: 'Vedi Più Tour',
+    statTravelers: 'Viaggiatori Soddisfatti',
+    statExperience: 'Anni di Esperienza',
+    statRoutes: 'Rotte & Destinazioni',
+    statRating: 'Punteggio 4.9/5',
+    techSheetBadge: 'Scheda Tecnica Ufficiale del Tour',
+    techSheetTitle: 'Specifiche Tecniche dell’Itinerario',
+    techSheetDesc: 'Parametri certificati per garantire la massima sicurezza, comfort e piacere lungo i sentieri andini.',
+    altitudeLabel: 'Altitudine Massima',
+    durationLabel: 'Durata',
+    difficultyLabel: 'Difficoltà',
+    groupTypeLabel: 'Modalità',
+    targetAudienceLabel: 'Destinatari Ideali',
+    destinationLabel: 'Destinazione',
+    guideBadge: 'Guida Ufficiale Abilitata DIRCETUR',
+    guideSpokenLanguages: 'Lingue Parlate',
+    guideBio: 'Specialista locale abilitato con certificazione di primo soccorso in ambienti remoti e protocollo medico per l’altitudine.',
+    directLine: 'Assistenza Diretta',
+    includedServicesBadge: 'Servizi & Privilegi Ufficiali',
+    includedServicesTitle: 'Servizi Inclusi nella tua Esperienza (Punto 7)',
+    includedServicesDesc: 'Tutto ciò che serve per un viaggio confortevole, sicuro e indimenticabile senza costi nascosti.',
+    catalogBadge: 'Catalogo Esclusivo 2026',
+    catalogTitle: 'Tour in Evidenza a Cusco e Perù',
+    catalogDesc: 'Partenze giornaliere garantite con guide ufficiali, trasporti autorizzati e assistenza medica con ossigeno.',
+    filterAll: 'Tutti',
+    filterTrek: 'Trekking',
+    filterMachu: 'Machu Picchu',
+    filterCulture: 'Valle Sacra',
+    filterAdrenaline: 'Adrenalina',
+    pricePerPerson: 'Prezzo a persona',
+    bookTour: 'Prenota Tour',
+    quoteTour: 'Richiedi Preventivo',
+    itineraryBadge: 'Itinerario Dettagliato del Tour',
+    itineraryTitle: 'Programma Passo dopo Passo',
+    itineraryDesc: 'Orari studiati accuratamente per favorire l’acclimatazione all’altitudine e il massimo relax.',
+    logisticsBadge: 'Logistica Chiara & Bagaglio',
+    logisticsTitle: 'Esclusioni Chiare & Checklist dello Zaino',
+    logisticsDesc: 'Totale trasparenza prima di intraprendere il tuo viaggio andino.',
+    notIncludedTitle: 'Cosa NON è incluso nella tariffa',
+    whatToBringTitle: 'Cosa portare nello zaino (Consigliato)',
+    whyTrustBadge: 'Fiducia & Sicurezza',
+    altitudeProtocolTitle: 'Protocollo di Altitudine & Assistenza Medica',
+    altitudeProtocolDesc: 'Tutti i nostri veicoli e guide dispongono permanentemente di bombole di ossigeno medicale e kit di primo soccorso.',
+    trustBadgesTitle: 'Certificazioni Ufficiali & Sigilli di Garanzia',
+    activeGuidesNow: 'Guide Attive Oggi a Cusco',
+    satisfactionGuaranteed: '100% Soddisfazione Garantita',
+    packagesBadge: 'Circuiti Multigiorno',
+    packagesTitle: 'I Nostri Pacchetti di Viaggio',
+    packagesDesc: 'Circuiti completi con alloggi selezionati, biglietti ferroviari, trasferimenti e visite guidate.',
+    fromPrice: 'A partire da',
+    viewItinerary: 'Vedi Itinerario',
+    reviewsBadge: 'Storie Verificate',
+    reviewsTitle: 'Cosa dicono i nostri viaggiatori',
+    reviewsDesc: 'Recensioni verificate da viaggiatori di tutto il mondo che hanno affidato le loro vacanze al nostro team ufficiale.',
+    verifiedReview: 'Verificato',
+    ctaBannerTitle: 'PRONTO PER LA TUA PROSSIMA AVVENTURA?',
+    ctaBannerDesc: 'Contattaci oggi stesso per assicurarti gli ingressi a Machu Picchu e vivere il miglior viaggio della tua vita in Perù.',
+    contactNow: 'Contattaci Ora',
+    freeBanner: '⚡ Creato con Cusco Creativos Web — Generatore Rapido di Landing Turistiche',
+    questionsTooltip: 'Dubbi? Parla con un consulente',
+    certificationsTitle: 'Certificazioni Ufficiali'
+  }
+};
+
+// -------------------------------------------------------------
+// COMPONENTE PRINCIPAL
+// -------------------------------------------------------------
 export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 'desktop' }: AgencyPortalTemplateProps) {
   const isMobile = viewMode === 'mobile';
   
@@ -47,7 +463,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const [isQuoteOpen, setIsQuoteOpen] = useState<boolean>(false);
   const [selectedTourForQuote, setSelectedTourForQuote] = useState<string>('');
 
-  // 2. Parámetros y datos dinámicos extraídos de LandingData
+  // 2. Parámetros y datos dinámicos
   const brandName = data?.name || 'Cusco Tours';
   const whatsappNumber = (data?.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const guideName = data?.guideName || 'Marco Mendoza';
@@ -55,267 +471,530 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const objective: ObjectiveType = data?.objective || 'whatsapp';
   const planTier: PlanTier = data?.tier || 'pro';
 
-  // 3. Diccionario Multi-Idioma reactivo (ES / EN)
-  const isEn = lang === 'en';
+  // 3. Diccionario Multi-Idioma reactivo (ES / EN / PT / FR / IT)
+  const dict = DICTIONARIES[lang] || DICTIONARIES.es;
   const t = {
-    officialBar: isEn ? 'DIRCETUR • Safe Travels' : 'DIRCETUR Cusco • Safe Travels',
-    seasonBadge: isEn ? '2026 Season • Guaranteed Daily Departures' : 'Temporada 2026 • Salidas Diarias',
-    ratingLabel: isEn ? '4.9 / 5.0 Rating' : '4.9 / 5.0 Valoración',
-    reviewsCount: isEn ? '+500 Verified Reviews' : '+500 Opiniones Verificadas',
-    officialBadge: isEn ? 'MINCETUR & DIRCETUR' : 'MINCETUR & DIRCETUR',
-    officialDesc: isEn ? 'Official Licensed Operator' : 'Operador Turístico Oficial',
-    navTours: isEn ? 'Featured Tours' : 'Tours Destacados',
-    navPackages: isEn ? 'Packages' : 'Paquetes',
-    navWhyUs: isEn ? 'Why Us?' : '¿Por Qué Nosotros?',
-    navReviews: isEn ? 'Reviews' : 'Reseñas',
-    navFaq: isEn ? 'FAQ & Support' : 'FAQ & Soporte',
-    ctaHeader: isEn ? 'WhatsApp' : 'WhatsApp',
-    ctaHeroQuote: isEn ? 'Request Quote' : 'Solicitar Cotización',
-    ctaHeroWa: isEn ? 'Book Now' : 'Reservar Ahora',
-    ctaViewMore: isEn ? 'View Tours' : 'Ver Más Tours',
-    statTravelers: isEn ? 'Happy Travelers' : 'Viajeros Felices',
-    statExperience: isEn ? 'Years Experience' : 'De Experiencia',
-    statRoutes: isEn ? 'Routes & Tours' : 'Rutas & Destinos',
-    statRating: isEn ? 'Score 4.9/5' : 'Puntuación 4.9/5',
-    catalogBadge: isEn ? 'Exclusive 2026 Catalog' : 'Catálogo Exclusivo 2026',
-    catalogTitle: isEn ? 'Featured Tours in Cusco & Peru' : 'Tours Destacados en Cusco y Perú',
-    catalogDesc: isEn ? 'Daily departures with certified tour guides, medical emergency kits and private transport.' : 'Salidas diarias garantizadas con guías colegiados, traslados oficiales y asistencia médica de emergencia.',
-    filterAll: isEn ? 'All' : 'Todos',
-    filterTrek: isEn ? 'Trekking' : 'Trekking',
-    filterMachu: isEn ? 'Machu Picchu' : 'Machu Picchu',
-    filterCulture: isEn ? 'Sacred Valley' : 'Valle Sagrado',
-    filterAdrenaline: isEn ? 'Adrenaline' : 'Adrenalina',
-    pricePerPerson: isEn ? 'Price per person' : 'Precio por persona',
-    bookTour: isEn ? 'Book Tour' : 'Reservar Tour',
-    quoteTour: isEn ? 'Request Quote' : 'Cotizar Tour',
-    whyTitle: isEn ? `Why travel with ${brandName}?` : `¿Por qué viajar con ${brandName}?`,
-    whySubtitle: isEn ? 'Official local agency with over a decade curating unforgettable memories across the Peruvian Andes.' : 'Somos una agencia local acreditada con más de 10 años organizando viajes inolvidables en Cusco y todo el Perú.',
-    packagesTitle: isEn ? 'Curated Travel Packages' : 'Nuestros Tours & Paquetes',
-    packagesDesc: isEn ? 'Multi-day packages including hotels, railway tickets, transfers and local guided tours.' : 'Circuitos completos con alojamiento, traslados y guiado incluidos.',
-    reviewsTitle: isEn ? 'What our travelers say' : 'Lo que dicen nuestros viajeros',
-    reviewsDesc: isEn ? 'Verified testimonials from adventurers around the globe who trusted our team in Cusco.' : 'Opiniones recopiladas de turistas de todo el mundo que confiaron sus vacaciones en Cusco con nuestro equipo oficial.',
-    ctaBannerTitle: isEn ? 'READY FOR YOUR NEXT ADVENTURE?' : '¿LISTO PARA TU PRÓXIMA AVENTURA?',
-    ctaBannerDesc: isEn ? 'Contact our team today to lock in your Machu Picchu tickets and personalized Andean itinerary.' : 'Contáctanos hoy mismo para asegurar tus accesos a Machu Picchu y disfrutar del mejor viaje de tu vida en el Perú.',
-    contactNow: isEn ? 'Contact Us Now' : 'Contactar Ahora',
-    footerRights: isEn ? `© 2026 ${brandName}. Authorized Tourism Operator.` : `© 2026 ${brandName}. Operador Turístico Autorizado.`,
-    freeBanner: isEn ? '⚡ Created with Cusco Creativos Web — Fast Tourism Landing Builder' : '⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas'
+    ...dict,
+    whyTitle: lang === 'en' ? `Why travel with ${brandName}?` : lang === 'pt' ? `Por que viajar com ${brandName}?` : lang === 'fr' ? `Pourquoi voyager avec ${brandName} ?` : lang === 'it' ? `Perché viaggiare con ${brandName}?` : `¿Por qué viajar con ${brandName}?`,
+    whySubtitle: lang === 'en' ? 'Official local agency with over a decade curating unforgettable memories across the Peruvian Andes.' : lang === 'pt' ? 'Agência local credenciada com mais de uma década organizando experiências inesquecíveis nos Andes peruanos.' : lang === 'fr' ? 'Agence locale agréée forte de plus d’une décennie d’expérience dans l’organisation de souvenirs inoubliables.' : lang === 'it' ? 'Agenzia locale accreditata con oltre un decennio di esperienza nella creazione di ricordi indimenticabili.' : 'Somos una agencia local acreditada con más de 10 años organizando viajes inolvidables en Cusco y todo el Perú.',
+    footerRights: `© 2026 ${brandName}. ${lang === 'en' ? 'Authorized Tourism Operator.' : lang === 'pt' ? 'Operador Turístico Autorizado.' : lang === 'fr' ? 'Opérateur Touristique Autorisé.' : lang === 'it' ? 'Operatore Turistico Autorizzato.' : 'Operador Turístico Autorizado.'}`
   };
 
-  // 4. Jerarquía de contenidos adaptada al nivel del plan
+  // 4. Jerarquía de contenidos
   const isFree = planTier === 'free';
   const isBasic = planTier === 'basic';
   const isPro = planTier === 'pro';
   const isAdvance = planTier === 'advance';
 
-  // 5. Helpers de traducción bilingüe completa (ES / EN)
-  const getBilingualHeroTitle = (originalTitle?: string) => {
-    if (!isEn) return originalTitle || 'VINICUNCA & MACHU PICCHU';
-    if (!originalTitle) return 'LUXURY MACHU PICCHU & SCENIC PANORAMIC TRAIN';
+  // -----------------------------------------------------------
+  // 5. HELPERS DE TRADUCCIÓN DINÁMICA DE 5 IDIOMAS
+  // -----------------------------------------------------------
+  const getLocalizedHeroTitle = (originalTitle?: string) => {
+    if (!originalTitle) {
+      if (lang === 'en') return 'LUXURY MACHU PICCHU & SCENIC PANORAMIC TRAIN';
+      if (lang === 'pt') return 'MACHU PICCHU EXCLUSIVO EM TREM PANORÂMICO';
+      if (lang === 'fr') return 'MACHU PICCHU EXCLUSIF EN TRAIN PANORAMIQUE';
+      if (lang === 'it') return 'MACHU PICCHU ESCLUSIVO IN TRENO PANORAMICO';
+      return 'VINICUNCA & MACHU PICCHU';
+    }
+    if (lang === 'es') return originalTitle;
+
     const lower = originalTitle.toLowerCase();
     if (lower.includes('machu picchu') || lower.includes('lujo') || lower.includes('tren') || lower.includes('vip')) {
-      return 'LUXURY MACHU PICCHU & SCENIC PANORAMIC TRAIN';
+      if (lang === 'en') return 'LUXURY MACHU PICCHU & SCENIC PANORAMIC TRAIN';
+      if (lang === 'pt') return 'MACHU PICCHU EXCLUSIVO EM TREM PANORÂMICO';
+      if (lang === 'fr') return 'MACHU PICCHU EXCLUSIF EN TRAIN PANORAMIQUE';
+      if (lang === 'it') return 'MACHU PICCHU ESCLUSIVO IN TRENO PANORAMICO';
     }
     if (lower.includes('vinicunca') || lower.includes('7 colores') || lower.includes('colores')) {
-      return 'RAINBOW MOUNTAIN & RED VALLEY VIP EXPEDITION';
+      if (lang === 'en') return 'RAINBOW MOUNTAIN & RED VALLEY VIP EXPEDITION';
+      if (lang === 'pt') return 'MONTANHA DAS 7 CORES & VALE VERMELHO VIP';
+      if (lang === 'fr') return 'MONTAGNE AUX 7 COULEURS & VALLÉE ROUGE VIP';
+      if (lang === 'it') return 'MONTAGNA DEI 7 COLORI & VALLE ROSSA VIP';
     }
     if (lower.includes('humantay')) {
-      return 'TURQUOISE HUMANTAY LAKE & GLACIER VIP TREK';
+      if (lang === 'en') return 'TURQUOISE HUMANTAY LAKE & GLACIER VIP TREK';
+      if (lang === 'pt') return 'LAGUNA HUMANTAY TURQUESA & GELEIRA ANDINA';
+      if (lang === 'fr') return 'LAGUNE HUMANTAY TURQUOISE & GLACIER ANDIN';
+      if (lang === 'it') return 'LAGUNA HUMANTAY TURCHESE & GHIACCIAIO ANDINO';
+    }
+    if (lower.includes('salkantay')) {
+      if (lang === 'en') return 'CLASSIC SALKANTAY TREK TO MACHU PICCHU';
+      if (lang === 'pt') return 'SALKANTAY TREK CLÁSSICO PARA MACHU PICCHU';
+      if (lang === 'fr') return 'TREK SALKANTAY CLASSIQUE VERS LE MACHU PICCHU';
+      if (lang === 'it') return 'TREK SALKANTAY CLASSICO VERSO MACHU PICCHU';
     }
     if (lower.includes('valle sagrado')) {
-      return 'SACRED VALLEY OF THE INCAS VIP CULTURAL JOURNEY';
+      if (lang === 'en') return 'SACRED VALLEY OF THE INCAS VIP CULTURAL JOURNEY';
+      if (lang === 'pt') return 'VALE SAGRADO DOS INCAS VIP & CULTURA ANDINA';
+      if (lang === 'fr') return 'VALLÉE SACRÉE DES INCAS VIP & CULTURE ANDINE';
+      if (lang === 'it') return 'VALLE SACRA DEGLI INCA VIP & CULTURA ANDINA';
+    }
+    if (lower.includes('city tour') || lower.includes('sacsayhuam')) {
+      if (lang === 'en') return 'ANCESTRAL CUSCO CITY TOUR & 4 RUINS';
+      if (lang === 'pt') return 'CITY TOUR ANCESTRAL CUSCO & 4 SÍTIOS ARQUEOLÓGICOS';
+      if (lang === 'fr') return 'CITY TOUR CUSCO ANCESTRAL & 4 SITES ARCHÉOLOGIQUES';
+      if (lang === 'it') return 'CITY TOUR CUSCO ANCESTRALE & 4 SITI ARCHEOLOGICI';
     }
     return originalTitle;
   };
 
-  const getBilingualHeroSubtitle = (originalSubtitle?: string) => {
-    if (!isEn) {
+  const getLocalizedHeroSubtitle = (originalSubtitle?: string) => {
+    if (lang === 'es') {
       return originalSubtitle || 'Montaña de 7 Colores & Valle Rojo • Vive la magia de los Andes con operadores colegiados y salidas diarias.';
     }
-    if (!originalSubtitle) {
-      return 'Discover the Wonder of the World with private luxury transfers, 5-star comfort and an official certified historian guide dedicated exclusively to you.';
+    if (lang === 'en') {
+      return 'Discover the wonders of the Peruvian Andes with accredited certified guides, private comfortable transfers and continuous medical oxygen support.';
     }
-    const lower = originalSubtitle.toLowerCase();
-    if (lower.includes('maravilla') || lower.includes('machu picchu') || lower.includes('traslados') || lower.includes('familia')) {
-      return 'Discover the Wonder of the World with private luxury transfers, 5-star comfort and an official certified historian guide dedicated exclusively to you and your family.';
+    if (lang === 'pt') {
+      return 'Descubra as maravilhas dos Andes peruanos com guias credenciados, transporte privado com total conforto e suporte de oxigênio medicinal permanente.';
     }
-    if (lower.includes('montaña') || lower.includes('vinicunca') || lower.includes('colores')) {
-      return 'Rainbow Mountain, Red Valley & Andean Wonders • Live the authentic Andean journey with accredited official experts and daily departures.';
+    if (lang === 'fr') {
+      return 'Découvrez les merveilles des Andes péruviennes avec des guides certifiés, des transferts privés tout confort et une assistance permanente à l’oxygène médical.';
     }
-    return 'Live the authentic Andean journey with accredited official experts, private transfers and full medical oxygen assistance.';
+    if (lang === 'it') {
+      return 'Scopri le meraviglie delle Ande peruviane con guide certificate, trasferimenti privati confortevoli e supporto continuo di ossigeno medicale.';
+    }
+    return originalSubtitle || '';
   };
 
-  const getBilingualHeroBadge = (originalBadge?: string) => {
-    if (!isEn) return originalBadge || t.seasonBadge;
-    if (!originalBadge) return t.seasonBadge;
-    const lower = originalBadge.toLowerCase();
-    if (lower.includes('vip') || lower.includes('exclusiv')) {
-      return 'Exclusive VIP Experience • 2026 Season';
+  const getLocalizedDifficulty = (diff?: string) => {
+    const val = diff || 'Moderada';
+    if (lang === 'es') return val;
+    const lower = val.toLowerCase();
+    if (lower.includes('fácil') || lower.includes('facil')) {
+      if (lang === 'en') return 'Easy (Family friendly)';
+      if (lang === 'pt') return 'Fácil (Famílias / Sem esforço)';
+      if (lang === 'fr') return 'Facile (Accessible à tous)';
+      if (lang === 'it') return 'Facile (Adatto a tutti)';
     }
-    return t.seasonBadge;
+    if (lower.includes('exigente') || lower.includes('alta montaña')) {
+      if (lang === 'en') return 'Challenging (High Mountain)';
+      if (lang === 'pt') return 'Exigente (Alta Montanha)';
+      if (lang === 'fr') return 'Exigeante (Haute Montagne)';
+      if (lang === 'it') return 'Impegnativa (Alta Montagna)';
+    }
+    if (lower.includes('moderada - alta')) {
+      if (lang === 'en') return 'Moderate - High';
+      if (lang === 'pt') return 'Moderada - Alta';
+      if (lang === 'fr') return 'Modérée - Soutenue';
+      if (lang === 'it') return 'Moderata - Impegnativa';
+    }
+    if (lang === 'en') return 'Moderate';
+    if (lang === 'pt') return 'Moderada';
+    if (lang === 'fr') return 'Modérée';
+    if (lang === 'it') return 'Moderata';
+    return val;
   };
 
-  const getBilingualFeatures = (items?: string[]) => {
-    if (data?.includedServices && data.includedServices.length > 0) {
-      return data.includedServices;
+  const getLocalizedGroupType = (group?: string) => {
+    const val = group || 'Grupo Reducido';
+    if (lang === 'es') return val;
+    const lower = val.toLowerCase();
+    if (lower.includes('privado')) {
+      if (lang === 'en') return 'Exclusive Private Tour';
+      if (lang === 'pt') return 'Tour Privado Exclusivo';
+      if (lang === 'fr') return 'Visite Privée Exclusive';
+      if (lang === 'it') return 'Tour Privato Esclusivo';
     }
-    if (!isEn) {
-      return items || [
-        'Guías Oficiales Acreditados',
-        'Balón de Oxígeno & Botiquín',
-        'Salidas Diarias Garantizadas',
-        'Atención 24/7 por WhatsApp'
-      ];
+    if (lang === 'en') return 'Small Group (Max 8-12 pax)';
+    if (lang === 'pt') return 'Grupo Reduzido (Máx 8-12 pax)';
+    if (lang === 'fr') return 'Petit Groupe (Max 8-12 pax)';
+    if (lang === 'it') return 'Piccolo Gruppo (Max 8-12 pax)';
+    return val;
+  };
+
+  const getLocalizedTargetAudience = (aud?: string) => {
+    const val = aud || 'Viajeros Internacionales & Familias';
+    if (lang === 'es') return val;
+    if (lang === 'en') return 'International Travelers & Families';
+    if (lang === 'pt') return 'Viajantes Internacionais & Famílias';
+    if (lang === 'fr') return 'Voyageurs Internationaux & Familles';
+    if (lang === 'it') return 'Viaggiatori Internazionali & Famiglie';
+    return val;
+  };
+
+  const getLocalizedDuration = (dur?: string) => {
+    const val = dur || 'Full Day';
+    if (lang === 'es') return val;
+    const lower = val.toLowerCase();
+    if (lower.includes('full day') || lower.includes('1 día') || lower.includes('1 dia')) {
+      if (lang === 'en') return 'Full Day (05:00 - 18:00)';
+      if (lang === 'pt') return 'Dia Inteiro (Full Day)';
+      if (lang === 'fr') return 'Journée Complète';
+      if (lang === 'it') return 'Giornata Intera';
     }
-    if (!items || items.length === 0) {
-      return [
-        'Official Certified Historian Guides',
-        'Emergency Medical Oxygen & First Aid Kit',
-        'Guaranteed Daily Departures',
-        '24/7 Dedicated WhatsApp Support'
-      ];
+    if (lower.includes('media') || lower.includes('horas')) {
+      if (lang === 'en') return 'Half Day (4.5 Hours)';
+      if (lang === 'pt') return 'Meio Dia (4.5 Horas)';
+      if (lang === 'fr') return 'Demi-Journée (4.5 H)';
+      if (lang === 'it') return 'Mezza Giornata (4.5 Ore)';
     }
-    return items.map(item => {
+    if (lower.includes('5 días') || lower.includes('5 dias')) {
+      if (lang === 'en') return '5 Days / 4 Nights';
+      if (lang === 'pt') return '5 Dias / 4 Noites';
+      if (lang === 'fr') return '5 Jours / 4 Nuits';
+      if (lang === 'it') return '5 Giorni / 4 Notti';
+    }
+    return val;
+  };
+
+  const getLocalizedIncludedServices = (services?: string[]) => {
+    const baseList = (services && services.length > 0) ? services : [
+      'Transporte turístico privado con aire acondicionado',
+      'Boletos de tren panorámico y entradas oficiales',
+      'Guía oficial bilingüe DIRCETUR en todas las excursiones',
+      'Asistencia y monitoreo 24/7 con oxígeno a bordo',
+      'Almuerzo buffet y degustaciones gastronómicas'
+    ];
+
+    if (lang === 'es') return baseList;
+
+    return baseList.map(srv => {
+      const lower = srv.toLowerCase();
+      if (lower.includes('transporte') || lower.includes('traslado')) {
+        if (lang === 'en') return 'Private scenic tourist transportation with panoramic windows';
+        if (lang === 'pt') return 'Transporte turístico privado com janelas panorâmicas';
+        if (lang === 'fr') return 'Transport touristique privé avec vitres panoramiques';
+        if (lang === 'it') return 'Trasporto turistico privato con finestre panoramiche';
+      }
+      if (lower.includes('tren') || lower.includes('boleto') || lower.includes('entrada')) {
+        if (lang === 'en') return 'Official panoramic railway tickets and entrance passes';
+        if (lang === 'pt') return 'Passagens de trem panorâmico e ingressos oficiais';
+        if (lang === 'fr') return 'Billets de train panoramique et entrées officielles';
+        if (lang === 'it') return 'Biglietti treno panoramico e ingressi ufficiali';
+      }
+      if (lower.includes('guía') || lower.includes('guia') || lower.includes('guide')) {
+        if (lang === 'en') return 'Certified bilingual historian guide (DIRCETUR licensed)';
+        if (lang === 'pt') return 'Guia oficial bilíngue credenciado pela DIRCETUR';
+        if (lang === 'fr') return 'Guide officiel bilingue agréé par la DIRCETUR';
+        if (lang === 'it') return 'Guida ufficiale bilingue abilitata dalla DIRCETUR';
+      }
+      if (lower.includes('oxígeno') || lower.includes('oxigeno') || lower.includes('asistencia')) {
+        if (lang === 'en') return '24/7 emergency medical oxygen and altitude first aid kits';
+        if (lang === 'pt') return 'Assistência 24/7 com balão de oxigênio e kit de altitude';
+        if (lang === 'fr') return 'Assistance 24/7 avec oxygène médical et trousse d’altitude';
+        if (lang === 'it') return 'Assistenza 24/7 con ossigeno medicale e kit altitudine';
+      }
+      if (lower.includes('almuerzo') || lower.includes('buffet') || lower.includes('gastronom')) {
+        if (lang === 'en') return 'Traditional Andean buffet lunch and regional tastings';
+        if (lang === 'pt') return 'Almoço buffet campestre e degustações gastronômicas';
+        if (lang === 'fr') return 'Déjeuner buffet andin traditionnel et dégustations';
+        if (lang === 'it') return 'Pranzo a buffet andino tradizionale e degustazioni';
+      }
+      return srv;
+    });
+  };
+
+  const getLocalizedItinerary = (itinerary?: { step: string; title: string; desc: string }[]) => {
+    const base = (itinerary && itinerary.length > 0) ? itinerary : [
+      { step: '04:30 AM', title: 'Recojo en Hotel & Traslado Panorámico', desc: 'Recojo puntual en tu alojamiento con asistencia médica preventiva y refrigerio ligero.' },
+      { step: '07:30 AM', title: 'Desayuno Buffet Andino Energético', desc: 'Desayuno preparado por cocineros locales para cargar energías antes del ascenso.' },
+      { step: '09:30 AM', title: 'Ascenso Guiado a la Cumbre de Vinicunca (5,036 m)', desc: 'Caminata con ritmo dosificado, paradas fotográficas y asistencia permanente de oxígeno.' },
+      { step: '01:30 PM', title: 'Almuerzo Campestre & Retorno a Cusco', desc: 'Almuerzo buffet campestre en valle andino y retorno cómodo a la ciudad de Cusco.' }
+    ];
+
+    if (lang === 'es') return base;
+
+    return base.map((it, idx) => {
+      let step = it.step;
+      if (step.toLowerCase().includes('día') || step.toLowerCase().includes('dia')) {
+        const num = step.replace(/[^0-9]/g, '') || String(idx + 1);
+        if (lang === 'en') step = `Day ${num}`;
+        if (lang === 'pt') step = `Dia ${num}`;
+        if (lang === 'fr') step = `Jour ${num}`;
+        if (lang === 'it') step = `Giorno ${num}`;
+      }
+
+      let title = it.title;
+      let desc = it.desc;
+      const lower = (it.title + ' ' + it.desc).toLowerCase();
+
+      if (lower.includes('recojo') || lower.includes('pickup') || lower.includes('llegada')) {
+        if (lang === 'en') {
+          title = 'Hotel Pickup & Scenic Transfer';
+          desc = 'Prompt hotel pickup with altitude prevention check and light scenic refreshments.';
+        } else if (lang === 'pt') {
+          title = 'Embarque no Hotel & Traslado Panorâmico';
+          desc = 'Pontualidade no hotel com checagem preventiva de altitude e lanche leve.';
+        } else if (lang === 'fr') {
+          title = 'Prise en Charge à l’Hôtel & Transfert Panoramique';
+          desc = 'Départ ponctuel de votre hôtel avec collation légère et prévention d’altitude.';
+        } else if (lang === 'it') {
+          title = 'Prelievo in Hotel & Trasferimento Panoramico';
+          desc = 'Partenza puntuale dall’hotel con assistenza preventiva per l’altitudine.';
+        }
+      } else if (lower.includes('desayuno') || lower.includes('breakfast')) {
+        if (lang === 'en') {
+          title = 'High-Energy Andean Buffet Breakfast';
+          desc = 'Nutritious breakfast prepared with local ingredients to energize your ascent.';
+        } else if (lang === 'pt') {
+          title = 'Café da Manhã Buffet Andino Energético';
+          desc = 'Café da manhã nutritivo com ingredientes locais para recarregar as energias.';
+        } else if (lang === 'fr') {
+          title = 'Petit-Déjeuner Buffet Énergétique des Andes';
+          desc = 'Repas nutritif préparé par des chefs locaux avant la montée.';
+        } else if (lang === 'it') {
+          title = 'Colazione a Buffet Andina Energetica';
+          desc = 'Colazione nutriente preparata con ingredienti locali per l’ascesa.';
+        }
+      } else if (lower.includes('ascenso') || lower.includes('machu picchu') || lower.includes('cumbre')) {
+        if (lang === 'en') {
+          title = 'Guided Exploration & Scenic Highlights';
+          desc = 'Paced walk with professional photo stops and dedicated continuous oxygen assistance.';
+        } else if (lang === 'pt') {
+          title = 'Caminhada Guiada & Vistas Panorâmicas';
+          desc = 'Ritmo dosado com paradas para fotos e assistência médica constante com oxigênio.';
+        } else if (lang === 'fr') {
+          title = 'Exploration Guidée & Panoramas Exceptionnels';
+          desc = 'Montée à votre rythme avec pauses photos et soutien médical à l’oxygène.';
+        } else if (lang === 'it') {
+          title = 'Esplorazione Guidata & Punti Panoramici';
+          desc = 'Camminata a ritmo costante con soste fotografiche e ossigeno medicale continuo.';
+        }
+      } else if (lower.includes('almuerzo') || lower.includes('retorno')) {
+        if (lang === 'en') {
+          title = 'Country Buffet Lunch & Return to Cusco';
+          desc = 'Celebratory valley buffet lunch followed by a comfortable scenic drive back to Cusco.';
+        } else if (lang === 'pt') {
+          title = 'Almoço Buffet Campestre & Retorno a Cusco';
+          desc = 'Almoço comemorativo no vale andino e retorno tranquilo para a cidade de Cusco.';
+        } else if (lang === 'fr') {
+          title = 'Déjeuner Buffet Champêtre & Retour à Cusco';
+          desc = 'Déjeuner convivial dans la vallée suivi d’un retour confortable vers Cusco.';
+        } else if (lang === 'it') {
+          title = 'Pranzo a Buffet Campestre & Ritorno a Cusco';
+          desc = 'Pranzo celebrativo nella vallata andina e rientro confortevole a Cusco.';
+        }
+      }
+
+      return { step, title, desc };
+    });
+  };
+
+  const getLocalizedNotIncluded = (items?: string[]) => {
+    const base = (items && items.length > 0) ? items : [
+      'Vuelos internacionales o nacionales hacia Cusco',
+      'Propinas voluntarias para guía y conductor',
+      'Seguro médico personal de viaje internacional',
+      'Gastos o snacks personales no detallados'
+    ];
+    if (lang === 'es') return base;
+
+    return base.map(item => {
       const lower = item.toLowerCase();
-      if (lower.includes('hiram bingham') || lower.includes('vistadome')) {
-        return 'Hiram Bingham / Vistadome Luxury Train: Live Andean music, welcome cocktail and panoramic observatory windows.';
+      if (lower.includes('vuelo')) {
+        if (lang === 'en') return 'International or domestic flights to Cusco';
+        if (lang === 'pt') return 'Voos internacionais ou domésticos até Cusco';
+        if (lang === 'fr') return 'Vols internationaux ou nationaux vers Cusco';
+        if (lang === 'it') return 'Voli internazionali o nazionali per Cusco';
       }
-      if (lower.includes('guía') || lower.includes('historiador')) {
-        return 'Private Certified Historian Guide: Deep, tailored narrative at your own personal pace.';
+      if (lower.includes('propina')) {
+        if (lang === 'en') return 'Voluntary gratuities for tour guides and drivers';
+        if (lang === 'pt') return 'Gorjetas voluntárias para guias e motoristas';
+        if (lang === 'fr') return 'Pourboires volontaires pour les guides et chauffeurs';
+        if (lang === 'it') return 'Mance facoltative per guide e autisti';
       }
-      if (lower.includes('gastronomía') || lower.includes('almuerzo') || lower.includes('buffet')) {
-        return 'Signature Andean Gastronomy: Gourmet buffet lunch included at the foothills of the citadel.';
+      if (lower.includes('seguro')) {
+        if (lang === 'en') return 'Personal international travel medical insurance';
+        if (lang === 'pt') return 'Seguro viagem médico pessoal internacional';
+        if (lang === 'fr') return 'Assurance médicale de voyage personnelle';
+        if (lang === 'it') return 'Assicurazione medica personale di viaggio';
       }
-      if (lower.includes('conserjería') || lower.includes('24/7') || lower.includes('coordinador')) {
-        return '24/7 Dedicated Travel Concierge: Dedicated trip coordinator permanently on call for any request.';
-      }
-      if (lower.includes('oxígeno')) {
-        return 'Emergency Medical Oxygen & Andean Altitude First Aid Kit in all vehicles.';
+      if (lower.includes('gasto') || lower.includes('snack')) {
+        if (lang === 'en') return 'Personal extra expenses, souvenirs and unlisted snacks';
+        if (lang === 'pt') return 'Despesas pessoais extras e lanches não listados';
+        if (lang === 'fr') return 'Dépenses personnelles et collations non mentionnées';
+        if (lang === 'it') return 'Spese personali extra e snack non specificati';
       }
       return item;
     });
   };
 
-  const getBilingualItinerary = (itinerary?: { step: string; title: string; desc: string }[]) => {
-    if (!isEn) {
-      return itinerary && itinerary.length > 0 ? itinerary : [
-        { step: '04:30 AM', title: 'Recojo en Hotel & Traslado Panorámico', desc: 'Recojo puntual en tu alojamiento con asistencia médica preventiva y refrigerio ligero.' },
-        { step: '07:30 AM', title: 'Desayuno Buffet Andino Energético', desc: 'Desayuno preparado por cocineros locales para cargar energías antes del ascenso.' },
-        { step: '09:30 AM', title: 'Ascenso Guiado a la Cumbre de Vinicunca (5,036 m)', desc: 'Caminata con ritmo dosificado, paradas fotográficas y asistencia permanente de oxígeno.' },
-        { step: '01:30 PM', title: 'Almuerzo Campestre & Retorno a Cusco', desc: 'Almuerzo buffet campestre en valle andino y retorno cómodo a la ciudad de Cusco.' }
-      ];
-    }
-    if (itinerary && itinerary.length > 0) {
-      return itinerary.map(it => {
-        const lower = (it.title + ' ' + it.desc).toLowerCase();
-        let step = it.step.replace(/Día/gi, 'Day').replace(/Paso/gi, 'Step');
-        let title = it.title;
-        let desc = it.desc;
-        if (lower.includes('aguas calientes') || lower.includes('vistadome') || lower.includes('tren')) {
-          step = 'Day 1';
-          title = 'Cusco to Aguas Calientes via Vistadome Panoramic Train';
-          desc = 'Private pickup from your hotel in Cusco to Ollantaytambo station. Scenic railway journey through the Sacred Valley with live onboard performance. Check-in at boutique hotel in Machu Picchu Pueblo.';
-        } else if (lower.includes('exploración') || lower.includes('machu picchu') || lower.includes('belmond')) {
-          step = 'Day 2';
-          title = 'Mystical Exploration of Machu Picchu & Gourmet Buffet';
-          desc = 'Exclusive bus ascent to the Inca citadel. 3-hour private guided exploration through temples, royal enclosures and terraces. Gourmet buffet lunch at Belmond Sanctuary Lodge and first-class train back to Cusco.';
-        }
-        return { step, title, desc };
-      });
-    }
-    return [
-      { step: '04:30 AM', title: 'Hotel Pickup & Scenic Transfer', desc: 'Prompt pickup at your accommodation with preventative altitude assistance and light refreshments.' },
-      { step: '07:30 AM', title: 'High-Energy Andean Buffet Breakfast', desc: 'Nutritious breakfast prepared with local Andean ingredients to fuel your morning ascent.' },
-      { step: '09:30 AM', title: 'Guided Trek to Vinicunca Summit (5,036 m)', desc: 'Paced hike with photo stops, breathtaking mountain vistas and continuous medical oxygen support.' },
-      { step: '01:30 PM', title: 'Valley Buffet Lunch & Comfortable Return', desc: 'Celebratory country buffet lunch followed by a smooth scenic drive returning to Cusco around 5:00 PM.' }
+  const getLocalizedWhatToBring = (items?: string[]) => {
+    const base = (items && items.length > 0) ? items : [
+      'Pasaporte original físico vigente (obligatorio)',
+      'Ropa abrigadora en capas y casaca cortavientos',
+      'Zapatos cómodos de trekking con buen agarre',
+      'Bloqueador solar (SPF 50+), lentes de sol y gorro',
+      'Dinero en efectivo en soles peruanos'
     ];
+    if (lang === 'es') return base;
+
+    return base.map(item => {
+      const lower = item.toLowerCase();
+      if (lower.includes('pasaporte')) {
+        if (lang === 'en') return 'Original valid physical passport (Mandatory)';
+        if (lang === 'pt') return 'Passaporte original físico válido (Obrigatório)';
+        if (lang === 'fr') return 'Passeport original physique valide (Obligatoire)';
+        if (lang === 'it') return 'Passaporto originale fisico valido (Obbligatorio)';
+      }
+      if (lower.includes('ropa') || lower.includes('capas')) {
+        if (lang === 'en') return 'Warm layered clothing, fleece and windbreaker jacket';
+        if (lang === 'pt') return 'Roupas quentes em camadas e jaqueta corta-vento';
+        if (lang === 'fr') return 'Vêtements chauds multicouches et veste coupe-vent';
+        if (lang === 'it') return 'Abbigliamento caldo a strati e giacca a vento';
+      }
+      if (lower.includes('zapato') || lower.includes('calzado') || lower.includes('trekking')) {
+        if (lang === 'en') return 'Comfortable hiking shoes or boots with good traction';
+        if (lang === 'pt') return 'Tênis ou botas de caminhada com boa tração';
+        if (lang === 'fr') return 'Chaussures de randonnée confortables avec bonne adhérence';
+        if (lang === 'it') return 'Scarpe o scarponcini da trekking con buon grip';
+      }
+      if (lower.includes('bloqueador') || lower.includes('solar') || lower.includes('lentes')) {
+        if (lang === 'en') return 'High SPF sunscreen (50+), UV sunglasses and sun hat';
+        if (lang === 'pt') return 'Protetor solar (FPS 50+), óculos escuros UV e chapéu';
+        if (lang === 'fr') return 'Crème solaire (SPF 50+), lunettes de soleil UV et chapeau';
+        if (lang === 'it') return 'Crema solare (SPF 50+), occhiali da sole UV e cappello';
+      }
+      if (lower.includes('dinero') || lower.includes('efectivo') || lower.includes('soles')) {
+        if (lang === 'en') return 'Cash in Peruvian Soles (PEN) for local handicrafts and snacks';
+        if (lang === 'pt') return 'Dinheiro em espécie em Soles peruanos para artesanato';
+        if (lang === 'fr') return 'Espèces en Soles péruviens pour souvenirs et achats locaux';
+        if (lang === 'it') return 'Contanti in Soles peruviani per artigianato e spese locali';
+      }
+      return item;
+    });
   };
 
-  const heroTitle = getBilingualHeroTitle(data?.hero?.title);
-  const heroSubtitle = getBilingualHeroSubtitle(data?.hero?.subtitle);
-  const heroBadge = getBilingualHeroBadge(data?.hero?.badge);
-  const heroImage = data?.heroImage || 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop';
-  const heroCtaLabel = isEn 
-    ? (objective === 'quote' ? 'Request Private VIP Quote' : objective === 'both' ? 'Book on WhatsApp or Quote' : 'Book on WhatsApp') 
-    : (data?.hero?.cta || (objective === 'quote' ? t.ctaHeroQuote : objective === 'both' ? 'WhatsApp & Cotizar Online' : t.ctaHeroWa));
+  const getLocalizedTrustBadges = (badges?: string[]) => {
+    const base = (badges && badges.length > 0) ? badges : [
+      'Licencia Oficial DIRCETUR Cusco',
+      'Sello Internacional Safe Travels',
+      'Agencia Formal RUC 20 Verificado',
+      'Guía Colegiado Bilingüe',
+      'Balón de Oxígeno & Botiquín'
+    ];
+    if (lang === 'es') return base;
 
-  // 6. Lista de Tours Destacados
+    return base.map(badge => {
+      const lower = badge.toLowerCase();
+      if (lower.includes('dircetur')) {
+        if (lang === 'en') return 'Official DIRCETUR Cusco License';
+        if (lang === 'pt') return 'Licença Oficial DIRCETUR Cusco';
+        if (lang === 'fr') return 'Licence Officielle DIRCETUR Cusco';
+        if (lang === 'it') return 'Licenza Ufficiale DIRCETUR Cusco';
+      }
+      if (lower.includes('safe travels')) {
+        if (lang === 'en') return 'International Safe Travels Seal';
+        if (lang === 'pt') return 'Selo Internacional Safe Travels';
+        if (lang === 'fr') return 'Label International Safe Travels';
+        if (lang === 'it') return 'Sigillo Internazionale Safe Travels';
+      }
+      if (lower.includes('ruc') || lower.includes('formal')) {
+        if (lang === 'en') return 'Verified Registered Formal Agency';
+        if (lang === 'pt') return 'Agência Formal Registrada e Verificada';
+        if (lang === 'fr') return 'Agence Agréée et Enregistrée';
+        if (lang === 'it') return 'Agenzia Ufficiale Registrata e Verificata';
+      }
+      if (lower.includes('guía') || lower.includes('bilingüe')) {
+        if (lang === 'en') return 'Certified Bilingual Tourism Guide';
+        if (lang === 'pt') return 'Guia Bilíngue Oficial Credenciado';
+        if (lang === 'fr') return 'Guide Officiel Bilingue Agréé';
+        if (lang === 'it') return 'Guida Ufficiale Bilingue Abilitata';
+      }
+      if (lower.includes('oxígeno') || lower.includes('botiquín')) {
+        if (lang === 'en') return 'Medical Oxygen Tank & Altitude First Aid';
+        if (lang === 'pt') return 'Balão de Oxigênio & Kit de Altitude';
+        if (lang === 'fr') return 'Bouteille d’Oxygène & Trousse d’Altitude';
+        if (lang === 'it') return 'Bombola di Ossigeno & Kit Altitudine';
+      }
+      return badge;
+    });
+  };
+
+  // Textos y enlaces dinámicos
+  const heroTitle = getLocalizedHeroTitle(data?.hero?.title);
+  const heroSubtitle = getLocalizedHeroSubtitle(data?.hero?.subtitle);
+  const heroBadge = data?.hero?.badge || t.seasonBadge;
+  const heroImage = data?.heroImage || 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop';
+  
+  const heroCtaLabel = objective === 'quote' 
+    ? t.ctaHeroQuote 
+    : objective === 'both' 
+    ? (lang === 'es' ? 'WhatsApp & Cotizar Online' : lang === 'en' ? 'WhatsApp & Quote' : lang === 'pt' ? 'WhatsApp & Orçamento' : lang === 'fr' ? 'WhatsApp & Devis' : 'WhatsApp & Preventivo')
+    : t.ctaHeroWa;
+
+  // -----------------------------------------------------------
+  // 6. CATÁLOGO DE TOURS MULTI-IDIOMA
+  // -----------------------------------------------------------
   const DEFAULT_FEATURED_TOURS = [
     {
       id: 'tour-creado-usuario',
-      title: data?.name || (isEn ? 'Signature Andean Tour Experience' : 'Tour Principal Seleccionado'),
-      category: isEn ? 'Featured Signature Tour' : 'Tour Principal Destacado',
+      title: data?.name || (lang === 'en' ? 'Signature Andean Tour' : lang === 'pt' ? 'Passeio Andino Principal' : lang === 'fr' ? 'Circuit Andin Principal' : lang === 'it' ? 'Tour Andino Principale' : 'Tour Principal Seleccionado'),
+      category: lang === 'en' ? 'Featured Signature Tour' : lang === 'pt' ? 'Passeio Destaque' : lang === 'fr' ? 'Circuit Signature' : lang === 'it' ? 'Tour in Evidenza' : 'Tour Principal Destacado',
       categoryKey: 'all',
       location: destination,
-      duration: data?.duration || 'Full Day',
+      duration: getLocalizedDuration(data?.duration),
       price: data?.price || '$45 USD',
       rating: 4.9,
       image: heroImage,
-      tag: isEn ? 'Selected Tour' : 'Tour Seleccionado',
+      tag: lang === 'en' ? 'Selected Tour' : lang === 'pt' ? 'Selecionado' : lang === 'fr' ? 'Sélectionné' : lang === 'it' ? 'Selezionato' : 'Tour Seleccionado',
       badge: '4.9 ★'
     },
     {
       id: '2',
-      title: isEn ? 'Humantay Turquoise Lake & Glacier' : 'Laguna Humantay Turquesa & Glaciar',
-      category: isEn ? 'Nature & Photography' : 'Naturaleza & Fotografía',
+      title: lang === 'en' ? 'Humantay Turquoise Lake & Glacier' : lang === 'pt' ? 'Laguna Humantay Turquesa & Geleira' : lang === 'fr' ? 'Lagune Humantay Turquoise & Glacier' : lang === 'it' ? 'Laguna Humantay Turchese & Ghiacciaio' : 'Laguna Humantay Turquesa & Glaciar',
+      category: lang === 'en' ? 'Nature & Photography' : lang === 'pt' ? 'Natureza & Fotografia' : lang === 'fr' ? 'Nature & Photographie' : lang === 'it' ? 'Natura & Fotografia' : 'Naturaleza & Fotografía',
       categoryKey: 'trekking',
       location: 'Anta - Mollepata',
       duration: 'Full Day (05:00 - 18:00)',
       price: '$40 USD',
       rating: 4.8,
       image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=2070&auto=format&fit=crop',
-      tag: isEn ? 'Glacier Trek' : 'Glaciar',
+      tag: lang === 'en' ? 'Glacier Trek' : lang === 'pt' ? 'Geleira' : lang === 'fr' ? 'Glacier' : lang === 'it' ? 'Ghiacciaio' : 'Glaciar',
       badge: '4.8 ★'
     },
     {
       id: '3',
-      title: isEn ? 'Machu Picchu Panoramic Train & Guided Tour' : 'Machu Picchu Mágico en Tren Panorámico',
-      category: isEn ? 'Wonder of the World' : 'Historia & Maravilla',
+      title: lang === 'en' ? 'Machu Picchu Panoramic Train & Guided Tour' : lang === 'pt' ? 'Machu Picchu Mágico em Trem Panorâmico' : lang === 'fr' ? 'Machu Picchu Magique en Train Panoramique' : lang === 'it' ? 'Machu Picchu Magico in Treno Panoramico' : 'Machu Picchu Mágico en Tren Panorámico',
+      category: lang === 'en' ? 'Wonder of the World' : lang === 'pt' ? 'Maravilha do Mundo' : lang === 'fr' ? 'Merveille du Monde' : lang === 'it' ? 'Meraviglia del Mondo' : 'Historia & Maravilla',
       categoryKey: 'machu',
       location: 'Aguas Calientes',
-      duration: isEn ? '1 Full Day' : '1 Día Completo',
+      duration: lang === 'en' ? '1 Full Day' : lang === 'pt' ? '1 Dia Completo' : lang === 'fr' ? '1 Journée' : lang === 'it' ? '1 Giorno' : '1 Día Completo',
       price: '$280 USD',
       rating: 5.0,
       image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
-      tag: isEn ? 'Top Wonder' : 'Maravilla del Mundo',
+      tag: lang === 'en' ? 'Top Wonder' : lang === 'pt' ? 'Maravilha' : lang === 'fr' ? 'Merveille' : lang === 'it' ? 'Meraviglia' : 'Maravilla del Mundo',
       badge: '5.0 ★'
     },
     {
       id: '4',
-      title: isEn ? 'Sacred Valley VIP Experience' : 'Valle Sagrado de los Incas VIP',
-      category: isEn ? 'Culture & Archaeology' : 'Cultura & Arqueología',
+      title: lang === 'en' ? 'Sacred Valley VIP Cultural Journey' : lang === 'pt' ? 'Vale Sagrado dos Incas VIP' : lang === 'fr' ? 'Vallée Sacrée des Incas VIP' : lang === 'it' ? 'Valle Sacra degli Inca VIP' : 'Valle Sagrado de los Incas VIP',
+      category: lang === 'en' ? 'Culture & Archaeology' : lang === 'pt' ? 'Cultura & Arqueologia' : lang === 'fr' ? 'Culture & Archéologie' : lang === 'it' ? 'Cultura & Archeologia' : 'Cultura & Arqueología',
       categoryKey: 'cultura',
       location: 'Pisac - Ollantaytambo',
       duration: 'Full Day',
       price: '$55 USD',
       rating: 4.9,
       image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
-      tag: isEn ? 'Archaeology' : 'Arqueológico',
+      tag: lang === 'en' ? 'Archaeology' : lang === 'pt' ? 'Arqueológico' : lang === 'fr' ? 'Archéologie' : lang === 'it' ? 'Archeologico' : 'Arqueológico',
       badge: '4.9 ★'
     },
     {
       id: '5',
-      title: isEn ? 'Machu Picchu 2 Days & Aguas Calientes Hotel' : 'Machu Picchu 2 Días con Noche en Aguas Calientes',
-      category: isEn ? 'Complete Journey' : 'Experiencia Completa',
+      title: lang === 'en' ? 'Machu Picchu 2 Days & Aguas Calientes Hotel' : lang === 'pt' ? 'Machu Picchu 2 Dias com Hotel em Aguas Calientes' : lang === 'fr' ? 'Machu Picchu 2 Jours & Hôtel à Aguas Calientes' : lang === 'it' ? 'Machu Picchu 2 Giorni & Hotel ad Aguas Calientes' : 'Machu Picchu 2 Días con Noche en Aguas Calientes',
+      category: lang === 'en' ? 'Complete Journey' : lang === 'pt' ? 'Experiência Completa' : lang === 'fr' ? 'Séjour Complet' : lang === 'it' ? 'Soggiorno Completo' : 'Experiencia Completa',
       categoryKey: 'machu',
       location: 'Machu Picchu Pueblo',
-      duration: isEn ? '2 Days / 1 Night' : '2 Días / 1 Noche',
+      duration: lang === 'en' ? '2 Days / 1 Night' : lang === 'pt' ? '2 Dias / 1 Noite' : lang === 'fr' ? '2 Jours / 1 Nuit' : lang === 'it' ? '2 Giorni / 1 Notte' : '2 Días / 1 Noche',
       price: '$340 USD',
       rating: 5.0,
       image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=2029&auto=format&fit=crop',
-      tag: isEn ? 'Recommended' : 'Recomendado',
+      tag: lang === 'en' ? 'Recommended' : lang === 'pt' ? 'Recomendado' : lang === 'fr' ? 'Recommandé' : lang === 'it' ? 'Consigliato' : 'Recomendado',
       badge: '5.0 ★'
     },
     {
       id: '6',
-      title: isEn ? 'Huacachina Oasis & Ballestas Islands' : 'Huacachina Oasis & Islas Ballestas',
-      category: isEn ? 'Desert & Wildlife' : 'Costa & Desierto',
+      title: lang === 'en' ? 'Huacachina Oasis & Ballestas Islands' : lang === 'pt' ? 'Huacachina Oasis & Ilhas Ballestas' : lang === 'fr' ? 'Oasis de Huacachina & Îles Ballestas' : lang === 'it' ? 'Oasi di Huacachina & Isole Ballestas' : 'Huacachina Oasis & Islas Ballestas',
+      category: lang === 'en' ? 'Desert & Wildlife' : lang === 'pt' ? 'Costa & Deserto' : lang === 'fr' ? 'Désert & Faune' : lang === 'it' ? 'Deserto & Fauna' : 'Costa & Desierto',
       categoryKey: 'adrenalina',
       location: 'Ica - Paracas',
       duration: 'Full Day',
       price: '$95 USD',
       rating: 4.8,
       image: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop',
-      tag: isEn ? 'Adrenaline' : 'Adrenalina',
+      tag: lang === 'en' ? 'Adrenaline' : lang === 'pt' ? 'Adrenalina' : lang === 'fr' ? 'Adrénaline' : lang === 'it' ? 'Adrenalina' : 'Adrenalina',
       badge: '4.8 ★'
     }
   ];
@@ -323,38 +1002,90 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const tourLimit = isFree ? 1 : isBasic ? 3 : 6;
   const displayTours = DEFAULT_FEATURED_TOURS.slice(0, tourLimit);
 
-  // 7. Paquetes turísticos
+  // -----------------------------------------------------------
+  // 7. PAQUETES TURÍSTICOS MULTI-IDIOMA
+  // -----------------------------------------------------------
   const PACK_TOURS = [
     {
       id: 'p1',
-      title: isEn ? 'Cusco Magic 4 Days / 3 Nights' : 'Cusco Mágico 4 Días / 3 Noches',
-      category: isEn ? 'Classic Package' : 'Paquete Clásico',
-      duration: '4 Días / 3 Noches',
+      title: lang === 'en' ? 'Cusco Magic 4 Days / 3 Nights' : lang === 'pt' ? 'Cusco Mágico 4 Dias / 3 Noites' : lang === 'fr' ? 'Cusco Magique 4 Jours / 3 Nuits' : lang === 'it' ? 'Cusco Magico 4 Giorni / 3 Notti' : 'Cusco Mágico 4 Días / 3 Noches',
+      category: lang === 'en' ? 'Classic Package' : lang === 'pt' ? 'Pacote Clássico' : lang === 'fr' ? 'Forfait Classique' : lang === 'it' ? 'Pacchetto Classico' : 'Paquete Clásico',
+      duration: lang === 'en' ? '4 Days / 3 Nights' : lang === 'pt' ? '4 Dias / 3 Noites' : lang === 'fr' ? '4 Jours / 3 Nuits' : lang === 'it' ? '4 Giorni / 3 Notti' : '4 Días / 3 Noches',
       price: '$420 USD',
       image: 'https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?q=80&w=2074&auto=format&fit=crop',
       badge: '4.9 ★'
     },
     {
       id: 'p2',
-      title: isEn ? 'Total Cusco Adventure 5 Days' : 'Cusco Aventura Total 5 Días',
-      category: isEn ? 'Altitude Trekking' : 'Aventura & Altura',
-      duration: '5 Días / 4 Noches',
+      title: lang === 'en' ? 'Total Cusco Adventure 5 Days' : lang === 'pt' ? 'Cusco Aventura Total 5 Dias' : lang === 'fr' ? 'Aventure Totale à Cusco 5 Jours' : lang === 'it' ? 'Avventura Totale a Cusco 5 Giorni' : 'Cusco Aventura Total 5 Días',
+      category: lang === 'en' ? 'Altitude Trekking' : lang === 'pt' ? 'Aventura & Altitude' : lang === 'fr' ? 'Trekking & Altitude' : lang === 'it' ? 'Trekking & Altitudine' : 'Aventura & Altura',
+      duration: lang === 'en' ? '5 Days / 4 Nights' : lang === 'pt' ? '5 Dias / 4 Noites' : lang === 'fr' ? '5 Jours / 4 Nuits' : lang === 'it' ? '5 Giorni / 4 Notti' : '5 Días / 4 Noches',
       price: '$490 USD',
       image: 'https://images.unsplash.com/photo-1533587851505-d119e13fa0d7?q=80&w=2070&auto=format&fit=crop',
       badge: '5.0 ★'
     },
     {
       id: 'p3',
-      title: isEn ? 'Dream Peru: Lima, Ica & Cusco' : 'Perú Soñado: Lima, Ica & Cusco',
-      category: isEn ? 'National Circuit' : 'Circuito Nacional',
-      duration: '7 Días / 6 Noches',
+      title: lang === 'en' ? 'Dream Peru: Lima, Ica & Cusco' : lang === 'pt' ? 'Peru dos Sonhos: Lima, Ica & Cusco' : lang === 'fr' ? 'Pérou de Rêve : Lima, Ica & Cusco' : lang === 'it' ? 'Perù da Sogno: Lima, Ica & Cusco' : 'Perú Soñado: Lima, Ica & Cusco',
+      category: lang === 'en' ? 'National Circuit' : lang === 'pt' ? 'Circuito Nacional' : lang === 'fr' ? 'Circuit National' : lang === 'it' ? 'Circuito Nazionale' : 'Circuito Nacional',
+      duration: lang === 'en' ? '7 Days / 6 Nights' : lang === 'pt' ? '7 Dias / 6 Noites' : lang === 'fr' ? '7 Jours / 6 Nuits' : lang === 'it' ? '7 Giorni / 6 Notti' : '7 Días / 6 Noches',
       price: '$780 USD',
       image: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop',
       badge: '4.9 ★'
     }
   ];
 
-  // 8. Manejo de clics en acciones según el objetivo
+  // -----------------------------------------------------------
+  // 8. TESTIMONIOS MULTI-IDIOMA
+  // -----------------------------------------------------------
+  const getLocalizedTestimonials = () => {
+    return [
+      {
+        name: 'Alejandro & Marcela',
+        origin: lang === 'en' ? 'Madrid, Spain' : lang === 'pt' ? 'Madri, Espanha' : lang === 'fr' ? 'Madrid, Espagne' : lang === 'it' ? 'Madrid, Spagna' : 'Madrid, España',
+        comment: lang === 'en' 
+          ? 'The best trip of our lives. Carlos our guide explained Andean history with immense passion and oxygen support was always on point.'
+          : lang === 'pt'
+          ? 'A melhor viagem da nossa vida. Nosso guia explicou a história inca com imensa paixão e o oxigênio esteve sempre disponível.'
+          : lang === 'fr'
+          ? 'Le meilleur voyage de notre vie. Notre guide nous a raconté l’histoire avec une passion incroyable et l’assistance oxygène était parfaite.'
+          : lang === 'it'
+          ? 'Il miglior viaggio della nostra vita. La nostra guida ci ha raccontato la storia con grandissima passione e l’ossigeno era sempre pronto.'
+          : 'La mejor experiencia de nuestra vida en Perú. Nuestro guía nos explicó la historia con una pasión inolvidable y el oxígeno siempre estuvo a mano.',
+        rating: 5
+      },
+      {
+        name: 'David Miller',
+        origin: 'California, USA',
+        comment: lang === 'es'
+          ? 'Cero estrés, el tren panorámico fue alucinante y la atención personalizada insuperable. ¡Vale cada dólar invertido!'
+          : lang === 'pt'
+          ? 'Zero estresse, o trem panorâmico foi deslumbrante e o atendimento impecável. Valeu cada centavo investido!'
+          : lang === 'fr'
+          ? 'Zéro stress, le train panoramique était magnifique et le service irréprochable. Ça vaut chaque dollar investi !'
+          : lang === 'it'
+          ? 'Zero stress, il treno panoramico è stato mozzafiato e il servizio impeccabile. Vale ogni singolo dollaro!'
+          : 'Zero stress, scenic train was stunning. Worth every single dollar. 100% recommended!',
+        rating: 5
+      },
+      {
+        name: 'Camila & Laurent',
+        origin: lang === 'en' ? 'Lyon, France' : lang === 'pt' ? 'Lyon, França' : lang === 'fr' ? 'Lyon, France' : lang === 'it' ? 'Lione, Francia' : 'Lyon, Francia',
+        comment: lang === 'en'
+          ? 'Flawless organization from airport pickup to summit. Oxygen assistance was always ready and tickets secured seamlessly.'
+          : lang === 'pt'
+          ? 'Organização impecável do aeroporto até o topo. Equipe atenciosa com o oxigênio e ingressos sempre pontuais.'
+          : lang === 'fr'
+          ? 'Organisation impeccable de la prise en charge à l’aéroport jusqu’au sommet. Équipe aux petits soins avec l’oxygène.'
+          : lang === 'it'
+          ? 'Organizzazione impeccabile dall’aeroporto alla vetta. Personale premuroso con l’ossigeno e biglietti perfetti.'
+          : 'Organización impecable de principio a fin. El equipo siempre atento con el oxígeno y los boletos puntuales.',
+        rating: 5
+      }
+    ];
+  };
+
+  // 9. Manejo de clics en acciones
   const handleActionClick = (tourName?: string, actionType?: 'whatsapp' | 'quote') => {
     const targetType = actionType || (objective === 'both' ? 'whatsapp' : objective);
     if (targetType === 'quote') {
@@ -362,13 +1093,13 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       setIsQuoteOpen(true);
     } else {
       const msg = tourName 
-        ? `Hola ${brandName}, deseo reservar el tour "${tourName}".` 
-        : `Hola ${brandName}, deseo información sobre sus tours en Cusco.`;
+        ? (lang === 'en' ? `Hello ${brandName}, I would like to book the "${tourName}" tour.` : lang === 'pt' ? `Olá ${brandName}, gostaria de reservar o passeio "${tourName}".` : lang === 'fr' ? `Bonjour ${brandName}, je souhaite réserver le circuit "${tourName}".` : lang === 'it' ? `Ciao ${brandName}, vorrei prenotare il tour "${tourName}".` : `Hola ${brandName}, deseo reservar el tour "${tourName}".`)
+        : (lang === 'en' ? `Hello ${brandName}, I would like information about your tours in Cusco.` : lang === 'pt' ? `Olá ${brandName}, gostaria de informações sobre seus passeios em Cusco.` : lang === 'fr' ? `Bonjour ${brandName}, j’aimerais des informations sur vos circuits à Cusco.` : lang === 'it' ? `Ciao ${brandName}, vorrei informazioni sui vostri tour a Cusco.` : `Hola ${brandName}, deseo información sobre sus tours en Cusco.`);
       window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(msg)}`, '_blank');
     }
   };
 
-  // 9. Objeto sintético para QuoteModal
+  // 10. Objeto sintético para QuoteModal
   const syntheticLanding: LandingData = {
     id: data?.id || 'agency-portal-preview',
     name: selectedTourForQuote ? `${brandName} - ${selectedTourForQuote}` : (data?.name || brandName),
@@ -382,8 +1113,9 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
     objective: objective,
     template: 'agency-portal',
     language: lang,
+    languages: data?.languages || ['es', 'en', 'pt', 'fr', 'it'],
     status: 'published',
-    date: '2026-09-15',
+    date: '2026-09-17',
     views: '1,420',
     hero: {
       badge: heroBadge,
@@ -401,10 +1133,15 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
     }
   };
 
+  // Idiomas seleccionados en el generador (Paso 4)
+  const activeLanguages: LanguageType[] = (data?.languages && data.languages.length > 0)
+    ? data.languages
+    : (['es', 'en', 'pt', 'fr', 'it'] as LanguageType[]);
+
   return (
     <div className={`min-h-screen bg-[#FDFDFD] text-stone-900 font-sans selection:bg-[#FF5500] selection:text-white w-full max-w-full overflow-x-hidden ${isMobile ? 'text-xs' : ''}`}>
       
-      {/* 1. TOP ANNOUNCEMENT BAR (RESPONSIVE) */}
+      {/* 1. TOP ANNOUNCEMENT BAR CON SELECTOR DE IDIOMAS MULTI-SELECCIÓN (PASO 4) */}
       <div className="bg-[#1C1917] text-white text-[10px] sm:text-xs py-1.5 sm:py-2 px-3 sm:px-4 border-b border-stone-800">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-1.5">
           <div className="flex items-center gap-2 sm:gap-4 truncate">
@@ -426,18 +1163,21 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </span>
             )}
 
-            {/* Selector interactivo de Idioma (muestra los idiomas seleccionados) */}
+            {/* Selector interactivo de Idioma (Todos los idiomas elegidos en el Paso 4) */}
             <div className="flex items-center bg-stone-800 rounded-lg p-0.5 border border-stone-700">
-              {(data?.languages && data.languages.length > 0 ? data.languages : (['es', 'en', 'pt', 'fr', 'it'] as LanguageType[])).map((l) => (
+              {activeLanguages.map((l) => (
                 <button
                   key={l}
                   onClick={() => setLang(l)}
-                  className={`px-1.5 sm:px-2 py-0.5 rounded text-[9px] sm:text-[10px] font-extrabold uppercase transition-all cursor-pointer ${
-                    lang === l ? 'bg-[#FF5500] text-white shadow-xs' : 'text-stone-400 hover:text-white'
+                  className={`px-1.5 sm:px-2.5 py-0.5 rounded text-[9px] sm:text-[10px] font-extrabold uppercase transition-all cursor-pointer flex items-center gap-1 ${
+                    lang === l 
+                      ? 'bg-[#FF5500] text-white shadow-xs scale-105 ring-1 ring-white/20' 
+                      : 'text-stone-400 hover:text-white'
                   }`}
                   title={l === 'es' ? 'Español' : l === 'en' ? 'English' : l === 'pt' ? 'Português' : l === 'fr' ? 'Français' : 'Italiano'}
                 >
-                  {l.toUpperCase()}
+                  <span>{l === 'es' ? '🇵🇪' : l === 'en' ? '🇺🇸' : l === 'pt' ? '🇧🇷' : l === 'fr' ? '🇫🇷' : '🇮🇹'}</span>
+                  <span>{l.toUpperCase()}</span>
                 </button>
               ))}
             </div>
@@ -458,15 +1198,16 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </span>
               {!isMobile && (
                 <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block -mt-0.5 truncate hidden sm:block">
-                  {isEn ? 'Official Operator' : 'Agencia Oficial'}
+                  {t.officialOperator}
                 </span>
               )}
             </div>
           </div>
 
           {!isFree && !isMobile && (
-            <nav className="hidden lg:flex items-center gap-7 text-xs font-bold text-stone-700 uppercase tracking-wider">
+            <nav className="hidden lg:flex items-center gap-6 text-xs font-bold text-stone-700 uppercase tracking-wider">
               <a href="#tours" className="hover:text-[#FF5500] transition-colors">{t.navTours}</a>
+              <a href="#galeria" className="hover:text-[#FF5500] transition-colors">{t.navGallery}</a>
               {!isBasic && <a href="#paquetes" className="hover:text-[#FF5500] transition-colors">{t.navPackages}</a>}
               <a href="#por-que-nosotros" className="hover:text-[#FF5500] transition-colors">{t.navWhyUs}</a>
               {!isBasic && <a href="#resenas" className="hover:text-[#FF5500] transition-colors">{t.navReviews}</a>}
@@ -505,7 +1246,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </header>
 
-      {/* 3. HERO SECTION (RESPONSIVE) */}
+      {/* 3. HERO SECTION (PASO 2: FOTOGRAFÍA DE PORTADA & OBJETIVO COMERCIAL) */}
       <section className={`relative ${isMobile ? 'min-h-[380px] py-8 px-3' : 'min-h-[420px] sm:min-h-[520px] lg:min-h-[600px] py-10 sm:py-16 px-4 sm:px-6'} flex items-center justify-center overflow-hidden w-full max-w-full`}>
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
@@ -519,7 +1260,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/40" />
         </div>
 
-        {/* Ambient Glass Cards solo en Desktop */}
+        {/* Ambient Glass Badges en Desktop */}
         {!isFree && !isMobile && (
           <>
             <div className="hidden xl:flex animate-float-slow absolute left-8 top-1/3 z-20 bg-black/45 backdrop-blur-xl border border-white/20 p-3.5 rounded-2xl items-center gap-3 shadow-2xl hover:scale-105 transition-transform">
@@ -565,14 +1306,14 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   className="shimmer-btn w-full sm:w-auto bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-emerald-600/30 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group ring-2 ring-white/25"
                 >
                   <MessageCircle size={16} />
-                  <span>{isEn ? 'Book on WhatsApp' : t.ctaHeroWa}</span>
+                  <span>{t.ctaBothWa}</span>
                 </button>
                 <button
                   onClick={() => handleActionClick(undefined, 'quote')}
                   className="shimmer-btn w-full sm:w-auto bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-[#FF5500]/40 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group ring-2 ring-white/25"
                 >
                   <FileText size={16} />
-                  <span>{isEn ? 'Request VIP Quote' : t.ctaHeroQuote}</span>
+                  <span>{t.ctaBothQuote}</span>
                 </button>
               </>
             ) : (
@@ -617,7 +1358,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             <div className="p-2 sm:p-3 rounded-2xl bg-stone-50/60 sm:bg-transparent space-y-0.5 sm:space-y-1">
               <span className="text-lg sm:text-4xl font-black text-stone-900 tracking-tight block animate-number-glow">50+</span>
               <span className="text-[11px] sm:text-sm font-bold text-stone-700 block">{t.statRoutes}</span>
-              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{isEn ? 'Peru' : 'Perú'}</span>
+              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">Perú</span>
             </div>
 
             <div className="p-2 sm:p-3 rounded-2xl bg-stone-50/60 sm:bg-transparent space-y-0.5 sm:space-y-1">
@@ -629,7 +1370,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </section>
 
-      {/* 4.5 FICHA TÉCNICA DEL TOUR & PERFIL DEL GUÍA OFICIAL */}
+      {/* 4.5 FICHA TÉCNICA DEL TOUR (PUNTO 6) & PERFIL DEL GUÍA COLEGIADO (PUNTO 7) */}
       <section className="py-8 sm:py-14 bg-gradient-to-b from-stone-50 to-white border-b border-stone-200">
         <div className="max-w-7xl mx-auto px-3 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
@@ -639,26 +1380,26 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-2">
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FF5500]/10 text-[#FF5500] text-[10px] font-black uppercase tracking-wider">
-                    <Compass size={12} /> {isEn ? 'Official Tour Technical Sheet' : 'Ficha Técnica Oficial del Tour'}
+                    <Compass size={12} /> {t.techSheetBadge}
                   </span>
                   <span className="text-[10px] bg-stone-100 text-stone-700 font-extrabold px-2.5 py-0.5 rounded-full border border-stone-200">
                     {data?.name || brandName}
                   </span>
                 </div>
                 <h3 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
-                  {isEn ? 'Technical Specifications & Adventure Details' : 'Especificaciones Técnicas del Recorrido'}
+                  {t.techSheetTitle}
                 </h3>
                 <p className="text-xs text-stone-500 mt-1.5 leading-relaxed">
-                  {data?.about?.content || data?.hero?.subtitle || (isEn ? 'Key parameters to ensure your safety and enjoyment across the Peruvian Andes.' : 'Parámetros certificados para garantizar tu seguridad, confort y disfrute en la ruta.')}
+                  {data?.about?.content || data?.hero?.subtitle || t.techSheetDesc}
                 </p>
               </div>
 
-              {/* Grid 6 Specs */}
+              {/* Grid 6 Especificaciones */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1">
                 <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
                   <div className="flex items-center gap-1.5 text-stone-400 mb-1">
                     <Mountain size={14} className="text-[#FF5500]" />
-                    <span className="text-[10px] font-bold uppercase">{isEn ? 'Max Altitude' : 'Altitud Máxima'}</span>
+                    <span className="text-[10px] font-bold uppercase">{t.altitudeLabel}</span>
                   </div>
                   <span className="text-xs sm:text-sm font-extrabold text-stone-900 block">{data?.altitude || '3,400 msnm'}</span>
                 </div>
@@ -666,39 +1407,39 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                 <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
                   <div className="flex items-center gap-1.5 text-stone-400 mb-1">
                     <Clock size={14} className="text-[#FF5500]" />
-                    <span className="text-[10px] font-bold uppercase">{isEn ? 'Duration' : 'Duración'}</span>
+                    <span className="text-[10px] font-bold uppercase">{t.durationLabel}</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block">{data?.duration || 'Full Day'}</span>
+                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block">{getLocalizedDuration(data?.duration)}</span>
                 </div>
 
                 <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
                   <div className="flex items-center gap-1.5 text-stone-400 mb-1">
                     <Award size={14} className="text-[#FF5500]" />
-                    <span className="text-[10px] font-bold uppercase">{isEn ? 'Difficulty' : 'Dificultad'}</span>
+                    <span className="text-[10px] font-bold uppercase">{t.difficultyLabel}</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block">{data?.difficulty || 'Moderada'}</span>
+                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block">{getLocalizedDifficulty(data?.difficulty)}</span>
                 </div>
 
                 <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
                   <div className="flex items-center gap-1.5 text-stone-400 mb-1">
                     <Users size={14} className="text-[#FF5500]" />
-                    <span className="text-[10px] font-bold uppercase">{isEn ? 'Group Type' : 'Modalidad'}</span>
+                    <span className="text-[10px] font-bold uppercase">{t.groupTypeLabel}</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block truncate">{data?.groupType || 'Grupo Reducido'}</span>
+                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block truncate">{getLocalizedGroupType(data?.groupType)}</span>
                 </div>
 
                 <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
                   <div className="flex items-center gap-1.5 text-stone-400 mb-1">
                     <Target size={14} className="text-[#FF5500]" />
-                    <span className="text-[10px] font-bold uppercase">{isEn ? 'Target Audience' : 'Público'}</span>
+                    <span className="text-[10px] font-bold uppercase">{t.targetAudienceLabel}</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block truncate">{data?.targetAudience || 'Aventureros & Familias'}</span>
+                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block truncate">{getLocalizedTargetAudience(data?.targetAudience)}</span>
                 </div>
 
                 <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
                   <div className="flex items-center gap-1.5 text-stone-400 mb-1">
                     <MapPin size={14} className="text-[#FF5500]" />
-                    <span className="text-[10px] font-bold uppercase">{isEn ? 'Destination' : 'Destino'}</span>
+                    <span className="text-[10px] font-bold uppercase">{t.destinationLabel}</span>
                   </div>
                   <span className="text-xs sm:text-sm font-extrabold text-stone-900 block truncate">{destination}</span>
                 </div>
@@ -709,7 +1450,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             <div className="lg:col-span-5 bg-stone-900 text-white rounded-3xl p-5 sm:p-7 border border-stone-800 shadow-xs flex flex-col justify-between space-y-4">
               <div>
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-black uppercase tracking-wider mb-3 border border-emerald-500/30">
-                  <BadgeCheck size={13} /> {isEn ? 'Official Certified Guide' : 'Guía Oficial Colegiado DIRCETUR'}
+                  <BadgeCheck size={13} /> {t.guideBadge}
                 </div>
                 
                 <div className="flex items-center gap-3.5 mb-3">
@@ -719,21 +1460,19 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   <div>
                     <h4 className="text-lg font-black text-white">{guideName}</h4>
                     <p className="text-xs text-stone-300 font-semibold">{data?.guideCert || 'Guía Oficial de Turismo DIRCETUR'}</p>
-                    <p className="text-[11px] text-[#FF8844] font-medium mt-0.5">🗣️ {data?.guideLanguages || 'Español, Inglés y Francés'}</p>
+                    <p className="text-[11px] text-[#FF8844] font-medium mt-0.5">🗣️ {t.guideSpokenLanguages}: {data?.guideLanguages || 'Español, English, Français'}</p>
                   </div>
                 </div>
 
                 <p className="text-xs text-stone-400 leading-relaxed">
-                  {isEn 
-                    ? 'Accredited local specialist with wilderness first aid certification and specialized high-altitude protocol training.'
-                    : 'Especialista local acreditado con certificación en primeros auxilios en zonas agrestes y protocolo médico para aclimatación.'}
+                  {t.guideBio}
                 </p>
               </div>
 
               <div className="pt-3 border-t border-stone-800 flex items-center justify-between gap-3">
                 <div>
-                  <span className="text-[10px] text-stone-400 block">{isEn ? 'Direct Line' : 'Atención Directa'}</span>
-                  <span className="text-xs font-black text-emerald-400">{whatsappNumber ? `+${whatsappNumber}` : '+51 984 123 456'}</span>
+                  <span className="text-[10px] text-stone-400 block">{t.directLine}</span>
+                  <span className="text-xs font-black text-emerald-400 font-mono">{whatsappNumber ? `+${whatsappNumber}` : '+51 984 123 456'}</span>
                 </div>
                 <button
                   type="button"
@@ -750,8 +1489,40 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </section>
 
-      {/* 5. TOURS DESTACADOS (1 COLUMNA ESTRICTA EN MÓVIL) */}
-      <section id="tours" className={`py-8 sm:py-20 px-3 sm:px-6 max-w-7xl mx-auto`}>
+      {/* 4.6 SERVICIOS Y PRIVILEGIOS INCLUIDOS (PUNTO 7 DEL GENERADOR) */}
+      <section className="py-8 sm:py-12 bg-white border-b border-stone-200">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6">
+          <div className="bg-gradient-to-br from-stone-900 via-stone-850 to-stone-950 text-white rounded-3xl p-6 sm:p-9 shadow-lg border border-stone-800">
+            <div className="max-w-3xl mb-6 space-y-1.5">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF5500]/20 text-[#FF8844] text-[10px] sm:text-xs font-black uppercase tracking-widest border border-[#FF5500]/30">
+                <CheckCircle2 size={13} /> {t.includedServicesBadge}
+              </span>
+              <h3 className="text-xl sm:text-3xl font-black text-white tracking-tight">
+                {t.includedServicesTitle}
+              </h3>
+              <p className="text-xs sm:text-sm text-stone-300">
+                {t.includedServicesDesc}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+              {getLocalizedIncludedServices(data?.includedServices).map((srv, idx) => (
+                <div key={idx} className="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-[#FF5500]/50 transition-colors">
+                  <div className="w-7 h-7 rounded-xl bg-[#FF5500] text-white flex items-center justify-center shrink-0 shadow-xs font-bold text-xs mt-0.5">
+                    ✓
+                  </div>
+                  <span className="text-xs sm:text-sm text-stone-200 font-medium leading-snug">
+                    {srv}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 5. TOURS DESTACADOS (1 COLUMNA EN MÓVIL) */}
+      <section id="tours" className="py-8 sm:py-20 px-3 sm:px-6 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 space-y-2 sm:space-y-3 px-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF5500]/10 text-[#FF5500] text-[10px] sm:text-xs font-black uppercase tracking-widest">
             <Sparkles size={12} />
@@ -795,7 +1566,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           </div>
         )}
 
-        {/* Grilla de Tours: En isMobile se fuerza 1 columna (w-full max-w-sm mx-auto) */}
+        {/* Grilla de Tours */}
         <div className={`grid gap-5 sm:gap-8 ${
           isMobile 
             ? 'grid-cols-1 max-w-sm mx-auto' 
@@ -876,24 +1647,37 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </section>
 
-      {/* 6. ITINERARIO DÍA A DÍA DETALLADO (CRONOGRAMA PASO A PASO) */}
+      {/* 5.5 TABLERO DE PINES DE INSPIRACIÓN & GALERÍA PINTEREST (PUNTO 1 Y ESTÉTICA PINTEREST) */}
+      {!isFree && (
+        <PinterestPinboard
+          images={data?.galleryImages && data.galleryImages.length > 0 ? data.galleryImages : [heroImage]}
+          destination={destination}
+          tourName={data?.name || brandName}
+          tier={planTier}
+          theme="agency-portal"
+          isMobile={isMobile}
+          lang={lang}
+        />
+      )}
+
+      {/* 6. ITINERARIO DÍA A DÍA DETALLADO (PUNTO 8 DEL GENERADOR) */}
       {(data?.itinerary && data.itinerary.length > 0) && (
         <section className="py-10 sm:py-20 bg-stone-900 text-white border-y border-stone-800">
           <div className="max-w-5xl mx-auto px-3 sm:px-6 space-y-6 sm:space-y-10">
             <div className="text-center space-y-2">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-[10px] sm:text-xs font-black uppercase tracking-widest border border-amber-500/30">
-                <Calendar size={12} /> {isEn ? 'Official Tour Itinerary' : 'Itinerario Detallado del Tour'}
+                <Calendar size={12} /> {t.itineraryBadge}
               </span>
               <h2 className="text-xl sm:text-4xl font-black tracking-tight">
-                {isEn ? 'Day-by-Day Experience Flow' : 'Cronograma y Experiencia Paso a Paso'}
+                {t.itineraryTitle}
               </h2>
               <p className="text-[11px] sm:text-sm text-stone-400">
-                {isEn ? 'Designed to maximize comfort and acclimatization.' : 'Tiempos planificados al milímetro para favorecer la aclimatación y disfrute de la ruta.'}
+                {t.itineraryDesc}
               </p>
             </div>
 
             <div className="space-y-2.5 sm:space-y-4">
-              {getBilingualItinerary(data?.itinerary).map((it, i) => (
+              {getLocalizedItinerary(data?.itinerary).map((it, i) => (
                 <div key={i} className="flex flex-col xs:flex-row gap-2.5 sm:gap-4 p-3.5 sm:p-5 rounded-2xl bg-stone-800/80 border border-stone-700 items-start w-full">
                   <div className="shrink-0 bg-[#FF5500] text-white px-2.5 sm:px-3 py-1 rounded-lg font-mono text-[10px] sm:text-xs font-black relative flex items-center gap-1.5 animate-pulse-subtle shadow-xs shadow-[#FF5500]/30">
                     <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping"></span>
@@ -910,19 +1694,19 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </section>
       )}
 
-      {/* 6.1 LOGÍSTICA: QUÉ NO INCLUYE & QUÉ LLEVAR EN LA MOCHILA */}
+      {/* 6.1 LOGÍSTICA: QUÉ NO INCLUYE & QUÉ LLEVAR EN LA MOCHILA (PUNTO 9 DEL GENERADOR) */}
       {((data?.notIncluded && data.notIncluded.length > 0) || (data?.whatToBring && data.whatToBring.length > 0)) && (
         <section className="py-10 sm:py-16 bg-stone-100 border-b border-stone-200">
           <div className="max-w-6xl mx-auto px-3 sm:px-6">
             <div className="text-center max-w-2xl mx-auto mb-8 space-y-1.5">
               <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#FF5500]">
-                {isEn ? 'Clear Logistics & Preparation' : 'Logística Clara & Equipaje'}
+                {t.logisticsBadge}
               </span>
               <h3 className="text-xl sm:text-3xl font-black text-stone-900 tracking-tight">
-                {isEn ? 'Exclusions & Backpack Checklist' : 'Exclusiones Claras & Checklist de Mochila'}
+                {t.logisticsTitle}
               </h3>
               <p className="text-xs text-stone-500">
-                {isEn ? 'Everything transparent before you depart to the route.' : 'Transparencia total antes de iniciar tu aventura.'}
+                {t.logisticsDesc}
               </p>
             </div>
 
@@ -931,15 +1715,10 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               <div className="bg-white p-5 sm:p-7 rounded-3xl border border-rose-200/80 shadow-xs space-y-4">
                 <div className="flex items-center gap-2 text-rose-600 font-black text-sm sm:text-base border-b border-rose-100 pb-3">
                   <XCircle size={20} className="shrink-0" />
-                  <span>{isEn ? 'Not Included in Price' : 'Qué NO está incluido en la tarifa'}</span>
+                  <span>{t.notIncludedTitle}</span>
                 </div>
                 <ul className="space-y-2.5 text-xs sm:text-sm text-stone-600">
-                  {(data?.notIncluded && data.notIncluded.length > 0 ? data.notIncluded : [
-                    'Vuelos internacionales o nacionales hacia Cusco',
-                    'Propinas voluntarias para guía y conductor',
-                    'Seguro médico de viaje internacional',
-                    'Gastos o snacks personales no detallados'
-                  ]).map((item, idx) => (
+                  {getLocalizedNotIncluded(data?.notIncluded).map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2.5">
                       <span className="text-rose-500 font-bold shrink-0 mt-0.5">✕</span>
                       <span className="leading-snug">{item}</span>
@@ -952,16 +1731,10 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               <div className="bg-white p-5 sm:p-7 rounded-3xl border border-emerald-200/80 shadow-xs space-y-4">
                 <div className="flex items-center gap-2 text-emerald-700 font-black text-sm sm:text-base border-b border-emerald-100 pb-3">
                   <Backpack size={20} className="shrink-0" />
-                  <span>{isEn ? 'Recommended Packing List' : 'Qué llevar en tu mochila (Recomendado)'}</span>
+                  <span>{t.whatToBringTitle}</span>
                 </div>
                 <ul className="space-y-2.5 text-xs sm:text-sm text-stone-600">
-                  {(data?.whatToBring && data.whatToBring.length > 0 ? data.whatToBring : [
-                    'Pasaporte original físico vigente (obligatorio)',
-                    'Ropa abrigadora en capas y casaca cortavientos',
-                    'Zapatos cómodos o zapatillas con buen agarre',
-                    'Bloqueador solar (SPF 50+), lentes de sol y gorro',
-                    'Dinero en efectivo en soles peruanos'
-                  ]).map((item, idx) => (
+                  {getLocalizedWhatToBring(data?.whatToBring).map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2.5">
                       <span className="text-emerald-500 font-bold shrink-0 mt-0.5">✓</span>
                       <span className="leading-snug">{item}</span>
@@ -974,7 +1747,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </section>
       )}
 
-      {/* 7. ¿POR QUÉ ELEGIRNOS? */}
+      {/* 7. ¿POR QUÉ ELEGIRNOS? & PROTOCOLO DE ALTURA & DISTINTIVOS (PUNTO 10 DEL GENERADOR) */}
       <section id="por-que-nosotros" className="py-10 sm:py-24 bg-[#F9F7F4] border-y border-stone-200">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 space-y-8 sm:space-y-16">
           <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14'} items-center`}>
@@ -996,7 +1769,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                   </span>
-                  <span>{isEn ? 'Guides Active in Cusco' : 'Guías Activos Hoy en Cusco'}</span>
+                  <span>{t.activeGuidesNow}</span>
                 </div>
               </div>
 
@@ -1005,7 +1778,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   100%
                 </div>
                 <div>
-                  <p className="font-extrabold text-xs sm:text-sm text-stone-900">{isEn ? 'Satisfaction Guaranteed' : 'Satisfacción Garantizada'}</p>
+                  <p className="font-extrabold text-xs sm:text-sm text-stone-900">{t.satisfactionGuaranteed}</p>
                   <p className="text-[10px] text-stone-400">{guideName} • DIRCETUR</p>
                 </div>
               </div>
@@ -1016,7 +1789,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               <div className="space-y-1.5 sm:space-y-2">
                 <div className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#FF5500]">
                   <ShieldCheck size={14} />
-                  <span>{isEn ? 'Trust & Safety' : 'Confianza & Seguridad'}</span>
+                  <span>{t.whyTrustBadge}</span>
                 </div>
                 <h2 className="text-xl sm:text-4xl font-black text-stone-900 tracking-tight">
                   {t.whyTitle}
@@ -1027,7 +1800,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </div>
 
               <div className={`grid ${isMobile ? 'grid-cols-1 gap-2' : 'grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3.5'} pt-1`}>
-                {getBilingualFeatures(data?.features?.items).map((feat, idx) => (
+                {getLocalizedIncludedServices(data?.features?.items).slice(0, 4).map((feat, idx) => (
                   <div key={idx} className="flex items-center gap-2 text-xs font-bold text-stone-800 bg-white p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border border-stone-200 shadow-2xs">
                     <CheckCircle2 size={15} className="text-[#FF5500] shrink-0" />
                     <span className="truncate">{feat}</span>
@@ -1038,28 +1811,20 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               <div className="bg-[#FFF6F0] p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-[#FFD9C2] space-y-1.5 shadow-xs">
                 <h4 className="font-extrabold text-xs sm:text-sm text-stone-900 flex items-center gap-1.5">
                   <Award size={16} className="text-[#FF5500] shrink-0" />
-                  <span>{isEn ? 'High Altitude Protocol' : 'Compromiso de Altura y Asistencia Médica'}</span>
+                  <span>{t.altitudeProtocolTitle}</span>
                 </h4>
                 <p className="text-[11px] sm:text-xs text-stone-600 leading-relaxed">
-                  {isEn 
-                    ? 'All tours include certified pulse oximeter monitoring and medical oxygen in all transport vehicles.' 
-                    : 'Todos nuestros vehículos y guías cuentan permanentemente con balón de oxígeno medicinal y botiquín de primeros auxilios.'}
+                  {t.altitudeProtocolDesc}
                 </p>
               </div>
 
-              {/* Distintivos Oficiales & Sellos de Confianza */}
+              {/* Distintivos Oficiales & Sellos de Confianza (Punto 10) */}
               <div className="pt-2 border-t border-stone-200/80">
                 <span className="text-[10px] font-black uppercase tracking-wider text-stone-500 block mb-2.5">
-                  {isEn ? 'Official Certifications & Trust Badges' : 'Distintivos Oficiales & Sellos de Confianza'}
+                  {t.trustBadgesTitle}
                 </span>
                 <div className="flex flex-wrap gap-2">
-                  {(data?.trustBadges && data.trustBadges.length > 0 ? data.trustBadges : [
-                    'Licencia Oficial DIRCETUR Cusco',
-                    'Sello Internacional Safe Travels',
-                    'Agencia Formal RUC 20 Verificado',
-                    'Guía Colegiado Bilingüe',
-                    'Balón de Oxígeno & Botiquín'
-                  ]).map((badge, bIdx) => (
+                  {getLocalizedTrustBadges(data?.trustBadges).map((badge, bIdx) => (
                     <span key={bIdx} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-stone-200 text-xs font-bold text-stone-800 shadow-2xs">
                       <ShieldCheck size={14} className="text-[#FF5500] shrink-0" />
                       <span>{badge}</span>
@@ -1079,7 +1844,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           <div className="max-w-7xl mx-auto px-3 sm:px-6">
             <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 space-y-1 sm:space-y-2 px-2">
               <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#FF5500]">
-                {t.navPackages}
+                {t.packagesBadge}
               </span>
               <h2 className="text-xl sm:text-4xl font-black text-stone-900 tracking-tight">
                 {t.packagesTitle}
@@ -1120,7 +1885,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                         <Clock size={12} className="text-stone-400" /> {tour.duration}
                       </p>
                       <div className="pt-2 flex items-baseline justify-between border-t border-stone-100">
-                        <span className="text-xs text-stone-400">{isEn ? 'From' : 'Desde'}</span>
+                        <span className="text-xs text-stone-400">{t.fromPrice}</span>
                         <span className="text-lg font-black text-stone-900">{tour.price}</span>
                       </div>
                     </div>
@@ -1131,7 +1896,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                       onClick={() => handleActionClick(tour.title)}
                       className="shimmer-btn w-full bg-stone-900 hover:bg-[#FF5500] text-white py-2.5 rounded-xl font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all duration-300 active:scale-95 cursor-pointer"
                     >
-                      <span>{objective === 'quote' ? t.quoteTour : (isEn ? 'View Itinerary' : 'Ver Itinerario')}</span>
+                      <span>{objective === 'quote' ? t.quoteTour : t.viewItinerary}</span>
                       <ArrowRight size={13} />
                     </button>
                   </div>
@@ -1149,7 +1914,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             <div className="text-center max-w-2xl mx-auto space-y-2 px-2">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-[#FF8844] text-[10px] sm:text-xs font-black uppercase tracking-widest border border-white/10">
                 <Star size={12} className="text-amber-400 fill-amber-400" />
-                <span>{isEn ? 'Verified Stories' : 'Experiencias Reales'}</span>
+                <span>{t.reviewsBadge}</span>
               </div>
               <h2 className="text-xl sm:text-4xl font-black text-white tracking-tight">
                 {t.reviewsTitle}
@@ -1160,26 +1925,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             </div>
 
             <div className={`grid gap-4 sm:gap-6 ${isMobile ? 'grid-cols-1 max-w-sm mx-auto' : 'grid-cols-1 md:grid-cols-3'}`}>
-              {(data?.testimonials && data.testimonials.length > 0 ? data.testimonials : [
-                {
-                  name: 'Alejandro y Marcela',
-                  origin: 'Madrid, España',
-                  comment: isEn ? 'The best trip of our lives. Carlos our guide explained Andean history with immense passion.' : 'La mejor experiencia de nuestra vida en Perú. Nuestro guía nos explicó la historia con una pasión inolvidable.',
-                  rating: 5
-                },
-                {
-                  name: 'David Miller',
-                  origin: 'California, USA',
-                  comment: 'Zero stress, scenic train was stunning. Worth every single dollar. 100% recommended!',
-                  rating: 5
-                },
-                {
-                  name: 'Camila & Laurent',
-                  origin: 'Lyon, Francia',
-                  comment: isEn ? 'Flawless organization from airport pickup to summit. Oxygen assistance was always ready.' : 'Organización impecable de principio a fin. El equipo siempre atento con el oxígeno y los boletos puntuales.',
-                  rating: 5
-                }
-              ]).slice(0, 3).map((rev, idx) => (
+              {getLocalizedTestimonials().map((rev, idx) => (
                 <div
                   key={idx}
                   className="bg-gradient-to-b from-[#1F1C1A] to-[#151311] p-4 sm:p-7 rounded-2xl sm:rounded-3xl border border-stone-800 space-y-3 flex flex-col justify-between shadow-md w-full"
@@ -1192,7 +1938,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                         ))}
                       </div>
                       <span className="text-[9px] font-bold text-stone-300 uppercase bg-white/10 px-2 py-0.5 rounded-full">
-                        {isEn ? 'Verified' : 'Verificado'}
+                        {t.verifiedReview}
                       </span>
                     </div>
                     <p className="text-xs sm:text-sm text-stone-300 leading-relaxed italic">
@@ -1264,7 +2010,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         <section className="bg-white py-6 sm:py-8 border-b border-stone-200">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center space-y-3 sm:space-y-4">
             <p className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-stone-400">
-              {isEn ? 'Official Certifications' : 'Acreditaciones Oficiales'}
+              {t.certificationsTitle}
             </p>
             <div className={`flex flex-wrap items-center justify-center ${isMobile ? 'gap-4' : 'gap-4 sm:gap-14'} opacity-80`}>
               <div className="flex items-center gap-1.5 text-stone-700 font-extrabold text-[11px] sm:text-xs">
@@ -1292,11 +2038,11 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </footer>
 
-      {/* 15. FLOATING WHATSAPP BUTTON (PLANTADO Y FIJO) */}
+      {/* 15. FLOATING WHATSAPP BUTTON */}
       <div className="z-40 flex items-center gap-2 fixed bottom-5 right-5 sm:bottom-6 sm:right-6 pointer-events-auto select-none max-w-[calc(100vw-2.5rem)]">
         {showWaTooltip && !isMobile && (
           <div className="hidden sm:flex items-center gap-2 bg-white text-stone-900 text-xs font-bold px-3.5 py-2 rounded-2xl shadow-xl border border-stone-200 animate-in fade-in slide-in-from-right-2">
-            <span>💬 {isEn ? 'Questions? Chat live' : '¿Dudas? Habla con un asesor'}</span>
+            <span>💬 {t.questionsTooltip}</span>
             <button
               onClick={() => setShowWaTooltip(false)}
               className="text-stone-400 hover:text-stone-700 text-xs p-0.5 cursor-pointer"
