@@ -827,40 +827,36 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
     : (['es', 'en', 'pt', 'fr', 'it'] as LanguageType[]);
 
   return (
-    <div className={`min-h-screen bg-[#FDFDFD] text-stone-900 font-sans selection:bg-[#FF5500] selection:text-white w-full max-w-full overflow-x-hidden ${isMobile ? 'text-xs' : ''}`}>
+    <div className={`min-h-screen bg-[#FDFDFD] text-stone-900 font-sans selection:bg-[#FF5500] selection:text-white w-full max-w-full overflow-x-hidden pb-16 sm:pb-0 ${isMobile ? 'text-xs' : ''}`}>
       
       {/* 1. TOP ANNOUNCEMENT BAR CON SELECTOR DE IDIOMAS */}
-      <div className="bg-[#1C1917] text-white text-[11px] py-2 px-3 sm:px-6 border-b border-stone-800">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+      <div className="bg-[#1C1917] text-white text-[11px] py-1.5 sm:py-2 px-2.5 sm:px-6 border-b border-stone-800">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           
           {/* Left: Contact Info */}
-          <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+          <div className="flex items-center gap-2 sm:gap-5 min-w-0">
             <a 
               href={`https://wa.me/${whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 text-stone-300 hover:text-[#FF5500] transition-colors font-mono shrink-0"
+              className="flex items-center gap-1.5 text-stone-300 hover:text-[#FF5500] transition-colors font-mono shrink-0 text-[10px] sm:text-[11px]"
               title="Atención inmediata por WhatsApp"
             >
-              <Phone size={12} className="text-[#FF5500] shrink-0" />
-              <span className="font-semibold">+{whatsappNumber}</span>
+              <Phone size={11} className="text-[#FF5500] shrink-0 sm:w-3 sm:h-3" />
+              <span className="font-bold">+{whatsappNumber}</span>
             </a>
-            {!isMobile && (
-              <span className="hidden md:flex items-center gap-1.5 text-stone-400 truncate text-[10px]">
-                <Mail size={12} className="text-[#FF5500] shrink-0" />
-                <span className="truncate">reservas@{brandName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 16) || 'tours'}.pe</span>
-              </span>
-            )}
+            <span className="hidden md:flex items-center gap-1.5 text-stone-400 truncate text-[10px]">
+              <Mail size={12} className="text-[#FF5500] shrink-0" />
+              <span className="truncate">reservas@{brandName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 16) || 'tours'}.pe</span>
+            </span>
           </div>
           
           {/* Right: Badge & Language Selector */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {!isMobile && (
-              <span className="hidden sm:inline-flex items-center gap-1 bg-[#FF5500]/15 text-[#FF8844] font-bold px-2.5 py-0.5 rounded-full text-[10px] border border-[#FF5500]/30 whitespace-nowrap">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                {t.officialBar}
-              </span>
-            )}
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+            <span className="hidden sm:inline-flex items-center gap-1 bg-[#FF5500]/15 text-[#FF8844] font-bold px-2.5 py-0.5 rounded-full text-[10px] border border-[#FF5500]/30 whitespace-nowrap">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              {t.officialBar}
+            </span>
 
             {/* Language Selector: Sleek, compact and responsive */}
             <div className="flex items-center bg-stone-800/90 rounded-lg p-0.5 border border-stone-700/80 shadow-xs">
@@ -868,15 +864,15 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                 <button
                   key={l}
                   onClick={() => setLang(l)}
-                  className={`px-1.5 sm:px-2 py-0.5 rounded-md text-[10px] font-bold uppercase transition-all cursor-pointer flex items-center gap-1 shrink-0 ${
+                  className={`px-1 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-[10px] font-bold uppercase transition-all cursor-pointer flex items-center gap-0.5 sm:gap-1 shrink-0 ${
                     lang === l 
                       ? 'bg-[#FF5500] text-white shadow-xs font-black' 
                       : 'text-stone-400 hover:text-white'
                   }`}
                   title={l === 'es' ? 'Español' : l === 'en' ? 'English' : l === 'pt' ? 'Português' : l === 'fr' ? 'Français' : 'Italiano'}
                 >
-                  <span className="text-xs leading-none">{l === 'es' ? '🇵🇪' : l === 'en' ? '🇺🇸' : l === 'pt' ? '🇧🇷' : l === 'fr' ? '🇫🇷' : '🇮🇹'}</span>
-                  <span className="hidden xs:inline sm:inline text-[9px] sm:text-[10px]">{l.toUpperCase()}</span>
+                  <span className="text-[10px] sm:text-xs leading-none">{l === 'es' ? '🇵🇪' : l === 'en' ? '🇺🇸' : l === 'pt' ? '🇧🇷' : l === 'fr' ? '🇫🇷' : '🇮🇹'}</span>
+                  <span className="hidden xs:inline sm:inline text-[8px] sm:text-[10px]">{l.toUpperCase()}</span>
                 </button>
               ))}
             </div>
@@ -887,18 +883,18 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
       {/* 2. MAIN HEADER (RESPONSIVE) */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-xs">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-3">
+        <div className="max-w-7xl mx-auto px-2.5 sm:px-6 h-14 sm:h-20 flex items-center justify-between gap-2 sm:gap-3">
           
           {/* Brand Logo & Name */}
-          <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-[#FF5500] to-[#FF8800] flex items-center justify-center text-white font-black shadow-md shadow-[#FF5500]/30 shrink-0">
-              <Compass size={20} className="sm:w-6 sm:h-6" />
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+            <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-[#FF5500] to-[#FF8800] flex items-center justify-center text-white font-black shadow-md shadow-[#FF5500]/30 shrink-0">
+              <Compass size={17} className="sm:w-6 sm:h-6" />
             </div>
-            <div className="min-w-0 max-w-[170px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[260px] xl:max-w-[320px]">
-              <span className="font-extrabold text-xs sm:text-base md:text-lg tracking-tight text-stone-900 block leading-tight truncate">
+            <div className="min-w-0 max-w-[130px] xs:max-w-[170px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[260px] xl:max-w-[320px]">
+              <span className="font-extrabold text-[11px] sm:text-base md:text-lg tracking-tight text-stone-900 block leading-tight truncate">
                 {brandName.toUpperCase()}
               </span>
-              <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block truncate">
+              <span className="text-[8px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block truncate">
                 {t.officialOperator}
               </span>
             </div>
@@ -917,34 +913,37 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           )}
 
           {/* Right Action Buttons & Mobile Toggle */}
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {objective === 'both' ? (
               <>
                 <button
                   type="button"
                   onClick={() => handleActionClick(undefined, 'whatsapp')}
-                  className="hidden sm:flex shimmer-btn bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-xs font-extrabold px-3.5 py-2 sm:py-2.5 rounded-full shadow-md transition-all items-center gap-1.5 cursor-pointer shrink-0 whitespace-nowrap"
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] sm:text-xs font-black p-2 sm:px-3.5 sm:py-2.5 rounded-full shadow-md transition-all flex items-center gap-1 cursor-pointer shrink-0"
+                  title="WhatsApp"
                 >
                   <MessageCircle size={14} />
-                  <span>WhatsApp</span>
+                  <span className="hidden xs:inline">WhatsApp</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => handleActionClick(undefined, 'quote')}
-                  className="shimmer-btn bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3500] hover:from-[#E04B00] hover:to-[#FF5500] text-white text-xs font-extrabold px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full shadow-md transition-all flex items-center gap-1.5 cursor-pointer shrink-0 whitespace-nowrap"
+                  className="shimmer-btn bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3500] hover:from-[#E04B00] hover:to-[#FF5500] text-white text-[11px] sm:text-xs font-black px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-full shadow-md transition-all flex items-center gap-1 cursor-pointer shrink-0 whitespace-nowrap"
                 >
-                  <FileText size={14} />
-                  <span>{t.ctaHeroQuote}</span>
+                  <FileText size={13} />
+                  <span className="sm:hidden">{lang === 'en' ? 'Quote' : 'Cotizar'}</span>
+                  <span className="hidden sm:inline">{t.ctaHeroQuote}</span>
                 </button>
               </>
             ) : (
               <button
                 type="button"
                 onClick={() => handleActionClick()}
-                className="shimmer-btn bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3500] hover:from-[#E04B00] hover:to-[#FF5500] text-white text-xs font-extrabold px-3 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-md shadow-[#FF5500]/25 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer group shrink-0 whitespace-nowrap"
+                className="shimmer-btn bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3500] hover:from-[#E04B00] hover:to-[#FF5500] text-white text-[11px] sm:text-xs font-black px-2.5 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-md shadow-[#FF5500]/25 transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer group shrink-0 whitespace-nowrap"
               >
-                {objective === 'quote' ? <FileText size={14} /> : <MessageCircle size={14} className="group-hover:rotate-12 transition-transform duration-300 shrink-0" />}
-                <span>{objective === 'quote' ? t.ctaHeroQuote : t.ctaHeader}</span>
+                {objective === 'quote' ? <FileText size={13} /> : <MessageCircle size={13} className="group-hover:rotate-12 transition-transform duration-300 shrink-0" />}
+                <span className={isMobile ? 'inline' : 'sm:hidden'}>{objective === 'quote' ? (lang === 'en' ? 'Quote' : 'Cotizar') : 'WhatsApp'}</span>
+                {!isMobile && <span className="hidden sm:inline">{objective === 'quote' ? t.ctaHeroQuote : t.ctaHeader}</span>}
               </button>
             )}
 
@@ -953,10 +952,10 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 rounded-xl text-stone-700 hover:text-[#FF5500] hover:bg-stone-100 transition-colors cursor-pointer shrink-0 ml-1"
+                className={`${isMobile ? 'flex' : 'lg:hidden'} p-1.5 sm:p-2 rounded-xl text-stone-700 hover:text-[#FF5500] hover:bg-stone-100 transition-colors cursor-pointer shrink-0 ml-0.5`}
                 aria-label="Menú de navegación"
               >
-                {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+                {mobileMenuOpen ? <X size={20} className="sm:w-[22px] sm:h-[22px]" /> : <Menu size={20} className="sm:w-[22px] sm:h-[22px]" />}
               </button>
             )}
           </div>
@@ -965,7 +964,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
         {/* MOBILE NAVIGATION DRAWER (Desplegable limpio y ordenado en Móvil) */}
         {!isFree && mobileMenuOpen && (
-          <div className="lg:hidden border-t border-stone-200 bg-white/98 backdrop-blur-xl px-4 py-5 shadow-2xl transition-all">
+          <div className={`${isMobile ? 'block' : 'lg:hidden'} border-t border-stone-200 bg-white/98 backdrop-blur-xl px-4 py-5 shadow-2xl transition-all`}>
             <div className="space-y-4">
               
               {/* Navigation Links Grid */}
@@ -1123,26 +1122,26 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             <span>{heroBadge}</span>
           </div>
 
-          <h1 className={`${isMobile ? 'text-2xl leading-tight' : 'text-2xl xs:text-3xl sm:text-5xl lg:text-6xl leading-tight'} font-black tracking-tight drop-shadow-2xl uppercase px-2`}>
+          <h1 className={`${isMobile ? 'text-2xl sm:text-4xl' : 'text-2xl xs:text-3xl sm:text-5xl lg:text-6xl'} font-black tracking-tight drop-shadow-2xl uppercase px-2 leading-tight`}>
             {heroTitle}
           </h1>
-          <p className={`${isMobile ? 'text-xs line-clamp-3' : 'text-xs sm:text-lg lg:text-xl line-clamp-3 sm:line-clamp-none'} font-light text-stone-100 max-w-2xl mx-auto drop-shadow-md leading-relaxed px-2`}>
+          <p className={`${isMobile ? 'text-xs line-clamp-3' : 'text-xs sm:text-base lg:text-lg line-clamp-3 sm:line-clamp-none'} font-light text-stone-100 max-w-2xl mx-auto drop-shadow-md leading-relaxed px-2`}>
             {heroSubtitle}
           </p>
 
-          <div className={`pt-2 flex ${isMobile ? 'flex-col' : 'flex-col sm:flex-row'} items-center justify-center gap-2.5 sm:gap-4 max-w-md mx-auto sm:max-w-none`}>
+          <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-4 max-w-md mx-auto sm:max-w-none w-full">
             {objective === 'both' ? (
               <>
                 <button
                   onClick={() => handleActionClick(undefined, 'whatsapp')}
-                  className="shimmer-btn w-full sm:w-auto bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-emerald-600/30 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group ring-2 ring-white/25"
+                  className="shimmer-btn w-full sm:w-auto bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-emerald-600/30 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group ring-2 ring-white/25"
                 >
                   <MessageCircle size={16} />
                   <span>{t.ctaBothWa}</span>
                 </button>
                 <button
                   onClick={() => handleActionClick(undefined, 'quote')}
-                  className="shimmer-btn w-full sm:w-auto bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-[#FF5500]/40 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group ring-2 ring-white/25"
+                  className="shimmer-btn w-full sm:w-auto bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-[#FF5500]/40 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group ring-2 ring-white/25"
                 >
                   <FileText size={16} />
                   <span>{t.ctaBothQuote}</span>
@@ -1151,7 +1150,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             ) : (
               <button
                 onClick={() => handleActionClick()}
-                className="shimmer-btn w-full sm:w-auto bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-[#FF5500]/40 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group ring-2 ring-white/25"
+                className="shimmer-btn w-full sm:w-auto bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-[#FF5500]/40 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group ring-2 ring-white/25"
               >
                 <span>{heroCtaLabel}</span>
                 <ArrowRight size={15} className="group-hover:translate-x-1.5 transition-transform duration-200 animate-bounce-x" />
@@ -1174,26 +1173,26 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       {/* 4. BARRA DE MÉTRICAS */}
       <section className="bg-white border-b border-stone-200 py-4 sm:py-8 shadow-xs">
         <div className="max-w-6xl mx-auto px-3 sm:px-6">
-          <div className={`grid ${isMobile ? 'grid-cols-2 gap-2.5' : 'grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-6'} divide-x-0 md:divide-x divide-stone-100 text-center`}>
-            <div className="p-2 sm:p-3 rounded-2xl bg-stone-50/60 sm:bg-transparent space-y-0.5 sm:space-y-1">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-6 divide-x-0 md:divide-x divide-stone-100 text-center">
+            <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50/80 sm:bg-transparent space-y-0.5 sm:space-y-1 border border-stone-100 sm:border-0">
               <span className="text-lg sm:text-4xl font-black text-stone-900 tracking-tight block animate-number-glow">+10,000</span>
               <span className="text-[11px] sm:text-sm font-bold text-stone-700 block">{t.statTravelers}</span>
-              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{guideName}</span>
+              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{lang === 'en' ? 'In Cusco & Peru' : 'En Cusco y Perú'}</span>
             </div>
 
-            <div className="p-2 sm:p-3 rounded-2xl bg-stone-50/60 sm:bg-transparent space-y-0.5 sm:space-y-1">
+            <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50/80 sm:bg-transparent space-y-0.5 sm:space-y-1 border border-stone-100 sm:border-0">
               <span className="text-lg sm:text-4xl font-black text-[#FF5500] tracking-tight block animate-pulse-subtle">10+</span>
               <span className="text-[11px] sm:text-sm font-bold text-stone-700 block">{t.statExperience}</span>
-              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{destination}</span>
+              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{lang === 'en' ? 'Local Operator' : 'Operador Local'}</span>
             </div>
 
-            <div className="p-2 sm:p-3 rounded-2xl bg-stone-50/60 sm:bg-transparent space-y-0.5 sm:space-y-1">
+            <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50/80 sm:bg-transparent space-y-0.5 sm:space-y-1 border border-stone-100 sm:border-0">
               <span className="text-lg sm:text-4xl font-black text-stone-900 tracking-tight block animate-number-glow">50+</span>
               <span className="text-[11px] sm:text-sm font-bold text-stone-700 block">{t.statRoutes}</span>
-              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">Perú</span>
+              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{lang === 'en' ? 'Peru & Andes' : 'Perú y Andes'}</span>
             </div>
 
-            <div className="p-2 sm:p-3 rounded-2xl bg-stone-50/60 sm:bg-transparent space-y-0.5 sm:space-y-1">
+            <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50/80 sm:bg-transparent space-y-0.5 sm:space-y-1 border border-stone-100 sm:border-0">
               <span className="text-lg sm:text-4xl font-black text-[#FF5500] tracking-tight block animate-pulse-subtle">4.9 ★</span>
               <span className="text-[11px] sm:text-sm font-bold text-stone-700 block">{t.statRating}</span>
               <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">Google Reviews</span>
@@ -1205,10 +1204,10 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       {/* 4.5 FICHA TÉCNICA DEL TOUR (PUNTO 6) & PERFIL DEL GUÍA COLEGIADO (PUNTO 7) */}
       <section className="py-8 sm:py-14 bg-gradient-to-b from-stone-50 to-white border-b border-stone-200">
         <div className="max-w-7xl mx-auto px-3 sm:px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-1 lg:grid-cols-12 gap-6'} items-stretch`}>
             
             {/* Left: Especificaciones Técnicas (7 cols) */}
-            <div className="lg:col-span-7 bg-white rounded-3xl p-5 sm:p-7 border border-stone-200 shadow-xs flex flex-col justify-between space-y-5">
+            <div className={`${isMobile ? 'col-span-1' : 'lg:col-span-7'} bg-white rounded-3xl p-4 sm:p-7 border border-stone-200 shadow-xs flex flex-col justify-between space-y-4 sm:space-y-5`}>
               <div>
                 <div className="flex flex-wrap items-center gap-2 mb-2">
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FF5500]/10 text-[#FF5500] text-[10px] font-black uppercase tracking-wider">
@@ -1218,68 +1217,68 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     {translateText(data?.name || brandName, lang)}
                   </span>
                 </div>
-                <h3 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight">
+                <h3 className="text-lg sm:text-2xl font-black text-stone-900 tracking-tight">
                   {t.techSheetTitle}
                 </h3>
-                <p className="text-xs text-stone-500 mt-1.5 leading-relaxed">
+                <p className="text-xs text-stone-500 mt-1 leading-relaxed">
                   {translateText(data?.about?.content || data?.hero?.subtitle || t.techSheetDesc, lang)}
                 </p>
               </div>
 
-              {/* Grid 6 Especificaciones */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1">
-                <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
+              {/* Grid 6 Especificaciones: Adaptable y sin cortes de texto */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-1">
+                <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50 border border-stone-100 flex flex-col justify-between">
                   <div className="flex items-center gap-1.5 text-stone-400 mb-1">
-                    <Mountain size={14} className="text-[#FF5500]" />
-                    <span className="text-[10px] font-bold uppercase">{t.altitudeLabel}</span>
+                    <Mountain size={13} className="text-[#FF5500] shrink-0" />
+                    <span className="text-[9px] sm:text-[10px] font-bold uppercase">{t.altitudeLabel}</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block">{translateText(data?.altitude || '3,400 msnm', lang)}</span>
+                  <span className="text-[11px] sm:text-sm font-extrabold text-stone-900 block leading-tight break-words">{translateText(data?.altitude || '3,400 msnm', lang)}</span>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
+                <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50 border border-stone-100 flex flex-col justify-between">
                   <div className="flex items-center gap-1.5 text-stone-400 mb-1">
-                    <Clock size={14} className="text-[#FF5500]" />
-                    <span className="text-[10px] font-bold uppercase">{t.durationLabel}</span>
+                    <Clock size={13} className="text-[#FF5500] shrink-0" />
+                    <span className="text-[9px] sm:text-[10px] font-bold uppercase">{t.durationLabel}</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block">{getLocalizedDuration(data?.duration)}</span>
+                  <span className="text-[11px] sm:text-sm font-extrabold text-stone-900 block leading-tight break-words">{getLocalizedDuration(data?.duration)}</span>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
+                <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50 border border-stone-100 flex flex-col justify-between">
                   <div className="flex items-center gap-1.5 text-stone-400 mb-1">
-                    <Award size={14} className="text-[#FF5500]" />
-                    <span className="text-[10px] font-bold uppercase">{t.difficultyLabel}</span>
+                    <Award size={13} className="text-[#FF5500] shrink-0" />
+                    <span className="text-[9px] sm:text-[10px] font-bold uppercase">{t.difficultyLabel}</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block">{getLocalizedDifficulty(data?.difficulty)}</span>
+                  <span className="text-[11px] sm:text-sm font-extrabold text-stone-900 block leading-tight break-words">{getLocalizedDifficulty(data?.difficulty)}</span>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
+                <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50 border border-stone-100 flex flex-col justify-between">
                   <div className="flex items-center gap-1.5 text-stone-400 mb-1">
-                    <Users size={14} className="text-[#FF5500]" />
-                    <span className="text-[10px] font-bold uppercase">{t.groupTypeLabel}</span>
+                    <Users size={13} className="text-[#FF5500] shrink-0" />
+                    <span className="text-[9px] sm:text-[10px] font-bold uppercase">{t.groupTypeLabel}</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block truncate">{getLocalizedGroupType(data?.groupType)}</span>
+                  <span className="text-[11px] sm:text-sm font-extrabold text-stone-900 block leading-tight break-words">{getLocalizedGroupType(data?.groupType)}</span>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
+                <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50 border border-stone-100 flex flex-col justify-between">
                   <div className="flex items-center gap-1.5 text-stone-400 mb-1">
-                    <Target size={14} className="text-[#FF5500]" />
-                    <span className="text-[10px] font-bold uppercase">{t.targetAudienceLabel}</span>
+                    <Target size={13} className="text-[#FF5500] shrink-0" />
+                    <span className="text-[9px] sm:text-[10px] font-bold uppercase">{t.targetAudienceLabel}</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block truncate">{getLocalizedTargetAudience(data?.targetAudience)}</span>
+                  <span className="text-[11px] sm:text-sm font-extrabold text-stone-900 block leading-tight break-words">{getLocalizedTargetAudience(data?.targetAudience)}</span>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-stone-50 border border-stone-100">
+                <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50 border border-stone-100 flex flex-col justify-between">
                   <div className="flex items-center gap-1.5 text-stone-400 mb-1">
-                    <MapPin size={14} className="text-[#FF5500]" />
-                    <span className="text-[10px] font-bold uppercase">{t.destinationLabel}</span>
+                    <MapPin size={13} className="text-[#FF5500] shrink-0" />
+                    <span className="text-[9px] sm:text-[10px] font-bold uppercase">{t.destinationLabel}</span>
                   </div>
-                  <span className="text-xs sm:text-sm font-extrabold text-stone-900 block truncate">{translateText(destination, lang)}</span>
+                  <span className="text-[11px] sm:text-sm font-extrabold text-stone-900 block leading-tight break-words">{translateText(destination, lang)}</span>
                 </div>
               </div>
             </div>
 
             {/* Right: Perfil del Guía Oficial Colegiado (5 cols) */}
-            <div className="lg:col-span-5 bg-stone-900 text-white rounded-3xl p-5 sm:p-7 border border-stone-800 shadow-xs flex flex-col justify-between space-y-4">
+            <div className={`${isMobile ? 'col-span-1' : 'lg:col-span-5'} bg-stone-900 text-white rounded-3xl p-5 sm:p-7 border border-stone-800 shadow-xs flex flex-col justify-between space-y-4`}>
               <div>
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-black uppercase tracking-wider mb-3 border border-emerald-500/30">
                   <BadgeCheck size={13} /> {t.guideBadge}
@@ -1368,9 +1367,9 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           </p>
         </div>
 
-        {/* Filtro interactivo */}
+        {/* Filtro interactivo: Sin scrollbars feos y tactil */}
         {!isFree && !isBasic && (
-          <div className={`flex items-center gap-1.5 sm:gap-3 overflow-x-auto sm:flex-wrap sm:justify-center mb-6 sm:mb-10 w-full max-w-full pb-2 ${isMobile ? 'no-scrollbar px-1' : ''}`}>
+          <div className="flex items-center gap-1.5 sm:gap-3 overflow-x-auto sm:flex-wrap sm:justify-center mb-6 sm:mb-10 w-full max-w-full pb-2 px-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
             {[
               { key: 'all', label: t.filterAll, icon: Globe2 },
               { key: 'trekking', label: t.filterTrek, icon: MapPin },
@@ -1399,7 +1398,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         )}
 
         {/* Grilla de Tours */}
-        <div className={`grid gap-5 sm:gap-8 ${
+        <div className={`grid gap-4 sm:gap-8 ${
           isMobile 
             ? 'grid-cols-1 max-w-sm mx-auto' 
             : isFree 
@@ -1428,7 +1427,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     
                     <div className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-black text-stone-900 flex items-center gap-1 shadow-md">
                       <Star size={12} className="text-amber-500 fill-amber-500" />
-                      <span>{tour.badge}</span>
+                      <span>{tour.badge.replace('★', '').trim()}</span>
                     </div>
 
                     {tour.tag && (
@@ -1444,7 +1443,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     </div>
                   </div>
 
-                  <div className="p-4 sm:p-6 space-y-3">
+                  <div className="p-4 sm:p-6 space-y-2.5 sm:space-y-3">
                     <h3 className="font-extrabold text-base sm:text-lg text-stone-900 leading-snug group-hover:text-[#FF5500] transition-colors">
                       {tour.title}
                     </h3>

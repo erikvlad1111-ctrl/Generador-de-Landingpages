@@ -213,9 +213,40 @@ Array.from(document.querySelectorAll('*'))
 
 ---
 
+## 7. Discrepancia Visual en el Simulador Móvil del Previsualizador (Tailwind Media Queries Evaluando contra el Viewport de Escritorio)
+
+### Síntoma
+En el editor/previsualizador (`/demo/preview`), al hacer clic en el botón de vista móvil (`Móvil / Smartphone`), el marco se reduce a 390px pero el contenido interior sigue mostrando elementos de escritorio (por ejemplo, cuadrículas de 4 columnas apretadas, textos comprimidos verticalmente, menús horizontales o el botón flotante de WhatsApp situado fuera del marco del teléfono en la esquina del monitor).
+
+### Causa Raíz
+Las media queries de Tailwind CSS (`sm:`, `md:`, `lg:`) evalúan contra el ancho de la ventana del navegador (`window.innerWidth`), no contra el ancho del contenedor padre `div` con `max-w-[390px]`. Si el usuario está en una pantalla de escritorio de 1280px o 1920px, `@media (min-width: 768px)` es verdadero, forzando clases de escritorio dentro de una caja de 390px. Además, los elementos `fixed` se posicionan relativos a la ventana completa y no al marco simulado.
+
+### Comando de Diagnóstico
+Revisar si el componente embebe directamente el JSX dentro de un `div` con ancho limitado en lugar de usar un contexto de viewport aislado (`<iframe>`).
+
+### Solución Paso a Paso
+1. **Aislar el Viewport con un `<iframe>` en Modos Móvil y Tablet:**
+   En `src/app/demo/preview/page.tsx`, en lugar de renderizar `<TemplateRenderer>` dentro de un `div` para móviles, renderizar un `<iframe>` de ancho y alto 100%:
+   ```tsx
+   <iframe
+     key={`${landing.slug}-${landing.template}-${viewMode}-${refreshKey}`}
+     src={`/p/${landing.slug}?embed=true&mode=${viewMode}&tpl=${landing.template}&r=${refreshKey}`}
+     title={`Simulador ${viewMode}`}
+     className="w-full h-full border-0 bg-white"
+   />
+   ```
+2. **Soportar Parámetros de Embebidura en la Ruta Pública (`/p/[slug]`):**
+   En `src/app/p/[slug]/page.tsx`, ocultar las barras de demostración cuando `embed=true` y pasar `viewMode={modeParam}` a `TemplateRenderer`.
+3. **Resultado:**
+   El `<iframe>` crea un contexto de navegación con `window.innerWidth = 390px`. Todas las media queries `@media (min-width: 640px)` evalúan a `false`, garantizando que la vista sea 100% idéntica a un teléfono físico real, y los botones `fixed` (como WhatsApp) se ubican exactamente dentro de la pantalla del celular.
+
+---
+
 ## Lista de Verificación Antes de Desplegar
 - [ ] Ejecutar `npm run lint` y verificar que salga con código 0.
 - [ ] Ejecutar `npm run build` localmente y comprobar que todas las rutas se generen sin errores.
 - [ ] Confirmar que el repositorio remoto en `main` esté actualizado (`git status` limpio).
 - [ ] Verificar que el Framework Preset en Vercel sea `Next.js`.
 - [ ] Validar que en celular (375px) `document.documentElement.scrollWidth === document.documentElement.clientWidth`.
+- [ ] Validar que el botón "Móvil" en `/demo/preview` muestre la réplica exacta de 390px sin desbordes de escritorio.
+

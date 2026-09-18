@@ -1,24 +1,35 @@
 "use client";
 
-import React, { useState } from 'react';
-import { useParams } from 'next/navigation';
+import React, { useState, Suspense } from 'react';
+import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, MessageCircle, Edit3, LayoutDashboard, Share2, Check, Download, HelpCircle } from 'lucide-react';
 import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, LandingData } from '@/data/landingStore';
+import { TemplateType } from '@/types/landing';
 
-export default function PublicLandingPage() {
+function PublicLandingContent() {
   const params = useParams();
+  const searchParams = useSearchParams();
   const slug = (params?.slug as string) || '';
+  const isEmbed = searchParams.get('embed') === 'true';
+  const templateQuery = searchParams.get('template') as TemplateType | null;
+
   const [copied, setCopied] = useState(false);
   const [isBannerVisible, setIsBannerVisible] = useState(true);
   const [isDeployModalOpen, setIsDeployModalOpen] = useState(false);
 
   const [landing] = useState<LandingData | null>(() => {
     const landings = getStoredLandings();
-    if (!slug) return landings[0] || null;
-    return landings.find(l => l.slug.toLowerCase() === slug.toLowerCase()) || landings[0] || null;
+    const found = !slug 
+      ? landings[0] 
+      : (landings.find(l => l.slug.toLowerCase() === slug.toLowerCase()) || landings[0]);
+    if (!found) return null;
+    if (templateQuery) {
+      return { ...found, template: templateQuery };
+    }
+    return found;
   });
 
   if (!landing) {
@@ -51,8 +62,8 @@ export default function PublicLandingPage() {
   return (
     <div className="relative selection:bg-emerald-500 selection:text-white w-full max-w-full overflow-x-hidden">
       
-      {/* Accessible Demo Navigation Bar */}
-      {isBannerVisible && (
+      {/* Accessible Demo Navigation Bar (Hidden when embedded in device preview) */}
+      {!isEmbed && isBannerVisible && (
         <div className="sticky top-0 z-50 bg-slate-950/95 text-white px-3 sm:px-4 py-2 border-b border-slate-800 backdrop-blur-md w-full max-w-full overflow-hidden">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 text-xs">
             <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
@@ -123,7 +134,7 @@ export default function PublicLandingPage() {
       )}
 
       {/* Visual Public Landing Content */}
-      <TemplateRenderer data={landing} isLive={true} />
+      <TemplateRenderer data={landing} isLive={true} viewMode={(searchParams.get('mode') as 'desktop' | 'tablet' | 'mobile') || (isEmbed ? 'mobile' : 'desktop')} />
 
       {/* Floating WhatsApp Button for templates without built-in interactive floating button */}
       {landing.template !== 'agency-portal' && (
@@ -142,11 +153,21 @@ export default function PublicLandingPage() {
       )}
 
       {/* Deployment & Export Modal */}
-      <DeploymentModal
-        isOpen={isDeployModalOpen}
-        onClose={() => setIsDeployModalOpen(false)}
-        landing={landing}
-      />
+      {!isEmbed && (
+        <DeploymentModal
+          isOpen={isDeployModalOpen}
+          onClose={() => setIsDeployModalOpen(false)}
+          landing={landing}
+        />
+      )}
     </div>
+  );
+}
+
+export default function PublicLandingPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-950 flex items-center justify-center text-white">Cargando...</div>}>
+      <PublicLandingContent />
+    </Suspense>
   );
 }

@@ -515,24 +515,20 @@ export default function TourSupportAndFaqs({
           </p>
         </div>
 
-        {/* Navigation Tabs Bar */}
-        <div className={`bg-stone-200/70 rounded-2xl max-w-2xl mx-auto p-1 sm:p-1.5 ${
-          isMobile ? 'grid grid-cols-3 gap-1' : 'flex flex-wrap items-center justify-center gap-2 sm:gap-3'
-        }`}>
+        {/* Navigation Tabs Bar: Mobile first 3 balanced columns */}
+        <div className="bg-stone-200/70 rounded-2xl max-w-2xl mx-auto p-1 sm:p-1.5 grid grid-cols-3 gap-1 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-3">
           <button
             type="button"
             onClick={() => { setActiveTab('forum'); setActiveQuestionId(null); }}
-            className={`flex items-center justify-center gap-1 sm:gap-2 ${
-              isMobile ? 'px-1.5 py-2 text-[10px] flex-col text-center' : 'px-4 sm:px-5 py-2.5 text-xs'
-            } rounded-xl font-black transition-all cursor-pointer ${
+            className={`flex items-center justify-center gap-1 sm:gap-2 px-1.5 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs flex-col sm:flex-row text-center rounded-xl font-black transition-all cursor-pointer min-h-[44px] ${
               activeTab === 'forum'
                 ? 'bg-white text-stone-900 shadow-md scale-102'
                 : 'text-stone-600 hover:text-stone-900'
             }`}
           >
             <MessageSquare size={14} className={activeTab === 'forum' ? 'text-[#FF5500]' : ''} />
-            <span>{st.tabForum}</span>
-            <span className="bg-[#FF5500]/15 text-[#FF5500] text-[9px] px-1.5 py-0.2 rounded-full font-bold">
+            <span className="truncate max-w-full">{st.tabForum}</span>
+            <span className="hidden sm:inline bg-[#FF5500]/15 text-[#FF5500] text-[9px] px-1.5 py-0.2 rounded-full font-bold">
               {forumQuestions.length}
             </span>
           </button>
@@ -540,31 +536,27 @@ export default function TourSupportAndFaqs({
           <button
             type="button"
             onClick={() => setActiveTab('faq')}
-            className={`flex items-center justify-center gap-1 sm:gap-2 ${
-              isMobile ? 'px-1.5 py-2 text-[10px] flex-col text-center' : 'px-4 sm:px-5 py-2.5 text-xs'
-            } rounded-xl font-black transition-all cursor-pointer ${
+            className={`flex items-center justify-center gap-1 sm:gap-2 px-1.5 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs flex-col sm:flex-row text-center rounded-xl font-black transition-all cursor-pointer min-h-[44px] ${
               activeTab === 'faq'
                 ? 'bg-white text-stone-900 shadow-md scale-102'
                 : 'text-stone-600 hover:text-stone-900'
             }`}
           >
             <HelpCircle size={14} className={activeTab === 'faq' ? 'text-[#FF5500]' : ''} />
-            <span>{st.tabFaq}</span>
+            <span className="truncate max-w-full">{st.tabFaq}</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('ticket')}
-            className={`flex items-center justify-center gap-1 sm:gap-2 ${
-              isMobile ? 'px-1.5 py-2 text-[10px] flex-col text-center' : 'px-4 sm:px-5 py-2.5 text-xs'
-            } rounded-xl font-black transition-all cursor-pointer ${
+            className={`flex items-center justify-center gap-1 sm:gap-2 px-1.5 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs flex-col sm:flex-row text-center rounded-xl font-black transition-all cursor-pointer min-h-[44px] ${
               activeTab === 'ticket'
                 ? 'bg-white text-stone-900 shadow-md scale-102'
                 : 'text-stone-600 hover:text-stone-900'
             }`}
           >
             <ShieldCheck size={14} className={activeTab === 'ticket' ? 'text-[#FF5500]' : ''} />
-            <span>{st.tabTicket}</span>
+            <span className="truncate max-w-full">{st.tabTicket}</span>
           </button>
         </div>
 
