@@ -470,7 +470,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   // 2. Parámetros y datos dinámicos
   const brandName = data?.name || 'Cusco Tours';
   const whatsappNumber = (data?.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
-  const guideName = data?.guideName || 'Marco Mendoza';
+  const guideName = data?.guideName || 'Carlos Mendoza';
   const destination = data?.destination || 'Cusco, Perú';
   const objective: ObjectiveType = data?.objective || 'whatsapp';
   const planTier: PlanTier = data?.tier || 'pro';
@@ -1277,38 +1277,55 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </div>
             </div>
 
-            {/* Right: Perfil del Guía Oficial Colegiado (5 cols) */}
-            <div className={`${isMobile ? 'col-span-1' : 'lg:col-span-5'} bg-stone-900 text-white rounded-3xl p-5 sm:p-7 border border-stone-800 shadow-xs flex flex-col justify-between space-y-4`}>
-              <div>
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[10px] font-black uppercase tracking-wider mb-3 border border-emerald-500/30">
-                  <BadgeCheck size={13} /> {t.guideBadge}
+            {/* Right: Perfil del Guía Oficial Colegiado (5 cols) con Imagen Real de Fondo */}
+            <div className={`${isMobile ? 'col-span-1' : 'lg:col-span-5'} relative rounded-3xl overflow-hidden p-5 sm:p-7 border border-stone-700/80 shadow-xl flex flex-col justify-between space-y-4 group min-h-[340px]`}>
+              {/* Imagen de Fondo del Guía de Turismo */}
+              <div className="absolute inset-0 z-0 pointer-events-none">
+                <img
+                  src={data?.guideAvatar || "/images/tour-guide-carlos.jpg"}
+                  alt={guideName}
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                />
+                {/* Degradado oscuro para asegurar perfecta legibilidad de textos y botones */}
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/85 to-stone-900/65" />
+                <div className="absolute inset-0 backdrop-blur-[0.5px]" />
+              </div>
+
+              {/* Contenido en primer plano (z-10) */}
+              <div className="relative z-10">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/25 text-emerald-300 text-[10px] font-black uppercase tracking-wider mb-3.5 border border-emerald-400/40 backdrop-blur-md shadow-sm">
+                  <BadgeCheck size={13} className="text-emerald-400" /> {t.guideBadge}
                 </div>
                 
-                <div className="flex items-center gap-3.5 mb-3">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-[#FF5500] to-[#FF8800] flex items-center justify-center text-white font-black text-xl shadow-md shrink-0">
-                    {guideName.charAt(0)}
+                <div className="flex items-center gap-3.5 mb-3.5">
+                  <div className="w-14 h-14 rounded-2xl ring-2 ring-emerald-400/70 overflow-hidden shadow-lg shrink-0 relative bg-stone-800">
+                    <img
+                      src={data?.guideAvatar || "/images/tour-guide-carlos.jpg"}
+                      alt={guideName}
+                      className="w-full h-full object-cover object-top"
+                    />
                   </div>
                   <div>
-                    <h4 className="text-lg font-black text-white">{guideName}</h4>
-                    <p className="text-xs text-stone-300 font-semibold">{translateText(data?.guideCert || 'Guía Oficial de Turismo DIRCETUR', lang)}</p>
-                    <p className="text-[11px] text-[#FF8844] font-medium mt-0.5">🗣️ {t.guideSpokenLanguages}: {translateText(data?.guideLanguages || 'Español, English, Français, Português, Italiano', lang)}</p>
+                    <h4 className="text-xl font-black text-white tracking-tight drop-shadow-sm">{guideName}</h4>
+                    <p className="text-xs text-stone-200 font-semibold">{translateText(data?.guideCert || 'Guía Oficial de Turismo DIRCETUR', lang)}</p>
+                    <p className="text-[11px] text-[#FF9955] font-medium mt-0.5">🗣️ {t.guideSpokenLanguages}: {translateText(data?.guideLanguages || 'Español, English, Français, Português, Italiano', lang)}</p>
                   </div>
                 </div>
 
-                <p className="text-xs text-stone-400 leading-relaxed">
+                <p className="text-xs text-stone-200/95 leading-relaxed font-normal bg-stone-950/50 p-3 rounded-2xl border border-white/10 backdrop-blur-md">
                   {t.guideBio}
                 </p>
               </div>
 
-              <div className="pt-3 border-t border-stone-800 flex items-center justify-between gap-3">
+              <div className="relative z-10 pt-3 border-t border-white/15 flex items-center justify-between gap-3 backdrop-blur-xs">
                 <div>
-                  <span className="text-[10px] text-stone-400 block">{t.directLine}</span>
-                  <span className="text-xs font-black text-emerald-400 font-mono">{whatsappNumber ? `+${whatsappNumber}` : '+51 984 123 456'}</span>
+                  <span className="text-[10px] text-stone-300 block">{t.directLine}</span>
+                  <span className="text-xs font-black text-emerald-400 font-mono tracking-wide">{whatsappNumber ? `+${whatsappNumber}` : '+51 984 123 456'}</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => handleActionClick(undefined, 'whatsapp')}
-                  className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2 rounded-xl flex items-center gap-1.5 shadow-md shadow-emerald-600/30 transition-all cursor-pointer"
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-4 py-2.5 rounded-xl flex items-center gap-1.5 shadow-lg shadow-emerald-600/40 hover:shadow-emerald-500/50 hover:-translate-y-0.5 transition-all cursor-pointer"
                 >
                   <MessageCircle size={14} />
                   <span>WhatsApp</span>
