@@ -29,48 +29,16 @@ body {
   background: #94a3b8;
 }
 
-/* Enhanced Large & Tactile Horizontal Slider for Data Tables */
-.table-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: #64748b #f1f5f9;
+/* Modern Clean Data Table Container: Zero native scrollbar clutter */
+.modern-table-container {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
-.table-scrollbar::-webkit-scrollbar {
-  height: 14px;
-}
-
-.table-scrollbar::-webkit-scrollbar-track {
-  background: #f1f5f9;
-  border-radius: 9999px;
-  border: 1px solid #e2e8f0;
-  margin: 0 10px 6px 10px;
-}
-
-.table-scrollbar::-webkit-scrollbar-thumb {
-  background: #64748b;
-  border-radius: 9999px;
-  border: 2px solid #f1f5f9;
-  cursor: grab;
-}
-
-.table-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #2563eb;
-  border-color: #eff6ff;
-}
-
-.table-scrollbar::-webkit-scrollbar-thumb:active {
-  background: #1d4ed8;
-  cursor: grabbing;
-}
-
-.table-scrollbar::-webkit-scrollbar-button {
+.modern-table-container::-webkit-scrollbar {
   display: none !important;
   width: 0 !important;
   height: 0 !important;
-}
-
-.table-scrollbar::-webkit-scrollbar-corner {
-  display: none !important;
 }
 
 /* Modern Button Shine and Dynamic Float Animations */

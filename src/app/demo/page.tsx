@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState, useMemo, useRef } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Link from 'next/link';
 import { 
   FileText, Globe, CalendarDays, Sparkles, TrendingUp, ArrowUpRight, 
   ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download,
-  MoveHorizontal, ChevronLeft, ChevronRight, Layers, Pin, LayoutTemplate,
-  LayoutGrid, List, SlidersHorizontal
+  Layers, Pin, LayoutTemplate, LayoutGrid, List
 } from 'lucide-react';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, LandingData } from '@/data/landingStore';
@@ -19,43 +18,6 @@ export default function DemoDashboard() {
   const [viewMode, setViewMode] = useState<'cards' | 'table'>('table');
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
   const [selectedLandingForDeploy, setSelectedLandingForDeploy] = useState<LandingData | null>(null);
-  const [scrollProgress, setScrollProgress] = useState<number>(0);
-  const [canScrollLeft, setCanScrollLeft] = useState<boolean>(false);
-  const [canScrollRight, setCanScrollRight] = useState<boolean>(true);
-  const tableScrollRef = useRef<HTMLDivElement>(null);
-
-  const updateScrollState = () => {
-    if (tableScrollRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = tableScrollRef.current;
-      const maxScroll = scrollWidth - clientWidth;
-      if (maxScroll > 0) {
-        setScrollProgress(Math.round((scrollLeft / maxScroll) * 100));
-        setCanScrollLeft(scrollLeft > 5);
-        setCanScrollRight(scrollLeft < maxScroll - 5);
-      } else {
-        setScrollProgress(0);
-        setCanScrollLeft(false);
-        setCanScrollRight(false);
-      }
-    }
-  };
-
-  const handleSliderChange = (val: number) => {
-    if (tableScrollRef.current) {
-      const { scrollWidth, clientWidth } = tableScrollRef.current;
-      const maxScroll = scrollWidth - clientWidth;
-      tableScrollRef.current.scrollLeft = (val / 100) * maxScroll;
-      setScrollProgress(val);
-    }
-  };
-
-  const scrollTable = (direction: 'left' | 'right') => {
-    if (tableScrollRef.current) {
-      const scrollAmount = direction === 'left' ? -350 : 350;
-      tableScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-      setTimeout(updateScrollState, 150);
-    }
-  };
 
   useEffect(() => {
     const handleFocus = () => setProjects(getStoredLandings());
@@ -78,13 +40,6 @@ export default function DemoDashboard() {
     });
   }, [projects, searchQuery, statusFilter, objectiveFilter]);
 
-  useEffect(() => {
-    if (viewMode === 'table') {
-      setTimeout(updateScrollState, 100);
-      window.addEventListener('resize', updateScrollState);
-      return () => window.removeEventListener('resize', updateScrollState);
-    }
-  }, [viewMode, filteredProjects]);
 
   const totalPublished = projects.filter(p => p.status === 'published').length;
   const totalLandings = projects.length;
@@ -525,75 +480,22 @@ export default function DemoDashboard() {
         )}
 
         {/* ========================================================= */}
-        {/* VISTA 2: TABLA EXPANDIDA CON DESLIZADOR PERSISTENTE       */}
+        {/* VISTA 2: TABLA MODERNA Y FLUIDA (ESTILO SAAS PREMIUM)     */}
         {/* ========================================================= */}
         {viewMode === 'table' && (
-          <div className="space-y-3">
-            {/* Top Table Header Navigation & Indicator */}
-            <div className="flex items-center justify-between gap-3 px-1 pt-1 pb-0.5 select-none">
-              <div className="flex items-center gap-2">
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-bold border border-slate-200/80 shadow-2xs">
-                  <MoveHorizontal size={14} className="text-blue-600" />
-                  <span className="text-[11px] font-extrabold uppercase tracking-wider text-slate-500">
-                    Desplazamiento horizontal ({scrollProgress}%)
-                  </span>
-                </span>
-                <span className="text-xs text-slate-400 hidden sm:inline">
-                  • Las acciones rápidas permanecen ancladas a la derecha
-                </span>
-              </div>
-
-              {/* Visual Icon-Only Navigation Pill */}
-              <div className="flex items-center bg-slate-100/90 p-1 rounded-2xl border border-slate-200/80 shadow-inner">
-                <button
-                  type="button"
-                  onClick={() => scrollTable('left')}
-                  disabled={!canScrollLeft}
-                  className="w-8 h-8 rounded-xl flex items-center justify-center bg-white text-slate-700 hover:text-white hover:bg-blue-600 disabled:opacity-40 disabled:hover:bg-white disabled:hover:text-slate-700 active:scale-95 transition-all shadow-xs border border-slate-200/60 hover:border-blue-600 cursor-pointer"
-                  title="Desplazar hacia la izquierda"
-                  aria-label="Desplazar hacia la izquierda"
-                >
-                  <ChevronLeft size={18} strokeWidth={2.5} />
-                </button>
-
-                <div className="px-2 flex items-center gap-1 text-slate-400">
-                  <span className={`w-1.5 h-1.5 rounded-full transition-colors ${canScrollLeft ? 'bg-blue-500' : 'bg-slate-300'}`}></span>
-                  <MoveHorizontal size={13} className="text-slate-400" />
-                  <span className={`w-1.5 h-1.5 rounded-full transition-colors ${canScrollRight ? 'bg-blue-500' : 'bg-slate-300'}`}></span>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => scrollTable('right')}
-                  disabled={!canScrollRight}
-                  className="w-8 h-8 rounded-xl flex items-center justify-center bg-white text-slate-700 hover:text-white hover:bg-blue-600 disabled:opacity-40 disabled:hover:bg-white disabled:hover:text-slate-700 active:scale-95 transition-all shadow-xs border border-slate-200/60 hover:border-blue-600 cursor-pointer"
-                  title="Desplazar hacia la derecha"
-                  aria-label="Desplazar hacia la derecha"
-                >
-                  <ChevronRight size={18} strokeWidth={2.5} />
-                </button>
-              </div>
-            </div>
-
-            {/* Expansive Table Wrapper */}
-            <div 
-              ref={tableScrollRef}
-              onScroll={updateScrollState}
-              className="overflow-x-auto rounded-2xl border border-slate-200/80 table-scrollbar bg-white shadow-xs relative"
-            >
-              <table className="w-full min-w-[1080px] text-left border-collapse">
+          <div className="rounded-2xl border border-slate-200/90 bg-white shadow-xs overflow-hidden animate-in fade-in duration-300">
+            {/* Table Scrollable Container with Hidden Scrollbars */}
+            <div className="overflow-x-auto modern-table-container">
+              <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-slate-50/90 text-slate-500 text-xs uppercase tracking-wider font-extrabold border-b border-slate-200/80">
-                    <th className="px-6 py-4 min-w-[320px]">Tour & Guía Asignado</th>
-                    <th className="px-4 py-4 min-w-[120px] whitespace-nowrap">Plantilla</th>
-                    <th className="px-4 py-4 min-w-[140px] whitespace-nowrap">Objetivo</th>
-                    <th className="px-4 py-4 min-w-[140px] whitespace-nowrap">Estado</th>
-                    <th className="px-4 py-4 min-w-[90px] whitespace-nowrap text-center">Vistas</th>
-                    <th className="px-4 py-4 min-w-[120px] whitespace-nowrap">Fecha</th>
-                    {/* Sticky Actions Column: Permanece siempre visible */}
-                    <th className="sticky right-0 z-20 bg-slate-50/95 backdrop-blur-xs shadow-[-10px_0_15px_-4px_rgba(0,0,0,0.06)] px-6 py-4 min-w-[280px] whitespace-nowrap text-right">
-                      Acciones Rápidas
-                    </th>
+                  <tr className="bg-slate-50/80 text-slate-500 text-[11px] uppercase tracking-wider font-bold border-b border-slate-200/80 select-none">
+                    <th className="px-5 py-3.5 min-w-[260px]">Tour & Guía Asignado</th>
+                    <th className="px-4 py-3.5 hidden md:table-cell whitespace-nowrap">Plantilla</th>
+                    <th className="px-4 py-3.5 hidden sm:table-cell whitespace-nowrap">Objetivo</th>
+                    <th className="px-4 py-3.5 whitespace-nowrap">Estado</th>
+                    <th className="px-4 py-3.5 hidden lg:table-cell whitespace-nowrap text-center">Vistas</th>
+                    <th className="px-4 py-3.5 hidden xl:table-cell whitespace-nowrap">Fecha</th>
+                    <th className="px-5 py-3.5 whitespace-nowrap text-right min-w-[200px]">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-sm">
@@ -616,23 +518,23 @@ export default function DemoDashboard() {
                       const isCopied = copiedSlug === p.slug;
 
                       return (
-                        <tr key={p.id} className="hover:bg-slate-50/80 transition-colors group">
+                        <tr key={p.id} className="hover:bg-slate-50/70 transition-colors group">
                           
                           {/* Tour Name & Guide */}
-                          <td className="px-6 py-4.5">
-                            <div className="flex items-center gap-3.5">
-                              <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 font-bold text-xs border border-blue-100 shadow-xs">
+                          <td className="px-5 py-3.5">
+                            <div className="flex items-center gap-3">
+                              <div className="w-9 h-9 rounded-xl bg-slate-100/90 group-hover:bg-blue-50 text-slate-700 group-hover:text-blue-600 flex items-center justify-center shrink-0 text-base border border-slate-200/70 group-hover:border-blue-200 transition-colors shadow-2xs">
                                 {p.template === 'adventure' ? '🏔️' : p.template === 'premium' ? '✨' : p.template === 'boho-nature' ? '📷' : '🏛️'}
                               </div>
                               <div className="min-w-0">
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-2 flex-wrap">
                                   <Link 
                                     href={`/demo/preview?slug=${p.slug}`} 
-                                    className="font-extrabold text-slate-900 hover:text-blue-600 transition-colors block text-sm leading-snug whitespace-nowrap"
+                                    className="font-bold text-slate-900 hover:text-blue-600 transition-colors text-sm leading-snug"
                                   >
                                     {p.name}
                                   </Link>
-                                  <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border ${
+                                  <span className={`text-[10px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded-md border shrink-0 ${
                                     (p.tier || 'advance') === 'advance'
                                       ? 'bg-purple-50 text-purple-700 border-purple-200'
                                       : (p.tier || 'advance') === 'pro'
@@ -644,94 +546,98 @@ export default function DemoDashboard() {
                                     {p.tier || 'advance'}
                                   </span>
                                 </div>
-                                <span className="text-xs text-slate-400 block mt-0.5 whitespace-nowrap">
-                                  Guía: <strong className="text-slate-600 font-medium">{p.guideName || 'No asignado'}</strong> • <span className="text-emerald-700 font-semibold">{p.price || 'S/ Consultar'}</span>
-                                </span>
+                                <div className="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
+                                  <span>Guía: <strong className="text-slate-600 font-medium">{p.guideName || 'No asignado'}</strong></span>
+                                  <span>•</span>
+                                  <span className="text-emerald-700 font-semibold">{p.price || 'S/ Consultar'}</span>
+                                </div>
                               </div>
                             </div>
                           </td>
 
                           {/* Template */}
-                          <td className="px-4 py-4.5 whitespace-nowrap">
-                            <span className="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold capitalize bg-slate-100 text-slate-700 border border-slate-200/60">
+                          <td className="px-4 py-3.5 hidden md:table-cell whitespace-nowrap">
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold capitalize bg-slate-100 text-slate-600 border border-slate-200/60">
                               {p.template}
                             </span>
                           </td>
 
                           {/* Objective */}
-                          <td className="px-4 py-4.5 whitespace-nowrap">
-                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-bold ${
+                          <td className="px-4 py-3.5 hidden sm:table-cell whitespace-nowrap">
+                            <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-xs font-bold ${
                               p.objective === 'both'
                                 ? 'bg-purple-50 text-purple-700 border border-purple-200/60'
                                 : p.objective === 'whatsapp' 
                                   ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' 
                                   : 'bg-blue-50 text-blue-700 border border-blue-200/60'
                             }`}>
-                              {p.objective === 'both' ? '⚡ Híbrido (Ambos)' : p.objective === 'whatsapp' ? '💬 WhatsApp' : '📋 Cotización'}
+                              {p.objective === 'both' ? '⚡ Híbrido' : p.objective === 'whatsapp' ? '💬 WhatsApp' : '📋 Cotización'}
                             </span>
                           </td>
 
                           {/* Status with interactive Toggle */}
-                          <td className="px-4 py-4.5 whitespace-nowrap">
+                          <td className="px-4 py-3.5 whitespace-nowrap">
                             <button
                               onClick={() => handleToggleStatus(p.id, p.status)}
-                              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold transition-all cursor-pointer shadow-2xs ${
+                              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer shadow-2xs ${
                                 isPublished 
-                                  ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200 border border-emerald-300/60' 
-                                  : 'bg-amber-100 text-amber-800 hover:bg-amber-200 border border-amber-300/60'
+                                  ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200' 
+                                  : 'bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200'
                               }`}
-                              title="Clic para alternar estado"
+                              title="Clic para cambiar entre Publicado y Borrador"
                             >
-                              <span className={`w-2 h-2 rounded-full ${isPublished ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-                              <span>{isPublished ? 'PUBLICADO' : 'BORRADOR'}</span>
-                              {isPublished ? <ToggleRight size={15} className="text-emerald-700" /> : <ToggleLeft size={15} className="text-amber-700" />}
+                              <span className={`w-1.5 h-1.5 rounded-full ${isPublished ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                              <span>{isPublished ? 'Publicado' : 'Borrador'}</span>
+                              {isPublished ? <ToggleRight size={14} className="text-emerald-600" /> : <ToggleLeft size={14} className="text-amber-600" />}
                             </button>
                           </td>
 
                           {/* Views */}
-                          <td className="px-4 py-4.5 text-xs font-mono font-extrabold text-slate-700 whitespace-nowrap text-center">
-                            {p.views || '0'}
+                          <td className="px-4 py-3.5 hidden lg:table-cell text-xs font-mono font-bold text-slate-600 whitespace-nowrap text-center">
+                            <span className="px-2 py-0.5 bg-slate-100 rounded-md">
+                              {p.views || '0'}
+                            </span>
                           </td>
 
                           {/* Date */}
-                          <td className="px-4 py-4.5 text-xs text-slate-500 font-medium whitespace-nowrap">
+                          <td className="px-4 py-3.5 hidden xl:table-cell text-xs text-slate-400 font-medium whitespace-nowrap">
                             <div className="flex items-center gap-1.5">
-                              <CalendarDays size={14} className="text-slate-400" />
+                              <CalendarDays size={13} className="text-slate-400" />
                               <span>{p.date}</span>
                             </div>
                           </td>
 
-                          {/* Sticky Action buttons */}
-                          <td className="sticky right-0 z-20 bg-white group-hover:bg-slate-50/95 backdrop-blur-xs transition-colors shadow-[-10px_0_15px_-4px_rgba(0,0,0,0.06)] px-6 py-4.5 text-right whitespace-nowrap">
-                            <div className="flex items-center justify-end gap-2">
+                          {/* Action buttons: Sleek & Clean */}
+                          <td className="px-5 py-3.5 text-right whitespace-nowrap">
+                            <div className="flex items-center justify-end gap-1.5">
                               
-                              {/* Primary: Editor / Vista Previa */}
+                              {/* Primary: Ver / Editar */}
                               <Link
                                 href={`/demo/preview?slug=${p.slug}`}
-                                className="inline-flex items-center gap-1.5 bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white border border-blue-200 hover:border-blue-600 px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all shadow-xs"
+                                className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg font-bold text-xs transition-all shadow-xs hover:scale-102 active:scale-98"
                                 title="Abrir editor y previsualizador"
                               >
                                 <Eye size={13} />
                                 <span>Ver / Editar</span>
                               </Link>
 
-                              {/* Export / Download / Deploy Options */}
+                              {/* Export / Deploy Modal */}
                               <button
                                 onClick={() => setSelectedLandingForDeploy(p)}
-                                className="inline-flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 px-3 py-1.5 rounded-xl font-bold text-xs transition-colors cursor-pointer shadow-xs"
-                                title="Descargar paquete ZIP/HTML o ver opciones de despliegue en Vercel"
+                                className="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 border border-slate-200/80 px-2.5 py-1.5 rounded-lg font-semibold text-xs transition-colors cursor-pointer"
+                                title="Exportar ZIP o desplegar"
                               >
-                                <Download size={13} className="text-amber-700" />
-                                <span>Exportar / ZIP</span>
+                                <Download size={13} className="text-slate-500" />
+                                <span className="hidden sm:inline">Exportar</span>
                               </button>
 
-                              {/* Direct Accessible Open in Chrome / New Tab */}
+                              {/* Direct Link in New Tab */}
                               <a
                                 href={`/p/${p.slug}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center justify-center p-2 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-blue-50 border border-slate-200 hover:border-blue-200 transition-all text-xs"
-                                title="Abrir landing page pública en una pestaña nueva"
+                                className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 border border-transparent hover:border-blue-200 transition-colors"
+                                title="Abrir página pública en pestaña nueva"
                               >
                                 <ExternalLink size={14} />
                               </a>
@@ -739,12 +645,12 @@ export default function DemoDashboard() {
                               {/* Copy Public Link */}
                               <button
                                 onClick={() => handleCopyLink(p.slug)}
-                                className={`p-2 rounded-xl text-xs font-medium transition-all border cursor-pointer ${
+                                className={`p-1.5 rounded-lg transition-colors border cursor-pointer ${
                                   isCopied 
                                     ? 'bg-emerald-600 text-white border-emerald-600' 
-                                    : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100 border-slate-200'
+                                    : 'text-slate-400 hover:text-slate-700 hover:bg-slate-100 border-transparent hover:border-slate-200'
                                 }`}
-                                title="Copiar link público para clientes"
+                                title="Copiar enlace"
                               >
                                 {isCopied ? <Check size={14} /> : <Copy size={14} />}
                               </button>
@@ -752,8 +658,8 @@ export default function DemoDashboard() {
                               {/* Delete */}
                               <button
                                 onClick={() => handleDelete(p.id, p.name)}
-                                className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 rounded-xl transition-colors text-xs cursor-pointer"
-                                title="Eliminar proyecto"
+                                className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 rounded-lg transition-colors cursor-pointer"
+                                title="Eliminar"
                               >
                                 <Trash2 size={14} />
                               </button>
@@ -767,64 +673,32 @@ export default function DemoDashboard() {
               </table>
             </div>
 
-            {/* BARRA DESLIZADORA FLOTANTE PERSISTENTE (Sticky bottom al hacer scroll o bajar) */}
-            <div className="sticky bottom-4 z-30 mx-auto max-w-2xl px-4 py-2.5 bg-slate-900/95 hover:bg-slate-900 backdrop-blur-md rounded-2xl border border-slate-700/80 shadow-2xl text-white flex items-center justify-between gap-3 sm:gap-4 transition-all animate-in fade-in slide-in-from-bottom-2">
-              <div className="flex items-center gap-2 text-xs font-bold text-slate-300 shrink-0">
-                <SlidersHorizontal size={15} className="text-blue-400 shrink-0" />
-                <span className="hidden sm:inline">Deslizar Columnas:</span>
-                <span className="sm:hidden font-mono text-blue-400">{scrollProgress}%</span>
+            {/* Table Footer: Elegante resumen de datos y estados */}
+            <div className="px-5 py-3 bg-slate-50/70 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+              <div className="flex items-center gap-2">
+                <span>Mostrando <strong className="font-bold text-slate-700">{filteredProjects.length}</strong> de <strong className="font-bold text-slate-700">{projects.length}</strong> landings</span>
+                {(searchQuery || statusFilter !== 'all' || objectiveFilter !== 'all') && (
+                  <button
+                    onClick={() => { setSearchQuery(''); setStatusFilter('all'); setObjectiveFilter('all'); }}
+                    className="text-blue-600 font-bold hover:underline ml-1 cursor-pointer"
+                  >
+                    (Limpiar filtros)
+                  </button>
+                )}
               </div>
 
-              <div className="flex-1 flex items-center gap-2 max-w-md">
-                <button
-                  type="button"
-                  onClick={() => scrollTable('left')}
-                  disabled={!canScrollLeft}
-                  className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed text-slate-300 transition-colors cursor-pointer"
-                  title="Desplazar a la izquierda"
-                >
-                  <ChevronLeft size={16} />
-                </button>
-                
-                <div className="flex-1 relative flex items-center">
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={scrollProgress}
-                    onChange={(e) => handleSliderChange(Number(e.target.value))}
-                    className="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer accent-blue-500"
-                    aria-label="Deslizador horizontal de la tabla"
-                  />
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => scrollTable('right')}
-                  disabled={!canScrollRight}
-                  className="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed text-slate-300 transition-colors cursor-pointer"
-                  title="Desplazar a la derecha"
-                >
-                  <ChevronRight size={16} />
-                </button>
-              </div>
-
-              <div className="hidden sm:flex items-center gap-2 shrink-0">
-                <span className="text-[11px] font-mono text-slate-400 font-bold">{scrollProgress}%</span>
-                <button
-                  type="button"
-                  onClick={() => handleSliderChange(0)}
-                  className="text-[11px] text-blue-400 hover:text-blue-300 hover:underline px-1 cursor-pointer font-medium"
-                >
-                  Inicio
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleSliderChange(100)}
-                  className="text-[11px] text-blue-400 hover:text-blue-300 hover:underline px-1 cursor-pointer font-medium"
-                >
-                  Final
-                </button>
+              <div className="flex items-center gap-4 text-[11px] font-medium text-slate-500">
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span>{totalPublished} Publicadas</span>
+                </span>
+                <span className="inline-flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+                  <span>{totalLandings - totalPublished} Borradores</span>
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-slate-400">
+                  <span>{totalViews} vistas acumuladas</span>
+                </span>
               </div>
             </div>
           </div>
