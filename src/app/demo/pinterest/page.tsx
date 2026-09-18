@@ -609,24 +609,25 @@ export default function PinterestGalleryPage() {
   };
 
   return (
-    <div className="p-4 sm:p-8 max-w-7xl mx-auto space-y-8 selection:bg-[#FF5500] selection:text-white animate-in fade-in duration-300">
+    <div className="p-4 sm:p-8 max-w-7xl mx-auto space-y-8 selection:bg-blue-600 selection:text-white animate-in fade-in duration-300">
       
-      {/* 1. HEADER HERO: COMPACTO, ELEGANTE Y ORDENADO */}
-      <div className="bg-gradient-to-br from-[#1C1917] via-stone-900 to-[#2A231F] rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border border-stone-800">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#FF5500]/15 rounded-full blur-3xl pointer-events-none" />
+      {/* 1. HEADER HERO: COMPACTO, ELEGANTE Y ORDENADO CON IDENTIDAD DE SOFTWARE */}
+      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden border border-slate-800">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-blue-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
         
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF5500]/20 text-[#FF8844] text-xs font-bold uppercase tracking-wider border border-[#FF5500]/40">
-              <LayoutTemplate size={13} className="text-[#FF5500]" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-sky-300 text-xs font-bold uppercase tracking-wider border border-blue-500/40">
+              <LayoutTemplate size={13} className="text-sky-400" />
               <span>Catálogo de Diseños Oficiales</span>
             </div>
 
             <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white">
-              Diseños Disponibles para <span className="text-[#FF5500]">Landing Pages</span>
+              Diseños Disponibles para <span className="text-sky-400">Landing Pages</span>
             </h1>
 
-            <p className="text-xs sm:text-sm text-stone-300 leading-relaxed font-normal">
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
               Explora nuestros <strong>7 arquetipos visuales y de conversión</strong> para turismo en Cusco y Perú. Cada diseño incluye su ficha técnica con <strong>beneficios, paleta de colores con roles, tipografías y estilos visuales</strong>.
             </p>
           </div>
@@ -635,11 +636,11 @@ export default function PinterestGalleryPage() {
           <div className="grid grid-cols-2 gap-3 shrink-0">
             <div className="bg-white/5 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 text-center">
               <span className="text-xl font-black text-white block leading-none">7</span>
-              <span className="text-[11px] text-stone-400 font-semibold mt-1 block">Diseños Listos</span>
+              <span className="text-[11px] text-slate-400 font-semibold mt-1 block">Diseños Listos</span>
             </div>
             <div className="bg-white/5 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 text-center">
-              <span className="text-xl font-black text-[#FF5500] block leading-none">4</span>
-              <span className="text-[11px] text-stone-400 font-semibold mt-1 block">Niveles de Plan</span>
+              <span className="text-xl font-black text-sky-400 block leading-none">4</span>
+              <span className="text-[11px] text-slate-400 font-semibold mt-1 block">Niveles de Plan</span>
             </div>
           </div>
         </div>
@@ -657,7 +658,7 @@ export default function PinterestGalleryPage() {
               placeholder="Buscar diseño, estilo, tipografía o tag..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[#FF5500] focus:border-transparent transition-all"
+              className="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
             />
             {searchQuery && (
               <button 
@@ -702,7 +703,7 @@ export default function PinterestGalleryPage() {
               onClick={() => setSelectedCategory(cat)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                 selectedCategory === cat
-                  ? 'bg-[#FF5500] text-white shadow-xs font-bold'
+                  ? 'bg-blue-600 text-white shadow-xs font-bold'
                   : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/80'
               }`}
             >
@@ -720,7 +721,7 @@ export default function PinterestGalleryPage() {
           <p className="text-xs text-slate-500">Intenta restablecer los filtros para ver los 7 diseños.</p>
           <button
             onClick={() => { setSelectedCategory('all'); setSelectedTier('all'); setSearchQuery(''); }}
-            className="text-xs font-bold text-[#FF5500] hover:underline cursor-pointer"
+            className="text-xs font-bold text-blue-600 hover:underline cursor-pointer"
           >
             Restablecer Filtros
           </button>
@@ -737,7 +738,7 @@ export default function PinterestGalleryPage() {
                 key={design.id}
                 className={`bg-white rounded-2xl border transition-all duration-300 flex flex-col justify-between overflow-hidden shadow-xs hover:shadow-lg ${
                   isFirstOption 
-                    ? 'border-[#FF5500]/60 ring-2 ring-[#FF5500]/20' 
+                    ? 'border-blue-500/60 ring-2 ring-blue-500/20' 
                     : 'border-slate-200 hover:border-slate-300'
                 }`}
               >
@@ -760,7 +761,7 @@ export default function PinterestGalleryPage() {
                           Plan {design.recommendedTier.toUpperCase()}
                         </span>
                         {isFirstOption && (
-                          <span className="bg-[#FF5500] text-white text-[10px] font-black px-2 py-1 rounded-full flex items-center gap-1 shadow-xs">
+                          <span className="bg-blue-600 text-white text-[10px] font-black px-2 py-1 rounded-full flex items-center gap-1 shadow-xs">
                             <Crown size={11} /> Top #1
                           </span>
                         )}
@@ -809,13 +810,13 @@ export default function PinterestGalleryPage() {
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between text-[11px]">
                         <span className="font-bold text-slate-700 flex items-center gap-1.5">
-                          <Palette size={13} className="text-[#FF5500]" />
+                          <Palette size={13} className="text-blue-600" />
                           Paleta de Colores:
                         </span>
                         <button
                           type="button"
                           onClick={() => openModal(design, 'colors')}
-                          className="text-[10px] font-bold text-slate-500 hover:text-[#FF5500] cursor-pointer"
+                          className="text-[10px] font-bold text-slate-500 hover:text-blue-600 cursor-pointer"
                         >
                           Ver roles →
                         </button>
@@ -873,7 +874,7 @@ export default function PinterestGalleryPage() {
                         Beneficio Clave
                       </span>
                       <div className="flex items-start gap-1.5 text-xs text-slate-700">
-                        <CheckCircle2 size={13} className="text-[#FF5500] shrink-0 mt-0.5" />
+                        <CheckCircle2 size={13} className="text-sky-500 shrink-0 mt-0.5" />
                         <span className="text-[11px] font-medium leading-tight">
                           {design.benefits[0]?.title}: {design.benefits[0]?.description.slice(0, 75)}...
                         </span>
@@ -886,7 +887,7 @@ export default function PinterestGalleryPage() {
                       onClick={() => openModal(design, 'benefits')}
                       className="w-full py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                     >
-                      <Info size={13} className="text-[#FF5500]" />
+                      <Info size={13} className="text-blue-600" />
                       <span>Ver Ficha Técnica Completa (Detalles)</span>
                     </button>
 
@@ -955,7 +956,7 @@ export default function PinterestGalleryPage() {
                   onClick={() => setModalTab('benefits')}
                   className={`py-1.5 px-3 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
                     modalTab === 'benefits'
-                      ? 'bg-white text-[#FF5500] shadow-xs'
+                      ? 'bg-white text-blue-600 shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -968,7 +969,7 @@ export default function PinterestGalleryPage() {
                   onClick={() => setModalTab('colors')}
                   className={`py-1.5 px-3 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
                     modalTab === 'colors'
-                      ? 'bg-white text-[#FF5500] shadow-xs'
+                      ? 'bg-white text-blue-600 shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -981,7 +982,7 @@ export default function PinterestGalleryPage() {
                   onClick={() => setModalTab('typography')}
                   className={`py-1.5 px-3 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
                     modalTab === 'typography'
-                      ? 'bg-white text-[#FF5500] shadow-xs'
+                      ? 'bg-white text-blue-600 shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -994,7 +995,7 @@ export default function PinterestGalleryPage() {
                   onClick={() => setModalTab('style')}
                   className={`py-1.5 px-3 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
                     modalTab === 'style'
-                      ? 'bg-white text-[#FF5500] shadow-xs'
+                      ? 'bg-white text-blue-600 shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -1007,7 +1008,7 @@ export default function PinterestGalleryPage() {
                   onClick={() => setModalTab('components')}
                   className={`py-1.5 px-3 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
                     modalTab === 'components'
-                      ? 'bg-white text-[#FF5500] shadow-xs'
+                      ? 'bg-white text-blue-600 shadow-xs'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -1040,11 +1041,11 @@ export default function PinterestGalleryPage() {
                         <div key={idx} className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
                           <div className="flex items-center justify-between">
                             <span className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                              <Zap size={13} className="text-[#FF5500]" />
+                              <Zap size={13} className="text-sky-500" />
                               {b.title}
                             </span>
                             {b.badge && (
-                              <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-[#FF5500]/10 text-[#FF5500]">
+                              <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-sky-500/10 text-sky-600">
                                 {b.badge}
                               </span>
                             )}
@@ -1065,7 +1066,7 @@ export default function PinterestGalleryPage() {
                       <span className="text-slate-500 font-medium">
                         Paleta cromática con su función psicológica y comercial:
                       </span>
-                      <span className="text-[10px] text-[#FF5500] font-bold">
+                      <span className="text-[10px] text-sky-600 font-bold">
                         Click para copiar código HEX
                       </span>
                     </div>
@@ -1083,7 +1084,7 @@ export default function PinterestGalleryPage() {
                               <button
                                 type="button"
                                 onClick={() => copyToClipboard(col.hex)}
-                                className="text-[10px] font-mono font-bold text-slate-600 hover:text-[#FF5500] flex items-center gap-1 px-1.5 py-0.5 rounded bg-white border border-slate-200 cursor-pointer"
+                                className="text-[10px] font-mono font-bold text-slate-600 hover:text-blue-600 flex items-center gap-1 px-1.5 py-0.5 rounded bg-white border border-slate-200 cursor-pointer"
                               >
                                 {copiedHex === col.hex ? (
                                   <>
@@ -1198,7 +1199,7 @@ export default function PinterestGalleryPage() {
                     <ul className="grid grid-cols-1 gap-2 text-xs text-slate-700">
                       {selectedDesignForModal.includedComponents.map((comp, idx) => (
                         <li key={idx} className="flex items-start gap-2 p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                          <CheckCircle2 size={15} className="text-[#FF5500] shrink-0 mt-0.5" />
+                          <CheckCircle2 size={15} className="text-sky-500 shrink-0 mt-0.5" />
                           <span className="text-[11px] font-medium leading-tight">{comp}</span>
                         </li>
                       ))}
@@ -1230,7 +1231,7 @@ export default function PinterestGalleryPage() {
 
                 <Link
                   href={`/demo/new?tier=${selectedDesignForModal.recommendedTier}&template=${selectedDesignForModal.template}`}
-                  className="py-2.5 px-5 rounded-xl bg-[#FF5500] hover:bg-[#E04B00] text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-[#FF5500]/25 cursor-pointer"
+                  className="py-2.5 px-5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-md shadow-blue-600/25 cursor-pointer"
                 >
                   <span>Crear Landing</span>
                   <ArrowRight size={14} />
@@ -1243,20 +1244,20 @@ export default function PinterestGalleryPage() {
       )}
 
       {/* 5. AVISO DE CÓDIGO MODULAR EN EL REPOSITORIO */}
-      <div className="bg-gradient-to-r from-stone-900 via-stone-950 to-black text-white rounded-2xl p-6 border border-stone-800 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-slate-900 via-slate-950 to-indigo-950 text-white rounded-2xl p-6 border border-slate-800 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-amber-400 text-[11px] font-bold uppercase tracking-wider">
+          <div className="flex items-center gap-2 text-sky-400 text-[11px] font-bold uppercase tracking-wider">
             <ShieldCheck size={15} />
             <span>Código Modular en src/templates/</span>
           </div>
-          <p className="text-xs text-stone-300 max-w-2xl leading-relaxed">
+          <p className="text-xs text-slate-300 max-w-2xl leading-relaxed">
             Todas las plantillas están disponibles en código modular (<code className="text-emerald-400 font-mono">AgencyPortalTemplate</code>, <code className="text-emerald-400 font-mono">BohoTemplate</code>, <code className="text-emerald-400 font-mono">AdventureTemplate</code>, <code className="text-emerald-400 font-mono">CulturalTemplate</code> y <code className="text-emerald-400 font-mono">PremiumTemplate</code>).
           </p>
         </div>
 
         <Link
           href="/demo/new"
-          className="bg-[#FF5500] hover:bg-[#E04B00] text-white px-5 py-2.5 rounded-xl font-bold text-xs transition-all shadow-md shadow-[#FF5500]/30 shrink-0 flex items-center gap-2 cursor-pointer"
+          className="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-bold text-xs transition-all shadow-md shadow-blue-600/30 shrink-0 flex items-center gap-2 cursor-pointer"
         >
           <Sparkles size={14} />
           <span>Generar Nueva Landing</span>

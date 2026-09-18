@@ -31,25 +31,25 @@ body {
 
 /* Enhanced Large & Tactile Horizontal Slider for Data Tables */
 .table-scrollbar {
-  scrollbar-width: auto;
+  scrollbar-width: thin;
   scrollbar-color: #64748b #f1f5f9;
 }
 
 .table-scrollbar::-webkit-scrollbar {
-  height: 16px; /* Agrandado y cómodo para interactuar y arrastrar */
+  height: 14px;
 }
 
 .table-scrollbar::-webkit-scrollbar-track {
   background: #f1f5f9;
   border-radius: 9999px;
   border: 1px solid #e2e8f0;
-  margin: 0 10px 8px 10px;
+  margin: 0 10px 6px 10px;
 }
 
 .table-scrollbar::-webkit-scrollbar-thumb {
   background: #64748b;
   border-radius: 9999px;
-  border: 3px solid #f1f5f9;
+  border: 2px solid #f1f5f9;
   cursor: grab;
 }
 
@@ -64,7 +64,13 @@ body {
 }
 
 .table-scrollbar::-webkit-scrollbar-button {
-  display: none; /* Elimina las flechitas cuadradas anticuadas de Windows */
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.table-scrollbar::-webkit-scrollbar-corner {
+  display: none !important;
 }
 
 /* Modern Button Shine and Dynamic Float Animations */
