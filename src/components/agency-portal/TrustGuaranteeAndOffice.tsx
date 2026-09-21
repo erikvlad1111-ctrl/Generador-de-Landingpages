@@ -261,103 +261,164 @@ export default function TrustGuaranteeAndOffice({
       </section>
 
       {/* 2. OFICINA FÍSICA Y HORARIOS EN CUSCO */}
-      <section className="py-10 sm:py-16 bg-[#1C1917] text-white rounded-3xl mx-3 sm:mx-6 p-6 sm:p-12 relative overflow-hidden shadow-2xl border border-stone-800">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-[#FF5500]/15 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+      <section className="py-12 sm:py-20 bg-[#161412] text-white rounded-[36px] mx-3 sm:mx-6 p-6 sm:p-12 relative overflow-hidden shadow-2xl border border-stone-800">
+        {/* Glow ambient background */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#FF5500]/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20" />
+        <div className="absolute bottom-0 left-0 w-[450px] h-[450px] bg-blue-600/10 rounded-full blur-3xl pointer-events-none -ml-20 -mb-20" />
 
-        <div className="relative z-10 max-w-5xl mx-auto grid md:grid-cols-12 gap-8 items-center">
-          {/* Columna Izquierda: Información */}
-          <div className="md:col-span-7 space-y-5">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-black uppercase tracking-widest border border-amber-500/30">
-              <Building2 size={13} /> {t.officeBadge}
-            </span>
-            
-            <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-              {t.officeTitle}
-            </h3>
-            
-            <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
-              {t.officeSubtitle}
-            </p>
+        <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
+          {/* Columna Izquierda: Información de Contacto y Atención */}
+          <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
+            <div className="space-y-4">
+              <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 text-amber-300 text-xs font-black uppercase tracking-widest border border-amber-500/30">
+                <Building2 size={13} className="text-amber-400" /> {t.officeBadge}
+              </span>
+              
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
+                {t.officeTitle}
+              </h3>
+              
+              <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
+                {t.officeSubtitle}
+              </p>
 
-            <div className="space-y-3.5 pt-2 text-xs">
-              <div className="flex items-start gap-3 bg-stone-900/90 p-3.5 rounded-2xl border border-stone-800">
-                <MapPin size={18} className="text-[#FF5500] shrink-0 mt-0.5" />
-                <div>
-                  <span className="font-bold text-stone-200 block text-xs">{t.addressTitle}</span>
-                  <span className="text-stone-300 text-xs">{effectiveAddress}</span>
+              <div className="space-y-3 pt-2 text-xs">
+                <div className="flex items-start gap-3.5 bg-stone-900/90 hover:bg-stone-900 p-4 rounded-2xl border border-stone-800 transition-all shadow-xs">
+                  <div className="w-9 h-9 rounded-xl bg-[#FF5500]/15 text-[#FF5500] flex items-center justify-center shrink-0 mt-0.5">
+                    <MapPin size={18} />
+                  </div>
+                  <div className="space-y-0.5">
+                    <span className="font-bold text-stone-200 block text-xs">{t.addressTitle}</span>
+                    <span className="text-stone-300 text-xs leading-relaxed block">{effectiveAddress}</span>
+                    <span className="inline-block text-[10px] text-amber-400 font-semibold pt-0.5">Centro Histórico • A 1 min de la Plaza de Armas</span>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-start gap-3 bg-stone-900/90 p-3.5 rounded-2xl border border-stone-800">
-                <Clock size={18} className="text-emerald-400 shrink-0 mt-0.5" />
-                <div>
-                  <span className="font-bold text-stone-200 block text-xs">{t.hoursTitle}</span>
-                  <span className="text-stone-300 text-xs">{effectiveHours}</span>
+                <div className="flex items-start gap-3.5 bg-stone-900/90 hover:bg-stone-900 p-4 rounded-2xl border border-stone-800 transition-all shadow-xs">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                    <Clock size={18} />
+                  </div>
+                  <div className="space-y-0.5">
+                    <span className="font-bold text-stone-200 block text-xs">{t.hoursTitle}</span>
+                    <span className="text-stone-300 text-xs block">{effectiveHours}</span>
+                    <span className="inline-block text-[10px] text-emerald-400 font-semibold pt-0.5">● Abierto hoy (Atención Continua)</span>
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex items-start gap-3 bg-stone-900/90 p-3.5 rounded-2xl border border-stone-800">
-                <Phone size={18} className="text-blue-400 shrink-0 mt-0.5" />
-                <div>
-                  <span className="font-bold text-stone-200 block text-xs">{t.directPhone}</span>
-                  <span className="text-amber-400 font-mono font-bold text-xs">{whatsapp}</span>
+                <div className="flex items-start gap-3.5 bg-stone-900/90 hover:bg-stone-900 p-4 rounded-2xl border border-stone-800 transition-all shadow-xs">
+                  <div className="w-9 h-9 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
+                    <Phone size={18} />
+                  </div>
+                  <div className="space-y-0.5">
+                    <span className="font-bold text-stone-200 block text-xs">{t.directPhone}</span>
+                    <span className="text-amber-400 font-mono font-black text-sm">{whatsapp}</span>
+                    <span className="text-[10px] text-stone-400 block pt-0.5">Recepción telefónica y WhatsApp oficial</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap gap-3 pt-2">
-              <a
-                href={effectiveMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white hover:bg-stone-100 text-stone-900 font-extrabold px-5 py-3 rounded-xl text-xs flex items-center gap-2 transition-all shadow-md cursor-pointer"
-              >
-                <Navigation size={14} className="text-[#FF5500]" />
-                {t.openMapsBtn}
-              </a>
-
-              <a
-                href={waOfficeUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-[#FF5500] hover:bg-[#e04b00] text-white font-extrabold px-5 py-3 rounded-xl text-xs flex items-center gap-2 transition-all shadow-md shadow-[#FF5500]/30 cursor-pointer"
-              >
-                <MessageCircle size={14} />
-                {t.contactDeskBtn}
-              </a>
-            </div>
-          </div>
-
-          {/* Columna Derecha: Tarjeta Estilizada de Mapa y Sello Municipal */}
-          <div className="md:col-span-5 relative">
-            <div className="bg-stone-900/90 border border-stone-700 rounded-3xl p-5 space-y-4 shadow-xl">
-              <div className="relative h-48 w-full rounded-2xl overflow-hidden border border-stone-800 bg-stone-950 shadow-inner group">
-                <iframe
-                  title="Ubicación en Google Maps"
-                  src={`https://maps.google.com/maps?q=${encodeURIComponent(effectiveAddress)}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
-                  className="w-full h-full border-0 opacity-90 group-hover:opacity-100 transition-all duration-300"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
+            {/* Action Buttons & Sello */}
+            <div className="space-y-4 pt-2">
+              <div className="flex flex-wrap gap-3">
                 <a
                   href={effectiveMapsUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="absolute bottom-2.5 right-2.5 bg-stone-900/90 hover:bg-stone-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg border border-stone-700 shadow-md backdrop-blur flex items-center gap-1 transition-all cursor-pointer"
+                  className="flex-1 min-w-[170px] bg-white hover:bg-stone-100 text-stone-900 font-black px-5 py-3.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-xl cursor-pointer active:scale-98"
                 >
-                  <Navigation size={11} className="text-[#FF5500]" />
-                  Ampliar Mapa
+                  <Navigation size={15} className="text-[#FF5500]" />
+                  {t.openMapsBtn}
+                </a>
+
+                <a
+                  href={waOfficeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 min-w-[170px] bg-[#FF5500] hover:bg-[#e04b00] text-white font-black px-5 py-3.5 rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#FF5500]/30 hover:shadow-[#FF5500]/50 cursor-pointer active:scale-98"
+                >
+                  <MessageCircle size={15} />
+                  {t.contactDeskBtn}
                 </a>
               </div>
 
-              <div className="p-3 bg-stone-950 rounded-2xl border border-stone-800 flex items-center justify-between text-[11px]">
+              <div className="p-3 bg-stone-950/80 rounded-2xl border border-stone-800 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck size={16} className="text-emerald-400" />
-                  <span className="text-stone-300 font-semibold">Licencia Municipal N° 04821</span>
+                  <ShieldCheck size={17} className="text-emerald-400 shrink-0" />
+                  <span className="text-stone-300 font-semibold text-[11px]">Licencia Municipal N° 04821 • DIRCETUR</span>
                 </div>
-                <span className="text-emerald-400 font-bold text-[10px]">VIGENTE</span>
+                <span className="text-emerald-400 font-black text-[10px] bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-800/60">
+                  VIGENTE
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Columna Derecha: Gran Mapa Interactivo Ampliado y Enmarcado */}
+          <div className="lg:col-span-7 flex flex-col">
+            <div className="bg-stone-950/90 border border-stone-800 hover:border-stone-700/80 rounded-3xl p-4 sm:p-5 flex-1 flex flex-col space-y-3.5 shadow-2xl transition-all">
+              {/* Barra Superior del Mapa */}
+              <div className="flex items-center justify-between text-xs pb-1">
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                  </span>
+                  <span className="font-bold text-white text-xs">
+                    Google Maps en Tiempo Real
+                  </span>
+                </div>
+
+                <a
+                  href={effectiveMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-stone-400 hover:text-white transition-colors text-[11px] font-semibold flex items-center gap-1 cursor-pointer"
+                >
+                  <span>Abrir en Pantalla Completa</span>
+                  <ExternalLink size={12} className="text-[#FF5500]" />
+                </a>
+              </div>
+
+              {/* Contenedor del Mapa Ampliado */}
+              <div className="relative flex-1 min-h-[380px] sm:min-h-[460px] w-full rounded-2xl overflow-hidden border border-stone-800 bg-stone-900 group shadow-inner">
+                <iframe
+                  title="Ubicación de la Agencia en Google Maps"
+                  src={`https://maps.google.com/maps?q=${encodeURIComponent(effectiveAddress)}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
+                  className="w-full h-full min-h-[380px] sm:min-h-[460px] border-0 opacity-95 group-hover:opacity-100 transition-all duration-300"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+
+                {/* Badge flotante con nombre de oficina */}
+                <div className="absolute top-3 left-3 bg-stone-950/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-stone-700/80 shadow-lg flex items-center gap-2 pointer-events-none">
+                  <div className="w-2 h-2 rounded-full bg-[#FF5500] animate-pulse" />
+                  <span className="text-white text-xs font-black">
+                    Sede Oficial en Cusco
+                  </span>
+                </div>
+
+                {/* Botón flotante 'Cómo Llegar' */}
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(effectiveAddress)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute bottom-3 right-3 bg-stone-950/90 hover:bg-black text-white text-xs font-extrabold px-3.5 py-2 rounded-xl border border-stone-700 shadow-xl backdrop-blur-md flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+                >
+                  <Navigation size={13} className="text-[#FF5500]" />
+                  <span>Cómo Llegar (Ruta)</span>
+                </a>
+              </div>
+
+              {/* Barra Inferior del Mapa */}
+              <div className="flex flex-col sm:flex-row items-center justify-between text-[11px] text-stone-400 gap-2 pt-1 px-1">
+                <span className="flex items-center gap-1.5 text-stone-300">
+                  <MapPin size={12} className="text-[#FF5500]" />
+                  {effectiveAddress}
+                </span>
+                <span className="text-[10px] text-stone-500 italic">
+                  * Puedes arrastrar y hacer zoom sobre el mapa
+                </span>
               </div>
             </div>
           </div>
