@@ -1088,7 +1088,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             sizes="100vw"
             className="object-cover object-center scale-105 animate-pulse-glow"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-black/20" />
         </div>
 
         {/* Ambient Glass Badges en Desktop */}
