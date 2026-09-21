@@ -333,19 +333,23 @@ export default function TrustGuaranteeAndOffice({
           {/* Columna Derecha: Tarjeta Estilizada de Mapa y Sello Municipal */}
           <div className="md:col-span-5 relative">
             <div className="bg-stone-900/90 border border-stone-700 rounded-3xl p-5 space-y-4 shadow-xl">
-              <div className="relative h-44 w-full rounded-2xl overflow-hidden border border-stone-800 bg-stone-950 flex items-center justify-center">
-                <div className="absolute inset-0 bg-radial from-stone-800 to-stone-950" />
-                <div className="relative z-10 text-center space-y-2 p-4">
-                  <div className="w-12 h-12 rounded-full bg-[#FF5500]/20 text-[#FF5500] flex items-center justify-center mx-auto animate-bounce">
-                    <MapPin size={24} />
-                  </div>
-                  <p className="font-extrabold text-white text-xs">
-                    Plaza de Armas de Cusco
-                  </p>
-                  <span className="text-[10px] text-stone-400 block">
-                    A sólo 2 minutos caminando de la Catedral
-                  </span>
-                </div>
+              <div className="relative h-48 w-full rounded-2xl overflow-hidden border border-stone-800 bg-stone-950 shadow-inner group">
+                <iframe
+                  title="Ubicación en Google Maps"
+                  src={`https://maps.google.com/maps?q=${encodeURIComponent(effectiveAddress)}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
+                  className="w-full h-full border-0 opacity-90 group-hover:opacity-100 transition-all duration-300"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+                <a
+                  href={effectiveMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute bottom-2.5 right-2.5 bg-stone-900/90 hover:bg-stone-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg border border-stone-700 shadow-md backdrop-blur flex items-center gap-1 transition-all cursor-pointer"
+                >
+                  <Navigation size={11} className="text-[#FF5500]" />
+                  Ampliar Mapa
+                </a>
               </div>
 
               <div className="p-3 bg-stone-950 rounded-2xl border border-stone-800 flex items-center justify-between text-[11px]">
