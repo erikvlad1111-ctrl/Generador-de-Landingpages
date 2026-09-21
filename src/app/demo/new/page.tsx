@@ -10,7 +10,7 @@ import {
   Check, Zap, Eye, CheckCircle2, MapPin,
   Shield, Award, Mountain, Users, Languages, CheckSquare, Square,
   Plus, Trash2, XCircle, Backpack, ShieldCheck, Share2, Calendar,
-  Star, ArrowRight, Camera, Crown, ChevronDown, Layers
+  Star, ArrowRight, Camera, Crown, ChevronDown, Layers, Navigation
 } from 'lucide-react';
 import { ObjectiveType, TemplateType, LanguageType, ItineraryItem, PlanTier } from '@/types/landing';
 import { simulateAiGeneration, saveLandingToStorage } from '@/data/landingStore';
@@ -1395,9 +1395,9 @@ export default function NewLandingDemo() {
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                 <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">7</span>
-                Perfil del Guía & Servicios Incluidos
+                Perfil del Guía, Oficina Física & Servicios
               </label>
-              <span className="text-[11px] font-semibold text-slate-400">Genera confianza y credibilidad</span>
+              <span className="text-[11px] font-semibold text-slate-400">Confianza, WhatsApp y Ubicación en Maps</span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1901,6 +1901,23 @@ export default function NewLandingDemo() {
                         <h4 className="text-[11px] font-black text-white truncate">{name || 'Machu Picchu VIP'}</h4>
                         <p className="text-[9px] text-stone-400">{duration || 'Full Day'} • {destination || 'Cusco'}</p>
                         <span className="text-xs font-black text-[#FF5500]">{price || '$380 USD'}</span>
+                      </div>
+                    </div>
+
+                    {/* Mini Oficina Física & Google Maps Card */}
+                    <div className="p-2.5 bg-stone-900/95 rounded-xl border border-stone-800 space-y-1 text-[9px]">
+                      <div className="flex items-center gap-1.5 text-amber-400 font-bold">
+                        <MapPin size={11} className="text-[#FF5500] shrink-0" />
+                        <span>Oficina Física en Cusco:</span>
+                      </div>
+                      <p className="text-stone-300 line-clamp-1 text-[8px] pl-4">
+                        {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
+                      </p>
+                      <div className="flex items-center justify-between pt-1 pl-4 text-[8px]">
+                        <span className="text-emerald-400 font-semibold">{officeHours || 'Lun-Dom: 8am - 8pm'}</span>
+                        <span className="text-blue-400 font-bold flex items-center gap-0.5">
+                          <Navigation size={8} /> Maps Conectado
+                        </span>
                       </div>
                     </div>
 

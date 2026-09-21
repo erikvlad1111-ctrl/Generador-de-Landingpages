@@ -103,7 +103,10 @@ export const INITIAL_LANDINGS: LandingData[] = [
         comment: 'Organización impecable de principio a fin. El equipo siempre atento con el oxígeno y los boletos puntuales. ¡Machu Picchu superó todas nuestras expectativas!',
         rating: 5
       }
-    ]
+    ],
+    officeAddress: 'Portal de Panes N° 123, Plaza de Armas, Centro Histórico, Cusco - Perú',
+    officeHours: 'Lunes a Domingo: 08:00 AM – 08:00 PM (Horario Corrido)',
+    mapsUrl: 'https://maps.google.com/?q=Plaza+de+Armas+Cusco+Peru'
   },
   {
     id: '2',
