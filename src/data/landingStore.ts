@@ -4,7 +4,7 @@ export type { LandingData };
 export const INITIAL_LANDINGS: LandingData[] = [
   {
     id: '1',
-    name: 'Machu Picchu VIP',
+    name: 'Machu Picchu VIP (Diseño 1)',
     slug: 'machu-picchu-vip',
     tier: 'advance',
     guideName: 'Carlos Mendoza',
@@ -562,7 +562,7 @@ export function simulateAiGeneration(params: {
 
   let heroTitle = `${params.name}: La Experiencia Definitiva en Cusco`;
   let heroSubtitle = params.description || 'Vive una aventura inolvidable con guías expertos locales y atención de primer nivel.';
-  let heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : (params.template === 'agency-portal' ? 'Portal Oficial de Agencia' : params.template === 'premium' ? 'Experiencia Exclusiva VIP' : params.template === 'cultural' ? 'Historia y Cultura Andina' : 'Aventura y Naturaleza');
+  let heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : (params.template === 'agency-portal' ? 'Diseño 1 • Portal Oficial' : params.template === 'premium' ? 'Experiencia Exclusiva VIP' : params.template === 'cultural' ? 'Historia y Cultura Andina' : 'Aventura y Naturaleza');
   let ctaText = isBoth 
     ? 'WhatsApp & Cotizar Online' 
     : (isWhatsapp ? 'Reservar Directo por WhatsApp' : 'Solicitar Cotización y Disponibilidad');

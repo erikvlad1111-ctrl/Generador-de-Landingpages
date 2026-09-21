@@ -358,7 +358,7 @@ export default function DemoDashboard() {
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex items-center gap-3 min-w-0">
                             <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 font-bold text-lg border border-blue-100 shadow-xs">
-                              {p.template === 'adventure' ? '🏔️' : p.template === 'premium' ? '✨' : p.template === 'boho-nature' ? '📷' : '🏛️'}
+                              {p.template === 'agency-portal' ? '🔥' : p.template === 'adventure' ? '🏔️' : p.template === 'premium' ? '✨' : p.template === 'boho-nature' ? '📷' : '🏛️'}
                             </div>
                             <div className="min-w-0">
                               <div className="flex items-center gap-1.5 flex-wrap">
@@ -373,7 +373,9 @@ export default function DemoDashboard() {
                                 }`}>
                                   {p.tier || 'advance'}
                                 </span>
-                                <span className="text-[11px] text-slate-400 capitalize font-medium">{p.template}</span>
+                                <span className={`text-[11px] font-bold ${p.template === 'agency-portal' ? 'text-[#FF5500]' : 'text-slate-500 capitalize'}`}>
+                                  {p.template === 'agency-portal' ? 'Diseño 1' : p.template}
+                                </span>
                               </div>
                               <Link 
                                 href={`/demo/preview?slug=${p.slug}`}
@@ -524,7 +526,7 @@ export default function DemoDashboard() {
                           <td className="px-5 py-3.5">
                             <div className="flex items-center gap-3">
                               <div className="w-9 h-9 rounded-xl bg-slate-100/90 group-hover:bg-blue-50 text-slate-700 group-hover:text-blue-600 flex items-center justify-center shrink-0 text-base border border-slate-200/70 group-hover:border-blue-200 transition-colors shadow-2xs">
-                                {p.template === 'adventure' ? '🏔️' : p.template === 'premium' ? '✨' : p.template === 'boho-nature' ? '📷' : '🏛️'}
+                                {p.template === 'agency-portal' ? '🔥' : p.template === 'adventure' ? '🏔️' : p.template === 'premium' ? '✨' : p.template === 'boho-nature' ? '📷' : '🏛️'}
                               </div>
                               <div className="min-w-0">
                                 <div className="flex items-center gap-2 flex-wrap">
@@ -557,8 +559,12 @@ export default function DemoDashboard() {
 
                           {/* Template */}
                           <td className="px-4 py-3.5 hidden md:table-cell whitespace-nowrap">
-                            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold capitalize bg-slate-100 text-slate-600 border border-slate-200/60">
-                              {p.template}
+                            <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold ${
+                              p.template === 'agency-portal' 
+                                ? 'bg-orange-50 text-[#FF5500] border border-orange-200 font-bold' 
+                                : 'capitalize bg-slate-100 text-slate-600 border border-slate-200/60'
+                            }`}>
+                              {p.template === 'agency-portal' ? 'Diseño 1' : p.template}
                             </span>
                           </td>
 

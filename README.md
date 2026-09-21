@@ -9,7 +9,7 @@ Plataforma especializada en la creación ultra-rápida de landing pages de alta 
 
 ## 🚀 Los 10 Puntos Clave del Generador Integrados
 
-1. **Plantilla Visual:** 5 estilos disponibles (Portal Agencia Pinterest #1, Boho Travel Journal, Lujo VIP, Aventura & Trekking, Cultural & Ancestral).
+1. **Plantilla Visual:** 5 estilos disponibles (Diseño 1 - Portal Agencia, Boho Travel Journal, Lujo VIP, Aventura & Trekking, Cultural & Ancestral).
 2. **Fotografía de Portada (Hero):** Selección fotográfica en alta resolución, insignias flotantes y llamadas a la acción directas.
 3. **Nivel de Servicio (Tiers):** Planes *Free*, *Basic*, *Pro* y *Advance* con renderizado dinámico según el perfil del cliente.
 4. **Selector Multi-Idioma Dinámico (5 Idiomas):**

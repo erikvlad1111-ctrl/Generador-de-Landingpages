@@ -410,6 +410,7 @@ function DemoPreviewContent() {
                     onChange={(e) => setEditTemplate(e.target.value as TemplateType)}
                     className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white font-medium focus:ring-2 focus:ring-blue-500 outline-none"
                   >
+                    <option value="agency-portal">🔥 Diseño 1 (Portal Oficial de Agencia)</option>
                     <option value="adventure">Aventura (Trekking y Naturaleza)</option>
                     <option value="premium">Premium / Lujo (Exclusivo VIP)</option>
                     <option value="cultural">Cultural Clásico (Historia e Incas)</option>

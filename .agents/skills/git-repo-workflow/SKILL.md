@@ -28,7 +28,7 @@ Cada vez que se realicen cambios solicitados por el usuario:
    ```
 
 ## Estructura de Plantillas Guardadas
-- **AgencyPortalTemplate:** `src/templates/AgencyPortalTemplate.tsx` (Diseño #1 de alta conversión con hero Vinicunca, acentos naranja, barra de métricas y sellos DIRCETUR).
+- **AgencyPortalTemplate:** `src/templates/AgencyPortalTemplate.tsx` (Diseño 1 de alta conversión con hero Vinicunca, acentos naranja, barra de métricas y sellos DIRCETUR).
 - **AdventureTemplate:** `src/templates/AdventureTemplate.tsx`
 - **PremiumTemplate:** `src/templates/PremiumTemplate.tsx`
 - **CulturalTemplate:** `src/templates/CulturalTemplate.tsx`

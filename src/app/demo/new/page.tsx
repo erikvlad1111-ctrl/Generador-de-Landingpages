@@ -29,8 +29,8 @@ const AVAILABLE_TRUST_BADGES = [
 const PRESET_TOURS = [
   {
     id: 'peru-portal-agency',
-    label: '🔥 Portal Agencia (Pinterest #1)',
-    name: 'Portal Oficial de Agencia de Viajes Perú',
+    label: '🔥 Diseño 1 (Portal Agencia)',
+    name: 'Diseño 1 - Portal Oficial de Agencia de Viajes Perú',
     destination: 'Cusco, Machu Picchu & Rutas del Perú',
     guideName: 'Carlos Mendoza',
     guideCert: 'Licenciado DIRCETUR & Operador Autorizado',
@@ -730,10 +730,10 @@ export default function NewLandingDemo() {
               {[
                 { 
                   id: 'agency-portal', 
-                  name: 'Portal Agencia (Pinterest #1)', 
+                  name: 'Diseño 1', 
                   desc: 'Naranja viral, métricas +10k, catálogo de tours, FAQ y WhatsApp con radar.', 
                   icon: '🔥',
-                  badge: 'Viral Pinterest #1',
+                  badge: 'Diseño 1',
                   badgeClass: 'bg-[#FF5500] text-white'
                 },
                 { 
@@ -1741,7 +1741,7 @@ export default function NewLandingDemo() {
                 : 'bg-slate-950 text-white border-emerald-500/30'
             }`}>
 
-              {/* 1. PLANTILLA PINTEREST #1: PORTAL AGENCIA (VINICUNCA ORANGE) */}
+              {/* 1. PLANTILLA DISEÑO 1: PORTAL AGENCIA (VINICUNCA ORANGE) */}
               {template === 'agency-portal' && (
                 <div className="flex flex-col min-h-full">
                   {/* Hero with Photo */}

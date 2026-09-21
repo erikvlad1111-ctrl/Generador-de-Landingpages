@@ -88,8 +88,8 @@ export interface LandingDesign {
 const AVAILABLE_DESIGNS: LandingDesign[] = [
   {
     id: 'peru-portal-agency',
-    name: '1. Portal Oficial de Agencia Perú (Vinicunca Orange)',
-    subtitle: 'El diseño viral #1: Alta conversión con acentos naranja, métricas de confianza, FAQ y sellos DIRCETUR',
+    name: 'Diseño 1',
+    subtitle: 'Portal Oficial de Agencia Perú (Vinicunca Orange): Alta conversión con acentos naranja, métricas de confianza, FAQ y sellos DIRCETUR',
     category: 'Alta Conversión & Portal Oficial',
     template: 'agency-portal',
     recommendedTier: 'advance',
@@ -103,7 +103,7 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
       'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop'
     ],
-    tags: ['Hero Vinicunca', 'Botones Naranjas', 'Sellos DIRCETUR', 'Alta Conversión'],
+    tags: ['Diseño 1', 'Hero Vinicunca', 'Botones Naranjas', 'Alta Conversión'],
     targetAudience: 'Agencias turísticas formales, operadores receptivos y agencias que invierten en pauta de Facebook, Instagram o Google Ads.',
     conversionImpact: '+42% en contactos calificados y reservas multidía',
     benefits: [
@@ -762,7 +762,7 @@ export default function PinterestGalleryPage() {
                         </span>
                         {isFirstOption && (
                           <span className="bg-blue-600 text-white text-[10px] font-black px-2 py-1 rounded-full flex items-center gap-1 shadow-xs">
-                            <Crown size={11} /> Top #1
+                            <Crown size={11} /> Diseño 1
                           </span>
                         )}
                       </div>
