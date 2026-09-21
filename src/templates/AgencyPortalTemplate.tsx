@@ -34,7 +34,6 @@ import { LandingData, PlanTier, ObjectiveType, LanguageType } from '@/types/land
 import PinterestPinboard from '@/components/common/PinterestPinboard';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import QuoteModal from '@/components/common/QuoteModal';
-import AltitudeAndClimateSection from '@/components/agency-portal/AltitudeAndClimateSection';
 import SustainabilityAndSocialProof from '@/components/agency-portal/SustainabilityAndSocialProof';
 import TrustGuaranteeAndOffice from '@/components/agency-portal/TrustGuaranteeAndOffice';
 import { translateText, translateItineraryItem } from '@/data/translations';
@@ -1598,10 +1597,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </section>
       )}
 
-      {/* 6.2 PERFIL DE ALTITUD, CLIMA Y PROTOCOLO SOROCHE (INFORMACIÓN PRÁCTICA ANDINA) */}
-      {!isFree && (
-        <AltitudeAndClimateSection lang={lang} isMobile={isMobile} />
-      )}
+
 
       {/* 7. ¿POR QUÉ ELEGIRNOS? & PROTOCOLO DE ALTURA & DISTINTIVOS (PUNTO 10 DEL GENERADOR) */}
       <section id="por-que-nosotros" className="py-10 sm:py-24 bg-[#F9F7F4] border-y border-stone-200">
