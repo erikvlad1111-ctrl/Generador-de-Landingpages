@@ -224,14 +224,14 @@ export default function SustainabilityAndSocialProof({
 
   const t = content[lang] || content.es;
 
-  // Real traveler photo mock feed with realistic Unsplash travel shots of Peru
+  // Real traveler photo feed with authentic tourists enjoying tours in Peru
   const travelerFeed = [
     {
       user: '@sarah.anderson_travel',
       country: '🇺🇸 EE.UU.',
       tour: 'Machu Picchu VIP & Huayna Picchu',
       timeAgo: 'Hace 2 días',
-      image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=1000&auto=format&fit=crop',
+      image: '/images/travelers/traveler-machu-picchu.jpg',
       comment: '¡Un amanecer mágico sin multitudes! Carlos fue el mejor guía que pudimos tener.'
     },
     {
@@ -239,7 +239,7 @@ export default function SustainabilityAndSocialProof({
       country: '🇮🇹 Italia',
       tour: 'Laguna Humantay Turquesa',
       timeAgo: 'Hace 3 días',
-      image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=1000&auto=format&fit=crop',
+      image: '/images/travelers/traveler-humantay.jpg',
       comment: 'El color del agua es irreal. Nos dieron bastones de trekking y té de coca calientito.'
     },
     {
@@ -247,15 +247,15 @@ export default function SustainabilityAndSocialProof({
       country: '🇧🇷 Brasil',
       tour: 'Montaña 7 Colores Vinicunca',
       timeAgo: 'Esta semana',
-      image: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=1000&auto=format&fit=crop',
+      image: '/images/travelers/traveler-vinicunca.jpg',
       comment: 'Subimos a 5,036 metros y el oxígeno que llevaban en la van nos dio total tranquilidad.'
     },
     {
       user: '@julien_voyage_paris',
       country: '🇫🇷 Francia',
-      tour: 'Valle Sagrado & Salineras de Maras',
+      tour: 'Valle Sagrado & Ollantaytambo',
       timeAgo: 'Esta semana',
-      image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1000&auto=format&fit=crop',
+      image: '/images/travelers/traveler-sacred-valley.jpg',
       comment: 'Excelente organización y transporte privado de primera clase con aire acondicionado.'
     }
   ];

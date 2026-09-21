@@ -26,7 +26,7 @@ export const SAMPLE_TOUR_IMAGES: GalleryImage[] = [
   },
   {
     id: 'img-rainbow',
-    url: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop',
+    url: '/images/travelers/traveler-vinicunca.jpg',
     title: 'Montaña de Siete Colores (Vinicunca)',
     category: 'trekking'
   },

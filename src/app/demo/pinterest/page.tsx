@@ -97,7 +97,7 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
     demoSlug: 'machu-picchu-vip',
     isFeatured: true,
     likesCount: 3840,
-    previewImage: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop',
+    previewImage: '/images/travelers/traveler-machu-picchu.jpg',
     gridSampleImages: [
       'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=2070&auto=format&fit=crop',
