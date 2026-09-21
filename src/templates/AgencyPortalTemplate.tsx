@@ -34,6 +34,9 @@ import { LandingData, PlanTier, ObjectiveType, LanguageType } from '@/types/land
 import PinterestPinboard from '@/components/common/PinterestPinboard';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import QuoteModal from '@/components/common/QuoteModal';
+import AltitudeAndClimateSection from '@/components/agency-portal/AltitudeAndClimateSection';
+import SustainabilityAndSocialProof from '@/components/agency-portal/SustainabilityAndSocialProof';
+import TrustGuaranteeAndOffice from '@/components/agency-portal/TrustGuaranteeAndOffice';
 import { translateText, translateItineraryItem } from '@/data/translations';
 
 interface AgencyPortalTemplateProps {
@@ -1595,6 +1598,11 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </section>
       )}
 
+      {/* 6.2 PERFIL DE ALTITUD, CLIMA Y PROTOCOLO SOROCHE (INFORMACIÓN PRÁCTICA ANDINA) */}
+      {!isFree && (
+        <AltitudeAndClimateSection lang={lang} isMobile={isMobile} />
+      )}
+
       {/* 7. ¿POR QUÉ ELEGIRNOS? & PROTOCOLO DE ALTURA & DISTINTIVOS (PUNTO 10 DEL GENERADOR) */}
       <section id="por-que-nosotros" className="py-10 sm:py-24 bg-[#F9F7F4] border-y border-stone-200">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 space-y-8 sm:space-y-16">
@@ -1807,6 +1815,11 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </section>
       )}
 
+      {/* 9.5 TURISMO SOSTENIBLE, INSIGNIAS DE REPUTACIÓN Y FEED EN VIVO #CUSCOTRAVELERS */}
+      {!isFree && (
+        <SustainabilityAndSocialProof lang={lang} brandName={brandName} isMobile={isMobile} />
+      )}
+
       {/* 10. FORO DE SOPORTE & FAQ */}
       {!isFree && (
         <TourSupportAndFaqs
@@ -1819,6 +1832,16 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           theme="agency-portal"
           isMobile={isMobile}
           lang={lang}
+        />
+      )}
+
+      {/* 10.5 GARANTÍA DE FLEXIBILIDAD Y OFICINA FÍSICA EN CUSCO */}
+      {!isFree && (
+        <TrustGuaranteeAndOffice 
+          lang={lang} 
+          whatsapp={whatsappNumber} 
+          brandName={brandName} 
+          isMobile={isMobile} 
         />
       )}
 
