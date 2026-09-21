@@ -1842,6 +1842,9 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           whatsapp={whatsappNumber} 
           brandName={brandName} 
           isMobile={isMobile} 
+          officeAddress={data?.officeAddress}
+          officeHours={data?.officeHours}
+          mapsUrl={data?.mapsUrl}
         />
       )}
 

@@ -544,6 +544,9 @@ export function simulateAiGeneration(params: {
   trustBadges?: string[];
   aiTone?: string;
   guideAvatar?: string;
+  officeAddress?: string;
+  officeHours?: string;
+  mapsUrl?: string;
 }): LandingData {
   const slug = params.name
     .toLowerCase()
@@ -746,6 +749,9 @@ export function simulateAiGeneration(params: {
       'Balón de Oxígeno & Botiquín'
     ],
     faqs,
-    testimonials
+    testimonials,
+    officeAddress: params.officeAddress,
+    officeHours: params.officeHours,
+    mapsUrl: params.mapsUrl
   };
 }

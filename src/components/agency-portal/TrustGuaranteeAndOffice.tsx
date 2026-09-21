@@ -22,13 +22,19 @@ interface TrustGuaranteeAndOfficeProps {
   whatsapp?: string;
   brandName?: string;
   isMobile?: boolean;
+  officeAddress?: string;
+  officeHours?: string;
+  mapsUrl?: string;
 }
 
 export default function TrustGuaranteeAndOffice({
   lang = 'es',
   whatsapp = '+51984123456',
   brandName = 'Cusco Tours Oficial',
-  isMobile = false
+  isMobile = false,
+  officeAddress,
+  officeHours,
+  mapsUrl
 }: TrustGuaranteeAndOfficeProps) {
   const cleanPhone = whatsapp.replace(/[^0-9]/g, '');
 
@@ -58,7 +64,7 @@ export default function TrustGuaranteeAndOffice({
       officeTitle: 'Nuestra Oficina Física en el Centro Histórico',
       officeSubtitle: 'Visítanos en persona para coordinar los detalles de tu tour, recoger tu kit de viajero o probar una degustación de café cusqueño.',
       addressTitle: 'Dirección Principal:',
-      addressValue: 'Portal de Panes N° 123 (Plaza de Armas) & Av. El Sol N° 456, Centro Histórico, Cusco - Perú',
+      addressValue: 'Portal de Panes N° 123, Plaza de Armas, Centro Histórico, Cusco - Perú',
       hoursTitle: 'Horarios de Atención:',
       hoursValue: 'Lunes a Domingo: 08:00 AM – 08:00 PM (Horario Corrido)',
       directPhone: 'Central de Reservas & Recepción:',
@@ -196,7 +202,10 @@ export default function TrustGuaranteeAndOffice({
   };
 
   const t = content[lang] || content.es;
-  const mapsUrl = 'https://maps.google.com/?q=Plaza+de+Armas+Cusco+Peru';
+  const effectiveAddress = officeAddress || t.addressValue;
+  const effectiveHours = officeHours || t.hoursValue;
+  const effectiveMapsUrl = mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(effectiveAddress)}`;
+  
   const waOfficeUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(
     lang === 'en'
       ? `Hello ${brandName}, I would like to visit your office in Cusco to coordinate my tour booking.`
@@ -276,7 +285,7 @@ export default function TrustGuaranteeAndOffice({
                 <MapPin size={18} className="text-[#FF5500] shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-stone-200 block text-xs">{t.addressTitle}</span>
-                  <span className="text-stone-300 text-xs">{t.addressValue}</span>
+                  <span className="text-stone-300 text-xs">{effectiveAddress}</span>
                 </div>
               </div>
 
@@ -284,7 +293,7 @@ export default function TrustGuaranteeAndOffice({
                 <Clock size={18} className="text-emerald-400 shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-stone-200 block text-xs">{t.hoursTitle}</span>
-                  <span className="text-stone-300 text-xs">{t.hoursValue}</span>
+                  <span className="text-stone-300 text-xs">{effectiveHours}</span>
                 </div>
               </div>
 
@@ -300,7 +309,7 @@ export default function TrustGuaranteeAndOffice({
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-3 pt-2">
               <a
-                href={mapsUrl}
+                href={effectiveMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white hover:bg-stone-100 text-stone-900 font-extrabold px-5 py-3 rounded-xl text-xs flex items-center gap-2 transition-all shadow-md cursor-pointer"

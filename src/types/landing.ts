@@ -69,4 +69,7 @@ export interface LandingData {
   trustBadges?: string[];
   faqs?: FAQItem[];
   testimonials?: TestimonialItem[];
+  officeAddress?: string;
+  officeHours?: string;
+  mapsUrl?: string;
 }

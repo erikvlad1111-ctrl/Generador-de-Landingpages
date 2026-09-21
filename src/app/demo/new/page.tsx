@@ -441,6 +441,9 @@ export default function NewLandingDemo() {
   const [whatToBring, setWhatToBring] = useState<string[]>(PRESET_TOURS[0].whatToBring || []);
   const [newWhatToBring, setNewWhatToBring] = useState('');
   const [trustBadges, setTrustBadges] = useState<string[]>(PRESET_TOURS[0].trustBadges || []);
+  const [officeAddress, setOfficeAddress] = useState<string>('Portal de Panes N° 123, Plaza de Armas, Centro Histórico, Cusco - Perú');
+  const [officeHours, setOfficeHours] = useState<string>('Lunes a Domingo: 08:00 AM – 08:00 PM (Horario Corrido)');
+  const [mapsUrl, setMapsUrl] = useState<string>('');
   const [aiTone, setAiTone] = useState<string>('aventurero');
   const [tier, setTier] = useState<PlanTier>('pro');
 
@@ -622,6 +625,9 @@ export default function NewLandingDemo() {
           notIncluded,
           whatToBring,
           trustBadges,
+          officeAddress,
+          officeHours,
+          mapsUrl,
           aiTone
         });
         saveLandingToStorage(generated);
@@ -1480,6 +1486,58 @@ export default function NewLandingDemo() {
                     </button>
                   );
                 })}
+              </div>
+            </div>
+
+            {/* Ubicación de Oficina Física & Google Maps (Opcional) */}
+            <div className="pt-4 border-t border-slate-100 space-y-3">
+              <div className="flex items-center gap-2">
+                <MapPin size={16} className="text-[#FF5500]" />
+                <label className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+                  Oficina Física en Cusco & Enlace de Google Maps (Opcional):
+                </label>
+              </div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                    Dirección Física:
+                  </label>
+                  <input 
+                    type="text" 
+                    value={officeAddress}
+                    onChange={(e) => setOfficeAddress(e.target.value)}
+                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                    placeholder="Ej. Portal de Panes N° 123, Plaza de Armas, Cusco"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-600 mb-1">
+                    Horario de Atención:
+                  </label>
+                  <input 
+                    type="text" 
+                    value={officeHours}
+                    onChange={(e) => setOfficeHours(e.target.value)}
+                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                    placeholder="Ej. Lunes a Domingo: 08:00 AM – 08:00 PM"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-semibold text-slate-600 mb-1 flex items-center justify-between">
+                  <span>Enlace de Google Maps (Opcional):</span>
+                  <span className="text-[10px] text-slate-400 font-normal">Si se deja vacío, se buscará automáticamente por tu dirección</span>
+                </label>
+                <input 
+                  type="url" 
+                  value={mapsUrl}
+                  onChange={(e) => setMapsUrl(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. https://maps.app.goo.gl/... o https://maps.google.com/?q=..."
+                />
               </div>
             </div>
           </div>
