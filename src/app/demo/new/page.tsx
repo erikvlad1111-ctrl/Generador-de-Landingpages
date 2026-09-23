@@ -10,11 +10,9 @@ import {
   Check, Zap, Eye, CheckCircle2, MapPin,
   Shield, Award, Mountain, Users, Languages, CheckSquare, Square,
   Plus, Trash2, XCircle, Backpack, ShieldCheck, Share2, Calendar,
-  Star, ArrowRight, Camera, Crown, ChevronDown, Layers, Navigation,
-  Maximize2, Smartphone, Monitor, Tablet, X, RefreshCw
+  Star, ArrowRight, Camera, Crown, ChevronDown, Layers, Navigation
 } from 'lucide-react';
 import { ObjectiveType, TemplateType, LanguageType, ItineraryItem, PlanTier, LandingData } from '@/types/landing';
-import TemplateRenderer from '@/templates/TemplateRenderer';
 import { simulateAiGeneration, saveLandingToStorage } from '@/data/landingStore';
 import { SAMPLE_TOUR_IMAGES } from '@/data/sampleImages';
 
@@ -448,8 +446,6 @@ export default function NewLandingDemo() {
   const [mapsUrl, setMapsUrl] = useState<string>('');
   const [aiTone, setAiTone] = useState<string>('aventurero');
   const [tier, setTier] = useState<PlanTier>('advance');
-  const [isModalPreviewOpen, setIsModalPreviewOpen] = useState(false);
-  const [modalViewMode, setModalViewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -1764,7 +1760,7 @@ export default function NewLandingDemo() {
         </form>
 
         {/* Realtime Live Preview Column (Sticky on Desktop) */}
-        <div className="lg:col-span-5 sticky top-6 space-y-3.5">
+        <div className="lg:col-span-5 sticky top-6 space-y-4">
           
           {/* Preview Bar Header */}
           <div className="flex items-center justify-between px-1">
@@ -1778,7 +1774,7 @@ export default function NewLandingDemo() {
               </span>
             </div>
 
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <span className={`text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full border ${
                 tier === 'advance'
                   ? 'bg-purple-50 text-purple-700 border-purple-200'
@@ -1790,16 +1786,10 @@ export default function NewLandingDemo() {
               }`}>
                 Plan {tier}
               </span>
-              
-              <button
-                type="button"
-                onClick={() => setIsModalPreviewOpen(true)}
-                className="bg-white hover:bg-slate-100 border border-slate-300 text-slate-700 px-2.5 py-1 rounded-xl text-[11px] font-bold shadow-xs flex items-center gap-1 active:scale-95 transition-all cursor-pointer"
-                title="Expandir a pantalla completa"
-              >
-                <Maximize2 size={12} className="text-blue-600" />
-                <span className="hidden sm:inline">Expandir</span>
-              </button>
+              <span className="text-[10px] bg-blue-50 text-blue-700 font-extrabold px-2.5 py-0.5 rounded-full border border-blue-200 flex items-center gap-1">
+                <Globe size={11} />
+                {selectedLanguages.map(l => l.toUpperCase()).join(' + ')}
+              </span>
             </div>
           </div>
 
@@ -1835,290 +1825,378 @@ export default function NewLandingDemo() {
             ))}
           </div>
 
-          {/* Smartphone Mockup with Real Interactive TemplateRenderer */}
-          <div className="bg-slate-950 rounded-[46px] p-2.5 sm:p-3 shadow-2xl border-4 border-slate-700/80 ring-1 ring-slate-800 max-w-[350px] sm:max-w-[370px] mx-auto relative group">
+          {/* Smartphone Mockup */}
+          <div className="bg-slate-950 rounded-[42px] p-3 shadow-2xl border-4 border-slate-800 ring-1 ring-slate-900 max-w-sm mx-auto">
+            {/* Dynamic Island / Notch */}
+            <div className="w-24 h-4 bg-slate-900 rounded-full mx-auto mb-2" />
             
-            {/* Dynamic Island / Notch with status indicator */}
-            <div className="w-28 h-4.5 bg-black rounded-full mx-auto mb-2 flex items-center justify-between px-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-slate-800" />
-              <div className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-slate-900 border border-slate-800" />
-                <span className="w-1 h-1 rounded-full bg-emerald-500/80" />
-              </div>
-            </div>
+            {/* Dynamic Screen View tailored to the chosen Template */}
+            <div className={`rounded-[32px] overflow-hidden relative min-h-[580px] max-h-[620px] overflow-y-auto no-scrollbar border flex flex-col justify-between select-none ${
+              template === 'agency-portal'
+                ? 'bg-stone-900 text-white border-orange-500/30'
+                : template === 'boho-nature'
+                ? 'bg-[#FAF7F2] text-stone-900 border-[#C86D51]/30'
+                : template === 'premium'
+                ? 'bg-[#0C0A09] text-white border-amber-500/30'
+                : template === 'cultural'
+                ? 'bg-[#1C1917] text-white border-amber-600/30'
+                : 'bg-slate-950 text-white border-emerald-500/30'
+            }`}>
 
-            {/* Smartphone Live Viewport Screen */}
-            <div className="rounded-[34px] overflow-hidden relative h-[620px] sm:h-[650px] overflow-y-auto no-scrollbar scroll-smooth border border-black/40 transform-gpu select-none bg-stone-900">
-              <TemplateRenderer 
-                data={{
-                  id: 'preview-landing-id',
-                  name: name || (
-                    template === 'boho-nature' 
-                      ? 'Laguna Humantay & Domos de Soraypampa — Bitácora Andina'
-                      : template === 'agency-portal'
-                      ? 'Portal Oficial de Agencia de Viajes Perú'
-                      : template === 'premium'
-                      ? 'Machu Picchu Hiram Bingham VIP'
-                      : template === 'adventure'
-                      ? 'Tour Salkantay Trek Clásico'
-                      : 'City Tour Ancestral & Leyendas Incas'
-                  ),
-                  slug: 'preview-slug',
-                  tier: tier,
-                  guideName: guideName || 'Camila Valdivia',
-                  guideAvatar: '',
-                  guideCert: guideCert || 'Guía Colegiada DIRCETUR',
-                  guideLanguages: guideLanguages || 'Español, Inglés',
-                  destination: destination || 'Cusco, Perú',
-                  altitude: altitude || (template === 'boho-nature' ? '4,200 msnm' : '3,400 msnm'),
-                  groupType: groupType || 'Grupos Reducidos',
-                  targetAudience: targetAudience || 'Viajeros',
-                  includedServices: includedServices.length > 0 ? includedServices : [
-                    'Transporte turístico privado ida y vuelta',
-                    'Guía oficial colegiado bilingüe DIRCETUR',
-                    'Desayuno y almuerzo buffet campestre',
-                    'Botiquín de primeros auxilios y balón de oxígeno'
-                  ],
-                  aiTone: aiTone,
-                  whatsapp: whatsapp || '+51984123456',
-                  price: price || (
-                    template === 'boho-nature' 
-                      ? 'S/ 160' 
-                      : template === 'agency-portal'
-                      ? '$380 USD'
-                      : template === 'premium'
-                      ? '$890 USD'
-                      : template === 'adventure'
-                      ? '$350 USD'
-                      : 'S/ 85 PEN'
-                  ),
-                  duration: duration || 'Full Day',
-                  difficulty: difficulty || 'Moderada',
-                  objective: objective,
-                  template: template,
-                  language: language,
-                  languages: selectedLanguages,
-                  status: 'draft',
-                  date: new Date().toISOString(),
-                  views: '1',
-                  heroImage: customImageUrl.trim() || selectedHeroImage,
-                  galleryImages: [
-                    customImageUrl.trim() || selectedHeroImage,
-                    SAMPLE_TOUR_IMAGES[0]?.url,
-                    SAMPLE_TOUR_IMAGES[1]?.url,
-                    SAMPLE_TOUR_IMAGES[2]?.url
-                  ].filter(Boolean),
-                  hero: {
-                    badge: template === 'boho-nature' 
-                      ? (tier === 'free' ? 'Edición Travel Journal • Acceso Rápido' : 'Edición Travel Journal • Pinterest Style')
-                      : template === 'agency-portal'
-                      ? 'DIRCETUR Oficial • Diseño 1'
-                      : template === 'premium'
-                      ? 'Servicio Privado Exclusivo VIP'
-                      : 'Experiencia Oficial Certificada',
-                    title: name || (
-                      template === 'boho-nature' 
-                        ? 'Laguna Humantay & Domos de Soraypampa' 
-                        : template === 'agency-portal'
-                        ? 'Portal Oficial de Agencia de Viajes Perú'
-                        : 'Tour Exclusivo en Cusco'
-                    ),
-                    subtitle: description || 'Una experiencia curada para viajeros que aprecian los detalles, la fotografía y la autenticidad de los Andes peruanos.',
-                    cta: objective === 'quote' ? 'Cotizar Experiencia' : 'Reservar por WhatsApp'
-                  },
-                  about: {
-                    title: 'Una experiencia curada para conectar con el paisaje andino',
-                    content: description || 'Diseñada para quienes buscan desconectar de las prisas y conectar con la majestuosidad de las montañas andinas con paradas estratégicas en los mejores miradores.'
-                  },
-                  features: {
-                    title: '¿Qué incluye la experiencia?',
-                    items: includedServices.length > 0 ? includedServices : [
-                      'Guía oficial colegiado bilingüe',
-                      'Transporte turístico ida y vuelta desde tu hotel',
-                      'Desayuno y refrigerio andino campestre',
-                      'Botiquín de primeros auxilios y balón de oxígeno medicinal'
-                    ]
-                  },
-                  itinerary: itinerary.length > 0 ? itinerary : [
-                    { step: '04:30 AM', title: 'Partida desde tu hotel en Cusco', desc: 'Recojo en transporte turístico con vistas panorámicas del amanecer andino.' },
-                    { step: '07:30 AM', title: 'Desayuno Campestre Orgánico en Domos', desc: 'Parada en Mollepata con panes frescos de leña y café de altura.' },
-                    { step: '09:30 AM', title: 'Inicio de Caminata con Guía Fotógrafo', desc: 'Ascenso a ritmo suave con bastones de trekking y pausas de aclimatación.' },
-                    { step: '12:30 PM', title: 'Llegada y Sesión Fotográfica', desc: 'Tiempo frente al espejo turquesa con fotos Polaroid y refrigerio andino.' }
-                  ],
-                  notIncluded: notIncluded.length > 0 ? notIncluded : [
-                    'Entradas comunales o boleto turístico',
-                    'Caballos de auxilio (opcional en el punto)',
-                    'Snacks personales o bebidas adicionales'
-                  ],
-                  whatToBring: whatToBring.length > 0 ? whatToBring : [
-                    'Casaca cortaviento y ropa abrigadora en capas',
-                    'Zapatillas de trekking con buen agarre',
-                    'Bloqueador solar y lentes con filtro UV',
-                    'Botella de agua recargable'
-                  ],
-                  trustBadges: trustBadges.length > 0 ? trustBadges : [
-                    'Licencia Oficial DIRCETUR Cusco',
-                    'Sello Internacional Safe Travels',
-                    'Agencia Formal RUC 20 Verificado',
-                    'Balón de Oxígeno & Botiquín de Altura'
-                  ],
-                  officeAddress: officeAddress,
-                  officeHours: officeHours,
-                  mapsUrl: mapsUrl
-                }} 
-                isLive={false} 
-                viewMode="mobile" 
-              />
-            </div>
+              {/* 1. PLANTILLA DISEÑO 1: PORTAL AGENCIA (VINICUNCA ORANGE) */}
+              {template === 'agency-portal' && (
+                <div className="flex flex-col min-h-full">
+                  {/* Hero with Photo */}
+                  <div className="relative h-64 w-full bg-stone-900 shrink-0">
+                    <Image 
+                      src={activeHeroImg} 
+                      alt="Hero Preview" 
+                      fill 
+                      sizes="400px"
+                      className="object-cover opacity-75" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-stone-900 via-black/40 to-black/60" />
+                    
+                    {/* Top Bar with Dynamic Language Switcher */}
+                    <div className="absolute top-3 inset-x-3 flex justify-between items-center text-[10px]">
+                      <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-emerald-400 font-extrabold flex items-center gap-1.5 border border-white/10">
+                        <span className="relative flex h-1.5 w-1.5">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                        </span>
+                        DIRCETUR Oficial
+                      </span>
+                      <div className="flex items-center gap-1.5">
+                        {/* Selected Languages Switcher in Preview */}
+                        <div className="flex items-center bg-black/70 backdrop-blur-md rounded-md p-0.5 border border-white/15">
+                          {selectedLanguages.map(l => (
+                            <button
+                              key={l}
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setLanguage(l);
+                              }}
+                              className={`px-1.5 py-0.5 rounded text-[8px] font-black uppercase transition-all ${
+                                l === language ? 'bg-[#FF5500] text-white shadow-xs' : 'text-stone-300 hover:text-white'
+                              }`}
+                            >
+                              {l.toUpperCase()}
+                            </button>
+                          ))}
+                        </div>
+                        <span className="bg-white/20 backdrop-blur-md text-white font-bold px-2 py-0.5 rounded-full">
+                          {price || '$380 USD'}
+                        </span>
+                      </div>
+                    </div>
 
-            {/* Bottom Home Indicator Bar */}
-            <div className="w-28 h-1 bg-stone-500/40 rounded-full mx-auto mt-2 mb-0.5" />
+                    {/* Hero Content */}
+                    <div className="absolute bottom-3 inset-x-3 space-y-1.5">
+                      <span className="inline-block bg-[#FF5500]/90 text-white text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full shadow-xs">
+                        🔥 Portal Agencia Pinterest
+                      </span>
+                      <h3 className="text-base font-black leading-tight text-white drop-shadow-md line-clamp-2">
+                        {name || 'Machu Picchu VIP con Tren Panorámico'}
+                      </h3>
+                      <p className="text-[10px] text-stone-200 line-clamp-1">
+                        {destination || 'Cusco'} • {duration || 'Full Day'} • Guía Historiador
+                      </p>
+
+                      <div className="pt-1">
+                        <div className="w-full bg-gradient-to-r from-[#FF5500] to-[#FF3000] text-white font-black py-2 px-3 rounded-xl text-center text-[11px] shadow-md shadow-[#FF5500]/40 flex items-center justify-center gap-1.5">
+                          <span>{objective === 'quote' ? 'SOLICITAR COTIZACIÓN' : objective === 'both' ? 'WHATSAPP & COTIZACIÓN' : 'RESERVAR CON GUÍA'}</span>
+                          <ArrowRight size={13} className="animate-bounce-x" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Metrics Bar */}
+                  <div className="bg-white text-stone-900 py-2.5 px-3 border-y border-stone-200 shrink-0">
+                    <div className="grid grid-cols-3 gap-1 text-center">
+                      <div className="p-1 rounded-lg bg-stone-50">
+                        <span className="text-xs font-black block text-stone-900 animate-number-glow">+10,000</span>
+                        <span className="text-[8px] text-stone-500 font-bold block">Viajeros</span>
+                      </div>
+                      <div className="p-1 rounded-lg bg-stone-50">
+                        <span className="text-xs font-black block text-[#FF5500] animate-pulse-subtle">10+ Años</span>
+                        <span className="text-[8px] text-stone-500 font-bold block">Experiencia</span>
+                      </div>
+                      <div className="p-1 rounded-lg bg-stone-50">
+                        <span className="text-xs font-black block text-[#FF5500] animate-pulse-subtle">4.9 ★</span>
+                        <span className="text-[8px] text-stone-500 font-bold block">Reviews</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Mini Tour Catalog Section */}
+                  <div className="p-3 bg-stone-950 space-y-2 flex-1">
+                    <div className="flex items-center justify-between text-[10px]">
+                      <span className="font-extrabold text-stone-300">Catálogo de Tours Exclusivos</span>
+                      <span className="text-[#FF5500] font-bold text-[9px]">Ver todos (6)</span>
+                    </div>
+
+                    <div className="bg-stone-900 rounded-xl p-2 border border-stone-800 flex items-center gap-2.5">
+                      <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-stone-800 shrink-0">
+                        <Image src={activeHeroImg} alt="Tour" fill sizes="80px" className="object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-[11px] font-black text-white truncate">{name || 'Machu Picchu VIP'}</h4>
+                        <p className="text-[9px] text-stone-400">{duration || 'Full Day'} • {destination || 'Cusco'}</p>
+                        <span className="text-xs font-black text-[#FF5500]">{price || '$380 USD'}</span>
+                      </div>
+                    </div>
+
+                    {/* Mini Oficina Física & Google Maps Card */}
+                    <div className="p-2.5 bg-stone-900/95 rounded-xl border border-stone-800 space-y-1 text-[9px]">
+                      <div className="flex items-center gap-1.5 text-amber-400 font-bold">
+                        <MapPin size={11} className="text-[#FF5500] shrink-0" />
+                        <span>Oficina Física en Cusco:</span>
+                      </div>
+                      <p className="text-stone-300 line-clamp-1 text-[8px] pl-4">
+                        {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
+                      </p>
+                      <div className="flex items-center justify-between pt-1 pl-4 text-[8px]">
+                        <span className="text-emerald-400 font-semibold">{officeHours || 'Lun-Dom: 8am - 8pm'}</span>
+                        <span className="text-blue-400 font-bold flex items-center gap-0.5">
+                          <Navigation size={8} /> Maps Conectado
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Certifications Footer */}
+                    <div className="pt-1 flex items-center justify-center gap-3 text-[8px] text-stone-400 font-bold">
+                      <span>✓ MINCETUR</span>
+                      <span>✓ DIRCETUR</span>
+                      <span>✓ SAFE TRAVELS</span>
+                    </div>
+                  </div>
+
+                  {/* Floating WhatsApp Button on corner */}
+                  <div className="sticky bottom-3 right-3 ml-auto pr-3 pointer-events-none">
+                    <div className="w-8 h-8 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg relative ml-auto">
+                      <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white border border-[#25D366]"></span>
+                      </span>
+                      <MessageCircle size={15} className="fill-white" />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 2. PLANTILLA BOHO TRAVEL JOURNAL (PINTEREST STYLE) */}
+              {template === 'boho-nature' && (
+                <div className="p-4 flex flex-col justify-between min-h-full space-y-3 bg-[#FAF7F2]">
+                  {/* Top Header */}
+                  <div className="flex justify-between items-center text-[10px] text-stone-600 pb-1 border-b border-stone-200">
+                    <span className="font-extrabold flex items-center gap-1 text-[#C86D51]">
+                      <span>📌</span> BOHO TRAVEL JOURNAL
+                    </span>
+                    <span className="bg-[#E8DEC8] px-2 py-0.5 rounded-full font-mono text-[9px] text-stone-800">
+                      CUSCO • PINTEREST
+                    </span>
+                  </div>
+
+                  {/* Polaroid Frame */}
+                  <div className="bg-white p-3 pb-4 rounded-xl shadow-md border border-stone-200 -rotate-1 relative">
+                    <div className="w-16 h-3 bg-[#E8DEC8]/90 absolute -top-1.5 left-1/2 -translate-x-1/2 rotate-1 shadow-2xs" />
+                    <div className="relative h-44 w-full rounded-lg overflow-hidden bg-stone-100 mb-2">
+                      <Image src={activeHeroImg} alt="Polaroid" fill sizes="400px" className="object-cover" />
+                      <div className="absolute bottom-2 left-2 bg-black/60 text-white text-[9px] font-bold px-2 py-0.5 rounded-md backdrop-blur-xs">
+                        {altitude || '4,200 msnm'}
+                      </div>
+                    </div>
+                    <p className="text-[11px] font-serif font-black text-stone-900 leading-snug line-clamp-1">
+                      {name || 'Laguna Humantay — Bitácora Fotográfica'}
+                    </p>
+                    <p className="text-[9px] text-stone-500 italic mt-0.5 line-clamp-1">
+                      &quot;Anotaciones de campo: Luz dorada sobre los nevados.&quot;
+                    </p>
+                  </div>
+
+                  {/* Mini Highlights Chips */}
+                  <div className="grid grid-cols-2 gap-1.5 text-[9px]">
+                    <div className="bg-[#F0EAE1] p-1.5 rounded-lg text-stone-700 font-bold flex items-center gap-1">
+                      <span>⭐</span> 4.9 ★ (340+ reviews)
+                    </div>
+                    <div className="bg-[#F0EAE1] p-1.5 rounded-lg text-stone-700 font-bold flex items-center gap-1">
+                      <span>📷</span> Spots Fotográficos
+                    </div>
+                  </div>
+
+                  {/* Details & CTA */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-xs font-bold text-stone-800">
+                      <span>Tarifa Especial:</span>
+                      <span className="text-[#C86D51] font-black text-sm">{price || 'S/ 160 PEN'}</span>
+                    </div>
+
+                    <div className="w-full bg-[#C86D51] hover:bg-[#b05d43] text-white font-bold py-2.5 px-3 rounded-xl text-center text-xs shadow-md flex items-center justify-center gap-1.5">
+                      <Camera size={14} />
+                      <span>{objective === 'quote' ? 'Consultar Cupo' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Reservar por WhatsApp'}</span>
+                    </div>
+
+                    <p className="text-center text-[9px] text-stone-400">
+                      Guía Fotográfica: <strong>{guideName || 'Camila Valdivia'}</strong>
+                    </p>
+                  </div>
+
+                  {/* Floating WhatsApp Button on corner */}
+                  <div className="sticky bottom-3 right-3 ml-auto pr-3 pointer-events-none">
+                    <div className="w-8 h-8 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg relative ml-auto">
+                      <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white border border-[#25D366]"></span>
+                      </span>
+                      <MessageCircle size={15} className="fill-white" />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 3. PLANTILLA PREMIUM: LUJO & EXCLUSIVO (VIP) */}
+              {template === 'premium' && (
+                <div className="p-4 flex flex-col justify-between min-h-full space-y-3 bg-gradient-to-b from-[#141210] to-[#0A0A0A]">
+                  <div className="flex justify-between items-center text-[10px] pb-2 border-b border-amber-500/20">
+                    <span className="text-amber-400 font-black tracking-widest flex items-center gap-1">
+                      <Crown size={12} /> CUSCO LUXURY VIP
+                    </span>
+                    <span className="bg-amber-500/20 text-amber-300 font-bold px-2 py-0.5 rounded-full text-[9px] border border-amber-500/30">
+                      5 STARS
+                    </span>
+                  </div>
+
+                  <div className="relative h-44 rounded-2xl overflow-hidden border border-amber-500/30">
+                    <Image src={activeHeroImg} alt="Luxury" fill sizes="400px" className="object-cover opacity-80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <span className="text-[9px] text-amber-300 font-bold uppercase tracking-wider block">Servicio Privado Exclusivo</span>
+                      <h3 className="text-sm font-black text-white line-clamp-1">{name || 'Machu Picchu Hiram Bingham VIP'}</h3>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5 text-[10px] text-stone-300">
+                    <div className="p-2 rounded-xl bg-stone-900/90 border border-stone-800 space-y-1">
+                      <div className="flex justify-between text-white font-bold">
+                        <span>Almuerzo Gourmet Belmond</span>
+                        <span className="text-amber-400">Incluido</span>
+                      </div>
+                      <div className="flex justify-between text-stone-400 text-[9px]">
+                        <span>Guía Historiador Colegiado</span>
+                        <span>{guideName || 'Carlos Mendoza'}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 pt-1">
+                    <div className="flex items-baseline justify-between">
+                      <span className="text-[10px] text-stone-400 uppercase">Tarifa por persona:</span>
+                      <span className="text-base font-black text-amber-400">{price || '$890 USD'}</span>
+                    </div>
+                    <div className="w-full bg-gradient-to-r from-amber-500 to-amber-700 text-stone-950 font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
+                      <Crown size={14} />
+                      <span>{objective === 'quote' ? 'Solicitar Propuesta VIP' : objective === 'both' ? 'WhatsApp & Propuesta VIP' : 'Asesor Privado en Vivo'}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 4. PLANTILLA AVENTURA & TREKKING */}
+              {template === 'adventure' && (
+                <div className="p-4 flex flex-col justify-between min-h-full space-y-3 bg-gradient-to-b from-[#064E3B] to-[#022C22]">
+                  <div className="flex justify-between items-center text-[10px] pb-2 border-b border-emerald-500/20">
+                    <span className="text-emerald-300 font-black tracking-wider flex items-center gap-1">
+                      <Mountain size={12} /> TREK EXPLORER
+                    </span>
+                    <span className="bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full text-[9px]">
+                      {altitude || '4,630 msnm'}
+                    </span>
+                  </div>
+
+                  <div className="relative h-44 rounded-2xl overflow-hidden border border-emerald-500/30">
+                    <Image src={activeHeroImg} alt="Trek" fill sizes="400px" className="object-cover opacity-80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#022C22] via-transparent to-transparent" />
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <span className="text-[9px] text-emerald-300 font-bold uppercase tracking-wider block">Alta Montaña • {difficulty}</span>
+                      <h3 className="text-sm font-black text-white line-clamp-1">{name || 'Salkantay Trek Clásico'}</h3>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 text-[10px]">
+                    <div className="p-2 rounded-xl bg-emerald-950/60 border border-emerald-800/40 text-center">
+                      <span className="text-emerald-400 font-bold block">Duración</span>
+                      <span className="text-white font-extrabold">{duration || '5 Días'}</span>
+                    </div>
+                    <div className="p-2 rounded-xl bg-emerald-950/60 border border-emerald-800/40 text-center">
+                      <span className="text-emerald-400 font-bold block">Modalidad</span>
+                      <span className="text-white font-extrabold">{groupType?.split('(')[0] || 'Grupos'}</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 pt-1">
+                    <div className="flex items-baseline justify-between text-xs">
+                      <span className="text-stone-300">Precio Todo Incluido:</span>
+                      <span className="text-base font-black text-emerald-400">{price || '$350 USD'}</span>
+                    </div>
+                    <div className="w-full bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
+                      <Mountain size={14} />
+                      <span>{objective === 'quote' ? 'Cotizar Expedición' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Reservar por WhatsApp'}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* 5. PLANTILLA CULTURAL & ANCESTRAL */}
+              {template === 'cultural' && (
+                <div className="p-4 flex flex-col justify-between min-h-full space-y-3 bg-gradient-to-b from-[#29221C] to-[#1C1917]">
+                  <div className="flex justify-between items-center text-[10px] pb-2 border-b border-amber-600/20">
+                    <span className="text-amber-400 font-black tracking-wider flex items-center gap-1">
+                      <Compass size={12} /> CUSCO ANCESTRAL
+                    </span>
+                    <span className="bg-amber-600/20 text-amber-300 font-bold px-2 py-0.5 rounded-full text-[9px]">
+                      HISTORIA & ARQUEOLOGÍA
+                    </span>
+                  </div>
+
+                  <div className="relative h-44 rounded-2xl overflow-hidden border border-amber-600/30">
+                    <Image src={activeHeroImg} alt="Cultural" fill sizes="400px" className="object-cover opacity-80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1C1917] via-transparent to-transparent" />
+                    <div className="absolute bottom-2 left-2 right-2">
+                      <span className="text-[9px] text-amber-300 font-bold uppercase tracking-wider block">Arquitectura Megalítica Inca</span>
+                      <h3 className="text-sm font-black text-white line-clamp-1">{name || 'City Tour & 4 Ruinas'}</h3>
+                    </div>
+                  </div>
+
+                  <div className="p-2 rounded-xl bg-stone-900 border border-stone-800 text-[10px] space-y-1">
+                    <p className="text-stone-300">
+                      Guía Especialista: <strong className="text-white">{guideName || 'Lucía Condori'}</strong>
+                    </p>
+                    <p className="text-[9px] text-amber-400">
+                      {guideCert || 'Arqueóloga Colegiada DIRCETUR'}
+                    </p>
+                  </div>
+
+                  <div className="space-y-2 pt-1">
+                    <div className="flex items-baseline justify-between text-xs">
+                      <span className="text-stone-400">Tarifa Promocional:</span>
+                      <span className="text-base font-black text-amber-400">{price || 'S/ 85 PEN'}</span>
+                    </div>
+                    <div className="w-full bg-[#D97706] hover:bg-[#b45309] text-white font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
+                      <Compass size={14} />
+                      <span>{objective === 'quote' ? 'Solicitar Horarios' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Confirmar por WhatsApp'}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+            </div>
           </div>
-
-          {/* Helpful Scroll / Explore Note */}
-          <p className="text-center text-[11px] text-slate-500 font-medium">
-            💡 Desplaza la pantalla del celular hacia abajo para revisar todas las secciones en vivo.
-          </p>
 
         </div>
 
       </div>
-
-      {/* Fullscreen Interactive Preview Modal */}
-      {isModalPreviewOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex flex-col p-3 sm:p-6 animate-fade-in">
-          {/* Modal Header */}
-          <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-800 gap-2">
-            <div className="flex items-center gap-3 min-w-0">
-              <div className="w-9 h-9 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold shrink-0">
-                <Eye size={18} />
-              </div>
-              <div className="min-w-0">
-                <h3 className="text-sm sm:text-base font-bold text-white truncate max-w-xs sm:max-w-md">
-                  {name || 'Previsualización de Landing'}
-                </h3>
-                <span className="text-[11px] text-slate-400 block truncate">
-                  Previsualización Completa • Plantilla: {template} • Plan {tier}
-                </span>
-              </div>
-            </div>
-
-            {/* View Mode Switcher in Modal */}
-            <div className="flex items-center gap-2">
-              <div className="hidden sm:flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800">
-                <button
-                  type="button"
-                  onClick={() => setModalViewMode('desktop')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-                    modalViewMode === 'desktop' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <Monitor size={14} />
-                  <span>Escritorio</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setModalViewMode('tablet')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-                    modalViewMode === 'tablet' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <Tablet size={14} />
-                  <span>Tablet</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setModalViewMode('mobile')}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-                    modalViewMode === 'mobile' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <Smartphone size={14} />
-                  <span>Móvil</span>
-                </button>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setIsModalPreviewOpen(false)}
-                className="w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition-all cursor-pointer"
-                title="Cerrar"
-              >
-                <X size={18} />
-              </button>
-            </div>
-          </div>
-
-          {/* Modal Preview Body */}
-          <div className="flex-1 flex items-center justify-center overflow-hidden pt-3 sm:pt-4">
-            <div className={`
-              ${modalViewMode === 'desktop' ? 'w-full max-w-6xl' : modalViewMode === 'tablet' ? 'w-full max-w-2xl' : 'w-full max-w-sm'}
-              h-full rounded-2xl overflow-hidden border border-slate-800 bg-white shadow-2xl overflow-y-auto no-scrollbar
-            `}>
-              <TemplateRenderer 
-                data={{
-                  id: 'preview-modal-id',
-                  name: name || 'Tour en Cusco',
-                  slug: 'preview-slug',
-                  tier: tier,
-                  guideName: guideName || 'Guía Oficial',
-                  guideAvatar: '',
-                  guideCert: guideCert || 'Guía Oficial DIRCETUR',
-                  guideLanguages: guideLanguages || 'Español, Inglés',
-                  destination: destination || 'Cusco, Perú',
-                  altitude: altitude || '3,400 msnm',
-                  groupType: groupType || 'Grupos Reducidos',
-                  targetAudience: targetAudience || 'Viajeros',
-                  includedServices: includedServices,
-                  aiTone: aiTone,
-                  whatsapp: whatsapp || '+51984123456',
-                  price: price || 'S/ 180',
-                  duration: duration || 'Full Day',
-                  difficulty: difficulty || 'Moderada',
-                  objective: objective,
-                  template: template,
-                  language: language,
-                  languages: selectedLanguages,
-                  status: 'draft',
-                  date: new Date().toISOString(),
-                  views: '1',
-                  heroImage: customImageUrl.trim() || selectedHeroImage,
-                  galleryImages: [
-                    customImageUrl.trim() || selectedHeroImage,
-                    SAMPLE_TOUR_IMAGES[0]?.url,
-                    SAMPLE_TOUR_IMAGES[1]?.url,
-                    SAMPLE_TOUR_IMAGES[2]?.url
-                  ].filter(Boolean),
-                  hero: {
-                    badge: template === 'boho-nature' ? 'Edición Travel Journal' : 'Experiencia Oficial',
-                    title: name || 'Tour Exclusivo en Cusco',
-                    subtitle: description || 'Una experiencia curada para viajeros que aprecian los detalles.',
-                    cta: objective === 'quote' ? 'Cotizar' : 'Reservar'
-                  },
-                  about: {
-                    title: 'Sobre la Experiencia',
-                    content: description || 'Conecta con los mejores paisajes andinos en grupos reducidos.'
-                  },
-                  features: {
-                    title: '¿Qué incluye?',
-                    items: includedServices
-                  },
-                  itinerary: itinerary,
-                  notIncluded: notIncluded,
-                  whatToBring: whatToBring,
-                  trustBadges: trustBadges,
-                  officeAddress: officeAddress,
-                  officeHours: officeHours,
-                  mapsUrl: mapsUrl
-                }} 
-                isLive={false} 
-                viewMode={modalViewMode} 
-              />
-            </div>
-          </div>
-        </div>
-      )}
-
     </div>
   );
 }
