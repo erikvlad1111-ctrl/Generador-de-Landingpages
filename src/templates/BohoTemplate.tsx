@@ -24,7 +24,8 @@ import {
   Sun,
   Award,
   ThumbsUp,
-  Filter,
+  ChevronRight,
+  SlidersHorizontal,
   Check
 } from 'lucide-react';
 import { LandingData } from '@/types/landing';
@@ -62,7 +63,7 @@ const CURATED_TOURS: CuratedTour[] = [
     categoryLabel: 'Lagunas & Glaciares',
     badge: 'Más Fotogénico',
     altitude: '4,200 msnm',
-    duration: 'Full Day (4:30 AM - 5:30 PM)',
+    duration: 'Full Day',
     difficulty: 'Moderada',
     price: 'S/ 160',
     image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=1200&auto=format&fit=crop',
@@ -76,7 +77,7 @@ const CURATED_TOURS: CuratedTour[] = [
     categoryLabel: 'Lagunas & Glaciares',
     badge: 'Amanecer Sin Multitudes',
     altitude: '5,036 msnm',
-    duration: 'Full Day (4:00 AM - 5:00 PM)',
+    duration: 'Full Day',
     difficulty: 'Exigente',
     price: 'S/ 175',
     image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=1200&auto=format&fit=crop',
@@ -90,7 +91,7 @@ const CURATED_TOURS: CuratedTour[] = [
     categoryLabel: 'Valles & Cultura',
     badge: 'Aclimatación Ideal',
     altitude: '2,870 - 3,500 msnm',
-    duration: 'Full Day (7:30 AM - 6:30 PM)',
+    duration: 'Full Day',
     difficulty: 'Suave / Cultural',
     price: 'S/ 140',
     image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1200&auto=format&fit=crop',
@@ -104,7 +105,7 @@ const CURATED_TOURS: CuratedTour[] = [
     categoryLabel: 'Trek Andino',
     badge: 'Joyas Ocultas',
     altitude: '4,600 msnm',
-    duration: 'Full Day (4:30 AM - 6:30 PM)',
+    duration: 'Full Day',
     difficulty: 'Moderada',
     price: 'S/ 190',
     image: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=1200&auto=format&fit=crop',
@@ -220,6 +221,8 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [selectedTourCategory, setSelectedTourCategory] = useState<string>('all');
   const [selectedReviewCategory, setSelectedReviewCategory] = useState<string>('all');
+  const [mobileTourLayout, setMobileTourLayout] = useState<'carousel' | 'list'>('carousel');
+  const [activeMochilaTab, setActiveMochilaTab] = useState<'incluye' | 'no-incluye' | 'mochila'>('incluye');
 
   const isQuote = data.objective === 'quote';
   const isMobile = viewMode === 'mobile';
@@ -271,24 +274,25 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
   const googleMapsExternalUrl = data.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(destinationQuery)}`;
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] font-sans text-stone-800 selection:bg-[#C86D51] selection:text-white">
+    <div className="min-h-screen bg-[#FAF7F2] font-sans text-stone-800 selection:bg-[#C86D51] selection:text-white pb-24 md:pb-0 overflow-x-hidden">
+      
       {/* Editorial Header / Navigation */}
-      <header className="sticky top-0 w-full z-40 bg-[#FAF7F2]/90 backdrop-blur-md px-4 sm:px-8 py-3.5 flex justify-between items-center border-b border-stone-200/80 gap-3">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-[#C86D51]/15 text-[#C86D51] flex items-center justify-center font-serif text-sm font-bold shadow-xs">
+      <header className="sticky top-0 w-full z-40 bg-[#FAF7F2]/95 backdrop-blur-md px-3 sm:px-8 py-3 flex justify-between items-center border-b border-stone-200/80 gap-2">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-[#C86D51]/15 text-[#C86D51] flex items-center justify-center font-serif text-sm font-bold shadow-xs shrink-0">
             <Camera size={16} />
           </div>
-          <div className="flex flex-col">
-            <span className="font-serif tracking-widest uppercase text-xs sm:text-sm font-bold text-stone-800">
+          <div className="flex flex-col min-w-0">
+            <span className="font-serif tracking-wider uppercase text-xs sm:text-sm font-bold text-stone-800 truncate">
               Boho Travel Journal
             </span>
-            <span className="text-[10px] text-stone-500 font-sans tracking-tight">
+            <span className="text-[9px] sm:text-[10px] text-stone-500 font-sans tracking-tight truncate">
               Inspirado en Pinterest • Cusco, Perú
             </span>
           </div>
         </div>
 
-        {/* Navigation Links based on active plan */}
+        {/* Desktop Navigation Links */}
         {!isMobile && !isFree && (
           <nav className="hidden lg:flex items-center gap-5 text-xs tracking-wider uppercase font-medium text-stone-600">
             <a href="#sobre-tour" className="hover:text-[#C86D51] transition-colors">Sobre el Tour</a>
@@ -316,57 +320,96 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
           </nav>
         )}
 
-        {/* Action Button */}
-        <div className="flex items-center gap-2">
+        {/* Header Action Button */}
+        <div className="flex items-center gap-1.5 shrink-0">
           {data.objective === 'both' ? (
             <>
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#588157] hover:bg-[#476846] text-white px-3 sm:px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+                className="bg-[#588157] hover:bg-[#476846] text-white px-2.5 sm:px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1 cursor-pointer"
               >
                 <MessageCircle size={14} />
-                <span>WhatsApp</span>
+                <span className="hidden sm:inline">WhatsApp</span>
               </a>
               <button
                 onClick={() => setIsQuoteOpen(true)}
-                className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-3 sm:px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+                className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-2.5 sm:px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1 cursor-pointer"
               >
                 <FileText size={14} />
-                <span>Cotizar</span>
+                <span className="hidden sm:inline">Cotizar</span>
               </button>
             </>
           ) : isQuote ? (
             <button
               onClick={() => setIsQuoteOpen(true)}
-              className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+              className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-3 sm:px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
             >
               <FileText size={14} />
-              <span>Pedir Cotización</span>
+              <span>Cotizar</span>
             </button>
           ) : (
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#588157] hover:bg-[#476846] text-white px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+              className="bg-[#588157] hover:bg-[#476846] text-white px-3 sm:px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
             >
               <MessageCircle size={14} />
-              <span>WhatsApp Directo</span>
+              <span>WhatsApp</span>
             </a>
           )}
         </div>
       </header>
 
+      {/* MOBILE QUICK-JUMP CHIP BAR (Horizontal Thumb Navigation) */}
+      {!isFree && (
+        <div className="lg:hidden sticky top-[53px] z-30 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-stone-200/70 py-2 px-3 overflow-x-auto scrollbar-none flex items-center gap-2">
+          <a href="#sobre-tour" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+            📖 Sobre el Tour
+          </a>
+          <a href="#galeria" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+            🖼️ {isBasic ? 'Postales' : 'Pines & Fotos'}
+          </a>
+          {(isPro || isAdvance) && (
+            <a href="#itinerario" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+              ⏱️ Bitácora
+            </a>
+          )}
+          <a href="#tours" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+            ⭐ Mejores Tours
+          </a>
+          {(isPro || isAdvance) && (
+            <a href="#mapa" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+              🗺️ Mapa GPS
+            </a>
+          )}
+          <a href="#resenas" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+            💬 Reseñas 4.9★
+          </a>
+          {(isPro || isAdvance) && (
+            <a href="#guia-campo" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+              📸 Tips Fotos
+            </a>
+          )}
+          <a href="#mochila" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+            🎒 Mochila
+          </a>
+          <a href="#soporte-faq" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+            ❓ FAQ
+          </a>
+        </div>
+      )}
+
       {/* Hero Section: Editorial Cover with Pinterest Moodboard vibe */}
-      <section className="relative px-4 sm:px-8 pt-8 pb-12 sm:pb-16 max-w-6xl mx-auto">
-        <div className="grid md:grid-cols-12 gap-8 items-center">
+      <section className="relative px-4 sm:px-8 pt-5 sm:pt-8 pb-10 sm:pb-16 max-w-6xl mx-auto overflow-hidden">
+        <div className="grid md:grid-cols-12 gap-6 sm:gap-8 items-center">
           
           {/* Left Hero Content */}
-          <div className="md:col-span-7 space-y-5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C86D51]/10 text-[#C86D51] text-xs font-semibold uppercase tracking-wider">
-              <Sparkles size={13} />
+          <div className="md:col-span-7 space-y-4 sm:space-y-5">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C86D51]/10 text-[#C86D51] text-[11px] sm:text-xs font-semibold uppercase tracking-wider">
+              <Sparkles size={12} />
               <span>
                 {data.hero?.badge || (
                   isFree ? 'Edición Travel Journal • Acceso Rápido' :
@@ -377,63 +420,63 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-medium text-stone-900 leading-[1.15] tracking-tight">
+            <h1 className="text-2xl sm:text-4xl md:text-5xl font-serif font-medium text-stone-900 leading-[1.18] sm:leading-[1.15] tracking-tight">
               {data.hero?.title || data.name}
             </h1>
 
-            <p className="text-stone-600 text-sm sm:text-base leading-relaxed font-sans max-w-xl">
+            <p className="text-stone-600 text-xs sm:text-base leading-relaxed font-sans max-w-xl">
               {data.hero?.subtitle || 'Una experiencia curada para viajeros que aprecian los detalles, la fotografía y la autenticidad de los Andes peruanos.'}
             </p>
 
             {/* Quick Stats Tags */}
-            <div className="flex flex-wrap gap-2.5 pt-2">
-              <span className="px-3 py-1.5 rounded-xl bg-white border border-stone-200 text-stone-700 text-xs flex items-center gap-1.5 shadow-2xs">
-                <Compass size={14} className="text-[#C86D51]" />
+            <div className="flex flex-wrap gap-2 pt-1">
+              <span className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl bg-white border border-stone-200 text-stone-700 text-[11px] sm:text-xs flex items-center gap-1.5 shadow-2xs">
+                <Compass size={13} className="text-[#C86D51]" />
                 {data.duration || 'Full Day'}
               </span>
-              <span className="px-3 py-1.5 rounded-xl bg-white border border-stone-200 text-stone-700 text-xs flex items-center gap-1.5 shadow-2xs">
-                <MapPin size={14} className="text-[#588157]" />
+              <span className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl bg-white border border-stone-200 text-stone-700 text-[11px] sm:text-xs flex items-center gap-1.5 shadow-2xs">
+                <MapPin size={13} className="text-[#588157]" />
                 {data.destination || 'Cusco & Valle Sagrado'}
               </span>
-              <span className="px-3 py-1.5 rounded-xl bg-white border border-stone-200 text-stone-700 text-xs flex items-center gap-1.5 shadow-2xs">
-                <Users size={14} className="text-stone-500" />
+              <span className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl bg-white border border-stone-200 text-stone-700 text-[11px] sm:text-xs flex items-center gap-1.5 shadow-2xs">
+                <Users size={13} className="text-stone-500" />
                 {data.groupType || 'Grupos Reducidos'}
               </span>
             </div>
 
             {/* Price & Primary CTA */}
-            <div className="pt-4 flex flex-wrap items-center gap-4">
-              <div className="bg-white px-5 py-3 rounded-2xl border border-stone-200/90 shadow-2xs">
-                <span className="text-[11px] text-stone-500 block uppercase tracking-wider font-semibold">Inversión</span>
-                <span className="text-2xl font-serif font-bold text-stone-900">{data.price || 'S/ 180'}</span>
-                <span className="text-xs text-stone-500 ml-1">/ viajero</span>
+            <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+              <div className="bg-white px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl border border-stone-200/90 shadow-2xs inline-flex sm:block items-baseline gap-2 self-start">
+                <span className="text-[10px] text-stone-500 uppercase tracking-wider font-semibold block">Inversión</span>
+                <span className="text-xl sm:text-2xl font-serif font-bold text-stone-900">{data.price || 'S/ 180'}</span>
+                <span className="text-[11px] text-stone-500 sm:ml-1">/ viajero</span>
               </div>
 
               {data.objective === 'both' ? (
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-2 w-full sm:w-auto">
                   <a
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-[#588157] hover:bg-[#476846] text-white px-5 sm:px-6 py-3.5 rounded-2xl font-semibold text-sm transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+                    className="flex-1 sm:flex-initial bg-[#588157] hover:bg-[#476846] text-white px-4 py-3 rounded-2xl font-semibold text-xs transition-all shadow-md active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
                   >
-                    <MessageCircle size={17} />
-                    <span>Reservar por WhatsApp</span>
+                    <MessageCircle size={16} />
+                    <span>WhatsApp</span>
                   </a>
                   <button
                     onClick={() => setIsQuoteOpen(true)}
-                    className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-5 sm:px-6 py-3.5 rounded-2xl font-semibold text-sm transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+                    className="flex-1 sm:flex-initial bg-[#C86D51] hover:bg-[#b05d43] text-white px-4 py-3 rounded-2xl font-semibold text-xs transition-all shadow-md active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
                   >
-                    <FileText size={17} />
-                    <span>Cotizar Experiencia</span>
+                    <FileText size={16} />
+                    <span>Cotizar</span>
                   </button>
                 </div>
               ) : isQuote ? (
                 <button
                   onClick={() => setIsQuoteOpen(true)}
-                  className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-6 py-3.5 rounded-2xl font-semibold text-sm transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto bg-[#C86D51] hover:bg-[#b05d43] text-white px-6 py-3.5 rounded-2xl font-semibold text-xs sm:text-sm transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <FileText size={17} />
+                  <FileText size={16} />
                   <span>{data.hero?.cta || 'Cotizar Experiencia'}</span>
                 </button>
               ) : (
@@ -441,32 +484,32 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#588157] hover:bg-[#476846] text-white px-6 py-3.5 rounded-2xl font-semibold text-sm transition-all shadow-md hover:shadow-lg flex items-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto bg-[#588157] hover:bg-[#476846] text-white px-6 py-3.5 rounded-2xl font-semibold text-xs sm:text-sm transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <MessageCircle size={17} />
+                  <MessageCircle size={16} />
                   <span>{data.hero?.cta || 'Reservar por WhatsApp'}</span>
                 </a>
               )}
             </div>
 
             {/* Micro Reassurance Banner */}
-            <p className="text-xs text-stone-500 flex items-center gap-2 pt-1 font-serif italic">
+            <p className="text-[11px] text-stone-500 flex items-center gap-1.5 pt-1 font-serif italic">
               <CheckCircle2 size={13} className="text-[#588157] shrink-0" />
-              <span>Respuesta inmediata en minutos • Coordinación directa con el guía colegiado</span>
+              <span>Respuesta en minutos • Coordinación directa con el guía</span>
             </p>
           </div>
 
           {/* Right Hero: Pinterest Polaroid Collage */}
-          <div className="md:col-span-5 relative flex justify-center">
+          <div className="md:col-span-5 relative flex justify-center pt-2 sm:pt-0">
             {/* Background Decorative Polaroid (Pro & Advance) */}
             {!isFree && (
-              <div className="absolute -top-3 -right-2 w-48 sm:w-56 bg-white p-2.5 pb-6 rounded-2xl shadow-md transform rotate-6 border border-stone-200/60 hidden sm:block opacity-80">
+              <div className="absolute -top-3 -right-2 w-44 sm:w-56 bg-white p-2 pb-5 rounded-2xl shadow-md transform rotate-6 border border-stone-200/60 hidden sm:block opacity-80 pointer-events-none">
                 <div className="relative aspect-[4/5] rounded-xl overflow-hidden bg-stone-100">
                   <Image
                     src={gallery[1] || heroImg}
                     alt="Vista previa andina"
                     fill
-                    sizes="240px"
+                    sizes="220px"
                     className="object-cover"
                   />
                 </div>
@@ -477,7 +520,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             )}
 
             {/* Main Featured Polaroid Card */}
-            <div className="relative z-10 w-64 sm:w-72 bg-white p-3 pb-7 rounded-2xl shadow-xl border border-stone-200 transform -rotate-2 hover:rotate-0 transition-transform duration-300">
+            <div className="relative z-10 w-full max-w-[270px] sm:max-w-[290px] bg-white p-3 pb-6 rounded-2xl shadow-lg border border-stone-200 transform sm:-rotate-2 hover:rotate-0 transition-transform duration-300">
               {/* Washi tape */}
               <div className="w-16 h-3 bg-[#E8DEC8]/90 absolute -top-1.5 left-1/2 -translate-x-1/2 rotate-1 shadow-2xs" />
               
@@ -487,18 +530,18 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                   alt={data.name}
                   fill
                   priority
-                  sizes="320px"
+                  sizes="(max-width: 640px) 270px, 320px"
                   className="object-cover"
                 />
-                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-xs p-1.5 rounded-full text-rose-500 shadow-2xs">
-                  <Heart size={14} fill="currentColor" />
+                <div className="absolute top-2.5 right-2.5 bg-white/90 backdrop-blur-xs p-1.5 rounded-full text-rose-500 shadow-2xs">
+                  <Heart size={13} fill="currentColor" />
                 </div>
               </div>
-              <div className="mt-3 text-center">
-                <p className="font-serif italic text-stone-800 text-sm font-medium">
+              <div className="mt-2.5 text-center">
+                <p className="font-serif italic text-stone-800 text-xs sm:text-sm font-medium">
                   &quot;{data.name}&quot;
                 </p>
-                <p className="text-[10px] font-sans uppercase tracking-widest text-stone-400 mt-1">
+                <p className="text-[9px] sm:text-[10px] font-sans uppercase tracking-widest text-stone-400 mt-0.5">
                   Guía Oficial: {data.guideName || 'Cusco Creativos'}
                 </p>
               </div>
@@ -510,16 +553,16 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
       {/* Trust Badges Bar (DIRCETUR, Safe Travels) - PRO & ADVANCE ONLY */}
       {!isFree && !isBasic && data.trustBadges && data.trustBadges.length > 0 && (
-        <section className="bg-white/80 border-y border-stone-200/80 py-4 px-4 sm:px-8">
-          <div className="max-w-5xl mx-auto flex flex-wrap justify-center sm:justify-between items-center gap-4">
+        <section className="bg-white/80 border-y border-stone-200/80 py-3 sm:py-4 px-4 sm:px-8">
+          <div className="max-w-5xl mx-auto flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-2.5 sm:gap-4 text-center sm:text-left">
             <div className="flex items-center gap-2 text-stone-600 text-xs font-serif italic">
-              <ShieldCheck size={18} className="text-[#588157]" />
+              <ShieldCheck size={16} className="text-[#588157] shrink-0" />
               <span>Garantía de servicio oficial y seguro en Cusco</span>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
               {data.trustBadges.map((badge, idx) => (
-                <span key={idx} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-stone-100 border border-stone-200 text-stone-700 text-xs font-medium">
-                  <CheckCircle2 size={13} className="text-[#C86D51]" />
+                <span key={idx} className="inline-flex items-center gap-1 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-stone-100 border border-stone-200 text-stone-700 text-[10px] sm:text-xs font-medium">
+                  <CheckCircle2 size={12} className="text-[#C86D51]" />
                   {badge}
                 </span>
               ))}
@@ -530,21 +573,21 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
       {/* About Section - For BASIC, PRO, ADVANCE */}
       {!isFree && (
-        <section id="sobre-tour" className="py-12 sm:py-16 px-4 sm:px-8 max-w-4xl mx-auto">
-          <div className="bg-white p-6 sm:p-10 rounded-3xl border border-stone-200/90 shadow-xs space-y-4 relative overflow-hidden">
+        <section id="sobre-tour" className="py-10 sm:py-16 px-4 sm:px-8 max-w-4xl mx-auto">
+          <div className="bg-white p-5 sm:p-10 rounded-3xl border border-stone-200/90 shadow-xs space-y-4 relative overflow-hidden">
             {/* Washi tape decoration */}
-            <div className="w-20 h-3.5 bg-[#E8DEC8]/90 absolute -top-1 left-8 rotate-1 shadow-2xs" />
+            <div className="w-16 sm:w-20 h-3 sm:h-3.5 bg-[#E8DEC8]/90 absolute -top-1 left-6 sm:left-8 rotate-1 shadow-2xs" />
             
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <span className="text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center gap-1.5">
-                <Bookmark size={14} /> Bitácora de Campo • Sobre la Experiencia
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+              <span className="text-[11px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center gap-1.5">
+                <Bookmark size={13} /> Bitácora de Campo • Sobre la Experiencia
               </span>
-              <span className="text-[11px] font-mono text-stone-500 bg-stone-100 px-2.5 py-0.5 rounded-full">
+              <span className="text-[10px] sm:text-[11px] font-mono text-stone-500 bg-stone-100 px-2 py-0.5 rounded-full">
                 {data.destination || 'Cusco'}
               </span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-serif font-medium text-stone-900 leading-snug">
+            <h2 className="text-xl sm:text-3xl font-serif font-medium text-stone-900 leading-snug">
               {data.about?.title || 'Una experiencia curada para conectar con el paisaje andino'}
             </h2>
 
@@ -552,26 +595,26 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               {data.about?.content || 'Diseñada para quienes buscan desconectar de las prisas y conectar con la majestuosidad de las montañas andinas. Viajamos en grupos reducidos con paradas estratégicas en los mejores miradores, café orgánico de altura y un guía especializado que te asesorará para capturar fotos inolvidables.'}
             </p>
 
-            {/* Highlights Chips */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-stone-100">
-              <div className="flex items-center gap-2.5 text-xs text-stone-700 bg-[#FAF7F2] p-3 rounded-2xl border border-stone-200/70">
+            {/* Highlights Chips: 3-column on desktop, stacked or compact on mobile */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-2 sm:pt-3 border-t border-stone-100">
+              <div className="flex items-center gap-2.5 text-xs text-stone-700 bg-[#FAF7F2] p-2.5 sm:p-3 rounded-2xl border border-stone-200/70">
                 <Camera size={16} className="text-[#C86D51] shrink-0" />
                 <div>
-                  <strong className="block text-stone-900 font-serif">Horario Dorado</strong>
+                  <strong className="block text-stone-900 font-serif text-xs">Horario Dorado</strong>
                   <span className="text-[10px] text-stone-500">Mejor luz fotográfica</span>
                 </div>
               </div>
-              <div className="flex items-center gap-2.5 text-xs text-stone-700 bg-[#FAF7F2] p-3 rounded-2xl border border-stone-200/70">
+              <div className="flex items-center gap-2.5 text-xs text-stone-700 bg-[#FAF7F2] p-2.5 sm:p-3 rounded-2xl border border-stone-200/70">
                 <Compass size={16} className="text-[#588157] shrink-0" />
                 <div>
-                  <strong className="block text-stone-900 font-serif">Ritmo Pausado</strong>
+                  <strong className="block text-stone-900 font-serif text-xs">Ritmo Pausado</strong>
                   <span className="text-[10px] text-stone-500">Sin apuros ni carreras</span>
                 </div>
               </div>
-              <div className="flex items-center gap-2.5 text-xs text-stone-700 bg-[#FAF7F2] p-3 rounded-2xl border border-stone-200/70">
+              <div className="flex items-center gap-2.5 text-xs text-stone-700 bg-[#FAF7F2] p-2.5 sm:p-3 rounded-2xl border border-stone-200/70">
                 <ShieldCheck size={16} className="text-amber-600 shrink-0" />
                 <div>
-                  <strong className="block text-stone-900 font-serif">Aclimatación Segura</strong>
+                  <strong className="block text-stone-900 font-serif text-xs">Aclimatación Segura</strong>
                   <span className="text-[10px] text-stone-500">Oxígeno y botiquín</span>
                 </div>
               </div>
@@ -594,13 +637,13 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
       {/* Section: Itinerary (Visual Travel Journal by Day) - PRO & ADVANCE ONLY */}
       {!isFree && !isBasic && (
-        <section id="itinerario" className="py-12 sm:py-16 px-4 sm:px-8 bg-[#F3EFEA] border-y border-stone-200">
-          <div className="max-w-4xl mx-auto space-y-8">
-            <div className="text-center space-y-2">
-              <span className="text-xs uppercase tracking-widest font-serif font-bold text-[#588157]">
+        <section id="itinerario" className="py-10 sm:py-16 px-4 sm:px-8 bg-[#F3EFEA] border-y border-stone-200">
+          <div className="max-w-4xl mx-auto space-y-6 sm:space-y-8">
+            <div className="text-center space-y-1.5 sm:space-y-2">
+              <span className="text-[11px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#588157]">
                 Hoja de Ruta Andina
               </span>
-              <h2 className="text-2xl sm:text-3xl font-serif text-stone-900">
+              <h2 className="text-xl sm:text-3xl font-serif text-stone-900">
                 Itinerario Detallado de la Experiencia
               </h2>
               <p className="text-xs sm:text-sm text-stone-600 max-w-xl mx-auto">
@@ -608,7 +651,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {(data.itinerary && data.itinerary.length > 0 ? data.itinerary : [
                 { step: '04:30 AM', title: 'Partida desde el Hotel en Cusco', desc: 'Recojo privado en movilidad turística climatizada con vistas del amanecer en el valle.' },
                 { step: '07:30 AM', title: 'Desayuno Campestre Orgánico en Domos', desc: 'Parada en pintoresco poblado andino con panes frescos, café de Quillabamba y frutas.' },
@@ -618,16 +661,16 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               ]).map((item, idx) => (
                 <div 
                   key={idx}
-                  className="bg-white p-5 sm:p-6 rounded-2xl border border-stone-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center gap-4 hover:border-[#C86D51]/50 transition-all group"
+                  className="bg-white p-4 sm:p-6 rounded-2xl border border-stone-200 shadow-xs flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 hover:border-[#C86D51]/50 transition-all group"
                 >
-                  <div className="w-24 shrink-0 px-3 py-1.5 rounded-xl bg-[#FAF7F2] border border-[#C86D51]/20 text-center">
+                  <div className="px-2.5 py-1 sm:w-24 shrink-0 rounded-xl bg-[#FAF7F2] border border-[#C86D51]/20 text-center">
                     <span className="font-serif font-bold text-xs text-[#C86D51] block">{item.step}</span>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-sm sm:text-base font-serif font-bold text-stone-900 group-hover:text-[#C86D51] transition-colors">{item.title}</h3>
-                    <p className="text-xs text-stone-600 mt-1 leading-relaxed">{item.desc}</p>
+                    <h3 className="text-xs sm:text-base font-serif font-bold text-stone-900 group-hover:text-[#C86D51] transition-colors">{item.title}</h3>
+                    <p className="text-xs text-stone-600 mt-0.5 sm:mt-1 leading-relaxed">{item.desc}</p>
                     {isAdvance && (
-                      <span className="inline-flex items-center gap-1.5 text-[10px] text-[#588157] font-serif italic mt-1.5 bg-[#588157]/10 px-2 py-0.5 rounded-md">
+                      <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] text-[#588157] font-serif italic mt-1 bg-[#588157]/10 px-2 py-0.5 rounded-md">
                         <Camera size={11} /> Punto fotográfico recomendado
                       </span>
                     )}
@@ -641,15 +684,15 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
       {/* SECTION: MEJORES TOURS (Otras Bitácoras de la Colección) - FOR BASIC, PRO, ADVANCE */}
       {!isFree && (
-        <section id="tours" className="py-14 sm:py-20 px-4 sm:px-8 max-w-6xl mx-auto">
-          <div className="space-y-8 sm:space-y-10">
+        <section id="tours" className="py-12 sm:py-20 px-4 sm:px-8 max-w-6xl mx-auto overflow-hidden">
+          <div className="space-y-6 sm:space-y-10">
             
             {/* Header with Boho mood */}
-            <div className="text-center space-y-2.5 max-w-2xl mx-auto">
-              <span className="text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center justify-center gap-1.5">
-                <Compass size={14} /> Colección Curada en Cusco
+            <div className="text-center space-y-2 max-w-2xl mx-auto">
+              <span className="text-[11px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center justify-center gap-1.5">
+                <Compass size={13} /> Colección Curada en Cusco
               </span>
-              <h2 className="text-2xl sm:text-4xl font-serif text-stone-900">
+              <h2 className="text-xl sm:text-4xl font-serif text-stone-900">
                 Nuestros Mejores Tours & Rutas Andinas
               </h2>
               <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-sans">
@@ -659,7 +702,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
             {/* Category Filter Tabs (Advance Plan) */}
             {isAdvance && (
-              <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+              <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
                 {[
                   { id: 'all', label: 'Todos los Circuitos' },
                   { id: 'lagunas', label: 'Lagunas & Glaciares' },
@@ -669,7 +712,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                   <button
                     key={cat.id}
                     onClick={() => setSelectedTourCategory(cat.id)}
-                    className={`px-4 py-2 rounded-full text-xs font-serif font-medium transition-all cursor-pointer ${
+                    className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-xs font-serif font-medium transition-all cursor-pointer ${
                       selectedTourCategory === cat.id
                         ? 'bg-[#C86D51] text-white shadow-xs'
                         : 'bg-white text-stone-600 border border-stone-200 hover:border-stone-300'
@@ -681,9 +724,32 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </div>
             )}
 
-            {/* Tours Grid */}
-            <div className={`grid grid-cols-1 ${visibleTours.length > 1 ? 'md:grid-cols-2' : ''} ${isAdvance ? 'lg:grid-cols-3' : ''} gap-6 sm:gap-7`}>
-              {visibleTours.map((tour, idx) => {
+            {/* Mobile View Toggle Helper (Carrusel ↔ vs Lista ↕) */}
+            <div className="flex items-center justify-between sm:hidden px-1 text-[11px] text-stone-500">
+              <span className="font-serif italic flex items-center gap-1">
+                <span>Desliza para ver más</span>
+                <ChevronRight size={12} className="text-[#C86D51] animate-pulse" />
+              </span>
+              <button
+                onClick={() => setMobileTourLayout(prev => prev === 'carousel' ? 'list' : 'carousel')}
+                className="flex items-center gap-1 text-[#C86D51] font-bold bg-white px-2 py-0.5 rounded-lg border border-stone-200 shadow-2xs"
+              >
+                <SlidersHorizontal size={11} />
+                <span>{mobileTourLayout === 'carousel' ? 'Ver en Lista' : 'Ver en Carrusel'}</span>
+              </button>
+            </div>
+
+            {/* Tours Grid / Mobile Snap Carousel */}
+            <div className={`
+              ${mobileTourLayout === 'carousel' 
+                ? 'flex sm:grid overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none gap-4 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none' 
+                : 'grid grid-cols-1 gap-5'
+              }
+              ${visibleTours.length > 1 ? 'sm:grid-cols-2' : ''} 
+              ${isAdvance ? 'lg:grid-cols-3' : ''} 
+              sm:gap-7
+            `}>
+              {visibleTours.map((tour) => {
                 const tourWhatsAppUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(
                   `Hola ${data.guideName || 'Cusco Creativos'}, vi en su web el tour de "${tour.title}" y deseo consultar fechas disponibles y precio.`
                 )}`;
@@ -691,84 +757,87 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 return (
                   <div 
                     key={tour.id}
-                    className="bg-white rounded-3xl border border-stone-200/90 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group relative"
+                    className={`
+                      ${mobileTourLayout === 'carousel' ? 'w-[82vw] max-w-[310px] shrink-0 snap-center sm:w-auto sm:max-w-none sm:shrink' : 'w-full'}
+                      bg-white rounded-3xl border border-stone-200/90 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group relative
+                    `}
                   >
                     {/* Washi tape sticker */}
                     <div className="w-16 h-3 bg-[#E8DEC8]/90 absolute -top-1 left-8 rotate-1 shadow-2xs z-20" />
 
-                    {/* Image Header with Polaroid frame feel */}
+                    {/* Image Header */}
                     <div className="relative aspect-[16/10] overflow-hidden bg-stone-100">
                       <Image
                         src={tour.image}
                         alt={tour.title}
                         fill
-                        sizes="(max-width: 768px) 100vw, 400px"
+                        sizes="(max-width: 640px) 310px, 400px"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       {/* Floating Badge */}
-                      <div className="absolute top-3 left-3 bg-[#FAF7F2]/95 backdrop-blur-xs px-2.5 py-1 rounded-full border border-stone-200 text-[10px] font-serif font-bold text-[#C86D51] shadow-xs">
+                      <div className="absolute top-2.5 left-2.5 bg-[#FAF7F2]/95 backdrop-blur-xs px-2.5 py-0.5 rounded-full border border-stone-200 text-[9px] sm:text-[10px] font-serif font-bold text-[#C86D51] shadow-xs">
                         {tour.badge}
                       </div>
                       {/* Price Pill */}
-                      <div className="absolute bottom-3 right-3 bg-stone-900/90 backdrop-blur-xs px-3 py-1 rounded-xl text-white text-xs font-serif font-bold shadow-md">
-                        {tour.price} <span className="text-[10px] font-normal text-stone-300">/ pers.</span>
+                      <div className="absolute bottom-2.5 right-2.5 bg-stone-900/90 backdrop-blur-xs px-2.5 py-1 rounded-xl text-white text-[11px] sm:text-xs font-serif font-bold shadow-md">
+                        {tour.price} <span className="text-[9px] font-normal text-stone-300">/ pers.</span>
                       </div>
                     </div>
 
                     {/* Card Content */}
-                    <div className="p-5 sm:p-6 flex-1 flex flex-col justify-between space-y-4">
-                      <div className="space-y-2.5">
+                    <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between space-y-3 sm:space-y-4">
+                      <div className="space-y-2">
                         {/* Specs Chips */}
-                        <div className="flex flex-wrap gap-2 text-[10px] text-stone-500 font-sans">
+                        <div className="flex flex-wrap gap-1.5 text-[9px] sm:text-[10px] text-stone-500 font-sans">
                           <span className="flex items-center gap-1 bg-[#FAF7F2] px-2 py-0.5 rounded-md border border-stone-200/70">
-                            <Clock size={11} className="text-[#C86D51]" />
-                            {tour.duration.split(' ')[0]}
+                            <Clock size={10} className="text-[#C86D51]" />
+                            {tour.duration}
                           </span>
                           <span className="flex items-center gap-1 bg-[#FAF7F2] px-2 py-0.5 rounded-md border border-stone-200/70">
-                            <Mountain size={11} className="text-[#588157]" />
+                            <Mountain size={10} className="text-[#588157]" />
                             {tour.altitude}
                           </span>
                           <span className="flex items-center gap-1 bg-[#FAF7F2] px-2 py-0.5 rounded-md border border-stone-200/70">
-                            <Compass size={11} className="text-stone-400" />
+                            <Compass size={10} className="text-stone-400" />
                             {tour.difficulty}
                           </span>
                         </div>
 
-                        <h3 className="font-serif font-bold text-stone-900 text-base sm:text-lg group-hover:text-[#C86D51] transition-colors leading-snug">
+                        <h3 className="font-serif font-bold text-stone-900 text-sm sm:text-lg group-hover:text-[#C86D51] transition-colors leading-snug line-clamp-2">
                           {tour.title}
                         </h3>
 
-                        <p className="text-xs text-stone-600 leading-relaxed font-sans">
+                        <p className="text-xs text-stone-600 leading-relaxed font-sans line-clamp-2 sm:line-clamp-3">
                           {tour.description}
                         </p>
 
                         {/* Highlights list */}
-                        <ul className="pt-2 space-y-1 text-[11px] text-stone-600">
-                          {tour.highlights.map((h, hIdx) => (
-                            <li key={hIdx} className="flex items-center gap-1.5">
-                              <Check size={12} className="text-[#588157] shrink-0" />
-                              <span>{h}</span>
+                        <ul className="pt-1 space-y-1 text-[10px] sm:text-[11px] text-stone-600">
+                          {tour.highlights.slice(0, 2).map((h, hIdx) => (
+                            <li key={hIdx} className="flex items-center gap-1.5 truncate">
+                              <Check size={11} className="text-[#588157] shrink-0" />
+                              <span className="truncate">{h}</span>
                             </li>
                           ))}
                         </ul>
                       </div>
 
                       {/* Card Action Buttons */}
-                      <div className="pt-3 border-t border-stone-100 flex items-center gap-2">
+                      <div className="pt-2 sm:pt-3 border-t border-stone-100 flex items-center gap-2">
                         <a
                           href={tourWhatsAppUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 bg-[#588157] hover:bg-[#476846] text-white py-2.5 px-3 rounded-xl font-medium text-xs text-center transition-all flex items-center justify-center gap-1.5 shadow-2xs cursor-pointer"
+                          className="flex-1 bg-[#588157] hover:bg-[#476846] text-white py-2 sm:py-2.5 px-3 rounded-xl font-medium text-xs text-center transition-all flex items-center justify-center gap-1.5 shadow-2xs active:scale-95 cursor-pointer"
                         >
-                          <MessageCircle size={14} />
+                          <MessageCircle size={13} />
                           <span>Consultar</span>
                         </a>
                         <button
                           onClick={() => setIsQuoteOpen(true)}
-                          className="bg-[#FAF7F2] hover:bg-stone-100 border border-stone-200 text-stone-700 py-2.5 px-3.5 rounded-xl font-medium text-xs transition-all flex items-center justify-center gap-1 cursor-pointer"
+                          className="bg-[#FAF7F2] hover:bg-stone-100 border border-stone-200 text-stone-700 py-2 sm:py-2.5 px-3 rounded-xl font-medium text-xs transition-all flex items-center justify-center gap-1 active:scale-95 cursor-pointer"
                         >
-                          <FileText size={14} className="text-[#C86D51]" />
+                          <FileText size={13} className="text-[#C86D51]" />
                           <span>Cotizar</span>
                         </button>
                       </div>
@@ -779,8 +848,8 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             </div>
 
             {/* Note on availability */}
-            <div className="text-center pt-2">
-              <p className="text-xs text-stone-500 font-serif italic">
+            <div className="text-center pt-1">
+              <p className="text-[11px] sm:text-xs text-stone-500 font-serif italic">
                 ¿Buscas un circuito combinado o privado? Podemos armar tu bitácora personalizada en Cusco a tu medida.
               </p>
             </div>
@@ -791,15 +860,15 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
       {/* SECTION: MAPA DE RUTA & COORDENADAS DE CAMPO - PRO & ADVANCE ONLY */}
       {!isFree && (isPro || isAdvance) && (
-        <section id="mapa" className="py-14 sm:py-20 px-4 sm:px-8 bg-[#F3EFEA] border-y border-stone-200">
-          <div className="max-w-6xl mx-auto space-y-10">
+        <section id="mapa" className="py-12 sm:py-20 px-4 sm:px-8 bg-[#F3EFEA] border-y border-stone-200">
+          <div className="max-w-6xl mx-auto space-y-8 sm:space-y-10">
             
             {/* Header */}
-            <div className="text-center space-y-2 max-w-2xl mx-auto">
-              <span className="text-xs uppercase tracking-widest font-serif font-bold text-[#588157] flex items-center justify-center gap-1.5">
-                <MapPin size={14} /> Coordenadas de Campo & Elevación
+            <div className="text-center space-y-1.5 sm:space-y-2 max-w-2xl mx-auto">
+              <span className="text-[11px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#588157] flex items-center justify-center gap-1.5">
+                <MapPin size={13} /> Coordenadas de Campo & Elevación
               </span>
-              <h2 className="text-2xl sm:text-4xl font-serif text-stone-900">
+              <h2 className="text-xl sm:text-4xl font-serif text-stone-900">
                 Mapa de Ruta & Puntos Escénicos
               </h2>
               <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
@@ -807,54 +876,72 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </p>
             </div>
 
-            {/* Elevation Profile Milestones Bar */}
-            <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-xs space-y-6">
-              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-stone-100 pb-4">
-                <div className="flex items-center gap-2 text-xs font-serif font-bold text-stone-800">
-                  <Mountain size={16} className="text-[#C86D51]" />
+            {/* Elevation Profile Milestones */}
+            <div className="bg-white p-5 sm:p-8 rounded-3xl border border-stone-200 shadow-xs space-y-4 sm:space-y-6">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-100 pb-3">
+                <div className="flex items-center gap-1.5 text-xs font-serif font-bold text-stone-800">
+                  <Mountain size={15} className="text-[#C86D51]" />
                   <span>Perfil de Altitud & Escala del Recorrido</span>
                 </div>
-                <div className="flex items-center gap-4 text-[11px] text-stone-500 font-mono">
-                  <span>Punto de partida: 3,400m</span>
+                <div className="flex items-center gap-2 text-[10px] sm:text-[11px] text-stone-500 font-mono">
+                  <span>Partida: 3,400m</span>
                   <span>•</span>
-                  <span className="text-[#C86D51] font-bold">Punto más alto: 4,200m</span>
+                  <span className="text-[#C86D51] font-bold">Cumbre: 4,200m</span>
                 </div>
               </div>
 
-              {/* Milestones Flow */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 relative">
+              {/* Mobile Vertical Stepper View (< sm) */}
+              <div className="sm:hidden relative pl-5 space-y-3.5 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#C86D51]/30">
+                {[
+                  { step: '01', name: 'Cusco Histórico', alt: '3,400 msnm', time: '04:30 AM', desc: 'Recojo en hotel y travesía panorámica por el valle.' },
+                  { step: '02', name: 'Mollepata', alt: '2,900 msnm', time: '07:30 AM', desc: 'Desayuno andino con café fresco y panes de leña.' },
+                  { step: '03', name: 'Soraypampa', alt: '3,900 msnm', time: '09:30 AM', desc: 'Zona de domos geodésicos a los pies del Salkantay.' },
+                  { step: '04', name: 'Laguna Humantay', alt: '4,200 msnm', time: '12:00 PM', desc: 'Espejo turquesa, fotos Polaroid y tiempo libre.' }
+                ].map((pt, i) => (
+                  <div key={i} className="relative bg-[#FAF7F2] p-3 rounded-2xl border border-stone-200/80 space-y-1">
+                    <div className="absolute -left-[19px] top-3.5 w-3.5 h-3.5 rounded-full bg-[#C86D51] border-2 border-white" />
+                    <div className="flex items-center justify-between">
+                      <h4 className="font-serif font-bold text-xs text-stone-900">{pt.name}</h4>
+                      <span className="text-[9px] font-mono font-bold bg-white px-2 py-0.5 rounded-full border border-stone-200 text-[#588157]">
+                        {pt.alt}
+                      </span>
+                    </div>
+                    <span className="text-[10px] text-[#C86D51] font-semibold block">{pt.time}</span>
+                    <p className="text-[11px] text-stone-600 leading-snug">{pt.desc}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Desktop Horizontal Stepper Grid (>= sm) */}
+              <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-4 relative">
                 {[
                   {
                     step: '01',
                     name: 'Cusco Histórico',
                     alt: '3,400 msnm',
                     tag: 'Salida 04:30 AM',
-                    desc: 'Recojo en tu hotel y travesía panorámica por el valle de Anta.',
-                    color: 'text-stone-700'
+                    desc: 'Recojo en tu hotel y travesía panorámica por el valle de Anta.'
                   },
                   {
                     step: '02',
                     name: 'Poblado de Mollepata',
                     alt: '2,900 msnm',
                     tag: 'Desayuno 07:30 AM',
-                    desc: 'Parada gastronómica con panes de leña, café de altura y frutas.',
-                    color: 'text-[#588157]'
+                    desc: 'Parada gastronómica con panes de leña, café de altura y frutas.'
                   },
                   {
                     step: '03',
                     name: 'Campamento Soraypampa',
                     alt: '3,900 msnm',
                     tag: 'Inicio Caminata 09:30 AM',
-                    desc: 'Zona de domos geodésicos a los pies del imponente Apu Salkantay.',
-                    color: 'text-[#C86D51]'
+                    desc: 'Zona de domos geodésicos a los pies del imponente Apu Salkantay.'
                   },
                   {
                     step: '04',
                     name: 'Laguna Humantay',
                     alt: '4,200 msnm',
                     tag: 'Mirador 12:00 PM',
-                    desc: 'Espejo turquesa, fotos Polaroid y tiempo de contemplación pacífica.',
-                    color: 'text-[#C86D51]'
+                    desc: 'Espejo turquesa, fotos Polaroid y tiempo de contemplación pacífica.'
                   }
                 ].map((pt, i) => (
                   <div key={i} className="bg-[#FAF7F2] p-4 rounded-2xl border border-stone-200/80 space-y-2 relative">
@@ -878,41 +965,41 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             <div className="grid lg:grid-cols-12 gap-6 items-stretch">
               
               {/* Left Column: Route Details & Action */}
-              <div className="lg:col-span-5 bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-xs flex flex-col justify-between space-y-6">
-                <div className="space-y-4">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#588157]/10 text-[#588157] text-xs font-serif font-semibold">
-                    <Navigation size={13} />
+              <div className="lg:col-span-5 bg-white p-5 sm:p-8 rounded-3xl border border-stone-200 shadow-xs flex flex-col justify-between space-y-5">
+                <div className="space-y-3 sm:space-y-4">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#588157]/10 text-[#588157] text-[11px] sm:text-xs font-serif font-semibold">
+                    <Navigation size={12} />
                     <span>Navegación GPS Verificada</span>
                   </div>
 
-                  <h3 className="font-serif font-bold text-xl sm:text-2xl text-stone-900 leading-tight">
+                  <h3 className="font-serif font-bold text-lg sm:text-2xl text-stone-900 leading-tight">
                     Acceso Guiado y Traslado Puerta a Puerta
                   </h3>
 
                   <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-sans">
-                    Nuestras unidades turísticas cuentan con permiso del MTC, SOAT turístico vigente y monitoreo GPS durante todo el trayecto desde el centro de Cusco hasta el inicio del sendero.
+                    Nuestras unidades turísticas cuentan con permiso del MTC, SOAT turístico vigente y monitoreo GPS durante todo el trayecto desde el centro de Cusco hasta el sendero.
                   </p>
 
-                  <div className="space-y-2.5 pt-2 border-t border-stone-100 text-xs text-stone-700">
-                    <div className="flex items-start gap-2.5">
-                      <MapPin size={15} className="text-[#C86D51] shrink-0 mt-0.5" />
+                  <div className="space-y-2 pt-2 border-t border-stone-100 text-xs text-stone-700">
+                    <div className="flex items-start gap-2">
+                      <MapPin size={14} className="text-[#C86D51] shrink-0 mt-0.5" />
                       <div>
-                        <strong className="block text-stone-900 font-serif">Punto de Recojo:</strong>
-                        <span className="text-stone-500 text-[11px]">Tu hotel o Airbnb en el Centro Histórico de Cusco</span>
+                        <strong className="block text-stone-900 font-serif text-xs">Punto de Recojo:</strong>
+                        <span className="text-stone-500 text-[10px] sm:text-[11px]">Tu hotel o Airbnb en el Centro Histórico de Cusco</span>
                       </div>
                     </div>
-                    <div className="flex items-start gap-2.5">
-                      <Clock size={15} className="text-[#588157] shrink-0 mt-0.5" />
+                    <div className="flex items-start gap-2">
+                      <Clock size={14} className="text-[#588157] shrink-0 mt-0.5" />
                       <div>
-                        <strong className="block text-stone-900 font-serif">Tiempo de Traslado:</strong>
-                        <span className="text-stone-500 text-[11px]">Aprox. 2h 45m de viaje panorámico por tramo</span>
+                        <strong className="block text-stone-900 font-serif text-xs">Tiempo de Traslado:</strong>
+                        <span className="text-stone-500 text-[10px] sm:text-[11px]">Aprox. 2h 45m de viaje panorámico por tramo</span>
                       </div>
                     </div>
-                    <div className="flex items-start gap-2.5">
-                      <ShieldCheck size={15} className="text-amber-600 shrink-0 mt-0.5" />
+                    <div className="flex items-start gap-2">
+                      <ShieldCheck size={14} className="text-amber-600 shrink-0 mt-0.5" />
                       <div>
-                        <strong className="block text-stone-900 font-serif">Seguridad en Ruta:</strong>
-                        <span className="text-stone-500 text-[11px]">Choferes profesionales habituados a rutas de montaña</span>
+                        <strong className="block text-stone-900 font-serif text-xs">Seguridad en Ruta:</strong>
+                        <span className="text-stone-500 text-[10px] sm:text-[11px]">Choferes experimentados en carreteras de montaña</span>
                       </div>
                     </div>
                   </div>
@@ -924,7 +1011,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                     href={googleMapsExternalUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full bg-stone-900 hover:bg-black text-white py-3 px-4 rounded-2xl text-xs font-serif font-bold flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                    className="w-full bg-stone-900 hover:bg-black text-white py-3 px-4 rounded-2xl text-xs font-serif font-bold flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer"
                   >
                     <ExternalLink size={14} className="text-[#C86D51]" />
                     <span>Abrir Ruta en Google Maps GPS</span>
@@ -933,7 +1020,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full bg-[#FAF7F2] hover:bg-stone-100 border border-stone-300 text-stone-800 py-2.5 px-4 rounded-2xl text-xs font-serif font-medium flex items-center justify-center gap-2 transition-all cursor-pointer"
+                    className="w-full bg-[#FAF7F2] hover:bg-stone-100 border border-stone-300 text-stone-800 py-2.5 px-4 rounded-2xl text-xs font-serif font-medium flex items-center justify-center gap-2 transition-all active:scale-95 cursor-pointer"
                   >
                     <MessageCircle size={14} className="text-[#588157]" />
                     <span>Confirmar si mi hotel tiene recojo</span>
@@ -944,9 +1031,9 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               {/* Right Column: Google Maps Live Preview Frame */}
               <div className="lg:col-span-7 bg-white p-3 sm:p-4 rounded-3xl border border-stone-200 shadow-md flex flex-col relative overflow-hidden group">
                 {/* Washi tape */}
-                <div className="w-20 h-3 bg-[#E8DEC8]/90 absolute -top-1 left-1/2 -translate-x-1/2 rotate-1 shadow-2xs z-20" />
+                <div className="w-16 sm:w-20 h-3 bg-[#E8DEC8]/90 absolute -top-1 left-1/2 -translate-x-1/2 rotate-1 shadow-2xs z-20" />
                 
-                <div className="relative w-full h-[340px] sm:h-[400px] rounded-2xl overflow-hidden bg-stone-100 border border-stone-200/80">
+                <div className="relative w-full h-[260px] sm:h-[400px] rounded-2xl overflow-hidden bg-stone-100 border border-stone-200/80">
                   <iframe
                     title="Ubicación y Ruta en Google Maps"
                     src={mapIframeUrl}
@@ -955,20 +1042,20 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                     referrerPolicy="no-referrer-when-downgrade"
                   />
                   {/* Floating Pill */}
-                  <div className="absolute top-3 left-3 bg-[#FAF7F2]/95 backdrop-blur-xs px-3 py-1.5 rounded-full border border-stone-300 text-stone-800 text-[11px] font-serif font-semibold shadow-xs flex items-center gap-1.5 pointer-events-none">
+                  <div className="absolute top-2.5 left-2.5 bg-[#FAF7F2]/95 backdrop-blur-xs px-2.5 py-1 rounded-full border border-stone-300 text-stone-800 text-[10px] sm:text-[11px] font-serif font-semibold shadow-xs flex items-center gap-1.5 pointer-events-none">
                     <span className="w-2 h-2 rounded-full bg-[#588157] animate-pulse" />
                     <span>Destino: {data.destination || 'Cusco & Laguna Humantay'}</span>
                   </div>
                 </div>
-                <div className="mt-2.5 flex items-center justify-between text-[11px] text-stone-500 font-sans px-2">
-                  <span>Coordenadas de referencia en los Andes peruanos</span>
+                <div className="mt-2 flex items-center justify-between text-[10px] sm:text-[11px] text-stone-500 font-sans px-1">
+                  <span>Coordenadas en los Andes peruanos</span>
                   <a 
                     href={googleMapsExternalUrl} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-[#C86D51] font-serif italic hover:underline flex items-center gap-1"
                   >
-                    Ver mapa ampliado <ExternalLink size={11} />
+                    Ver mapa ampliado <ExternalLink size={10} />
                   </a>
                 </div>
               </div>
@@ -981,15 +1068,15 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
       {/* SECTION: RESEÑAS & LIBRO DE VISITAS - FOR BASIC, PRO, ADVANCE */}
       {!isFree && (
-        <section id="resenas" className="py-14 sm:py-20 px-4 sm:px-8 max-w-6xl mx-auto">
-          <div className="space-y-10 sm:space-y-12">
+        <section id="resenas" className="py-12 sm:py-20 px-4 sm:px-8 max-w-6xl mx-auto overflow-hidden">
+          <div className="space-y-8 sm:space-y-12">
             
             {/* Header */}
-            <div className="text-center space-y-2.5 max-w-2xl mx-auto">
-              <span className="text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center justify-center gap-1.5">
-                <Heart size={14} className="text-rose-500 fill-rose-500" /> Libro de Visitas • Calificaciones Reales
+            <div className="text-center space-y-1.5 sm:space-y-2 max-w-2xl mx-auto">
+              <span className="text-[11px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center justify-center gap-1.5">
+                <Heart size={13} className="text-rose-500 fill-rose-500" /> Libro de Visitas • Calificaciones Reales
               </span>
-              <h2 className="text-2xl sm:text-4xl font-serif text-stone-900">
+              <h2 className="text-xl sm:text-4xl font-serif text-stone-900">
                 Reseñas de la Comunidad Viajera
               </h2>
               <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-sans">
@@ -998,26 +1085,26 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             </div>
 
             {/* Global Rating Scoreboard Banner */}
-            <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200/90 shadow-sm grid md:grid-cols-12 gap-6 items-center">
+            <div className="bg-white p-5 sm:p-8 rounded-3xl border border-stone-200/90 shadow-sm grid grid-cols-1 md:grid-cols-12 gap-5 sm:gap-6 items-center">
               
               {/* Score Box */}
-              <div className="md:col-span-4 text-center md:text-left space-y-2 md:border-r md:border-stone-100 md:pr-6">
-                <div className="flex items-center justify-center md:justify-start gap-3">
-                  <span className="text-4xl sm:text-5xl font-serif font-bold text-stone-900">4.9</span>
-                  <div className="space-y-0.5">
+              <div className="md:col-span-4 text-center md:text-left space-y-1.5 md:border-r md:border-stone-100 md:pr-6">
+                <div className="flex items-center justify-center md:justify-start gap-2.5">
+                  <span className="text-3xl sm:text-5xl font-serif font-bold text-stone-900">4.9</span>
+                  <div className="space-y-0.5 text-left">
                     <div className="flex text-amber-500">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={16} fill="currentColor" />
+                        <Star key={i} size={15} fill="currentColor" />
                       ))}
                     </div>
-                    <span className="text-xs text-stone-500 block">sobre 5.0 puntos</span>
+                    <span className="text-[11px] text-stone-500 block">sobre 5.0 puntos</span>
                   </div>
                 </div>
                 <p className="text-xs text-stone-600">
-                  Basado en más de <strong>+340 opiniones</strong> en TripAdvisor y Google Reviews.
+                  Basado en más de <strong>+340 opiniones</strong> en TripAdvisor y Google.
                 </p>
-                <div className="flex items-center justify-center md:justify-start gap-1.5 text-[11px] text-[#588157] font-semibold pt-1">
-                  <ThumbsUp size={13} />
+                <div className="flex items-center justify-center md:justify-start gap-1 text-[11px] text-[#588157] font-semibold pt-0.5">
+                  <ThumbsUp size={12} />
                   <span>98% de recomendación directa</span>
                 </div>
               </div>
@@ -1025,32 +1112,32 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               {/* Star Breakdown Bars */}
               <div className="md:col-span-5 space-y-1.5 text-xs text-stone-600">
                 <div className="flex items-center gap-2">
-                  <span className="w-12 text-[11px]">5 estrellas</span>
+                  <span className="w-12 text-[10px] sm:text-[11px]">5 estrellas</span>
                   <div className="flex-1 h-2 rounded-full bg-stone-100 overflow-hidden">
                     <div className="w-[94%] h-full bg-[#C86D51] rounded-full" />
                   </div>
-                  <span className="w-8 text-right font-mono text-[11px]">94%</span>
+                  <span className="w-7 text-right font-mono text-[10px] sm:text-[11px]">94%</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="w-12 text-[11px]">4 estrellas</span>
+                  <span className="w-12 text-[10px] sm:text-[11px]">4 estrellas</span>
                   <div className="flex-1 h-2 rounded-full bg-stone-100 overflow-hidden">
                     <div className="w-[6%] h-full bg-[#588157] rounded-full" />
                   </div>
-                  <span className="w-8 text-right font-mono text-[11px]">6%</span>
+                  <span className="w-7 text-right font-mono text-[10px] sm:text-[11px]">6%</span>
                 </div>
                 <div className="flex items-center gap-2 text-stone-400">
-                  <span className="w-12 text-[11px]">3 estrellas</span>
+                  <span className="w-12 text-[10px] sm:text-[11px]">3 estrellas</span>
                   <div className="flex-1 h-2 rounded-full bg-stone-100 overflow-hidden">
                     <div className="w-[0%] h-full bg-stone-300 rounded-full" />
                   </div>
-                  <span className="w-8 text-right font-mono text-[11px]">0%</span>
+                  <span className="w-7 text-right font-mono text-[10px] sm:text-[11px]">0%</span>
                 </div>
               </div>
 
               {/* Trust Badges Stamp */}
-              <div className="md:col-span-3 flex flex-col justify-center items-center md:items-end space-y-2 text-center md:text-right">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF7F2] border border-stone-200 text-stone-700 text-xs font-serif">
-                  <Award size={14} className="text-amber-600" />
+              <div className="md:col-span-3 flex flex-col justify-center items-center md:items-end space-y-1 text-center md:text-right">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FAF7F2] border border-stone-200 text-stone-700 text-[11px] sm:text-xs font-serif">
+                  <Award size={13} className="text-amber-600" />
                   <span>Top Rated Cusco 2026</span>
                 </div>
                 <span className="text-[10px] text-stone-400">
@@ -1062,7 +1149,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
             {/* Category Filter Chips for Advance tier */}
             {isAdvance && (
-              <div className="flex flex-wrap items-center justify-center gap-2">
+              <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
                 {[
                   { id: 'all', label: 'Todas las Reseñas' },
                   { id: 'fotografia', label: 'Fotógrafos' },
@@ -1073,7 +1160,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                   <button
                     key={f.id}
                     onClick={() => setSelectedReviewCategory(f.id)}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-serif transition-all cursor-pointer ${
+                    className={`px-3 py-1 rounded-full text-[11px] sm:text-xs font-serif transition-all cursor-pointer ${
                       selectedReviewCategory === f.id
                         ? 'bg-[#588157] text-white shadow-2xs font-bold'
                         : 'bg-white text-stone-600 border border-stone-200 hover:border-stone-300'
@@ -1085,50 +1172,60 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </div>
             )}
 
-            {/* Review Cards Grid (Polaroid Style with Washi Tape) */}
-            <div className={`grid grid-cols-1 ${visibleReviews.length > 1 ? 'md:grid-cols-2' : ''} ${visibleReviews.length > 2 ? 'lg:grid-cols-3' : ''} gap-6`}>
+            {/* Swipe hint for mobile */}
+            <div className="sm:hidden text-center">
+              <span className="text-[11px] text-stone-500 font-serif italic inline-flex items-center gap-1">
+                <span>Desliza para leer más experiencias</span>
+                <ChevronRight size={11} className="text-[#C86D51]" />
+              </span>
+            </div>
+
+            {/* Review Cards: Horizontal Snap on Mobile, Grid on Desktop */}
+            <div className="flex sm:grid overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none gap-4 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none sm:grid-cols-2 lg:grid-cols-3">
               {visibleReviews.map((r, idx) => (
                 <div 
                   key={r.id}
-                  className={`bg-white p-5 sm:p-6 pb-7 rounded-2xl shadow-sm border border-stone-200/90 relative transform ${
-                    idx % 3 === 0 ? '-rotate-0.5 hover:rotate-0' : idx % 3 === 1 ? 'rotate-0.5 hover:rotate-0' : 'hover:scale-[1.01]'
-                  } transition-all duration-300 flex flex-col justify-between space-y-4`}
+                  className={`
+                    w-[82vw] max-w-[310px] shrink-0 snap-center sm:w-auto sm:max-w-none sm:shrink
+                    bg-white p-4 sm:p-6 pb-6 rounded-2xl shadow-sm border border-stone-200/90 relative transform ${
+                    idx % 3 === 0 ? 'sm:-rotate-0.5 sm:hover:rotate-0' : idx % 3 === 1 ? 'sm:rotate-0.5 sm:hover:rotate-0' : 'sm:hover:scale-[1.01]'
+                  } transition-all duration-300 flex flex-col justify-between space-y-3 sm:space-y-4`}
                 >
                   {/* Washi tape */}
-                  <div className="w-16 h-3 bg-[#E8DEC8]/80 absolute -top-1.5 left-1/2 -translate-x-1/2 rotate-1 shadow-2xs" />
+                  <div className="w-14 sm:w-16 h-3 bg-[#E8DEC8]/80 absolute -top-1.5 left-1/2 -translate-x-1/2 rotate-1 shadow-2xs" />
                   
-                  <div className="space-y-3">
+                  <div className="space-y-2.5">
                     {/* Stars and Category Chip */}
                     <div className="flex items-center justify-between pt-1">
-                      <div className="flex gap-1 text-amber-500">
+                      <div className="flex gap-0.5 text-amber-500">
                         {[...Array(r.rating)].map((_, i) => (
-                          <Star key={i} size={14} fill="currentColor" />
+                          <Star key={i} size={13} fill="currentColor" />
                         ))}
                       </div>
-                      <span className="text-[10px] font-mono text-[#C86D51] bg-[#C86D51]/10 px-2 py-0.5 rounded-full font-bold">
+                      <span className="text-[9px] sm:text-[10px] font-mono text-[#C86D51] bg-[#C86D51]/10 px-2 py-0.5 rounded-full font-bold">
                         {r.categoryLabel}
                       </span>
                     </div>
 
                     {/* Quote Text */}
-                    <p className="text-xs sm:text-sm font-serif italic text-stone-700 leading-relaxed">
+                    <p className="text-xs sm:text-sm font-serif italic text-stone-700 leading-relaxed line-clamp-4">
                       &quot;{r.comment}&quot;
                     </p>
                   </div>
 
                   {/* Reviewer Footer */}
-                  <div className="pt-3 border-t border-stone-100 flex items-center justify-between">
-                    <div className="flex items-center gap-2.5">
-                      <div className={`w-8 h-8 rounded-full ${r.avatarColor} text-white flex items-center justify-center font-serif text-xs font-bold shrink-0`}>
+                  <div className="pt-2.5 border-t border-stone-100 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <div className={`w-7 h-7 rounded-full ${r.avatarColor} text-white flex items-center justify-center font-serif text-[11px] font-bold shrink-0`}>
                         {r.name.slice(0, 1)}
                       </div>
-                      <div>
-                        <h4 className="font-serif font-bold text-xs text-stone-900">{r.name}</h4>
-                        <p className="text-[10px] text-stone-400">{r.origin} • {r.date}</p>
+                      <div className="truncate">
+                        <h4 className="font-serif font-bold text-xs text-stone-900 truncate">{r.name}</h4>
+                        <p className="text-[9px] sm:text-[10px] text-stone-400 truncate">{r.origin} • {r.date}</p>
                       </div>
                     </div>
-                    <span className="text-[10px] text-[#588157] font-semibold flex items-center gap-1">
-                      <CheckCircle2 size={12} />
+                    <span className="text-[9px] sm:text-[10px] text-[#588157] font-semibold flex items-center gap-0.5 shrink-0">
+                      <CheckCircle2 size={11} />
                       <span className="hidden sm:inline">Verificado</span>
                     </span>
                   </div>
@@ -1137,21 +1234,21 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             </div>
 
             {/* Write a review prompt */}
-            <div className="bg-[#F3EFEA] p-5 sm:p-6 rounded-2xl border border-stone-200 text-center space-y-2 max-w-xl mx-auto">
+            <div className="bg-[#F3EFEA] p-4 sm:p-6 rounded-2xl border border-stone-200 text-center space-y-1.5 max-w-xl mx-auto">
               <span className="font-serif font-bold text-xs sm:text-sm text-stone-800 block">
                 ¿Viajaste recientemente con nosotros?
               </span>
-              <p className="text-xs text-stone-600">
+              <p className="text-[11px] sm:text-xs text-stone-600">
                 Nos encantaría leer tu experiencia y sumar tus fotos a nuestro libro de visitas.
               </p>
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-serif font-bold text-[#C86D51] hover:underline pt-1"
+                className="inline-flex items-center gap-1.5 text-xs font-serif font-bold text-[#C86D51] hover:underline pt-0.5"
               >
                 <span>Enviar testimonio o fotos al guía</span>
-                <MessageCircle size={13} />
+                <MessageCircle size={12} />
               </a>
             </div>
 
@@ -1161,15 +1258,15 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
       {/* SECTION: GUÍA DE CAMPO DEL FOTÓGRAFO & CONSEJOS (ETC) - PRO & ADVANCE ONLY */}
       {!isFree && (isPro || isAdvance) && (
-        <section id="guia-campo" className="py-14 sm:py-20 px-4 sm:px-8 bg-[#FAF7F2] border-t border-stone-200">
-          <div className="max-w-6xl mx-auto space-y-10">
+        <section id="guia-campo" className="py-12 sm:py-20 px-4 sm:px-8 bg-[#FAF7F2] border-t border-stone-200">
+          <div className="max-w-6xl mx-auto space-y-8 sm:space-y-10">
             
             {/* Header */}
-            <div className="text-center space-y-2 max-w-2xl mx-auto">
-              <span className="text-xs uppercase tracking-widest font-serif font-bold text-[#588157] flex items-center justify-center gap-1.5">
-                <Sun size={14} /> Guía de Campo • Consejos de Fotografía & Altura
+            <div className="text-center space-y-1.5 sm:space-y-2 max-w-2xl mx-auto">
+              <span className="text-[11px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#588157] flex items-center justify-center gap-1.5">
+                <Sun size={13} /> Guía de Campo • Consejos de Fotografía & Altura
               </span>
-              <h2 className="text-2xl sm:text-4xl font-serif text-stone-900">
+              <h2 className="text-xl sm:text-4xl font-serif text-stone-900">
                 Secretos para Fotografiar los Andes
               </h2>
               <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-sans">
@@ -1177,75 +1274,75 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </p>
             </div>
 
-            {/* 4 Editorial Field Advice Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* 4 Editorial Field Advice Cards: 2-column on mobile, 4 on desktop */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
               
               {/* Tip 1: Luz y Hora */}
-              <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-xs space-y-3 relative overflow-hidden">
-                <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
-                  <Sun size={20} />
+              <div className="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-xs space-y-2 sm:space-y-3 relative overflow-hidden">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
+                  <Sun size={18} />
                 </div>
-                <h3 className="font-serif font-bold text-stone-900 text-sm">
+                <h3 className="font-serif font-bold text-stone-900 text-xs sm:text-sm">
                   1. Horario de Luz Dorada
                 </h3>
-                <p className="text-xs text-stone-600 leading-relaxed">
-                  Llegar a la laguna entre las 09:30 y 11:30 AM permite que el sol pegue en ángulo directo, eliminando sombras en el agua y revelando el turquesa glacial más vivo.
+                <p className="text-[11px] sm:text-xs text-stone-600 leading-relaxed">
+                  Llegar a la laguna entre las 09:30 y 11:30 AM permite que el sol incida de frente, eliminando sombras y revelando el turquesa glacial más vivo.
                 </p>
               </div>
 
               {/* Tip 2: Paleta de Ropa */}
-              <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-xs space-y-3 relative overflow-hidden">
-                <div className="w-10 h-10 rounded-xl bg-[#C86D51]/10 text-[#C86D51] flex items-center justify-center">
-                  <Camera size={20} />
+              <div className="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-xs space-y-2 sm:space-y-3 relative overflow-hidden">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#C86D51]/10 text-[#C86D51] flex items-center justify-center">
+                  <Camera size={18} />
                 </div>
-                <h3 className="font-serif font-bold text-stone-900 text-sm">
+                <h3 className="font-serif font-bold text-stone-900 text-xs sm:text-sm">
                   2. Paleta de Color Boho
                 </h3>
-                <p className="text-xs text-stone-600 leading-relaxed">
-                  Recomendamos prendas en tonos tierra: terracota, mostaza, verde musgo o lana cruda. Contrastan de forma espectacular con el cielo azul y el glaciar blanco.
+                <p className="text-[11px] sm:text-xs text-stone-600 leading-relaxed">
+                  Recomendamos tonos terracota, mostaza, verde musgo o lana cruda. Contrastan de forma espectacular con el cielo azul y el glaciar blanco.
                 </p>
               </div>
 
               {/* Tip 3: Aclimatación */}
-              <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-xs space-y-3 relative overflow-hidden">
-                <div className="w-10 h-10 rounded-xl bg-[#588157]/10 text-[#588157] flex items-center justify-center">
-                  <Mountain size={20} />
+              <div className="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-xs space-y-2 sm:space-y-3 relative overflow-hidden">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#588157]/10 text-[#588157] flex items-center justify-center">
+                  <Mountain size={18} />
                 </div>
-                <h3 className="font-serif font-bold text-stone-900 text-sm">
+                <h3 className="font-serif font-bold text-stone-900 text-xs sm:text-sm">
                   3. Paso Andino y Soroche
                 </h3>
-                <p className="text-xs text-stone-600 leading-relaxed">
-                  Paso corto y constante, inhalando profundo por la nariz y exhalando al ritmo del paso. El té de muña en el desayuno es el mejor aliado digestivo antes de ascender.
+                <p className="text-[11px] sm:text-xs text-stone-600 leading-relaxed">
+                  Paso corto y constante respirando hondo por la nariz. El té de muña en el desayuno es el mejor aliado digestivo antes de iniciar el ascenso.
                 </p>
               </div>
 
               {/* Tip 4: Huella Positiva */}
-              <div className="bg-white p-5 rounded-2xl border border-stone-200 shadow-xs space-y-3 relative overflow-hidden">
-                <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center">
-                  <ShieldCheck size={20} />
+              <div className="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-xs space-y-2 sm:space-y-3 relative overflow-hidden">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center">
+                  <ShieldCheck size={18} />
                 </div>
-                <h3 className="font-serif font-bold text-stone-900 text-sm">
+                <h3 className="font-serif font-bold text-stone-900 text-xs sm:text-sm">
                   4. Sin Dejar Rastro
                 </h3>
-                <p className="text-xs text-stone-600 leading-relaxed">
-                  Cero plásticos de un solo uso. Llevamos cantimploras reutilizables y respetamos las apachetas tradicionales dejadas por las comunidades quechuas.
+                <p className="text-[11px] sm:text-xs text-stone-600 leading-relaxed">
+                  Cero plásticos de un solo uso. Llevamos cantimploras reutilizables y respetamos las apachetas tradicionales dejadas por las comunidades andinas.
                 </p>
               </div>
 
             </div>
 
             {/* Reassurance Banner: Cancelación Flexible */}
-            <div className="bg-[#F3EFEA] p-6 rounded-3xl border border-stone-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="bg-[#F3EFEA] p-4 sm:p-6 rounded-3xl border border-stone-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#588157] text-white flex items-center justify-center shrink-0">
-                  <CheckCircle2 size={20} />
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#588157] text-white flex items-center justify-center shrink-0">
+                  <CheckCircle2 size={18} />
                 </div>
                 <div>
-                  <h4 className="font-serif font-bold text-sm text-stone-900">
+                  <h4 className="font-serif font-bold text-xs sm:text-sm text-stone-900">
                     Garantía de Reprogramación sin Penalidad
                   </h4>
-                  <p className="text-xs text-stone-600">
-                    Si tu vuelo se retrasa o hay condiciones climáticas adversas, puedes cambiar tu fecha sin costo avisando con 48h de anticipación.
+                  <p className="text-[11px] sm:text-xs text-stone-600">
+                    Si tu vuelo se retrasa o hay mal clima severo, puedes cambiar tu fecha sin costo avisando con 48h de anticipación.
                   </p>
                 </div>
               </div>
@@ -1253,7 +1350,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="shrink-0 bg-white hover:bg-stone-50 border border-stone-300 text-stone-800 text-xs font-serif font-bold px-4 py-2.5 rounded-xl transition-all shadow-2xs cursor-pointer"
+                className="w-full sm:w-auto text-center shrink-0 bg-white hover:bg-stone-50 border border-stone-300 text-stone-800 text-xs font-serif font-bold px-4 py-2 sm:py-2.5 rounded-xl transition-all shadow-2xs active:scale-95 cursor-pointer"
               >
                 Consultar Políticas
               </a>
@@ -1263,26 +1360,26 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </section>
       )}
 
-      {/* Inclusiones & Exclusiones & Mochila - ADAPTIVE BY TIER */}
+      {/* Inclusiones & Exclusiones & Mochila - ADAPTIVE BY TIER & MOBILE OPTIMIZED */}
       {!isFree && (
-        <section id="mochila" className="py-12 sm:py-16 px-4 sm:px-8 max-w-6xl mx-auto">
+        <section id="mochila" className="py-10 sm:py-16 px-4 sm:px-8 max-w-6xl mx-auto">
           {/* BASIC: Single or 2-column layout (Qué Incluye + Contacto) */}
           {isBasic ? (
-            <div id="incluye" className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            <div id="incluye" className="grid md:grid-cols-2 gap-5 sm:gap-6 max-w-4xl mx-auto">
               {/* Incluye */}
-              <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 shadow-xs space-y-4">
+              <div className="bg-white p-5 sm:p-8 rounded-3xl border border-stone-200 shadow-xs space-y-3 sm:space-y-4">
                 <div className="flex items-center gap-2 text-[#588157]">
-                  <CheckCircle2 size={20} />
-                  <h3 className="font-serif font-bold text-lg text-stone-900">¿Qué Incluye el Servicio?</h3>
+                  <CheckCircle2 size={18} />
+                  <h3 className="font-serif font-bold text-base sm:text-lg text-stone-900">¿Qué Incluye el Servicio?</h3>
                 </div>
-                <ul className="space-y-3 text-xs sm:text-sm text-stone-600">
+                <ul className="space-y-2.5 text-xs sm:text-sm text-stone-600">
                   {(data.features?.items || [
                     'Guía profesional colegiado bilingüe',
                     'Transporte turístico ida y vuelta desde tu hotel',
                     'Desayuno y refrigerio andino campestre',
                     'Botiquín de primeros auxilios y balón de oxígeno medicinal'
                   ]).map((item, i) => (
-                    <li key={i} className="flex items-start gap-2.5">
+                    <li key={i} className="flex items-start gap-2">
                       <span className="text-[#588157] font-bold">✓</span>
                       <span>{item}</span>
                     </li>
@@ -1291,12 +1388,12 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </div>
 
               {/* Quick Booking Assistance */}
-              <div className="bg-[#FAF7F2] p-6 sm:p-8 rounded-3xl border border-[#C86D51]/30 shadow-xs space-y-4 flex flex-col justify-between">
-                <div className="space-y-2">
-                  <span className="text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51]">
+              <div className="bg-[#FAF7F2] p-5 sm:p-8 rounded-3xl border border-[#C86D51]/30 shadow-xs space-y-3 sm:space-y-4 flex flex-col justify-between">
+                <div className="space-y-1.5">
+                  <span className="text-[10px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51]">
                     Atención Inmediata
                   </span>
-                  <h3 className="font-serif font-bold text-lg text-stone-900">¿Deseas confirmar disponibilidad?</h3>
+                  <h3 className="font-serif font-bold text-base sm:text-lg text-stone-900">¿Deseas confirmar disponibilidad?</h3>
                   <p className="text-xs text-stone-600 leading-relaxed">
                     Escríbenos directamente para coordinar fecha de salida y número de viajeros con respuesta en minutos.
                   </p>
@@ -1305,80 +1402,122 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#588157] hover:bg-[#476846] text-white py-3 px-5 rounded-2xl font-bold text-xs transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                  className="bg-[#588157] hover:bg-[#476846] text-white py-3 px-4 rounded-2xl font-bold text-xs transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
                 >
-                  <MessageCircle size={16} />
+                  <MessageCircle size={15} />
                   <span>Consultar por WhatsApp</span>
                 </a>
               </div>
             </div>
           ) : (
-            /* PRO & ADVANCE: Full 3 Columns (Incluye, No Incluye, Mochila de Viaje) */
-            <div className="grid md:grid-cols-3 gap-6">
+            /* PRO & ADVANCE: Full 3 Columns with Mobile Segmented Tabs for clean mobile UX */
+            <div className="space-y-4 sm:space-y-0">
               
-              {/* Incluye */}
-              <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs space-y-4">
-                <div className="flex items-center gap-2 text-[#588157]">
-                  <CheckCircle2 size={18} />
-                  <h3 className="font-serif font-bold text-base text-stone-900">¿Qué Incluye?</h3>
-                </div>
-                <ul className="space-y-2.5 text-xs text-stone-600">
-                  {(data.features?.items || [
-                    'Guía profesional colegiado bilingüe',
-                    'Transporte turístico ida y vuelta',
-                    'Desayuno y almuerzo buffet andino',
-                    'Botiquín de primeros auxilios y balón de oxígeno',
-                    'Bastones de trekking para la caminata'
-                  ]).map((item, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span className="text-[#588157] font-bold">✓</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+              {/* Mobile Tab Switcher */}
+              <div className="sm:hidden flex items-center justify-center gap-1.5 bg-stone-100 p-1 rounded-2xl">
+                <button
+                  onClick={() => setActiveMochilaTab('incluye')}
+                  className={`flex-1 py-1.5 text-xs font-serif font-bold rounded-xl transition-all ${
+                    activeMochilaTab === 'incluye' ? 'bg-white text-stone-900 shadow-2xs' : 'text-stone-500'
+                  }`}
+                >
+                  ✓ Incluye
+                </button>
+                <button
+                  onClick={() => setActiveMochilaTab('no-incluye')}
+                  className={`flex-1 py-1.5 text-xs font-serif font-bold rounded-xl transition-all ${
+                    activeMochilaTab === 'no-incluye' ? 'bg-white text-stone-900 shadow-2xs' : 'text-stone-500'
+                  }`}
+                >
+                  ✕ No Incluye
+                </button>
+                <button
+                  onClick={() => setActiveMochilaTab('mochila')}
+                  className={`flex-1 py-1.5 text-xs font-serif font-bold rounded-xl transition-all ${
+                    activeMochilaTab === 'mochila' ? 'bg-white text-stone-900 shadow-2xs' : 'text-stone-500'
+                  }`}
+                >
+                  🎒 Mochila
+                </button>
               </div>
 
-              {/* No Incluye */}
-              <div className="bg-white p-6 rounded-2xl border border-stone-200 shadow-xs space-y-4">
-                <div className="flex items-center gap-2 text-stone-500">
-                  <XCircle size={18} />
-                  <h3 className="font-serif font-bold text-base text-stone-900">No Incluye</h3>
+              {/* Grid Container (Responsive: Tabbed on mobile, 3-column on desktop) */}
+              <div className="grid sm:grid-cols-3 gap-4 sm:gap-6">
+                
+                {/* Incluye */}
+                <div className={`
+                  ${activeMochilaTab === 'incluye' ? 'block' : 'hidden sm:block'}
+                  bg-white p-5 sm:p-6 rounded-2xl border border-stone-200 shadow-xs space-y-3 sm:space-y-4
+                `}>
+                  <div className="flex items-center gap-2 text-[#588157]">
+                    <CheckCircle2 size={17} />
+                    <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900">¿Qué Incluye?</h3>
+                  </div>
+                  <ul className="space-y-2 text-xs text-stone-600">
+                    {(data.features?.items || [
+                      'Guía profesional colegiado bilingüe',
+                      'Transporte turístico ida y vuelta',
+                      'Desayuno y almuerzo buffet andino',
+                      'Botiquín de primeros auxilios y balón de oxígeno',
+                      'Bastones de trekking para la caminata'
+                    ]).map((item, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="text-[#588157] font-bold">✓</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="space-y-2.5 text-xs text-stone-600">
-                  {(data.notIncluded || [
-                    'Boleto turístico o entradas comunales',
-                    'Caballos de auxilio (opcional en el punto)',
-                    'Snacks personales o bebidas adicionales',
-                    'Propinas voluntarias para el equipo'
-                  ]).map((item, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span className="text-stone-400 font-bold">✕</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
 
-              {/* Mochila / Esenciales */}
-              <div className="bg-[#FAF7F2] p-6 rounded-2xl border border-[#C86D51]/30 shadow-xs space-y-4">
-                <div className="flex items-center gap-2 text-[#C86D51]">
-                  <Backpack size={18} />
-                  <h3 className="font-serif font-bold text-base text-stone-900">Mochila de Viaje</h3>
+                {/* No Incluye */}
+                <div className={`
+                  ${activeMochilaTab === 'no-incluye' ? 'block' : 'hidden sm:block'}
+                  bg-white p-5 sm:p-6 rounded-2xl border border-stone-200 shadow-xs space-y-3 sm:space-y-4
+                `}>
+                  <div className="flex items-center gap-2 text-stone-500">
+                    <XCircle size={17} />
+                    <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900">No Incluye</h3>
+                  </div>
+                  <ul className="space-y-2 text-xs text-stone-600">
+                    {(data.notIncluded || [
+                      'Boleto turístico o entradas comunales',
+                      'Caballos de auxilio (opcional en el punto)',
+                      'Snacks personales o bebidas adicionales',
+                      'Propinas voluntarias para el equipo'
+                    ]).map((item, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="text-stone-400 font-bold">✕</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <ul className="space-y-2.5 text-xs text-stone-700">
-                  {(data.whatToBring || [
-                    'Casaca cortaviento y ropa abrigadora en capas',
-                    'Bloqueador solar y lentes con filtro UV',
-                    'Zapatillas de trekking con buen agarre',
-                    'Botella de agua recargable',
-                    'Efectivo en soles para compras locales'
-                  ]).map((item, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span className="text-[#C86D51] font-bold">•</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
+
+                {/* Mochila / Esenciales */}
+                <div className={`
+                  ${activeMochilaTab === 'mochila' ? 'block' : 'hidden sm:block'}
+                  bg-[#FAF7F2] p-5 sm:p-6 rounded-2xl border border-[#C86D51]/30 shadow-xs space-y-3 sm:space-y-4
+                `}>
+                  <div className="flex items-center gap-2 text-[#C86D51]">
+                    <Backpack size={17} />
+                    <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900">Mochila de Viaje</h3>
+                  </div>
+                  <ul className="space-y-2 text-xs text-stone-700">
+                    {(data.whatToBring || [
+                      'Casaca cortaviento y ropa abrigadora en capas',
+                      'Bloqueador solar y lentes con filtro UV',
+                      'Zapatillas de trekking con buen agarre',
+                      'Botella de agua recargable',
+                      'Efectivo en soles para compras locales'
+                    ]).map((item, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="text-[#C86D51] font-bold">•</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
               </div>
 
             </div>
@@ -1401,10 +1540,10 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
       )}
 
       {/* Bottom CTA Banner */}
-      <footer className="bg-stone-900 text-stone-300 py-12 px-4 sm:px-8 text-center space-y-6">
+      <footer className="bg-stone-900 text-stone-300 py-10 sm:py-12 px-4 sm:px-8 text-center space-y-5">
         <div className="max-w-xl mx-auto space-y-2">
-          <div className="inline-flex items-center gap-2 text-stone-400 text-xs uppercase tracking-widest font-serif">
-            <Camera size={14} className="text-[#C86D51]" />
+          <div className="inline-flex items-center gap-1.5 text-stone-400 text-[10px] sm:text-xs uppercase tracking-widest font-serif">
+            <Camera size={13} className="text-[#C86D51]" />
             <span>Boho Travel Journal • Edición Limitada</span>
           </div>
           <h3 className="text-xl sm:text-3xl font-serif text-white">¿Listo para vivir esta experiencia?</h3>
@@ -1413,13 +1552,13 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
           </p>
         </div>
 
-        <div className="flex flex-wrap justify-center items-center gap-3">
+        <div className="flex flex-wrap justify-center items-center gap-2.5">
           {isQuote ? (
             <button
               onClick={() => setIsQuoteOpen(true)}
-              className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-6 py-3.5 rounded-full font-medium text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto bg-[#C86D51] hover:bg-[#b05d43] text-white px-6 py-3 rounded-full font-medium text-xs transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
             >
-              <FileText size={15} />
+              <FileText size={14} />
               <span>Solicitar Cotización Formal</span>
             </button>
           ) : (
@@ -1427,19 +1566,76 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#588157] hover:bg-[#476846] text-white px-6 py-3.5 rounded-full font-medium text-xs transition-all shadow-md flex items-center gap-2 cursor-pointer"
+              className="w-full sm:w-auto bg-[#588157] hover:bg-[#476846] text-white px-6 py-3 rounded-full font-medium text-xs transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
             >
-              <MessageCircle size={15} />
+              <MessageCircle size={14} />
               <span>Hablar con el Guía por WhatsApp</span>
             </a>
           )}
         </div>
 
-        <div className="border-t border-stone-800 pt-6 max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between text-[11px] text-stone-500 gap-2">
+        <div className="border-t border-stone-800 pt-5 max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between text-[10px] sm:text-[11px] text-stone-500 gap-1.5">
           <span>© {new Date().getFullYear()} Cusco Creativos S.A.C. • Plantilla Boho Travel Journal</span>
           <span>Inspirado en la estética editorial de viajes & Pinterest</span>
         </div>
       </footer>
+
+      {/* FLOATING MOBILE CONVERSION BAR (Persistent Bottom Quick Booking Bar) */}
+      <div className="fixed bottom-0 inset-x-0 z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-t border-stone-200/90 px-3.5 py-2.5 shadow-2xl flex items-center justify-between gap-2.5 md:hidden">
+        <div className="flex flex-col">
+          <div className="flex items-baseline gap-1">
+            <span className="text-base font-serif font-bold text-stone-900 leading-none">
+              {data.price || 'S/ 180'}
+            </span>
+            <span className="text-[10px] text-stone-500 font-sans">/ pers.</span>
+          </div>
+          <div className="flex items-center gap-1 text-[10px] text-amber-600 font-medium pt-0.5">
+            <Star size={10} className="fill-amber-500 text-amber-500" />
+            <span>4.9 (340+ reseñas)</span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {data.objective === 'both' ? (
+            <>
+              <button
+                onClick={() => setIsQuoteOpen(true)}
+                className="bg-white border border-stone-300 text-stone-800 text-[11px] font-serif font-bold px-3 py-2 rounded-xl active:scale-95 transition-all shadow-xs flex items-center gap-1 cursor-pointer"
+              >
+                <FileText size={12} className="text-[#C86D51]" />
+                <span>Cotizar</span>
+              </button>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#588157] hover:bg-[#476846] text-white text-[11px] font-bold px-3.5 py-2 rounded-xl active:scale-95 transition-all shadow-md flex items-center gap-1 cursor-pointer"
+              >
+                <MessageCircle size={13} />
+                <span>WhatsApp</span>
+              </a>
+            </>
+          ) : isQuote ? (
+            <button
+              onClick={() => setIsQuoteOpen(true)}
+              className="bg-[#C86D51] hover:bg-[#b05d43] text-white text-xs font-bold px-4 py-2.5 rounded-xl active:scale-95 transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+            >
+              <FileText size={14} />
+              <span>Cotizar Ahora</span>
+            </button>
+          ) : (
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#588157] hover:bg-[#476846] text-white text-xs font-bold px-4 py-2.5 rounded-xl active:scale-95 transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+            >
+              <MessageCircle size={14} />
+              <span>Reservar Tour</span>
+            </a>
+          )}
+        </div>
+      </div>
 
       {/* Quote Modal if needed */}
       <QuoteModal 
