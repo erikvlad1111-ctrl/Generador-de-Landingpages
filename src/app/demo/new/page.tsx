@@ -1988,59 +1988,104 @@ export default function NewLandingDemo() {
 
               {/* 2. PLANTILLA BOHO TRAVEL JOURNAL (PINTEREST STYLE) */}
               {template === 'boho-nature' && (
-                <div className="p-4 flex flex-col justify-between min-h-full space-y-3 bg-[#FAF7F2]">
-                  {/* Top Header */}
-                  <div className="flex justify-between items-center text-[10px] text-stone-600 pb-1 border-b border-stone-200">
-                    <span className="font-extrabold flex items-center gap-1 text-[#C86D51]">
-                      <span>📌</span> BOHO TRAVEL JOURNAL
-                    </span>
-                    <span className="bg-[#E8DEC8] px-2 py-0.5 rounded-full font-mono text-[9px] text-stone-800">
-                      CUSCO • PINTEREST
-                    </span>
-                  </div>
+                <div className="flex flex-col min-h-full bg-[#FAF7F2]">
+                  <div className="p-4 space-y-3">
+                    {/* Top Header */}
+                    <div className="flex justify-between items-center text-[10px] text-stone-600 pb-1 border-b border-stone-200">
+                      <span className="font-extrabold flex items-center gap-1 text-[#C86D51]">
+                        <span>📌</span> BOHO TRAVEL JOURNAL
+                      </span>
+                      <span className="bg-[#E8DEC8] px-2 py-0.5 rounded-full font-mono text-[9px] text-stone-800">
+                        CUSCO • PINTEREST
+                      </span>
+                    </div>
 
-                  {/* Polaroid Frame */}
-                  <div className="bg-white p-3 pb-4 rounded-xl shadow-md border border-stone-200 -rotate-1 relative">
-                    <div className="w-16 h-3 bg-[#E8DEC8]/90 absolute -top-1.5 left-1/2 -translate-x-1/2 rotate-1 shadow-2xs" />
-                    <div className="relative h-44 w-full rounded-lg overflow-hidden bg-stone-100 mb-2">
-                      <Image src={activeHeroImg} alt="Polaroid" fill sizes="400px" className="object-cover" />
-                      <div className="absolute bottom-2 left-2 bg-black/60 text-white text-[9px] font-bold px-2 py-0.5 rounded-md backdrop-blur-xs">
-                        {altitude || '4,200 msnm'}
+                    {/* Polaroid Frame */}
+                    <div className="bg-white p-3 pb-4 rounded-xl shadow-md border border-stone-200 -rotate-1 relative">
+                      <div className="w-16 h-3 bg-[#E8DEC8]/90 absolute -top-1.5 left-1/2 -translate-x-1/2 rotate-1 shadow-2xs" />
+                      <div className="relative h-44 w-full rounded-lg overflow-hidden bg-stone-100 mb-2">
+                        <Image src={activeHeroImg} alt="Polaroid" fill sizes="400px" className="object-cover" />
+                        <div className="absolute bottom-2 left-2 bg-black/60 text-white text-[9px] font-bold px-2 py-0.5 rounded-md backdrop-blur-xs">
+                          {altitude || '4,200 msnm'}
+                        </div>
+                      </div>
+                      <p className="text-[11px] font-serif font-black text-stone-900 leading-snug line-clamp-1">
+                        {name || 'Laguna Humantay — Bitácora Fotográfica'}
+                      </p>
+                      <p className="text-[9px] text-stone-500 italic mt-0.5 line-clamp-1">
+                        &quot;Anotaciones de campo: Luz dorada sobre los nevados.&quot;
+                      </p>
+                    </div>
+
+                    {/* Mini Highlights Chips */}
+                    <div className="grid grid-cols-2 gap-1.5 text-[9px]">
+                      <div className="bg-[#F0EAE1] p-1.5 rounded-lg text-stone-700 font-bold flex items-center gap-1">
+                        <span>⭐</span> 4.9 ★ (340+ reviews)
+                      </div>
+                      <div className="bg-[#F0EAE1] p-1.5 rounded-lg text-stone-700 font-bold flex items-center gap-1">
+                        <span>📷</span> Spots Fotográficos
                       </div>
                     </div>
-                    <p className="text-[11px] font-serif font-black text-stone-900 leading-snug line-clamp-1">
-                      {name || 'Laguna Humantay — Bitácora Fotográfica'}
-                    </p>
-                    <p className="text-[9px] text-stone-500 italic mt-0.5 line-clamp-1">
-                      &quot;Anotaciones de campo: Luz dorada sobre los nevados.&quot;
-                    </p>
+
+                    {/* Details & CTA */}
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-xs font-bold text-stone-800">
+                        <span>Tarifa Especial:</span>
+                        <span className="text-[#C86D51] font-black text-sm">{price || 'S/ 160 PEN'}</span>
+                      </div>
+
+                      <div className="w-full bg-[#C86D51] hover:bg-[#b05d43] text-white font-bold py-2.5 px-3 rounded-xl text-center text-xs shadow-md flex items-center justify-center gap-1.5">
+                        <Camera size={14} />
+                        <span>{objective === 'quote' ? 'Consultar Cupo' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Reservar por WhatsApp'}</span>
+                      </div>
+
+                      <p className="text-center text-[9px] text-stone-400">
+                        Guía Fotográfica: <strong>{guideName || 'Camila Valdivia'}</strong>
+                      </p>
+                    </div>
                   </div>
 
-                  {/* Mini Highlights Chips */}
-                  <div className="grid grid-cols-2 gap-1.5 text-[9px]">
-                    <div className="bg-[#F0EAE1] p-1.5 rounded-lg text-stone-700 font-bold flex items-center gap-1">
-                      <span>⭐</span> 4.9 ★ (340+ reviews)
-                    </div>
-                    <div className="bg-[#F0EAE1] p-1.5 rounded-lg text-stone-700 font-bold flex items-center gap-1">
-                      <span>📷</span> Spots Fotográficos
-                    </div>
-                  </div>
-
-                  {/* Details & CTA */}
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-xs font-bold text-stone-800">
-                      <span>Tarifa Especial:</span>
-                      <span className="text-[#C86D51] font-black text-sm">{price || 'S/ 160 PEN'}</span>
+                  {/* Mini Tour Catalog Section */}
+                  <div className="p-3 bg-[#F4EFEA] border-t border-stone-200/80 space-y-2 flex-1">
+                    <div className="flex items-center justify-between text-[10px]">
+                      <span className="font-extrabold text-stone-800">Catálogo de Tours Exclusivos</span>
+                      <span className="text-[#C86D51] font-bold text-[9px]">Ver todos (6)</span>
                     </div>
 
-                    <div className="w-full bg-[#C86D51] hover:bg-[#b05d43] text-white font-bold py-2.5 px-3 rounded-xl text-center text-xs shadow-md flex items-center justify-center gap-1.5">
-                      <Camera size={14} />
-                      <span>{objective === 'quote' ? 'Consultar Cupo' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Reservar por WhatsApp'}</span>
+                    <div className="bg-white rounded-xl p-2 border border-stone-200 shadow-xs flex items-center gap-2.5">
+                      <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-stone-100 shrink-0">
+                        <Image src={activeHeroImg} alt="Tour" fill sizes="80px" className="object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-[11px] font-black text-stone-900 truncate">{name || 'Laguna Humantay Boho'}</h4>
+                        <p className="text-[9px] text-stone-500">{duration || 'Full Day'} • {destination || 'Cusco'}</p>
+                        <span className="text-xs font-black text-[#C86D51]">{price || 'S/ 160 PEN'}</span>
+                      </div>
                     </div>
 
-                    <p className="text-center text-[9px] text-stone-400">
-                      Guía Fotográfica: <strong>{guideName || 'Camila Valdivia'}</strong>
-                    </p>
+                    {/* Mini Oficina Física & Google Maps Card */}
+                    <div className="p-2.5 bg-white rounded-xl border border-stone-200 space-y-1 text-[9px] shadow-xs">
+                      <div className="flex items-center gap-1.5 text-[#C86D51] font-bold">
+                        <MapPin size={11} className="text-[#C86D51] shrink-0" />
+                        <span>Oficina Física en Cusco:</span>
+                      </div>
+                      <p className="text-stone-700 line-clamp-1 text-[8px] pl-4">
+                        {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
+                      </p>
+                      <div className="flex items-center justify-between pt-1 pl-4 text-[8px]">
+                        <span className="text-emerald-700 font-semibold">{officeHours || 'Lun-Dom: 8am - 8pm'}</span>
+                        <span className="text-blue-600 font-bold flex items-center gap-0.5">
+                          <Navigation size={8} /> Maps Conectado
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Certifications Footer */}
+                    <div className="pt-1 flex items-center justify-center gap-3 text-[8px] text-stone-500 font-bold">
+                      <span>✓ MINCETUR</span>
+                      <span>✓ DIRCETUR</span>
+                      <span>✓ SAFE TRAVELS</span>
+                    </div>
                   </div>
 
                   {/* Floating WhatsApp Button on corner */}
@@ -2058,46 +2103,102 @@ export default function NewLandingDemo() {
 
               {/* 3. PLANTILLA PREMIUM: LUJO & EXCLUSIVO (VIP) */}
               {template === 'premium' && (
-                <div className="p-4 flex flex-col justify-between min-h-full space-y-3 bg-gradient-to-b from-[#141210] to-[#0A0A0A]">
-                  <div className="flex justify-between items-center text-[10px] pb-2 border-b border-amber-500/20">
-                    <span className="text-amber-400 font-black tracking-widest flex items-center gap-1">
-                      <Crown size={12} /> CUSCO LUXURY VIP
-                    </span>
-                    <span className="bg-amber-500/20 text-amber-300 font-bold px-2 py-0.5 rounded-full text-[9px] border border-amber-500/30">
-                      5 STARS
-                    </span>
-                  </div>
-
-                  <div className="relative h-44 rounded-2xl overflow-hidden border border-amber-500/30">
-                    <Image src={activeHeroImg} alt="Luxury" fill sizes="400px" className="object-cover opacity-80" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
-                    <div className="absolute bottom-2 left-2 right-2">
-                      <span className="text-[9px] text-amber-300 font-bold uppercase tracking-wider block">Servicio Privado Exclusivo</span>
-                      <h3 className="text-sm font-black text-white line-clamp-1">{name || 'Machu Picchu Hiram Bingham VIP'}</h3>
+                <div className="flex flex-col min-h-full bg-gradient-to-b from-[#141210] to-[#0A0A0A]">
+                  <div className="p-4 space-y-3">
+                    <div className="flex justify-between items-center text-[10px] pb-2 border-b border-amber-500/20">
+                      <span className="text-amber-400 font-black tracking-widest flex items-center gap-1">
+                        <Crown size={12} /> CUSCO LUXURY VIP
+                      </span>
+                      <span className="bg-amber-500/20 text-amber-300 font-bold px-2 py-0.5 rounded-full text-[9px] border border-amber-500/30">
+                        5 STARS
+                      </span>
                     </div>
-                  </div>
 
-                  <div className="space-y-1.5 text-[10px] text-stone-300">
-                    <div className="p-2 rounded-xl bg-stone-900/90 border border-stone-800 space-y-1">
-                      <div className="flex justify-between text-white font-bold">
-                        <span>Almuerzo Gourmet Belmond</span>
-                        <span className="text-amber-400">Incluido</span>
-                      </div>
-                      <div className="flex justify-between text-stone-400 text-[9px]">
-                        <span>Guía Historiador Colegiado</span>
-                        <span>{guideName || 'Carlos Mendoza'}</span>
+                    <div className="relative h-44 rounded-2xl overflow-hidden border border-amber-500/30">
+                      <Image src={activeHeroImg} alt="Luxury" fill sizes="400px" className="object-cover opacity-80" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
+                      <div className="absolute bottom-2 left-2 right-2">
+                        <span className="text-[9px] text-amber-300 font-bold uppercase tracking-wider block">Servicio Privado Exclusivo</span>
+                        <h3 className="text-sm font-black text-white line-clamp-1">{name || 'Machu Picchu Hiram Bingham VIP'}</h3>
                       </div>
                     </div>
+
+                    <div className="space-y-1.5 text-[10px] text-stone-300">
+                      <div className="p-2 rounded-xl bg-stone-900/90 border border-stone-800 space-y-1">
+                        <div className="flex justify-between text-white font-bold">
+                          <span>Almuerzo Gourmet Belmond</span>
+                          <span className="text-amber-400">Incluido</span>
+                        </div>
+                        <div className="flex justify-between text-stone-400 text-[9px]">
+                          <span>Guía Historiador Colegiado</span>
+                          <span>{guideName || 'Carlos Mendoza'}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 pt-1">
+                      <div className="flex items-baseline justify-between">
+                        <span className="text-[10px] text-stone-400 uppercase">Tarifa por persona:</span>
+                        <span className="text-base font-black text-amber-400">{price || '$890 USD'}</span>
+                      </div>
+                      <div className="w-full bg-gradient-to-r from-amber-500 to-amber-700 text-stone-950 font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
+                        <Crown size={14} />
+                        <span>{objective === 'quote' ? 'Solicitar Propuesta VIP' : objective === 'both' ? 'WhatsApp & Propuesta VIP' : 'Asesor Privado en Vivo'}</span>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="space-y-2 pt-1">
-                    <div className="flex items-baseline justify-between">
-                      <span className="text-[10px] text-stone-400 uppercase">Tarifa por persona:</span>
-                      <span className="text-base font-black text-amber-400">{price || '$890 USD'}</span>
+                  {/* Mini Tour Catalog Section */}
+                  <div className="p-3 bg-[#080706] border-t border-amber-500/20 space-y-2 flex-1">
+                    <div className="flex items-center justify-between text-[10px]">
+                      <span className="font-extrabold text-amber-200">Catálogo de Tours Exclusivos</span>
+                      <span className="text-amber-400 font-bold text-[9px]">Ver todos (6)</span>
                     </div>
-                    <div className="w-full bg-gradient-to-r from-amber-500 to-amber-700 text-stone-950 font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
-                      <Crown size={14} />
-                      <span>{objective === 'quote' ? 'Solicitar Propuesta VIP' : objective === 'both' ? 'WhatsApp & Propuesta VIP' : 'Asesor Privado en Vivo'}</span>
+
+                    <div className="bg-stone-900/90 rounded-xl p-2 border border-amber-500/20 flex items-center gap-2.5">
+                      <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-stone-800 shrink-0">
+                        <Image src={activeHeroImg} alt="Tour" fill sizes="80px" className="object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-[11px] font-black text-white truncate">{name || 'Machu Picchu Hiram Bingham VIP'}</h4>
+                        <p className="text-[9px] text-stone-400">{duration || 'Full Day'} • {destination || 'Cusco'}</p>
+                        <span className="text-xs font-black text-amber-400">{price || '$890 USD'}</span>
+                      </div>
+                    </div>
+
+                    {/* Mini Oficina Física & Google Maps Card */}
+                    <div className="p-2.5 bg-stone-900/95 rounded-xl border border-amber-500/20 space-y-1 text-[9px]">
+                      <div className="flex items-center gap-1.5 text-amber-400 font-bold">
+                        <MapPin size={11} className="text-amber-400 shrink-0" />
+                        <span>Oficina Física en Cusco:</span>
+                      </div>
+                      <p className="text-stone-300 line-clamp-1 text-[8px] pl-4">
+                        {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
+                      </p>
+                      <div className="flex items-center justify-between pt-1 pl-4 text-[8px]">
+                        <span className="text-emerald-400 font-semibold">{officeHours || 'Lun-Dom: 8am - 8pm'}</span>
+                        <span className="text-blue-400 font-bold flex items-center gap-0.5">
+                          <Navigation size={8} /> Maps Conectado
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Certifications Footer */}
+                    <div className="pt-1 flex items-center justify-center gap-3 text-[8px] text-amber-400/80 font-bold">
+                      <span>✓ MINCETUR</span>
+                      <span>✓ DIRCETUR</span>
+                      <span>✓ SAFE TRAVELS</span>
+                    </div>
+                  </div>
+
+                  {/* Floating WhatsApp Button on corner */}
+                  <div className="sticky bottom-3 right-3 ml-auto pr-3 pointer-events-none">
+                    <div className="w-8 h-8 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg relative ml-auto">
+                      <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white border border-[#25D366]"></span>
+                      </span>
+                      <MessageCircle size={15} className="fill-white" />
                     </div>
                   </div>
                 </div>
@@ -2105,44 +2206,100 @@ export default function NewLandingDemo() {
 
               {/* 4. PLANTILLA AVENTURA & TREKKING */}
               {template === 'adventure' && (
-                <div className="p-4 flex flex-col justify-between min-h-full space-y-3 bg-gradient-to-b from-[#064E3B] to-[#022C22]">
-                  <div className="flex justify-between items-center text-[10px] pb-2 border-b border-emerald-500/20">
-                    <span className="text-emerald-300 font-black tracking-wider flex items-center gap-1">
-                      <Mountain size={12} /> TREK EXPLORER
-                    </span>
-                    <span className="bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full text-[9px]">
-                      {altitude || '4,630 msnm'}
-                    </span>
+                <div className="flex flex-col min-h-full bg-gradient-to-b from-[#064E3B] to-[#022C22]">
+                  <div className="p-4 space-y-3">
+                    <div className="flex justify-between items-center text-[10px] pb-2 border-b border-emerald-500/20">
+                      <span className="text-emerald-300 font-black tracking-wider flex items-center gap-1">
+                        <Mountain size={12} /> TREK EXPLORER
+                      </span>
+                      <span className="bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full text-[9px]">
+                        {altitude || '4,630 msnm'}
+                      </span>
+                    </div>
+
+                    <div className="relative h-44 rounded-2xl overflow-hidden border border-emerald-500/30">
+                      <Image src={activeHeroImg} alt="Trek" fill sizes="400px" className="object-cover opacity-80" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#022C22] via-transparent to-transparent" />
+                      <div className="absolute bottom-2 left-2 right-2">
+                        <span className="text-[9px] text-emerald-300 font-bold uppercase tracking-wider block">Alta Montaña • {difficulty}</span>
+                        <h3 className="text-sm font-black text-white line-clamp-1">{name || 'Salkantay Trek Clásico'}</h3>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-[10px]">
+                      <div className="p-2 rounded-xl bg-emerald-950/60 border border-emerald-800/40 text-center">
+                        <span className="text-emerald-400 font-bold block">Duración</span>
+                        <span className="text-white font-extrabold">{duration || '5 Días'}</span>
+                      </div>
+                      <div className="p-2 rounded-xl bg-emerald-950/60 border border-emerald-800/40 text-center">
+                        <span className="text-emerald-400 font-bold block">Modalidad</span>
+                        <span className="text-white font-extrabold">{groupType?.split('(')[0] || 'Grupos'}</span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2 pt-1">
+                      <div className="flex items-baseline justify-between text-xs">
+                        <span className="text-stone-300">Precio Todo Incluido:</span>
+                        <span className="text-base font-black text-emerald-400">{price || '$350 USD'}</span>
+                      </div>
+                      <div className="w-full bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
+                        <Mountain size={14} />
+                        <span>{objective === 'quote' ? 'Cotizar Expedición' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Reservar por WhatsApp'}</span>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="relative h-44 rounded-2xl overflow-hidden border border-emerald-500/30">
-                    <Image src={activeHeroImg} alt="Trek" fill sizes="400px" className="object-cover opacity-80" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#022C22] via-transparent to-transparent" />
-                    <div className="absolute bottom-2 left-2 right-2">
-                      <span className="text-[9px] text-emerald-300 font-bold uppercase tracking-wider block">Alta Montaña • {difficulty}</span>
-                      <h3 className="text-sm font-black text-white line-clamp-1">{name || 'Salkantay Trek Clásico'}</h3>
+                  {/* Mini Tour Catalog Section */}
+                  <div className="p-3 bg-[#011d16] border-t border-emerald-500/20 space-y-2 flex-1">
+                    <div className="flex items-center justify-between text-[10px]">
+                      <span className="font-extrabold text-emerald-200">Catálogo de Tours Exclusivos</span>
+                      <span className="text-emerald-400 font-bold text-[9px]">Ver todos (6)</span>
+                    </div>
+
+                    <div className="bg-emerald-950/80 rounded-xl p-2 border border-emerald-800/50 flex items-center gap-2.5">
+                      <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-emerald-900 shrink-0">
+                        <Image src={activeHeroImg} alt="Tour" fill sizes="80px" className="object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-[11px] font-black text-white truncate">{name || 'Salkantay Trek Clásico'}</h4>
+                        <p className="text-[9px] text-emerald-300/80">{duration || '5 Días'} • {destination || 'Cusco'}</p>
+                        <span className="text-xs font-black text-emerald-400">{price || '$350 USD'}</span>
+                      </div>
+                    </div>
+
+                    {/* Mini Oficina Física & Google Maps Card */}
+                    <div className="p-2.5 bg-emerald-950/90 rounded-xl border border-emerald-800/50 space-y-1 text-[9px]">
+                      <div className="flex items-center gap-1.5 text-emerald-400 font-bold">
+                        <MapPin size={11} className="text-emerald-400 shrink-0" />
+                        <span>Oficina Física en Cusco:</span>
+                      </div>
+                      <p className="text-emerald-100 line-clamp-1 text-[8px] pl-4">
+                        {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
+                      </p>
+                      <div className="flex items-center justify-between pt-1 pl-4 text-[8px]">
+                        <span className="text-emerald-300 font-semibold">{officeHours || 'Lun-Dom: 8am - 8pm'}</span>
+                        <span className="text-blue-400 font-bold flex items-center gap-0.5">
+                          <Navigation size={8} /> Maps Conectado
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Certifications Footer */}
+                    <div className="pt-1 flex items-center justify-center gap-3 text-[8px] text-emerald-400/80 font-bold">
+                      <span>✓ MINCETUR</span>
+                      <span>✓ DIRCETUR</span>
+                      <span>✓ SAFE TRAVELS</span>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2 text-[10px]">
-                    <div className="p-2 rounded-xl bg-emerald-950/60 border border-emerald-800/40 text-center">
-                      <span className="text-emerald-400 font-bold block">Duración</span>
-                      <span className="text-white font-extrabold">{duration || '5 Días'}</span>
-                    </div>
-                    <div className="p-2 rounded-xl bg-emerald-950/60 border border-emerald-800/40 text-center">
-                      <span className="text-emerald-400 font-bold block">Modalidad</span>
-                      <span className="text-white font-extrabold">{groupType?.split('(')[0] || 'Grupos'}</span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2 pt-1">
-                    <div className="flex items-baseline justify-between text-xs">
-                      <span className="text-stone-300">Precio Todo Incluido:</span>
-                      <span className="text-base font-black text-emerald-400">{price || '$350 USD'}</span>
-                    </div>
-                    <div className="w-full bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
-                      <Mountain size={14} />
-                      <span>{objective === 'quote' ? 'Cotizar Expedición' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Reservar por WhatsApp'}</span>
+                  {/* Floating WhatsApp Button on corner */}
+                  <div className="sticky bottom-3 right-3 ml-auto pr-3 pointer-events-none">
+                    <div className="w-8 h-8 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg relative ml-auto">
+                      <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white border border-[#25D366]"></span>
+                      </span>
+                      <MessageCircle size={15} className="fill-white" />
                     </div>
                   </div>
                 </div>
@@ -2150,42 +2307,98 @@ export default function NewLandingDemo() {
 
               {/* 5. PLANTILLA CULTURAL & ANCESTRAL */}
               {template === 'cultural' && (
-                <div className="p-4 flex flex-col justify-between min-h-full space-y-3 bg-gradient-to-b from-[#29221C] to-[#1C1917]">
-                  <div className="flex justify-between items-center text-[10px] pb-2 border-b border-amber-600/20">
-                    <span className="text-amber-400 font-black tracking-wider flex items-center gap-1">
-                      <Compass size={12} /> CUSCO ANCESTRAL
-                    </span>
-                    <span className="bg-amber-600/20 text-amber-300 font-bold px-2 py-0.5 rounded-full text-[9px]">
-                      HISTORIA & ARQUEOLOGÍA
-                    </span>
-                  </div>
+                <div className="flex flex-col min-h-full bg-gradient-to-b from-[#29221C] to-[#1C1917]">
+                  <div className="p-4 space-y-3">
+                    <div className="flex justify-between items-center text-[10px] pb-2 border-b border-amber-600/20">
+                      <span className="text-amber-400 font-black tracking-wider flex items-center gap-1">
+                        <Compass size={12} /> CUSCO ANCESTRAL
+                      </span>
+                      <span className="bg-amber-600/20 text-amber-300 font-bold px-2 py-0.5 rounded-full text-[9px]">
+                        HISTORIA & ARQUEOLOGÍA
+                      </span>
+                    </div>
 
-                  <div className="relative h-44 rounded-2xl overflow-hidden border border-amber-600/30">
-                    <Image src={activeHeroImg} alt="Cultural" fill sizes="400px" className="object-cover opacity-80" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1C1917] via-transparent to-transparent" />
-                    <div className="absolute bottom-2 left-2 right-2">
-                      <span className="text-[9px] text-amber-300 font-bold uppercase tracking-wider block">Arquitectura Megalítica Inca</span>
-                      <h3 className="text-sm font-black text-white line-clamp-1">{name || 'City Tour & 4 Ruinas'}</h3>
+                    <div className="relative h-44 rounded-2xl overflow-hidden border border-amber-600/30">
+                      <Image src={activeHeroImg} alt="Cultural" fill sizes="400px" className="object-cover opacity-80" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#1C1917] via-transparent to-transparent" />
+                      <div className="absolute bottom-2 left-2 right-2">
+                        <span className="text-[9px] text-amber-300 font-bold uppercase tracking-wider block">Arquitectura Megalítica Inca</span>
+                        <h3 className="text-sm font-black text-white line-clamp-1">{name || 'City Tour & 4 Ruinas'}</h3>
+                      </div>
+                    </div>
+
+                    <div className="p-2 rounded-xl bg-stone-900 border border-stone-800 text-[10px] space-y-1">
+                      <p className="text-stone-300">
+                        Guía Especialista: <strong className="text-white">{guideName || 'Lucía Condori'}</strong>
+                      </p>
+                      <p className="text-[9px] text-amber-400">
+                        {guideCert || 'Arqueóloga Colegiada DIRCETUR'}
+                      </p>
+                    </div>
+
+                    <div className="space-y-2 pt-1">
+                      <div className="flex items-baseline justify-between text-xs">
+                        <span className="text-stone-400">Tarifa Promocional:</span>
+                        <span className="text-base font-black text-amber-400">{price || 'S/ 85 PEN'}</span>
+                      </div>
+                      <div className="w-full bg-[#D97706] hover:bg-[#b45309] text-white font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
+                        <Compass size={14} />
+                        <span>{objective === 'quote' ? 'Solicitar Horarios' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Confirmar por WhatsApp'}</span>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="p-2 rounded-xl bg-stone-900 border border-stone-800 text-[10px] space-y-1">
-                    <p className="text-stone-300">
-                      Guía Especialista: <strong className="text-white">{guideName || 'Lucía Condori'}</strong>
-                    </p>
-                    <p className="text-[9px] text-amber-400">
-                      {guideCert || 'Arqueóloga Colegiada DIRCETUR'}
-                    </p>
+                  {/* Mini Tour Catalog Section */}
+                  <div className="p-3 bg-[#14110E] border-t border-amber-600/20 space-y-2 flex-1">
+                    <div className="flex items-center justify-between text-[10px]">
+                      <span className="font-extrabold text-amber-200">Catálogo de Tours Exclusivos</span>
+                      <span className="text-amber-500 font-bold text-[9px]">Ver todos (6)</span>
+                    </div>
+
+                    <div className="bg-stone-900/90 rounded-xl p-2 border border-amber-600/20 flex items-center gap-2.5">
+                      <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-stone-800 shrink-0">
+                        <Image src={activeHeroImg} alt="Tour" fill sizes="80px" className="object-cover" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="text-[11px] font-black text-white truncate">{name || 'City Tour & 4 Ruinas'}</h4>
+                        <p className="text-[9px] text-stone-400">{duration || 'Full Day'} • {destination || 'Cusco'}</p>
+                        <span className="text-xs font-black text-amber-400">{price || 'S/ 85 PEN'}</span>
+                      </div>
+                    </div>
+
+                    {/* Mini Oficina Física & Google Maps Card */}
+                    <div className="p-2.5 bg-stone-900/95 rounded-xl border border-amber-600/20 space-y-1 text-[9px]">
+                      <div className="flex items-center gap-1.5 text-amber-400 font-bold">
+                        <MapPin size={11} className="text-amber-400 shrink-0" />
+                        <span>Oficina Física en Cusco:</span>
+                      </div>
+                      <p className="text-stone-300 line-clamp-1 text-[8px] pl-4">
+                        {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
+                      </p>
+                      <div className="flex items-center justify-between pt-1 pl-4 text-[8px]">
+                        <span className="text-emerald-400 font-semibold">{officeHours || 'Lun-Dom: 8am - 8pm'}</span>
+                        <span className="text-blue-400 font-bold flex items-center gap-0.5">
+                          <Navigation size={8} /> Maps Conectado
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Certifications Footer */}
+                    <div className="pt-1 flex items-center justify-center gap-3 text-[8px] text-amber-400/80 font-bold">
+                      <span>✓ MINCETUR</span>
+                      <span>✓ DIRCETUR</span>
+                      <span>✓ SAFE TRAVELS</span>
+                    </div>
                   </div>
 
-                  <div className="space-y-2 pt-1">
-                    <div className="flex items-baseline justify-between text-xs">
-                      <span className="text-stone-400">Tarifa Promocional:</span>
-                      <span className="text-base font-black text-amber-400">{price || 'S/ 85 PEN'}</span>
-                    </div>
-                    <div className="w-full bg-[#D97706] hover:bg-[#b45309] text-white font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
-                      <Compass size={14} />
-                      <span>{objective === 'quote' ? 'Solicitar Horarios' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Confirmar por WhatsApp'}</span>
+                  {/* Floating WhatsApp Button on corner */}
+                  <div className="sticky bottom-3 right-3 ml-auto pr-3 pointer-events-none">
+                    <div className="w-8 h-8 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg relative ml-auto">
+                      <span className="absolute -top-0.5 -right-0.5 flex h-2.5 w-2.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white border border-[#25D366]"></span>
+                      </span>
+                      <MessageCircle size={15} className="fill-white" />
                     </div>
                   </div>
                 </div>
