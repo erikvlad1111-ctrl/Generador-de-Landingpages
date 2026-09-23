@@ -56,17 +56,17 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
   return (
     <div className="min-h-screen bg-[#FFFDF9] font-sans text-stone-800 selection:bg-red-800 selection:text-white">
       
-      {/* 1. TOP HEADER OVER PANORAMIC SUNSET (HERITAGE RED PALETTE) */}
-      <header className="relative bg-stone-900 text-white overflow-hidden">
-        {/* Panoramic Background Image */}
-        <div className="absolute inset-0 z-0">
+      {/* 1. TOP HEADER OVER PANORAMIC SUNSET (HERITAGE RED PALETTE WITH DYNAMIC ENTRANCE) */}
+      <header className="relative bg-stone-900 text-white overflow-hidden group">
+        {/* Panoramic Background Image with subtle Ken Burns effect */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
             src={heroSunsetBg}
             alt={data.name || 'Cusco Ancestral'}
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center opacity-85 brightness-90"
+            className="object-cover object-center opacity-85 brightness-90 transition-transform duration-1000 ease-out group-hover:scale-105"
           />
           {/* Subtle gradient overlay to enhance typography contrast */}
           <div className="absolute inset-0 bg-gradient-to-b from-stone-950/70 via-stone-900/40 to-red-950/75" />
@@ -76,7 +76,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         <nav className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-4 sm:py-5 flex items-center justify-between border-b border-white/15">
           {/* Official Emblem / Coat of arms */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-red-600/30 backdrop-blur-md border border-red-400/50 flex items-center justify-center text-red-200 shadow-md shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-red-600/30 backdrop-blur-md border border-red-400/50 flex items-center justify-center text-red-200 shadow-md shrink-0 animate-soft-float">
               <Landmark size={22} />
             </div>
             <div className="text-left leading-tight">
@@ -89,33 +89,33 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             </div>
           </div>
 
-          {/* Nav links */}
+          {/* Nav links (Desktop) */}
           {!isMobile && (
             <div className="hidden xl:flex items-center gap-5 text-[11px] font-bold tracking-wider uppercase text-stone-200">
-              <a href="#actualites" className="hover:text-red-300 transition-colors">{t.nav.cronicas}</a>
-              <a href="#agenda" className="hover:text-red-300 transition-colors">{t.nav.agenda}</a>
-              <a href="#territorio" className="hover:text-red-300 transition-colors">{t.nav.territorio}</a>
-              <a href="#itinerario" className="hover:text-red-300 transition-colors">{t.nav.itinerario}</a>
-              <a href="#conseils" className="hover:text-red-300 transition-colors">{t.nav.conseils}</a>
-              <a href="#guide" className="hover:text-red-300 transition-colors">{t.nav.guide}</a>
-              <a href="#livre-dor" className="hover:text-red-300 transition-colors">{t.nav.reviews}</a>
-              <a href="#contacto" className="hover:text-red-300 transition-colors">{t.nav.contact}</a>
+              <a href="#actualites" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.cronicas}</a>
+              <a href="#agenda" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.agenda}</a>
+              <a href="#territorio" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.territorio}</a>
+              <a href="#itinerario" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.itinerario}</a>
+              <a href="#conseils" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.conseils}</a>
+              <a href="#guide" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.guide}</a>
+              <a href="#livre-dor" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.reviews}</a>
+              <a href="#contacto" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.contact}</a>
             </div>
           )}
 
           {/* Action CTAs & Language Switcher */}
           <div className="flex items-center gap-2.5">
             {/* Language Selector Pill */}
-            <div className="flex items-center bg-black/45 backdrop-blur-md rounded-full border border-white/20 p-0.5 text-[10px] sm:text-[11px] font-bold">
+            <div className="flex items-center bg-black/45 backdrop-blur-md rounded-full border border-white/20 p-0.5 text-[10px] sm:text-[11px] font-bold shadow-inner">
               {(['es', 'en', 'fr', 'pt', 'it'] as LanguageType[]).map((langKey) => (
                 <button
                   key={langKey}
                   type="button"
                   onClick={() => setCurrentLang(langKey)}
-                  className={`px-2 py-1 rounded-full uppercase transition-all cursor-pointer ${
+                  className={`px-2 py-1 rounded-full uppercase transition-all duration-200 cursor-pointer active:scale-90 ${
                     currentLang === langKey
                       ? 'bg-red-700 text-white shadow-xs font-black scale-105'
-                      : 'text-stone-300 hover:text-white hover:bg-white/10'
+                      : 'text-stone-300 hover:text-white hover:bg-white/10 hover:scale-105'
                   }`}
                   title={`Idioma: ${langKey.toUpperCase()}`}
                 >
@@ -124,12 +124,12 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               ))}
             </div>
 
-            {/* Action CTA */}
+            {/* Action CTA with Shimmer & Hover Lift */}
             {isQuote ? (
               <button
                 type="button"
                 onClick={() => setIsQuoteOpen(true)}
-                className="bg-red-700 hover:bg-red-600 text-white px-3.5 sm:px-5 py-2 rounded-full font-bold text-xs shadow-md shadow-red-900/30 transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
+                className="shimmer-btn bg-red-700 hover:bg-red-600 text-white px-3.5 sm:px-5 py-2 rounded-full font-bold text-xs shadow-md shadow-red-900/40 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 <FileText size={14} />
                 <span>{t.cta.quote}</span>
@@ -139,7 +139,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-red-700 hover:bg-red-600 text-white px-3.5 sm:px-5 py-2 rounded-full font-bold text-xs shadow-md shadow-red-900/30 transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
+                className="shimmer-btn bg-red-700 hover:bg-red-600 text-white px-3.5 sm:px-5 py-2 rounded-full font-bold text-xs shadow-md shadow-red-900/40 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 <MessageCircle size={14} />
                 <span className="hidden sm:inline">{t.cta.whatsapp}</span>
@@ -149,8 +149,8 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           </div>
         </nav>
 
-        {/* Hero Central Titles & Circular Icons */}
-        <div className="relative z-20 max-w-4xl mx-auto px-4 pt-16 sm:pt-24 pb-28 sm:pb-36 text-center space-y-4 sm:space-y-6">
+        {/* Hero Central Titles & Circular Icons (Animated Entry) */}
+        <div className="relative z-20 max-w-4xl mx-auto px-4 pt-16 sm:pt-24 pb-28 sm:pb-36 text-center space-y-4 sm:space-y-6 animate-fade-in-up">
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-black tracking-tight drop-shadow-xl text-white italic">
             {data.hero?.title || 'Cusco Imperial'}
           </h1>
@@ -158,27 +158,31 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             {data.hero?.subtitle || t.heroSubtitleDefault}
           </p>
 
-          {/* 3 Circular Quick Action Icons (Center matching reference image with red centerpiece) */}
-          <div className="pt-2 flex items-center justify-center gap-3">
+          {/* 3 Circular Quick Action Icons (Centerpiece with Beacon Glow) */}
+          <div className="pt-2 flex items-center justify-center gap-3.5">
             <a
               href="#territorio"
-              className="w-10 h-10 rounded-full bg-black/40 hover:bg-red-900/80 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 cursor-pointer"
+              className="w-11 h-11 rounded-full bg-black/40 hover:bg-red-900/90 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-115 hover:-translate-y-1 active:scale-90 cursor-pointer"
               title={t.cta.exploreTerritory}
             >
               <Search size={16} />
             </a>
+            
+            {/* WhatsApp centerpiece with beacon glow ring */}
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full bg-red-700 hover:bg-red-600 text-white flex items-center justify-center shadow-lg shadow-red-900/40 transition-transform hover:scale-110 cursor-pointer"
+              className="relative w-12 h-12 rounded-full bg-red-700 hover:bg-red-600 text-white flex items-center justify-center shadow-xl shadow-red-900/50 transition-all duration-300 hover:scale-115 hover:-translate-y-1 active:scale-90 cursor-pointer animate-beacon-glow"
               title={t.cta.writeWhatsApp}
             >
-              <Mail size={16} />
+              <span className="absolute -inset-1 rounded-full bg-red-400 opacity-40 animate-ping-slow pointer-events-none" />
+              <Mail size={18} className="relative z-10" />
             </a>
+
             <a
               href={`tel:${cleanPhone}`}
-              className="w-10 h-10 rounded-full bg-black/40 hover:bg-red-900/80 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 cursor-pointer"
+              className="w-11 h-11 rounded-full bg-black/40 hover:bg-red-900/90 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-115 hover:-translate-y-1 active:scale-90 cursor-pointer"
               title={t.cta.callOffice}
             >
               <Phone size={16} />
@@ -186,7 +190,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           </div>
         </div>
 
-        {/* Organic Wave Cut in Heritage Red (Exact shape matching reference image) */}
+        {/* Organic Wave Cut in Heritage Red */}
         <div className="absolute -bottom-1 inset-x-0 z-20 pointer-events-none">
           <svg viewBox="0 0 1440 180" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto preserve-3d">
             <path
@@ -202,7 +206,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </header>
 
-      {/* 2. OVERLAPPING 5 CIRCULAR QUICK ACCESS BADGES (Red Style) */}
+      {/* 2. OVERLAPPING 5 CIRCULAR QUICK ACCESS BADGES (With Interactive Micro-Animations) */}
       <section className="relative z-30 -mt-10 sm:-mt-14 max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
           {t.quickServices.map((item, idx) => (
@@ -211,11 +215,11 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               href={createWhatsAppLink(item.label)}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white hover:bg-red-50/60 border border-stone-200/80 hover:border-red-400/80 rounded-3xl p-4 sm:p-5 shadow-lg shadow-red-950/5 hover:shadow-xl transition-all duration-300 text-center flex flex-col items-center group cursor-pointer"
+              className="cultural-card-hover bg-white hover:bg-red-50/70 border border-stone-200/80 hover:border-red-400/80 rounded-3xl p-4 sm:p-5 shadow-lg shadow-red-950/5 hover:shadow-2xl transition-all duration-300 text-center flex flex-col items-center group cursor-pointer active:scale-95"
             >
-              {/* Circular Icon with rich red ring */}
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-red-50/80 border-2 border-red-300/90 flex items-center justify-center text-2xl sm:text-3xl mb-3 shadow-inner group-hover:scale-110 group-hover:bg-red-100 group-hover:border-red-500 transition-all">
-                <span>{item.icon}</span>
+              {/* Circular Icon with rich red ring, hover scale & rotation */}
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-red-50/80 border-2 border-red-300/90 flex items-center justify-center text-2xl sm:text-3xl mb-3 shadow-inner group-hover:scale-115 group-hover:rotate-6 group-hover:bg-red-100 group-hover:border-red-500 transition-all duration-300">
+                <span className="transition-transform group-hover:scale-110">{item.icon}</span>
               </div>
               <h3 className="font-serif font-black text-xs sm:text-sm text-stone-900 leading-tight group-hover:text-red-700 transition-colors">
                 {item.label}
@@ -228,7 +232,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </section>
 
-      {/* 3. SECTION: ACTUALITÉS / PATRIMONIO VIVO (Red Badges & Links) */}
+      {/* 3. SECTION: ACTUALITÉS / PATRIMONIO VIVO (Hover-Lifts & Image Zooms) */}
       <section id="actualites" className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="flex items-baseline justify-between mb-8 sm:mb-12 border-b border-stone-200/70 pb-4">
@@ -239,10 +243,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-red-700 hover:bg-red-800 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-md transition-all flex items-center gap-2 cursor-pointer"
+            className="shimmer-btn bg-red-700 hover:bg-red-800 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer"
           >
             <span>{t.actualites.btnAll}</span>
-            <ArrowRight size={14} />
+            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
 
@@ -250,16 +254,16 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Column: Large Featured Post */}
-          <div className="lg:col-span-6 bg-white rounded-3xl overflow-hidden border border-stone-200/80 shadow-sm hover:shadow-xl transition-all group text-left">
+          <div className="cultural-card-hover lg:col-span-6 bg-white rounded-3xl overflow-hidden border border-stone-200/80 shadow-sm hover:shadow-2xl transition-all duration-300 group text-left">
             <div className="relative h-64 sm:h-80 w-full overflow-hidden bg-stone-100">
               <Image
                 src={featuredNewsPhoto}
                 alt={t.actualites.featuredTitle}
                 fill
                 sizes="(max-width: 768px) 100vw, 600px"
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                className="object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
               />
-              <div className="absolute top-4 left-4 bg-red-700 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-sm">
+              <div className="absolute top-4 left-4 bg-red-700 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-sm animate-soft-float">
                 {t.actualites.badgeFeatured}
               </div>
             </div>
@@ -276,7 +280,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                   href={createWhatsAppLink(t.actualites.featuredTitle)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-red-700 hover:text-red-800 font-bold text-xs sm:text-sm cursor-pointer group-hover:translate-x-1 transition-transform"
+                  className="inline-flex items-center gap-2 text-red-700 hover:text-red-800 font-bold text-xs sm:text-sm cursor-pointer group-hover:translate-x-2 transition-transform duration-300"
                 >
                   <span>{t.actualites.readMore}</span>
                   <ArrowRight size={14} />
@@ -290,7 +294,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             {t.actualites.items.map((item) => (
               <div
                 key={item.id}
-                className="bg-white rounded-2xl p-5 sm:p-6 border border-stone-200/80 shadow-xs hover:shadow-md hover:border-red-300 transition-all text-left space-y-2 group"
+                className="cultural-card-hover bg-white rounded-2xl p-5 sm:p-6 border border-stone-200/80 shadow-xs hover:shadow-xl hover:border-red-400 transition-all duration-300 text-left space-y-2 group"
               >
                 <div className="inline-block bg-red-700 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                   {item.badge} • {item.date}
@@ -306,7 +310,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                     href={createWhatsAppLink(item.title)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-red-700 hover:text-red-800 font-bold text-xs cursor-pointer group-hover:translate-x-1 transition-transform"
+                    className="inline-flex items-center gap-1.5 text-red-700 hover:text-red-800 font-bold text-xs cursor-pointer group-hover:translate-x-1.5 transition-transform duration-300"
                   >
                     <span>{item.linkText}</span>
                     <ArrowRight size={13} />
@@ -319,7 +323,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </section>
 
-      {/* 4. SECTION: AGENDA (Red Style) */}
+      {/* 4. SECTION: AGENDA (Interactive Showcase & Card Lifts) */}
       <section id="agenda" className="py-16 sm:py-24 px-4 sm:px-8 bg-red-50/30 border-y border-red-200/50">
         <div className="max-w-7xl mx-auto">
           
@@ -341,7 +345,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-red-700 hover:bg-red-800 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-md transition-all inline-flex items-center gap-2 cursor-pointer"
+                  className="shimmer-btn bg-red-700 hover:bg-red-800 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 inline-flex items-center gap-2 cursor-pointer"
                 >
                   <span>{t.agenda.btnAll}</span>
                   <ArrowRight size={14} />
@@ -357,7 +361,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 <button
                   type="button"
                   onClick={() => setActiveEventIndex(prev => (prev === 0 ? t.agenda.events.length - 1 : prev - 1))}
-                  className="w-8 h-8 rounded-full bg-red-700 text-white flex items-center justify-center shadow-xs hover:bg-red-800 active:scale-90 transition-all cursor-pointer"
+                  className="w-8 h-8 rounded-full bg-red-700 text-white flex items-center justify-center shadow-xs hover:bg-red-800 hover:scale-110 active:scale-90 transition-all duration-200 cursor-pointer"
                   title="Anterior"
                 >
                   <ChevronLeft size={16} />
@@ -365,7 +369,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 <button
                   type="button"
                   onClick={() => setActiveEventIndex(prev => (prev === t.agenda.events.length - 1 ? 0 : prev + 1))}
-                  className="w-8 h-8 rounded-full bg-red-700 text-white flex items-center justify-center shadow-xs hover:bg-red-800 active:scale-90 transition-all cursor-pointer"
+                  className="w-8 h-8 rounded-full bg-red-700 text-white flex items-center justify-center shadow-xs hover:bg-red-800 hover:scale-110 active:scale-90 transition-all duration-200 cursor-pointer"
                   title="Siguiente"
                 >
                   <ChevronRight size={16} />
@@ -377,7 +381,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 {t.agenda.events.map((event, idx) => (
                   <div
                     key={event.id}
-                    className="bg-white rounded-3xl overflow-hidden border border-red-200/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group text-left"
+                    className="cultural-card-hover bg-white rounded-3xl overflow-hidden border border-red-200/80 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group text-left"
                   >
                     <div>
                       <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-stone-100">
@@ -386,7 +390,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                           alt={event.title}
                           fill
                           sizes="(max-width: 768px) 100vw, 400px"
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                         
@@ -411,7 +415,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                         href={createWhatsAppLink(event.title)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-red-700 hover:text-red-800 font-bold text-xs cursor-pointer group-hover:translate-x-1 transition-transform"
+                        className="inline-flex items-center gap-1.5 text-red-700 hover:text-red-800 font-bold text-xs cursor-pointer group-hover:translate-x-1.5 transition-transform duration-300"
                       >
                         <span className="w-4 h-4 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-[10px]">➤</span>
                         <span>{t.agenda.readMore}</span>
@@ -428,7 +432,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </section>
 
-      {/* 5. SECTION: LE TERRITOIRE / EL TERRITORIO SAGRADO (Red Button & Red Map Accent) */}
+      {/* 5. SECTION: LE TERRITOIRE / EL TERRITORIO SAGRADO (Animated GPS Beacon & Interactive Pins) */}
       <section id="territorio" className="relative py-20 sm:py-28 px-4 sm:px-8 text-white overflow-hidden">
         {/* Full-width mountain backdrop */}
         <div className="absolute inset-0 z-0">
@@ -460,7 +464,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 href={data.mapsUrl || 'https://maps.google.com'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-red-700 hover:bg-red-600 text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-full shadow-xl shadow-red-950/50 transition-all inline-flex items-center gap-2 cursor-pointer"
+                className="shimmer-btn bg-red-700 hover:bg-red-600 text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-full shadow-xl shadow-red-950/50 hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 inline-flex items-center gap-2 cursor-pointer"
               >
                 <span>{t.territory.btnMap}</span>
                 <Navigation size={15} />
@@ -470,27 +474,44 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
           {/* Right Column: Stylized Territory Map Silhouette with Route Pins */}
           <div className="lg:col-span-6 flex justify-center">
-            <div className="relative w-full max-w-[420px] bg-slate-900/90 backdrop-blur-md rounded-3xl p-6 border-2 border-red-500/30 shadow-2xl space-y-4">
+            <div className="cultural-card-hover relative w-full max-w-[420px] bg-slate-900/90 backdrop-blur-md rounded-3xl p-6 border-2 border-red-500/30 shadow-2xl space-y-4">
               
               <div className="flex items-center justify-between text-xs font-bold text-red-200 pb-2 border-b border-white/10">
                 <span className="flex items-center gap-1.5">
-                  <MapPin size={14} className="text-red-500" />
+                  <MapPin size={14} className="text-red-500 animate-bounce" />
                   {t.territory.cardTitle}
                 </span>
-                <span className="text-[10px] bg-red-600/30 text-red-200 px-2 py-0.5 rounded-full border border-red-500/30">
+                <span className="text-[10px] bg-red-600/30 text-red-200 px-2 py-0.5 rounded-full border border-red-500/30 animate-pulse-subtle">
                   {t.territory.badgeGps}
                 </span>
               </div>
 
-              {/* Interactive Point Badges */}
+              {/* Interactive Point Badges with Hover-Lifts */}
               <div className="space-y-2.5 text-left text-xs">
                 {t.territory.places.map((place) => (
-                  <div key={place.num} className="bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/10 flex items-center justify-between transition-colors">
+                  <div
+                    key={place.num}
+                    className="cultural-card-hover bg-white/10 hover:bg-white/20 active:scale-98 p-2.5 rounded-xl border border-white/10 hover:border-red-400/50 flex items-center justify-between transition-all duration-200 cursor-pointer group/pin"
+                  >
                     <div className="flex items-center gap-2">
-                      <span className="w-5 h-5 rounded-full bg-red-700 text-white font-black text-[10px] flex items-center justify-center">{place.num}</span>
-                      <span className="font-bold text-white">{place.name}</span>
+                      <span className="w-5 h-5 rounded-full bg-red-700 text-white font-black text-[10px] flex items-center justify-center group-hover/pin:scale-110 group-hover/pin:bg-red-600 transition-transform">
+                        {place.num}
+                      </span>
+                      <span className="font-bold text-white group-hover/pin:text-red-200 transition-colors">
+                        {place.name}
+                      </span>
                     </div>
-                    <span className="text-[10px] text-red-300">{place.altitude}</span>
+                    {place.num === 4 ? (
+                      <span className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-bold">
+                        <span className="relative flex h-2 w-2">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        {place.altitude}
+                      </span>
+                    ) : (
+                      <span className="text-[10px] text-red-300 font-mono">{place.altitude}</span>
+                    )}
                   </div>
                 ))}
               </div>
@@ -504,7 +525,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </section>
 
-      {/* 6. TOUR ITINERARY & INCLUSIONS (Red Accents) */}
+      {/* 6. TOUR ITINERARY & INCLUSIONS (Red Accents with Step Highlights) */}
       {data.itinerary && data.itinerary.length > 0 && (
         <section id="itinerario" className="py-16 sm:py-24 px-4 sm:px-8 max-w-4xl mx-auto">
           <div className="text-center mb-10 space-y-2">
@@ -521,15 +542,15 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
           <div className="space-y-4 sm:space-y-5 relative before:absolute before:inset-0 before:left-4 sm:before:left-5 before:w-0.5 before:bg-red-200">
             {data.itinerary.map((item, idx) => (
-              <div key={idx} className="relative flex items-start gap-4 pl-1 sm:pl-2">
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-red-700 text-white font-serif font-black flex items-center justify-center text-xs shrink-0 shadow-md ring-4 ring-white z-10">
+              <div key={idx} className="relative flex items-start gap-4 pl-1 sm:pl-2 group">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-red-700 text-white font-serif font-black flex items-center justify-center text-xs shrink-0 shadow-md ring-4 ring-white z-10 transition-transform group-hover:scale-115">
                   {idx + 1}
                 </div>
-                <div className="bg-white border border-stone-200 rounded-2xl p-4 sm:p-5 w-full shadow-xs text-left">
+                <div className="cultural-card-hover bg-white border border-stone-200 group-hover:border-red-300 rounded-2xl p-4 sm:p-5 w-full shadow-xs hover:shadow-md text-left transition-all">
                   <span className="text-[11px] uppercase font-black tracking-wider text-red-800 bg-red-50 border border-red-200 px-2.5 py-0.5 rounded-md inline-block mb-1.5">
                     {item.step}
                   </span>
-                  <h3 className="font-serif font-bold text-stone-900 text-sm sm:text-base mb-1">{item.title}</h3>
+                  <h3 className="font-serif font-bold text-stone-900 text-sm sm:text-base mb-1 group-hover:text-red-700 transition-colors">{item.title}</h3>
                   <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
                 </div>
               </div>
@@ -538,7 +559,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </section>
       )}
 
-      {/* 7. FEATURES & PACKING LIST */}
+      {/* 7. FEATURES & INCLUSIONS */}
       {data.features && data.features.items && data.features.items.length > 0 && !isFree && (
         <section id="incluye" className="py-14 sm:py-20 px-4 sm:px-8 bg-stone-100 border-t border-stone-200">
           <div className="max-w-6xl mx-auto">
@@ -550,10 +571,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {data.features.items.map((item, idx) => (
-                <div key={idx} className="bg-white p-5 rounded-2xl border border-stone-200 hover:border-red-300 shadow-2xs flex items-start gap-3.5 text-left transition-colors">
-                  <CheckCircle2 className="text-red-700 shrink-0 mt-0.5" size={20} />
+                <div key={idx} className="cultural-card-hover bg-white p-5 rounded-2xl border border-stone-200 hover:border-red-300 shadow-2xs hover:shadow-md flex items-start gap-3.5 text-left transition-all group">
+                  <CheckCircle2 className="text-red-700 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" size={20} />
                   <div>
-                    <h3 className="font-bold text-stone-900 text-sm sm:text-base">{item.split(':')[0]}</h3>
+                    <h3 className="font-bold text-stone-900 text-sm sm:text-base group-hover:text-red-700 transition-colors">{item.split(':')[0]}</h3>
                     <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
                       {item.split(':')[1] || t.features.defaultDesc}
                     </p>
@@ -565,11 +586,11 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </section>
       )}
 
-      {/* 8. CONSEILS PRATIQUES / QUÉ LLEVAR EN LA MOCHILA CULTURAL */}
+      {/* 8. CONSEILS PRATIQUES / QUÉ LLEVAR EN LA MOCHILA CULTURAL (Hover Lifts & Bounces) */}
       <section id="conseils" className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
           <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
-            <Backpack size={13} />
+            <Backpack size={13} className="animate-soft-float" />
             <span>{t.conseils.badge}</span>
           </span>
           <h2 className="text-2xl sm:text-4xl font-serif font-black text-stone-900">
@@ -584,17 +605,17 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           {t.conseils.items.map((item, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-3xl p-6 border border-stone-200/80 hover:border-red-400 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+              className="cultural-card-hover bg-white rounded-3xl p-6 border border-stone-200/80 hover:border-red-400 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group active:scale-95"
             >
               <div className="space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-red-50 border border-red-200 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 rounded-2xl bg-red-50 border border-red-200 flex items-center justify-center text-2xl group-hover:scale-115 group-hover:-rotate-6 transition-transform duration-300">
                   <span>{item.icon}</span>
                 </div>
                 <div>
                   <span className="text-[10px] font-bold text-red-700 uppercase tracking-wider block">
                     {item.subtitle}
                   </span>
-                  <h3 className="font-serif font-black text-stone-900 text-base leading-snug mt-0.5">
+                  <h3 className="font-serif font-black text-stone-900 text-base leading-snug mt-0.5 group-hover:text-red-700 transition-colors">
                     {item.title}
                   </h3>
                 </div>
@@ -605,21 +626,21 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
               <div className="pt-4 mt-4 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-400 font-bold">
                 <span>N° {idx + 1}</span>
-                <span className="text-red-700 font-black">✓ {t.conseils.recommended}</span>
+                <span className="text-red-700 font-black group-hover:scale-105 transition-transform">✓ {t.conseils.recommended}</span>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 9. VOS MÉDIATEURS DU PATRIMOINE / EQUIPO DE HISTORIADORES CERTIFICADOS */}
+      {/* 9. VOS MÉDIATEURS DU PATRIMOINE / EQUIPO DE HISTORIADORES CERTIFICADOS (Beacon Active Status) */}
       <section id="guide" className="py-16 sm:py-24 px-4 sm:px-8 bg-red-50/40 border-t border-red-200/60">
         <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12">
           
           {/* Section Header */}
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
-              <GraduationCap size={14} />
+              <GraduationCap size={14} className="animate-soft-float" />
               <span>{t.guides.badge}</span>
             </span>
             <h2 className="text-2xl sm:text-4xl font-serif font-black text-stone-900">
@@ -642,10 +663,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               return (
                 <div
                   key={guide.id}
-                  className="bg-white rounded-3xl p-6 sm:p-7 border border-red-200/90 hover:border-red-400 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
+                  className="cultural-card-hover bg-white rounded-3xl p-6 sm:p-7 border border-red-200/90 hover:border-red-400 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden active:scale-98"
                 >
                   <div className="space-y-4">
-                    {/* Photo with Badge */}
+                    {/* Photo with Badge & Active Beacon Ring */}
                     <div className="relative h-56 sm:h-64 w-full rounded-2xl overflow-hidden bg-stone-100 shadow-md border-2 border-red-100">
                       <Image
                         src={finalAvatar}
@@ -654,9 +675,15 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                         sizes="(max-width: 1024px) 100vw, 380px"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute bottom-2.5 inset-x-2.5 bg-black/65 backdrop-blur-md text-white text-[10px] font-bold py-1.5 px-3 rounded-xl border border-white/20 flex items-center justify-between">
+                      <div className="absolute bottom-2.5 inset-x-2.5 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold py-1.5 px-3 rounded-xl border border-white/20 flex items-center justify-between">
                         <span className="truncate">{finalCert}</span>
-                        <span className="text-emerald-400 font-black shrink-0">✓ {t.guides.activeStatus}</span>
+                        <span className="flex items-center text-emerald-400 font-black shrink-0">
+                          <span className="relative flex h-2 w-2 mr-1">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                          </span>
+                          {t.guides.activeStatus}
+                        </span>
                       </div>
                     </div>
 
@@ -684,7 +711,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                     {/* Specs Grid */}
                     <div className="grid grid-cols-2 gap-2 pt-1 text-[11px] text-stone-700">
                       {guide.specs.map((sp, sIdx) => (
-                        <div key={sIdx} className="flex items-center gap-1.5 bg-stone-50 p-2 rounded-xl border border-stone-200/80">
+                        <div key={sIdx} className="flex items-center gap-1.5 bg-stone-50 p-2 rounded-xl border border-stone-200/80 group-hover:border-red-200 transition-colors">
                           <span className="text-xs shrink-0">{sp.icon}</span>
                           <span className="truncate font-medium">{sp.label}</span>
                         </div>
@@ -692,13 +719,13 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                     </div>
                   </div>
 
-                  {/* Direct Action Button */}
+                  {/* Direct Action Button with Shimmer */}
                   <div className="pt-5 mt-5 border-t border-stone-100">
                     <a
                       href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent(finalMsg)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-2.5 px-4 rounded-full text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group-hover:shadow-lg"
+                      className="shimmer-btn w-full bg-red-700 hover:bg-red-800 text-white font-bold py-2.5 px-4 rounded-full text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
                     >
                       <MessageCircle size={14} />
                       <span className="truncate">{guide.directBtn}</span>
@@ -731,7 +758,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-stone-200 pb-8 text-left">
             <div className="space-y-2">
               <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
-                <Star size={13} className="fill-red-700 text-red-700" />
+                <Star size={13} className="fill-red-700 text-red-700 animate-soft-float" />
                 <span>{t.livreDor.badge}</span>
               </span>
               <h2 className="text-3xl sm:text-5xl font-serif font-black italic text-stone-900">
@@ -742,8 +769,8 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               </p>
             </div>
 
-            {/* Big Score Card */}
-            <div className="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center gap-4 shrink-0">
+            {/* Big Score Card with Glow Effect */}
+            <div className="cultural-card-hover bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-sm hover:shadow-md flex items-center gap-4 shrink-0">
               <div className="text-center">
                 <span className="text-3xl sm:text-4xl font-serif font-black text-red-900 block leading-none">
                   4.9
@@ -753,7 +780,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               <div className="space-y-1">
                 <div className="flex items-center gap-0.5 text-amber-500">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={15} className="fill-amber-500" />
+                    <Star key={i} size={15} className="fill-amber-500 hover:scale-125 transition-transform" />
                   ))}
                 </div>
                 <span className="text-xs font-bold text-stone-800 block">{t.livreDor.verifiedCount}</span>
@@ -762,12 +789,12 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             </div>
           </div>
 
-          {/* Testimonial Cards Grid */}
+          {/* Testimonial Cards Grid with Hover-Lifts */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
             {t.livreDor.reviews.map((review, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-3xl p-6 sm:p-7 border border-stone-200/80 hover:border-red-400/80 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group space-y-4"
+                className="cultural-card-hover bg-white rounded-3xl p-6 sm:p-7 border border-stone-200/80 hover:border-red-400/80 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group space-y-4 active:scale-98"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -793,7 +820,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                       {review.origin}
                     </span>
                   </div>
-                  <span className="w-7 h-7 rounded-full bg-red-100 text-red-700 flex items-center justify-center font-bold text-xs">
+                  <span className="w-7 h-7 rounded-full bg-red-100 text-red-700 flex items-center justify-center font-bold text-xs group-hover:scale-115 group-hover:bg-red-200 transition-all">
                     ✓
                   </span>
                 </div>
@@ -804,7 +831,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           {/* Sello de confianza */}
           <div className="bg-white rounded-2xl p-4 border border-stone-200 flex flex-wrap items-center justify-center gap-6 text-xs text-stone-600 font-medium">
             <span className="flex items-center gap-1.5 font-bold text-stone-900">
-              <Award size={16} className="text-red-700" />
+              <Award size={16} className="text-red-700 animate-soft-float" />
               {t.livreDor.certBadge}
             </span>
             <span>•</span>
@@ -820,7 +847,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </section>
 
-      {/* 12. TOUR SUPPORT & FAQS (Now receiving active currentLang) */}
+      {/* 12. TOUR SUPPORT & FAQS */}
       <TourSupportAndFaqs
         faqs={data.faqs}
         tourName={data.name || data.hero?.title || 'Tour Cultural'}
@@ -833,13 +860,13 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         lang={currentLang}
       />
 
-      {/* 13. MUNICIPAL & HERITAGE FOOTER BLOCK (Red Border & Accents) */}
+      {/* 13. MUNICIPAL & HERITAGE FOOTER BLOCK */}
       <footer id="contacto" className="bg-white border-t-2 border-red-700 py-10 px-4 sm:px-8 text-stone-700 text-xs">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center text-left">
           
           {/* Column 1: Emblem & Town Name */}
           <div className="md:col-span-3 flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-red-100 border border-red-300 text-red-800 flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-xl bg-red-100 border border-red-300 text-red-800 flex items-center justify-center shrink-0 animate-soft-float">
               <Landmark size={24} />
             </div>
             <div>
@@ -877,7 +904,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             <div className="space-y-1.5">
               <a
                 href={`tel:${cleanPhone}`}
-                className="flex items-center gap-1.5 text-stone-900 hover:text-red-700 font-black text-xs cursor-pointer"
+                className="flex items-center gap-1.5 text-stone-900 hover:text-red-700 font-black text-xs cursor-pointer transition-colors"
               >
                 <Phone size={13} className="text-red-700" />
                 <span>{data.whatsapp || '+51 984 123 456'}</span>
@@ -886,7 +913,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-red-700 hover:bg-red-800 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-2xs cursor-pointer"
+                className="shimmer-btn inline-block bg-red-700 hover:bg-red-800 text-white text-[11px] font-bold px-3.5 py-1 rounded-full shadow-2xs hover:scale-105 active:scale-95 transition-all cursor-pointer"
               >
                 {t.footer.contactBtn}
               </a>
@@ -906,19 +933,19 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </footer>
 
-      {/* 14. STICKY MOBILE BOTTOM BAR */}
+      {/* 14. STICKY MOBILE BOTTOM BAR (With Slide-up entrance & pulsating beacon CTA) */}
       {isMobile && (
-        <div className="fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-red-200 p-3 flex items-center justify-between gap-3 shadow-2xl">
+        <div className="animate-slide-up-mobile fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-red-200 p-3 flex items-center justify-between gap-3 shadow-2xl">
           <div className="min-w-0">
-            <span className="text-[10px] text-stone-500 font-bold block uppercase">{t.mobileSticky.tariffLabel}</span>
-            <span className="text-base font-serif font-black text-red-900">{data.price || 'S/ 85 PEN'}</span>
+            <span className="text-[10px] text-stone-500 font-bold block uppercase tracking-wider">{t.mobileSticky.tariffLabel}</span>
+            <span className="text-base font-serif font-black text-red-900 animate-pulse-subtle inline-block">{data.price || 'S/ 85 PEN'}</span>
           </div>
           <div className="flex items-center gap-2">
             {isQuote ? (
               <button
                 type="button"
                 onClick={() => setIsQuoteOpen(true)}
-                className="bg-red-700 hover:bg-red-600 text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 cursor-pointer"
+                className="shimmer-btn animate-beacon-glow bg-red-700 hover:bg-red-600 text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 cursor-pointer active:scale-95 transition-transform"
               >
                 <FileText size={14} />
                 <span>{t.mobileSticky.quote}</span>
@@ -928,7 +955,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-red-700 hover:bg-red-600 text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 cursor-pointer"
+                className="shimmer-btn animate-beacon-glow bg-red-700 hover:bg-red-600 text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 cursor-pointer active:scale-95 transition-transform"
               >
                 <MessageCircle size={14} />
                 <span>{t.mobileSticky.reserve}</span>
