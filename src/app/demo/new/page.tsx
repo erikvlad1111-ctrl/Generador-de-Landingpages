@@ -2509,16 +2509,10 @@ export default function NewLandingDemo() {
                       </p>
                     </div>
 
-                    {/* Billetterie & Conseils Chips */}
-                    <div className="grid grid-cols-2 gap-1.5 text-left text-[7px]">
-                      <div className="p-1.5 rounded-lg bg-stone-100 border border-stone-200">
-                        <span className="font-bold text-stone-800 block">🎟️ BTC Parques</span>
-                        <span className="text-stone-500">S/ 70 PEN (Directo)</span>
-                      </div>
-                      <div className="p-1.5 rounded-lg bg-stone-100 border border-stone-200">
-                        <span className="font-bold text-stone-800 block">👟 Mochila</span>
-                        <span className="text-stone-500">Calzado antideslizante</span>
-                      </div>
+                    {/* Conseils Mochila Chip */}
+                    <div className="p-1.5 rounded-lg bg-stone-100 border border-stone-200 text-left text-[7px] flex items-center justify-between">
+                      <span className="font-bold text-stone-800">👟 Mochila del Historiador:</span>
+                      <span className="text-stone-500">Calzado con tracción • UV400</span>
                     </div>
 
                     {/* Pricing & CTA */}

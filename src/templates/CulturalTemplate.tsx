@@ -165,12 +165,11 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
           {/* Nav links */}
           {!isMobile && (
-            <div className="hidden xl:flex items-center gap-5 text-[11px] font-bold tracking-wider uppercase text-stone-200">
+            <div className="hidden xl:flex items-center gap-6 text-[11px] font-bold tracking-wider uppercase text-stone-200">
               <a href="#actualites" className="hover:text-red-300 transition-colors">Crónicas</a>
               <a href="#agenda" className="hover:text-red-300 transition-colors">Agenda</a>
               <a href="#territorio" className="hover:text-red-300 transition-colors">Territorio</a>
               <a href="#itinerario" className="hover:text-red-300 transition-colors">Itinerario</a>
-              <a href="#tarifs" className="hover:text-red-300 transition-colors">Tarifas & Boletos</a>
               <a href="#conseils" className="hover:text-red-300 transition-colors">Qué Llevar</a>
               <a href="#guide" className="hover:text-red-300 transition-colors">El Historiador</a>
               <a href="#livre-dor" className="hover:text-red-300 transition-colors">Libro de Oro</a>
@@ -642,153 +641,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </section>
       )}
 
-      {/* 8. BILLETTERIE & TARIFS OFFICIELS (TRANSPARENCIA DE BOLETOS & TARIFAS) */}
-      <section id="tarifs" className="py-16 sm:py-24 px-4 sm:px-8 bg-stone-100/70 border-t border-stone-200">
-        <div className="max-w-6xl mx-auto space-y-10 sm:space-y-12">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
-              <Ticket size={13} />
-              <span>Transparence Tarifaire & Accès</span>
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-serif font-black text-stone-900">
-              Billetterie & Tarifs Officiels
-            </h2>
-            <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-              Distinguez en toute clarté la prestation de guidage spécialisé et les droits d&apos;entrée obligatoires fixés par l&apos;État péruvien.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-            {/* Carte 1: Prestation Cusco Creativos */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-red-700/80 shadow-xl flex flex-col justify-between text-left relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-red-700 text-white text-[10px] font-black uppercase tracking-wider px-4 py-1 rounded-bl-2xl">
-                Prestation Guide & Transport
-              </div>
-
-              <div className="space-y-4">
-                <div>
-                  <span className="text-xs font-serif text-stone-500 font-bold block uppercase">
-                    Honoraires du Circuit
-                  </span>
-                  <div className="flex items-baseline gap-2 mt-1">
-                    <span className="text-3xl sm:text-4xl font-serif font-black text-red-900">
-                      {data.price || 'S/ 85 PEN'}
-                    </span>
-                    <span className="text-xs text-stone-500 font-medium">/ par voyageur</span>
-                  </div>
-                </div>
-
-                <p className="text-xs text-stone-600 leading-relaxed">
-                  Comprend l&apos;intégralité de la logistique culturelle sans mauvaise surprise ni frais dissimulés :
-                </p>
-
-                <ul className="space-y-2.5 text-xs text-stone-700 pt-1">
-                  {[
-                    'Transport touristique officiel climatisé A/R (Prise en charge hôtel)',
-                    'Guide-conférencier bilingue diplômé (Licence Histoire / Archéologie)',
-                    'Récepteurs audio individuels haute fidélité pour une écoute limpide',
-                    'Accompagnement coupe-file et aide à l\'achat rapide des billets',
-                    'Bouteille d\'oxygène médical permanent & trousse de premiers secours'
-                  ].map((srv, idx) => (
-                    <li key={idx} className="flex items-start gap-2.5">
-                      <CheckCircle2 size={16} className="text-red-700 shrink-0 mt-0.5" />
-                      <span>{srv}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="pt-6 mt-6 border-t border-stone-100">
-                {isQuote ? (
-                  <button
-                    type="button"
-                    onClick={() => setIsQuoteOpen(true)}
-                    className="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-3 px-5 rounded-full text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <FileText size={15} />
-                    <span>Demander un devis formel</span>
-                  </button>
-                ) : (
-                  <a
-                    href={whatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-3 px-5 rounded-full text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <MessageCircle size={15} />
-                    <span>Réserver mes places par WhatsApp</span>
-                  </a>
-                )}
-              </div>
-            </div>
-
-            {/* Carte 2: Billets des Monuments (Droits de l'Etat) */}
-            <div className="bg-stone-900 text-white rounded-3xl p-6 sm:p-8 border border-white/10 shadow-xl flex flex-col justify-between text-left space-y-6">
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-black uppercase tracking-wider text-red-300 bg-red-950/80 border border-red-500/30 px-3 py-1 rounded-full">
-                    Régie Publique des Monuments
-                  </span>
-                  <span className="text-[10px] text-stone-400 font-mono">Tarifs Officiels 2026</span>
-                </div>
-
-                <h3 className="text-xl sm:text-2xl font-serif font-black text-white">
-                  Droits d&apos;Entrée aux Parcs Archéologiques
-                </h3>
-
-                <p className="text-xs text-stone-300 leading-relaxed">
-                  Conformément à la législation péruvienne, les billets d&apos;entrée sont nominatifs et réglés directement aux guichets officiels du Ministère de la Culture (COSITUC) :
-                </p>
-
-                <div className="space-y-3 pt-1">
-                  <div className="p-3 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-between">
-                    <div>
-                      <span className="font-bold text-xs text-white block">BTC Circuit I (Sacsayhuamán, Qenqo, Puka Pukara)</span>
-                      <span className="text-[10px] text-stone-400">Billet Touristique Cusco - Valable 1 jour</span>
-                    </div>
-                    <div className="text-right">
-                      <span className="font-serif font-black text-sm text-red-200">S/ 70 PEN</span>
-                      <span className="text-[9px] text-stone-400 block">(S/ 40 Nat.)</span>
-                    </div>
-                  </div>
-
-                  <div className="p-3 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-between">
-                    <div>
-                      <span className="font-bold text-xs text-white block">Temple du Soleil Qorikancha</span>
-                      <span className="text-[10px] text-stone-400">Régie du Couvent Santo Domingo</span>
-                    </div>
-                    <div className="text-right">
-                      <span className="font-serif font-black text-sm text-red-200">S/ 20 PEN</span>
-                      <span className="text-[9px] text-stone-400 block">(Tarif unique)</span>
-                    </div>
-                  </div>
-
-                  <div className="p-3 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-between">
-                    <div>
-                      <span className="font-bold text-xs text-white block">Cathédrale Majeure de Cusco (Optionnel)</span>
-                      <span className="text-[10px] text-stone-400">Musée d&apos;Art Religieux Virreinal</span>
-                    </div>
-                    <div className="text-right">
-                      <span className="font-serif font-black text-sm text-red-200">S/ 40 PEN</span>
-                      <span className="text-[9px] text-stone-400 block">(Étudiant S/ 20)</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-3.5 bg-red-950/40 rounded-2xl border border-red-500/20 text-[11px] text-stone-300 space-y-1">
-                <span className="font-bold text-red-200 flex items-center gap-1.5">
-                  <ShieldCheck size={14} className="text-red-400" />
-                  Garantie Zéro Commission Cachée
-                </span>
-                <p className="text-[10px] text-stone-400 leading-snug">
-                  Notre guide vous accompagne personnellement à chaque guichet pour l&apos;achat immédiat sans surcoût. Paiement par espèces ou carte bancaire au contrôle.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* 9. CONSEILS PRATIQUES / QUÉ LLEVAR EN LA MOCHILA CULTURAL */}
       <section id="conseils" className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto">
