@@ -10,7 +10,7 @@ import {
   Check, Zap, Eye, CheckCircle2, MapPin,
   Shield, Award, Mountain, Users, Languages, CheckSquare, Square,
   Plus, Trash2, XCircle, Backpack, ShieldCheck, Share2, Calendar,
-  Star, ArrowRight, Camera, Crown, ChevronDown, Layers, Navigation
+  Star, ArrowRight, Camera, Crown, ChevronDown, Layers, Navigation, Landmark
 } from 'lucide-react';
 import { ObjectiveType, TemplateType, LanguageType, ItineraryItem, PlanTier, LandingData } from '@/types/landing';
 import { simulateAiGeneration, saveLandingToStorage } from '@/data/landingStore';
@@ -1839,7 +1839,7 @@ export default function NewLandingDemo() {
                 : template === 'premium'
                 ? 'bg-[#0C0A09] text-white border-amber-500/30'
                 : template === 'cultural'
-                ? 'bg-[#1C1917] text-white border-amber-600/30'
+                ? 'bg-[#FFFDF9] text-stone-900 border-amber-300/60'
                 : 'bg-white text-slate-800 border-slate-200'
             }`}>
 
@@ -2335,88 +2335,173 @@ export default function NewLandingDemo() {
                 </div>
               )}
 
-              {/* 5. PLANTILLA CULTURAL & ANCESTRAL */}
+              {/* 5. PLANTILLA CULTURAL & ANCESTRAL (FRENCH HERITAGE COMMUNE STYLE) */}
               {template === 'cultural' && (
-                <div className="flex flex-col min-h-full bg-gradient-to-b from-[#29221C] to-[#1C1917]">
-                  <div className="p-4 space-y-3">
-                    <div className="flex justify-between items-center text-[10px] pb-2 border-b border-amber-600/20">
-                      <span className="text-amber-400 font-black tracking-wider flex items-center gap-1">
-                        <Compass size={12} /> CUSCO ANCESTRAL
-                      </span>
-                      <span className="bg-amber-600/20 text-amber-300 font-bold px-2 py-0.5 rounded-full text-[9px]">
-                        HISTORIA & ARQUEOLOGÍA
-                      </span>
-                    </div>
-
-                    <div className="relative h-44 rounded-2xl overflow-hidden border border-amber-600/30">
-                      <Image src={activeHeroImg} alt="Cultural" fill sizes="400px" className="object-cover opacity-80" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#1C1917] via-transparent to-transparent" />
-                      <div className="absolute bottom-2 left-2 right-2">
-                        <span className="text-[9px] text-amber-300 font-bold uppercase tracking-wider block">Arquitectura Megalítica Inca</span>
-                        <h3 className="text-sm font-black text-white line-clamp-1">{name || 'City Tour & 4 Ruinas'}</h3>
+                <div className="flex flex-col min-h-full bg-[#FFFDF9] text-stone-800">
+                  {/* Sunset Panoramic Hero with Golden Curve */}
+                  <div className="relative bg-stone-900 text-white overflow-hidden shrink-0">
+                    <div className="relative h-44 w-full">
+                      <Image 
+                        src={activeHeroImg} 
+                        alt="Cusco Ancestral" 
+                        fill 
+                        sizes="400px" 
+                        className="object-cover brightness-90" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-b from-stone-950/60 via-stone-900/30 to-amber-950/70" />
+                      
+                      {/* Top Header */}
+                      <div className="absolute top-2.5 inset-x-3 flex justify-between items-center text-[10px]">
+                        <span className="bg-amber-500/20 backdrop-blur-md px-2 py-0.5 rounded-full text-amber-200 font-serif font-black flex items-center gap-1 border border-amber-400/30">
+                          <Landmark size={11} /> Qosqo Ancestral
+                        </span>
+                        <span className="bg-black/50 backdrop-blur-md text-amber-300 px-2 py-0.5 rounded-full font-bold text-[9px]">
+                          Patrimoine UNESCO
+                        </span>
                       </div>
-                    </div>
 
-                    <div className="p-2 rounded-xl bg-stone-900 border border-stone-800 text-[10px] space-y-1">
-                      <p className="text-stone-300">
-                        Guía Especialista: <strong className="text-white">{guideName || 'Lucía Condori'}</strong>
-                      </p>
-                      <p className="text-[9px] text-amber-400">
-                        {guideCert || 'Arqueóloga Colegiada DIRCETUR'}
-                      </p>
-                    </div>
+                      {/* Central Grand Serif Title */}
+                      <div className="absolute inset-x-4 top-10 text-center space-y-0.5">
+                        <h3 className="text-xl font-serif font-black italic drop-shadow-md text-white">
+                          {name || 'Qosqo Imperial'}
+                        </h3>
+                        <p className="text-[9px] text-amber-100 font-serif italic drop-shadow">
+                          Entre montañas sagradas y tradición milenaria
+                        </p>
 
-                    <div className="space-y-2 pt-1">
-                      <div className="flex items-baseline justify-between text-xs">
-                        <span className="text-stone-400">Tarifa Promocional:</span>
-                        <span className="text-base font-black text-amber-400">{price || 'S/ 85 PEN'}</span>
+                        {/* 3 Circular Mini Action Buttons */}
+                        <div className="pt-1.5 flex items-center justify-center gap-2">
+                          <span className="w-6 h-6 rounded-full bg-black/40 border border-white/30 text-white flex items-center justify-center text-[9px]">
+                            🔍
+                          </span>
+                          <span className="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center text-[9px]">
+                            ✉️
+                          </span>
+                          <span className="w-6 h-6 rounded-full bg-black/40 border border-white/30 text-white flex items-center justify-center text-[9px]">
+                            📞
+                          </span>
+                        </div>
                       </div>
-                      <div className="w-full bg-[#D97706] hover:bg-[#b45309] text-white font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
-                        <Compass size={14} />
-                        <span>{objective === 'quote' ? 'Solicitar Horarios' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Confirmar por WhatsApp'}</span>
+
+                      {/* Golden Wave Transition Shape */}
+                      <div className="absolute -bottom-0.5 inset-x-0 pointer-events-none">
+                        <svg viewBox="0 0 400 35" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
+                          <path d="M0,15 C90,30 150,5 240,20 C320,32 370,18 400,10 L400,35 L0,35 Z" fill="#F3B356" />
+                          <path d="M0,22 C100,35 170,12 270,26 C340,35 380,24 400,20 L400,35 L0,35 Z" fill="#FFFDF9" />
+                        </svg>
                       </div>
                     </div>
                   </div>
 
-                  {/* Mini Tour Catalog Section */}
-                  <div className="p-3 bg-[#14110E] border-t border-amber-600/20 space-y-2 flex-1">
-                    <div className="flex items-center justify-between text-[10px]">
-                      <span className="font-extrabold text-amber-200">Catálogo de Tours Exclusivos</span>
-                      <span className="text-amber-500 font-bold text-[9px]">Ver todos (6)</span>
+                  <div className="p-3.5 space-y-3.5">
+                    {/* 5 Circular Quick Access Badges (Matching reference image) */}
+                    <div className="grid grid-cols-5 gap-1 text-center -mt-3 relative z-10">
+                      {[
+                        { icon: '🎫', label: 'Boleto' },
+                        { icon: '📜', label: 'Guía' },
+                        { icon: '🕯️', label: 'Ritual' },
+                        { icon: '🏛️', label: 'Templos' },
+                        { icon: '📞', label: 'Reserva' }
+                      ].map((item, idx) => (
+                        <div key={idx} className="bg-white rounded-2xl p-1.5 border border-stone-200 shadow-xs flex flex-col items-center">
+                          <span className="text-sm">{item.icon}</span>
+                          <span className="text-[8px] font-serif font-black text-stone-800 leading-tight mt-0.5 truncate w-full">
+                            {item.label}
+                          </span>
+                        </div>
+                      ))}
                     </div>
 
-                    <div className="bg-stone-900/90 rounded-xl p-2 border border-amber-600/20 flex items-center gap-2.5">
-                      <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-stone-800 shrink-0">
-                        <Image src={activeHeroImg} alt="Tour" fill sizes="80px" className="object-cover" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-[11px] font-black text-white truncate">{name || 'City Tour & 4 Ruinas'}</h4>
-                        <p className="text-[9px] text-stone-400">{duration || 'Full Day'} • {destination || 'Cusco'}</p>
-                        <span className="text-xs font-black text-amber-400">{price || 'S/ 85 PEN'}</span>
-                      </div>
-                    </div>
-
-                    {/* Mini Oficina Física & Google Maps Card */}
-                    <div className="p-2.5 bg-stone-900/95 rounded-xl border border-amber-600/20 space-y-1 text-[9px]">
-                      <div className="flex items-center gap-1.5 text-amber-400 font-bold">
-                        <MapPin size={11} className="text-amber-400 shrink-0" />
-                        <span>Oficina Física en Cusco:</span>
-                      </div>
-                      <p className="text-stone-300 line-clamp-1 text-[8px] pl-4">
-                        {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
-                      </p>
-                      <div className="flex items-center justify-between pt-1 pl-4 text-[8px]">
-                        <span className="text-emerald-400 font-semibold">{officeHours || 'Lun-Dom: 8am - 8pm'}</span>
-                        <span className="text-blue-400 font-bold flex items-center gap-0.5">
-                          <Navigation size={8} /> Maps Conectado
+                    {/* Actualités / Crónicas Section */}
+                    <div className="space-y-1.5 text-left">
+                      <div className="flex items-baseline justify-between">
+                        <span className="font-serif font-black italic text-xs text-stone-900">
+                          Actualités
+                        </span>
+                        <span className="text-[8px] font-bold bg-stone-900 text-white px-2 py-0.5 rounded-full">
+                          Toute l&apos;actualité
                         </span>
                       </div>
+
+                      <div className="bg-white rounded-xl p-2 border border-stone-200 shadow-2xs space-y-1">
+                        <span className="text-[8px] font-black uppercase text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded">
+                          Temporada 2026
+                        </span>
+                        <h4 className="text-[10px] font-serif font-black text-stone-900 leading-snug line-clamp-1">
+                          Nuevo sendero señalizado por los templos y miradores incas
+                        </h4>
+                        <p className="text-[8px] text-stone-500 line-clamp-1">
+                          Guiado histórico con arqueólogos colegiados DIRCETUR.
+                        </p>
+                      </div>
                     </div>
 
-                    {/* Certifications Footer */}
-                    <div className="pt-1 flex items-center justify-center gap-3 text-[8px] text-amber-400/80 font-bold">
+                    {/* Agenda Section */}
+                    <div className="space-y-1.5 text-left">
+                      <div className="flex items-baseline justify-between">
+                        <span className="font-serif font-black italic text-xs text-stone-900">
+                          Agenda
+                        </span>
+                        <span className="text-[8px] text-amber-700 font-bold">
+                          Événements (2)
+                        </span>
+                      </div>
+
+                      <div className="bg-amber-50/60 rounded-xl p-2 border border-amber-200/80 flex items-center gap-2">
+                        <div className="w-10 h-10 rounded-lg overflow-hidden bg-stone-200 shrink-0 relative">
+                          <Image src={activeHeroImg} alt="Agenda" fill sizes="40px" className="object-cover" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <span className="text-[8px] font-black text-amber-800 bg-amber-200/60 px-1.5 py-0.2 rounded">
+                            24 Junio - Solsticio
+                          </span>
+                          <h5 className="text-[9px] font-serif font-black text-stone-900 truncate">
+                            Inti Raymi: La Fiesta del Sol
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Le Territoire / Map Card */}
+                    <div className="bg-slate-900 text-white rounded-xl p-2.5 space-y-1.5 text-left border border-white/10">
+                      <div className="flex items-center justify-between">
+                        <span className="font-serif font-black italic text-xs text-amber-200">
+                          Le territoire
+                        </span>
+                        <span className="text-[8px] text-rose-400 font-bold">
+                          Cartographie GPS
+                        </span>
+                      </div>
+                      <p className="text-[8px] text-stone-300 line-clamp-1">
+                        Qorikancha • Sacsayhuamán • Qenqo • San Blas
+                      </p>
+                    </div>
+
+                    {/* Pricing & CTA */}
+                    <div className="space-y-2 pt-1">
+                      <div className="flex items-baseline justify-between text-xs">
+                        <span className="text-stone-500 font-serif">Tarifa Cultural:</span>
+                        <span className="text-base font-serif font-black text-amber-900">{price || 'S/ 85 PEN'}</span>
+                      </div>
+                      <div className="w-full bg-[#B45309] hover:bg-[#92400E] text-white font-bold py-2.5 px-3 rounded-full text-center text-xs shadow-md flex items-center justify-center gap-1.5">
+                        <Compass size={13} />
+                        <span>{objective === 'quote' ? 'Demander un devis' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Réserver par WhatsApp'}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Municipal / Heritage Footer Block */}
+                  <div className="p-3 bg-white border-t border-amber-200/80 space-y-1.5 text-[8px] text-stone-600 text-left">
+                    <div className="flex items-center justify-between font-serif font-bold text-stone-900">
+                      <span>🏛️ Cusco Patrimonial</span>
+                      <span className="text-amber-700">DIRCETUR Oficial</span>
+                    </div>
+                    <p className="text-stone-500 line-clamp-1">
+                      {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
+                    </p>
+                    <div className="flex items-center justify-between text-[7px] text-stone-400 font-bold pt-0.5">
+                      <span>✓ PATRIMONIO UNESCO</span>
                       <span>✓ MINCETUR</span>
-                      <span>✓ DIRCETUR</span>
                       <span>✓ SAFE TRAVELS</span>
                     </div>
                   </div>
