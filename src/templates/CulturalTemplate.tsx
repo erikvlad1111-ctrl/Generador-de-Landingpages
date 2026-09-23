@@ -6,12 +6,13 @@ import {
   Landmark, Compass, Users, CheckCircle2, MessageCircle, MapPin, Calendar, 
   Star, HelpCircle, FileText, ShieldCheck, XCircle, Backpack, Search, Mail, 
   Phone, ArrowRight, ChevronLeft, ChevronRight, BookOpen, Clock, Sparkles, 
-  Navigation, Eye, Share2, Award, Check, Ticket, GraduationCap, Quote, Sun, Coins
+  Navigation, Eye, Share2, Award, Check, Ticket, GraduationCap, Quote, Sun, Coins, Globe
 } from 'lucide-react';
-import { LandingData } from '@/types/landing';
+import { LandingData, LanguageType } from '@/types/landing';
 import QuoteModal from '@/components/common/QuoteModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
+import { CULTURAL_I18N } from './culturalI18n';
 
 interface TemplateProps {
   data: LandingData;
@@ -19,91 +20,17 @@ interface TemplateProps {
   viewMode?: 'desktop' | 'tablet' | 'mobile';
 }
 
-// 5 Quick Access Circles overlapping the organic red curve (Matching user reference image in red style)
-const QUICK_SERVICES = [
-  {
-    icon: '🎫',
-    label: 'Boleto Turístico',
-    sub: 'Accesos Oficiales',
-    category: 'Ingresos'
-  },
-  {
-    icon: '📜',
-    label: 'Guía Colegiado',
-    sub: 'DIRCETUR Oficial',
-    category: 'Historia'
-  },
-  {
-    icon: '🕯️',
-    label: 'Ceremonias Andinas',
-    sub: 'Pago a la Pachamama',
-    category: 'Rituales'
-  },
-  {
-    icon: '🏛️',
-    label: 'Templos & Palacios',
-    sub: 'Arquitectura Inca',
-    category: 'Megalítico'
-  },
-  {
-    icon: '📞',
-    label: 'Asistencia 24/7',
-    sub: 'Horarios & Reservas',
-    category: 'Soporte'
-  }
-];
-
-// Actualités / Heritage news items (Styled with the vibrant crimson red from reference image)
-const ACTUALITES_ITEMS = [
-  {
-    id: 1,
-    badge: 'Historia & Arqueología',
-    date: 'Temporada 2026',
-    title: 'Secretos del Qorikancha y el templo dorado del Sol',
-    desc: 'Un recorrido guiado por las cimentaciones megalíticas más perfectas del imperio incaico y su fusión con el convento virreinal de Santo Domingo.',
-    linkText: 'Leer crónica del templo'
-  },
-  {
-    id: 2,
-    badge: 'Conservación & Muros',
-    date: 'Patrimonio UNESCO',
-    title: 'La piedra de los 12 ángulos y el palacio de Inca Roca',
-    desc: 'Análisis arquitectónico in situ de la calle Hatun Rumiyoc con guías historiadores certificados de la Universidad San Antonio Abad.',
-    linkText: 'Ver detalles de ruta'
-  },
-  {
-    id: 3,
-    badge: 'Cultura Viva',
-    date: 'Tradición Andina',
-    title: 'Ceremonia de ofrenda a la Pachamama y textilería ancestral',
-    desc: 'Aprende sobre la cosmovisión andina, los tres mundos (Hanan, Kay, Uku Pacha) y los tintes vegetales naturales de los valles cusqueños.',
-    linkText: 'Consultar horarios'
-  }
-];
-
-// Agenda events (Matching user reference image in red style)
-const AGENDA_EVENTS = [
-  {
-    id: 'inti-raymi',
-    date: '24 Junio 2026',
-    badge: 'Solsticio de Invierno',
-    title: 'Inti Raymi: La Gran Fiesta del Sol',
-    desc: 'Celebración milenaria en Sacsayhuamán con más de 700 actores en escena reviviendo el mayor tributo al dios Inti.',
-    image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=600&auto=format&fit=crop'
-  },
-  {
-    id: 'city-tour-ancestral',
-    date: 'Salidas Diarias Confirmadas',
-    badge: 'Mañanas & Tardes',
-    title: 'Circuito de los 4 Templos: Qenqo & Puka Pukara',
-    desc: 'Visita guiada a los centros ceremoniales, laberintos de roca caliza y fortalezas de control militar del imperio.',
-    image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=600&auto=format&fit=crop'
-  }
+const AGENDA_IMAGES = [
+  'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=600&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=600&auto=format&fit=crop'
 ];
 
 export default function CulturalTemplate({ data, viewMode = 'desktop' }: TemplateProps) {
+  const [currentLang, setCurrentLang] = useState<LanguageType>(data.language || 'es');
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [activeEventIndex, setActiveEventIndex] = useState(0);
+
+  const t = CULTURAL_I18N[currentLang] || CULTURAL_I18N.es;
 
   const isQuote = data.objective === 'quote';
   const isMobile = viewMode === 'mobile';
@@ -111,7 +38,6 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const tier = data.tier || 'advance';
   const isFree = tier === 'free';
-  const isAdvance = tier === 'advance';
 
   const encodedMsg = encodeURIComponent(
     `Hola ${data.guideName || 'Guía Historiador'}, deseo información y disponibilidad para el tour cultural "${data.name || data.hero?.title || 'Cusco Ancestral'}".`
@@ -123,7 +49,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
     return `https://wa.me/${cleanPhone}?text=${msg}`;
   };
 
-  // Grand panoramic sunset hero photo over mountain valley (matching user reference image)
+  // Grand panoramic sunset hero photo over mountain valley
   const heroSunsetBg = data.heroImage || 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop';
   const featuredNewsPhoto = data.galleryImages?.[0] || 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1200&auto=format&fit=crop';
 
@@ -150,54 +76,74 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         <nav className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-4 sm:py-5 flex items-center justify-between border-b border-white/15">
           {/* Official Emblem / Coat of arms */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-red-600/30 backdrop-blur-md border border-red-400/50 flex items-center justify-center text-red-200 shadow-md">
+            <div className="w-10 h-10 rounded-xl bg-red-600/30 backdrop-blur-md border border-red-400/50 flex items-center justify-center text-red-200 shadow-md shrink-0">
               <Landmark size={22} />
             </div>
             <div className="text-left leading-tight">
               <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-red-200">
-                Qosqo Ancestral
+                {t.emblemTitle}
               </span>
               <span className="text-[10px] text-stone-300 tracking-wider font-sans block">
-                Patrimonio Cultural de la Humanidad
+                {t.emblemSub}
               </span>
             </div>
           </div>
 
           {/* Nav links */}
           {!isMobile && (
-            <div className="hidden xl:flex items-center gap-6 text-[11px] font-bold tracking-wider uppercase text-stone-200">
-              <a href="#actualites" className="hover:text-red-300 transition-colors">Crónicas</a>
-              <a href="#agenda" className="hover:text-red-300 transition-colors">Agenda</a>
-              <a href="#territorio" className="hover:text-red-300 transition-colors">Territorio</a>
-              <a href="#itinerario" className="hover:text-red-300 transition-colors">Itinerario</a>
-              <a href="#conseils" className="hover:text-red-300 transition-colors">Qué Llevar</a>
-              <a href="#guide" className="hover:text-red-300 transition-colors">El Historiador</a>
-              <a href="#livre-dor" className="hover:text-red-300 transition-colors">Libro de Oro</a>
-              <a href="#contacto" className="hover:text-red-300 transition-colors">Oficina</a>
+            <div className="hidden xl:flex items-center gap-5 text-[11px] font-bold tracking-wider uppercase text-stone-200">
+              <a href="#actualites" className="hover:text-red-300 transition-colors">{t.nav.cronicas}</a>
+              <a href="#agenda" className="hover:text-red-300 transition-colors">{t.nav.agenda}</a>
+              <a href="#territorio" className="hover:text-red-300 transition-colors">{t.nav.territorio}</a>
+              <a href="#itinerario" className="hover:text-red-300 transition-colors">{t.nav.itinerario}</a>
+              <a href="#conseils" className="hover:text-red-300 transition-colors">{t.nav.conseils}</a>
+              <a href="#guide" className="hover:text-red-300 transition-colors">{t.nav.guide}</a>
+              <a href="#livre-dor" className="hover:text-red-300 transition-colors">{t.nav.reviews}</a>
+              <a href="#contacto" className="hover:text-red-300 transition-colors">{t.nav.contact}</a>
             </div>
           )}
 
-          {/* Action CTA */}
-          <div className="flex items-center gap-2">
+          {/* Action CTAs & Language Switcher */}
+          <div className="flex items-center gap-2.5">
+            {/* Language Selector Pill */}
+            <div className="flex items-center bg-black/45 backdrop-blur-md rounded-full border border-white/20 p-0.5 text-[10px] sm:text-[11px] font-bold">
+              {(['es', 'en', 'fr', 'pt', 'it'] as LanguageType[]).map((langKey) => (
+                <button
+                  key={langKey}
+                  type="button"
+                  onClick={() => setCurrentLang(langKey)}
+                  className={`px-2 py-1 rounded-full uppercase transition-all cursor-pointer ${
+                    currentLang === langKey
+                      ? 'bg-red-700 text-white shadow-xs font-black scale-105'
+                      : 'text-stone-300 hover:text-white hover:bg-white/10'
+                  }`}
+                  title={`Idioma: ${langKey.toUpperCase()}`}
+                >
+                  {langKey}
+                </button>
+              ))}
+            </div>
+
+            {/* Action CTA */}
             {isQuote ? (
               <button
                 type="button"
                 onClick={() => setIsQuoteOpen(true)}
-                className="bg-red-700 hover:bg-red-600 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-xs shadow-md shadow-red-900/30 transition-all flex items-center gap-1.5 cursor-pointer"
+                className="bg-red-700 hover:bg-red-600 text-white px-3.5 sm:px-5 py-2 rounded-full font-bold text-xs shadow-md shadow-red-900/30 transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 <FileText size={14} />
-                <span>Cotizar Visita</span>
+                <span>{t.cta.quote}</span>
               </button>
             ) : (
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-red-700 hover:bg-red-600 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-xs shadow-md shadow-red-900/30 transition-all flex items-center gap-1.5 cursor-pointer"
+                className="bg-red-700 hover:bg-red-600 text-white px-3.5 sm:px-5 py-2 rounded-full font-bold text-xs shadow-md shadow-red-900/30 transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 <MessageCircle size={14} />
-                <span className="hidden sm:inline">WhatsApp</span>
-                <span className="sm:hidden">Reservar</span>
+                <span className="hidden sm:inline">{t.cta.whatsapp}</span>
+                <span className="sm:hidden">{t.cta.reserve}</span>
               </a>
             )}
           </div>
@@ -209,7 +155,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             {data.hero?.title || 'Cusco Imperial'}
           </h1>
           <p className="text-base sm:text-xl text-red-100 font-serif max-w-2xl mx-auto drop-shadow-md">
-            {data.hero?.subtitle || 'Entre montañas sagradas y tradición milenaria, bienvenido a la capital arqueológica de América.'}
+            {data.hero?.subtitle || t.heroSubtitleDefault}
           </p>
 
           {/* 3 Circular Quick Action Icons (Center matching reference image with red centerpiece) */}
@@ -217,7 +163,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             <a
               href="#territorio"
               className="w-10 h-10 rounded-full bg-black/40 hover:bg-red-900/80 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 cursor-pointer"
-              title="Explorar el Territorio"
+              title={t.cta.exploreTerritory}
             >
               <Search size={16} />
             </a>
@@ -226,14 +172,14 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               target="_blank"
               rel="noopener noreferrer"
               className="w-10 h-10 rounded-full bg-red-700 hover:bg-red-600 text-white flex items-center justify-center shadow-lg shadow-red-900/40 transition-transform hover:scale-110 cursor-pointer"
-              title="Escribir por WhatsApp"
+              title={t.cta.writeWhatsApp}
             >
               <Mail size={16} />
             </a>
             <a
               href={`tel:${cleanPhone}`}
               className="w-10 h-10 rounded-full bg-black/40 hover:bg-red-900/80 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 cursor-pointer"
-              title="Llamar a la Oficina"
+              title={t.cta.callOffice}
             >
               <Phone size={16} />
             </a>
@@ -259,7 +205,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
       {/* 2. OVERLAPPING 5 CIRCULAR QUICK ACCESS BADGES (Red Style) */}
       <section className="relative z-30 -mt-10 sm:-mt-14 max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
-          {QUICK_SERVICES.map((item, idx) => (
+          {t.quickServices.map((item, idx) => (
             <a
               key={idx}
               href={createWhatsAppLink(item.label)}
@@ -287,7 +233,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         {/* Section Header */}
         <div className="flex items-baseline justify-between mb-8 sm:mb-12 border-b border-stone-200/70 pb-4">
           <h2 className="text-3xl sm:text-5xl font-serif font-black italic text-stone-900">
-            Actualités
+            {t.actualites.title}
           </h2>
           <a
             href={whatsappUrl}
@@ -295,7 +241,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             rel="noopener noreferrer"
             className="bg-red-700 hover:bg-red-800 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-md transition-all flex items-center gap-2 cursor-pointer"
           >
-            <span>Toutes les actualités</span>
+            <span>{t.actualites.btnAll}</span>
             <ArrowRight size={14} />
           </a>
         </div>
@@ -308,31 +254,31 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             <div className="relative h-64 sm:h-80 w-full overflow-hidden bg-stone-100">
               <Image
                 src={featuredNewsPhoto}
-                alt="Sendero Arqueológico"
+                alt={t.actualites.featuredTitle}
                 fill
                 sizes="(max-width: 768px) 100vw, 600px"
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute top-4 left-4 bg-red-700 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-sm">
-                Publicado: Temporada 2026
+                {t.actualites.badgeFeatured}
               </div>
             </div>
 
             <div className="p-6 sm:p-7 space-y-3">
               <h3 className="font-serif font-black text-xl sm:text-2xl text-stone-900 group-hover:text-red-700 transition-colors leading-tight">
-                Un nuevo sendero señalizado al corazón de los templos incas
+                {t.actualites.featuredTitle}
               </h3>
               <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-                El circuito guiado hacia las alturas sagradas del Cusco ofrece vistas incomparables sobre la ciudad imperial, los muros ciclópeos de Sacsayhuamán y las huacas de aclimatación.
+                {t.actualites.featuredDesc}
               </p>
               <div className="pt-2">
                 <a
-                  href={createWhatsAppLink('Sendero Señalizado Templos Incas')}
+                  href={createWhatsAppLink(t.actualites.featuredTitle)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-red-700 hover:text-red-800 font-bold text-xs sm:text-sm cursor-pointer group-hover:translate-x-1 transition-transform"
                 >
-                  <span>Lire la suite / Reservar</span>
+                  <span>{t.actualites.readMore}</span>
                   <ArrowRight size={14} />
                 </a>
               </div>
@@ -341,7 +287,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
           {/* Right Column: 3 Stacked Chronicle Cards */}
           <div className="lg:col-span-6 space-y-6">
-            {ACTUALITES_ITEMS.map((item) => (
+            {t.actualites.items.map((item) => (
               <div
                 key={item.id}
                 className="bg-white rounded-2xl p-5 sm:p-6 border border-stone-200/80 shadow-xs hover:shadow-md hover:border-red-300 transition-all text-left space-y-2 group"
@@ -382,13 +328,13 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             {/* Left side: Heading & Intro Paragraph */}
             <div className="lg:col-span-4 text-left space-y-4">
               <h2 className="text-3xl sm:text-5xl font-serif font-black italic text-stone-900">
-                Agenda
+                {t.agenda.title}
               </h2>
               <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-                Tout au long de l&apos;année, Cusco s&apos;anime au rythme de ses événements : fêtes locales, balades historiques, célébrations ancestrales et visites guidées.
+                {t.agenda.desc1}
               </p>
               <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-                Retrouvez ici les prochaines dates à noter dans votre agenda pour vivre l&apos;histoire en direct.
+                {t.agenda.desc2}
               </p>
               <div className="pt-2">
                 <a
@@ -397,7 +343,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                   rel="noopener noreferrer"
                   className="bg-red-700 hover:bg-red-800 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-md transition-all inline-flex items-center gap-2 cursor-pointer"
                 >
-                  <span>TOUS LES ÉVÉNEMENTS</span>
+                  <span>{t.agenda.btnAll}</span>
                   <ArrowRight size={14} />
                 </a>
               </div>
@@ -410,7 +356,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               <div className="flex justify-end gap-2 pr-1">
                 <button
                   type="button"
-                  onClick={() => setActiveEventIndex(prev => (prev === 0 ? AGENDA_EVENTS.length - 1 : prev - 1))}
+                  onClick={() => setActiveEventIndex(prev => (prev === 0 ? t.agenda.events.length - 1 : prev - 1))}
                   className="w-8 h-8 rounded-full bg-red-700 text-white flex items-center justify-center shadow-xs hover:bg-red-800 active:scale-90 transition-all cursor-pointer"
                   title="Anterior"
                 >
@@ -418,7 +364,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 </button>
                 <button
                   type="button"
-                  onClick={() => setActiveEventIndex(prev => (prev === AGENDA_EVENTS.length - 1 ? 0 : prev + 1))}
+                  onClick={() => setActiveEventIndex(prev => (prev === t.agenda.events.length - 1 ? 0 : prev + 1))}
                   className="w-8 h-8 rounded-full bg-red-700 text-white flex items-center justify-center shadow-xs hover:bg-red-800 active:scale-90 transition-all cursor-pointer"
                   title="Siguiente"
                 >
@@ -428,7 +374,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
               {/* 2 Event Cards Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {AGENDA_EVENTS.map((event) => (
+                {t.agenda.events.map((event, idx) => (
                   <div
                     key={event.id}
                     className="bg-white rounded-3xl overflow-hidden border border-red-200/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group text-left"
@@ -436,7 +382,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                     <div>
                       <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-stone-100">
                         <Image
-                          src={event.image}
+                          src={AGENDA_IMAGES[idx % AGENDA_IMAGES.length]}
                           alt={event.title}
                           fill
                           sizes="(max-width: 768px) 100vw, 400px"
@@ -468,7 +414,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                         className="inline-flex items-center gap-1.5 text-red-700 hover:text-red-800 font-bold text-xs cursor-pointer group-hover:translate-x-1 transition-transform"
                       >
                         <span className="w-4 h-4 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-[10px]">➤</span>
-                        <span>Lire la suite / Réserver</span>
+                        <span>{t.agenda.readMore}</span>
                       </a>
                     </div>
                   </div>
@@ -501,13 +447,13 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           {/* Left Text Column */}
           <div className="lg:col-span-6 text-left space-y-5">
             <h2 className="text-4xl sm:text-6xl font-serif font-black italic tracking-tight text-white">
-              Le territoire
+              {t.territory.title}
             </h2>
             <p className="text-sm sm:text-base text-stone-200 leading-relaxed font-serif">
-              Entre traditions vivantes au pied de la montagne andine, Cusco séduit par son authenticité, ses temples sacrés et son cadre naturel préservé.
+              {t.territory.desc1}
             </p>
             <p className="text-xs sm:text-sm text-stone-300 leading-relaxed font-normal">
-              Grâce à la carte interactive, explorez les lieux emblématiques : Qorikancha, Sacsayhuamán, miradors de San Blas, sentiers historiques et trésors du quotidien. Une façon simple et visuelle de mieux connaître le territoire inca.
+              {t.territory.desc2}
             </p>
             <div className="pt-2">
               <a
@@ -516,7 +462,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 rel="noopener noreferrer"
                 className="bg-red-700 hover:bg-red-600 text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-full shadow-xl shadow-red-950/50 transition-all inline-flex items-center gap-2 cursor-pointer"
               >
-                <span>VOIR LA CARTE INTERACTIVE</span>
+                <span>{t.territory.btnMap}</span>
                 <Navigation size={15} />
               </a>
             </div>
@@ -529,50 +475,28 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               <div className="flex items-center justify-between text-xs font-bold text-red-200 pb-2 border-b border-white/10">
                 <span className="flex items-center gap-1.5">
                   <MapPin size={14} className="text-red-500" />
-                  Cartographie des Temples
+                  {t.territory.cardTitle}
                 </span>
                 <span className="text-[10px] bg-red-600/30 text-red-200 px-2 py-0.5 rounded-full border border-red-500/30">
-                  GPS Cusco
+                  {t.territory.badgeGps}
                 </span>
               </div>
 
               {/* Interactive Point Badges */}
               <div className="space-y-2.5 text-left text-xs">
-                <div className="bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/10 flex items-center justify-between transition-colors">
-                  <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-red-700 text-white font-black text-[10px] flex items-center justify-center">1</span>
-                    <span className="font-bold text-white">Qorikancha (Temple du Soleil)</span>
+                {t.territory.places.map((place) => (
+                  <div key={place.num} className="bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/10 flex items-center justify-between transition-colors">
+                    <div className="flex items-center gap-2">
+                      <span className="w-5 h-5 rounded-full bg-red-700 text-white font-black text-[10px] flex items-center justify-center">{place.num}</span>
+                      <span className="font-bold text-white">{place.name}</span>
+                    </div>
+                    <span className="text-[10px] text-red-300">{place.altitude}</span>
                   </div>
-                  <span className="text-[10px] text-red-300">3,400 m</span>
-                </div>
-
-                <div className="bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/10 flex items-center justify-between transition-colors">
-                  <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-red-700 text-white font-black text-[10px] flex items-center justify-center">2</span>
-                    <span className="font-bold text-white">Sacsayhuamán Megalithique</span>
-                  </div>
-                  <span className="text-[10px] text-red-300">3,700 m</span>
-                </div>
-
-                <div className="bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/10 flex items-center justify-between transition-colors">
-                  <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-red-700 text-white font-black text-[10px] flex items-center justify-center">3</span>
-                    <span className="font-bold text-white">Qenqo & Puka Pukara</span>
-                  </div>
-                  <span className="text-[10px] text-red-300">3,800 m</span>
-                </div>
-
-                <div className="bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/10 flex items-center justify-between transition-colors">
-                  <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-red-700 text-white font-black text-[10px] flex items-center justify-center">4</span>
-                    <span className="font-bold text-white">Plaza de Armas & Cathédrale</span>
-                  </div>
-                  <span className="text-[10px] text-emerald-400">Point Zéro</span>
-                </div>
+                ))}
               </div>
 
               <p className="text-[10px] text-stone-300 text-center pt-1 italic">
-                💡 Cliquez pour ouvrir l&apos;itinéraire direct dans votre application GPS.
+                {t.territory.tip}
               </p>
             </div>
           </div>
@@ -585,13 +509,13 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         <section id="itinerario" className="py-16 sm:py-24 px-4 sm:px-8 max-w-4xl mx-auto">
           <div className="text-center mb-10 space-y-2">
             <span className="text-xs font-bold text-red-800 uppercase tracking-widest bg-red-100 border border-red-200 px-3 py-1 rounded-full">
-              Itinéraire Officiel DIRCETUR
+              {t.itinerary.badge}
             </span>
             <h2 className="text-2xl sm:text-4xl font-serif font-black text-stone-900">
-              Ruta Histórica Paso a Paso
+              {t.itinerary.title}
             </h2>
             <p className="text-xs sm:text-sm text-stone-600">
-              Organizado con tiempos holgados para apreciación fotográfica y explicación histórica.
+              {t.itinerary.subtitle}
             </p>
           </div>
 
@@ -620,7 +544,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-10 space-y-2">
               <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900">
-                {data.features.title || '¿Qué incluye la experiencia cultural?'}
+                {data.features.title || t.features.defaultTitle}
               </h2>
             </div>
 
@@ -631,7 +555,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                   <div>
                     <h3 className="font-bold text-stone-900 text-sm sm:text-base">{item.split(':')[0]}</h3>
                     <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
-                      {item.split(':')[1] || 'Servicio brindado con estándares de calidad turística.'}
+                      {item.split(':')[1] || t.features.defaultDesc}
                     </p>
                   </div>
                 </div>
@@ -641,50 +565,23 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </section>
       )}
 
-
-
-      {/* 9. CONSEILS PRATIQUES / QUÉ LLEVAR EN LA MOCHILA CULTURAL */}
+      {/* 8. CONSEILS PRATIQUES / QUÉ LLEVAR EN LA MOCHILA CULTURAL */}
       <section id="conseils" className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
           <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
             <Backpack size={13} />
-            <span>Recommandations des Historiens</span>
+            <span>{t.conseils.badge}</span>
           </span>
           <h2 className="text-2xl sm:text-4xl font-serif font-black text-stone-900">
-            Préparer sa Visite : Ce qu&apos;il faut emporter
+            {t.conseils.title}
           </h2>
           <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-            Pour apprécier le patrimoine dans les meilleures conditions de confort et de sécurité à 3 400 mètres d&apos;altitude.
+            {t.conseils.subtitle}
           </p>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
-          {[
-            {
-              icon: '👟',
-              title: 'Chaussures à bonne adhérence',
-              subtitle: 'Sol pavé & escaliers incas',
-              desc: 'Les dalles de Hatun Rumiyoc et les chemins de pierre de Sacsayhuamán sont polis par les siècles. Privilégiez des baskets de marche ou souliers à semelle adhérente.'
-            },
-            {
-              icon: '☀️',
-              title: 'Protection solaire maximale',
-              subtitle: 'Indice UV d\'altitude',
-              desc: 'Sous le ciel limpide des Andes, la réverbération solaire est intense même par temps voilé. Chapeau à larges bords, lunettes UV400 et écran total indispensables.'
-            },
-            {
-              icon: '💵',
-              title: 'Espèces en Soles (PEN)',
-              subtitle: 'Guichets & artisanat local',
-              desc: 'Certains postes de contrôle archéologiques et les tisseuses traditionnelles ne disposent pas de terminal carte. Prévoyez 100 à 150 PEN en liquide.'
-            },
-            {
-              icon: '🧥',
-              title: 'Vêtements en plusieurs couches',
-              subtitle: 'Climat thermique andin',
-              desc: 'Le soleil chauffe à midi (20°C), mais dès 16h30 le vent frais souffle sur les crêtes de Sacsayhuamán (10°C). Prévoyez un pull chaud et une veste coupe-vent.'
-            }
-          ].map((item, idx) => (
+          {t.conseils.items.map((item, idx) => (
             <div
               key={idx}
               className="bg-white rounded-3xl p-6 border border-stone-200/80 hover:border-red-400 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
@@ -707,15 +604,15 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               </div>
 
               <div className="pt-4 mt-4 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-400 font-bold">
-                <span>CONSEIL N° {idx + 1}</span>
-                <span className="text-red-700">✓ Recommandé</span>
+                <span>N° {idx + 1}</span>
+                <span className="text-red-700 font-black">✓ {t.conseils.recommended}</span>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* 10. VOS MÉDIATEURS DU PATRIMOINE / EQUIPO DE HISTORIADORES CERTIFICADOS */}
+      {/* 9. VOS MÉDIATEURS DU PATRIMOINE / EQUIPO DE HISTORIADORES CERTIFICADOS */}
       <section id="guide" className="py-16 sm:py-24 px-4 sm:px-8 bg-red-50/40 border-t border-red-200/60">
         <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12">
           
@@ -723,143 +620,99 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           <div className="text-center max-w-2xl mx-auto space-y-2">
             <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
               <GraduationCap size={14} />
-              <span>Médiateurs du Patrimoine & Historiens Agréés</span>
+              <span>{t.guides.badge}</span>
             </span>
             <h2 className="text-2xl sm:text-4xl font-serif font-black text-stone-900">
-              Vos Guides-Conférenciers Dédiés
+              {t.guides.title}
             </h2>
             <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-              Tous nos guides sont archéologues ou historiens diplômés de l&apos;Université San Antonio Abad (UNSAAC), titulaires du carnet officiel DIRCETUR et membres actifs du COLTUR Cusco.
+              {t.guides.subtitle}
             </p>
           </div>
 
           {/* 3 Heritage Guides Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch text-left">
-            {[
-              {
-                id: 'lucia-condori',
-                name: data.guideName || 'Lic. Lucía Condori',
-                title: 'Votre Médiatrice du Patrimoine',
-                role: 'Archéologue & Cosmovision Andine',
-                cert: data.guideCert || 'Carnet DIRCETUR N° 04821 • COLTUR Cusco',
-                avatar: data.guideAvatar || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop',
-                quote: 'Transmettre la mémoire des pierres n\'est pas une récitation de dates : c\'est une immersion vivante dans la cosmogonie de nos ancêtres. Chaque temple que nous foulons raconte l\'équilibre sacré entre l\'homme et la Pachamama.',
-                specs: [
-                  { icon: '🎓', label: 'Diplômée de l\'UNSAAC Cusco' },
-                  { icon: '🗣️', label: data.guideLanguages || 'Español, Inglés y Francés' },
-                  { icon: '🏛️', label: '12 ans d\'expertise archéologique' },
-                  { icon: '🛡️', label: 'Secourisme & Altitude certifié' }
-                ],
-                directBtn: 'Échanger avec Lucía Condori',
-                msg: `Hola Lucía Condori, deseo información y disponibilidad para el tour cultural "${data.name || data.hero?.title || 'Tour Cultural'}".`
-              },
-              {
-                id: 'marco-quispe',
-                name: 'Lic. Marco Antonio Quispe',
-                title: 'Votre Historien de l\'Architecture',
-                role: 'Ingénierie Mégalithique & Sacsayhuamán',
-                cert: 'Carnet DIRCETUR N° 03914 • COLTUR Cusco',
-                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop',
-                quote: 'L\'architecture inca n\'était pas seulement monumentale mais parasismique et sacrée. Analyser la taille des blocs de Sacsayhuamán sur place permet de comprendre le génie mathématique andin.',
-                specs: [
-                  { icon: '🎓', label: 'Diplômé de l\'UNSAAC Cusco' },
-                  { icon: '🗣️', label: 'Español, Quechua y Francés' },
-                  { icon: '🏛️', label: '15 ans de recherche mégalithique' },
-                  { icon: '🛡️', label: 'Accompagnateur Haute Montagne' }
-                ],
-                directBtn: 'Échanger avec Marco Quispe',
-                msg: `Hola Marco Antonio Quispe, deseo información y disponibilidad para el tour cultural "${data.name || data.hero?.title || 'Tour Cultural'}".`
-              },
-              {
-                id: 'carlos-valdivia',
-                name: 'Mag. Carlos Eduardo Valdivia',
-                title: 'Votre Spécialiste du Métissage',
-                role: 'Histoire de l\'Art Colonial & Qorikancha',
-                cert: 'Carnet DIRCETUR N° 05128 • COLTUR Cusco',
-                avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop',
-                quote: 'La rencontre entre les temples incas du Soleil et les arcades virreinales du couvent de Santo Domingo illustre le dialogue et la résistance culturelle de notre cité impériale.',
-                specs: [
-                  { icon: '🎓', label: 'Master Histoire de l\'Art (UNSAAC)' },
-                  { icon: '🗣️', label: 'Español, Inglés e Italiano' },
-                  { icon: '🏛️', label: '10 ans de guidage muséal & églises' },
-                  { icon: '🛡️', label: 'Guide-Conférencier Certifié' }
-                ],
-                directBtn: 'Échanger avec Carlos Valdivia',
-                msg: `Hola Carlos Eduardo Valdivia, deseo información y disponibilidad para el tour cultural "${data.name || data.hero?.title || 'Tour Cultural'}".`
-              }
-            ].map((guide) => (
-              <div
-                key={guide.id}
-                className="bg-white rounded-3xl p-6 sm:p-7 border border-red-200/90 hover:border-red-400 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
-              >
-                <div className="space-y-4">
-                  {/* Photo with Badge */}
-                  <div className="relative h-56 sm:h-64 w-full rounded-2xl overflow-hidden bg-stone-100 shadow-md border-2 border-red-100">
-                    <Image
-                      src={guide.avatar}
-                      alt={guide.name}
-                      fill
-                      sizes="(max-width: 1024px) 100vw, 380px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute bottom-2.5 inset-x-2.5 bg-black/65 backdrop-blur-md text-white text-[10px] font-bold py-1.5 px-3 rounded-xl border border-white/20 flex items-center justify-between">
-                      <span className="truncate">{guide.cert}</span>
-                      <span className="text-emerald-400 font-black shrink-0">✓ Actif</span>
-                    </div>
-                  </div>
+            {t.guides.list.map((guide, gIdx) => {
+              // Permit dynamic overrides for the primary guide if provided in data
+              const finalName = (gIdx === 0 && data.guideName) ? data.guideName : guide.name;
+              const finalCert = (gIdx === 0 && data.guideCert) ? data.guideCert : guide.cert;
+              const finalAvatar = (gIdx === 0 && data.guideAvatar) ? data.guideAvatar : guide.avatar;
+              const finalMsg = `${guide.msgPrefix} "${data.name || data.hero?.title || 'Tour Cultural'}".`;
 
-                  {/* Header info */}
-                  <div className="space-y-1">
-                    <div className="inline-block bg-red-100 text-red-800 text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">
-                      {guide.role}
-                    </div>
-                    <span className="text-xs font-serif italic text-red-700 font-bold block pt-1">
-                      {guide.title}
-                    </span>
-                    <h3 className="font-serif font-black text-xl text-stone-900 group-hover:text-red-700 transition-colors leading-tight">
-                      {guide.name}
-                    </h3>
-                  </div>
-
-                  {/* Quote */}
-                  <div className="relative pl-4 py-2 border-l-2 border-red-700 bg-red-50/50 rounded-r-xl pr-3">
-                    <Quote size={16} className="text-red-300 absolute -top-1.5 left-1 opacity-50" />
-                    <p className="text-xs font-serif italic text-stone-700 leading-relaxed line-clamp-4">
-                      « {guide.quote} »
-                    </p>
-                  </div>
-
-                  {/* Specs Grid */}
-                  <div className="grid grid-cols-2 gap-2 pt-1 text-[11px] text-stone-700">
-                    {guide.specs.map((sp, sIdx) => (
-                      <div key={sIdx} className="flex items-center gap-1.5 bg-stone-50 p-2 rounded-xl border border-stone-200/80">
-                        <span className="text-xs shrink-0">{sp.icon}</span>
-                        <span className="truncate font-medium">{sp.label}</span>
+              return (
+                <div
+                  key={guide.id}
+                  className="bg-white rounded-3xl p-6 sm:p-7 border border-red-200/90 hover:border-red-400 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
+                >
+                  <div className="space-y-4">
+                    {/* Photo with Badge */}
+                    <div className="relative h-56 sm:h-64 w-full rounded-2xl overflow-hidden bg-stone-100 shadow-md border-2 border-red-100">
+                      <Image
+                        src={finalAvatar}
+                        alt={finalName}
+                        fill
+                        sizes="(max-width: 1024px) 100vw, 380px"
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute bottom-2.5 inset-x-2.5 bg-black/65 backdrop-blur-md text-white text-[10px] font-bold py-1.5 px-3 rounded-xl border border-white/20 flex items-center justify-between">
+                        <span className="truncate">{finalCert}</span>
+                        <span className="text-emerald-400 font-black shrink-0">✓ {t.guides.activeStatus}</span>
                       </div>
-                    ))}
+                    </div>
+
+                    {/* Header info */}
+                    <div className="space-y-1">
+                      <div className="inline-block bg-red-100 text-red-800 text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">
+                        {guide.role}
+                      </div>
+                      <span className="text-xs font-serif italic text-red-700 font-bold block pt-1">
+                        {guide.title}
+                      </span>
+                      <h3 className="font-serif font-black text-xl text-stone-900 group-hover:text-red-700 transition-colors leading-tight">
+                        {finalName}
+                      </h3>
+                    </div>
+
+                    {/* Quote */}
+                    <div className="relative pl-4 py-2 border-l-2 border-red-700 bg-red-50/50 rounded-r-xl pr-3">
+                      <Quote size={16} className="text-red-300 absolute -top-1.5 left-1 opacity-50" />
+                      <p className="text-xs font-serif italic text-stone-700 leading-relaxed line-clamp-4">
+                        « {guide.quote} »
+                      </p>
+                    </div>
+
+                    {/* Specs Grid */}
+                    <div className="grid grid-cols-2 gap-2 pt-1 text-[11px] text-stone-700">
+                      {guide.specs.map((sp, sIdx) => (
+                        <div key={sIdx} className="flex items-center gap-1.5 bg-stone-50 p-2 rounded-xl border border-stone-200/80">
+                          <span className="text-xs shrink-0">{sp.icon}</span>
+                          <span className="truncate font-medium">{sp.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Direct Action Button */}
+                  <div className="pt-5 mt-5 border-t border-stone-100">
+                    <a
+                      href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent(finalMsg)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-2.5 px-4 rounded-full text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group-hover:shadow-lg"
+                    >
+                      <MessageCircle size={14} />
+                      <span className="truncate">{guide.directBtn}</span>
+                    </a>
                   </div>
                 </div>
-
-                {/* Direct Action Button */}
-                <div className="pt-5 mt-5 border-t border-stone-100">
-                  <a
-                    href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent(guide.msg)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-2.5 px-4 rounded-full text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group-hover:shadow-lg"
-                  >
-                    <MessageCircle size={14} />
-                    <span className="truncate">{guide.directBtn}</span>
-                  </a>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
         </div>
       </section>
 
-      {/* 11. PINTEREST PINBOARD (PRO & ADVANCE) */}
+      {/* 10. PINTEREST PINBOARD (PRO & ADVANCE) */}
       {!isFree && (
         <PinterestPinboard
           images={data.galleryImages}
@@ -871,7 +724,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         />
       )}
 
-      {/* 12. LIVRE D'OR DU PATRIMOINE (RESEÑAS & TESTIMONIOS VERIFICADOS) */}
+      {/* 11. LIVRE D'OR DU PATRIMOINE (RESEÑAS & TESTIMONIOS VERIFICADOS) */}
       <section id="livre-dor" className="py-16 sm:py-24 px-4 sm:px-8 bg-stone-50 border-t border-stone-200">
         <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12">
           {/* Header & Rating Summary */}
@@ -879,13 +732,13 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             <div className="space-y-2">
               <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
                 <Star size={13} className="fill-red-700 text-red-700" />
-                <span>Avis Vérifiés des Visiteurs</span>
+                <span>{t.livreDor.badge}</span>
               </span>
               <h2 className="text-3xl sm:text-5xl font-serif font-black italic text-stone-900">
-                Le Livre d&apos;or du Patrimoine
+                {t.livreDor.title}
               </h2>
               <p className="text-xs sm:text-sm text-stone-600 max-w-xl leading-relaxed">
-                Témoignages de passionnés d&apos;histoire, d&apos;universitaires et de familles ayant vécu l&apos;immersion culturelle à Cusco.
+                {t.livreDor.subtitle}
               </p>
             </div>
 
@@ -895,7 +748,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 <span className="text-3xl sm:text-4xl font-serif font-black text-red-900 block leading-none">
                   4.9
                 </span>
-                <span className="text-[10px] text-stone-400 font-bold uppercase mt-1 block">Sur 5.0</span>
+                <span className="text-[10px] text-stone-400 font-bold uppercase mt-1 block">{t.livreDor.scoreOutOf}</span>
               </div>
               <div className="space-y-1">
                 <div className="flex items-center gap-0.5 text-amber-500">
@@ -903,37 +756,15 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                     <Star key={i} size={15} className="fill-amber-500" />
                   ))}
                 </div>
-                <span className="text-xs font-bold text-stone-800 block">184 avis vérifiés</span>
-                <span className="text-[10px] text-emerald-600 font-bold block">✓ 100% Retours Positifs</span>
+                <span className="text-xs font-bold text-stone-800 block">{t.livreDor.verifiedCount}</span>
+                <span className="text-[10px] text-emerald-600 font-bold block">✓ {t.livreDor.positiveRate}</span>
               </div>
             </div>
           </div>
 
           {/* Testimonial Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-            {[
-              {
-                name: 'Jean-Luc & Françoise Moreau',
-                origin: '🇫🇷 Lyon, France',
-                date: 'Visite effectuée le 14 Septembre 2026',
-                stars: 5,
-                comment: 'Une visite magistrale qui dépasse de loin tous les circuits conventionnels. Les explications sur l\'ingénierie parasismique de Sacsayhuamán et la symbolique du temple du Soleil étaient d\'une rigueur absolue. Un moment inoubliable.'
-              },
-              {
-                name: 'Dra. Elena Santillán',
-                origin: '🇪🇸 Madrid, Espagne',
-                date: 'Visite effectuée le 02 Août 2026',
-                stars: 5,
-                comment: 'Como docente de historia del arte, buscaba un guiado sin mitos inventados. La preparación académica del guía y su respeto por las fuentes cronistas coloniales me pareció extraordinaria. Diez sobre diez en puntualidad y conocimiento.'
-              },
-              {
-                name: 'Michael & Sarah Jenkins',
-                origin: '🇺🇸 Boston, USA',
-                date: 'Visite effectuée le 19 Juillet 2026',
-                stars: 5,
-                comment: 'The best tour we took in Peru! Small group, zero rush, crystal-clear audio receivers, and fascinating insights into Inca astronomy that you simply cannot get on standard commercial buses.'
-              }
-            ].map((review, idx) => (
+            {t.livreDor.reviews.map((review, idx) => (
               <div
                 key={idx}
                 className="bg-white rounded-3xl p-6 sm:p-7 border border-stone-200/80 hover:border-red-400/80 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group space-y-4"
@@ -974,22 +805,22 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           <div className="bg-white rounded-2xl p-4 border border-stone-200 flex flex-wrap items-center justify-center gap-6 text-xs text-stone-600 font-medium">
             <span className="flex items-center gap-1.5 font-bold text-stone-900">
               <Award size={16} className="text-red-700" />
-              Certificat d&apos;Excellence DIRCETUR
+              {t.livreDor.certBadge}
             </span>
             <span>•</span>
             <span className="flex items-center gap-1.5">
               <ShieldCheck size={16} className="text-emerald-600" />
-              Avis 100% Authentifiés par WhatsApp & Voucher
+              {t.livreDor.authenticatedBadge}
             </span>
             <span>•</span>
             <span className="text-stone-500">
-              Registre officiel des guides conférenciers du Pérou
+              {t.livreDor.officialRegistry}
             </span>
           </div>
         </div>
       </section>
 
-      {/* 13. TOUR SUPPORT & FAQS */}
+      {/* 12. TOUR SUPPORT & FAQS (Now receiving active currentLang) */}
       <TourSupportAndFaqs
         faqs={data.faqs}
         tourName={data.name || data.hero?.title || 'Tour Cultural'}
@@ -999,9 +830,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         tier={tier}
         theme="cultural"
         isMobile={isMobile}
+        lang={currentLang}
       />
 
-      {/* 10. MUNICIPAL & HERITAGE FOOTER BLOCK (Red Border & Accents) */}
+      {/* 13. MUNICIPAL & HERITAGE FOOTER BLOCK (Red Border & Accents) */}
       <footer id="contacto" className="bg-white border-t-2 border-red-700 py-10 px-4 sm:px-8 text-stone-700 text-xs">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center text-left">
           
@@ -1012,10 +844,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             </div>
             <div>
               <span className="font-serif font-black text-sm uppercase text-stone-900 block">
-                Cusco Patrimonial
+                {t.footer.townName}
               </span>
               <span className="text-[10px] text-stone-500 uppercase tracking-widest block font-bold">
-                DIRCETUR Cusco • Perú
+                {t.footer.regionalDir}
               </span>
             </div>
           </div>
@@ -1023,20 +855,20 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           {/* Column 2: Address */}
           <div className="md:col-span-3 space-y-1">
             <span className="font-black text-stone-900 block uppercase text-[11px]">
-              Oficina de Información Turística
+              {t.footer.officeTitle}
             </span>
             <p className="text-stone-600 text-xs">
-              {data.officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Centro Histórico, Cusco'}
+              {data.officeAddress || t.footer.officeDesc}
             </p>
           </div>
 
           {/* Column 3: Hours */}
           <div className="md:col-span-3 space-y-1">
             <span className="font-black text-stone-900 block uppercase text-[11px]">
-              Horaires d&apos;ouverture / Atención
+              {t.footer.hoursTitle}
             </span>
             <p className="text-stone-600 text-xs">
-              {data.officeHours || 'Lunes a Domingo de 08:00 AM a 08:00 PM (Horario Corrido)'}
+              {data.officeHours || t.footer.hoursDesc}
             </p>
           </div>
 
@@ -1056,7 +888,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 rel="noopener noreferrer"
                 className="inline-block bg-red-700 hover:bg-red-800 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-2xs cursor-pointer"
               >
-                Contactez-nous !
+                {t.footer.contactBtn}
               </a>
             </div>
 
@@ -1070,15 +902,15 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
         {/* Legal notice bottom */}
         <div className="max-w-7xl mx-auto pt-8 mt-8 border-t border-stone-200 text-center text-stone-400 text-[10px]">
-          <p>© 2026 Cusco Creativos S.A.C. — Edición Patrimonial y Cultural. Todos los derechos reservados.</p>
+          <p>{t.footer.copyright}</p>
         </div>
       </footer>
 
-      {/* 11. STICKY MOBILE BOTTOM BAR */}
+      {/* 14. STICKY MOBILE BOTTOM BAR */}
       {isMobile && (
         <div className="fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-red-200 p-3 flex items-center justify-between gap-3 shadow-2xl">
           <div className="min-w-0">
-            <span className="text-[10px] text-stone-500 font-bold block uppercase">Tarifa Cultural</span>
+            <span className="text-[10px] text-stone-500 font-bold block uppercase">{t.mobileSticky.tariffLabel}</span>
             <span className="text-base font-serif font-black text-red-900">{data.price || 'S/ 85 PEN'}</span>
           </div>
           <div className="flex items-center gap-2">
@@ -1089,7 +921,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 className="bg-red-700 hover:bg-red-600 text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 cursor-pointer"
               >
                 <FileText size={14} />
-                <span>Cotizar</span>
+                <span>{t.mobileSticky.quote}</span>
               </button>
             ) : (
               <a
@@ -1099,7 +931,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 className="bg-red-700 hover:bg-red-600 text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 cursor-pointer"
               >
                 <MessageCircle size={14} />
-                <span>Reservar</span>
+                <span>{t.mobileSticky.reserve}</span>
               </a>
             )}
           </div>
