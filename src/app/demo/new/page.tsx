@@ -2338,7 +2338,7 @@ export default function NewLandingDemo() {
               {/* 5. PLANTILLA CULTURAL & ANCESTRAL (FRENCH HERITAGE COMMUNE STYLE) */}
               {template === 'cultural' && (
                 <div className="flex flex-col min-h-full bg-[#FFFDF9] text-stone-800">
-                  {/* Sunset Panoramic Hero with Golden Curve */}
+                  {/* Sunset Panoramic Hero with Red Curve */}
                   <div className="relative bg-stone-900 text-white overflow-hidden shrink-0">
                     <div className="relative h-44 w-full">
                       <Image 
@@ -2348,14 +2348,14 @@ export default function NewLandingDemo() {
                         sizes="400px" 
                         className="object-cover brightness-90" 
                       />
-                      <div className="absolute inset-0 bg-gradient-to-b from-stone-950/60 via-stone-900/30 to-amber-950/70" />
+                      <div className="absolute inset-0 bg-gradient-to-b from-stone-950/60 via-stone-900/30 to-red-950/70" />
                       
                       {/* Top Header */}
                       <div className="absolute top-2.5 inset-x-3 flex justify-between items-center text-[10px]">
-                        <span className="bg-amber-500/20 backdrop-blur-md px-2 py-0.5 rounded-full text-amber-200 font-serif font-black flex items-center gap-1 border border-amber-400/30">
+                        <span className="bg-red-600/30 backdrop-blur-md px-2 py-0.5 rounded-full text-red-100 font-serif font-black flex items-center gap-1 border border-red-400/40">
                           <Landmark size={11} /> Qosqo Ancestral
                         </span>
-                        <span className="bg-black/50 backdrop-blur-md text-amber-300 px-2 py-0.5 rounded-full font-bold text-[9px]">
+                        <span className="bg-black/50 backdrop-blur-md text-red-200 px-2 py-0.5 rounded-full font-bold text-[9px]">
                           Patrimoine UNESCO
                         </span>
                       </div>
@@ -2365,7 +2365,7 @@ export default function NewLandingDemo() {
                         <h3 className="text-xl font-serif font-black italic drop-shadow-md text-white">
                           {name || 'Qosqo Imperial'}
                         </h3>
-                        <p className="text-[9px] text-amber-100 font-serif italic drop-shadow">
+                        <p className="text-[9px] text-red-100 font-serif italic drop-shadow">
                           Entre montañas sagradas y tradición milenaria
                         </p>
 
@@ -2374,7 +2374,7 @@ export default function NewLandingDemo() {
                           <span className="w-6 h-6 rounded-full bg-black/40 border border-white/30 text-white flex items-center justify-center text-[9px]">
                             🔍
                           </span>
-                          <span className="w-6 h-6 rounded-full bg-amber-600 text-white flex items-center justify-center text-[9px]">
+                          <span className="w-6 h-6 rounded-full bg-red-700 text-white flex items-center justify-center text-[9px] shadow-sm">
                             ✉️
                           </span>
                           <span className="w-6 h-6 rounded-full bg-black/40 border border-white/30 text-white flex items-center justify-center text-[9px]">
@@ -2383,10 +2383,10 @@ export default function NewLandingDemo() {
                         </div>
                       </div>
 
-                      {/* Golden Wave Transition Shape */}
+                      {/* Heritage Red Wave Transition Shape */}
                       <div className="absolute -bottom-0.5 inset-x-0 pointer-events-none">
                         <svg viewBox="0 0 400 35" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-                          <path d="M0,15 C90,30 150,5 240,20 C320,32 370,18 400,10 L400,35 L0,35 Z" fill="#F3B356" />
+                          <path d="M0,15 C90,30 150,5 240,20 C320,32 370,18 400,10 L400,35 L0,35 Z" fill="#B91C1C" />
                           <path d="M0,22 C100,35 170,12 270,26 C340,35 380,24 400,20 L400,35 L0,35 Z" fill="#FFFDF9" />
                         </svg>
                       </div>
@@ -2403,7 +2403,7 @@ export default function NewLandingDemo() {
                         { icon: '🏛️', label: 'Templos' },
                         { icon: '📞', label: 'Reserva' }
                       ].map((item, idx) => (
-                        <div key={idx} className="bg-white rounded-2xl p-1.5 border border-stone-200 shadow-xs flex flex-col items-center">
+                        <div key={idx} className="bg-white rounded-2xl p-1.5 border border-stone-200 hover:border-red-300 shadow-xs flex flex-col items-center">
                           <span className="text-sm">{item.icon}</span>
                           <span className="text-[8px] font-serif font-black text-stone-800 leading-tight mt-0.5 truncate w-full">
                             {item.label}
@@ -2418,13 +2418,13 @@ export default function NewLandingDemo() {
                         <span className="font-serif font-black italic text-xs text-stone-900">
                           Actualités
                         </span>
-                        <span className="text-[8px] font-bold bg-stone-900 text-white px-2 py-0.5 rounded-full">
+                        <span className="text-[8px] font-bold bg-red-700 text-white px-2 py-0.5 rounded-full">
                           Toute l&apos;actualité
                         </span>
                       </div>
 
                       <div className="bg-white rounded-xl p-2 border border-stone-200 shadow-2xs space-y-1">
-                        <span className="text-[8px] font-black uppercase text-rose-600 bg-rose-50 px-1.5 py-0.5 rounded">
+                        <span className="text-[8px] font-black uppercase text-red-700 bg-red-50 px-1.5 py-0.5 rounded border border-red-100">
                           Temporada 2026
                         </span>
                         <h4 className="text-[10px] font-serif font-black text-stone-900 leading-snug line-clamp-1">
@@ -2442,17 +2442,17 @@ export default function NewLandingDemo() {
                         <span className="font-serif font-black italic text-xs text-stone-900">
                           Agenda
                         </span>
-                        <span className="text-[8px] text-amber-700 font-bold">
+                        <span className="text-[8px] text-red-700 font-bold">
                           Événements (2)
                         </span>
                       </div>
 
-                      <div className="bg-amber-50/60 rounded-xl p-2 border border-amber-200/80 flex items-center gap-2">
+                      <div className="bg-red-50/60 rounded-xl p-2 border border-red-200/80 flex items-center gap-2">
                         <div className="w-10 h-10 rounded-lg overflow-hidden bg-stone-200 shrink-0 relative">
                           <Image src={activeHeroImg} alt="Agenda" fill sizes="40px" className="object-cover" />
                         </div>
                         <div className="min-w-0 flex-1">
-                          <span className="text-[8px] font-black text-amber-800 bg-amber-200/60 px-1.5 py-0.2 rounded">
+                          <span className="text-[8px] font-black text-white bg-red-700 px-1.5 py-0.2 rounded">
                             24 Junio - Solsticio
                           </span>
                           <h5 className="text-[9px] font-serif font-black text-stone-900 truncate">
@@ -2463,12 +2463,12 @@ export default function NewLandingDemo() {
                     </div>
 
                     {/* Le Territoire / Map Card */}
-                    <div className="bg-slate-900 text-white rounded-xl p-2.5 space-y-1.5 text-left border border-white/10">
+                    <div className="bg-stone-900 text-white rounded-xl p-2.5 space-y-1.5 text-left border border-red-900/40">
                       <div className="flex items-center justify-between">
-                        <span className="font-serif font-black italic text-xs text-amber-200">
+                        <span className="font-serif font-black italic text-xs text-red-200">
                           Le territoire
                         </span>
-                        <span className="text-[8px] text-rose-400 font-bold">
+                        <span className="text-[8px] text-red-300 font-bold">
                           Cartographie GPS
                         </span>
                       </div>
@@ -2481,9 +2481,9 @@ export default function NewLandingDemo() {
                     <div className="space-y-2 pt-1">
                       <div className="flex items-baseline justify-between text-xs">
                         <span className="text-stone-500 font-serif">Tarifa Cultural:</span>
-                        <span className="text-base font-serif font-black text-amber-900">{price || 'S/ 85 PEN'}</span>
+                        <span className="text-base font-serif font-black text-red-800">{price || 'S/ 85 PEN'}</span>
                       </div>
-                      <div className="w-full bg-[#B45309] hover:bg-[#92400E] text-white font-bold py-2.5 px-3 rounded-full text-center text-xs shadow-md flex items-center justify-center gap-1.5">
+                      <div className="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-2.5 px-3 rounded-full text-center text-xs shadow-md flex items-center justify-center gap-1.5 transition-colors">
                         <Compass size={13} />
                         <span>{objective === 'quote' ? 'Demander un devis' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Réserver par WhatsApp'}</span>
                       </div>
@@ -2491,10 +2491,10 @@ export default function NewLandingDemo() {
                   </div>
 
                   {/* Municipal / Heritage Footer Block */}
-                  <div className="p-3 bg-white border-t border-amber-200/80 space-y-1.5 text-[8px] text-stone-600 text-left">
+                  <div className="p-3 bg-white border-t border-red-200/80 space-y-1.5 text-[8px] text-stone-600 text-left">
                     <div className="flex items-center justify-between font-serif font-bold text-stone-900">
                       <span>🏛️ Cusco Patrimonial</span>
-                      <span className="text-amber-700">DIRCETUR Oficial</span>
+                      <span className="text-red-700 font-bold">DIRCETUR Oficial</span>
                     </div>
                     <p className="text-stone-500 line-clamp-1">
                       {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}

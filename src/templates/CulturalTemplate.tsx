@@ -19,7 +19,7 @@ interface TemplateProps {
   viewMode?: 'desktop' | 'tablet' | 'mobile';
 }
 
-// 5 Quick Access Circles overlapping the golden curve (Matching user reference image)
+// 5 Quick Access Circles overlapping the organic red curve (Matching user reference image in red style)
 const QUICK_SERVICES = [
   {
     icon: '🎫',
@@ -53,7 +53,7 @@ const QUICK_SERVICES = [
   }
 ];
 
-// Actualités / Heritage news items (Matching user reference image)
+// Actualités / Heritage news items (Styled with the vibrant crimson red from reference image)
 const ACTUALITES_ITEMS = [
   {
     id: 1,
@@ -81,7 +81,7 @@ const ACTUALITES_ITEMS = [
   }
 ];
 
-// Agenda events (Matching user reference image)
+// Agenda events (Matching user reference image in red style)
 const AGENDA_EVENTS = [
   {
     id: 'inti-raymi',
@@ -128,9 +128,9 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
   const featuredNewsPhoto = data.galleryImages?.[0] || 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1200&auto=format&fit=crop';
 
   return (
-    <div className="min-h-screen bg-[#FFFDF9] font-sans text-stone-800 selection:bg-amber-800 selection:text-white">
+    <div className="min-h-screen bg-[#FFFDF9] font-sans text-stone-800 selection:bg-red-800 selection:text-white">
       
-      {/* 1. TOP HEADER OVER PANORAMIC SUNSET */}
+      {/* 1. TOP HEADER OVER PANORAMIC SUNSET (HERITAGE RED PALETTE) */}
       <header className="relative bg-stone-900 text-white overflow-hidden">
         {/* Panoramic Background Image */}
         <div className="absolute inset-0 z-0">
@@ -143,18 +143,18 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             className="object-cover object-center opacity-85 brightness-90"
           />
           {/* Subtle gradient overlay to enhance typography contrast */}
-          <div className="absolute inset-0 bg-gradient-to-b from-stone-950/60 via-stone-900/30 to-amber-950/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-stone-950/70 via-stone-900/40 to-red-950/75" />
         </div>
 
         {/* Municipal / Heritage Navigation Bar */}
         <nav className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-4 sm:py-5 flex items-center justify-between border-b border-white/15">
           {/* Official Emblem / Coat of arms */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/20 backdrop-blur-md border border-amber-400/40 flex items-center justify-center text-amber-300 shadow-md">
+            <div className="w-10 h-10 rounded-xl bg-red-600/30 backdrop-blur-md border border-red-400/50 flex items-center justify-center text-red-200 shadow-md">
               <Landmark size={22} />
             </div>
             <div className="text-left leading-tight">
-              <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-amber-200">
+              <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-red-200">
                 Qosqo Ancestral
               </span>
               <span className="text-[10px] text-stone-300 tracking-wider font-sans block">
@@ -166,11 +166,11 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           {/* Nav links */}
           {!isMobile && (
             <div className="hidden lg:flex items-center gap-7 text-xs font-bold tracking-wider uppercase text-stone-200">
-              <a href="#actualites" className="hover:text-amber-300 transition-colors">Crónicas</a>
-              <a href="#agenda" className="hover:text-amber-300 transition-colors">Agenda Cultural</a>
-              <a href="#itinerario" className="hover:text-amber-300 transition-colors">Ruta & Templos</a>
-              <a href="#territorio" className="hover:text-amber-300 transition-colors">El Territorio</a>
-              <a href="#contacto" className="hover:text-amber-300 transition-colors">Información</a>
+              <a href="#actualites" className="hover:text-red-300 transition-colors">Crónicas</a>
+              <a href="#agenda" className="hover:text-red-300 transition-colors">Agenda Cultural</a>
+              <a href="#itinerario" className="hover:text-red-300 transition-colors">Ruta & Templos</a>
+              <a href="#territorio" className="hover:text-red-300 transition-colors">El Territorio</a>
+              <a href="#contacto" className="hover:text-red-300 transition-colors">Información</a>
             </div>
           )}
 
@@ -180,7 +180,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               <button
                 type="button"
                 onClick={() => setIsQuoteOpen(true)}
-                className="bg-amber-600 hover:bg-amber-500 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-xs shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
+                className="bg-red-700 hover:bg-red-600 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-xs shadow-md shadow-red-900/30 transition-all flex items-center gap-1.5 cursor-pointer"
               >
                 <FileText size={14} />
                 <span>Cotizar Visita</span>
@@ -190,7 +190,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-amber-600 hover:bg-amber-500 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-xs shadow-md transition-all flex items-center gap-1.5 cursor-pointer"
+                className="bg-red-700 hover:bg-red-600 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-xs shadow-md shadow-red-900/30 transition-all flex items-center gap-1.5 cursor-pointer"
               >
                 <MessageCircle size={14} />
                 <span className="hidden sm:inline">WhatsApp</span>
@@ -205,15 +205,15 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-black tracking-tight drop-shadow-xl text-white italic">
             {data.hero?.title || 'Cusco Imperial'}
           </h1>
-          <p className="text-base sm:text-xl text-amber-100 font-serif max-w-2xl mx-auto drop-shadow-md">
+          <p className="text-base sm:text-xl text-red-100 font-serif max-w-2xl mx-auto drop-shadow-md">
             {data.hero?.subtitle || 'Entre montañas sagradas y tradición milenaria, bienvenido a la capital arqueológica de América.'}
           </p>
 
-          {/* 3 Circular Quick Action Icons (Center matching reference image) */}
+          {/* 3 Circular Quick Action Icons (Center matching reference image with red centerpiece) */}
           <div className="pt-2 flex items-center justify-center gap-3">
             <a
               href="#territorio"
-              className="w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 cursor-pointer"
+              className="w-10 h-10 rounded-full bg-black/40 hover:bg-red-900/80 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 cursor-pointer"
               title="Explorar el Territorio"
             >
               <Search size={16} />
@@ -222,14 +222,14 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-10 h-10 rounded-full bg-amber-600 hover:bg-amber-500 text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 cursor-pointer"
+              className="w-10 h-10 rounded-full bg-red-700 hover:bg-red-600 text-white flex items-center justify-center shadow-lg shadow-red-900/40 transition-transform hover:scale-110 cursor-pointer"
               title="Escribir por WhatsApp"
             >
               <Mail size={16} />
             </a>
             <a
               href={`tel:${cleanPhone}`}
-              className="w-10 h-10 rounded-full bg-black/40 hover:bg-black/60 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 cursor-pointer"
+              className="w-10 h-10 rounded-full bg-black/40 hover:bg-red-900/80 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-transform hover:scale-110 cursor-pointer"
               title="Llamar a la Oficina"
             >
               <Phone size={16} />
@@ -237,12 +237,12 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           </div>
         </div>
 
-        {/* Golden / Apricot Organic Wave Cut (Exact shape matching reference image) */}
+        {/* Organic Wave Cut in Heritage Red (Exact shape matching reference image) */}
         <div className="absolute -bottom-1 inset-x-0 z-20 pointer-events-none">
           <svg viewBox="0 0 1440 180" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto preserve-3d">
             <path
               d="M0,80 C320,160 540,20 880,100 C1140,160 1340,90 1440,60 L1440,180 L0,180 Z"
-              fill="#F3B356"
+              fill="#B91C1C"
               className="opacity-95"
             />
             <path
@@ -253,7 +253,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </header>
 
-      {/* 2. OVERLAPPING 5 CIRCULAR QUICK ACCESS BADGES (Matching reference image) */}
+      {/* 2. OVERLAPPING 5 CIRCULAR QUICK ACCESS BADGES (Red Style) */}
       <section className="relative z-30 -mt-10 sm:-mt-14 max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
           {QUICK_SERVICES.map((item, idx) => (
@@ -262,13 +262,13 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               href={createWhatsAppLink(item.label)}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-white hover:bg-amber-50/50 border border-stone-200/80 hover:border-amber-400/60 rounded-3xl p-4 sm:p-5 shadow-lg shadow-amber-900/5 hover:shadow-xl transition-all duration-300 text-center flex flex-col items-center group cursor-pointer"
+              className="bg-white hover:bg-red-50/60 border border-stone-200/80 hover:border-red-400/80 rounded-3xl p-4 sm:p-5 shadow-lg shadow-red-950/5 hover:shadow-xl transition-all duration-300 text-center flex flex-col items-center group cursor-pointer"
             >
-              {/* Circular Icon with golden ring */}
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-amber-50 border-2 border-amber-300/80 flex items-center justify-center text-2xl sm:text-3xl mb-3 shadow-inner group-hover:scale-110 group-hover:bg-amber-100 transition-transform">
+              {/* Circular Icon with rich red ring */}
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-red-50/80 border-2 border-red-300/90 flex items-center justify-center text-2xl sm:text-3xl mb-3 shadow-inner group-hover:scale-110 group-hover:bg-red-100 group-hover:border-red-500 transition-all">
                 <span>{item.icon}</span>
               </div>
-              <h3 className="font-serif font-black text-xs sm:text-sm text-stone-900 leading-tight group-hover:text-amber-800 transition-colors">
+              <h3 className="font-serif font-black text-xs sm:text-sm text-stone-900 leading-tight group-hover:text-red-700 transition-colors">
                 {item.label}
               </h3>
               <p className="text-[10px] sm:text-[11px] text-stone-500 font-medium mt-1">
@@ -279,7 +279,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </section>
 
-      {/* 3. SECTION: ACTUALITÉS / PATRIMONIO VIVO (Exact match to reference image) */}
+      {/* 3. SECTION: ACTUALITÉS / PATRIMONIO VIVO (Red Badges & Links) */}
       <section id="actualites" className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="flex items-baseline justify-between mb-8 sm:mb-12 border-b border-stone-200/70 pb-4">
@@ -290,7 +290,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-md transition-all flex items-center gap-2 cursor-pointer"
+            className="bg-red-700 hover:bg-red-800 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-md transition-all flex items-center gap-2 cursor-pointer"
           >
             <span>Toutes les actualités</span>
             <ArrowRight size={14} />
@@ -310,13 +310,13 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 sizes="(max-width: 768px) 100vw, 600px"
                 className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute top-4 left-4 bg-rose-600 text-white text-[11px] font-black px-3 py-1 rounded-full shadow-sm">
+              <div className="absolute top-4 left-4 bg-red-700 text-white text-[11px] font-black px-3.5 py-1 rounded-full shadow-sm">
                 Publicado: Temporada 2026
               </div>
             </div>
 
             <div className="p-6 sm:p-7 space-y-3">
-              <h3 className="font-serif font-black text-xl sm:text-2xl text-stone-900 group-hover:text-amber-800 transition-colors leading-tight">
+              <h3 className="font-serif font-black text-xl sm:text-2xl text-stone-900 group-hover:text-red-700 transition-colors leading-tight">
                 Un nuevo sendero señalizado al corazón de los templos incas
               </h3>
               <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
@@ -327,7 +327,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                   href={createWhatsAppLink('Sendero Señalizado Templos Incas')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-rose-600 hover:text-rose-700 font-bold text-xs sm:text-sm cursor-pointer group-hover:translate-x-1 transition-transform"
+                  className="inline-flex items-center gap-2 text-red-700 hover:text-red-800 font-bold text-xs sm:text-sm cursor-pointer group-hover:translate-x-1 transition-transform"
                 >
                   <span>Lire la suite / Reservar</span>
                   <ArrowRight size={14} />
@@ -341,12 +341,12 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             {ACTUALITES_ITEMS.map((item) => (
               <div
                 key={item.id}
-                className="bg-white rounded-2xl p-5 sm:p-6 border border-stone-200/80 shadow-xs hover:shadow-md transition-all text-left space-y-2 group"
+                className="bg-white rounded-2xl p-5 sm:p-6 border border-stone-200/80 shadow-xs hover:shadow-md hover:border-red-300 transition-all text-left space-y-2 group"
               >
-                <div className="inline-block bg-rose-600 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                <div className="inline-block bg-red-700 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                   {item.badge} • {item.date}
                 </div>
-                <h4 className="font-serif font-black text-base sm:text-lg text-stone-900 group-hover:text-amber-800 transition-colors leading-snug">
+                <h4 className="font-serif font-black text-base sm:text-lg text-stone-900 group-hover:text-red-700 transition-colors leading-snug">
                   {item.title}
                 </h4>
                 <p className="text-xs sm:text-sm text-stone-600 leading-relaxed line-clamp-2">
@@ -357,7 +357,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                     href={createWhatsAppLink(item.title)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-rose-600 hover:text-rose-700 font-bold text-xs cursor-pointer group-hover:translate-x-1 transition-transform"
+                    className="inline-flex items-center gap-1.5 text-red-700 hover:text-red-800 font-bold text-xs cursor-pointer group-hover:translate-x-1 transition-transform"
                   >
                     <span>{item.linkText}</span>
                     <ArrowRight size={13} />
@@ -370,8 +370,8 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </section>
 
-      {/* 4. SECTION: AGENDA (Exact match to reference image) */}
-      <section id="agenda" className="py-16 sm:py-24 px-4 sm:px-8 bg-amber-50/40 border-y border-amber-200/50">
+      {/* 4. SECTION: AGENDA (Red Style) */}
+      <section id="agenda" className="py-16 sm:py-24 px-4 sm:px-8 bg-red-50/30 border-y border-red-200/50">
         <div className="max-w-7xl mx-auto">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -392,7 +392,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-md transition-all inline-flex items-center gap-2 cursor-pointer"
+                  className="bg-red-700 hover:bg-red-800 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-md transition-all inline-flex items-center gap-2 cursor-pointer"
                 >
                   <span>TOUS LES ÉVÉNEMENTS</span>
                   <ArrowRight size={14} />
@@ -408,7 +408,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 <button
                   type="button"
                   onClick={() => setActiveEventIndex(prev => (prev === 0 ? AGENDA_EVENTS.length - 1 : prev - 1))}
-                  className="w-8 h-8 rounded-full bg-stone-900 text-white flex items-center justify-center shadow-xs hover:bg-stone-800 active:scale-90 transition-all cursor-pointer"
+                  className="w-8 h-8 rounded-full bg-red-700 text-white flex items-center justify-center shadow-xs hover:bg-red-800 active:scale-90 transition-all cursor-pointer"
                   title="Anterior"
                 >
                   <ChevronLeft size={16} />
@@ -416,7 +416,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 <button
                   type="button"
                   onClick={() => setActiveEventIndex(prev => (prev === AGENDA_EVENTS.length - 1 ? 0 : prev + 1))}
-                  className="w-8 h-8 rounded-full bg-stone-900 text-white flex items-center justify-center shadow-xs hover:bg-stone-800 active:scale-90 transition-all cursor-pointer"
+                  className="w-8 h-8 rounded-full bg-red-700 text-white flex items-center justify-center shadow-xs hover:bg-red-800 active:scale-90 transition-all cursor-pointer"
                   title="Siguiente"
                 >
                   <ChevronRight size={16} />
@@ -428,7 +428,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 {AGENDA_EVENTS.map((event) => (
                   <div
                     key={event.id}
-                    className="bg-white rounded-3xl overflow-hidden border border-amber-200/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group text-left"
+                    className="bg-white rounded-3xl overflow-hidden border border-red-200/80 shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between group text-left"
                   >
                     <div>
                       <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-stone-100">
@@ -441,14 +441,14 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                         
-                        {/* Golden Event Date Badge */}
-                        <div className="absolute bottom-3 left-3 bg-amber-400/90 text-stone-900 text-[10px] font-black px-3 py-1 rounded-full shadow-sm backdrop-blur-xs">
+                        {/* Red Event Date Badge */}
+                        <div className="absolute bottom-3 left-3 bg-red-700 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-sm backdrop-blur-xs">
                           {event.date}
                         </div>
                       </div>
 
                       <div className="p-5 space-y-2">
-                        <h4 className="font-serif font-black text-base sm:text-lg text-stone-900 group-hover:text-amber-800 transition-colors leading-tight">
+                        <h4 className="font-serif font-black text-base sm:text-lg text-stone-900 group-hover:text-red-700 transition-colors leading-tight">
                           {event.title}
                         </h4>
                         <p className="text-xs text-stone-600 leading-relaxed line-clamp-2">
@@ -462,9 +462,9 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                         href={createWhatsAppLink(event.title)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-amber-700 hover:text-amber-800 font-bold text-xs cursor-pointer group-hover:translate-x-1 transition-transform"
+                        className="inline-flex items-center gap-1.5 text-red-700 hover:text-red-800 font-bold text-xs cursor-pointer group-hover:translate-x-1 transition-transform"
                       >
-                        <span className="w-4 h-4 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center text-[10px]">➤</span>
+                        <span className="w-4 h-4 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-[10px]">➤</span>
                         <span>Lire la suite / Réserver</span>
                       </a>
                     </div>
@@ -479,7 +479,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </section>
 
-      {/* 5. SECTION: LE TERRITOIRE / EL TERRITORIO SAGRADO (Exact match to reference image) */}
+      {/* 5. SECTION: LE TERRITOIRE / EL TERRITORIO SAGRADO (Red Button & Red Map Accent) */}
       <section id="territorio" className="relative py-20 sm:py-28 px-4 sm:px-8 text-white overflow-hidden">
         {/* Full-width mountain backdrop */}
         <div className="absolute inset-0 z-0">
@@ -490,7 +490,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             sizes="100vw"
             className="object-cover object-center brightness-75 contrast-105"
           />
-          <div className="absolute inset-0 bg-stone-950/50 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-stone-950/60 backdrop-blur-[2px]" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -511,7 +511,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 href={data.mapsUrl || 'https://maps.google.com'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-full shadow-xl transition-all inline-flex items-center gap-2 cursor-pointer"
+                className="bg-red-700 hover:bg-red-600 text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-full shadow-xl shadow-red-950/50 transition-all inline-flex items-center gap-2 cursor-pointer"
               >
                 <span>VOIR LA CARTE INTERACTIVE</span>
                 <Navigation size={15} />
@@ -521,14 +521,14 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
           {/* Right Column: Stylized Territory Map Silhouette with Route Pins */}
           <div className="lg:col-span-6 flex justify-center">
-            <div className="relative w-full max-w-[420px] bg-slate-900/90 backdrop-blur-md rounded-3xl p-6 border-2 border-white/20 shadow-2xl space-y-4">
+            <div className="relative w-full max-w-[420px] bg-slate-900/90 backdrop-blur-md rounded-3xl p-6 border-2 border-red-500/30 shadow-2xl space-y-4">
               
-              <div className="flex items-center justify-between text-xs font-bold text-amber-300 pb-2 border-b border-white/10">
+              <div className="flex items-center justify-between text-xs font-bold text-red-200 pb-2 border-b border-white/10">
                 <span className="flex items-center gap-1.5">
-                  <MapPin size={14} className="text-rose-500" />
+                  <MapPin size={14} className="text-red-500" />
                   Cartographie des Temples
                 </span>
-                <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full">
+                <span className="text-[10px] bg-red-600/30 text-red-200 px-2 py-0.5 rounded-full border border-red-500/30">
                   GPS Cusco
                 </span>
               </div>
@@ -537,31 +537,31 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               <div className="space-y-2.5 text-left text-xs">
                 <div className="bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/10 flex items-center justify-between transition-colors">
                   <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-rose-600 text-white font-black text-[10px] flex items-center justify-center">1</span>
+                    <span className="w-5 h-5 rounded-full bg-red-700 text-white font-black text-[10px] flex items-center justify-center">1</span>
                     <span className="font-bold text-white">Qorikancha (Temple du Soleil)</span>
                   </div>
-                  <span className="text-[10px] text-amber-300">3,400 m</span>
+                  <span className="text-[10px] text-red-300">3,400 m</span>
                 </div>
 
                 <div className="bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/10 flex items-center justify-between transition-colors">
                   <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-rose-600 text-white font-black text-[10px] flex items-center justify-center">2</span>
+                    <span className="w-5 h-5 rounded-full bg-red-700 text-white font-black text-[10px] flex items-center justify-center">2</span>
                     <span className="font-bold text-white">Sacsayhuamán Megalithique</span>
                   </div>
-                  <span className="text-[10px] text-amber-300">3,700 m</span>
+                  <span className="text-[10px] text-red-300">3,700 m</span>
                 </div>
 
                 <div className="bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/10 flex items-center justify-between transition-colors">
                   <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-rose-600 text-white font-black text-[10px] flex items-center justify-center">3</span>
+                    <span className="w-5 h-5 rounded-full bg-red-700 text-white font-black text-[10px] flex items-center justify-center">3</span>
                     <span className="font-bold text-white">Qenqo & Puka Pukara</span>
                   </div>
-                  <span className="text-[10px] text-amber-300">3,800 m</span>
+                  <span className="text-[10px] text-red-300">3,800 m</span>
                 </div>
 
                 <div className="bg-white/10 hover:bg-white/20 p-2.5 rounded-xl border border-white/10 flex items-center justify-between transition-colors">
                   <div className="flex items-center gap-2">
-                    <span className="w-5 h-5 rounded-full bg-rose-600 text-white font-black text-[10px] flex items-center justify-center">4</span>
+                    <span className="w-5 h-5 rounded-full bg-red-700 text-white font-black text-[10px] flex items-center justify-center">4</span>
                     <span className="font-bold text-white">Plaza de Armas & Cathédrale</span>
                   </div>
                   <span className="text-[10px] text-emerald-400">Point Zéro</span>
@@ -577,11 +577,11 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </section>
 
-      {/* 6. TOUR ITINERARY & INCLUSIONS (Preserved for full booking completeness) */}
+      {/* 6. TOUR ITINERARY & INCLUSIONS (Red Accents) */}
       {data.itinerary && data.itinerary.length > 0 && (
         <section id="itinerario" className="py-16 sm:py-24 px-4 sm:px-8 max-w-4xl mx-auto">
           <div className="text-center mb-10 space-y-2">
-            <span className="text-xs font-bold text-amber-800 uppercase tracking-widest bg-amber-100 px-3 py-1 rounded-full">
+            <span className="text-xs font-bold text-red-800 uppercase tracking-widest bg-red-100 border border-red-200 px-3 py-1 rounded-full">
               Itinéraire Officiel DIRCETUR
             </span>
             <h2 className="text-2xl sm:text-4xl font-serif font-black text-stone-900">
@@ -592,14 +592,14 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             </p>
           </div>
 
-          <div className="space-y-4 sm:space-y-5 relative before:absolute before:inset-0 before:left-4 sm:before:left-5 before:w-0.5 before:bg-amber-300">
+          <div className="space-y-4 sm:space-y-5 relative before:absolute before:inset-0 before:left-4 sm:before:left-5 before:w-0.5 before:bg-red-200">
             {data.itinerary.map((item, idx) => (
               <div key={idx} className="relative flex items-start gap-4 pl-1 sm:pl-2">
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-stone-900 text-amber-300 font-serif font-black flex items-center justify-center text-xs shrink-0 shadow-md ring-4 ring-white z-10">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-red-700 text-white font-serif font-black flex items-center justify-center text-xs shrink-0 shadow-md ring-4 ring-white z-10">
                   {idx + 1}
                 </div>
                 <div className="bg-white border border-stone-200 rounded-2xl p-4 sm:p-5 w-full shadow-xs text-left">
-                  <span className="text-[11px] uppercase font-black tracking-wider text-amber-800 bg-amber-100/80 px-2.5 py-0.5 rounded-md inline-block mb-1.5">
+                  <span className="text-[11px] uppercase font-black tracking-wider text-red-800 bg-red-50 border border-red-200 px-2.5 py-0.5 rounded-md inline-block mb-1.5">
                     {item.step}
                   </span>
                   <h3 className="font-serif font-bold text-stone-900 text-sm sm:text-base mb-1">{item.title}</h3>
@@ -623,8 +623,8 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {data.features.items.map((item, idx) => (
-                <div key={idx} className="bg-white p-5 rounded-2xl border border-stone-200 shadow-2xs flex items-start gap-3.5 text-left">
-                  <CheckCircle2 className="text-amber-700 shrink-0 mt-0.5" size={20} />
+                <div key={idx} className="bg-white p-5 rounded-2xl border border-stone-200 hover:border-red-300 shadow-2xs flex items-start gap-3.5 text-left transition-colors">
+                  <CheckCircle2 className="text-red-700 shrink-0 mt-0.5" size={20} />
                   <div>
                     <h3 className="font-bold text-stone-900 text-sm sm:text-base">{item.split(':')[0]}</h3>
                     <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
@@ -662,13 +662,13 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         isMobile={isMobile}
       />
 
-      {/* 10. MUNICIPAL & HERITAGE FOOTER BLOCK (Exact match to bottom of reference image) */}
-      <footer id="contacto" className="bg-white border-t-2 border-amber-300/80 py-10 px-4 sm:px-8 text-stone-700 text-xs">
+      {/* 10. MUNICIPAL & HERITAGE FOOTER BLOCK (Red Border & Accents) */}
+      <footer id="contacto" className="bg-white border-t-2 border-red-700 py-10 px-4 sm:px-8 text-stone-700 text-xs">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-center text-left">
           
           {/* Column 1: Emblem & Town Name */}
           <div className="md:col-span-3 flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-400 text-amber-700 flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-xl bg-red-100 border border-red-300 text-red-800 flex items-center justify-center shrink-0">
               <Landmark size={24} />
             </div>
             <div>
@@ -706,23 +706,23 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             <div className="space-y-1.5">
               <a
                 href={`tel:${cleanPhone}`}
-                className="flex items-center gap-1.5 text-stone-900 hover:text-amber-800 font-black text-xs cursor-pointer"
+                className="flex items-center gap-1.5 text-stone-900 hover:text-red-700 font-black text-xs cursor-pointer"
               >
-                <Phone size={13} className="text-amber-700" />
+                <Phone size={13} className="text-red-700" />
                 <span>{data.whatsapp || '+51 984 123 456'}</span>
               </a>
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-block bg-stone-900 hover:bg-stone-800 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-2xs cursor-pointer"
+                className="inline-block bg-red-700 hover:bg-red-800 text-white text-[11px] font-bold px-3 py-1 rounded-full shadow-2xs cursor-pointer"
               >
                 Contactez-nous !
               </a>
             </div>
 
             {/* Mini Map Icon Illustration */}
-            <div className="w-16 h-12 bg-amber-100 rounded-xl border border-amber-300 flex items-center justify-center text-amber-800 shrink-0 shadow-2xs">
+            <div className="w-16 h-12 bg-red-100 rounded-xl border border-red-300 flex items-center justify-center text-red-800 shrink-0 shadow-2xs">
               <MapPin size={20} className="animate-bounce" />
             </div>
           </div>
@@ -737,17 +737,17 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
       {/* 11. STICKY MOBILE BOTTOM BAR */}
       {isMobile && (
-        <div className="fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-amber-200 p-3 flex items-center justify-between gap-3 shadow-2xl">
+        <div className="fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-red-200 p-3 flex items-center justify-between gap-3 shadow-2xl">
           <div className="min-w-0">
             <span className="text-[10px] text-stone-500 font-bold block uppercase">Tarifa Cultural</span>
-            <span className="text-base font-serif font-black text-stone-900">{data.price || 'S/ 85 PEN'}</span>
+            <span className="text-base font-serif font-black text-red-900">{data.price || 'S/ 85 PEN'}</span>
           </div>
           <div className="flex items-center gap-2">
             {isQuote ? (
               <button
                 type="button"
                 onClick={() => setIsQuoteOpen(true)}
-                className="bg-amber-700 hover:bg-amber-600 text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 cursor-pointer"
+                className="bg-red-700 hover:bg-red-600 text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 cursor-pointer"
               >
                 <FileText size={14} />
                 <span>Cotizar</span>
@@ -757,7 +757,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-stone-900 hover:bg-stone-800 text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 cursor-pointer"
+                className="bg-red-700 hover:bg-red-600 text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 cursor-pointer"
               >
                 <MessageCircle size={14} />
                 <span>Reservar</span>
