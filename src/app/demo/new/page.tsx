@@ -1840,7 +1840,7 @@ export default function NewLandingDemo() {
                 ? 'bg-[#0C0A09] text-white border-amber-500/30'
                 : template === 'cultural'
                 ? 'bg-[#1C1917] text-white border-amber-600/30'
-                : 'bg-slate-950 text-white border-emerald-500/30'
+                : 'bg-white text-slate-800 border-slate-200'
             }`}>
 
               {/* 1. PLANTILLA DISEÑO 1: PORTAL AGENCIA (VINICUNCA ORANGE) */}
@@ -2204,88 +2204,118 @@ export default function NewLandingDemo() {
                 </div>
               )}
 
-              {/* 4. PLANTILLA AVENTURA & TREKKING */}
+              {/* 4. PLANTILLA AVENTURA & TREKKING (TRAVEL THE BEST / MODERN CLEAN) */}
               {template === 'adventure' && (
-                <div className="flex flex-col min-h-full bg-gradient-to-b from-[#064E3B] to-[#022C22]">
+                <div className="flex flex-col min-h-full bg-white text-slate-800">
                   <div className="p-4 space-y-3">
-                    <div className="flex justify-between items-center text-[10px] pb-2 border-b border-emerald-500/20">
-                      <span className="text-emerald-300 font-black tracking-wider flex items-center gap-1">
-                        <Mountain size={12} /> TREK EXPLORER
+                    {/* Top Pill Header */}
+                    <div className="flex justify-between items-center text-[10px] pb-1 border-b border-slate-100">
+                      <span className="bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                        <span>🌐</span> Discover the World
                       </span>
-                      <span className="bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-full text-[9px]">
+                      <span className="text-slate-400 font-bold text-[9px]">
                         {altitude || '4,630 msnm'}
                       </span>
                     </div>
 
-                    <div className="relative h-44 rounded-2xl overflow-hidden border border-emerald-500/30">
-                      <Image src={activeHeroImg} alt="Trek" fill sizes="400px" className="object-cover opacity-80" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#022C22] via-transparent to-transparent" />
-                      <div className="absolute bottom-2 left-2 right-2">
-                        <span className="text-[9px] text-emerald-300 font-bold uppercase tracking-wider block">Alta Montaña • {difficulty}</span>
-                        <h3 className="text-sm font-black text-white line-clamp-1">{name || 'Salkantay Trek Clásico'}</h3>
+                    {/* Headline Banner */}
+                    <div className="space-y-1">
+                      <h3 className="text-sm font-black text-slate-900 leading-tight">
+                        Travel the Best, It&apos;s a Big World, Go Explore! 🚀
+                      </h3>
+                      <p className="text-[10px] text-slate-500 line-clamp-1">
+                        {name || 'Tour Salkantay Trek Clásico'} • {duration || '5 Días'}
+                      </p>
+                    </div>
+
+                    {/* Trekker Hero Image with Floating Review Badge */}
+                    <div className="relative h-44 rounded-2xl overflow-hidden border border-slate-100 shadow-sm bg-slate-100">
+                      <Image 
+                        src={activeHeroImg} 
+                        alt="Trekker" 
+                        fill 
+                        sizes="400px" 
+                        className="object-cover" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                      
+                      {/* Floating Review Badge */}
+                      <div className="absolute bottom-2 left-2 right-2 bg-white/95 backdrop-blur-md px-2.5 py-1.5 rounded-full shadow-md flex items-center justify-between text-[9px]">
+                        <span className="font-bold text-slate-800">Our Happy Customers</span>
+                        <div className="flex items-center gap-1 font-black text-slate-900">
+                          <span className="text-amber-400">★</span>
+                          <span>4.9 (10.2k)</span>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2 text-[10px]">
-                      <div className="p-2 rounded-xl bg-emerald-950/60 border border-emerald-800/40 text-center">
-                        <span className="text-emerald-400 font-bold block">Duración</span>
-                        <span className="text-white font-extrabold">{duration || '5 Días'}</span>
-                      </div>
-                      <div className="p-2 rounded-xl bg-emerald-950/60 border border-emerald-800/40 text-center">
-                        <span className="text-emerald-400 font-bold block">Modalidad</span>
-                        <span className="text-white font-extrabold">{groupType?.split('(')[0] || 'Grupos'}</span>
+                    {/* Quick Searched Spots Pills (Mini) */}
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-black text-slate-800 block">
+                        Explore Top Searched Spots 🔥
+                      </span>
+                      <div className="grid grid-cols-2 gap-1.5 text-[9px]">
+                        <div className="bg-slate-50 border border-slate-200/80 p-1.5 rounded-xl font-bold flex items-center justify-between">
+                          <span className="truncate">Salkantay Trek</span>
+                          <span className="text-slate-400">450</span>
+                        </div>
+                        <div className="bg-slate-50 border border-slate-200/80 p-1.5 rounded-xl font-bold flex items-center justify-between">
+                          <span className="truncate">Camino Inca</span>
+                          <span className="text-slate-400">380</span>
+                        </div>
                       </div>
                     </div>
 
+                    {/* Pricing & CTA */}
                     <div className="space-y-2 pt-1">
                       <div className="flex items-baseline justify-between text-xs">
-                        <span className="text-stone-300">Precio Todo Incluido:</span>
-                        <span className="text-base font-black text-emerald-400">{price || '$350 USD'}</span>
+                        <span className="text-slate-400 font-bold">Tarifa Todo Incluido:</span>
+                        <span className="text-base font-black text-slate-900">{price || '$350 USD'}</span>
                       </div>
-                      <div className="w-full bg-emerald-500 hover:bg-emerald-400 text-stone-950 font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
-                        <Mountain size={14} />
-                        <span>{objective === 'quote' ? 'Cotizar Expedición' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Reservar por WhatsApp'}</span>
+                      <div className="w-full bg-slate-900 hover:bg-slate-800 text-white font-black py-2.5 px-3 rounded-full text-center text-xs shadow-md flex items-center justify-center gap-1.5">
+                        <ArrowRight size={13} />
+                        <span>{objective === 'quote' ? 'Get Started / Cotizar' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Get Started / Reservar'}</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Mini Tour Catalog Section */}
-                  <div className="p-3 bg-[#011d16] border-t border-emerald-500/20 space-y-2 flex-1">
+                  <div className="p-3 bg-slate-50 border-t border-slate-200 space-y-2 flex-1">
                     <div className="flex items-center justify-between text-[10px]">
-                      <span className="font-extrabold text-emerald-200">Catálogo de Tours Exclusivos</span>
-                      <span className="text-emerald-400 font-bold text-[9px]">Ver todos (6)</span>
+                      <span className="font-extrabold text-slate-800">Catálogo de Tours Exclusivos</span>
+                      <span className="text-blue-600 font-bold text-[9px]">Ver todos (6)</span>
                     </div>
 
-                    <div className="bg-emerald-950/80 rounded-xl p-2 border border-emerald-800/50 flex items-center gap-2.5">
-                      <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-emerald-900 shrink-0">
+                    <div className="bg-white rounded-xl p-2 border border-slate-200 shadow-2xs flex items-center gap-2.5">
+                      <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-slate-100 shrink-0">
                         <Image src={activeHeroImg} alt="Tour" fill sizes="80px" className="object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-[11px] font-black text-white truncate">{name || 'Salkantay Trek Clásico'}</h4>
-                        <p className="text-[9px] text-emerald-300/80">{duration || '5 Días'} • {destination || 'Cusco'}</p>
-                        <span className="text-xs font-black text-emerald-400">{price || '$350 USD'}</span>
+                        <h4 className="text-[11px] font-black text-slate-900 truncate">{name || 'Salkantay Trek Clásico'}</h4>
+                        <p className="text-[9px] text-slate-500">{duration || '5 Días'} • {destination || 'Cusco'}</p>
+                        <span className="text-xs font-black text-slate-900">{price || '$350 USD'}</span>
                       </div>
                     </div>
 
                     {/* Mini Oficina Física & Google Maps Card */}
-                    <div className="p-2.5 bg-emerald-950/90 rounded-xl border border-emerald-800/50 space-y-1 text-[9px]">
-                      <div className="flex items-center gap-1.5 text-emerald-400 font-bold">
-                        <MapPin size={11} className="text-emerald-400 shrink-0" />
+                    <div className="p-2.5 bg-white rounded-xl border border-slate-200 shadow-2xs space-y-1 text-[9px]">
+                      <div className="flex items-center gap-1.5 text-blue-600 font-bold">
+                        <MapPin size={11} className="text-blue-600 shrink-0" />
                         <span>Oficina Física en Cusco:</span>
                       </div>
-                      <p className="text-emerald-100 line-clamp-1 text-[8px] pl-4">
+                      <p className="text-slate-600 line-clamp-1 text-[8px] pl-4">
                         {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
                       </p>
                       <div className="flex items-center justify-between pt-1 pl-4 text-[8px]">
-                        <span className="text-emerald-300 font-semibold">{officeHours || 'Lun-Dom: 8am - 8pm'}</span>
-                        <span className="text-blue-400 font-bold flex items-center gap-0.5">
+                        <span className="text-emerald-700 font-semibold">{officeHours || 'Lun-Dom: 8am - 8pm'}</span>
+                        <span className="text-blue-600 font-bold flex items-center gap-0.5">
                           <Navigation size={8} /> Maps Conectado
                         </span>
                       </div>
                     </div>
 
                     {/* Certifications Footer */}
-                    <div className="pt-1 flex items-center justify-center gap-3 text-[8px] text-emerald-400/80 font-bold">
+                    <div className="pt-1 flex items-center justify-center gap-3 text-[8px] text-slate-500 font-bold">
                       <span>✓ MINCETUR</span>
                       <span>✓ DIRCETUR</span>
                       <span>✓ SAFE TRAVELS</span>
