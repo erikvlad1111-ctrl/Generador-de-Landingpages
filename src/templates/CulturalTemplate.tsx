@@ -715,90 +715,147 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </section>
 
-      {/* 10. LE MÉDIATEUR DU PATRIMOINE / PERFIL DEL GUÍA HISTORIADOR */}
+      {/* 10. VOS MÉDIATEURS DU PATRIMOINE / EQUIPO DE HISTORIADORES CERTIFICADOS */}
       <section id="guide" className="py-16 sm:py-24 px-4 sm:px-8 bg-red-50/40 border-t border-red-200/60">
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-white rounded-3xl p-6 sm:p-10 border border-red-200 shadow-xl overflow-hidden relative text-left">
-            <div className="absolute top-0 right-0 w-80 h-80 bg-red-100/50 rounded-full blur-3xl pointer-events-none" />
+        <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12">
+          
+          {/* Section Header */}
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
+              <GraduationCap size={14} />
+              <span>Médiateurs du Patrimoine & Historiens Agréés</span>
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-serif font-black text-stone-900">
+              Vos Guides-Conférenciers Dédiés
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+              Tous nos guides sont archéologues ou historiens diplômés de l&apos;Université San Antonio Abad (UNSAAC), titulaires du carnet officiel DIRCETUR et membres actifs du COLTUR Cusco.
+            </p>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10">
-              {/* Photo & Badge */}
-              <div className="md:col-span-5 flex flex-col items-center text-center space-y-3">
-                <div className="relative w-44 h-44 sm:w-56 sm:h-56 rounded-3xl overflow-hidden shadow-xl border-4 border-red-100 bg-stone-100">
-                  <Image
-                    src={data.guideAvatar || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop'}
-                    alt={data.guideName || 'Guide Conférencier'}
-                    fill
-                    sizes="250px"
-                    className="object-cover"
-                  />
-                  <div className="absolute bottom-2 inset-x-2 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold py-1 px-2 rounded-xl border border-white/20">
-                    {data.guideCert || 'Carnet DIRCETUR N° 04821'}
+          {/* 3 Heritage Guides Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch text-left">
+            {[
+              {
+                id: 'lucia-condori',
+                name: data.guideName || 'Lic. Lucía Condori',
+                title: 'Votre Médiatrice du Patrimoine',
+                role: 'Archéologue & Cosmovision Andine',
+                cert: data.guideCert || 'Carnet DIRCETUR N° 04821 • COLTUR Cusco',
+                avatar: data.guideAvatar || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop',
+                quote: 'Transmettre la mémoire des pierres n\'est pas une récitation de dates : c\'est une immersion vivante dans la cosmogonie de nos ancêtres. Chaque temple que nous foulons raconte l\'équilibre sacré entre l\'homme et la Pachamama.',
+                specs: [
+                  { icon: '🎓', label: 'Diplômée de l\'UNSAAC Cusco' },
+                  { icon: '🗣️', label: data.guideLanguages || 'Español, Inglés y Francés' },
+                  { icon: '🏛️', label: '12 ans d\'expertise archéologique' },
+                  { icon: '🛡️', label: 'Secourisme & Altitude certifié' }
+                ],
+                directBtn: 'Échanger avec Lucía Condori',
+                msg: `Hola Lucía Condori, deseo información y disponibilidad para el tour cultural "${data.name || data.hero?.title || 'Tour Cultural'}".`
+              },
+              {
+                id: 'marco-quispe',
+                name: 'Lic. Marco Antonio Quispe',
+                title: 'Votre Historien de l\'Architecture',
+                role: 'Ingénierie Mégalithique & Sacsayhuamán',
+                cert: 'Carnet DIRCETUR N° 03914 • COLTUR Cusco',
+                avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop',
+                quote: 'L\'architecture inca n\'était pas seulement monumentale mais parasismique et sacrée. Analyser la taille des blocs de Sacsayhuamán sur place permet de comprendre le génie mathématique andin.',
+                specs: [
+                  { icon: '🎓', label: 'Diplômé de l\'UNSAAC Cusco' },
+                  { icon: '🗣️', label: 'Español, Quechua y Francés' },
+                  { icon: '🏛️', label: '15 ans de recherche mégalithique' },
+                  { icon: '🛡️', label: 'Accompagnateur Haute Montagne' }
+                ],
+                directBtn: 'Échanger avec Marco Quispe',
+                msg: `Hola Marco Antonio Quispe, deseo información y disponibilidad para el tour cultural "${data.name || data.hero?.title || 'Tour Cultural'}".`
+              },
+              {
+                id: 'carlos-valdivia',
+                name: 'Mag. Carlos Eduardo Valdivia',
+                title: 'Votre Spécialiste du Métissage',
+                role: 'Histoire de l\'Art Colonial & Qorikancha',
+                cert: 'Carnet DIRCETUR N° 05128 • COLTUR Cusco',
+                avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop',
+                quote: 'La rencontre entre les temples incas du Soleil et les arcades virreinales du couvent de Santo Domingo illustre le dialogue et la résistance culturelle de notre cité impériale.',
+                specs: [
+                  { icon: '🎓', label: 'Master Histoire de l\'Art (UNSAAC)' },
+                  { icon: '🗣️', label: 'Español, Inglés e Italiano' },
+                  { icon: '🏛️', label: '10 ans de guidage muséal & églises' },
+                  { icon: '🛡️', label: 'Guide-Conférencier Certifié' }
+                ],
+                directBtn: 'Échanger avec Carlos Valdivia',
+                msg: `Hola Carlos Eduardo Valdivia, deseo información y disponibilidad para el tour cultural "${data.name || data.hero?.title || 'Tour Cultural'}".`
+              }
+            ].map((guide) => (
+              <div
+                key={guide.id}
+                className="bg-white rounded-3xl p-6 sm:p-7 border border-red-200/90 hover:border-red-400 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
+              >
+                <div className="space-y-4">
+                  {/* Photo with Badge */}
+                  <div className="relative h-56 sm:h-64 w-full rounded-2xl overflow-hidden bg-stone-100 shadow-md border-2 border-red-100">
+                    <Image
+                      src={guide.avatar}
+                      alt={guide.name}
+                      fill
+                      sizes="(max-width: 1024px) 100vw, 380px"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute bottom-2.5 inset-x-2.5 bg-black/65 backdrop-blur-md text-white text-[10px] font-bold py-1.5 px-3 rounded-xl border border-white/20 flex items-center justify-between">
+                      <span className="truncate">{guide.cert}</span>
+                      <span className="text-emerald-400 font-black shrink-0">✓ Actif</span>
+                    </div>
+                  </div>
+
+                  {/* Header info */}
+                  <div className="space-y-1">
+                    <div className="inline-block bg-red-100 text-red-800 text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">
+                      {guide.role}
+                    </div>
+                    <span className="text-xs font-serif italic text-red-700 font-bold block pt-1">
+                      {guide.title}
+                    </span>
+                    <h3 className="font-serif font-black text-xl text-stone-900 group-hover:text-red-700 transition-colors leading-tight">
+                      {guide.name}
+                    </h3>
+                  </div>
+
+                  {/* Quote */}
+                  <div className="relative pl-4 py-2 border-l-2 border-red-700 bg-red-50/50 rounded-r-xl pr-3">
+                    <Quote size={16} className="text-red-300 absolute -top-1.5 left-1 opacity-50" />
+                    <p className="text-xs font-serif italic text-stone-700 leading-relaxed line-clamp-4">
+                      « {guide.quote} »
+                    </p>
+                  </div>
+
+                  {/* Specs Grid */}
+                  <div className="grid grid-cols-2 gap-2 pt-1 text-[11px] text-stone-700">
+                    {guide.specs.map((sp, sIdx) => (
+                      <div key={sIdx} className="flex items-center gap-1.5 bg-stone-50 p-2 rounded-xl border border-stone-200/80">
+                        <span className="text-xs shrink-0">{sp.icon}</span>
+                        <span className="truncate font-medium">{sp.label}</span>
+                      </div>
+                    ))}
                   </div>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-800 text-[11px] font-black uppercase tracking-wider">
-                  <GraduationCap size={14} />
-                  <span>Historien & Archéologue</span>
-                </div>
-              </div>
-
-              {/* Bio & Academic Credentials */}
-              <div className="md:col-span-7 space-y-4">
-                <div>
-                  <span className="text-xs font-serif italic text-red-700 font-bold block">
-                    Votre Médiateur du Patrimoine
-                  </span>
-                  <h3 className="text-2xl sm:text-3xl font-serif font-black text-stone-900 leading-tight">
-                    {data.guideName || 'Lic. Marco Antonio Quispe'}
-                  </h3>
-                  <span className="text-xs text-stone-500 font-medium block mt-0.5">
-                    Membre actif de l&apos;Ordre des Licenciés en Tourisme du Pérou (COLTUR Cusco)
-                  </span>
-                </div>
-
-                {/* Quote */}
-                <div className="relative pl-6 py-2 border-l-2 border-red-700 bg-red-50/50 rounded-r-2xl pr-4">
-                  <Quote size={20} className="text-red-300 absolute -top-2 left-2 opacity-50" />
-                  <p className="text-xs sm:text-sm font-serif italic text-stone-800 leading-relaxed">
-                    « Transmettre la mémoire des pierres n&apos;est pas une récitation de dates : c&apos;est une immersion vivante dans la cosmogonie de nos ancêtres. Chaque temple que nous foulons raconte l&apos;équilibre sacré entre l&apos;homme et la Pachamama. »
-                  </p>
-                </div>
-
-                {/* Badges / Specs */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs text-stone-700">
-                  <div className="flex items-center gap-2 bg-stone-50 p-2.5 rounded-xl border border-stone-200">
-                    <span className="text-base">🎓</span>
-                    <span>Diplômé de l&apos;UNSAAC Cusco</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-stone-50 p-2.5 rounded-xl border border-stone-200">
-                    <span className="text-base">🗣️</span>
-                    <span>{data.guideLanguages || 'Espagnol • Quechua • Français • English'}</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-stone-50 p-2.5 rounded-xl border border-stone-200">
-                    <span className="text-base">🏛️</span>
-                    <span>12 ans d&apos;expertise archéologique</span>
-                  </div>
-                  <div className="flex items-center gap-2 bg-stone-50 p-2.5 rounded-xl border border-stone-200">
-                    <span className="text-base">🛡️</span>
-                    <span>Secourisme & Altitude certifié</span>
-                  </div>
-                </div>
-
-                <div className="pt-2">
+                {/* Direct Action Button */}
+                <div className="pt-5 mt-5 border-t border-stone-100">
                   <a
-                    href={whatsappUrl}
+                    href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent(guide.msg)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-red-700 hover:bg-red-800 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-md transition-all cursor-pointer"
+                    className="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-2.5 px-4 rounded-full text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group-hover:shadow-lg"
                   >
-                    <MessageCircle size={16} />
-                    <span>Échanger directement avec le guide</span>
+                    <MessageCircle size={14} />
+                    <span className="truncate">{guide.directBtn}</span>
                   </a>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
+
         </div>
       </section>
 
