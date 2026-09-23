@@ -22,11 +22,12 @@ export function generateStandaloneHtml(data: LandingData): string {
 
   const isPremium = data.template === 'premium';
   const isCultural = data.template === 'cultural';
+  const isBoho = data.template === 'boho-nature';
 
   // Theme accents
-  const primaryColor = isPremium ? 'amber-500' : isCultural ? 'orange-600' : 'emerald-600';
-  const primaryHover = isPremium ? 'amber-600' : isCultural ? 'orange-700' : 'emerald-700';
-  const bgTheme = isPremium ? 'bg-slate-950 text-slate-100' : isCultural ? 'bg-amber-50/50 text-stone-900' : 'bg-stone-50 text-stone-900';
+  const primaryColor = isPremium ? 'amber-500' : isCultural ? 'orange-600' : isBoho ? '[#C86D51]' : 'emerald-600';
+  const primaryHover = isPremium ? 'amber-600' : isCultural ? 'orange-700' : isBoho ? '[#b05d43]' : 'emerald-700';
+  const bgTheme = isPremium ? 'bg-slate-950 text-slate-100' : isCultural ? 'bg-amber-50/50 text-stone-900' : isBoho ? 'bg-[#FAF7F2] text-stone-800' : 'bg-stone-50 text-stone-900';
   const cardBg = isPremium ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-stone-200 text-stone-900';
 
   return `<!DOCTYPE html>

@@ -151,8 +151,28 @@ export default function TourSupportAndFaqs({
 }: TourSupportAndFaqsProps) {
   const isEn = lang === 'en';
 
+  const isBoho = theme === 'boho-nature';
+  const isPremium = theme === 'premium';
+  const isCultural = theme === 'cultural';
+  const isAdventure = theme === 'adventure';
+  const isBasic = tier === 'basic';
+  const isPro = tier === 'pro';
+
   // Navigation Tabs: 'forum' (Comunidad) | 'faq' (Preguntas Frecuentes) | 'ticket' (Mesa Privada)
-  const [activeTab, setActiveTab] = useState<'forum' | 'faq' | 'ticket'>('forum');
+  // For basic or pro tier, default to 'faq'
+  const [activeTab, setActiveTab] = useState<'forum' | 'faq' | 'ticket'>(
+    (isBasic || isPro) ? 'faq' : 'forum'
+  );
+
+  // Theme-aware visual tokens
+  const themeTitleClass = isBoho ? 'font-serif font-medium text-stone-900' : 'font-black tracking-tight text-stone-900';
+  const themeAccentText = isBoho ? 'text-[#C86D51]' : isPremium ? 'text-amber-400' : isAdventure ? 'text-emerald-500' : isCultural ? 'text-amber-600' : 'text-[#FF5500]';
+  const themeBadge = isBoho ? 'bg-[#C86D51]/10 text-[#C86D51] border border-[#C86D51]/20 font-serif font-bold' : isPremium ? 'bg-amber-400/10 text-amber-300 border border-amber-400/30 font-serif' : isAdventure ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : isCultural ? 'bg-amber-600/10 text-amber-600 border border-amber-600/20 font-serif' : 'bg-[#FF5500]/10 text-[#FF5500] border border-[#FF5500]/20 font-black';
+  const themeButtonPrimary = isBoho ? 'bg-[#C86D51] hover:bg-[#b05d43] text-white shadow-md shadow-[#C86D51]/25' : isPremium ? 'bg-amber-500 hover:bg-amber-600 text-stone-900 shadow-md shadow-amber-500/30' : isAdventure ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-600/30' : isCultural ? 'bg-amber-700 hover:bg-amber-800 text-white shadow-md shadow-amber-700/30' : 'shimmer-btn bg-gradient-to-r from-[#FF5500] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white shadow-md shadow-[#FF5500]/30';
+  const themeTabBadge = isBoho ? 'bg-[#C86D51]/15 text-[#C86D51]' : isPremium ? 'bg-amber-400/20 text-amber-400' : isAdventure ? 'bg-emerald-500/15 text-emerald-600' : isCultural ? 'bg-amber-600/15 text-amber-700' : 'bg-[#FF5500]/15 text-[#FF5500]';
+  const themeFocusRing = isBoho ? 'focus:ring-[#C86D51]/30 focus:border-[#C86D51]' : isPremium ? 'focus:ring-amber-500/30 focus:border-amber-500' : isAdventure ? 'focus:ring-emerald-500/30 focus:border-emerald-500' : isCultural ? 'focus:ring-amber-600/30 focus:border-amber-600' : 'focus:ring-[#FF5500]/30 focus:border-[#FF5500]';
+  const themeCardBorderHover = isBoho ? 'hover:border-[#C86D51]/50' : 'hover:border-[#FF5500]/40';
+  const themeAdminAvatar = isBoho ? 'bg-[#C86D51]' : isPremium ? 'bg-amber-600' : isAdventure ? 'bg-emerald-600' : isCultural ? 'bg-amber-700' : 'bg-[#FF5500]';
 
   // Forum Threads State
   const [forumQuestions, setForumQuestions] = useState<ForumQuestion[]>(INITIAL_FORUM_QUESTIONS);
@@ -496,18 +516,18 @@ export default function TourSupportAndFaqs({
   };
 
   return (
-    <section id="soporte-faq" className={`${isMobile ? 'py-8 px-3' : 'py-20 px-6 sm:px-8'} bg-[#F9F7F4] border-t border-stone-200 transition-colors duration-300`}>
+    <section id="soporte-faq" className={`${isMobile ? 'py-8 px-3' : 'py-20 px-6 sm:px-8'} ${isBoho ? 'bg-[#FAF7F2]' : 'bg-[#F9F7F4]'} border-t border-stone-200 transition-colors duration-300`}>
       <div className="max-w-5xl mx-auto space-y-6 sm:space-y-10">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-2 sm:space-y-3 px-2">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider bg-[#FF5500]/10 text-[#FF5500] border border-[#FF5500]/20">
+          <div className={`inline-flex items-center gap-1.5 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full text-[10px] sm:text-xs uppercase tracking-wider ${themeBadge}`}>
             <HelpCircle size={14} />
             <span>{st.badge}</span>
           </div>
 
-          <h2 className={`${isMobile ? 'text-xl' : 'text-3xl sm:text-4xl'} font-black tracking-tight text-stone-900`}>
-            {st.titlePrefix} <span className="text-[#FF5500]">{st.titleSuffix}</span>
+          <h2 className={`${isMobile ? 'text-xl' : 'text-3xl sm:text-4xl'} ${themeTitleClass}`}>
+            {st.titlePrefix} <span className={themeAccentText}>{st.titleSuffix}</span>
           </h2>
 
           <p className="text-xs sm:text-sm text-stone-600 leading-relaxed max-w-xl mx-auto">
@@ -520,15 +540,15 @@ export default function TourSupportAndFaqs({
           <button
             type="button"
             onClick={() => { setActiveTab('forum'); setActiveQuestionId(null); }}
-            className={`flex items-center justify-center gap-1 sm:gap-2 px-1.5 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs flex-col sm:flex-row text-center rounded-xl font-black transition-all cursor-pointer min-h-[44px] ${
+            className={`flex items-center justify-center gap-1 sm:gap-2 px-1.5 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs flex-col sm:flex-row text-center rounded-xl font-bold transition-all cursor-pointer min-h-[44px] ${
               activeTab === 'forum'
                 ? 'bg-white text-stone-900 shadow-md scale-102'
                 : 'text-stone-600 hover:text-stone-900'
             }`}
           >
-            <MessageSquare size={14} className={activeTab === 'forum' ? 'text-[#FF5500]' : ''} />
+            <MessageSquare size={14} className={activeTab === 'forum' ? themeAccentText : ''} />
             <span className="truncate max-w-full">{st.tabForum}</span>
-            <span className="hidden sm:inline bg-[#FF5500]/15 text-[#FF5500] text-[9px] px-1.5 py-0.2 rounded-full font-bold">
+            <span className={`hidden sm:inline ${themeTabBadge} text-[9px] px-1.5 py-0.2 rounded-full font-bold`}>
               {forumQuestions.length}
             </span>
           </button>
@@ -536,26 +556,26 @@ export default function TourSupportAndFaqs({
           <button
             type="button"
             onClick={() => setActiveTab('faq')}
-            className={`flex items-center justify-center gap-1 sm:gap-2 px-1.5 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs flex-col sm:flex-row text-center rounded-xl font-black transition-all cursor-pointer min-h-[44px] ${
+            className={`flex items-center justify-center gap-1 sm:gap-2 px-1.5 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs flex-col sm:flex-row text-center rounded-xl font-bold transition-all cursor-pointer min-h-[44px] ${
               activeTab === 'faq'
                 ? 'bg-white text-stone-900 shadow-md scale-102'
                 : 'text-stone-600 hover:text-stone-900'
             }`}
           >
-            <HelpCircle size={14} className={activeTab === 'faq' ? 'text-[#FF5500]' : ''} />
+            <HelpCircle size={14} className={activeTab === 'faq' ? themeAccentText : ''} />
             <span className="truncate max-w-full">{st.tabFaq}</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab('ticket')}
-            className={`flex items-center justify-center gap-1 sm:gap-2 px-1.5 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs flex-col sm:flex-row text-center rounded-xl font-black transition-all cursor-pointer min-h-[44px] ${
+            className={`flex items-center justify-center gap-1 sm:gap-2 px-1.5 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs flex-col sm:flex-row text-center rounded-xl font-bold transition-all cursor-pointer min-h-[44px] ${
               activeTab === 'ticket'
                 ? 'bg-white text-stone-900 shadow-md scale-102'
                 : 'text-stone-600 hover:text-stone-900'
             }`}
           >
-            <ShieldCheck size={14} className={activeTab === 'ticket' ? 'text-[#FF5500]' : ''} />
+            <ShieldCheck size={14} className={activeTab === 'ticket' ? themeAccentText : ''} />
             <span className="truncate max-w-full">{st.tabTicket}</span>
           </button>
         </div>
@@ -570,10 +590,10 @@ export default function TourSupportAndFaqs({
             <div className={`bg-white ${isMobile ? 'p-4 rounded-2xl space-y-3' : 'p-6 sm:p-8 rounded-3xl space-y-6'} border border-stone-200 shadow-xs`}>
               <div className={`flex ${isMobile ? 'flex-col items-stretch gap-3' : 'flex-col sm:flex-row items-start sm:items-center justify-between gap-4'}`}>
                 <div className="space-y-1">
-                  <div className="inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-black uppercase tracking-wider text-[#FF5500]">
+                  <div className={`inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider ${themeAccentText}`}>
                     <Sparkles size={13} /> <span>Conversación Pública y Asistencia</span>
                   </div>
-                  <h3 className={`${isMobile ? 'text-lg' : 'text-lg sm:text-2xl'} font-black text-stone-900 tracking-tight`}>
+                  <h3 className={`${isMobile ? 'text-lg' : 'text-lg sm:text-2xl'} ${themeTitleClass}`}>
                     Foro de Ayuda
                   </h3>
                   <p className="text-xs sm:text-sm text-stone-500 leading-relaxed">
@@ -584,9 +604,9 @@ export default function TourSupportAndFaqs({
                 <button
                   type="button"
                   onClick={() => setShowNewQuestionModal(true)}
-                  className={`shimmer-btn bg-gradient-to-r from-[#FF5500] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white ${
+                  className={`${themeButtonPrimary} ${
                     isMobile ? 'w-full py-2.5 px-4 justify-center text-xs' : 'px-5 py-3 text-xs'
-                  } rounded-xl sm:rounded-2xl font-black uppercase tracking-wider shadow-md shadow-[#FF5500]/30 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer shrink-0`}
+                  } rounded-xl sm:rounded-2xl font-bold uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer shrink-0`}
                 >
                   <Plus size={15} />
                   <span>Nueva Pregunta</span>
@@ -602,7 +622,7 @@ export default function TourSupportAndFaqs({
                     placeholder={isMobile ? "🔎 Buscar en el foro..." : "🔎 Buscar en el foro (ej. imágenes, soroche, cancelaciones)..."}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full bg-stone-50 border border-stone-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-stone-900 placeholder:text-stone-400 outline-none focus:ring-2 focus:ring-[#FF5500]/30 focus:border-[#FF5500]"
+                    className={`w-full bg-stone-50 border border-stone-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-stone-900 placeholder:text-stone-400 outline-none focus:ring-2 ${themeFocusRing}`}
                   />
                   {searchQuery && (
                     <button
@@ -622,7 +642,7 @@ export default function TourSupportAndFaqs({
                       onClick={() => setSelectedCategory(cat)}
                       className={`px-3 py-1.5 sm:py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
                         selectedCategory === cat
-                          ? 'bg-stone-900 text-white'
+                          ? (isBoho ? 'bg-[#C86D51] text-white shadow-xs' : 'bg-stone-900 text-white')
                           : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
                       }`}
                     >
@@ -635,10 +655,10 @@ export default function TourSupportAndFaqs({
 
             {/* Modal / Panel: Formulario "+ Nueva Pregunta" */}
             {showNewQuestionModal && (
-              <div className={`bg-white ${isMobile ? 'p-4 rounded-2xl' : 'p-6 sm:p-8 rounded-3xl'} border-2 border-[#FF5500]/40 shadow-xl space-y-4 animate-in fade-in zoom-in-95 duration-200`}>
+              <div className={`bg-white ${isMobile ? 'p-4 rounded-2xl' : 'p-6 sm:p-8 rounded-3xl'} border-2 ${isBoho ? 'border-[#C86D51]/40' : 'border-[#FF5500]/40'} shadow-xl space-y-4 animate-in fade-in zoom-in-95 duration-200`}>
                 <div className="flex items-center justify-between pb-3 border-b border-stone-100">
-                  <h4 className="font-extrabold text-sm sm:text-base text-stone-900 flex items-center gap-2">
-                    <MessageSquare size={16} className="text-[#FF5500]" />
+                  <h4 className={`font-bold text-sm sm:text-base text-stone-900 flex items-center gap-2 ${isBoho ? 'font-serif' : ''}`}>
+                    <MessageSquare size={16} className={themeAccentText} />
                     <span>Crear Nueva Pregunta en el Foro</span>
                   </h4>
                   <button
@@ -661,7 +681,7 @@ export default function TourSupportAndFaqs({
                         placeholder="Ej. ¿Cómo cambiar las imágenes de mi landing?"
                         value={newTitle}
                         onChange={(e) => setNewTitle(e.target.value)}
-                        className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:ring-2 focus:ring-[#FF5500]/30 focus:border-[#FF5500]"
+                        className={`w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:ring-2 ${themeFocusRing}`}
                       />
                     </div>
 
@@ -675,7 +695,7 @@ export default function TourSupportAndFaqs({
                         placeholder="Ej. Erik"
                         value={newAuthor}
                         onChange={(e) => setNewAuthor(e.target.value)}
-                        className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:ring-2 focus:ring-[#FF5500]/30 focus:border-[#FF5500]"
+                        className={`w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:ring-2 ${themeFocusRing}`}
                       />
                     </div>
                   </div>
@@ -687,7 +707,7 @@ export default function TourSupportAndFaqs({
                     <select
                       value={newCategory}
                       onChange={(e) => setNewCategory(e.target.value)}
-                      className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:ring-2 focus:ring-[#FF5500]/30 focus:border-[#FF5500]"
+                      className={`w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:ring-2 ${themeFocusRing}`}
                     >
                       <option value="Editor & Diseño">Editor & Diseño (Imágenes, Textos, Secciones)</option>
                       <option value="Salud & Altura">Salud & Altura (Oxígeno, Aclimatación, Protocolos)</option>
@@ -706,7 +726,7 @@ export default function TourSupportAndFaqs({
                       placeholder="Describe qué problema tienes o qué deseas consultar en detalle..."
                       value={newDescription}
                       onChange={(e) => setNewDescription(e.target.value)}
-                      className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:ring-2 focus:ring-[#FF5500]/30 focus:border-[#FF5500] resize-none"
+                      className={`w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:ring-2 ${themeFocusRing} resize-none`}
                     />
                   </div>
 
@@ -720,7 +740,7 @@ export default function TourSupportAndFaqs({
                     </button>
                     <button
                       type="submit"
-                      className="shimmer-btn bg-[#FF5500] hover:bg-[#E04B00] text-white px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-md transition-all cursor-pointer"
+                      className={`${themeButtonPrimary} px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer`}
                     >
                       Publicar Pregunta
                     </button>
@@ -735,7 +755,7 @@ export default function TourSupportAndFaqs({
                 <button
                   type="button"
                   onClick={() => setActiveQuestionId(null)}
-                  className="inline-flex items-center gap-2 text-xs font-bold text-[#FF5500] hover:underline cursor-pointer"
+                  className={`inline-flex items-center gap-2 text-xs font-bold ${themeAccentText} hover:underline cursor-pointer`}
                 >
                   <ArrowLeft size={14} />
                   <span>Volver a la lista del foro</span>
@@ -744,7 +764,7 @@ export default function TourSupportAndFaqs({
                 {/* Pregunta Principal */}
                 <div className="space-y-3 pb-4 sm:pb-6 border-b border-stone-200">
                   <div className={`flex ${isMobile ? 'flex-wrap gap-1.5' : 'items-center gap-2'} text-xs text-stone-500`}>
-                    <span className="bg-[#FF5500]/10 text-[#FF5500] px-2.5 py-0.5 rounded-full font-bold text-[10px]">
+                    <span className={`${themeBadge} px-2.5 py-0.5 rounded-full text-[10px]`}>
                       {activeQuestion.category}
                     </span>
                     <span>•</span>
@@ -759,7 +779,7 @@ export default function TourSupportAndFaqs({
                     </span>
                   </div>
 
-                  <h3 className={`${isMobile ? 'text-lg' : 'text-xl sm:text-2xl'} font-black text-stone-900 tracking-tight`}>
+                  <h3 className={`${isMobile ? 'text-lg' : 'text-xl sm:text-2xl'} ${themeTitleClass}`}>
                     {activeQuestion.title}
                   </h3>
 
@@ -771,8 +791,8 @@ export default function TourSupportAndFaqs({
                 {/* Listado de Respuestas Públicas */}
                 <div className="space-y-3 sm:space-y-4">
                   <div className="flex items-center justify-between">
-                    <h4 className="font-extrabold text-xs sm:text-sm text-stone-900 flex items-center gap-2 uppercase tracking-wider">
-                      <MessageCircle size={16} className="text-[#FF5500]" />
+                    <h4 className={`font-bold text-xs sm:text-sm text-stone-900 flex items-center gap-2 uppercase tracking-wider ${isBoho ? 'font-serif' : ''}`}>
+                      <MessageCircle size={16} className={themeAccentText} />
                       <span>Respuestas ({activeQuestion.replies.length})</span>
                     </h4>
                     <span className="text-[10px] sm:text-[11px] text-stone-400">Comunidad</span>
@@ -791,7 +811,7 @@ export default function TourSupportAndFaqs({
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                              <div className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full ${reply.avatarBg || 'bg-stone-700'} text-white flex items-center justify-center font-bold text-[10px] sm:text-xs`}>
+                              <div className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full ${reply.role === 'admin' ? themeAdminAvatar : (reply.avatarBg || 'bg-stone-700')} text-white flex items-center justify-center font-bold text-[10px] sm:text-xs`}>
                                 {reply.author.charAt(0)}
                               </div>
                               <div>
@@ -829,7 +849,7 @@ export default function TourSupportAndFaqs({
                         placeholder="Tu Nombre"
                         value={replyAuthor}
                         onChange={(e) => setReplyAuthor(e.target.value)}
-                        className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-xs text-stone-900 outline-none focus:ring-2 focus:ring-[#FF5500]/30"
+                        className={`w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-xs text-stone-900 outline-none focus:ring-2 ${themeFocusRing}`}
                       />
                     </div>
                     <div className={isMobile ? 'col-span-1' : 'sm:col-span-3'}>
@@ -844,7 +864,7 @@ export default function TourSupportAndFaqs({
                             handleAddReply(activeQuestion.id);
                           }
                         }}
-                        className="w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-xs text-stone-900 outline-none focus:ring-2 focus:ring-[#FF5500]/30"
+                        className={`w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-xs text-stone-900 outline-none focus:ring-2 ${themeFocusRing}`}
                       />
                     </div>
                   </div>
@@ -853,7 +873,7 @@ export default function TourSupportAndFaqs({
                     <button
                       type="button"
                       onClick={() => handleAddReply(activeQuestion.id)}
-                      className={`shimmer-btn bg-stone-900 hover:bg-[#FF5500] text-white ${isMobile ? 'w-full justify-center' : 'px-5'} py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer flex items-center gap-2`}
+                      className={`${isBoho ? 'bg-[#C86D51] hover:bg-[#b05d43]' : 'bg-stone-900 hover:bg-[#FF5500]'} text-white ${isMobile ? 'w-full justify-center' : 'px-5'} py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer flex items-center gap-2`}
                     >
                       <Send size={13} />
                       <span>Responder</span>
@@ -872,7 +892,7 @@ export default function TourSupportAndFaqs({
                     </p>
                     <button
                       onClick={() => setShowNewQuestionModal(true)}
-                      className="bg-[#FF5500] text-white px-4 py-2 rounded-xl text-xs font-bold cursor-pointer"
+                      className={`${themeButtonPrimary} px-4 py-2 rounded-xl text-xs font-bold cursor-pointer`}
                     >
                       Sé el primero en preguntar sobre este tema
                     </button>
@@ -882,11 +902,11 @@ export default function TourSupportAndFaqs({
                     <div
                       key={q.id}
                       onClick={() => setActiveQuestionId(q.id)}
-                      className={`bg-white ${isMobile ? 'p-4 rounded-2xl' : 'p-5 sm:p-6 rounded-3xl'} border border-stone-200/80 shadow-xs hover:shadow-lg hover:border-[#FF5500]/40 transition-all duration-200 cursor-pointer group space-y-2.5`}
+                      className={`bg-white ${isMobile ? 'p-4 rounded-2xl' : 'p-5 sm:p-6 rounded-3xl'} border border-stone-200/80 shadow-xs hover:shadow-lg ${themeCardBorderHover} transition-all duration-200 cursor-pointer group space-y-2.5`}
                     >
                       <div className={`flex ${isMobile ? 'flex-col gap-1 items-start' : 'items-center justify-between'} text-xs text-stone-500`}>
                         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
-                          <span className="bg-[#FF5500]/10 text-[#FF5500] text-[10px] font-extrabold px-2 py-0.5 rounded-full">
+                          <span className={`${themeBadge} text-[10px] font-bold px-2 py-0.5 rounded-full`}>
                             {q.category}
                           </span>
                           <span>•</span>
@@ -902,7 +922,7 @@ export default function TourSupportAndFaqs({
                         </span>
                       </div>
 
-                      <h4 className="font-extrabold text-sm sm:text-base text-stone-900 group-hover:text-[#FF5500] transition-colors leading-snug">
+                      <h4 className={`font-bold text-sm sm:text-base text-stone-900 group-hover:${themeAccentText} transition-colors leading-snug ${isBoho ? 'font-serif' : ''}`}>
                         {q.title}
                       </h4>
 
@@ -912,7 +932,7 @@ export default function TourSupportAndFaqs({
 
                       <div className={`pt-2 flex ${isMobile ? 'flex-col gap-1.5 items-start' : 'items-center justify-between'} text-xs border-t border-stone-100`}>
                         <span className="text-[11px] font-bold text-stone-700 flex flex-wrap items-center gap-1.5">
-                          <MessageCircle size={14} className="text-[#FF5500]" />
+                          <MessageCircle size={14} className={themeAccentText} />
                           <span>{q.replies.length} respuestas</span>
                           {q.replies.some(r => r.role === 'admin') && (
                             <span className="bg-emerald-500/10 text-emerald-700 text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-bold">
@@ -921,7 +941,7 @@ export default function TourSupportAndFaqs({
                           )}
                         </span>
 
-                        <span className="text-[11px] font-bold text-[#FF5500] group-hover:underline">
+                        <span className={`text-[11px] font-bold ${themeAccentText} group-hover:underline`}>
                           Ver respuestas &rarr;
                         </span>
                       </div>
@@ -945,7 +965,9 @@ export default function TourSupportAndFaqs({
                 <div
                   key={idx}
                   className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
-                    isOpen ? 'border-[#FF5500]/40 bg-[#FFF6F0]' : 'bg-white border-stone-200'
+                    isOpen 
+                      ? (isBoho ? 'border-[#C86D51]/40 bg-[#FDFBF7]' : 'border-[#FF5500]/40 bg-[#FFF6F0]') 
+                      : 'bg-white border-stone-200'
                   }`}
                 >
                   <button
@@ -953,15 +975,17 @@ export default function TourSupportAndFaqs({
                     onClick={() => setOpenIndex(isOpen ? null : idx)}
                     className="w-full text-left p-3.5 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 cursor-pointer"
                   >
-                    <span className="text-xs sm:text-sm font-bold text-stone-900 flex items-center gap-2 sm:gap-2.5">
+                    <span className={`text-xs sm:text-sm font-bold text-stone-900 flex items-center gap-2 sm:gap-2.5 ${isBoho ? 'font-serif' : ''}`}>
                       <span className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-[10px] sm:text-[11px] font-mono shrink-0 ${
-                        isOpen ? 'bg-[#FF5500] text-white' : 'bg-stone-100 text-stone-500'
+                        isOpen 
+                          ? (isBoho ? 'bg-[#C86D51] text-white' : 'bg-[#FF5500] text-white') 
+                          : 'bg-stone-100 text-stone-500'
                       }`}>
                         {idx + 1}
                       </span>
                       <span className="leading-snug">{faq.q}</span>
                     </span>
-                    <div className={`shrink-0 ${isOpen ? 'text-[#FF5500]' : 'text-stone-400'}`}>
+                    <div className={`shrink-0 ${isOpen ? themeAccentText : 'text-stone-400'}`}>
                       {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                     </div>
                   </button>
@@ -982,7 +1006,7 @@ export default function TourSupportAndFaqs({
         {/* ======================================================== */}
         {activeTab === 'ticket' && (
           <div className={`rounded-2xl sm:rounded-3xl ${isMobile ? 'p-4' : 'p-6 sm:p-10'} shadow-xl bg-stone-900 text-white relative overflow-hidden`}>
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#FF5500]/10 rounded-full blur-3xl pointer-events-none" />
+            <div className={`absolute top-0 right-0 w-64 h-64 ${isBoho ? 'bg-[#C86D51]/15' : 'bg-[#FF5500]/10'} rounded-full blur-3xl pointer-events-none`} />
 
             <div className={`flex flex-col ${isMobile ? 'space-y-6' : 'lg:grid lg:grid-cols-12 gap-8'} items-start relative z-10 w-full`}>
               
@@ -993,7 +1017,7 @@ export default function TourSupportAndFaqs({
                   {isEn ? 'Local Cusco Support Desk' : 'Mesa de Ayuda Local en Cusco'}
                 </div>
 
-                <h3 className={`${isMobile ? 'text-lg leading-snug' : 'text-xl sm:text-2xl'} font-bold tracking-tight text-white`}>
+                <h3 className={`${isMobile ? 'text-lg leading-snug' : 'text-xl sm:text-2xl'} font-bold tracking-tight text-white ${isBoho ? 'font-serif' : ''}`}>
                   {isEn ? 'Need assistance or have a special request?' : '¿Necesitas asistencia o tienes una solicitud especial?'}
                 </h3>
 
@@ -1040,7 +1064,7 @@ export default function TourSupportAndFaqs({
               <div className={`${isMobile ? 'w-full' : 'lg:col-span-5'} bg-white/10 backdrop-blur-md p-4 sm:p-6 rounded-2xl border border-white/15 text-white space-y-3`}>
                 <div className="flex items-center justify-between pb-2 border-b border-white/10">
                   <h4 className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
-                    <Send size={15} className="text-[#FF5500]" />
+                    <Send size={15} className={themeAccentText} />
                     Consulta Privada Protegida
                   </h4>
                   <span className="text-[10px] text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-400/30 flex items-center gap-1">
@@ -1092,7 +1116,7 @@ export default function TourSupportAndFaqs({
                       <select
                         value={ticketCategory}
                         onChange={(e) => setTicketCategory(e.target.value)}
-                        className="w-full bg-stone-900 border border-white/20 rounded-xl px-3 py-2 text-xs text-white outline-none focus:ring-2 focus:ring-[#FF5500]"
+                        className={`w-full bg-stone-900 border border-white/20 rounded-xl px-3 py-2 text-xs text-white outline-none focus:ring-2 ${isBoho ? 'focus:ring-[#C86D51]' : 'focus:ring-[#FF5500]'}`}
                       >
                         <option value="Logística y Horarios de Recojo">Logística y Horarios de Recojo</option>
                         <option value="Aclimatación y Altitud (Soroche)">Aclimatación y Altitud (Soroche)</option>
@@ -1112,7 +1136,7 @@ export default function TourSupportAndFaqs({
                           placeholder="Ej. Mateo Rojas"
                           value={senderName}
                           onChange={(e) => setSenderName(e.target.value)}
-                          className="w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-stone-400 outline-none focus:ring-2 focus:ring-[#FF5500]"
+                          className={`w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-stone-400 outline-none focus:ring-2 ${isBoho ? 'focus:ring-[#C86D51]' : 'focus:ring-[#FF5500]'}`}
                         />
                       </div>
 
@@ -1126,7 +1150,7 @@ export default function TourSupportAndFaqs({
                           placeholder="+51 984..."
                           value={senderContact}
                           onChange={(e) => setSenderContact(e.target.value)}
-                          className="w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-stone-400 outline-none focus:ring-2 focus:ring-[#FF5500]"
+                          className={`w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-stone-400 outline-none focus:ring-2 ${isBoho ? 'focus:ring-[#C86D51]' : 'focus:ring-[#FF5500]'}`}
                         />
                       </div>
                     </div>
@@ -1141,14 +1165,14 @@ export default function TourSupportAndFaqs({
                         placeholder="Ej. ¿Tienen opción vegetariana? ¿Recogen en Ollantaytambo?"
                         value={senderQuestion}
                         onChange={(e) => setSenderQuestion(e.target.value)}
-                        className="w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-stone-400 outline-none focus:ring-2 focus:ring-[#FF5500] resize-none"
+                        className={`w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-stone-400 outline-none focus:ring-2 ${isBoho ? 'focus:ring-[#C86D51]' : 'focus:ring-[#FF5500]'} resize-none`}
                       />
                     </div>
 
                     {/* Anti-Spam Math Security Challenge */}
                     <div className="bg-white/10 p-2.5 rounded-xl border border-white/15 flex items-center justify-between gap-3">
                       <div className="flex items-center gap-2">
-                        <Bot size={15} className="text-[#FF8844] shrink-0" />
+                        <Bot size={15} className={`${isBoho ? 'text-[#C86D51]' : 'text-[#FF8844]'} shrink-0`} />
                         <span className="text-[10px] sm:text-[11px] text-stone-200 font-semibold">
                           Seguridad: ¿Cuánto es <strong>{mathNum1} + {mathNum2}</strong>?
                         </span>
@@ -1159,7 +1183,7 @@ export default function TourSupportAndFaqs({
                         placeholder="?"
                         value={mathAnswer}
                         onChange={(e) => setMathAnswer(e.target.value)}
-                        className="w-14 bg-white/20 border border-white/30 rounded-lg px-2 py-1 text-xs text-center font-bold text-white outline-none focus:ring-2 focus:ring-[#FF5500]"
+                        className={`w-14 bg-white/20 border border-white/30 rounded-lg px-2 py-1 text-xs text-center font-bold text-white outline-none focus:ring-2 ${isBoho ? 'focus:ring-[#C86D51]' : 'focus:ring-[#FF5500]'}`}
                       />
                     </div>
 
@@ -1174,7 +1198,7 @@ export default function TourSupportAndFaqs({
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-[#FF5500] hover:bg-[#E04B00] text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                      className={`w-full ${isBoho ? 'bg-[#C86D51] hover:bg-[#b05d43]' : 'bg-[#FF5500] hover:bg-[#E04B00]'} text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50`}
                     >
                       {isSubmitting ? (
                         <span>Validando y enviando...</span>

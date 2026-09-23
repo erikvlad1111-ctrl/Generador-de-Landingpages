@@ -353,7 +353,7 @@ export default function PinterestPinboard({
               onClick={() => setIsExpanded(!isExpanded)}
               className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full bg-stone-100 hover:bg-stone-200 text-stone-800 text-xs font-extrabold border border-stone-300/80 shadow-xs transition-all active:scale-95 cursor-pointer"
             >
-              <Pin size={13} className="text-[#FF5500] rotate-45" />
+              <Pin size={13} className={`${isBoho ? 'text-[#C86D51]' : isPremium ? 'text-amber-400' : isCultural ? 'text-amber-600' : isAdventure ? 'text-emerald-500' : 'text-[#FF5500]'} rotate-45`} />
               <span>
                 {isExpanded 
                   ? (lang === 'en' ? 'Show fewer pins' : 'Ver menos postales')
