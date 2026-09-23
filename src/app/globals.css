@@ -206,12 +206,90 @@ body {
 
 @media (hover: hover) {
   .cultural-card-hover:hover {
-    transform: translateY(-6px);
+    transform: translateY(-8px) scale(1.02);
   }
 }
 
 .cultural-card-hover:active {
-  transform: scale(0.98);
+  transform: scale(0.96);
 }
+
+/* 5 Quick Services Floating Waves (Asynchronous undulating motion) */
+@keyframes cardFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.animate-card-float-0 {
+  animation: cardFloat 3.8s ease-in-out infinite 0s;
+}
+.animate-card-float-1 {
+  animation: cardFloat 3.8s ease-in-out infinite 0.5s;
+}
+.animate-card-float-2 {
+  animation: cardFloat 3.8s ease-in-out infinite 1.0s;
+}
+.animate-card-float-3 {
+  animation: cardFloat 3.8s ease-in-out infinite 1.5s;
+}
+.animate-card-float-4 {
+  animation: cardFloat 3.8s ease-in-out infinite 2.0s;
+}
+
+/* Vibrant CTA Button Animations (Desktop & Mobile) */
+@keyframes pulseCta {
+  0%, 100% {
+    box-shadow: 0 4px 14px -1px rgba(185, 28, 28, 0.4), 0 2px 6px -2px rgba(185, 28, 28, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 8px 24px 2px rgba(185, 28, 28, 0.65), 0 4px 10px -1px rgba(185, 28, 28, 0.45);
+    transform: scale(1.03);
+  }
+}
+
+.animate-pulse-cta {
+  animation: pulseCta 2.8s ease-in-out infinite;
+}
+
+@keyframes autoShimmerSweep {
+  0% { left: -70%; }
+  35% { left: 150%; }
+  100% { left: 150%; }
+}
+
+.cultural-btn-primary {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(185, 28, 28, 0.35);
+}
+
+.cultural-btn-primary:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(185, 28, 28, 0.55);
+}
+
+.cultural-btn-primary:active {
+  transform: translateY(1px) scale(0.96);
+}
+
+.cultural-btn-primary::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -70%;
+  width: 45%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: rotate(25deg);
+  animation: autoShimmerSweep 3.6s infinite;
+  pointer-events: none;
+}
+
 
 

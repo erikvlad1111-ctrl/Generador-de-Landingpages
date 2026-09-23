@@ -58,7 +58,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
       
       {/* 1. TOP HEADER OVER PANORAMIC SUNSET (HERITAGE RED PALETTE WITH DYNAMIC ENTRANCE) */}
       <header className="relative bg-stone-900 text-white overflow-hidden group">
-        {/* Panoramic Background Image with subtle Ken Burns effect */}
+        {/* Panoramic Background Image with Ken Burns zoom effect */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
             src={heroSunsetBg}
@@ -68,7 +68,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             sizes="100vw"
             className="object-cover object-center opacity-85 brightness-90 transition-transform duration-1000 ease-out group-hover:scale-105"
           />
-          {/* Subtle gradient overlay to enhance typography contrast */}
+          {/* Gradient overlay to enhance typography contrast */}
           <div className="absolute inset-0 bg-gradient-to-b from-stone-950/70 via-stone-900/40 to-red-950/75" />
         </div>
 
@@ -124,12 +124,12 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               ))}
             </div>
 
-            {/* Action CTA with Shimmer & Hover Lift */}
+            {/* Action CTA Button with Pulsing Shimmer Glow */}
             {isQuote ? (
               <button
                 type="button"
                 onClick={() => setIsQuoteOpen(true)}
-                className="shimmer-btn bg-red-700 hover:bg-red-600 text-white px-3.5 sm:px-5 py-2 rounded-full font-bold text-xs shadow-md shadow-red-900/40 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer shrink-0"
+                className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-700 via-red-600 to-red-800 text-white px-4 sm:px-5 py-2.5 rounded-full font-bold text-xs shadow-lg shadow-red-900/40 hover:shadow-red-900/60 transition-all duration-300 flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 <FileText size={14} />
                 <span>{t.cta.quote}</span>
@@ -139,7 +139,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="shimmer-btn bg-red-700 hover:bg-red-600 text-white px-3.5 sm:px-5 py-2 rounded-full font-bold text-xs shadow-md shadow-red-900/40 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer shrink-0"
+                className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-700 via-red-600 to-red-800 text-white px-4 sm:px-5 py-2.5 rounded-full font-bold text-xs shadow-lg shadow-red-900/40 hover:shadow-red-900/60 transition-all duration-300 flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 <MessageCircle size={14} />
                 <span className="hidden sm:inline">{t.cta.whatsapp}</span>
@@ -158,31 +158,31 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             {data.hero?.subtitle || t.heroSubtitleDefault}
           </p>
 
-          {/* 3 Circular Quick Action Icons (Centerpiece with Beacon Glow) */}
-          <div className="pt-2 flex items-center justify-center gap-3.5">
+          {/* 3 Circular Quick Action Icons (Centerpiece with Animated Glow & Beacon Ring) */}
+          <div className="pt-2 flex items-center justify-center gap-4">
             <a
               href="#territorio"
-              className="w-11 h-11 rounded-full bg-black/40 hover:bg-red-900/90 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-115 hover:-translate-y-1 active:scale-90 cursor-pointer"
+              className="cultural-btn-primary w-11 h-11 rounded-full bg-black/45 hover:bg-red-900/90 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-115 hover:-translate-y-1 active:scale-90 cursor-pointer"
               title={t.cta.exploreTerritory}
             >
               <Search size={16} />
             </a>
             
-            {/* WhatsApp centerpiece with beacon glow ring */}
+            {/* WhatsApp centerpiece with beacon glow ring & constant pulse */}
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="relative w-12 h-12 rounded-full bg-red-700 hover:bg-red-600 text-white flex items-center justify-center shadow-xl shadow-red-900/50 transition-all duration-300 hover:scale-115 hover:-translate-y-1 active:scale-90 cursor-pointer animate-beacon-glow"
+              className="cultural-btn-primary animate-pulse-cta relative w-13 h-13 rounded-full bg-gradient-to-tr from-red-800 via-red-600 to-red-500 hover:from-red-600 hover:to-red-700 text-white flex items-center justify-center shadow-xl shadow-red-900/60 transition-all duration-300 hover:scale-120 hover:-translate-y-1.5 active:scale-90 cursor-pointer animate-beacon-glow"
               title={t.cta.writeWhatsApp}
             >
-              <span className="absolute -inset-1 rounded-full bg-red-400 opacity-40 animate-ping-slow pointer-events-none" />
-              <Mail size={18} className="relative z-10" />
+              <span className="absolute -inset-1.5 rounded-full bg-red-400 opacity-50 animate-ping-slow pointer-events-none" />
+              <Mail size={19} className="relative z-10" />
             </a>
 
             <a
               href={`tel:${cleanPhone}`}
-              className="w-11 h-11 rounded-full bg-black/40 hover:bg-red-900/90 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-115 hover:-translate-y-1 active:scale-90 cursor-pointer"
+              className="cultural-btn-primary w-11 h-11 rounded-full bg-black/45 hover:bg-red-900/90 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-115 hover:-translate-y-1 active:scale-90 cursor-pointer"
               title={t.cta.callOffice}
             >
               <Phone size={16} />
@@ -206,33 +206,58 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </header>
 
-      {/* 2. OVERLAPPING 5 CIRCULAR QUICK ACCESS BADGES (With Interactive Micro-Animations) */}
+      {/* 2. OVERLAPPING 5 CIRCULAR QUICK ACCESS CARDS (Continuous Staggered Floating Wave & Vibrant Hover/Tap) */}
       <section className="relative z-30 -mt-10 sm:-mt-14 max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
-          {t.quickServices.map((item, idx) => (
-            <a
-              key={idx}
-              href={createWhatsAppLink(item.label)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cultural-card-hover bg-white hover:bg-red-50/70 border border-stone-200/80 hover:border-red-400/80 rounded-3xl p-4 sm:p-5 shadow-lg shadow-red-950/5 hover:shadow-2xl transition-all duration-300 text-center flex flex-col items-center group cursor-pointer active:scale-95"
-            >
-              {/* Circular Icon with rich red ring, hover scale & rotation */}
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-red-50/80 border-2 border-red-300/90 flex items-center justify-center text-2xl sm:text-3xl mb-3 shadow-inner group-hover:scale-115 group-hover:rotate-6 group-hover:bg-red-100 group-hover:border-red-500 transition-all duration-300">
-                <span className="transition-transform group-hover:scale-110">{item.icon}</span>
-              </div>
-              <h3 className="font-serif font-black text-xs sm:text-sm text-stone-900 leading-tight group-hover:text-red-700 transition-colors">
-                {item.label}
-              </h3>
-              <p className="text-[10px] sm:text-[11px] text-stone-500 font-medium mt-1">
-                {item.sub}
-              </p>
-            </a>
-          ))}
+          {t.quickServices.map((item, idx) => {
+            const floatClass = [
+              'animate-card-float-0',
+              'animate-card-float-1',
+              'animate-card-float-2',
+              'animate-card-float-3',
+              'animate-card-float-4'
+            ][idx % 5];
+
+            return (
+              <a
+                key={idx}
+                href={createWhatsAppLink(item.label)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${floatClass} cultural-card-hover bg-white hover:bg-gradient-to-b hover:from-white hover:to-red-50/80 border-2 border-stone-200/90 hover:border-red-500 rounded-3xl p-4 sm:p-5 shadow-lg shadow-red-950/5 hover:shadow-2xl hover:shadow-red-900/20 transition-all duration-300 text-center flex flex-col items-center group cursor-pointer active:scale-95`}
+              >
+                {/* Active live indicator dot */}
+                <div className="w-full flex justify-end -mt-1 -mr-1 mb-1">
+                  <span className="flex h-2 w-2 relative">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
+                  </span>
+                </div>
+
+                {/* Circular Icon with rich red ring, hover scale & rotation */}
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-red-50/90 border-2 border-red-300 flex items-center justify-center text-2xl sm:text-3xl mb-2.5 shadow-inner group-hover:scale-120 group-hover:rotate-12 group-hover:bg-red-100 group-hover:border-red-600 group-hover:shadow-md transition-all duration-300">
+                  <span className="transition-transform duration-300 group-hover:scale-110">{item.icon}</span>
+                </div>
+
+                <h3 className="font-serif font-black text-xs sm:text-sm text-stone-900 leading-tight group-hover:text-red-700 transition-colors">
+                  {item.label}
+                </h3>
+                <p className="text-[10px] sm:text-[11px] text-stone-500 font-medium mt-1">
+                  {item.sub}
+                </p>
+
+                {/* Micro CTA indicator visible on hover */}
+                <div className="mt-2 text-red-700 text-[10px] font-black uppercase tracking-wider opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all flex items-center gap-1">
+                  <span>Consultar</span>
+                  <ArrowRight size={11} className="animate-bounce-x" />
+                </div>
+              </a>
+            );
+          })}
         </div>
       </section>
 
-      {/* 3. SECTION: ACTUALITÉS / PATRIMONIO VIVO (Hover-Lifts & Image Zooms) */}
+      {/* 3. SECTION: ACTUALITÉS / PATRIMONIO VIVO (Hover-Lifts, Pulsing CTAs & Image Zooms) */}
       <section id="actualites" className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="flex items-baseline justify-between mb-8 sm:mb-12 border-b border-stone-200/70 pb-4">
@@ -243,10 +268,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="shimmer-btn bg-red-700 hover:bg-red-800 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer"
+            className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white font-bold text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-2 cursor-pointer"
           >
             <span>{t.actualites.btnAll}</span>
-            <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform" />
           </a>
         </div>
 
@@ -280,10 +305,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                   href={createWhatsAppLink(t.actualites.featuredTitle)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-red-700 hover:text-red-800 font-bold text-xs sm:text-sm cursor-pointer group-hover:translate-x-2 transition-transform duration-300"
+                  className="cultural-btn-primary bg-gradient-to-r from-red-800 to-red-700 hover:from-red-700 hover:to-red-600 text-white font-bold text-xs sm:text-sm px-4.5 py-2.5 rounded-full inline-flex items-center gap-2 shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer"
                 >
                   <span>{t.actualites.readMore}</span>
-                  <ArrowRight size={14} />
+                  <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform" />
                 </a>
               </div>
             </div>
@@ -310,10 +335,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                     href={createWhatsAppLink(item.title)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-red-700 hover:text-red-800 font-bold text-xs cursor-pointer group-hover:translate-x-1.5 transition-transform duration-300"
+                    className="inline-flex items-center gap-1.5 text-red-700 hover:text-red-900 font-bold text-xs cursor-pointer group-hover:translate-x-2 transition-all duration-300 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-full border border-red-200"
                   >
                     <span>{item.linkText}</span>
-                    <ArrowRight size={13} />
+                    <ArrowRight size={13} className="animate-bounce-x" />
                   </a>
                 </div>
               </div>
@@ -323,7 +348,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </section>
 
-      {/* 4. SECTION: AGENDA (Interactive Showcase & Card Lifts) */}
+      {/* 4. SECTION: AGENDA (Interactive Showcase & Pulsing Action Buttons) */}
       <section id="agenda" className="py-16 sm:py-24 px-4 sm:px-8 bg-red-50/30 border-y border-red-200/50">
         <div className="max-w-7xl mx-auto">
           
@@ -345,10 +370,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="shimmer-btn bg-red-700 hover:bg-red-800 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 inline-flex items-center gap-2 cursor-pointer"
+                  className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 inline-flex items-center gap-2 cursor-pointer"
                 >
                   <span>{t.agenda.btnAll}</span>
-                  <ArrowRight size={14} />
+                  <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform" />
                 </a>
               </div>
             </div>
@@ -415,9 +440,9 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                         href={createWhatsAppLink(event.title)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-red-700 hover:text-red-800 font-bold text-xs cursor-pointer group-hover:translate-x-1.5 transition-transform duration-300"
+                        className="cultural-btn-primary bg-red-50 hover:bg-red-700 text-red-800 hover:text-white border border-red-300 hover:border-red-700 px-3.5 py-1.5 rounded-full font-bold text-xs transition-all duration-300 inline-flex items-center gap-1.5 cursor-pointer group-hover:scale-105 active:scale-95"
                       >
-                        <span className="w-4 h-4 rounded-full bg-red-100 text-red-700 flex items-center justify-center text-[10px]">➤</span>
+                        <span className="w-4 h-4 rounded-full bg-red-200 text-red-800 flex items-center justify-center text-[10px]">➤</span>
                         <span>{t.agenda.readMore}</span>
                       </a>
                     </div>
@@ -464,7 +489,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 href={data.mapsUrl || 'https://maps.google.com'}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="shimmer-btn bg-red-700 hover:bg-red-600 text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-full shadow-xl shadow-red-950/50 hover:shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 inline-flex items-center gap-2 cursor-pointer"
+                className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white font-bold text-xs sm:text-sm px-7 py-3.5 rounded-full shadow-xl shadow-red-950/60 transition-all duration-300 hover:scale-105 active:scale-95 inline-flex items-center gap-2.5 cursor-pointer"
               >
                 <span>{t.territory.btnMap}</span>
                 <Navigation size={15} />
@@ -633,7 +658,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </section>
 
-      {/* 9. VOS MÉDIATEURS DU PATRIMOINE / EQUIPO DE HISTORIADORES CERTIFICADOS (Beacon Active Status) */}
+      {/* 9. VOS MÉDIATEURS DU PATRIMOINE / EQUIPO DE HISTORIADORES CERTIFICADOS (Pulsing Direct Action Buttons) */}
       <section id="guide" className="py-16 sm:py-24 px-4 sm:px-8 bg-red-50/40 border-t border-red-200/60">
         <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12">
           
@@ -719,15 +744,15 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                     </div>
                   </div>
 
-                  {/* Direct Action Button with Shimmer */}
+                  {/* Direct Action Button with Rich Crimson Gradient & Shimmer */}
                   <div className="pt-5 mt-5 border-t border-stone-100">
                     <a
                       href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent(finalMsg)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="shimmer-btn w-full bg-red-700 hover:bg-red-800 text-white font-bold py-2.5 px-4 rounded-full text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer"
+                      className="cultural-btn-primary bg-gradient-to-r from-red-800 via-red-700 to-red-800 hover:from-red-700 hover:to-red-600 text-white font-bold py-3 px-5 rounded-full text-xs uppercase tracking-wider shadow-lg hover:shadow-red-900/40 transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] flex items-center justify-center gap-2 cursor-pointer"
                     >
-                      <MessageCircle size={14} />
+                      <MessageCircle size={15} className="animate-bounce-x" />
                       <span className="truncate">{guide.directBtn}</span>
                     </a>
                   </div>
@@ -913,7 +938,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="shimmer-btn inline-block bg-red-700 hover:bg-red-800 text-white text-[11px] font-bold px-3.5 py-1 rounded-full shadow-2xs hover:scale-105 active:scale-95 transition-all cursor-pointer"
+                className="cultural-btn-primary bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white text-[11px] font-bold px-4 py-1.5 rounded-full shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer inline-block"
               >
                 {t.footer.contactBtn}
               </a>
@@ -945,7 +970,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               <button
                 type="button"
                 onClick={() => setIsQuoteOpen(true)}
-                className="shimmer-btn animate-beacon-glow bg-red-700 hover:bg-red-600 text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 cursor-pointer active:scale-95 transition-transform"
+                className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-700 via-red-600 to-red-800 text-white font-black text-xs px-6 py-3 rounded-full shadow-xl flex items-center gap-1.5 cursor-pointer active:scale-95 transition-transform"
               >
                 <FileText size={14} />
                 <span>{t.mobileSticky.quote}</span>
@@ -955,7 +980,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="shimmer-btn animate-beacon-glow bg-red-700 hover:bg-red-600 text-white font-bold text-xs px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 cursor-pointer active:scale-95 transition-transform"
+                className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-700 via-red-600 to-red-800 text-white font-black text-xs px-6 py-3 rounded-full shadow-xl flex items-center gap-1.5 cursor-pointer active:scale-95 transition-transform"
               >
                 <MessageCircle size={14} />
                 <span>{t.mobileSticky.reserve}</span>
