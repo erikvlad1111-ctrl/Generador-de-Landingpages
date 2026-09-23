@@ -2477,6 +2477,50 @@ export default function NewLandingDemo() {
                       </p>
                     </div>
 
+                    {/* Guide Conférencier Mini Card */}
+                    <div className="bg-red-50/70 rounded-xl p-2 border border-red-200/80 flex items-center gap-2 text-left">
+                      <div className="w-9 h-9 rounded-lg overflow-hidden bg-stone-200 shrink-0 relative border border-red-300">
+                        <Image src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" alt="Guide" fill sizes="36px" className="object-cover" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[7px] font-black uppercase text-red-800 bg-red-200/60 px-1 py-0.2 rounded">
+                          Guide DIRCETUR N° 04821
+                        </span>
+                        <h5 className="text-[9px] font-serif font-black text-stone-900 truncate">
+                          Lic. Marco Antonio Quispe
+                        </h5>
+                        <p className="text-[7px] text-stone-500 truncate">UNSAAC • Arqueología Andina</p>
+                      </div>
+                    </div>
+
+                    {/* Livre d'or / Reviews Mini Bar */}
+                    <div className="bg-white rounded-xl p-2 border border-stone-200 shadow-2xs space-y-1 text-left">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-0.5 text-amber-500 text-[9px]">
+                          <span>★★★★★</span>
+                          <span className="text-[8px] font-bold text-stone-900 ml-1">4.9/5</span>
+                        </div>
+                        <span className="text-[7px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded">
+                          184 avis vérifiés
+                        </span>
+                      </div>
+                      <p className="text-[8px] font-serif italic text-stone-600 line-clamp-1">
+                        « Une visite magistrale, d&apos;une rigueur historique absolue. Inoubliable ! »
+                      </p>
+                    </div>
+
+                    {/* Billetterie & Conseils Chips */}
+                    <div className="grid grid-cols-2 gap-1.5 text-left text-[7px]">
+                      <div className="p-1.5 rounded-lg bg-stone-100 border border-stone-200">
+                        <span className="font-bold text-stone-800 block">🎟️ BTC Parques</span>
+                        <span className="text-stone-500">S/ 70 PEN (Directo)</span>
+                      </div>
+                      <div className="p-1.5 rounded-lg bg-stone-100 border border-stone-200">
+                        <span className="font-bold text-stone-800 block">👟 Mochila</span>
+                        <span className="text-stone-500">Calzado antideslizante</span>
+                      </div>
+                    </div>
+
                     {/* Pricing & CTA */}
                     <div className="space-y-2 pt-1">
                       <div className="flex items-baseline justify-between text-xs">

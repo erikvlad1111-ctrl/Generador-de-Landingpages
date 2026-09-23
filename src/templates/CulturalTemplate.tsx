@@ -6,7 +6,7 @@ import {
   Landmark, Compass, Users, CheckCircle2, MessageCircle, MapPin, Calendar, 
   Star, HelpCircle, FileText, ShieldCheck, XCircle, Backpack, Search, Mail, 
   Phone, ArrowRight, ChevronLeft, ChevronRight, BookOpen, Clock, Sparkles, 
-  Navigation, Eye, Share2, Award, Check
+  Navigation, Eye, Share2, Award, Check, Ticket, GraduationCap, Quote, Sun, Coins
 } from 'lucide-react';
 import { LandingData } from '@/types/landing';
 import QuoteModal from '@/components/common/QuoteModal';
@@ -165,12 +165,16 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
           {/* Nav links */}
           {!isMobile && (
-            <div className="hidden lg:flex items-center gap-7 text-xs font-bold tracking-wider uppercase text-stone-200">
+            <div className="hidden xl:flex items-center gap-5 text-[11px] font-bold tracking-wider uppercase text-stone-200">
               <a href="#actualites" className="hover:text-red-300 transition-colors">Crónicas</a>
-              <a href="#agenda" className="hover:text-red-300 transition-colors">Agenda Cultural</a>
-              <a href="#itinerario" className="hover:text-red-300 transition-colors">Ruta & Templos</a>
-              <a href="#territorio" className="hover:text-red-300 transition-colors">El Territorio</a>
-              <a href="#contacto" className="hover:text-red-300 transition-colors">Información</a>
+              <a href="#agenda" className="hover:text-red-300 transition-colors">Agenda</a>
+              <a href="#territorio" className="hover:text-red-300 transition-colors">Territorio</a>
+              <a href="#itinerario" className="hover:text-red-300 transition-colors">Itinerario</a>
+              <a href="#tarifs" className="hover:text-red-300 transition-colors">Tarifas & Boletos</a>
+              <a href="#conseils" className="hover:text-red-300 transition-colors">Qué Llevar</a>
+              <a href="#guide" className="hover:text-red-300 transition-colors">El Historiador</a>
+              <a href="#livre-dor" className="hover:text-red-300 transition-colors">Libro de Oro</a>
+              <a href="#contacto" className="hover:text-red-300 transition-colors">Oficina</a>
             </div>
           )}
 
@@ -638,7 +642,314 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </section>
       )}
 
-      {/* 8. PINTEREST PINBOARD (PRO & ADVANCE) */}
+      {/* 8. BILLETTERIE & TARIFS OFFICIELS (TRANSPARENCIA DE BOLETOS & TARIFAS) */}
+      <section id="tarifs" className="py-16 sm:py-24 px-4 sm:px-8 bg-stone-100/70 border-t border-stone-200">
+        <div className="max-w-6xl mx-auto space-y-10 sm:space-y-12">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
+              <Ticket size={13} />
+              <span>Transparence Tarifaire & Accès</span>
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-serif font-black text-stone-900">
+              Billetterie & Tarifs Officiels
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+              Distinguez en toute clarté la prestation de guidage spécialisé et les droits d&apos;entrée obligatoires fixés par l&apos;État péruvien.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+            {/* Carte 1: Prestation Cusco Creativos */}
+            <div className="bg-white rounded-3xl p-6 sm:p-8 border-2 border-red-700/80 shadow-xl flex flex-col justify-between text-left relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-red-700 text-white text-[10px] font-black uppercase tracking-wider px-4 py-1 rounded-bl-2xl">
+                Prestation Guide & Transport
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <span className="text-xs font-serif text-stone-500 font-bold block uppercase">
+                    Honoraires du Circuit
+                  </span>
+                  <div className="flex items-baseline gap-2 mt-1">
+                    <span className="text-3xl sm:text-4xl font-serif font-black text-red-900">
+                      {data.price || 'S/ 85 PEN'}
+                    </span>
+                    <span className="text-xs text-stone-500 font-medium">/ par voyageur</span>
+                  </div>
+                </div>
+
+                <p className="text-xs text-stone-600 leading-relaxed">
+                  Comprend l&apos;intégralité de la logistique culturelle sans mauvaise surprise ni frais dissimulés :
+                </p>
+
+                <ul className="space-y-2.5 text-xs text-stone-700 pt-1">
+                  {[
+                    'Transport touristique officiel climatisé A/R (Prise en charge hôtel)',
+                    'Guide-conférencier bilingue diplômé (Licence Histoire / Archéologie)',
+                    'Récepteurs audio individuels haute fidélité pour une écoute limpide',
+                    'Accompagnement coupe-file et aide à l\'achat rapide des billets',
+                    'Bouteille d\'oxygène médical permanent & trousse de premiers secours'
+                  ].map((srv, idx) => (
+                    <li key={idx} className="flex items-start gap-2.5">
+                      <CheckCircle2 size={16} className="text-red-700 shrink-0 mt-0.5" />
+                      <span>{srv}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="pt-6 mt-6 border-t border-stone-100">
+                {isQuote ? (
+                  <button
+                    type="button"
+                    onClick={() => setIsQuoteOpen(true)}
+                    className="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-3 px-5 rounded-full text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <FileText size={15} />
+                    <span>Demander un devis formel</span>
+                  </button>
+                ) : (
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-3 px-5 rounded-full text-xs uppercase tracking-wider shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <MessageCircle size={15} />
+                    <span>Réserver mes places par WhatsApp</span>
+                  </a>
+                )}
+              </div>
+            </div>
+
+            {/* Carte 2: Billets des Monuments (Droits de l'Etat) */}
+            <div className="bg-stone-900 text-white rounded-3xl p-6 sm:p-8 border border-white/10 shadow-xl flex flex-col justify-between text-left space-y-6">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-red-300 bg-red-950/80 border border-red-500/30 px-3 py-1 rounded-full">
+                    Régie Publique des Monuments
+                  </span>
+                  <span className="text-[10px] text-stone-400 font-mono">Tarifs Officiels 2026</span>
+                </div>
+
+                <h3 className="text-xl sm:text-2xl font-serif font-black text-white">
+                  Droits d&apos;Entrée aux Parcs Archéologiques
+                </h3>
+
+                <p className="text-xs text-stone-300 leading-relaxed">
+                  Conformément à la législation péruvienne, les billets d&apos;entrée sont nominatifs et réglés directement aux guichets officiels du Ministère de la Culture (COSITUC) :
+                </p>
+
+                <div className="space-y-3 pt-1">
+                  <div className="p-3 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-between">
+                    <div>
+                      <span className="font-bold text-xs text-white block">BTC Circuit I (Sacsayhuamán, Qenqo, Puka Pukara)</span>
+                      <span className="text-[10px] text-stone-400">Billet Touristique Cusco - Valable 1 jour</span>
+                    </div>
+                    <div className="text-right">
+                      <span className="font-serif font-black text-sm text-red-200">S/ 70 PEN</span>
+                      <span className="text-[9px] text-stone-400 block">(S/ 40 Nat.)</span>
+                    </div>
+                  </div>
+
+                  <div className="p-3 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-between">
+                    <div>
+                      <span className="font-bold text-xs text-white block">Temple du Soleil Qorikancha</span>
+                      <span className="text-[10px] text-stone-400">Régie du Couvent Santo Domingo</span>
+                    </div>
+                    <div className="text-right">
+                      <span className="font-serif font-black text-sm text-red-200">S/ 20 PEN</span>
+                      <span className="text-[9px] text-stone-400 block">(Tarif unique)</span>
+                    </div>
+                  </div>
+
+                  <div className="p-3 bg-white/5 rounded-2xl border border-white/10 flex items-center justify-between">
+                    <div>
+                      <span className="font-bold text-xs text-white block">Cathédrale Majeure de Cusco (Optionnel)</span>
+                      <span className="text-[10px] text-stone-400">Musée d&apos;Art Religieux Virreinal</span>
+                    </div>
+                    <div className="text-right">
+                      <span className="font-serif font-black text-sm text-red-200">S/ 40 PEN</span>
+                      <span className="text-[9px] text-stone-400 block">(Étudiant S/ 20)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3.5 bg-red-950/40 rounded-2xl border border-red-500/20 text-[11px] text-stone-300 space-y-1">
+                <span className="font-bold text-red-200 flex items-center gap-1.5">
+                  <ShieldCheck size={14} className="text-red-400" />
+                  Garantie Zéro Commission Cachée
+                </span>
+                <p className="text-[10px] text-stone-400 leading-snug">
+                  Notre guide vous accompagne personnellement à chaque guichet pour l&apos;achat immédiat sans surcoût. Paiement par espèces ou carte bancaire au contrôle.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. CONSEILS PRATIQUES / QUÉ LLEVAR EN LA MOCHILA CULTURAL */}
+      <section id="conseils" className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto">
+        <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
+          <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
+            <Backpack size={13} />
+            <span>Recommandations des Historiens</span>
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-serif font-black text-stone-900">
+            Préparer sa Visite : Ce qu&apos;il faut emporter
+          </h2>
+          <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+            Pour apprécier le patrimoine dans les meilleures conditions de confort et de sécurité à 3 400 mètres d&apos;altitude.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+          {[
+            {
+              icon: '👟',
+              title: 'Chaussures à bonne adhérence',
+              subtitle: 'Sol pavé & escaliers incas',
+              desc: 'Les dalles de Hatun Rumiyoc et les chemins de pierre de Sacsayhuamán sont polis par les siècles. Privilégiez des baskets de marche ou souliers à semelle adhérente.'
+            },
+            {
+              icon: '☀️',
+              title: 'Protection solaire maximale',
+              subtitle: 'Indice UV d\'altitude',
+              desc: 'Sous le ciel limpide des Andes, la réverbération solaire est intense même par temps voilé. Chapeau à larges bords, lunettes UV400 et écran total indispensables.'
+            },
+            {
+              icon: '💵',
+              title: 'Espèces en Soles (PEN)',
+              subtitle: 'Guichets & artisanat local',
+              desc: 'Certains postes de contrôle archéologiques et les tisseuses traditionnelles ne disposent pas de terminal carte. Prévoyez 100 à 150 PEN en liquide.'
+            },
+            {
+              icon: '🧥',
+              title: 'Vêtements en plusieurs couches',
+              subtitle: 'Climat thermique andin',
+              desc: 'Le soleil chauffe à midi (20°C), mais dès 16h30 le vent frais souffle sur les crêtes de Sacsayhuamán (10°C). Prévoyez un pull chaud et une veste coupe-vent.'
+            }
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="bg-white rounded-3xl p-6 border border-stone-200/80 hover:border-red-400 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+            >
+              <div className="space-y-3">
+                <div className="w-12 h-12 rounded-2xl bg-red-50 border border-red-200 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
+                  <span>{item.icon}</span>
+                </div>
+                <div>
+                  <span className="text-[10px] font-bold text-red-700 uppercase tracking-wider block">
+                    {item.subtitle}
+                  </span>
+                  <h3 className="font-serif font-black text-stone-900 text-base leading-snug mt-0.5">
+                    {item.title}
+                  </h3>
+                </div>
+                <p className="text-xs text-stone-600 leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+
+              <div className="pt-4 mt-4 border-t border-stone-100 flex items-center justify-between text-[11px] text-stone-400 font-bold">
+                <span>CONSEIL N° {idx + 1}</span>
+                <span className="text-red-700">✓ Recommandé</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 10. LE MÉDIATEUR DU PATRIMOINE / PERFIL DEL GUÍA HISTORIADOR */}
+      <section id="guide" className="py-16 sm:py-24 px-4 sm:px-8 bg-red-50/40 border-t border-red-200/60">
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-white rounded-3xl p-6 sm:p-10 border border-red-200 shadow-xl overflow-hidden relative text-left">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-red-100/50 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10">
+              {/* Photo & Badge */}
+              <div className="md:col-span-5 flex flex-col items-center text-center space-y-3">
+                <div className="relative w-44 h-44 sm:w-56 sm:h-56 rounded-3xl overflow-hidden shadow-xl border-4 border-red-100 bg-stone-100">
+                  <Image
+                    src={data.guideAvatar || 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop'}
+                    alt={data.guideName || 'Guide Conférencier'}
+                    fill
+                    sizes="250px"
+                    className="object-cover"
+                  />
+                  <div className="absolute bottom-2 inset-x-2 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold py-1 px-2 rounded-xl border border-white/20">
+                    {data.guideCert || 'Carnet DIRCETUR N° 04821'}
+                  </div>
+                </div>
+
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-800 text-[11px] font-black uppercase tracking-wider">
+                  <GraduationCap size={14} />
+                  <span>Historien & Archéologue</span>
+                </div>
+              </div>
+
+              {/* Bio & Academic Credentials */}
+              <div className="md:col-span-7 space-y-4">
+                <div>
+                  <span className="text-xs font-serif italic text-red-700 font-bold block">
+                    Votre Médiateur du Patrimoine
+                  </span>
+                  <h3 className="text-2xl sm:text-3xl font-serif font-black text-stone-900 leading-tight">
+                    {data.guideName || 'Lic. Marco Antonio Quispe'}
+                  </h3>
+                  <span className="text-xs text-stone-500 font-medium block mt-0.5">
+                    Membre actif de l&apos;Ordre des Licenciés en Tourisme du Pérou (COLTUR Cusco)
+                  </span>
+                </div>
+
+                {/* Quote */}
+                <div className="relative pl-6 py-2 border-l-2 border-red-700 bg-red-50/50 rounded-r-2xl pr-4">
+                  <Quote size={20} className="text-red-300 absolute -top-2 left-2 opacity-50" />
+                  <p className="text-xs sm:text-sm font-serif italic text-stone-800 leading-relaxed">
+                    « Transmettre la mémoire des pierres n&apos;est pas une récitation de dates : c&apos;est une immersion vivante dans la cosmogonie de nos ancêtres. Chaque temple que nous foulons raconte l&apos;équilibre sacré entre l&apos;homme et la Pachamama. »
+                  </p>
+                </div>
+
+                {/* Badges / Specs */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs text-stone-700">
+                  <div className="flex items-center gap-2 bg-stone-50 p-2.5 rounded-xl border border-stone-200">
+                    <span className="text-base">🎓</span>
+                    <span>Diplômé de l&apos;UNSAAC Cusco</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-stone-50 p-2.5 rounded-xl border border-stone-200">
+                    <span className="text-base">🗣️</span>
+                    <span>{data.guideLanguages || 'Espagnol • Quechua • Français • English'}</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-stone-50 p-2.5 rounded-xl border border-stone-200">
+                    <span className="text-base">🏛️</span>
+                    <span>12 ans d&apos;expertise archéologique</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-stone-50 p-2.5 rounded-xl border border-stone-200">
+                    <span className="text-base">🛡️</span>
+                    <span>Secourisme & Altitude certifié</span>
+                  </div>
+                </div>
+
+                <div className="pt-2">
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-red-700 hover:bg-red-800 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-full shadow-md transition-all cursor-pointer"
+                  >
+                    <MessageCircle size={16} />
+                    <span>Échanger directement avec le guide</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 11. PINTEREST PINBOARD (PRO & ADVANCE) */}
       {!isFree && (
         <PinterestPinboard
           images={data.galleryImages}
@@ -650,7 +961,125 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         />
       )}
 
-      {/* 9. TOUR SUPPORT & FAQS */}
+      {/* 12. LIVRE D'OR DU PATRIMOINE (RESEÑAS & TESTIMONIOS VERIFICADOS) */}
+      <section id="livre-dor" className="py-16 sm:py-24 px-4 sm:px-8 bg-stone-50 border-t border-stone-200">
+        <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12">
+          {/* Header & Rating Summary */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-stone-200 pb-8 text-left">
+            <div className="space-y-2">
+              <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
+                <Star size={13} className="fill-red-700 text-red-700" />
+                <span>Avis Vérifiés des Visiteurs</span>
+              </span>
+              <h2 className="text-3xl sm:text-5xl font-serif font-black italic text-stone-900">
+                Le Livre d&apos;or du Patrimoine
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-600 max-w-xl leading-relaxed">
+                Témoignages de passionnés d&apos;histoire, d&apos;universitaires et de familles ayant vécu l&apos;immersion culturelle à Cusco.
+              </p>
+            </div>
+
+            {/* Big Score Card */}
+            <div className="bg-white p-4 sm:p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center gap-4 shrink-0">
+              <div className="text-center">
+                <span className="text-3xl sm:text-4xl font-serif font-black text-red-900 block leading-none">
+                  4.9
+                </span>
+                <span className="text-[10px] text-stone-400 font-bold uppercase mt-1 block">Sur 5.0</span>
+              </div>
+              <div className="space-y-1">
+                <div className="flex items-center gap-0.5 text-amber-500">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} size={15} className="fill-amber-500" />
+                  ))}
+                </div>
+                <span className="text-xs font-bold text-stone-800 block">184 avis vérifiés</span>
+                <span className="text-[10px] text-emerald-600 font-bold block">✓ 100% Retours Positifs</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Testimonial Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            {[
+              {
+                name: 'Jean-Luc & Françoise Moreau',
+                origin: '🇫🇷 Lyon, France',
+                date: 'Visite effectuée le 14 Septembre 2026',
+                stars: 5,
+                comment: 'Une visite magistrale qui dépasse de loin tous les circuits conventionnels. Les explications sur l\'ingénierie parasismique de Sacsayhuamán et la symbolique du temple du Soleil étaient d\'une rigueur absolue. Un moment inoubliable.'
+              },
+              {
+                name: 'Dra. Elena Santillán',
+                origin: '🇪🇸 Madrid, Espagne',
+                date: 'Visite effectuée le 02 Août 2026',
+                stars: 5,
+                comment: 'Como docente de historia del arte, buscaba un guiado sin mitos inventados. La preparación académica del guía y su respeto por las fuentes cronistas coloniales me pareció extraordinaria. Diez sobre diez en puntualidad y conocimiento.'
+              },
+              {
+                name: 'Michael & Sarah Jenkins',
+                origin: '🇺🇸 Boston, USA',
+                date: 'Visite effectuée le 19 Juillet 2026',
+                stars: 5,
+                comment: 'The best tour we took in Peru! Small group, zero rush, crystal-clear audio receivers, and fascinating insights into Inca astronomy that you simply cannot get on standard commercial buses.'
+              }
+            ].map((review, idx) => (
+              <div
+                key={idx}
+                className="bg-white rounded-3xl p-6 sm:p-7 border border-stone-200/80 hover:border-red-400/80 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group space-y-4"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-0.5 text-amber-500">
+                      {[...Array(review.stars)].map((_, i) => (
+                        <Star key={i} size={14} className="fill-amber-500" />
+                      ))}
+                    </div>
+                    <span className="text-[10px] text-stone-400 font-mono">{review.date}</span>
+                  </div>
+
+                  <p className="text-xs sm:text-sm font-serif italic text-stone-700 leading-relaxed">
+                    « {review.comment} »
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-stone-100 flex items-center justify-between">
+                  <div>
+                    <h4 className="font-serif font-black text-stone-900 text-xs sm:text-sm group-hover:text-red-700 transition-colors">
+                      {review.name}
+                    </h4>
+                    <span className="text-[11px] text-stone-500 font-medium block">
+                      {review.origin}
+                    </span>
+                  </div>
+                  <span className="w-7 h-7 rounded-full bg-red-100 text-red-700 flex items-center justify-center font-bold text-xs">
+                    ✓
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Sello de confianza */}
+          <div className="bg-white rounded-2xl p-4 border border-stone-200 flex flex-wrap items-center justify-center gap-6 text-xs text-stone-600 font-medium">
+            <span className="flex items-center gap-1.5 font-bold text-stone-900">
+              <Award size={16} className="text-red-700" />
+              Certificat d&apos;Excellence DIRCETUR
+            </span>
+            <span>•</span>
+            <span className="flex items-center gap-1.5">
+              <ShieldCheck size={16} className="text-emerald-600" />
+              Avis 100% Authentifiés par WhatsApp & Voucher
+            </span>
+            <span>•</span>
+            <span className="text-stone-500">
+              Registre officiel des guides conférenciers du Pérou
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* 13. TOUR SUPPORT & FAQS */}
       <TourSupportAndFaqs
         faqs={data.faqs}
         tourName={data.name || data.hero?.title || 'Tour Cultural'}
