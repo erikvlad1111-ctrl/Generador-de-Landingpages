@@ -492,13 +492,13 @@ export default function DemoDashboard() {
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-slate-50/90 text-slate-500 text-[11px] uppercase tracking-wider font-extrabold border-b border-slate-200/80 select-none">
-                    <th className="px-4 py-3.5 min-w-[220px]">Tour & Guía Asignado</th>
-                    <th className="px-3 py-3.5 hidden md:table-cell whitespace-nowrap">Plantilla</th>
-                    <th className="px-3 py-3.5 hidden sm:table-cell whitespace-nowrap">Objetivo</th>
-                    <th className="px-3 py-3.5 whitespace-nowrap">Estado</th>
-                    <th className="px-3 py-3.5 hidden lg:table-cell whitespace-nowrap text-center">Vistas</th>
-                    <th className="px-4 py-3.5 hidden xl:table-cell whitespace-nowrap min-w-[120px]">Fecha</th>
-                    <th className="px-4 py-3.5 whitespace-nowrap text-right min-w-[280px]">Acciones</th>
+                    <th className="px-5 py-3.5 min-w-[250px]">Tour & Guía Asignado</th>
+                    <th className="px-3.5 py-3.5 hidden md:table-cell whitespace-nowrap">Plantilla</th>
+                    <th className="px-3.5 py-3.5 hidden sm:table-cell whitespace-nowrap">Objetivo</th>
+                    <th className="px-3.5 py-3.5 whitespace-nowrap">Estado</th>
+                    <th className="px-3.5 py-3.5 hidden lg:table-cell whitespace-nowrap text-center">Vistas</th>
+                    <th className="px-4 py-3.5 hidden xl:table-cell whitespace-nowrap min-w-[130px]">Fecha</th>
+                    <th className="px-5 py-3.5 whitespace-nowrap text-right min-w-[290px]">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-sm">
@@ -615,7 +615,7 @@ export default function DemoDashboard() {
                           </td>
 
                           {/* Date: Libre de solapamiento, 100% visible */}
-                          <td className="px-4 py-3.5 hidden xl:table-cell text-xs text-slate-600 font-medium whitespace-nowrap min-w-[120px]">
+                          <td className="px-4 py-3.5 hidden xl:table-cell text-xs text-slate-600 font-medium whitespace-nowrap min-w-[130px]">
                             <div className="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200/60 w-fit">
                               <CalendarDays size={13} className="text-slate-400 shrink-0" />
                               <span className="font-mono text-xs font-bold text-slate-700">{p.date}</span>
@@ -623,7 +623,7 @@ export default function DemoDashboard() {
                           </td>
 
                           {/* Action buttons: Flujo natural sin encimarse sobre Fecha */}
-                          <td className="px-4 py-3.5 text-right whitespace-nowrap min-w-[280px]">
+                          <td className="px-5 py-3.5 text-right whitespace-nowrap min-w-[290px]">
                             <div className="flex items-center justify-end gap-1.5">
                               
                               {/* Primary: Ver / Editar */}

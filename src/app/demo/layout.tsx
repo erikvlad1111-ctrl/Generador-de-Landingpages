@@ -39,16 +39,16 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className="flex min-h-screen bg-slate-50 text-slate-900 flex-col md:flex-row">
       
-      {/* 1. DESKTOP SIDEBAR (Visible ONLY on md and up - exactly as original) */}
-      <aside className="hidden md:flex w-64 bg-slate-950 text-slate-300 flex-col shrink-0 border-r border-slate-800/80 select-none">
-        <div className="p-6 border-b border-slate-800/80">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-blue-600/30">
+      {/* 1. DESKTOP SIDEBAR (Visible ONLY on md and up - slightly slimmer for wider table view) */}
+      <aside className="hidden md:flex w-56 bg-slate-950 text-slate-300 flex-col shrink-0 border-r border-slate-800/80 select-none">
+        <div className="p-4.5 border-b border-slate-800/80">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-blue-600 flex items-center justify-center text-white font-bold text-xs shadow-md shadow-blue-600/30 shrink-0">
               CC
             </div>
-            <div>
-              <h1 className="text-sm font-bold text-white tracking-tight leading-tight">Cusco Creativos</h1>
-              <p className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider">Sistema de Agencias</p>
+            <div className="min-w-0">
+              <h1 className="text-sm font-bold text-white tracking-tight leading-tight truncate">Cusco Creativos</h1>
+              <p className="text-[10px] text-slate-500 font-semibold uppercase tracking-wider truncate">Sistema Agencias</p>
             </div>
           </div>
         </div>
@@ -276,8 +276,8 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
           </header>
         )}
 
-        {/* Content Body */}
-        <div className={`flex-1 overflow-auto ${isPreview ? 'p-0' : 'p-4 sm:p-6 md:p-8'}`}>
+        {/* Content Body: Optimized margins to maximize table breathing room */}
+        <div className={`flex-1 overflow-auto ${isPreview ? 'p-0' : 'p-3.5 sm:p-5 md:p-6 lg:p-7'}`}>
           {children}
         </div>
       </main>
