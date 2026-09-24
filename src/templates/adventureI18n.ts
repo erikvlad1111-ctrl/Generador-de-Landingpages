@@ -119,6 +119,30 @@ export interface AdventureI18nTexts {
       support: string;
     };
   };
+  footer: {
+    ctaBanner: {
+      badge: string;
+      title: string;
+      subtitle: string;
+      whatsappBtn: string;
+      quoteBtn: string;
+    };
+    brandDesc: string;
+    quickLinksTitle: string;
+    safetyTitle: string;
+    contactTitle: string;
+    quickLinks: Array<{ label: string; href: string }>;
+    safetyLinks: Array<{ label: string; href: string }>;
+    certifications: {
+      dircetur: string;
+      sernanp: string;
+      safeTravels: string;
+    };
+    rights: string;
+    complaintsBook: string;
+    terms: string;
+    privacy: string;
+  };
 }
 
 export const ADVENTURE_LANGUAGES: Array<{ code: LanguageType; label: string; flag: string }> = [
@@ -290,6 +314,43 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
         lockers: 'Custodia con Cámaras de Seguridad 24/7',
         support: 'Protocolo de Evacuación Médica y Soporte'
       }
+    },
+    footer: {
+      ctaBanner: {
+        badge: 'Temporada de Montaña 2026',
+        title: '¿Listo para conquistar los Andes? Asegura tu cupo hoy',
+        subtitle: 'Cupos diarios estrictamente limitados por el Santuario de Machu Picchu. Asesoría directa 24/7 con guías colegiados de alta montaña.',
+        whatsappBtn: 'Reservar Directo por WhatsApp',
+        quoteBtn: 'Cotizar Expedición'
+      },
+      brandDesc: 'Operador líder en turismo de aventura, alta montaña y expediciones sostenibles en Cusco, Salkantay, Choquequirao y Camino Inca con guías colegiados DIRCETUR.',
+      quickLinksTitle: 'Rutas & Treks Destacados',
+      safetyTitle: 'Seguridad & Preparación',
+      contactTitle: 'Base Central & Contacto',
+      quickLinks: [
+        { label: 'Salkantay Trek a Machu Picchu (5D/4N)', href: '#iconic' },
+        { label: 'Camino Inca Clásico Oficial (4D/3N)', href: '#iconic' },
+        { label: 'Ausangate 7 Lagunas & Glaciares', href: '#iconic' },
+        { label: 'Choquequirao La Cuna de Oro', href: '#iconic' },
+        { label: 'Laguna Humantay & Glamping', href: '#iconic' },
+        { label: 'Montaña de 7 Colores (Vinicunca)', href: '#iconic' }
+      ],
+      safetyLinks: [
+        { label: 'Guía de Aclimatación y Mal de Altura', href: '#itinerario' },
+        { label: 'Qué llevar en la mochila de trekking', href: '#incluye' },
+        { label: 'Briefing previo en oficina física', href: '#destinos' },
+        { label: 'Oxígeno y botiquín de alta montaña', href: '#incluye' },
+        { label: 'Políticas de reprogramación flexible', href: '#soporte-faq' }
+      ],
+      certifications: {
+        dircetur: 'DIRCETUR Licencia Oficial N° 2026-CC-EXP',
+        sernanp: 'Autorización SERNANP Machu Picchu',
+        safeTravels: 'Sello Safe Travels Internacional'
+      },
+      rights: '© 2026 TrekExplorer Perú • Operado por Cusco Creativos S.A.C. RUC 20601234567. Todos los derechos reservados.',
+      complaintsBook: 'Libro de Reclamaciones Virtual',
+      terms: 'Términos y Condiciones',
+      privacy: 'Políticas de Privacidad'
     }
   },
   en: {
@@ -452,6 +513,43 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
         lockers: '24/7 CCTV Monitored Lockers',
         support: 'Emergency Evacuation Protocol & Satellite Support'
       }
+    },
+    footer: {
+      ctaBanner: {
+        badge: '2026 Mountain Expedition Season',
+        title: 'Ready to conquer the Andes? Reserve your trail permits today',
+        subtitle: 'Daily trail permits strictly limited by Machu Picchu Sanctuary. 24/7 direct guidance from licensed high-altitude mountain leaders.',
+        whatsappBtn: 'Book Directly via WhatsApp',
+        quoteBtn: 'Request Custom Quote'
+      },
+      brandDesc: 'Official high-altitude trekking and adventure travel operator in Cusco, Salkantay, Choquequirao and Inca Trail with certified mountain guides.',
+      quickLinksTitle: 'Featured Treks & Routes',
+      safetyTitle: 'Safety & Preparation',
+      contactTitle: 'Expedition Base & Contact',
+      quickLinks: [
+        { label: 'Salkantay Trek to Machu Picchu (5D/4N)', href: '#iconic' },
+        { label: 'Classic Inca Trail (4D/3N)', href: '#iconic' },
+        { label: 'Ausangate 7 Lakes & Glaciers', href: '#iconic' },
+        { label: 'Choquequirao Lost City', href: '#iconic' },
+        { label: 'Humantay Lake & Glamping Dome', href: '#iconic' },
+        { label: 'Rainbow Mountain (Vinicunca)', href: '#iconic' }
+      ],
+      safetyLinks: [
+        { label: 'Acclimatization & Altitude Guide', href: '#itinerario' },
+        { label: 'Packing Checklist for Mountain Trails', href: '#incluye' },
+        { label: 'Evening Pre-Trek Briefing at Office', href: '#destinos' },
+        { label: 'High Altitude Medical Kit & Oxygen', href: '#incluye' },
+        { label: 'Flexible Date Rescheduling Policy', href: '#soporte-faq' }
+      ],
+      certifications: {
+        dircetur: 'DIRCETUR Official Tour License N° 2026-CC-EXP',
+        sernanp: 'SERNANP Machu Picchu Authorized',
+        safeTravels: 'Safe Travels Global Stamp'
+      },
+      rights: '© 2026 TrekExplorer Peru • Operated by Cusco Creativos S.A.C. Tax ID 20601234567. All rights reserved.',
+      complaintsBook: 'Official Virtual Complaints Book',
+      terms: 'Terms & Conditions',
+      privacy: 'Privacy Policy'
     }
   },
   fr: {
@@ -614,6 +712,43 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
         lockers: 'Casiers Sécurisés Vidéosurveillance 24/7',
         support: 'Protocoles Médicaux & Suivi Satellite'
       }
+    },
+    footer: {
+      ctaBanner: {
+        badge: 'Saison de Montagne 2026',
+        title: 'Prêt à conquérir les Andes ? Réservez vos permis dès aujourd’hui',
+        subtitle: 'Nombre de places strictement limité par le Sanctuaire de Machu Picchu. Assistance 24/7 assurée par des guides diplômés de haute montagne.',
+        whatsappBtn: 'Réserver par WhatsApp',
+        quoteBtn: 'Demander un Devis'
+      },
+      brandDesc: 'Agence et voyagiste officiel de trek et d’aventure à Cusco, Salkantay, Choquequirao et Chemin de l’Inca avec des guides agréés DIRCETUR.',
+      quickLinksTitle: 'Treks & Circuits Phares',
+      safetyTitle: 'Sécurité & Préparation',
+      contactTitle: 'Base Centrale & Contact',
+      quickLinks: [
+        { label: 'Trek du Salkantay au Machu Picchu (5J/4N)', href: '#iconic' },
+        { label: 'Chemin de l’Inca Classique (4J/3N)', href: '#iconic' },
+        { label: 'Ausangate 7 Lagunes & Glaciers', href: '#iconic' },
+        { label: 'Choquequirao Cité Perdue', href: '#iconic' },
+        { label: 'Lagune Humantay & Dômes Glamping', href: '#iconic' },
+        { label: 'Montagne aux 7 Couleurs (Vinicunca)', href: '#iconic' }
+      ],
+      safetyLinks: [
+        { label: 'Guide d’acclimatation et mal des montagnes', href: '#itinerario' },
+        { label: 'Check-list équipement et sac à dos', href: '#incluye' },
+        { label: 'Briefing préparatoire la veille en agence', href: '#destinos' },
+        { label: 'Oxygène et trousse médicale d’altitude', href: '#incluye' },
+        { label: 'Politique de report et flexibilité', href: '#soporte-faq' }
+      ],
+      certifications: {
+        dircetur: 'Licence Officielle DIRCETUR N° 2026-CC-EXP',
+        sernanp: 'Autorisé SERNANP Sanctuaire Machu Picchu',
+        safeTravels: 'Label International Safe Travels'
+      },
+      rights: '© 2026 TrekExplorer Pérou • Exploité par Cusco Creativos S.A.C. Tous droits réservés.',
+      complaintsBook: 'Livre de Réclamations Virtuel',
+      terms: 'Conditions Générales',
+      privacy: 'Politique de Confidentialité'
     }
   },
   pt: {
@@ -776,6 +911,43 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
         lockers: 'Armários com Câmeras de Segurança 24/7',
         support: 'Protocolo de Evacuação e Suporte Satelital'
       }
+    },
+    footer: {
+      ctaBanner: {
+        badge: 'Temporada de Montanha 2026',
+        title: 'Pronto para conquistar os Andes? Garanta sua vaga hoje',
+        subtitle: 'Vagas diárias estritamente limitadas pelas regras de Machu Picchu. Assessoria 24/7 com guias oficiais de alta montanha.',
+        whatsappBtn: 'Reservar pelo WhatsApp',
+        quoteBtn: 'Solicitar Cotação'
+      },
+      brandDesc: 'Operadora líder em turismo de aventura, alta montanha e expedições sustentáveis em Cusco, Salkantay, Choquequirao e Trilha Inca.',
+      quickLinksTitle: 'Trilhas & Rotas em Destaque',
+      safetyTitle: 'Segurança & Preparação',
+      contactTitle: 'Base Central & Contato',
+      quickLinks: [
+        { label: 'Salkantay Trek a Machu Picchu (5D/4N)', href: '#iconic' },
+        { label: 'Trilha Inca Clássica Oficial (4D/3N)', href: '#iconic' },
+        { label: 'Ausangate 7 Lagoas & Geleiras', href: '#iconic' },
+        { label: 'Choquequirao o Berço de Ouro', href: '#iconic' },
+        { label: 'Lagoa Humantay & Domos Glamping', href: '#iconic' },
+        { label: 'Montanha de 7 Cores (Vinicunca)', href: '#iconic' }
+      ],
+      safetyLinks: [
+        { label: 'Guia de Aclimatação e Mal da Altitude', href: '#itinerario' },
+        { label: 'O que levar na mochila de trilha', href: '#incluye' },
+        { label: 'Briefing prévio no escritório físico', href: '#destinos' },
+        { label: 'Oxigênio e kit de primeiros socorros', href: '#incluye' },
+        { label: 'Políticas de remarcação flexível', href: '#soporte-faq' }
+      ],
+      certifications: {
+        dircetur: 'Licença Oficial DIRCETUR N° 2026-CC-EXP',
+        sernanp: 'Autorização SERNANP Machu Picchu',
+        safeTravels: 'Selo Safe Travels Internacional'
+      },
+      rights: '© 2026 TrekExplorer Peru • Operado por Cusco Creativos S.A.C. Todos os direitos reservados.',
+      complaintsBook: 'Livro de Reclamações Virtual',
+      terms: 'Termos e Condições',
+      privacy: 'Políticas de Privacidade'
     }
   },
   it: {
@@ -938,6 +1110,43 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
         lockers: 'Armadietti con Videosorveglianza 24/7',
         support: 'Protocollo Medico d’Emergenza e Supporto'
       }
+    },
+    footer: {
+      ctaBanner: {
+        badge: 'Stagione di Montagna 2026',
+        title: 'Pronto a conquistare le Ande? Blocca i tuoi permessi oggi',
+        subtitle: 'Permessi giornalieri rigorosamente limitati dal regolamento di Machu Picchu. Consulenza 24/7 con guide ufficiali di alta quota.',
+        whatsappBtn: 'Prenota su WhatsApp',
+        quoteBtn: 'Richiedi Preventivo'
+      },
+      brandDesc: 'Tour operator leader in trekking d’alta quota, turismo avventura e spedizioni sostenibili a Cusco, Salkantay, Choquequirao e Cammino Inca.',
+      quickLinksTitle: 'Trek & Itinerari in Evidenza',
+      safetyTitle: 'Sicurezza & Preparazione',
+      contactTitle: 'Sede Operativa & Contatti',
+      quickLinks: [
+        { label: 'Salkantay Trek a Machu Picchu (5G/4N)', href: '#iconic' },
+        { label: 'Cammino Inca Classico Ufficiale (4G/3N)', href: '#iconic' },
+        { label: 'Ausangate 7 Laghi & Ghiacciai', href: '#iconic' },
+        { label: 'Choquequirao la Culla d’Oro', href: '#iconic' },
+        { label: 'Laguna Humantay & Tende Glamping', href: '#iconic' },
+        { label: 'Montagna dei 7 Colori (Vinicunca)', href: '#iconic' }
+      ],
+      safetyLinks: [
+        { label: 'Guida all’acclimatazione e mal di montagna', href: '#itinerario' },
+        { label: 'Cosa mettere nello zaino da trekking', href: '#incluye' },
+        { label: 'Briefing della vigilia in agenzia', href: '#destinos' },
+        { label: 'Ossigeno e kit medico d’alta quota', href: '#incluye' },
+        { label: 'Politiche di cancellazione flessibili', href: '#soporte-faq' }
+      ],
+      certifications: {
+        dircetur: 'Licenza Ufficiale DIRCETUR N° 2026-CC-EXP',
+        sernanp: 'Autorizzazione SERNANP Machu Picchu',
+        safeTravels: 'Certificato Globale Safe Travels'
+      },
+      rights: '© 2026 TrekExplorer Perù • Gestito da Cusco Creativos S.A.C. Tutti i diritti riservati.',
+      complaintsBook: 'Registro dei Reclami Virtuale',
+      terms: 'Termini e Condizioni',
+      privacy: 'Informativa sulla Privacy'
     }
   }
 };

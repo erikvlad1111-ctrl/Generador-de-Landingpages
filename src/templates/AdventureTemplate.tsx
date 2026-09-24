@@ -6,7 +6,7 @@ import {
   MapPin, Clock, Star, CheckCircle, MessageCircle, HelpCircle, FileText, 
   ShieldCheck, XCircle, Backpack, Calendar, ArrowRight, Heart, Flame, 
   Plane, Compass, Users, Sparkles, Navigation, Phone, Check, ChevronRight,
-  Send, Mountain, Building2
+  Send, Mountain, Building2, Mail, BookOpen
 } from 'lucide-react';
 import { LandingData, LanguageType } from '@/types/landing';
 import { ADVENTURE_I18N, ADVENTURE_LANGUAGES } from './adventureI18n';
@@ -887,19 +887,195 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         lang={currentLang}
       />
 
-      {/* 13. FOOTER */}
-      <footer className="bg-slate-950 py-10 px-4 text-center text-slate-500 text-xs border-t border-slate-900">
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <Mountain size={16} className="text-blue-500" />
-            <span className="font-black text-white">TrekExplorer Perú</span>
+      {/* 13. FOOTER COMPLETO DE ALTA AUTORIDAD & CONVERSIÓN */}
+      <footer className="bg-slate-950 text-slate-400 text-xs border-t border-slate-800/80 pt-14 pb-24 sm:pb-12 px-4 sm:px-8 relative overflow-hidden">
+        
+        {/* Glow ambient background effects */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-emerald-600/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto space-y-12 sm:space-y-14 relative z-10">
+          
+          {/* A. Pre-Footer High-Conversion Banner */}
+          <div className="relative rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900/95 to-blue-950/60 border border-slate-800 p-6 sm:p-10 shadow-2xl overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 text-left">
+            <div className="space-y-3 max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[11px] font-black uppercase tracking-wider">
+                <Sparkles size={12} className="text-blue-400" />
+                <span>{t.footer.ctaBanner.badge}</span>
+              </div>
+              <h3 className="text-xl sm:text-3xl font-black text-white tracking-tight leading-tight">
+                {t.footer.ctaBanner.title}
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                {t.footer.ctaBanner.subtitle}
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto shrink-0">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs sm:text-sm px-6 py-3.5 rounded-full shadow-lg shadow-emerald-600/25 hover:scale-102 active:scale-98 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <MessageCircle size={16} />
+                <span>{t.footer.ctaBanner.whatsappBtn}</span>
+              </a>
+              <button
+                type="button"
+                onClick={() => setIsQuoteOpen(true)}
+                className="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm px-6 py-3.5 rounded-full border border-white/20 hover:border-white/40 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <FileText size={16} className="text-blue-400" />
+                <span>{t.footer.ctaBanner.quoteBtn}</span>
+              </button>
+            </div>
           </div>
-          <p>© 2026 Cusco Creativos S.A.C. Todos los derechos reservados.</p>
-          <div className="flex items-center gap-3 text-slate-400 font-bold text-[11px]">
-            <span>✓ DIRCETUR</span>
-            <span>✓ SAFE TRAVELS</span>
-            <span>✓ MINCETUR</span>
+
+          {/* B. Main 4-Columns Directory Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 text-left">
+            
+            {/* Column 1: Brand Authority (4 cols) */}
+            <div className="lg:col-span-4 space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-slate-900 text-white flex items-center justify-center shadow-md shadow-blue-500/10">
+                  <Mountain size={22} className="text-white" />
+                </div>
+                <div>
+                  <span className="text-xl font-black text-white tracking-tight">
+                    Trek<span className="text-blue-500">Explorer</span>
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-bold block uppercase tracking-wider">
+                    {t.brand.subtitle}
+                  </span>
+                </div>
+              </div>
+
+              <p className="text-xs text-slate-400 leading-relaxed font-normal">
+                {t.footer.brandDesc}
+              </p>
+
+              {/* Official Badges */}
+              <div className="space-y-2 pt-1">
+                <div className="flex items-center gap-2 text-[11px] font-bold text-emerald-400">
+                  <ShieldCheck size={14} className="shrink-0" />
+                  <span>{t.footer.certifications.dircetur}</span>
+                </div>
+                <div className="flex items-center gap-2 text-[11px] font-bold text-blue-400">
+                  <CheckCircle size={14} className="shrink-0" />
+                  <span>{t.footer.certifications.sernanp}</span>
+                </div>
+                <div className="flex items-center gap-2 text-[11px] font-bold text-amber-400">
+                  <span>★</span>
+                  <span>{t.footer.certifications.safeTravels}</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Column 2: Treks & Routes (3 cols) */}
+            <div className="lg:col-span-3 space-y-3">
+              <h4 className="text-xs sm:text-sm font-black text-white uppercase tracking-wider">
+                {t.footer.quickLinksTitle}
+              </h4>
+              <ul className="space-y-2 text-xs">
+                {t.footer.quickLinks.map((link, idx) => (
+                  <li key={idx}>
+                    <a
+                      href={link.href}
+                      className="text-slate-400 hover:text-white transition-colors flex items-center gap-1.5 group"
+                    >
+                      <span className="text-slate-600 group-hover:text-blue-400 transition-colors">›</span>
+                      <span>{link.label}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Column 3: Safety & Preparation (2 cols) */}
+            <div className="lg:col-span-2 space-y-3">
+              <h4 className="text-xs sm:text-sm font-black text-white uppercase tracking-wider">
+                {t.footer.safetyTitle}
+              </h4>
+              <ul className="space-y-2 text-xs">
+                {t.footer.safetyLinks.map((link, idx) => (
+                  <li key={idx}>
+                    <a
+                      href={link.href}
+                      className="text-slate-400 hover:text-white transition-colors flex items-center gap-1.5 group"
+                    >
+                      <span className="text-slate-600 group-hover:text-emerald-400 transition-colors">›</span>
+                      <span>{link.label}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Column 4: Base Central & Direct Contact (3 cols) */}
+            <div className="lg:col-span-3 space-y-3">
+              <h4 className="text-xs sm:text-sm font-black text-white uppercase tracking-wider">
+                {t.footer.contactTitle}
+              </h4>
+
+              <div className="space-y-2.5 text-xs text-slate-300">
+                <div className="flex items-start gap-2.5">
+                  <MapPin size={15} className="text-blue-400 shrink-0 mt-0.5" />
+                  <span>{data.officeAddress || t.office.address}</span>
+                </div>
+
+                <div className="flex items-center gap-2.5">
+                  <Clock size={15} className="text-emerald-400 shrink-0" />
+                  <span>{data.officeHours || t.office.hours}</span>
+                </div>
+
+                <div className="flex items-center gap-2.5">
+                  <Phone size={15} className="text-amber-400 shrink-0" />
+                  <a href={`tel:${cleanPhone}`} className="hover:text-white transition-colors font-bold">
+                    {data.whatsapp || '+51 984 123 456'}
+                  </a>
+                </div>
+
+                <div className="flex items-center gap-2.5">
+                  <Mail size={15} className="text-rose-400 shrink-0" />
+                  <span className="text-slate-400">reservas@trekexplorerperu.com</span>
+                </div>
+              </div>
+
+              {/* Libro de Reclamaciones */}
+              <div className="pt-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] font-bold text-slate-400 hover:text-white hover:border-slate-700 transition-all cursor-pointer">
+                  <BookOpen size={14} className="text-amber-500" />
+                  <span>{t.footer.complaintsBook}</span>
+                </div>
+              </div>
+            </div>
+
           </div>
+
+          {/* C. Bottom Bar / Copyright, Payment Badges & Legal */}
+          <div className="pt-8 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+            <p className="text-center md:text-left">{t.footer.rights}</p>
+
+            {/* Payment Methods Badges */}
+            <div className="flex items-center gap-2 text-[10px] font-bold tracking-wider text-slate-400 bg-slate-900 px-3 py-1 rounded-full border border-slate-800">
+              <span>💳 VISA</span>
+              <span>•</span>
+              <span>MASTERCARD</span>
+              <span>•</span>
+              <span>AMEX</span>
+              <span>•</span>
+              <span>PAYPAL</span>
+            </div>
+
+            {/* Legal Links */}
+            <div className="flex items-center gap-4 text-slate-400">
+              <a href="#soporte-faq" className="hover:text-white transition-colors">{t.footer.terms}</a>
+              <span>•</span>
+              <a href="#soporte-faq" className="hover:text-white transition-colors">{t.footer.privacy}</a>
+            </div>
+          </div>
+
         </div>
       </footer>
 
