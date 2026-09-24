@@ -6,7 +6,7 @@ import {
   MapPin, Clock, Star, CheckCircle, MessageCircle, HelpCircle, FileText, 
   ShieldCheck, XCircle, Backpack, Calendar, ArrowRight, Heart, Flame, 
   Plane, Compass, Users, Sparkles, Navigation, Phone, Check, ChevronRight,
-  Send, Mountain, Building2, Mail, BookOpen
+  Send, Mountain, Building2, Mail, BookOpen, Tent, Bus, Utensils, Ticket, HeartPulse, Activity
 } from 'lucide-react';
 import { LandingData, LanguageType } from '@/types/landing';
 import { ADVENTURE_I18N, ADVENTURE_LANGUAGES } from './adventureI18n';
@@ -24,6 +24,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
   const [currentLang, setCurrentLang] = useState<LanguageType>(data.language || 'es');
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [likedCards, setLikedCards] = useState<Record<string, boolean>>({});
+  const [activeInclusionFilter, setActiveInclusionFilter] = useState<string>('all');
 
   const t = ADVENTURE_I18N[currentLang] || ADVENTURE_I18N.es;
 
@@ -67,6 +68,125 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
   // Hero Hiker photo: use user's hero image or default smiling trekker
   const trekkerHeroImage = data.heroImage || 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=1200&auto=format&fit=crop';
+
+  // Smart context-aware metadata & soft images for each feature inclusion
+  const getFeatureMetadata = (rawItem: string, idx: number) => {
+    const lower = rawItem.toLowerCase();
+    
+    if (lower.includes('domo') || lower.includes('campamento') || lower.includes('carpa') || lower.includes('equipado')) {
+      return {
+        id: 'camps',
+        image: 'https://images.unsplash.com/photo-1510312305653-8ed496efae75?q=80&w=700&auto=format&fit=crop',
+        icon: Tent,
+        badge: currentLang === 'en' ? 'Sky Glass Domes' : currentLang === 'fr' ? 'Dômes Célestes' : currentLang === 'pt' ? 'Domos de Cristal' : currentLang === 'it' ? 'Domi di Vetro' : 'Domos Panorámicos',
+        category: currentLang === 'en' ? 'Comfort & Night Sky' : 'Confort & Domos Térmicos',
+        defaultDesc: currentLang === 'en' 
+          ? 'Rest under the Andean Milky Way in geodesic thermal domes with real beds, feather duvets, and panoramic glacier views.'
+          : currentLang === 'fr'
+          ? 'Dormez sous la Voie Lactée dans des dômes géodésiques chauffés avec lits douillets et vue directe sur les glaciers.'
+          : currentLang === 'pt'
+          ? 'Durma sob a Via Láctea em domos térmicos com camas reais, cobertores de pluma e vista panorâmica para os nevados.'
+          : currentLang === 'it'
+          ? 'Dormi sotto la Via Lattea in domi geodetici termici con letti comodi e vista panoramica mozzafiato sui ghiacciai.'
+          : 'Duerme bajo la Vía Láctea en domos geodésicos térmicos con camas confortables, cobertores de pluma y vista a los glaciares.'
+      };
+    }
+    
+    if (lower.includes('alimento') || lower.includes('comida') || lower.includes('nutritiva') || lower.includes('chef') || lower.includes('desayuno')) {
+      return {
+        id: 'food',
+        image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=700&auto=format&fit=crop',
+        icon: Utensils,
+        badge: currentLang === 'en' ? 'High Altitude Gourmet' : currentLang === 'fr' ? 'Chef de Montagne' : currentLang === 'pt' ? 'Chef de Montanha' : currentLang === 'it' ? 'Chef di Spedizione' : 'Chef de Montaña',
+        category: currentLang === 'en' ? 'Nutrition & Energy' : 'Gastronomía Andina & Energía',
+        defaultDesc: currentLang === 'en'
+          ? '3 hearty gourmet hot meals daily prepared fresh by your mountain chef. Vegan, vegetarian, and gluten-free diets fully accommodated.'
+          : currentLang === 'fr'
+          ? '3 repas chauds copieux par jour cuisinés sur place par votre chef. Options végétariennes, végétaliennes et sans gluten incluses.'
+          : currentLang === 'pt'
+          ? '3 refeições quentes balanceadas por dia preparadas na hora por nosso chef. Dietas vegetarianas, veganas e sem glúten incluídas.'
+          : currentLang === 'it'
+          ? '3 pasti caldi abbondanti al giorno preparati freschi dal nostro chef. Menù vegetariani, vegani e senza glutine garantiti.'
+          : '3 comidas calientes nutritivas al día preparadas al momento por un chef de expedición. Dietas vegetarianas, veganas y celíacas incluidas.'
+      };
+    }
+    
+    if (lower.includes('oxígeno') || lower.includes('oxigeno') || lower.includes('botiquín') || lower.includes('botiquin') || lower.includes('altura') || lower.includes('médic')) {
+      return {
+        id: 'health',
+        image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=700&auto=format&fit=crop',
+        icon: HeartPulse,
+        badge: currentLang === 'en' ? 'Vital Safety' : currentLang === 'fr' ? 'Sécurité Vitale' : currentLang === 'pt' ? 'Segurança Vital' : currentLang === 'it' ? 'Sicurezza Vitale' : 'Seguridad Vital',
+        category: currentLang === 'en' ? 'Health & Medical' : 'Salud & Monitoreo 4,600m',
+        defaultDesc: currentLang === 'en'
+          ? 'Continuous pulse oximeter saturation checks twice daily, portable medical emergency oxygen tank, and specialized wilderness first aid kit.'
+          : currentLang === 'fr'
+          ? 'Contrôle quotidien de saturation à l’oxymètre, bouteille d’oxygène médical d’urgence et trousse de secours pour haute altitude.'
+          : currentLang === 'pt'
+          ? 'Monitoramento diário de oxigenação com oxímetro de pulso, cilindro de oxigênio medicinal e kit de primeiros socorros de altitude.'
+          : currentLang === 'it'
+          ? 'Controllo quotidiano dell’ossigenazione con pulsossimetro, bombola di ossigeno medicinale portatile e kit di pronto soccorso d’alta quota.'
+          : 'Monitoreo diario de saturación con oxímetro digital, balón de oxígeno medicinal de emergencia y botiquín de trauma para alta montaña.'
+      };
+    }
+    
+    if (lower.includes('entrada') || lower.includes('boleto') || lower.includes('machu') || lower.includes('ticket') || lower.includes('tren')) {
+      return {
+        id: 'tickets',
+        image: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=700&auto=format&fit=crop',
+        icon: Ticket,
+        badge: currentLang === 'en' ? 'Guaranteed Circuit' : currentLang === 'fr' ? 'Circuit Garanti' : currentLang === 'pt' ? 'Circuito Garantido' : currentLang === 'it' ? 'Circuito Garantito' : 'Circuito Garantizado',
+        category: currentLang === 'en' ? 'Sanctuary Access' : 'Acceso Oficial Machu Picchu',
+        defaultDesc: currentLang === 'en'
+          ? 'Official entrance ticket reserved in your name for Circuit 1 or 2, plus panoramic Expedition/Voyager train ride through the Sacred Valley.'
+          : currentLang === 'fr'
+          ? 'Billet officiel nominatif pour le circuit classique de la citadelle inca et train panoramique Expedition/Voyager dans la Vallée Sacrée.'
+          : currentLang === 'pt'
+          ? 'Ingresso oficial reservado em seu nome para os circuitos clássicos e passagem de trem panorâmico Expedition/Voyager pelo Vale Sagrado.'
+          : currentLang === 'it'
+          ? 'Biglietto ufficiale a tuo nome per il circuito classico di Machu Picchu e treno panoramico Expedition/Voyager nella Valle Sacra.'
+          : 'Boleto oficial nominativo para el circuito clásico de la ciudadela inca y pasajes de tren panorámico Expedition/Voyager por el Valle Sagrado.'
+      };
+    }
+    
+    if (lower.includes('transporte') || lower.includes('mollepata') || lower.includes('bus') || lower.includes('ida y vuelta') || lower.includes('retorno')) {
+      const isReturn = lower.includes('vuelta') || lower.includes('retorno');
+      return {
+        id: 'transport',
+        image: isReturn 
+          ? 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=700&auto=format&fit=crop'
+          : 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=700&auto=format&fit=crop',
+        icon: Bus,
+        badge: currentLang === 'en' ? 'Private Van Service' : currentLang === 'fr' ? 'Transport Privé' : currentLang === 'pt' ? 'Transporte Turístico' : currentLang === 'it' ? 'Trasferimento Diretto' : 'Transporte Turístico',
+        category: currentLang === 'en' ? 'Door-to-Door Logistics' : 'Logística Puerta a Puerta',
+        defaultDesc: currentLang === 'en'
+          ? 'Pick-up from your Cusco hotel in air-conditioned modern tourist sprinters with licensed professional drivers experienced on Andean roads.'
+          : currentLang === 'fr'
+          ? 'Prise en charge à votre hôtel à Cusco en minibus touristique moderne avec chauffeurs chevronnés sur les routes andines.'
+          : currentLang === 'pt'
+          ? 'Embarque na porta do seu hotel em Cusco em vans modernas climatizadas e motoristas experientes nas estradas andinas.'
+          : currentLang === 'it'
+          ? 'Prelievo direttamente dal tuo hotel a Cusco con moderni minibus turistici e autisti professionisti esperti delle strade andine.'
+          : 'Recojo en la puerta de tu hotel en Cusco en vehículos turísticos modernos climatizados con choferes experimentados en rutas andinas.'
+      };
+    }
+    
+    const defaultPhotos = [
+      'https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=700&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=700&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=700&auto=format&fit=crop'
+    ];
+    return {
+      id: 'other',
+      image: defaultPhotos[idx % defaultPhotos.length],
+      icon: ShieldCheck,
+      badge: currentLang === 'en' ? 'Included Service' : 'Servicio Oficial',
+      category: currentLang === 'en' ? 'Safety & Logistics' : 'Seguridad & Logística',
+      defaultDesc: currentLang === 'en'
+        ? 'Comprehensive expedition service operated directly by certified bilingual guides with top-tier mountain equipment.'
+        : 'Servicio integral operado directamente por guías locales colegiados con equipamiento técnico de alta montaña.'
+    };
+  };
 
   return (
     <div className="min-h-screen bg-[#FDFDFD] font-sans text-slate-800 selection:bg-slate-900 selection:text-white">
@@ -527,33 +647,221 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </section>
       )}
 
-      {/* 7. FEATURES & INCLUDED SERVICES */}
+      {/* 7. FEATURES & INCLUDED SERVICES (Con imágenes suaves, filtros y estándares de alta montaña) */}
       {data.features && data.features.items && data.features.items.length > 0 && !isFree && (
-        <section id="incluye" className="py-14 sm:py-20 px-4 sm:px-8 bg-slate-900 text-white">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-10 sm:mb-14 space-y-2">
-              <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">
-                {t.inclusions.title}
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-black">
+        <section id="incluye" className="py-16 sm:py-24 px-4 sm:px-8 bg-slate-950 text-white relative overflow-hidden border-y border-slate-800">
+          
+          {/* Ambient Lighting Glow Effect */}
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-blue-600/10 rounded-full blur-[140px] pointer-events-none" />
+          <div className="absolute bottom-10 left-10 w-96 h-96 bg-emerald-600/10 rounded-full blur-[120px] pointer-events-none" />
+
+          <div className="relative z-10 max-w-7xl mx-auto space-y-10 sm:space-y-14">
+            
+            {/* Header Section */}
+            <div className="text-center max-w-3xl mx-auto space-y-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-black uppercase tracking-wider shadow-sm">
+                <Sparkles size={13} className="text-emerald-400" />
+                <span>{t.inclusions.title}</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
                 {data.features.title || t.inclusions.includedTitle}
               </h2>
+              <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal max-w-2xl mx-auto">
+                {currentLang === 'en'
+                  ? 'Every logistical detail, camp comfort, and high-altitude safety protocol is seamlessly arranged so you focus entirely on the trail.'
+                  : currentLang === 'fr'
+                  ? 'Chaque détail logistique, confort en campement et sécurité d’altitude est orchestré par nos guides officiels pour un voyage serein.'
+                  : currentLang === 'pt'
+                  ? 'Cada detalhe logístico, conforto nos acampamentos e segurança em altitude é planejado para você focar apenas em viver a montanha.'
+                  : currentLang === 'it'
+                  ? 'Ogni dettaglio logistico, comfort nei campi base e sicurezza in quota è curato nei minimi particolari per farti vivere il trekking senza pensieri.'
+                  : 'Cada detalle logístico, confort en los campamentos y seguridad en altura está planificado para que solo te preocupes por disfrutar de la montaña.'}
+              </p>
+
+              {/* Interactive Category Filter Pills */}
+              <div className="pt-4 flex flex-wrap items-center justify-center gap-2">
+                {[
+                  { id: 'all', label: currentLang === 'en' ? 'All Inclusions (6)' : currentLang === 'fr' ? 'Tous les Services (6)' : currentLang === 'pt' ? 'Todos os Serviços (6)' : currentLang === 'it' ? 'Tutti i Servizi (6)' : 'Todos los Servicios (6)' },
+                  { id: 'transport', label: currentLang === 'en' ? '🚐 Transport & Vans' : '🚐 Transporte & Buses' },
+                  { id: 'camps', label: currentLang === 'en' ? '⛺ Sky Domes & Camps' : '⛺ Domos & Campamento' },
+                  { id: 'food', label: currentLang === 'en' ? '👨‍🍳 Mountain Chef & Food' : '👨‍🍳 Chef & Alimentación' },
+                  { id: 'tickets', label: currentLang === 'en' ? '🎫 Machu Picchu Tickets' : '🎫 Boletos Machu Picchu' },
+                  { id: 'health', label: currentLang === 'en' ? '🩺 Oxygen & Medical' : '🩺 Oxígeno & Primeros Auxilios' }
+                ].map((filterTab) => (
+                  <button
+                    key={filterTab.id}
+                    type="button"
+                    onClick={() => setActiveInclusionFilter(filterTab.id)}
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                      activeInclusionFilter === filterTab.id
+                        ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30 font-black scale-105'
+                        : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700'
+                    }`}
+                  >
+                    {filterTab.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {data.features.items.map((item, idx) => (
-                <div
-                  key={idx}
-                  className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 hover:border-blue-500 transition-colors text-left"
-                >
-                  <CheckCircle className="text-emerald-400 mb-3" size={26} />
-                  <h3 className="text-base font-bold mb-1.5 text-white">{item.split(':')[0]}</h3>
-                  <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
-                    {item.split(':')[1] || 'Servicio integral operado directamente por guías locales colegiados.'}
+            {/* Grid of Rich Cinematic Inclusion Cards with Soft Photos */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+              {data.features.items.map((item, idx) => {
+                const parts = item.split(':');
+                const title = parts[0].trim();
+                const userCustomDesc = parts[1]?.trim();
+                const meta = getFeatureMetadata(item, idx);
+                const IconComponent = meta.icon;
+
+                // Check filter visibility
+                const matchesFilter = activeInclusionFilter === 'all' || meta.id === activeInclusionFilter;
+                if (!matchesFilter) return null;
+
+                return (
+                  <div
+                    key={idx}
+                    className="bg-slate-900/90 border border-slate-800 hover:border-blue-500/50 rounded-3xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 group flex flex-col justify-between"
+                  >
+                    <div>
+                      {/* Soft Image Header */}
+                      <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-950">
+                        <Image
+                          src={meta.image}
+                          alt={title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 400px"
+                          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                        />
+                        {/* Soft Gradient Overlay for Readability */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
+                        <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-transparent transition-colors" />
+
+                        {/* Top Category Badge */}
+                        <div className="absolute top-3.5 left-3.5 bg-slate-950/75 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 text-[11px] font-black text-slate-200">
+                          {meta.category}
+                        </div>
+
+                        {/* Top Feature Pill Badge */}
+                        <div className="absolute top-3.5 right-3.5 bg-emerald-500/90 backdrop-blur-sm text-white text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
+                          {meta.badge}
+                        </div>
+
+                        {/* Floating Icon Container */}
+                        <div className="absolute -bottom-3 left-6 w-11 h-11 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-600/40 border-2 border-slate-900 shrink-0">
+                          <IconComponent size={20} className="text-white" />
+                        </div>
+                      </div>
+
+                      {/* Content Area */}
+                      <div className="p-6 pt-6 text-left space-y-2">
+                        <h3 className="text-base sm:text-lg font-black text-white group-hover:text-blue-400 transition-colors line-clamp-2">
+                          {title}
+                        </h3>
+                        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                          {userCustomDesc || meta.defaultDesc}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Card Footer Confirmation */}
+                    <div className="p-6 pt-0 flex items-center justify-between border-t border-slate-800/80 mt-4 text-[11px] text-slate-400 font-bold">
+                      <span className="flex items-center gap-1.5 text-emerald-400 font-black">
+                        <Check size={14} className="stroke-[3]" />
+                        <span>
+                          {currentLang === 'en' ? '100% Guaranteed Service' : currentLang === 'fr' ? 'Service Garanti' : currentLang === 'pt' ? 'Serviço Garantido' : currentLang === 'it' ? 'Servizio Garantito' : 'Servicio 100% Incluido'}
+                        </span>
+                      </span>
+                      <span className="text-[10px] font-mono text-slate-500 uppercase tracking-wider">
+                        #{idx + 1}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Expedition Standards & Quality Assurance Strip (Y Más Cosas) */}
+            <div className="mt-14 sm:mt-16 pt-10 border-t border-slate-800/80">
+              <div className="text-center mb-8 space-y-1">
+                <span className="text-[11px] font-black uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
+                  {currentLang === 'en' ? 'Expedition Quality Assurance' : currentLang === 'fr' ? 'Garantie d’Excellence' : currentLang === 'pt' ? 'Garantia de Qualidade' : currentLang === 'it' ? 'Garanzia di Qualità' : 'Garantía de Excelencia en Montaña'}
+                </span>
+                <h3 className="text-lg sm:text-2xl font-black text-white">
+                  {currentLang === 'en' ? 'Our High-Altitude Safety & Comfort Standards' : currentLang === 'fr' ? 'Nos Standards de Haute Montagne & Confort' : currentLang === 'pt' ? 'Nossos Padrões de Segurança & Conforto' : currentLang === 'it' ? 'I Nostri Standard di Alta Quota & Sicurezza' : 'Nuestros Estándares de Seguridad & Confort en Altura'}
+                </h3>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+                {/* 1. Chef */}
+                <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4.5 hover:border-slate-700 transition-colors space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center font-bold">
+                      <Utensils size={16} />
+                    </div>
+                    <strong className="text-xs sm:text-sm font-black text-white">
+                      {currentLang === 'en' ? 'Expedition Mountain Chef' : 'Chef de Alta Montaña'}
+                    </strong>
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-relaxed font-normal">
+                    {currentLang === 'en'
+                      ? '3 hot gourmet meals daily prepared fresh on the trail with balanced nutritional calories.'
+                      : 'Comidas calientes 3 veces al día elaboradas con insumos andinos frescos y balance calórico.'}
                   </p>
                 </div>
-              ))}
+
+                {/* 2. Health & Oxygen */}
+                <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4.5 hover:border-slate-700 transition-colors space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-rose-500/15 text-rose-400 flex items-center justify-center font-bold">
+                      <HeartPulse size={16} />
+                    </div>
+                    <strong className="text-xs sm:text-sm font-black text-white">
+                      {currentLang === 'en' ? '24/7 Oxygen Monitoring' : 'Oxígeno & Oximetría 24/7'}
+                    </strong>
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-relaxed font-normal">
+                    {currentLang === 'en'
+                      ? 'Daily saturation health checks twice a day and medical emergency oxygen tank at all camps.'
+                      : 'Monitoreo diario de saturación con oxímetro digital y balón de oxígeno en cada campamento.'}
+                  </p>
+                </div>
+
+                {/* 3. Mules & Horses */}
+                <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4.5 hover:border-slate-700 transition-colors space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center font-bold">
+                      <Backpack size={16} />
+                    </div>
+                    <strong className="text-xs sm:text-sm font-black text-white">
+                      {currentLang === 'en' ? 'Pack Horses & Duffel Bag' : 'Arrieros & Caballos de Carga'}
+                    </strong>
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-relaxed font-normal">
+                    {currentLang === 'en'
+                      ? 'Up to 7 kg duffel bag carried by horses so you hike comfortably with just a daypack.'
+                      : 'Duffel bag de hasta 7 kg llevado por caballos para que camines ligero con mochila de ataque.'}
+                  </p>
+                </div>
+
+                {/* 4. Domes */}
+                <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4.5 hover:border-slate-700 transition-colors space-y-2">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center font-bold">
+                      <Tent size={16} />
+                    </div>
+                    <strong className="text-xs sm:text-sm font-black text-white">
+                      {currentLang === 'en' ? 'Sky Glass Thermal Domes' : 'Domos de Cristal Térmicos'}
+                    </strong>
+                  </div>
+                  <p className="text-[11px] text-slate-400 leading-relaxed font-normal">
+                    {currentLang === 'en'
+                      ? 'Insulated 4-season geodesic domes with real beds and panoramic views of the glaciers.'
+                      : 'Cúpulas 4 estaciones aislantes del frío con camas confortables y vista directa al nevado.'}
+                  </p>
+                </div>
+              </div>
             </div>
+
           </div>
         </section>
       )}
