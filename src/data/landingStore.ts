@@ -160,9 +160,27 @@ export const INITIAL_LANDINGS: LandingData[] = [
     ],
     testimonials: [
       {
-        name: 'Sofía Valdivia',
+        name: 'Sofía y Lucas Valdivia',
         origin: 'Santiago, Chile',
-        comment: '¡Increíble tour! Las cuatrimotos tienen mucha potencia y los paisajes de las salineras son espectaculares.',
+        comment: '¡Increíble tour de aventura! Las cuatrimotos tienen excelente potencia y los paisajes de las salineras y terrazas de Moray son espectaculares.',
+        rating: 5
+      },
+      {
+        name: 'Carlos & Andrea Mendoza',
+        origin: 'Buenos Aires, Argentina',
+        comment: 'Excelente organización, puntualidad y seguridad en todo momento. Los instructores explican cada maniobra con mucha paciencia.',
+        rating: 5
+      },
+      {
+        name: 'David & Sarah Miller',
+        origin: 'Austin, Texas (USA)',
+        comment: 'Such a fun and thrilling day in the Sacred Valley! Riding through the salt mines with stunning Andean peaks in the background was unforgettable.',
+        rating: 5
+      },
+      {
+        name: 'Camila & Laurent Fournier',
+        origin: 'Lyon, Francia',
+        comment: 'Superbe après-midi en quad! Vue magnifique sur les glaciers de la vallée et un encadrement très pro avec matériel au top.',
         rating: 5
       }
     ],
@@ -786,16 +804,52 @@ export function simulateAiGeneration(params: {
 
   const testimonials = isEn ? [
     {
+      name: 'David & Sarah Miller',
+      origin: 'Austin, Texas (USA)',
+      comment: `Incredible experience with ${params.guideName || 'the team'}! Truly unforgettable landscapes, top gear, and outstanding organization from start to finish.`,
+      rating: 5
+    },
+    {
       name: 'Sarah Jenkins',
       origin: 'London, UK',
-      comment: `Incredible experience with ${params.guideName || 'the team'}. Truly unforgettable landscapes and outstanding organization!`,
+      comment: `Reaching the mountain pass with ${params.guideName || 'our guide'} was the highlight of our trip to Peru. Caring, professional, and authentic.`,
+      rating: 5
+    },
+    {
+      name: 'Matthieu & Élodie Laurent',
+      origin: 'Lyon, France',
+      comment: 'Une organisation sans faille et des paysages grandioses. Tout le matériel était parfait et les repas en campement délicieux.',
+      rating: 5
+    },
+    {
+      name: 'Lucas & Sofia Valdivia',
+      origin: 'Santiago, Chile',
+      comment: 'Superó todas nuestras expectativas. La paciencia para la aclimatación y el trato humano fueron de 10 estrellas.',
       rating: 5
     }
   ] : [
     {
-      name: 'Martín y Claudia',
+      name: 'Martín y Claudia Flores',
       origin: 'Lima, Perú',
-      comment: `Superó todas nuestras expectativas. La atención de ${params.guideName || 'nuestro guía'} fue impecable de principio a fin.`,
+      comment: `Superó todas nuestras expectativas. La atención de ${params.guideName || 'nuestro guía'} y las medidas de seguridad fueron impecables de principio a fin.`,
+      rating: 5
+    },
+    {
+      name: 'David & Sarah Miller',
+      origin: 'Austin, Texas (USA)',
+      comment: `La mejor expedición de nuestras vidas. Los paisajes sagrados, la comida caliente en la montaña y el profesionalismo de ${params.guideName || 'los guías'} fueron increíbles.`,
+      rating: 5
+    },
+    {
+      name: 'Matthieu & Élodie Laurent',
+      origin: 'Lyon, Francia',
+      comment: 'Una experiencia única en los Andes. Excelente ritmo de caminata, respeto por la naturaleza y asistencia permanente de oxígeno.',
+      rating: 5
+    },
+    {
+      name: 'Sofía y Lucas Valdivia',
+      origin: 'Santiago, Chile',
+      comment: 'Todo el equipo nos hizo sentir como en familia. Puntuales en el recojo, equipo técnico de primera y postales inolvidables.',
       rating: 5
     }
   ];
