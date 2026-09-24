@@ -242,127 +242,156 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </div>
       </nav>
 
-      {/* 2. HERO SECTION (Identical to user image) */}
-      <section className="relative px-4 sm:px-8 pt-8 pb-12 sm:pt-14 sm:pb-16 max-w-7xl mx-auto overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          
-          {/* Left Column: Copy & CTAs */}
-          <div className="lg:col-span-6 space-y-5 sm:space-y-6 text-left">
-            {/* Pill Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200/80 text-slate-700 text-xs font-semibold shadow-2xs">
-              <span className="text-xs">🌐</span>
-              <span>{data.hero?.badge || 'Discover the World • Aventura & Trekking'}</span>
-            </div>
+      {/* 2. HERO SECTION CON IMAGEN DE FONDO COMPLETO */}
+      <section className="relative w-full overflow-hidden min-h-[580px] sm:min-h-[660px] lg:min-h-[720px] flex items-center">
+        {/* Full Background Image */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src={trekkerHeroImage}
+            alt={data.name || 'Aventura & Trekking'}
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+          {/* Multi-layer cinematic overlays for contrast and readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/65 to-slate-950/35" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/40" />
+        </div>
 
-            {/* Main Headline */}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.1]">
-              Travel the Best <br />
-              <span className="text-slate-900">It&apos;s a Big World,</span> <br />
-              <span className="text-slate-900 flex items-center gap-2">
-                Go Explore! <span className="inline-block animate-bounce">🚀</span>
-              </span>
-            </h1>
+        {/* Content Container */}
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 py-16 sm:py-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+            
+            {/* Left Column: Copy & CTAs */}
+            <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-left">
+              {/* Pill Badge */}
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold shadow-sm">
+                <span className="text-xs">🌐</span>
+                <span>{data.hero?.badge || 'Discover the World • Aventura & Trekking'}</span>
+              </div>
 
-            {/* Tour Subtitle / Description */}
-            <p className="text-sm sm:text-base text-slate-500 leading-relaxed max-w-xl font-normal">
-              {data.hero?.subtitle || data.about?.content || 
-                'Embark on unforgettable journeys to the most stunning destinations around Cusco & the Andes. Whether you are seeking high altitude trekking, mountain relaxation, or authentic Inca trails.'}
-            </p>
+              {/* Main Headline */}
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-md">
+                Travel the Best <br />
+                <span className="text-white">It&apos;s a Big World,</span> <br />
+                <span className="text-white flex items-center gap-2">
+                  Go Explore! <span className="inline-block animate-bounce">🚀</span>
+                </span>
+              </h1>
 
-            {/* Buttons Row */}
-            <div className="pt-2 flex flex-wrap items-center gap-3.5">
-              {isQuote ? (
-                <button
-                  type="button"
-                  onClick={() => setIsQuoteOpen(true)}
-                  className="bg-slate-900 hover:bg-slate-800 text-white font-bold px-7 py-3.5 rounded-full text-sm shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
-                >
-                  <span>{data.hero?.cta || 'Get Started'}</span>
-                  <ArrowRight size={16} />
-                </button>
-              ) : (
+              {/* Tour Subtitle / Description */}
+              <p className="text-sm sm:text-base text-slate-200 leading-relaxed max-w-xl font-normal drop-shadow-sm">
+                {data.hero?.subtitle || data.about?.content || 
+                  'Un trekking legendario de alta montaña cruzando nevados imponentes, ceja de selva y plantaciones de café hasta la ciudadela inca de Machu Picchu.'}
+              </p>
+
+              {/* Buttons Row */}
+              <div className="pt-2 flex flex-wrap items-center gap-3.5">
+                {isQuote ? (
+                  <button
+                    type="button"
+                    onClick={() => setIsQuoteOpen(true)}
+                    className="bg-white hover:bg-slate-100 text-slate-950 font-black px-7 py-3.5 rounded-full text-sm shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
+                  >
+                    <span>{data.hero?.cta || 'Cotizar Expedición'}</span>
+                    <ArrowRight size={16} />
+                  </button>
+                ) : (
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white hover:bg-slate-100 text-slate-950 font-black px-7 py-3.5 rounded-full text-sm shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
+                  >
+                    <span>{data.hero?.cta || 'Reservar Directo por WhatsApp'}</span>
+                    <ArrowRight size={16} />
+                  </a>
+                )}
+
                 <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-slate-900 hover:bg-slate-800 text-white font-bold px-7 py-3.5 rounded-full text-sm shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
+                  href="#itinerario"
+                  className="bg-white/10 hover:bg-white/20 text-white font-bold px-5 py-3.5 rounded-full text-sm backdrop-blur-md border border-white/25 shadow-sm hover:border-white/40 transition-all flex items-center gap-2 cursor-pointer"
                 >
-                  <span>{data.hero?.cta || 'Get Started'}</span>
-                  <ArrowRight size={16} />
+                  <Compass size={16} className="text-blue-400" />
+                  <span>Ver Itinerario</span>
                 </a>
-              )}
 
-              <a
-                href="#itinerario"
-                className="bg-white hover:bg-slate-50 text-slate-700 font-bold px-5 py-3.5 rounded-full text-sm border border-slate-200 shadow-2xs hover:border-slate-300 transition-all flex items-center gap-2 cursor-pointer"
-              >
-                <Compass size={16} className="text-blue-600" />
-                <span>Ver Itinerario</span>
-              </a>
-
-              {data.price && (
-                <div className="px-4 py-3 rounded-full bg-blue-50 border border-blue-200/80 text-blue-900 font-black text-xs">
-                  Desde {data.price}
-                </div>
-              )}
+                {data.price && (
+                  <div className="px-4 py-3 rounded-full bg-blue-600/90 text-white backdrop-blur-md border border-blue-400/40 font-black text-xs shadow-md">
+                    Desde {data.price}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
 
-          {/* Right Column: Trekker Portrait Graphic & Floating Review Card */}
-          <div className="lg:col-span-6 relative flex justify-center items-center">
-            {/* Soft decorative background circles */}
-            <div className="absolute -top-10 -right-10 w-72 h-72 sm:w-96 sm:h-96 rounded-full bg-blue-100/50 blur-3xl -z-10 pointer-events-none" />
-            <div className="absolute -bottom-8 -left-8 w-64 h-64 rounded-full bg-amber-100/40 blur-2xl -z-10 pointer-events-none" />
-
-            <div className="relative w-full max-w-[420px] sm:max-w-[480px]">
-              {/* Trekker Image Card with organic rounded frame */}
-              <div className="relative h-[380px] sm:h-[460px] w-full rounded-[42px] overflow-hidden shadow-2xl border-4 border-white bg-slate-100">
-                <Image
-                  src={trekkerHeroImage}
-                  alt={data.name || 'Aventura & Trekking'}
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, 500px"
-                  className="object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+            {/* Right Column: Floating High-Impact Glass Cards */}
+            <div className="lg:col-span-5 relative flex flex-col justify-center items-start lg:items-end">
+              <div className="w-full max-w-sm space-y-4">
                 
-                {/* Altitud & Guía Chip inside image */}
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full text-slate-800 text-[11px] font-black shadow-sm flex items-center gap-1.5">
-                  <MapPin size={12} className="text-blue-600" />
-                  <span>{data.altitude || '4,630 msnm'}</span>
+                {/* Floating Altitude & Live Confirmation Card */}
+                <div className="bg-slate-900/70 backdrop-blur-xl border border-white/20 p-5 rounded-3xl shadow-2xl text-white space-y-3">
+                  <div className="flex items-center justify-between pb-2 border-b border-white/10">
+                    <div className="flex items-center gap-2 text-xs font-black text-emerald-400">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                      <span>Salidas Diarias Confirmadas</span>
+                    </div>
+                    <span className="bg-white/10 px-2 py-0.5 rounded-md text-[10px] font-bold text-slate-300">
+                      2026 Season
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between gap-3 text-xs">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-xl bg-blue-500/25 text-blue-400 flex items-center justify-center font-bold">
+                        <MapPin size={16} />
+                      </div>
+                      <div>
+                        <span className="text-[10px] text-slate-400 block font-semibold">Punto más alto:</span>
+                        <strong className="text-white text-xs sm:text-sm font-black">{data.altitude || '4,630 msnm (Paso Salkantay)'}</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-1 flex items-center justify-between text-xs text-slate-300 border-t border-white/10">
+                    <div className="flex items-center gap-1.5">
+                      <ShieldCheck size={14} className="text-emerald-400 shrink-0" />
+                      <span>Guía: <strong className="text-white">{data.guideName || 'Guía Colegiado'}</strong></span>
+                    </div>
+                    <span className="text-[11px] font-mono text-blue-300 font-bold">{data.duration || '5 Días / 4 Noches'}</span>
+                  </div>
                 </div>
+
+                {/* Floating Review Badge */}
+                <div className="bg-white/95 backdrop-blur-xl px-5 py-3 rounded-full shadow-2xl border border-white/80 flex items-center gap-3 w-fit hover:scale-105 transition-transform">
+                  {/* 3 Avatars Stack */}
+                  <div className="flex -space-x-2 shrink-0">
+                    <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden relative bg-slate-200">
+                      <Image src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&auto=format&fit=crop" alt="User 1" fill className="object-cover" />
+                    </div>
+                    <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden relative bg-slate-200">
+                      <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=120&auto=format&fit=crop" alt="User 2" fill className="object-cover" />
+                    </div>
+                    <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden relative bg-slate-200">
+                      <Image src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&auto=format&fit=crop" alt="User 3" fill className="object-cover" />
+                    </div>
+                  </div>
+
+                  {/* Rating copy */}
+                  <div className="text-left leading-tight">
+                    <span className="block text-[11px] sm:text-xs font-bold text-slate-900">Our Happy Customers</span>
+                    <div className="flex items-center gap-1 text-[11px] text-slate-600 font-semibold">
+                      <Star size={12} className="fill-amber-400 text-amber-400" />
+                      <span className="text-slate-900 font-black">4.9</span>
+                      <span>(10.2k Reviews)</span>
+                    </div>
+                  </div>
+                </div>
+
               </div>
-
-              {/* Floating Review Badge (Exact match to image) */}
-              <div className="absolute -bottom-5 sm:-bottom-6 left-1/2 -translate-x-1/2 bg-white/95 backdrop-blur-md px-4 sm:px-5 py-2.5 sm:py-3 rounded-full shadow-xl border border-slate-100 flex items-center gap-3 shrink-0 whitespace-nowrap z-20 hover:scale-105 transition-transform">
-                {/* 3 Avatars Stack */}
-                <div className="flex -space-x-2 shrink-0">
-                  <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden relative bg-slate-200">
-                    <Image src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&auto=format&fit=crop" alt="User 1" fill className="object-cover" />
-                  </div>
-                  <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden relative bg-slate-200">
-                    <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=120&auto=format&fit=crop" alt="User 2" fill className="object-cover" />
-                  </div>
-                  <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden relative bg-slate-200">
-                    <Image src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&auto=format&fit=crop" alt="User 3" fill className="object-cover" />
-                  </div>
-                </div>
-
-                {/* Rating copy */}
-                <div className="text-left leading-tight">
-                  <span className="block text-[11px] sm:text-xs font-bold text-slate-800">Our Happy Customers</span>
-                  <div className="flex items-center gap-1 text-[11px] text-slate-500 font-semibold">
-                    <Star size={12} className="fill-amber-400 text-amber-400" />
-                    <span className="text-slate-800 font-black">4.9</span>
-                    <span>(10.2k Reviews)</span>
-                  </div>
-                </div>
-              </div>
-
             </div>
-          </div>
 
+          </div>
         </div>
       </section>
 

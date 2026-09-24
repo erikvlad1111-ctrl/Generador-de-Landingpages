@@ -2319,47 +2319,48 @@ export default function NewLandingDemo() {
               {/* 4. PLANTILLA AVENTURA & TREKKING (TRAVEL THE BEST / MODERN CLEAN) */}
               {template === 'adventure' && (
                 <div className="flex flex-col min-h-full bg-white text-slate-800">
-                  <div className="p-4 space-y-3">
+                  {/* Hero con Imagen de Fondo Completo */}
+                  <div className="relative min-h-[220px] p-4 flex flex-col justify-between overflow-hidden">
+                    <Image 
+                      src={activeHeroImg} 
+                      alt="Trekker" 
+                      fill 
+                      sizes="400px" 
+                      className="object-cover object-center" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/50 to-slate-950/30" />
+                    
                     {/* Top Pill Header */}
-                    <div className="flex justify-between items-center text-[10px] pb-1 border-b border-slate-100">
-                      <span className="bg-slate-100 text-slate-700 font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <div className="relative z-10 flex justify-between items-center text-[10px]">
+                      <span className="bg-white/20 backdrop-blur-md text-white font-bold px-2 py-0.5 rounded-full flex items-center gap-1 border border-white/20">
                         <span>🌐</span> Discover the World
                       </span>
-                      <span className="text-slate-400 font-bold text-[9px]">
+                      <span className="bg-black/40 backdrop-blur-md text-white font-bold text-[9px] px-2 py-0.5 rounded-full border border-white/20">
                         {altitude || '4,630 msnm'}
                       </span>
                     </div>
 
                     {/* Headline Banner */}
-                    <div className="space-y-1">
-                      <h3 className="text-sm font-black text-slate-900 leading-tight">
+                    <div className="relative z-10 space-y-1 mt-6 mb-2">
+                      <h3 className="text-sm font-black text-white leading-tight drop-shadow-md">
                         Travel the Best, It&apos;s a Big World, Go Explore! 🚀
                       </h3>
-                      <p className="text-[10px] text-slate-500 line-clamp-1">
+                      <p className="text-[10px] text-slate-200 line-clamp-1">
                         {name || 'Tour Salkantay Trek Clásico'} • {duration || '5 Días'}
                       </p>
                     </div>
 
-                    {/* Trekker Hero Image with Floating Review Badge */}
-                    <div className="relative h-44 rounded-2xl overflow-hidden border border-slate-100 shadow-sm bg-slate-100">
-                      <Image 
-                        src={activeHeroImg} 
-                        alt="Trekker" 
-                        fill 
-                        sizes="400px" 
-                        className="object-cover" 
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                      
-                      {/* Floating Review Badge */}
-                      <div className="absolute bottom-2 left-2 right-2 bg-white/95 backdrop-blur-md px-2.5 py-1.5 rounded-full shadow-md flex items-center justify-between text-[9px]">
-                        <span className="font-bold text-slate-800">Our Happy Customers</span>
-                        <div className="flex items-center gap-1 font-black text-slate-900">
-                          <span className="text-amber-400">★</span>
-                          <span>4.9 (10.2k)</span>
-                        </div>
+                    {/* Floating Review Badge */}
+                    <div className="relative z-10 bg-white/95 backdrop-blur-md px-2.5 py-1.5 rounded-full shadow-md flex items-center justify-between text-[9px]">
+                      <span className="font-bold text-slate-900">Our Happy Customers</span>
+                      <div className="flex items-center gap-1 font-black text-slate-900">
+                        <span className="text-amber-500">★</span>
+                        <span>4.9 (10.2k)</span>
                       </div>
                     </div>
+                  </div>
+
+                  <div className="p-4 space-y-3">
 
                     {/* Quick Searched Spots Pills (Mini) */}
                     <div className="space-y-1">
