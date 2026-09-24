@@ -4,7 +4,8 @@ import {
   Crown, Sparkles, ShieldCheck, Clock, Award, PhoneCall, MessageCircle, 
   FileText, Star, Calendar, XCircle, Backpack, Gem, Compass, CheckCircle2,
   ChevronRight, ArrowRight, MapPin, Mountain, Users, Languages, HeartHandshake,
-  Coffee, Wifi, ExternalLink, ShieldAlert, Car, Utensils, Check, QrCode
+  Coffee, Wifi, ExternalLink, ShieldAlert, Car, Utensils, Check, QrCode,
+  Camera, Sun, Wine, Sparkle
 } from 'lucide-react';
 import { LandingData, LanguageType } from '@/types/landing';
 import QuoteModal from '@/components/common/QuoteModal';
@@ -50,36 +51,93 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
     ? data.includedServices 
     : defaultLuxuryServices;
 
+  // Visual sensory cards that make dark mode emotionally warm and enticing for tourists
+  const sensoryHighlights = [
+    {
+      title: 'Amanecer Dorado en la Ciudadela',
+      tag: 'Acceso Matutino Preferencial',
+      desc: 'Ingreso en el primer turno para admirar la bruma disipándose sobre las terrazas incas en silencio y sin multitudes.',
+      image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=1000&auto=format&fit=crop',
+      icon: Sun
+    },
+    {
+      title: 'Tren Panorámico & Brindis Andino',
+      tag: 'Observatorio Hiram Bingham / Vistadome',
+      desc: 'Copa de espumante o cóctel de bienvenida mientras la cordillera sagrada desfila frente a cúpulas acristaladas.',
+      image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=1000&auto=format&fit=crop',
+      icon: Wine
+    },
+    {
+      title: 'Alta Gastronomía Orgánica',
+      tag: 'Menú Degustación de Autor',
+      desc: 'Sabores ancestrales reinterpretados por chefs de vanguardia en casonas coloniales o al aire libre en el Valle.',
+      image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop',
+      icon: Utensils
+    },
+    {
+      title: 'Mística, Historia & Alpacas Reales',
+      tag: 'Cultura Viva & Textiles Finos',
+      desc: 'Encuentros privados con maestros artesanos cusqueños y crianza de alpacas y vicuñas en su hábitat natural.',
+      image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1000&auto=format&fit=crop',
+      icon: Camera
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-[#070709] font-sans text-neutral-100 selection:bg-amber-500 selection:text-black relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#0a080e] font-sans text-neutral-100 selection:bg-amber-500 selection:text-black relative overflow-x-hidden">
       
-      {/* Dynamic Ambient Luxury Lighting Backgrounds */}
+      {/* Warm Golden & Amber Ambient Luxury Lighting Backgrounds (Replaces Cold Pure Black) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-gradient-to-b from-amber-500/12 via-amber-600/5 to-transparent blur-[120px] rounded-full" />
-        <div className="absolute top-[35%] -right-40 w-[600px] h-[600px] bg-amber-700/8 blur-[140px] rounded-full" />
-        <div className="absolute top-[65%] -left-40 w-[600px] h-[600px] bg-amber-500/6 blur-[140px] rounded-full" />
+        <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b from-amber-500/18 via-amber-600/8 to-transparent blur-[140px] rounded-full" />
+        <div className="absolute top-[30%] -right-40 w-[650px] h-[650px] bg-amber-600/10 blur-[150px] rounded-full" />
+        <div className="absolute top-[60%] -left-40 w-[650px] h-[650px] bg-amber-500/8 blur-[150px] rounded-full" />
+        <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-amber-400/6 blur-[130px] rounded-full" />
       </div>
 
-      {/* 1. ULTRA LUXURY TOP HEADER */}
-      <header className="sticky top-0 w-full z-40 bg-[#070709]/90 backdrop-blur-xl border-b border-amber-500/20 px-4 sm:px-8 py-3.5 sm:py-4 flex justify-between items-center gap-4 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.6)]">
+      {/* 1. TOP LIVE ASSURANCE BAR FOR TOURISTS */}
+      <div className="relative z-50 bg-gradient-to-r from-amber-600/25 via-amber-500/20 to-amber-600/25 border-b border-amber-500/30 px-3 py-1.5 text-center">
+        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-[10px] sm:text-xs text-amber-200/90 font-medium">
+          <span className="flex items-center gap-1.5 font-semibold">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Temporada 2026 Confirmada • Salidas Diarias</span>
+          </span>
+          <span className="hidden md:inline text-amber-400/40">•</span>
+          <span className="flex items-center gap-1.5">
+            <Star size={12} className="text-amber-300 fill-amber-300" />
+            <span><strong>4.9 / 5.0</strong> Satisfacción de Huéspedes (+380 Reseñas VIP)</span>
+          </span>
+          <span className="hidden sm:inline text-amber-400/40">•</span>
+          <span className="hidden sm:flex items-center gap-1.5 text-emerald-300 font-semibold">
+            <ShieldCheck size={12} />
+            <span>Reserva Flexible • Asistencia Médica Continua</span>
+          </span>
+        </div>
+      </div>
+
+      {/* 2. ULTRA LUXURY TOP HEADER */}
+      <header className="sticky top-0 w-full z-40 bg-[#0a080e]/92 backdrop-blur-xl border-b border-amber-500/20 px-4 sm:px-8 py-3.5 sm:py-4 flex justify-between items-center gap-4 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.6)]">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400/25 via-amber-500/10 to-transparent border border-amber-400/40 flex items-center justify-center text-amber-300 shrink-0 shadow-[0_0_15px_rgba(245,158,11,0.25)]">
-            <Crown size={isMobile ? 18 : 20} className="text-amber-300 drop-shadow-[0_2px_8px_rgba(245,158,11,0.5)]" />
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400/30 via-amber-500/15 to-transparent border border-amber-400/50 flex items-center justify-center text-amber-300 shrink-0 shadow-[0_0_18px_rgba(245,158,11,0.3)]">
+            <Crown size={isMobile ? 18 : 20} className="text-amber-300 drop-shadow-[0_2px_8px_rgba(245,158,11,0.6)]" />
           </div>
           <div className="min-w-0">
             <span className={`${isMobile ? 'text-xs' : 'text-xs sm:text-sm md:text-base'} font-serif tracking-[0.2em] uppercase font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 truncate block`}>
               Cusco Luxury Collection
             </span>
-            <span className="text-[9px] uppercase tracking-[0.25em] text-amber-400/70 font-semibold block font-mono">
+            <span className="text-[9px] uppercase tracking-[0.25em] text-amber-400/80 font-semibold block font-mono">
               Private Concierge & Expeditions
             </span>
           </div>
         </div>
 
         {!isMobile && (
-          <nav className="hidden xl:flex items-center gap-6 text-[11px] uppercase tracking-[0.2em] text-neutral-400 shrink-0 font-medium">
+          <nav className="hidden xl:flex items-center gap-6 text-[11px] uppercase tracking-[0.2em] text-neutral-300 shrink-0 font-medium">
             <a href="#itinerario" className="hover:text-amber-300 transition-colors relative py-1 group">
               La Experiencia
+              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+            </a>
+            <a href="#sensorial" className="hover:text-amber-300 transition-colors relative py-1 group">
+              Momentos VIP
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
             </a>
             <a href="#ficha-tecnica" className="hover:text-amber-300 transition-colors relative py-1 group">
@@ -87,19 +145,11 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
             </a>
             <a href="#amenidades" className="hover:text-amber-300 transition-colors relative py-1 group">
-              Amenidades VIP
+              Amenidades
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
             </a>
             <a href="#guia-concierge" className="hover:text-amber-300 transition-colors relative py-1 group">
               Concierge
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
-            </a>
-            <a href="#itinerario-timeline" className="hover:text-amber-300 transition-colors relative py-1 group">
-              Cronograma
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
-            </a>
-            <a href="#galeria" className="hover:text-amber-300 transition-colors relative py-1 group">
-              Galería
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
             </a>
             <a href="#lounge-vip" className="hover:text-amber-300 transition-colors relative py-1 group">
@@ -134,14 +184,14 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-neutral-950 px-3 sm:px-4 py-2 rounded-full font-extrabold text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg shadow-emerald-500/20 hover:scale-102 cursor-pointer"
+                className="flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-neutral-950 px-3.5 sm:px-4 py-2 rounded-full font-extrabold text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg shadow-emerald-500/25 hover:scale-102 cursor-pointer"
               >
                 <MessageCircle size={14} />
                 <span>WhatsApp</span>
               </a>
               <button
                 onClick={() => setIsQuoteOpen(true)}
-                className="flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 px-3 sm:px-4 py-2 rounded-full font-extrabold text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg shadow-amber-400/25 hover:scale-102 cursor-pointer"
+                className="flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 px-3.5 sm:px-4 py-2 rounded-full font-extrabold text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg shadow-amber-400/30 hover:scale-102 cursor-pointer"
               >
                 <FileText size={14} />
                 <span>Cotizar</span>
@@ -150,7 +200,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           ) : isQuote ? (
             <button
               onClick={() => setIsQuoteOpen(true)}
-              className="flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 px-4 sm:px-5 py-2.5 rounded-full font-extrabold text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg shadow-amber-400/25 hover:scale-102 cursor-pointer"
+              className="flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 px-4 sm:px-5 py-2.5 rounded-full font-extrabold text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg shadow-amber-400/30 hover:scale-102 cursor-pointer"
             >
               <FileText size={15} />
               <span>Solicitar Cotización</span>
@@ -160,7 +210,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 px-4 sm:px-5 py-2.5 rounded-full font-extrabold text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg shadow-amber-400/25 hover:scale-102 cursor-pointer"
+              className="flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 px-4 sm:px-5 py-2.5 rounded-full font-extrabold text-[11px] sm:text-xs uppercase tracking-wider transition-all shadow-lg shadow-amber-400/30 hover:scale-102 cursor-pointer"
             >
               <MessageCircle size={15} />
               <span>Reserva VIP</span>
@@ -169,11 +219,11 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </header>
 
-      {/* 2. MAJESTIC HERO SECTION WITH METALLIC GOLD GRACE */}
-      <section className={`relative ${isMobile ? 'py-14 min-h-[520px]' : 'py-24 min-h-[88vh]'} flex items-center justify-center overflow-hidden z-10`}>
-        {/* Cinematic Vignette Layers */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#070709] via-[#070709]/70 to-[#070709]/40 z-10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_#070709_90%)] z-10 opacity-80" />
+      {/* 3. WARM SUNLIT CINEMATIC HERO SECTION */}
+      <section className={`relative ${isMobile ? 'py-14 min-h-[540px]' : 'py-26 min-h-[90vh]'} flex items-center justify-center overflow-hidden z-10`}>
+        {/* Warmer Vignette Layers (Enhances photographic sunlit scenery) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a080e] via-[#0a080e]/65 to-[#0a080e]/30 z-10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_10%,_#0a080e_85%)] z-10 opacity-75" />
         
         <Image 
           src={heroImg} 
@@ -181,36 +231,36 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           fill
           priority
           sizes="100vw"
-          className="object-cover opacity-50 scale-105 transition-transform duration-1000 ease-out"
+          className="object-cover opacity-65 scale-105 transition-transform duration-1000 ease-out filter saturate-110"
         />
         
         <div className={`relative z-20 text-center text-white ${isMobile ? 'px-4' : 'px-6'} max-w-5xl mx-auto flex flex-col items-center`}>
           
-          {/* Badge VIP con doble aro dorado */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-300 text-[11px] tracking-[0.25em] uppercase font-bold mb-5 backdrop-blur-md shadow-[0_0_20px_rgba(245,158,11,0.2)]">
-            <Sparkles size={13} className="text-amber-400 animate-pulse" />
+          {/* Badge VIP con resplandor dorado cálido */}
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-200 text-[11px] tracking-[0.25em] uppercase font-bold mb-5 backdrop-blur-md shadow-[0_0_25px_rgba(245,158,11,0.35)]">
+            <Sparkles size={14} className="text-amber-300 animate-pulse" />
             <span>{data.hero?.badge || 'Experiencia Exclusiva VIP'}</span>
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
           </div>
 
-          {/* Título en Oro Champagne Editorial */}
-          <h1 className={`${isMobile ? 'text-2xl sm:text-3xl leading-tight mb-4' : 'text-4xl sm:text-6xl md:text-7xl leading-[1.12] mb-6'} font-serif tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-100 to-amber-300 drop-shadow-sm font-normal`}>
+          {/* Título en Oro Champagne Editorial con halo luminoso */}
+          <h1 className={`${isMobile ? 'text-2xl sm:text-3xl leading-tight mb-4' : 'text-4xl sm:text-6xl md:text-7xl leading-[1.12] mb-6'} font-serif tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-100 to-amber-300 drop-shadow-md font-normal`}>
             {data.hero?.title}
           </h1>
 
           {/* Divisor ornamental dorado */}
-          <div className="flex items-center gap-3 my-2 opacity-80">
-            <span className="h-px w-12 bg-gradient-to-r from-transparent to-amber-400/60" />
-            <Crown size={14} className="text-amber-400" />
-            <span className="h-px w-12 bg-gradient-to-l from-transparent to-amber-400/60" />
+          <div className="flex items-center gap-3 my-2 opacity-90">
+            <span className="h-px w-14 bg-gradient-to-r from-transparent to-amber-400/80" />
+            <Crown size={15} className="text-amber-400 drop-shadow-[0_0_8px_rgba(245,158,11,0.8)]" />
+            <span className="h-px w-14 bg-gradient-to-l from-transparent to-amber-400/80" />
           </div>
 
-          {/* Subtítulo pulido */}
-          <p className={`${isMobile ? 'text-xs leading-relaxed mb-8' : 'text-base sm:text-lg md:text-xl mb-10 leading-relaxed'} text-neutral-300 max-w-2xl font-light tracking-wide`}>
+          {/* Subtítulo pulido y acogedor */}
+          <p className={`${isMobile ? 'text-xs leading-relaxed mb-8' : 'text-base sm:text-lg md:text-xl mb-10 leading-relaxed'} text-neutral-200 max-w-2xl font-light tracking-wide`}>
             {data.hero?.subtitle}
           </p>
 
-          {/* CTA & Precio en marco biselado */}
+          {/* CTA & Precio en marco biselado con resplandor cálido */}
           <div className={`flex ${isMobile ? 'flex-col' : 'flex-col sm:flex-row'} items-center gap-4 w-full max-w-xl justify-center`}>
             {data.objective === 'both' ? (
               <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
@@ -218,14 +268,14 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white ${isMobile ? 'w-full py-3.5 text-xs' : 'text-sm px-7 py-4'} rounded-full font-bold transition-all shadow-xl shadow-emerald-500/25 hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}
+                  className={`bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white ${isMobile ? 'w-full py-3.5 text-xs' : 'text-sm px-7 py-4'} rounded-full font-bold transition-all shadow-xl shadow-emerald-500/30 hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}
                 >
                   <MessageCircle size={18} />
-                  <span>WhatsApp VIP Concierge</span>
+                  <span>WhatsApp Concierge</span>
                 </a>
                 <button
                   onClick={() => setIsQuoteOpen(true)}
-                  className={`bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 ${isMobile ? 'w-full py-3.5 text-xs' : 'text-sm px-7 py-4'} rounded-full font-extrabold transition-all shadow-xl shadow-amber-400/30 hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}
+                  className={`bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 ${isMobile ? 'w-full py-3.5 text-xs' : 'text-sm px-7 py-4'} rounded-full font-extrabold transition-all shadow-xl shadow-amber-400/35 hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}
                 >
                   <FileText size={18} />
                   <span>Cotizar Privado</span>
@@ -234,7 +284,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             ) : isQuote ? (
               <button
                 onClick={() => setIsQuoteOpen(true)}
-                className={`bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 ${isMobile ? 'w-full py-3.5 text-sm' : 'text-base px-9 py-4'} rounded-full font-extrabold transition-all shadow-[0_8px_30px_rgba(245,158,11,0.35)] hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}
+                className={`bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 ${isMobile ? 'w-full py-3.5 text-sm' : 'text-base px-9 py-4'} rounded-full font-extrabold transition-all shadow-[0_8px_30px_rgba(245,158,11,0.4)] hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}
               >
                 <FileText size={19} />
                 <span>{data.hero?.cta || 'Solicitar Cotización Privada'}</span>
@@ -244,7 +294,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 ${isMobile ? 'w-full py-3.5 text-sm' : 'text-base px-9 py-4'} rounded-full font-extrabold transition-all shadow-[0_8px_30px_rgba(245,158,11,0.35)] hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}
+                className={`bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 ${isMobile ? 'w-full py-3.5 text-sm' : 'text-base px-9 py-4'} rounded-full font-extrabold transition-all shadow-[0_8px_30px_rgba(245,158,11,0.4)] hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}
               >
                 <MessageCircle size={19} />
                 <span>{data.hero?.cta || 'Consultar Disponibilidad VIP'}</span>
@@ -252,46 +302,53 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             )}
 
             {/* Price Box biselado */}
-            <div className={`bg-neutral-900/80 backdrop-blur-md rounded-2xl border border-amber-500/30 px-5 py-3 ${isMobile ? 'w-full text-center' : 'text-left'} shadow-xl`}>
+            <div className={`bg-neutral-900/90 backdrop-blur-md rounded-2xl border border-amber-500/40 px-5 py-3 ${isMobile ? 'w-full text-center' : 'text-left'} shadow-xl`}>
               <p className="text-[10px] text-amber-400 uppercase tracking-[0.2em] font-semibold font-mono">Tarifa Desde</p>
               <p className={`${isMobile ? 'text-lg' : 'text-xl'} font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-amber-200`}>
                 {data.price || '$450 USD'}
               </p>
             </div>
           </div>
+
+          {/* Intimate Group Availability Badge */}
+          <div className="mt-7 inline-flex items-center gap-2 text-[11px] text-amber-300/80 bg-neutral-900/80 border border-amber-500/20 px-3.5 py-1.5 rounded-full backdrop-blur-md">
+            <span className="w-2 h-2 rounded-full bg-amber-400 animate-ping" />
+            <span>Exclusividad garantizada: Cupos reducidos de 6 a 8 plazas privadas por fecha</span>
+          </div>
+
         </div>
       </section>
 
-      {/* 3. THREE FLOATING PILLARS OF EXCELLENCE */}
+      {/* 4. THREE FLOATING PILLARS OF EXCELLENCE */}
       <section className={`relative z-30 ${isMobile ? 'mt-4 px-3' : '-mt-12 max-w-5xl mx-auto px-4'}`}>
-        <div className={`bg-gradient-to-b from-neutral-900/95 via-neutral-900/80 to-[#0c0c10]/95 backdrop-blur-xl rounded-3xl border border-amber-500/30 ${isMobile ? 'p-4 grid grid-cols-1 gap-3.5' : 'p-7 grid grid-cols-1 md:grid-cols-3 gap-6'} shadow-[0_20px_50px_rgba(0,0,0,0.8)]`}>
+        <div className={`bg-gradient-to-b from-neutral-900/95 via-neutral-900/85 to-[#120f18]/95 backdrop-blur-xl rounded-3xl border border-amber-500/35 ${isMobile ? 'p-4 grid grid-cols-1 gap-3.5' : 'p-7 grid grid-cols-1 md:grid-cols-3 gap-6'} shadow-[0_20px_50px_rgba(0,0,0,0.85)]`}>
           
-          <div className="flex items-center gap-4 p-2 rounded-2xl group hover:bg-amber-500/5 transition-colors">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/30 flex items-center justify-center text-amber-300 shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-              <Award size={22} className="text-amber-400 drop-shadow-[0_2px_6px_rgba(245,158,11,0.4)]" />
+          <div className="flex items-center gap-4 p-2 rounded-2xl group hover:bg-amber-500/10 transition-colors">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400/25 to-amber-600/15 border border-amber-400/40 flex items-center justify-center text-amber-300 shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+              <Award size={22} className="text-amber-400 drop-shadow-[0_2px_6px_rgba(245,158,11,0.5)]" />
             </div>
             <div>
-              <p className="text-[10px] text-amber-400/80 uppercase tracking-[0.2em] font-bold font-mono">Guía de Élite</p>
+              <p className="text-[10px] text-amber-400 uppercase tracking-[0.2em] font-bold font-mono">Guía de Élite</p>
               <p className="font-serif font-bold text-neutral-100 text-sm sm:text-base leading-snug">{data.guideName || 'Historiador Oficial'}</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 p-2 rounded-2xl group hover:bg-amber-500/5 transition-colors border-y md:border-y-0 md:border-x border-neutral-800/80">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/30 flex items-center justify-center text-amber-300 shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-              <Clock size={22} className="text-amber-400 drop-shadow-[0_2px_6px_rgba(245,158,11,0.4)]" />
+          <div className="flex items-center gap-4 p-2 rounded-2xl group hover:bg-amber-500/10 transition-colors border-y md:border-y-0 md:border-x border-neutral-800/80">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400/25 to-amber-600/15 border border-amber-400/40 flex items-center justify-center text-amber-300 shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+              <Clock size={22} className="text-amber-400 drop-shadow-[0_2px_6px_rgba(245,158,11,0.5)]" />
             </div>
             <div>
-              <p className="text-[10px] text-amber-400/80 uppercase tracking-[0.2em] font-bold font-mono">Duración & Ritmo</p>
+              <p className="text-[10px] text-amber-400 uppercase tracking-[0.2em] font-bold font-mono">Duración & Ritmo</p>
               <p className="font-serif font-bold text-neutral-100 text-sm sm:text-base leading-snug">{data.duration || '2 Días / 1 Noche'}</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4 p-2 rounded-2xl group hover:bg-amber-500/5 transition-colors">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/30 flex items-center justify-center text-amber-300 shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-              <ShieldCheck size={22} className="text-amber-400 drop-shadow-[0_2px_6px_rgba(245,158,11,0.4)]" />
+          <div className="flex items-center gap-4 p-2 rounded-2xl group hover:bg-amber-500/10 transition-colors">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400/25 to-amber-600/15 border border-amber-400/40 flex items-center justify-center text-amber-300 shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+              <ShieldCheck size={22} className="text-amber-400 drop-shadow-[0_2px_6px_rgba(245,158,11,0.5)]" />
             </div>
             <div>
-              <p className="text-[10px] text-amber-400/80 uppercase tracking-[0.2em] font-bold font-mono">Garantía VIP</p>
+              <p className="text-[10px] text-amber-400 uppercase tracking-[0.2em] font-bold font-mono">Garantía VIP</p>
               <p className="font-serif font-bold text-neutral-100 text-sm sm:text-base leading-snug">100% Personalizado</p>
             </div>
           </div>
@@ -299,12 +356,12 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* 4. TRUST BADGES - PRO & ADVANCE ONLY */}
+      {/* 5. TRUST BADGES - PRO & ADVANCE ONLY */}
       {(isPro || isAdvance) && data.trustBadges && data.trustBadges.length > 0 && (
         <section className="max-w-5xl mx-auto px-4 mt-8 relative z-20">
           <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5">
             {data.trustBadges.map((badge, idx) => (
-              <div key={idx} className="flex items-center gap-2 bg-gradient-to-r from-neutral-900/90 to-neutral-900/60 border border-amber-500/30 text-amber-200 text-xs px-4 py-2 rounded-full font-medium shadow-sm backdrop-blur-md hover:border-amber-400/50 transition-colors">
+              <div key={idx} className="flex items-center gap-2 bg-gradient-to-r from-neutral-900/90 to-neutral-900/70 border border-amber-500/35 text-amber-200 text-xs px-4 py-2 rounded-full font-medium shadow-sm backdrop-blur-md hover:border-amber-400/60 transition-colors">
                 <Crown size={12} className="text-amber-400 shrink-0" />
                 <span className="tracking-wide text-[11px] sm:text-xs">{badge}</span>
               </div>
@@ -313,7 +370,67 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 5. FICHA TÉCNICA DE ALTA EXPEDICIÓN CON FONDO CINEMATOGRÁFICO */}
+      {/* 6. NUEVA SECCIÓN: MOMENTOS INOLVIDABLES & EXPERIENCIAS SENSORIALES (VIBRANT TOURIST APPEAL) */}
+      <section id="sensorial" className={`${isMobile ? 'py-14 px-4' : 'py-22 px-8'} max-w-6xl mx-auto relative z-10`}>
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono mb-3 shadow-[0_0_20px_rgba(245,158,11,0.25)]">
+            <Sparkle size={13} className="text-amber-400" />
+            <span>Vivencias Inolvidables</span>
+          </div>
+          <h2 className={`${isMobile ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-5xl'} font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-white to-amber-200 mb-3`}>
+            Momentos que Quedarán Grabados
+          </h2>
+          <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+            Una expedición no se mide solo en kilómetros, sino en las emociones vividas y en la belleza de sus instantes.
+          </p>
+        </div>
+
+        <div className={`grid ${isMobile ? 'grid-cols-1 gap-5' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'}`}>
+          {sensoryHighlights.map((moment, idx) => {
+            const Icon = moment.icon;
+            return (
+              <div 
+                key={idx}
+                className="group relative rounded-3xl overflow-hidden border border-amber-500/25 hover:border-amber-400/60 transition-all duration-500 bg-neutral-900/80 shadow-[0_15px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1.5 flex flex-col h-96"
+              >
+                {/* Background Image with Zoom */}
+                <Image
+                  src={moment.image}
+                  alt={moment.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 300px"
+                  className="object-cover group-hover:scale-110 transition-transform duration-700 filter brightness-90 group-hover:brightness-100"
+                />
+                
+                {/* Dramatic Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a080e] via-[#0a080e]/65 to-transparent z-10" />
+
+                {/* Top Badge */}
+                <div className="relative z-20 p-4">
+                  <div className="w-10 h-10 rounded-2xl bg-[#0a080e]/80 backdrop-blur-md border border-amber-400/40 flex items-center justify-center text-amber-300 shadow-md">
+                    <Icon size={18} />
+                  </div>
+                </div>
+
+                {/* Bottom Content */}
+                <div className="relative z-20 mt-auto p-5 space-y-2">
+                  <span className="text-[10px] uppercase tracking-wider font-mono font-bold text-amber-400 block">
+                    {moment.tag}
+                  </span>
+                  <h3 className="font-serif font-bold text-neutral-100 text-lg group-hover:text-amber-200 transition-colors">
+                    {moment.title}
+                  </h3>
+                  <p className="text-xs text-neutral-300 font-light leading-relaxed line-clamp-3">
+                    {moment.desc}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* 7. FICHA TÉCNICA DE ALTA EXPEDICIÓN */}
       <section id="ficha-tecnica" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-amber-500/15`}>
         {/* Background Image with Deep Vignette */}
         <div className="absolute inset-0 z-0">
@@ -322,10 +439,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             alt="Andean Panorama Background"
             fill
             sizes="100vw"
-            className="object-cover opacity-20 filter saturate-50 scale-105"
+            className="object-cover opacity-20 filter saturate-60 scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#070709] via-[#070709]/90 to-[#070709]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a080e] via-[#0a080e]/90 to-[#0a080e]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-amber-500/12 via-transparent to-transparent" />
         </div>
 
         <div className="max-w-6xl mx-auto relative z-10">
@@ -345,7 +462,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           <div className={`grid ${isMobile ? 'grid-cols-1 sm:grid-cols-2 gap-4' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'}`}>
             
             {/* Destino */}
-            <div className="bg-neutral-900/75 backdrop-blur-xl p-6 rounded-3xl border border-amber-500/25 hover:border-amber-400/60 transition-all duration-300 group shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1">
+            <div className="bg-neutral-900/80 backdrop-blur-xl p-6 rounded-3xl border border-amber-500/30 hover:border-amber-400/70 transition-all duration-300 group shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1">
               <div className="flex items-center gap-3.5 mb-3">
                 <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/35 flex items-center justify-center text-amber-300 shrink-0 group-hover:scale-105 transition-transform shadow-sm">
                   <MapPin size={20} />
@@ -361,7 +478,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             </div>
 
             {/* Altitud Máxima */}
-            <div className="bg-neutral-900/75 backdrop-blur-xl p-6 rounded-3xl border border-amber-500/25 hover:border-amber-400/60 transition-all duration-300 group shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1">
+            <div className="bg-neutral-900/80 backdrop-blur-xl p-6 rounded-3xl border border-amber-500/30 hover:border-amber-400/70 transition-all duration-300 group shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1">
               <div className="flex items-center gap-3.5 mb-3">
                 <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/35 flex items-center justify-center text-amber-300 shrink-0 group-hover:scale-105 transition-transform shadow-sm">
                   <Mountain size={20} />
@@ -378,7 +495,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             </div>
 
             {/* Dificultad & Ritmo */}
-            <div className="bg-neutral-900/75 backdrop-blur-xl p-6 rounded-3xl border border-amber-500/25 hover:border-amber-400/60 transition-all duration-300 group shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1">
+            <div className="bg-neutral-900/80 backdrop-blur-xl p-6 rounded-3xl border border-amber-500/30 hover:border-amber-400/70 transition-all duration-300 group shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1">
               <div className="flex items-center gap-3.5 mb-3">
                 <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/35 flex items-center justify-center text-amber-300 shrink-0 group-hover:scale-105 transition-transform shadow-sm">
                   <Clock size={20} />
@@ -394,7 +511,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             </div>
 
             {/* Formato de Grupo */}
-            <div className="bg-neutral-900/75 backdrop-blur-xl p-6 rounded-3xl border border-amber-500/25 hover:border-amber-400/60 transition-all duration-300 group shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1">
+            <div className="bg-neutral-900/80 backdrop-blur-xl p-6 rounded-3xl border border-amber-500/30 hover:border-amber-400/70 transition-all duration-300 group shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1">
               <div className="flex items-center gap-3.5 mb-3">
                 <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/35 flex items-center justify-center text-amber-300 shrink-0 group-hover:scale-105 transition-transform shadow-sm">
                   <Users size={20} />
@@ -410,7 +527,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             </div>
 
             {/* Audiencia */}
-            <div className="bg-neutral-900/75 backdrop-blur-xl p-6 rounded-3xl border border-amber-500/25 hover:border-amber-400/60 transition-all duration-300 group shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1">
+            <div className="bg-neutral-900/80 backdrop-blur-xl p-6 rounded-3xl border border-amber-500/30 hover:border-amber-400/70 transition-all duration-300 group shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1">
               <div className="flex items-center gap-3.5 mb-3">
                 <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/35 flex items-center justify-center text-amber-300 shrink-0 group-hover:scale-105 transition-transform shadow-sm">
                   <HeartHandshake size={20} />
@@ -426,7 +543,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             </div>
 
             {/* Idiomas */}
-            <div className="bg-neutral-900/75 backdrop-blur-xl p-6 rounded-3xl border border-amber-500/25 hover:border-amber-400/60 transition-all duration-300 group shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1">
+            <div className="bg-neutral-900/80 backdrop-blur-xl p-6 rounded-3xl border border-amber-500/30 hover:border-amber-400/70 transition-all duration-300 group shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1">
               <div className="flex items-center gap-3.5 mb-3">
                 <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-amber-400/20 to-amber-600/10 border border-amber-400/35 flex items-center justify-center text-amber-300 shrink-0 group-hover:scale-105 transition-transform shadow-sm">
                   <Languages size={20} />
@@ -445,7 +562,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* 6. ABOUT SECTION - ART GALLERY PASSEPARTOUT PRESENTATION */}
+      {/* 8. ABOUT SECTION - ART GALLERY PASSEPARTOUT PRESENTATION */}
       {!isFree && (
         <section id="itinerario" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} max-w-6xl mx-auto relative z-10`}>
           <div className={`grid ${isMobile ? 'grid-cols-1 gap-8' : 'md:grid-cols-2 gap-16'} items-center`}>
@@ -505,7 +622,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 7. SERVICIOS & AMENIDADES DE ALTA GAMA INCLUIDOS CON FONDO DE LUJO */}
+      {/* 9. SERVICIOS & AMENIDADES DE ALTA GAMA INCLUIDOS */}
       <section id="amenidades" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-amber-500/20`}>
         {/* Background Image with Deep Luxury Fade */}
         <div className="absolute inset-0 z-0">
@@ -516,7 +633,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             sizes="100vw"
             className="object-cover opacity-18 filter saturate-75"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#070709] via-[#070709]/92 to-[#070709]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a080e] via-[#0a080e]/92 to-[#0a080e]" />
           <div className="absolute -top-32 right-1/4 w-96 h-96 bg-amber-500/10 blur-[130px] rounded-full pointer-events-none" />
         </div>
 
@@ -560,7 +677,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* 8. PERFIL DEL GUÍA CONCIERGE OFICIAL CON AMBIENTE DE PALACIO */}
+      {/* 10. PERFIL DEL GUÍA CONCIERGE OFICIAL CON AMBIENTE DE PALACIO */}
       <section id="guia-concierge" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden`}>
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
@@ -571,7 +688,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             sizes="100vw"
             className="object-cover opacity-15 filter contrast-125"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#070709] via-[#070709]/90 to-[#070709]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a080e] via-[#0a080e]/90 to-[#0a080e]" />
         </div>
 
         <div className="max-w-5xl mx-auto relative z-10">
@@ -651,7 +768,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* 9. ITINERARIO TIMELINE CON FONDO DE CORDILLERA */}
+      {/* 11. ITINERARIO TIMELINE CON FONDO DE CORDILLERA */}
       {data.itinerary && data.itinerary.length > 0 && (
         <section id="itinerario-timeline" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-amber-500/20`}>
           <div className="absolute inset-0 z-0">
@@ -662,7 +779,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
               sizes="100vw"
               className="object-cover opacity-15 filter saturate-50"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#070709] via-[#070709]/92 to-[#070709]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0a080e] via-[#0a080e]/92 to-[#0a080e]" />
           </div>
 
           <div className="max-w-4xl mx-auto relative z-10">
@@ -676,7 +793,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             <div className="space-y-6 sm:space-y-8 relative before:absolute before:inset-0 before:left-4 sm:before:left-5 before:w-0.5 before:bg-gradient-to-b before:from-amber-400 before:via-amber-500/40 before:to-amber-600/10">
               {data.itinerary.map((item, idx) => (
                 <div key={idx} className="relative flex items-start gap-4 sm:gap-7 pl-1 sm:pl-2 group">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-amber-600 text-neutral-950 font-black flex items-center justify-center text-xs sm:text-sm shrink-0 shadow-[0_0_20px_rgba(245,158,11,0.5)] ring-4 ring-[#070709] z-10 group-hover:scale-110 transition-transform">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-amber-300 via-amber-500 to-amber-600 text-neutral-950 font-black flex items-center justify-center text-xs sm:text-sm shrink-0 shadow-[0_0_20px_rgba(245,158,11,0.5)] ring-4 ring-[#0a080e] z-10 group-hover:scale-110 transition-transform">
                     {idx + 1}
                   </div>
                   <div className="bg-gradient-to-b from-neutral-900/90 to-neutral-950/90 backdrop-blur-md border border-neutral-800/90 group-hover:border-amber-500/40 rounded-3xl p-5 sm:p-7 w-full shadow-xl transition-all">
@@ -684,7 +801,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                       {item.step}
                     </span>
                     <h3 className="font-serif font-bold text-neutral-100 text-base sm:text-xl mb-2">{item.title}</h3>
-                    <p className="text-neutral-400 font-light text-xs sm:text-sm leading-relaxed">{item.desc}</p>
+                    <p className="text-neutral-300 font-light text-xs sm:text-sm leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -693,7 +810,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 10. PRIVILEGIOS & FEATURES (Numbered Gold Membership Cards) */}
+      {/* 12. PRIVILEGIOS & FEATURES (Numbered Gold Membership Cards) */}
       {!isFree && (
         <section id="privilegios" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} max-w-6xl mx-auto relative z-10`}>
           <div className={`text-center ${isMobile ? 'mb-8' : 'mb-14'}`}>
@@ -724,7 +841,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                     </h3>
                   </div>
 
-                  <p className="text-neutral-400 font-light text-xs sm:text-sm leading-relaxed pl-0 sm:pl-13">
+                  <p className="text-neutral-300 font-light text-xs sm:text-sm leading-relaxed pl-0 sm:pl-13">
                     {desc || 'Atención premium orientada a la máxima comodidad.'}
                   </p>
                 </div>
@@ -734,7 +851,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 11. COMPROMISO DE EXCELENCIA & GARANTÍAS CON CIELO ESTRELLADO ANDINO */}
+      {/* 13. COMPROMISO DE EXCELENCIA & GARANTÍAS CON CIELO ESTRELLADO ANDINO */}
       <section id="garantias" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-neutral-900`}>
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
@@ -745,7 +862,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             sizes="100vw"
             className="object-cover opacity-20 filter saturate-75"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#070709] via-[#070709]/90 to-[#070709]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a080e] via-[#0a080e]/90 to-[#0a080e]" />
         </div>
 
         <div className="max-w-6xl mx-auto relative z-10">
@@ -808,9 +925,9 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* 12. LOGISTICS: EXCLUSIONES & EQUIPAJE VIP */}
+      {/* 14. LOGISTICS: EXCLUSIONES & EQUIPAJE VIP */}
       {((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
-        <section className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-[#070709] border-b border-neutral-900 relative z-10`}>
+        <section className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-[#0a080e] border-b border-neutral-900 relative z-10`}>
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             
             {/* Qué NO incluye */}
@@ -820,7 +937,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                   <XCircle size={20} className="text-rose-400 shrink-0" />
                   <h3>No Incluido en Tarifa</h3>
                 </div>
-                <ul className="space-y-2.5 text-xs sm:text-sm text-neutral-400 font-light">
+                <ul className="space-y-2.5 text-xs sm:text-sm text-neutral-300 font-light">
                   {data.notIncluded.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2.5">
                       <span className="text-rose-400 font-bold shrink-0">✕</span>
@@ -852,7 +969,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 13. PINTEREST PINBOARD GALLERY */}
+      {/* 15. PINTEREST PINBOARD GALLERY */}
       {!isFree && (
         <PinterestPinboard
           images={data.galleryImages}
@@ -865,9 +982,9 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         />
       )}
 
-      {/* 14. TESTIMONIALS - ADVANCE ONLY */}
+      {/* 16. TESTIMONIALS - ADVANCE ONLY */}
       {isAdvance && data.testimonials && data.testimonials.length > 0 && (
-        <section className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} bg-[#070709] border-b border-neutral-900 relative z-10`}>
+        <section className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} bg-[#0a080e] border-b border-neutral-900 relative z-10`}>
           <div className="max-w-4xl mx-auto text-center">
             <span className="text-xs uppercase tracking-[0.25em] text-amber-400 block mb-2 font-semibold font-mono">Testimonios Exclusivos</span>
             <h2 className={`${isMobile ? 'text-2xl mb-6' : 'text-3xl sm:text-4xl mb-14'} font-serif font-bold text-white`}>
@@ -884,7 +1001,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                   <p className="text-neutral-300 text-xs sm:text-sm font-light italic mb-4 leading-relaxed">&quot;{t.comment}&quot;</p>
                   <div className="border-t border-neutral-800/80 pt-3">
                     <h4 className="font-serif font-bold text-amber-300 text-xs sm:text-sm">{t.name}</h4>
-                    <p className="text-[11px] text-neutral-500 font-mono">{t.origin}</p>
+                    <p className="text-[11px] text-neutral-400 font-mono">{t.origin}</p>
                   </div>
                 </div>
               ))}
@@ -893,7 +1010,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 15. SALÓN VIP & PUNTO DE ENCUENTRO EN CUSCO CON PATIO VIRREINAL */}
+      {/* 17. SALÓN VIP & PUNTO DE ENCUENTRO EN CUSCO CON PATIO VIRREINAL */}
       <section id="lounge-vip" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-b border-neutral-900`}>
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
@@ -904,7 +1021,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             sizes="100vw"
             className="object-cover opacity-25 filter saturate-75"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#070709] via-[#070709]/88 to-[#070709]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a080e] via-[#0a080e]/88 to-[#0a080e]" />
         </div>
 
         <div className="max-w-5xl mx-auto relative z-10">
@@ -979,7 +1096,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* 16. TOUR SUPPORT & FAQS */}
+      {/* 18. TOUR SUPPORT & FAQS */}
       <TourSupportAndFaqs
         faqs={data.faqs}
         tourName={data.name || data.hero?.title || 'Experiencia VIP'}
@@ -992,7 +1109,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         lang={currentLang}
       />
 
-      {/* 17. MAJESTIC FINAL CALL TO ACTION */}
+      {/* 19. MAJESTIC FINAL CALL TO ACTION */}
       {!isFree && (
         <section id="contacto" className={`relative ${isMobile ? 'py-16 px-4' : 'py-28 px-8'} text-center overflow-hidden border-t border-amber-500/20`}>
           <div className="absolute inset-0 z-0">
@@ -1003,7 +1120,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
               sizes="100vw"
               className="object-cover opacity-25 filter saturate-75 scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#070709] via-[#070709]/85 to-black" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0a080e] via-[#0a080e]/85 to-black" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-amber-500/15 blur-[140px] rounded-full pointer-events-none" />
           </div>
 
@@ -1045,8 +1162,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 18. FOOTER */}
-      <footer className="py-8 text-center text-neutral-500 text-xs border-t border-neutral-900 relative z-10 bg-[#070709]">
+      {/* 20. FOOTER */}
+      <footer className="py-8 text-center text-neutral-500 text-xs border-t border-neutral-900 relative z-10 bg-[#0a080e]">
         <p className="tracking-wide">© 2026 Cusco Creativos S.A.C. — Edición Luxury Collection.</p>
       </footer>
 
