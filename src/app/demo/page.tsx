@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { 
   FileText, Globe, CalendarDays, Sparkles, TrendingUp, ArrowUpRight, 
   ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download,
-  Layers, Pin, LayoutTemplate, LayoutGrid, List
+  Layers, Pin, LayoutTemplate, LayoutGrid, List, User, Tag
 } from 'lucide-react';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, LandingData } from '@/data/landingStore';
@@ -222,23 +222,24 @@ export default function DemoDashboard() {
       </div>
 
       {/* 3. CONTROL BAR: SEARCH & INTERACTIVE FILTER TABS */}
-      <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 space-y-4">
-        <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
+      <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-5 sm:p-6 space-y-4">
+        <div className="flex flex-col lg:flex-row gap-4 justify-between items-stretch lg:items-center">
           
           {/* Search Input */}
-          <div className="relative w-full md:w-96">
-            <Search size={18} className="absolute left-3.5 top-3.5 text-slate-400" />
+          <div className="relative w-full lg:w-96">
+            <Search size={17} className="absolute left-3.5 top-3.5 text-slate-400 pointer-events-none" />
             <input 
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Buscar por tour, guía, destino o ruta..."
-              className="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-slate-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all"
+              className="w-full pl-10 pr-9 py-2.5 text-sm rounded-xl border border-slate-200/90 focus:border-blue-600 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all placeholder:text-slate-400 bg-slate-50/40 focus:bg-white"
             />
             {searchQuery && (
               <button 
                 onClick={() => setSearchQuery('')}
-                className="absolute right-3 top-3 text-xs text-slate-400 hover:text-slate-600"
+                className="absolute right-3 top-3 text-xs text-slate-400 hover:text-slate-600 p-0.5 rounded-full hover:bg-slate-200/60 transition-colors"
+                title="Limpiar búsqueda"
               >
                 ✕
               </button>
@@ -246,33 +247,33 @@ export default function DemoDashboard() {
           </div>
 
           {/* Interactive Filter Pills */}
-          <div className="flex flex-wrap items-center gap-3 w-full md:w-auto text-xs">
+          <div className="flex flex-wrap items-center gap-2.5 text-xs">
             
             {/* Status Filter */}
-            <div className="flex items-center bg-slate-100 p-1 rounded-xl">
-              <span className="px-2 text-slate-400 font-semibold flex items-center gap-1">
+            <div className="flex items-center bg-slate-100/90 p-1 rounded-xl border border-slate-200/60 shadow-2xs">
+              <span className="px-2 text-slate-400 font-semibold flex items-center gap-1 text-[11px]">
                 <Filter size={12} /> Estado:
               </span>
               <button
                 onClick={() => setStatusFilter('all')}
-                className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                  statusFilter === 'all' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer text-xs ${
+                  statusFilter === 'all' ? 'bg-white text-blue-600 shadow-xs' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 Todos ({projects.length})
               </button>
               <button
                 onClick={() => setStatusFilter('published')}
-                className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                  statusFilter === 'published' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer text-xs ${
+                  statusFilter === 'published' ? 'bg-white text-emerald-600 shadow-xs' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 Publicados ({totalPublished})
               </button>
               <button
                 onClick={() => setStatusFilter('draft')}
-                className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
-                  statusFilter === 'draft' ? 'bg-white text-amber-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+                className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer text-xs ${
+                  statusFilter === 'draft' ? 'bg-white text-amber-600 shadow-xs' : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
                 Borradores ({projects.length - totalPublished})
@@ -280,7 +281,7 @@ export default function DemoDashboard() {
             </div>
 
             {/* Objective Filter Toggle */}
-            <div className="flex items-center bg-slate-100 p-1 rounded-xl">
+            <div className="flex items-center bg-slate-100/90 p-1 rounded-xl border border-slate-200/60 shadow-2xs">
               <button
                 onClick={() => {
                   if (objectiveFilter === 'all') setObjectiveFilter('whatsapp');
@@ -288,25 +289,25 @@ export default function DemoDashboard() {
                   else if (objectiveFilter === 'quote') setObjectiveFilter('both');
                   else setObjectiveFilter('all');
                 }}
-                className="px-3 py-1.5 rounded-lg bg-white shadow-sm font-bold text-slate-800 flex items-center gap-1.5 cursor-pointer"
+                className="px-3 py-1.5 rounded-lg bg-white shadow-xs font-bold text-slate-700 flex items-center gap-1.5 cursor-pointer hover:bg-slate-50 transition-colors text-xs"
                 title="Alternar filtro por objetivo comercial"
               >
-                <span>Obj:</span>
-                <span className="text-blue-600">
-                  {objectiveFilter === 'all' ? 'Todos' : objectiveFilter === 'whatsapp' ? 'WhatsApp' : objectiveFilter === 'quote' ? 'Cotización' : 'Ambos'}
+                <span className="text-slate-400 text-[11px]">Obj:</span>
+                <span className="text-blue-600 font-extrabold">
+                  {objectiveFilter === 'all' ? 'Todos' : objectiveFilter === 'whatsapp' ? '💬 WhatsApp' : objectiveFilter === 'quote' ? '📋 Cotización' : '⚡ Ambos'}
                 </span>
               </button>
             </div>
 
             {/* View Mode Switcher (Tarjetas vs Tabla) */}
-            <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200/60 shadow-2xs">
+            <div className="flex items-center bg-slate-100/90 p-1 rounded-xl border border-slate-200/60 shadow-2xs">
               <button
                 type="button"
                 onClick={() => setViewMode('cards')}
-                className={`px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all cursor-pointer text-xs ${
                   viewMode === 'cards' ? 'bg-white text-blue-600 shadow-xs' : 'text-slate-600 hover:text-slate-900'
                 }`}
-                title="Vista en tarjetas: Todo visible y ordenado sin necesidad de desplazar horizontalmente"
+                title="Vista en tarjetas cuadrícula"
               >
                 <LayoutGrid size={13} />
                 <span>Tarjetas</span>
@@ -314,10 +315,10 @@ export default function DemoDashboard() {
               <button
                 type="button"
                 onClick={() => setViewMode('table')}
-                className={`px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                className={`px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all cursor-pointer text-xs ${
                   viewMode === 'table' ? 'bg-white text-blue-600 shadow-xs' : 'text-slate-600 hover:text-slate-900'
                 }`}
-                title="Vista en tabla con deslizador persistente"
+                title="Vista en tabla ordenada"
               >
                 <List size={13} />
                 <span>Tabla</span>
@@ -490,14 +491,14 @@ export default function DemoDashboard() {
             <div className="overflow-x-auto modern-table-container">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-slate-50/80 text-slate-500 text-[11px] uppercase tracking-wider font-bold border-b border-slate-200/80 select-none">
-                    <th className="px-5 py-3.5 min-w-[260px]">Tour & Guía Asignado</th>
+                  <tr className="bg-slate-50/90 text-slate-500 text-[11px] uppercase tracking-wider font-extrabold border-b border-slate-200/80 select-none">
+                    <th className="px-5 py-3.5 min-w-[340px]">Tour & Guía Asignado</th>
                     <th className="px-4 py-3.5 hidden md:table-cell whitespace-nowrap">Plantilla</th>
                     <th className="px-4 py-3.5 hidden sm:table-cell whitespace-nowrap">Objetivo</th>
                     <th className="px-4 py-3.5 whitespace-nowrap">Estado</th>
                     <th className="px-4 py-3.5 hidden lg:table-cell whitespace-nowrap text-center">Vistas</th>
                     <th className="px-4 py-3.5 hidden xl:table-cell whitespace-nowrap">Fecha</th>
-                    <th className="px-5 py-3.5 whitespace-nowrap text-right min-w-[200px]">Acciones</th>
+                    <th className="px-5 py-3.5 whitespace-nowrap text-right min-w-[220px]">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-sm">
@@ -522,17 +523,18 @@ export default function DemoDashboard() {
                       return (
                         <tr key={p.id} className="hover:bg-slate-50/70 transition-colors group">
                           
-                          {/* Tour Name & Guide */}
+                          {/* Tour Name & Guide (Badges limpios sin quiebres de texto antiestéticos) */}
                           <td className="px-5 py-3.5">
-                            <div className="flex items-center gap-3">
-                              <div className="w-9 h-9 rounded-xl bg-slate-100/90 group-hover:bg-blue-50 text-slate-700 group-hover:text-blue-600 flex items-center justify-center shrink-0 text-base border border-slate-200/70 group-hover:border-blue-200 transition-colors shadow-2xs">
+                            <div className="flex items-start gap-3">
+                              <div className="w-10 h-10 rounded-xl bg-slate-100/90 group-hover:bg-blue-50 text-slate-700 group-hover:text-blue-600 flex items-center justify-center shrink-0 text-lg border border-slate-200/80 group-hover:border-blue-200 transition-colors shadow-2xs mt-0.5">
                                 {p.template === 'agency-portal' ? '🔥' : p.template === 'adventure' ? '🏔️' : p.template === 'premium' ? '✨' : p.template === 'boho-nature' ? '📷' : '🏛️'}
                               </div>
-                              <div className="min-w-0">
+                              <div className="min-w-0 space-y-1.5 flex-1">
                                 <div className="flex items-center gap-2 flex-wrap">
                                   <Link 
                                     href={`/demo/preview?slug=${p.slug}`} 
-                                    className="font-bold text-slate-900 hover:text-blue-600 transition-colors text-sm leading-snug"
+                                    className="font-bold text-slate-900 group-hover:text-blue-600 transition-colors text-sm leading-snug line-clamp-1"
+                                    title={p.name}
                                   >
                                     {p.name}
                                   </Link>
@@ -548,10 +550,17 @@ export default function DemoDashboard() {
                                     {p.tier || 'advance'}
                                   </span>
                                 </div>
-                                <div className="text-xs text-slate-400 mt-0.5 flex items-center gap-1.5">
-                                  <span>Guía: <strong className="text-slate-600 font-medium">{p.guideName || 'No asignado'}</strong></span>
-                                  <span>•</span>
-                                  <span className="text-emerald-700 font-semibold">{p.price || 'S/ Consultar'}</span>
+
+                                {/* Guía y Precio en badges estructurados con whitespace-nowrap */}
+                                <div className="flex items-center gap-2 flex-wrap text-xs">
+                                  <span className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-600 bg-slate-100/90 border border-slate-200/70 px-2 py-0.5 rounded-md whitespace-nowrap">
+                                    <User size={11} className="text-slate-400 shrink-0" />
+                                    <span>Guía: <strong className="text-slate-800 font-semibold">{p.guideName || 'No asignado'}</strong></span>
+                                  </span>
+                                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-md whitespace-nowrap">
+                                    <Tag size={11} className="text-emerald-500 shrink-0" />
+                                    <span>{p.price || 'S/ Consultar'}</span>
+                                  </span>
                                 </div>
                               </div>
                             </div>
