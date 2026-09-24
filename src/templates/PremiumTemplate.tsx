@@ -3,9 +3,10 @@ import Image from 'next/image';
 import { 
   Crown, Sparkles, ShieldCheck, Clock, Award, PhoneCall, MessageCircle, 
   FileText, Star, Calendar, XCircle, Backpack, Gem, Compass, CheckCircle2,
-  ChevronRight, ArrowRight
+  ChevronRight, ArrowRight, MapPin, Mountain, Users, Languages, HeartHandshake,
+  Coffee, Wifi, ExternalLink, ShieldAlert, Car, Utensils, Check
 } from 'lucide-react';
-import { LandingData } from '@/types/landing';
+import { LandingData, LanguageType } from '@/types/landing';
 import QuoteModal from '@/components/common/QuoteModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
@@ -18,6 +19,7 @@ interface TemplateProps {
 
 export default function PremiumTemplate({ data, viewMode = 'desktop' }: TemplateProps) {
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+  const [currentLang, setCurrentLang] = useState<LanguageType>(data.language || 'es');
   const isQuote = data.objective === 'quote';
   const isMobile = viewMode === 'mobile';
 
@@ -31,6 +33,22 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
   const heroImg = data.heroImage || 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop';
   const gallery1 = data.galleryImages?.[0] || 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop';
+  const guideAvatarImg = data.guideAvatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop';
+
+  const defaultLuxuryServices = [
+    'Transporte turístico privado de alta gama (SUV o Sprinter ejecutiva climatizada con chofer profesional)',
+    'Boletos de ingreso preferenciales y completos a todos los recintos arqueológicos y monumentos',
+    'Tren panorámico de primera clase (Hiram Bingham de Belmond o Vistadome Observatory con servicio a bordo)',
+    'Guía oficial historiador colegiado bilingüe dedicado exclusivamente a tu grupo sin apuros',
+    'Gastronomía de autor: almuerzo gourmet de tiempos con maridaje o experiencia culinaria privada',
+    'Protocolo de altitud: balón de oxígeno medicinal de emergencia, oxímetro de pulso y botiquín de altura',
+    'Pick-up y drop-off de puerta a puerta en el lobby de tu hotel o villa en Cusco o Valle Sagrado',
+    'Kit de bienvenida andino con amenidades selectas y servicio de conserjería personalizada 24/7'
+  ];
+
+  const servicesList = data.includedServices && data.includedServices.length > 0 
+    ? data.includedServices 
+    : defaultLuxuryServices;
 
   return (
     <div className="min-h-screen bg-[#070709] font-sans text-neutral-100 selection:bg-amber-500 selection:text-black relative overflow-x-hidden">
@@ -38,12 +56,12 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       {/* Dynamic Ambient Luxury Lighting Backgrounds */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-gradient-to-b from-amber-500/12 via-amber-600/5 to-transparent blur-[120px] rounded-full" />
-        <div className="absolute top-[45%] -right-40 w-[600px] h-[600px] bg-amber-700/6 blur-[140px] rounded-full" />
-        <div className="absolute bottom-20 -left-40 w-[600px] h-[600px] bg-amber-500/5 blur-[140px] rounded-full" />
+        <div className="absolute top-[40%] -right-40 w-[600px] h-[600px] bg-amber-700/6 blur-[140px] rounded-full" />
+        <div className="absolute top-[70%] -left-40 w-[600px] h-[600px] bg-amber-500/5 blur-[140px] rounded-full" />
       </div>
 
       {/* 1. ULTRA LUXURY TOP HEADER */}
-      <header className="sticky top-0 w-full z-40 bg-[#070709]/85 backdrop-blur-xl border-b border-amber-500/20 px-4 sm:px-8 py-3.5 sm:py-4.5 flex justify-between items-center gap-4 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
+      <header className="sticky top-0 w-full z-40 bg-[#070709]/90 backdrop-blur-xl border-b border-amber-500/20 px-4 sm:px-8 py-3.5 sm:py-4 flex justify-between items-center gap-4 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.6)]">
         <div className="flex items-center gap-3 min-w-0">
           <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400/25 via-amber-500/10 to-transparent border border-amber-400/40 flex items-center justify-center text-amber-300 shrink-0 shadow-[0_0_15px_rgba(245,158,11,0.25)]">
             <Crown size={isMobile ? 18 : 20} className="text-amber-300 drop-shadow-[0_2px_8px_rgba(245,158,11,0.5)]" />
@@ -59,27 +77,57 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
 
         {!isMobile && (
-          <nav className="hidden lg:flex items-center gap-7 text-[11px] uppercase tracking-[0.2em] text-neutral-400 shrink-0 font-medium">
+          <nav className="hidden xl:flex items-center gap-6 text-[11px] uppercase tracking-[0.2em] text-neutral-400 shrink-0 font-medium">
             <a href="#itinerario" className="hover:text-amber-300 transition-colors relative py-1 group">
               La Experiencia
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
             </a>
-            <a href="#privilegios" className="hover:text-amber-300 transition-colors relative py-1 group">
-              Privilegios VIP
+            <a href="#ficha-tecnica" className="hover:text-amber-300 transition-colors relative py-1 group">
+              Ficha Técnica
+              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+            </a>
+            <a href="#amenidades" className="hover:text-amber-300 transition-colors relative py-1 group">
+              Amenidades VIP
+              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+            </a>
+            <a href="#guia-concierge" className="hover:text-amber-300 transition-colors relative py-1 group">
+              Concierge
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
             </a>
             <a href="#galeria" className="hover:text-amber-300 transition-colors relative py-1 group">
-              Galería Exclusiva
+              Galería
+              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+            </a>
+            <a href="#lounge-vip" className="hover:text-amber-300 transition-colors relative py-1 group">
+              Salón VIP
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
             </a>
             <a href="#soporte-faq" className="hover:text-amber-300 transition-colors relative py-1 group">
-              Soporte & FAQ
+              FAQ
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
             </a>
           </nav>
         )}
 
         <div className="flex items-center gap-2.5 shrink-0">
+          {/* Subtle Champagne Gold Language Selector */}
+          <div className="hidden sm:flex items-center bg-neutral-900/90 border border-amber-500/25 rounded-full p-0.5 text-[10px] font-bold">
+            {(['es', 'en', 'fr', 'pt', 'it'] as LanguageType[]).map((l) => (
+              <button
+                key={l}
+                type="button"
+                onClick={() => setCurrentLang(l)}
+                className={`px-2 py-0.5 rounded-full uppercase transition-all duration-200 cursor-pointer ${
+                  currentLang === l 
+                    ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-neutral-950 font-extrabold shadow-xs' 
+                    : 'text-neutral-400 hover:text-amber-200'
+                }`}
+              >
+                {l}
+              </button>
+            ))}
+          </div>
+
           {data.objective === 'both' ? (
             <div className="flex items-center gap-2">
               <a 
@@ -205,7 +253,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
             {/* Price Box biselado */}
             <div className={`bg-neutral-900/80 backdrop-blur-md rounded-2xl border border-amber-500/30 px-5 py-3 ${isMobile ? 'w-full text-center' : 'text-left'} shadow-xl`}>
-              <p className="text-[10px] text-amber-400 uppercase tracking-[0.2em] font-semibold">Tarifa Desde</p>
+              <p className="text-[10px] text-amber-400 uppercase tracking-[0.2em] font-semibold font-mono">Tarifa Desde</p>
               <p className={`${isMobile ? 'text-lg' : 'text-xl'} font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-amber-200`}>
                 {data.price || '$450 USD'}
               </p>
@@ -214,7 +262,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* 3. THREE FLOATING PILLARS OF EXCELLENCE (Glassmorphism & Gold Halo) */}
+      {/* 3. THREE FLOATING PILLARS OF EXCELLENCE */}
       <section className={`relative z-30 ${isMobile ? 'mt-4 px-3' : '-mt-12 max-w-5xl mx-auto px-4'}`}>
         <div className={`bg-gradient-to-b from-neutral-900/95 via-neutral-900/80 to-[#0c0c10]/95 backdrop-blur-xl rounded-3xl border border-amber-500/30 ${isMobile ? 'p-4 grid grid-cols-1 gap-3.5' : 'p-7 grid grid-cols-1 md:grid-cols-3 gap-6'} shadow-[0_20px_50px_rgba(0,0,0,0.8)]`}>
           
@@ -265,9 +313,126 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 5. ABOUT SECTION - ART GALLERY PASSEPARTOUT PRESENTATION */}
+      {/* 5. NUEVA SECCIÓN: FICHA TÉCNICA DE ALTA EXPEDICIÓN */}
+      <section id="ficha-tecnica" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} max-w-6xl mx-auto relative z-10`}>
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono mb-3">
+            <Compass size={13} className="text-amber-400" />
+            <span>Parámetros Certificados</span>
+          </div>
+          <h2 className={`${isMobile ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl'} font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-white to-amber-200 mb-3`}>
+            Especificaciones de la Expedición
+          </h2>
+          <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+            Parámetros milimétricamente organizados para asegurar máxima comodidad, aclimatación progresiva y seguridad de grado médico.
+          </p>
+        </div>
+
+        <div className={`grid ${isMobile ? 'grid-cols-1 sm:grid-cols-2 gap-3.5' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5'}`}>
+          
+          {/* Destino */}
+          <div className="bg-gradient-to-b from-neutral-900/90 to-neutral-950/80 p-5 rounded-2xl border border-neutral-800/90 hover:border-amber-500/35 transition-all group shadow-xl">
+            <div className="flex items-center gap-3 mb-2.5">
+              <div className="w-10 h-10 rounded-xl bg-amber-400/15 border border-amber-400/25 flex items-center justify-center text-amber-300 shrink-0 group-hover:scale-105 transition-transform">
+                <MapPin size={18} />
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-amber-400/80 font-mono font-bold">Destino Principal</p>
+                <h3 className="font-serif font-bold text-neutral-100 text-sm sm:text-base">{data.destination || 'Cusco & Machu Picchu'}</h3>
+              </div>
+            </div>
+            <p className="text-[11px] text-neutral-400 font-light leading-relaxed pl-13">
+              Rutas con accesos directos preferenciales y traslados privados puerta a puerta.
+            </p>
+          </div>
+
+          {/* Altitud Máxima */}
+          <div className="bg-gradient-to-b from-neutral-900/90 to-neutral-950/80 p-5 rounded-2xl border border-neutral-800/90 hover:border-amber-500/35 transition-all group shadow-xl">
+            <div className="flex items-center gap-3 mb-2.5">
+              <div className="w-10 h-10 rounded-xl bg-amber-400/15 border border-amber-400/25 flex items-center justify-center text-amber-300 shrink-0 group-hover:scale-105 transition-transform">
+                <Mountain size={18} />
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-amber-400/80 font-mono font-bold">Altitud & Salud</p>
+                <h3 className="font-serif font-bold text-neutral-100 text-sm sm:text-base">{data.altitude || '3,400 msnm'}</h3>
+              </div>
+            </div>
+            <p className="text-[11px] text-neutral-400 font-light leading-relaxed pl-13 flex items-center gap-1.5">
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Oxígeno médico presurizado permanente en vehículo y ruta.</span>
+            </p>
+          </div>
+
+          {/* Dificultad & Ritmo */}
+          <div className="bg-gradient-to-b from-neutral-900/90 to-neutral-950/80 p-5 rounded-2xl border border-neutral-800/90 hover:border-amber-500/35 transition-all group shadow-xl">
+            <div className="flex items-center gap-3 mb-2.5">
+              <div className="w-10 h-10 rounded-xl bg-amber-400/15 border border-amber-400/25 flex items-center justify-center text-amber-300 shrink-0 group-hover:scale-105 transition-transform">
+                <Clock size={18} />
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-amber-400/80 font-mono font-bold">Nivel & Ritmo</p>
+                <h3 className="font-serif font-bold text-neutral-100 text-sm sm:text-base">{data.difficulty || 'Confortable / Moderada'}</h3>
+              </div>
+            </div>
+            <p className="text-[11px] text-neutral-400 font-light leading-relaxed pl-13">
+              Cero apuros. El cronograma se sincroniza con el ritmo físico de tus acompañantes.
+            </p>
+          </div>
+
+          {/* Formato de Grupo */}
+          <div className="bg-gradient-to-b from-neutral-900/90 to-neutral-950/80 p-5 rounded-2xl border border-neutral-800/90 hover:border-amber-500/35 transition-all group shadow-xl">
+            <div className="flex items-center gap-3 mb-2.5">
+              <div className="w-10 h-10 rounded-xl bg-amber-400/15 border border-amber-400/25 flex items-center justify-center text-amber-300 shrink-0 group-hover:scale-105 transition-transform">
+                <Users size={18} />
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-amber-400/80 font-mono font-bold">Modalidad</p>
+                <h3 className="font-serif font-bold text-neutral-100 text-sm sm:text-base">{data.groupType || '100% Privado Exclusivo'}</h3>
+              </div>
+            </div>
+            <p className="text-[11px] text-neutral-400 font-light leading-relaxed pl-13">
+              Vehículo, chofer y guía asignados únicamente para ti y tus seres queridos.
+            </p>
+          </div>
+
+          {/* Audiencia */}
+          <div className="bg-gradient-to-b from-neutral-900/90 to-neutral-950/80 p-5 rounded-2xl border border-neutral-800/90 hover:border-amber-500/35 transition-all group shadow-xl">
+            <div className="flex items-center gap-3 mb-2.5">
+              <div className="w-10 h-10 rounded-xl bg-amber-400/15 border border-amber-400/25 flex items-center justify-center text-amber-300 shrink-0 group-hover:scale-105 transition-transform">
+                <HeartHandshake size={18} />
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-amber-400/80 font-mono font-bold">Perfil Recomendado</p>
+                <h3 className="font-serif font-bold text-neutral-100 text-sm sm:text-base">{data.targetAudience || 'Familias & Parejas VIP'}</h3>
+              </div>
+            </div>
+            <p className="text-[11px] text-neutral-400 font-light leading-relaxed pl-13">
+              Apto para adultos mayores y niños gracias a la asistencia continua personalizada.
+            </p>
+          </div>
+
+          {/* Idiomas */}
+          <div className="bg-gradient-to-b from-neutral-900/90 to-neutral-950/80 p-5 rounded-2xl border border-neutral-800/90 hover:border-amber-500/35 transition-all group shadow-xl">
+            <div className="flex items-center gap-3 mb-2.5">
+              <div className="w-10 h-10 rounded-xl bg-amber-400/15 border border-amber-400/25 flex items-center justify-center text-amber-300 shrink-0 group-hover:scale-105 transition-transform">
+                <Languages size={18} />
+              </div>
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-amber-400/80 font-mono font-bold">Idiomas Oficiales</p>
+                <h3 className="font-serif font-bold text-neutral-100 text-sm sm:text-base">{data.guideLanguages || 'Español, English & Français'}</h3>
+              </div>
+            </div>
+            <p className="text-[11px] text-neutral-400 font-light leading-relaxed pl-13">
+              Narración histórica fluida, precisa y culturalmente profunda en tu lengua nativa.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 6. ABOUT SECTION - ART GALLERY PASSEPARTOUT PRESENTATION */}
       {!isFree && (
-        <section id="itinerario" className={`${isMobile ? 'py-14 px-4' : 'py-24 px-8'} max-w-6xl mx-auto relative z-10`}>
+        <section id="itinerario" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} max-w-6xl mx-auto relative z-10`}>
           <div className={`grid ${isMobile ? 'grid-cols-1 gap-8' : 'md:grid-cols-2 gap-16'} items-center`}>
             <div className="space-y-4">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono">
@@ -296,9 +461,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                   href={whatsappUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 text-xs font-bold transition-colors shrink-0"
+                  className="px-3.5 py-2 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 text-xs font-bold transition-colors shrink-0 flex items-center gap-1.5"
                 >
-                  Contactar →
+                  <MessageCircle size={14} />
+                  <span>Contactar</span>
                 </a>
               </div>
             </div>
@@ -314,9 +480,9 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                   className="object-cover hover:scale-105 transition-transform duration-700" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl bg-neutral-950/80 backdrop-blur-md border border-amber-500/30 text-xs text-neutral-300">
+                <div className="absolute bottom-4 left-4 right-4 p-3.5 rounded-xl bg-neutral-950/85 backdrop-blur-md border border-amber-500/30 text-xs text-neutral-300 shadow-xl">
                   <span className="font-serif font-bold text-amber-300 block mb-0.5">Acceso Preferencial Exclusivo</span>
-                  <span>Sin multitudes, diseñado al ritmo de tu grupo familiar.</span>
+                  <span>Sin multitudes, diseñado al ritmo de tu grupo familiar con traslados directos.</span>
                 </div>
               </div>
             </div>
@@ -324,9 +490,125 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 6. ITINERARY TIMELINE (Golden Path Design) */}
+      {/* 7. NUEVA SECCIÓN: SERVICIOS & AMENIDADES DE ALTA GAMA INCLUIDOS */}
+      <section id="amenidades" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} bg-[#0a0a0e] border-y border-amber-500/15 relative z-10`}>
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono mb-3">
+              <Sparkles size={13} className="text-amber-400" />
+              <span>Todo Incluido de Primer Nivel</span>
+            </div>
+            <h2 className={`${isMobile ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl'} font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-white to-amber-200 mb-3`}>
+              Servicios & Amenidades Exclusivas
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+              Diseñado para brindar una vivencia fluida, libre de preocupaciones logísticas y con los más altos estándares hoteleros.
+            </p>
+          </div>
+
+          <div className={`grid ${isMobile ? 'grid-cols-1 gap-3.5' : 'grid-cols-1 md:grid-cols-2 gap-4'}`}>
+            {servicesList.map((srv, idx) => (
+              <div 
+                key={idx} 
+                className="bg-neutral-900/80 hover:bg-neutral-900 border border-neutral-800/90 hover:border-amber-500/40 p-4 sm:p-5 rounded-2xl transition-all duration-300 flex items-start gap-4 shadow-lg group"
+              >
+                <div className="w-8 h-8 rounded-xl bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-amber-300 shrink-0 group-hover:scale-110 transition-transform">
+                  <Check size={16} className="text-amber-400" />
+                </div>
+                <div className="space-y-1">
+                  <p className="text-neutral-200 text-xs sm:text-sm font-medium leading-relaxed">
+                    {srv}
+                  </p>
+                  <p className="text-[10px] text-amber-400/70 uppercase tracking-widest font-mono font-bold">
+                    Garantizado 100% Privado
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 8. NUEVA SECCIÓN: PERFIL DEL GUÍA CONCIERGE OFICIAL */}
+      <section id="guia-concierge" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} max-w-5xl mx-auto relative z-10`}>
+        <div className="bg-gradient-to-b from-neutral-900/90 via-neutral-900/60 to-neutral-950 border border-amber-500/30 rounded-3xl p-6 sm:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.7)] relative overflow-hidden">
+          
+          <div className="absolute top-0 right-0 w-72 h-72 bg-amber-500/5 blur-[90px] rounded-full pointer-events-none" />
+
+          <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-12 gap-8'} items-center`}>
+            
+            {/* Guide Avatar & Badges */}
+            <div className={`${isMobile ? 'mx-auto' : 'md:col-span-4'} flex flex-col items-center text-center`}>
+              <div className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-full p-1.5 bg-gradient-to-b from-amber-400 via-amber-500/40 to-neutral-800 shadow-[0_0_30px_rgba(245,158,11,0.25)] mb-4">
+                <div className="relative w-full h-full rounded-full overflow-hidden">
+                  <Image 
+                    src={guideAvatarImg} 
+                    alt={data.guideName || 'Guía Oficial Concierge'} 
+                    fill 
+                    sizes="200px" 
+                    className="object-cover"
+                  />
+                </div>
+                <div className="absolute bottom-1 right-2 w-9 h-9 rounded-full bg-neutral-950 border-2 border-amber-400 flex items-center justify-center text-amber-300 shadow-md">
+                  <Award size={18} />
+                </div>
+              </div>
+
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-[10px] uppercase tracking-widest font-mono font-bold">
+                <Crown size={11} />
+                <span>Colegiado DIRCETUR</span>
+              </div>
+            </div>
+
+            {/* Guide Bio & Message */}
+            <div className={`${isMobile ? 'text-center' : 'md:col-span-8 text-left'} space-y-4`}>
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.25em] text-amber-400/80 font-mono font-bold mb-1">
+                  Tu Anfitrión & Especialista Asignado
+                </p>
+                <h3 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-serif font-bold text-white`}>
+                  {data.guideName || 'Lic. Mateo Quispe & Equipo Concierge'}
+                </h3>
+                <p className="text-xs text-amber-300/80 font-medium">
+                  {data.guideCert || 'Guía Oficial Colegiado DIRCETUR Cusco — Carné N° 4812'}
+                </p>
+              </div>
+
+              <blockquote className="text-neutral-300 text-xs sm:text-sm font-light italic leading-relaxed border-l-2 border-amber-500/40 pl-4 py-1">
+                &quot;Mi compromiso es abrir las puertas de la historia viva de los Andes con la máxima comodidad, discreción y elegancia para ti y tu familia. Cada paso se adapta a tu bienestar.&quot;
+              </blockquote>
+
+              <div className="grid grid-cols-2 gap-3 pt-2">
+                <div className="bg-neutral-950/70 p-3 rounded-xl border border-neutral-800">
+                  <p className="text-[10px] uppercase tracking-wider text-neutral-400 font-mono">Idiomas Fluidos</p>
+                  <p className="text-xs font-bold text-neutral-200">{data.guideLanguages || 'Español, English & Français'}</p>
+                </div>
+                <div className="bg-neutral-950/70 p-3 rounded-xl border border-neutral-800">
+                  <p className="text-[10px] uppercase tracking-wider text-neutral-400 font-mono">Experiencia</p>
+                  <p className="text-xs font-bold text-neutral-200">+12 Años en Rutas de Lujo</p>
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-neutral-950 px-5 py-2.5 rounded-full font-bold text-xs uppercase tracking-wider shadow-lg shadow-amber-400/20 hover:scale-105 transition-all cursor-pointer"
+                >
+                  <MessageCircle size={15} />
+                  <span>Conversar con el Guía Concierge</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 9. ITINERARY TIMELINE (Golden Path Design) */}
       {data.itinerary && data.itinerary.length > 0 && (
-        <section id="itinerario-timeline" className={`${isMobile ? 'py-12 px-4' : 'py-24 px-8'} bg-gradient-to-b from-[#0a0a0e] via-[#070709] to-[#0a0a0e] border-y border-amber-500/15 relative z-10`}>
+        <section id="itinerario-timeline" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} bg-gradient-to-b from-[#0a0a0e] via-[#070709] to-[#0a0a0e] border-y border-amber-500/15 relative z-10`}>
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-10 sm:mb-16">
               <span className="text-xs font-semibold text-amber-400 uppercase tracking-[0.25em] block mb-2 font-mono">Cronograma de Lujo</span>
@@ -355,10 +637,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 7. PRIVILEGIOS & FEATURES (Numbered Gold Membership Cards) */}
+      {/* 10. PRIVILEGIOS & FEATURES (Numbered Gold Membership Cards) */}
       {!isFree && (
-        <section id="privilegios" className={`${isMobile ? 'py-12 px-4' : 'py-24 px-8'} max-w-6xl mx-auto relative z-10`}>
-          <div className={`text-center ${isMobile ? 'mb-8' : 'mb-16'}`}>
+        <section id="privilegios" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} max-w-6xl mx-auto relative z-10`}>
+          <div className={`text-center ${isMobile ? 'mb-8' : 'mb-14'}`}>
             <span className="text-xs font-semibold text-amber-400 uppercase tracking-[0.25em] block mb-2 font-mono">Estándares Presidenciales</span>
             <h2 className={`${isMobile ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-5xl'} font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-white to-amber-200`}>
               {data.features?.title || 'Privilegios de la Experiencia'}
@@ -396,9 +678,71 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 8. LOGISTICS: EXCLUSIONES & EQUIPAJE VIP */}
+      {/* 11. NUEVA SECCIÓN: COMPROMISO DE EXCELENCIA & GARANTÍAS DE TRANQUILIDAD */}
+      <section className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} bg-[#0a0a0e] border-y border-neutral-900 relative z-10`}>
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono mb-3">
+              <ShieldCheck size={13} className="text-amber-400" />
+              <span>Tranquilidad Garantizada</span>
+            </div>
+            <h2 className={`${isMobile ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl'} font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-white to-amber-200 mb-3`}>
+              Compromiso de Excelencia Cusco Luxury
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-400 font-light leading-relaxed">
+              Políticas transparentes y respaldo legal diseñados para que reserves con absoluta serenidad.
+            </p>
+          </div>
+
+          <div className={`grid ${isMobile ? 'grid-cols-1 sm:grid-cols-2 gap-4' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'}`}>
+            
+            <div className="bg-neutral-900/90 p-5 sm:p-6 rounded-2xl border border-neutral-800 hover:border-amber-500/40 transition-all shadow-xl">
+              <div className="w-10 h-10 rounded-xl bg-amber-400/15 border border-amber-400/25 flex items-center justify-center text-amber-300 mb-4">
+                <Calendar size={18} />
+              </div>
+              <h3 className="font-serif font-bold text-neutral-100 text-sm sm:text-base mb-1.5">Flexibilidad por Clima</h3>
+              <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                Si las condiciones meteorológicas en montaña impiden el goce óptimo, reprogramación sin penalidad de agencia.
+              </p>
+            </div>
+
+            <div className="bg-neutral-900/90 p-5 sm:p-6 rounded-2xl border border-neutral-800 hover:border-amber-500/40 transition-all shadow-xl">
+              <div className="w-10 h-10 rounded-xl bg-amber-400/15 border border-amber-400/25 flex items-center justify-center text-amber-300 mb-4">
+                <ShieldAlert size={18} />
+              </div>
+              <h3 className="font-serif font-bold text-neutral-100 text-sm sm:text-base mb-1.5">Protocolo de Oxígeno</h3>
+              <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                Balón de oxígeno de grado médico presurizado y monitoreo de pulso en todo el trayecto para aclimatación segura.
+              </p>
+            </div>
+
+            <div className="bg-neutral-900/90 p-5 sm:p-6 rounded-2xl border border-neutral-800 hover:border-amber-500/40 transition-all shadow-xl">
+              <div className="w-10 h-10 rounded-xl bg-amber-400/15 border border-amber-400/25 flex items-center justify-center text-amber-300 mb-4">
+                <Gem size={18} />
+              </div>
+              <h3 className="font-serif font-bold text-neutral-100 text-sm sm:text-base mb-1.5">Transparencia Total</h3>
+              <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                Tarifas netas sin cargos ocultos, sin paradas comerciales obligatorias ni compras forzadas.
+              </p>
+            </div>
+
+            <div className="bg-neutral-900/90 p-5 sm:p-6 rounded-2xl border border-neutral-800 hover:border-amber-500/40 transition-all shadow-xl">
+              <div className="w-10 h-10 rounded-xl bg-amber-400/15 border border-amber-400/25 flex items-center justify-center text-amber-300 mb-4">
+                <Award size={18} />
+              </div>
+              <h3 className="font-serif font-bold text-neutral-100 text-sm sm:text-base mb-1.5">Operador Registrado</h3>
+              <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                Licencia oficial de turismo DIRCETUR y sello Safe Travels emitido por el Consejo Mundial del Viaje (WTTC).
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 12. LOGISTICS: EXCLUSIONES & EQUIPAJE VIP */}
       {((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
-        <section className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-[#0a0a0e] border-y border-neutral-900 relative z-10`}>
+        <section className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-[#070709] border-b border-neutral-900 relative z-10`}>
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             
             {/* Qué NO incluye */}
@@ -440,7 +784,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 9. PINTEREST PINBOARD GALLERY */}
+      {/* 13. PINTEREST PINBOARD GALLERY */}
       {!isFree && (
         <PinterestPinboard
           images={data.galleryImages}
@@ -449,10 +793,11 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           tier={tier}
           theme="premium"
           isMobile={isMobile}
+          lang={currentLang}
         />
       )}
 
-      {/* 10. TESTIMONIALS - ADVANCE ONLY */}
+      {/* 14. TESTIMONIALS - ADVANCE ONLY */}
       {isAdvance && data.testimonials && data.testimonials.length > 0 && (
         <section className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} bg-[#070709] border-b border-neutral-900 relative z-10`}>
           <div className="max-w-4xl mx-auto text-center">
@@ -480,7 +825,81 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 11. TOUR SUPPORT & FAQS */}
+      {/* 15. NUEVA SECCIÓN: SALÓN VIP & PUNTO DE ENCUENTRO EN CUSCO */}
+      <section id="lounge-vip" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} bg-gradient-to-b from-[#0a0a0e] to-[#070709] border-b border-neutral-900 relative z-10`}>
+        <div className="max-w-5xl mx-auto">
+          <div className="bg-gradient-to-b from-neutral-900/90 to-neutral-950 p-6 sm:p-10 rounded-3xl border border-amber-500/30 shadow-2xl">
+            <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-12 gap-8'} items-center`}>
+              
+              <div className={`${isMobile ? 'text-center' : 'md:col-span-7 text-left'} space-y-4`}>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono">
+                  <MapPin size={12} className="text-amber-400" />
+                  <span>Atención Presencial & Salón Privado</span>
+                </div>
+                <h3 className={`${isMobile ? 'text-2xl' : 'text-3xl'} font-serif font-bold text-white`}>
+                  Lounge Concierge en Cusco
+                </h3>
+                <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+                  Visítanos antes de tu salida para relajarte, degustar café orgánico cusqueño de especialidad y coordinar los últimos detalles de tu expedición en un ambiente cálido y seguro.
+                </p>
+
+                <div className="space-y-2 pt-2">
+                  <div className="flex items-center gap-2.5 text-xs text-neutral-300">
+                    <MapPin size={15} className="text-amber-400 shrink-0" />
+                    <span>{data.officeAddress || 'Portal de Carnicerías 236, Plaza de Armas, Cusco, Perú'}</span>
+                  </div>
+                  <div className="flex items-center gap-2.5 text-xs text-neutral-300">
+                    <Clock size={15} className="text-amber-400 shrink-0" />
+                    <span>{data.officeHours || 'Lunes a Domingo: 07:00 – 21:00 hrs'}</span>
+                  </div>
+                </div>
+
+                <div className="pt-3">
+                  <a
+                    href={data.mapsUrl || 'https://maps.google.com/?q=Plaza+de+Armas+Cusco'}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-neutral-800 hover:bg-neutral-700 text-amber-300 border border-amber-500/30 px-4 py-2.5 rounded-xl text-xs font-bold transition-all hover:scale-102 cursor-pointer shadow-md"
+                  >
+                    <ExternalLink size={14} />
+                    <span>Abrir en Google Maps</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Lounge Amenities Grid */}
+              <div className={`${isMobile ? 'mt-2' : 'md:col-span-5'} grid grid-cols-2 gap-3`}>
+                <div className="bg-neutral-950/80 p-3.5 rounded-2xl border border-neutral-800/80 text-center space-y-1.5">
+                  <Coffee size={20} className="text-amber-400 mx-auto" />
+                  <p className="text-xs font-bold text-neutral-200">Café de Especialidad</p>
+                  <p className="text-[10px] text-neutral-500">De cortesía para huéspedes</p>
+                </div>
+
+                <div className="bg-neutral-950/80 p-3.5 rounded-2xl border border-neutral-800/80 text-center space-y-1.5">
+                  <Wifi size={20} className="text-amber-400 mx-auto" />
+                  <p className="text-xs font-bold text-neutral-200">Wi-Fi Starlink</p>
+                  <p className="text-[10px] text-neutral-500">Alta velocidad en sala</p>
+                </div>
+
+                <div className="bg-neutral-950/80 p-3.5 rounded-2xl border border-neutral-800/80 text-center space-y-1.5">
+                  <Backpack size={20} className="text-amber-400 mx-auto" />
+                  <p className="text-xs font-bold text-neutral-200">Custodia Segura</p>
+                  <p className="text-[10px] text-neutral-500">Guardaequipaje 24 hrs</p>
+                </div>
+
+                <div className="bg-neutral-950/80 p-3.5 rounded-2xl border border-neutral-800/80 text-center space-y-1.5">
+                  <ShieldCheck size={20} className="text-amber-400 mx-auto" />
+                  <p className="text-xs font-bold text-neutral-200">Oxigenoterapia</p>
+                  <p className="text-[10px] text-neutral-500">Aclimatación preventiva</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 16. TOUR SUPPORT & FAQS */}
       <TourSupportAndFaqs
         faqs={data.faqs}
         tourName={data.name || data.hero?.title || 'Experiencia VIP'}
@@ -490,9 +909,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         tier={tier}
         theme="premium"
         isMobile={isMobile}
+        lang={currentLang}
       />
 
-      {/* 12. MAJESTIC FINAL CALL TO ACTION */}
+      {/* 17. MAJESTIC FINAL CALL TO ACTION */}
       {!isFree && (
         <section id="contacto" className={`${isMobile ? 'py-14 px-4' : 'py-24 px-8'} text-center bg-gradient-to-b from-[#0a0a0e] via-[#070709] to-black relative z-10 overflow-hidden`}>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[300px] bg-amber-500/10 blur-[120px] rounded-full pointer-events-none" />
@@ -535,7 +955,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* Footer */}
+      {/* 18. FOOTER */}
       <footer className="py-8 text-center text-neutral-500 text-xs border-t border-neutral-900 relative z-10 bg-[#070709]">
         <p className="tracking-wide">© 2026 Cusco Creativos S.A.C. — Edición Luxury Collection.</p>
       </footer>
