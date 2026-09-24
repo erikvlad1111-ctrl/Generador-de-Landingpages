@@ -581,7 +581,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
   }
 ];
 
-const STORAGE_KEY = 'cusco_creativos_landings_v4';
+const STORAGE_KEY = 'cusco_creativos_landings_v5';
 
 export function getStoredLandings(): LandingData[] {
   if (typeof window === 'undefined') return INITIAL_LANDINGS;
@@ -591,7 +591,7 @@ export function getStoredLandings(): LandingData[] {
       // Check if previous versions had custom landings
       let migrated: LandingData[] = [...INITIAL_LANDINGS];
       try {
-        const oldData = localStorage.getItem('cusco_creativos_landings_v3') || localStorage.getItem('cusco_creativos_landings_v2');
+        const oldData = localStorage.getItem('cusco_creativos_landings_v4') || localStorage.getItem('cusco_creativos_landings_v3');
         if (oldData) {
           const oldList: LandingData[] = JSON.parse(oldData);
           if (Array.isArray(oldList)) {
