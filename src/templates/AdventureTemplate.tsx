@@ -704,9 +704,9 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               </div>
             </div>
 
-            {/* Grid of Compact & Refined Inclusion Cards */}
+            {/* Grid of Compact & Refined Inclusion Cards (6 items: 2x3 grid) */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-6xl mx-auto">
-              {data.features.items.map((item, idx) => {
+              {data.features.items.slice(0, 6).map((item, idx) => {
                 const parts = item.split(':');
                 const title = parts[0].trim();
                 const userCustomDesc = parts[1]?.trim();
@@ -745,18 +745,18 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                         <div className="absolute top-2.5 right-2.5 bg-emerald-500/90 backdrop-blur-sm text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
                           {meta.badge}
                         </div>
-
-                        {/* Floating Icon Container */}
-                        <div className="absolute -bottom-2.5 left-4 w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-600/30 border-2 border-slate-900 shrink-0">
-                          <IconComponent size={15} className="text-white" />
-                        </div>
                       </div>
 
                       {/* Content Area */}
-                      <div className="p-4 sm:p-5 pt-3.5 text-left space-y-1.5">
-                        <h3 className="text-sm sm:text-base font-black text-white group-hover:text-blue-400 transition-colors line-clamp-1 leading-snug">
-                          {title}
-                        </h3>
+                      <div className="p-4 sm:p-5 text-left space-y-2">
+                        <div className="flex items-center gap-2.5">
+                          <div className="w-8 h-8 rounded-xl bg-blue-500/15 border border-blue-500/30 text-blue-400 flex items-center justify-center shrink-0 shadow-2xs">
+                            <IconComponent size={16} />
+                          </div>
+                          <h3 className="text-sm sm:text-base font-black text-white group-hover:text-blue-400 transition-colors line-clamp-1 leading-snug">
+                            {title}
+                          </h3>
+                        </div>
                         <p className="text-xs text-slate-300 leading-relaxed font-normal line-clamp-2">
                           {userCustomDesc || meta.defaultDesc}
                         </p>
