@@ -5,7 +5,7 @@ import {
   FileText, Star, Calendar, XCircle, Backpack, Gem, Compass, CheckCircle2,
   ChevronRight, ArrowRight, MapPin, Mountain, Users, Languages, HeartHandshake,
   Coffee, Wifi, ExternalLink, ShieldAlert, Car, Utensils, Check, QrCode,
-  Camera, Sun, Wine, Sparkle
+  Camera, Sun, Wine, Sparkle, Layers
 } from 'lucide-react';
 import { LandingData, LanguageType } from '@/types/landing';
 import QuoteModal from '@/components/common/QuoteModal';
@@ -20,6 +20,7 @@ interface TemplateProps {
 
 export default function PremiumTemplate({ data, viewMode = 'desktop' }: TemplateProps) {
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+  const [selectedTourForQuote, setSelectedTourForQuote] = useState<string | null>(null);
   const [currentLang, setCurrentLang] = useState<LanguageType>(data.language || 'es');
   const isQuote = data.objective === 'quote';
   const isMobile = viewMode === 'mobile';
@@ -35,6 +36,11 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
   const heroImg = data.heroImage || 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop';
   const gallery1 = data.galleryImages?.[0] || 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop';
   const guideAvatarImg = data.guideAvatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop';
+
+  const getTourWaUrl = (tourTitle: string) => {
+    const msg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, deseo consultar disponibilidad y tarifa VIP para el tour "${tourTitle}".`);
+    return `https://wa.me/${cleanPhone}?text=${msg}`;
+  };
 
   const defaultLuxuryServices = [
     'Transporte turístico privado de alta gama (SUV o Sprinter ejecutiva climatizada con chofer profesional)',
@@ -83,10 +89,86 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
     }
   ];
 
+  // NUEVA COLECCIÓN: MEJORES TOURS & EXPEDICIONES PRIVADAS DE LA AGENCIA
+  const vipToursCatalog = [
+    {
+      id: 'tour-1',
+      title: 'Machu Picchu VIP en Tren Hiram Bingham & Hotel 5★',
+      category: 'Expedición Presidencial',
+      duration: '2 Días / 1 Noche',
+      groupType: '100% Privado',
+      price: '$680 USD',
+      rating: '5.0 ★',
+      badge: 'Más Solicitado',
+      image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=1000&auto=format&fit=crop',
+      features: ['Tren Belmond Observatorio', 'Noche en Belmond Sanctuary Lodge', 'Ingreso matutino sin multitudes', 'Almuerzo gourmet de autor']
+    },
+    {
+      id: 'tour-2',
+      title: 'Valle Sagrado de los Incas & Hacienda Privada',
+      category: 'Cultura & Paisaje',
+      duration: 'Full Day Exclusivo',
+      groupType: 'SUV Privada Climatizada',
+      price: '$180 USD',
+      rating: '4.9 ★',
+      badge: 'Recomendado',
+      image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1000&auto=format&fit=crop',
+      features: ['Pisac & Ollantaytambo guiado', 'Maras & Salineras ancestrales', 'Almuerzo en Hacienda Colonial', 'Chofer y guía dedicados']
+    },
+    {
+      id: 'tour-3',
+      title: 'Laguna Humantay Turquesa & Glamping de Altura',
+      category: 'Aventura & Bienestar',
+      duration: '2 Días / Noche Estelar',
+      groupType: 'Campamento Domos VIP',
+      price: '$320 USD',
+      rating: '4.9 ★',
+      badge: 'Naturaleza Pura',
+      image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=1000&auto=format&fit=crop',
+      features: ['Cúpulas con calefacción y vista', 'Caballos de apoyo incluidos', 'Chef privado en montaña', 'Balón de oxígeno permanente']
+    },
+    {
+      id: 'tour-4',
+      title: 'Montaña de Colores (Vinicunca) Anti-Multitudes',
+      category: 'Fotografía & Altura',
+      duration: 'Full Day Premium',
+      groupType: 'Salida Anticipada VIP',
+      price: '$190 USD',
+      rating: '4.8 ★',
+      badge: 'Exclusivo',
+      image: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1000&auto=format&fit=crop',
+      features: ['Horario exclusivo antes del gentío', 'Caballos y bastones de trekking', 'Desayuno gourmet campestre', 'Saturómetro y enfermería']
+    },
+    {
+      id: 'tour-5',
+      title: 'Gran Travesía Andina: Cusco a Puno en Tren Titicaca',
+      category: 'Circuito Multidía',
+      duration: '4 Días / 3 Noches',
+      groupType: 'Tren Pullman Histórico',
+      price: '$890 USD',
+      rating: '5.0 ★',
+      badge: 'Gran Expedición',
+      image: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=1000&auto=format&fit=crop',
+      features: ['Coche bar con música en vivo', 'Navegación privada Lago Titicaca', 'Hoteles 5 estrellas en ruta', 'Todos los traslados y comidas']
+    },
+    {
+      id: 'tour-6',
+      title: 'Cusco Imperial Secreto & Maridaje Gastronómico',
+      category: 'Experiencia Urbana VIP',
+      duration: 'Medio Día Gourmet',
+      groupType: 'Paso Peatonal Privado',
+      price: '$140 USD',
+      rating: '4.9 ★',
+      badge: 'Gourmet & Historia',
+      image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1000&auto=format&fit=crop',
+      features: ['Criptas coloniales y templos', 'Taller de cata de pisco selecto', 'Cena degustación 5 pasos', 'Historiador cusqueño privado']
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-[#0a080e] font-sans text-neutral-100 selection:bg-amber-500 selection:text-black relative overflow-x-hidden">
       
-      {/* Warm Golden & Amber Ambient Luxury Lighting Backgrounds (Replaces Cold Pure Black) */}
+      {/* Warm Golden & Amber Ambient Luxury Lighting Backgrounds */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-gradient-to-b from-amber-500/18 via-amber-600/8 to-transparent blur-[140px] rounded-full" />
         <div className="absolute top-[30%] -right-40 w-[650px] h-[650px] bg-amber-600/10 blur-[150px] rounded-full" />
@@ -134,6 +216,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           <nav className="hidden xl:flex items-center gap-6 text-[11px] uppercase tracking-[0.2em] text-neutral-300 shrink-0 font-medium">
             <a href="#itinerario" className="hover:text-amber-300 transition-colors relative py-1 group">
               La Experiencia
+              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+            </a>
+            <a href="#tours" className="hover:text-amber-300 transition-colors relative py-1 group">
+              Nuestros Tours
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
             </a>
             <a href="#sensorial" className="hover:text-amber-300 transition-colors relative py-1 group">
@@ -221,7 +307,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
       {/* 3. WARM SUNLIT CINEMATIC HERO SECTION */}
       <section className={`relative ${isMobile ? 'py-14 min-h-[540px]' : 'py-26 min-h-[90vh]'} flex items-center justify-center overflow-hidden z-10`}>
-        {/* Warmer Vignette Layers (Enhances photographic sunlit scenery) */}
+        {/* Warmer Vignette Layers */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a080e] via-[#0a080e]/65 to-[#0a080e]/30 z-10" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_10%,_#0a080e_85%)] z-10 opacity-75" />
         
@@ -243,7 +329,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
           </div>
 
-          {/* Título en Oro Champagne Editorial con halo luminoso */}
+          {/* Título en Oro Champagne Editorial */}
           <h1 className={`${isMobile ? 'text-2xl sm:text-3xl leading-tight mb-4' : 'text-4xl sm:text-6xl md:text-7xl leading-[1.12] mb-6'} font-serif tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-100 to-amber-300 drop-shadow-md font-normal`}>
             {data.hero?.title}
           </h1>
@@ -260,7 +346,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             {data.hero?.subtitle}
           </p>
 
-          {/* CTA & Precio en marco biselado con resplandor cálido */}
+          {/* CTA & Precio en marco biselado */}
           <div className={`flex ${isMobile ? 'flex-col' : 'flex-col sm:flex-row'} items-center gap-4 w-full max-w-xl justify-center`}>
             {data.objective === 'both' ? (
               <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
@@ -370,7 +456,131 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 6. NUEVA SECCIÓN: MOMENTOS INOLVIDABLES & EXPERIENCIAS SENSORIALES (VIBRANT TOURIST APPEAL) */}
+      {/* 6. NUEVA SECCIÓN: NUESTROS TOURS & EXPEDICIONES PRIVADAS */}
+      <section id="tours" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-t border-amber-500/15`}>
+        {/* Subtle Ambient Glow */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-amber-600/8 blur-[160px] rounded-full pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono mb-3 shadow-[0_0_20px_rgba(245,158,11,0.25)]">
+              <Layers size={13} className="text-amber-400" />
+              <span>Expediciones Selectas 2026</span>
+            </div>
+            <h2 className={`${isMobile ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-5xl'} font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-white to-amber-200 mb-3`}>
+              Nuestros Tours & Paquetes Privados
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+              Circuitos de alta gama operados con vehículos ejecutivos, trenes panorámicos de primera clase y hotelería boutique de ensueño.
+            </p>
+          </div>
+
+          {/* Grid of VIP Tours */}
+          <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7'}`}>
+            {vipToursCatalog.map((tour) => (
+              <div 
+                key={tour.id}
+                className="bg-neutral-900/85 backdrop-blur-xl border border-amber-500/25 hover:border-amber-400/60 rounded-3xl overflow-hidden shadow-[0_15px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group"
+              >
+                <div>
+                  {/* Tour Image Header */}
+                  <div className="relative h-52 sm:h-56 w-full overflow-hidden">
+                    <Image
+                      src={tour.image}
+                      alt={tour.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700 filter brightness-95 group-hover:brightness-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-black/40" />
+                    
+                    {/* Top Badges */}
+                    <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
+                      <span className="bg-neutral-950/80 backdrop-blur-md border border-amber-400/40 text-amber-300 text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full shadow-md font-mono">
+                        {tour.category}
+                      </span>
+                      <span className="bg-amber-500 text-neutral-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1 font-mono">
+                        <Star size={11} fill="currentColor" />
+                        <span>{tour.rating}</span>
+                      </span>
+                    </div>
+
+                    {/* Bottom floating chip */}
+                    <div className="absolute bottom-3 left-3">
+                      <span className="bg-neutral-950/85 backdrop-blur-md border border-amber-500/30 text-neutral-200 text-[11px] px-3 py-1 rounded-full font-medium">
+                        {tour.groupType}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Tour Details */}
+                  <div className="p-5 sm:p-6 space-y-3.5">
+                    <div className="flex items-center justify-between text-xs text-amber-400/80 font-mono">
+                      <span className="flex items-center gap-1.5">
+                        <Clock size={13} className="text-amber-400" />
+                        <span>{tour.duration}</span>
+                      </span>
+                      <span className="text-[10px] uppercase tracking-wider text-emerald-400 font-semibold flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                        <span>Salida Diaria</span>
+                      </span>
+                    </div>
+
+                    <h3 className="font-serif font-bold text-white text-lg leading-snug group-hover:text-amber-200 transition-colors">
+                      {tour.title}
+                    </h3>
+
+                    {/* Features list */}
+                    <ul className="space-y-1.5 pt-1 border-t border-neutral-800/80">
+                      {tour.features.map((feat, fIdx) => (
+                        <li key={fIdx} className="text-xs text-neutral-300 font-light flex items-center gap-2">
+                          <Check size={13} className="text-amber-400 shrink-0 font-bold" />
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Card Footer: Price & Direct Actions */}
+                <div className="p-5 sm:p-6 pt-0 border-t border-neutral-800/60 mt-2">
+                  <div className="flex items-baseline justify-between py-3">
+                    <span className="text-xs text-neutral-400 uppercase tracking-wider font-mono">Tarifa VIP</span>
+                    <span className="text-xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-400">
+                      {tour.price}
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 pt-1">
+                    <a
+                      href={getTourWaUrl(tour.title)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-emerald-600/90 hover:bg-emerald-500 text-white font-bold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-emerald-600/20 active:scale-95 cursor-pointer"
+                    >
+                      <MessageCircle size={14} />
+                      <span>WhatsApp</span>
+                    </a>
+                    <button
+                      onClick={() => {
+                        setSelectedTourForQuote(tour.title);
+                        setIsQuoteOpen(true);
+                      }}
+                      className="bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 font-extrabold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 transition-all shadow-md shadow-amber-400/25 active:scale-95 cursor-pointer"
+                    >
+                      <FileText size={14} />
+                      <span>Cotizar</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 7. MOMENTOS INOLVIDABLES & EXPERIENCIAS SENSORIALES */}
       <section id="sensorial" className={`${isMobile ? 'py-14 px-4' : 'py-22 px-8'} max-w-6xl mx-auto relative z-10`}>
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono mb-3 shadow-[0_0_20px_rgba(245,158,11,0.25)]">
@@ -430,7 +640,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* 7. FICHA TÉCNICA DE ALTA EXPEDICIÓN */}
+      {/* 8. FICHA TÉCNICA DE ALTA EXPEDICIÓN */}
       <section id="ficha-tecnica" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-amber-500/15`}>
         {/* Background Image with Deep Vignette */}
         <div className="absolute inset-0 z-0">
@@ -562,7 +772,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* 8. ABOUT SECTION - ART GALLERY PASSEPARTOUT PRESENTATION */}
+      {/* 9. ABOUT SECTION - ART GALLERY PASSEPARTOUT PRESENTATION */}
       {!isFree && (
         <section id="itinerario" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} max-w-6xl mx-auto relative z-10`}>
           <div className={`grid ${isMobile ? 'grid-cols-1 gap-8' : 'md:grid-cols-2 gap-16'} items-center`}>
@@ -622,7 +832,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 9. SERVICIOS & AMENIDADES DE ALTA GAMA INCLUIDOS */}
+      {/* 10. SERVICIOS & AMENIDADES DE ALTA GAMA INCLUIDOS */}
       <section id="amenidades" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-amber-500/20`}>
         {/* Background Image with Deep Luxury Fade */}
         <div className="absolute inset-0 z-0">
@@ -677,7 +887,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* 10. PERFIL DEL GUÍA CONCIERGE OFICIAL CON AMBIENTE DE PALACIO */}
+      {/* 11. PERFIL DEL GUÍA CONCIERGE OFICIAL CON AMBIENTE DE PALACIO */}
       <section id="guia-concierge" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden`}>
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
@@ -768,7 +978,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* 11. ITINERARIO TIMELINE CON FONDO DE CORDILLERA */}
+      {/* 12. ITINERARIO TIMELINE CON FONDO DE CORDILLERA */}
       {data.itinerary && data.itinerary.length > 0 && (
         <section id="itinerario-timeline" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-amber-500/20`}>
           <div className="absolute inset-0 z-0">
@@ -810,7 +1020,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 12. PRIVILEGIOS & FEATURES (Numbered Gold Membership Cards) */}
+      {/* 13. PRIVILEGIOS & FEATURES (Numbered Gold Membership Cards) */}
       {!isFree && (
         <section id="privilegios" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} max-w-6xl mx-auto relative z-10`}>
           <div className={`text-center ${isMobile ? 'mb-8' : 'mb-14'}`}>
@@ -851,7 +1061,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 13. COMPROMISO DE EXCELENCIA & GARANTÍAS CON CIELO ESTRELLADO ANDINO */}
+      {/* 14. COMPROMISO DE EXCELENCIA & GARANTÍAS CON CIELO ESTRELLADO ANDINO */}
       <section id="garantias" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-neutral-900`}>
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
@@ -925,7 +1135,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* 14. LOGISTICS: EXCLUSIONES & EQUIPAJE VIP */}
+      {/* 15. LOGISTICS: EXCLUSIONES & EQUIPAJE VIP */}
       {((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
         <section className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-[#0a080e] border-b border-neutral-900 relative z-10`}>
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
@@ -969,7 +1179,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 15. PINTEREST PINBOARD GALLERY */}
+      {/* 16. PINTEREST PINBOARD GALLERY */}
       {!isFree && (
         <PinterestPinboard
           images={data.galleryImages}
@@ -982,7 +1192,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         />
       )}
 
-      {/* 16. TESTIMONIALS - ADVANCE ONLY */}
+      {/* 17. TESTIMONIALS - ADVANCE ONLY */}
       {isAdvance && data.testimonials && data.testimonials.length > 0 && (
         <section className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} bg-[#0a080e] border-b border-neutral-900 relative z-10`}>
           <div className="max-w-4xl mx-auto text-center">
@@ -1010,7 +1220,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 17. SALÓN VIP & PUNTO DE ENCUENTRO EN CUSCO CON PATIO VIRREINAL */}
+      {/* 18. SALÓN VIP & PUNTO DE ENCUENTRO EN CUSCO CON PATIO VIRREINAL */}
       <section id="lounge-vip" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-b border-neutral-900`}>
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
@@ -1096,7 +1306,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* 18. TOUR SUPPORT & FAQS */}
+      {/* 19. TOUR SUPPORT & FAQS */}
       <TourSupportAndFaqs
         faqs={data.faqs}
         tourName={data.name || data.hero?.title || 'Experiencia VIP'}
@@ -1109,7 +1319,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         lang={currentLang}
       />
 
-      {/* 19. MAJESTIC FINAL CALL TO ACTION */}
+      {/* 20. MAJESTIC FINAL CALL TO ACTION */}
       {!isFree && (
         <section id="contacto" className={`relative ${isMobile ? 'py-16 px-4' : 'py-28 px-8'} text-center overflow-hidden border-t border-amber-500/20`}>
           <div className="absolute inset-0 z-0">
@@ -1162,13 +1372,23 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 20. FOOTER */}
+      {/* 21. FOOTER */}
       <footer className="py-8 text-center text-neutral-500 text-xs border-t border-neutral-900 relative z-10 bg-[#0a080e]">
         <p className="tracking-wide">© 2026 Cusco Creativos S.A.C. — Edición Luxury Collection.</p>
       </footer>
 
       {/* Quote Modal */}
-      <QuoteModal isOpen={isQuoteOpen} onClose={() => setIsQuoteOpen(false)} landing={data} />
+      <QuoteModal 
+        isOpen={isQuoteOpen} 
+        onClose={() => {
+          setIsQuoteOpen(false);
+          setSelectedTourForQuote(null);
+        }} 
+        landing={{
+          ...data,
+          name: selectedTourForQuote || data.name
+        }} 
+      />
     </div>
   );
 }
