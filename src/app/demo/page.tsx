@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { 
   FileText, Globe, CalendarDays, Sparkles, TrendingUp, ArrowUpRight, 
   ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download,
-  Layers, Pin, LayoutTemplate, LayoutGrid, List, User, Tag
+  Layers, Pin, LayoutTemplate, LayoutGrid, List, User, Tag,
+  ChevronLeft, ChevronRight, SlidersHorizontal
 } from 'lucide-react';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, LandingData } from '@/data/landingStore';
@@ -18,6 +19,40 @@ export default function DemoDashboard() {
   const [viewMode, setViewMode] = useState<'cards' | 'table'>('table');
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
   const [selectedLandingForDeploy, setSelectedLandingForDeploy] = useState<LandingData | null>(null);
+
+  // Table horizontal scroll sync refs and state
+  const tableContainerRef = useRef<HTMLDivElement>(null);
+  const topScrollRef = useRef<HTMLDivElement>(null);
+  const [tableScrollWidth, setTableScrollWidth] = useState(1200);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
+
+  const isSyncingTopScroll = useRef(false);
+  const isSyncingTableScroll = useRef(false);
+
+  const handleTopScroll = () => {
+    if (isSyncingTableScroll.current) return;
+    isSyncingTopScroll.current = true;
+    if (tableContainerRef.current && topScrollRef.current) {
+      tableContainerRef.current.scrollLeft = topScrollRef.current.scrollLeft;
+      const el = tableContainerRef.current;
+      setCanScrollLeft(el.scrollLeft > 10);
+      setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+    }
+    setTimeout(() => { isSyncingTopScroll.current = false; }, 50);
+  };
+
+  const handleTableScroll = () => {
+    if (isSyncingTopScroll.current) return;
+    isSyncingTableScroll.current = true;
+    if (tableContainerRef.current && topScrollRef.current) {
+      topScrollRef.current.scrollLeft = tableContainerRef.current.scrollLeft;
+      const el = tableContainerRef.current;
+      setCanScrollLeft(el.scrollLeft > 10);
+      setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+    }
+    setTimeout(() => { isSyncingTopScroll.current = false; }, 50);
+  };
 
   useEffect(() => {
     const handleFocus = () => setProjects(getStoredLandings());
@@ -39,6 +74,34 @@ export default function DemoDashboard() {
       return matchesSearch && matchesStatus && matchesObjective;
     });
   }, [projects, searchQuery, statusFilter, objectiveFilter]);
+
+  useEffect(() => {
+    const measure = () => {
+      if (tableContainerRef.current) {
+        const el = tableContainerRef.current;
+        setTableScrollWidth(el.scrollWidth);
+        setCanScrollLeft(el.scrollLeft > 10);
+        setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+      }
+    };
+    measure();
+    const timer = setTimeout(measure, 150);
+    window.addEventListener('resize', measure);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', measure);
+    };
+  }, [filteredProjects, viewMode]);
+
+  const scrollToStart = () => {
+    tableContainerRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
+  };
+
+  const scrollToEnd = () => {
+    if (tableContainerRef.current) {
+      tableContainerRef.current.scrollTo({ left: tableContainerRef.current.scrollWidth, behavior: 'smooth' });
+    }
+  };
 
 
   const totalPublished = projects.filter(p => p.status === 'published').length;
@@ -493,18 +556,79 @@ export default function DemoDashboard() {
         {/* ========================================================= */}
         {viewMode === 'table' && (
           <div className="rounded-2xl border border-slate-200/90 bg-white shadow-xs overflow-hidden animate-in fade-in duration-300">
-            {/* Table Scrollable Container with Hidden Scrollbars */}
-            <div className="overflow-x-auto modern-table-container">
+            
+            {/* BARRA SUPERIOR DE CONTROL Y DESPLAZAMIENTO HORIZONTAL */}
+            <div className="bg-slate-50/95 border-b border-slate-200/90 px-4 py-2 flex items-center justify-between gap-3 text-xs select-none">
+              <div className="flex items-center gap-2 text-slate-500 font-medium">
+                <span className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 px-2.5 py-1 rounded-lg text-[11px] font-bold border border-blue-200/70 shadow-2xs">
+                  <SlidersHorizontal size={12} className="text-blue-600" />
+                  Barra de Desplazamiento
+                </span>
+                <span className="hidden sm:inline text-slate-400">|</span>
+                <span className="hidden sm:inline text-slate-500 text-[11px]">
+                  Desplázate horizontalmente o usa los botones directos para ver todas las acciones
+                </span>
+              </div>
+
+              {/* Botones de navegación horizontal rápida */}
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button
+                  type="button"
+                  onClick={scrollToStart}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border ${
+                    canScrollLeft 
+                      ? 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300 shadow-2xs active:scale-98' 
+                      : 'bg-slate-100 text-slate-400 border-slate-200 cursor-default'
+                  }`}
+                  title="Ir al inicio de la tabla (Tour y datos)"
+                >
+                  <ChevronLeft size={14} />
+                  <span>Inicio</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={scrollToEnd}
+                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border ${
+                    canScrollRight 
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white border-blue-600 shadow-2xs active:scale-98' 
+                      : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300 shadow-2xs'
+                  }`}
+                  title="Ir directamente a la columna de Acciones"
+                >
+                  <span>Ir a Acciones</span>
+                  <ChevronRight size={14} />
+                </button>
+              </div>
+            </div>
+
+            {/* Barra de desplazamiento nativa superior sincronizada */}
+            <div 
+              ref={topScrollRef}
+              onScroll={handleTopScroll}
+              className="overflow-x-auto modern-table-container bg-slate-100/80 border-b border-slate-200/90 h-3 cursor-ew-resize"
+              title="Arrastra esta barra superior para desplazarte por la tabla"
+            >
+              <div style={{ width: `${Math.max(tableScrollWidth, 1100)}px` }} className="h-1" />
+            </div>
+
+            {/* Table Scrollable Container with synchronized scroll */}
+            <div 
+              ref={tableContainerRef}
+              onScroll={handleTableScroll}
+              className="overflow-x-auto modern-table-container relative"
+            >
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-slate-50/90 text-slate-500 text-[11px] uppercase tracking-wider font-extrabold border-b border-slate-200/80 select-none">
-                    <th className="px-5 py-3.5 min-w-[250px]">Tour & Guía Asignado</th>
+                    <th className="px-4 py-3.5 min-w-[220px]">Tour & Guía Asignado</th>
                     <th className="px-3.5 py-3.5 hidden md:table-cell whitespace-nowrap">Plantilla</th>
                     <th className="px-3.5 py-3.5 hidden sm:table-cell whitespace-nowrap">Objetivo</th>
                     <th className="px-3.5 py-3.5 whitespace-nowrap">Estado</th>
                     <th className="px-3.5 py-3.5 hidden lg:table-cell whitespace-nowrap text-center">Vistas</th>
-                    <th className="px-4 py-3.5 hidden xl:table-cell whitespace-nowrap min-w-[130px]">Fecha</th>
-                    <th className="px-5 py-3.5 whitespace-nowrap text-right min-w-[290px]">Acciones</th>
+                    <th className="px-4 py-3.5 hidden xl:table-cell whitespace-nowrap min-w-[120px]">Fecha</th>
+                    <th className="px-4 py-3.5 whitespace-nowrap text-right min-w-[270px] sticky right-0 bg-slate-50/95 backdrop-blur-md shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.08)] z-20">
+                      Acciones
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-sm">
@@ -529,7 +653,7 @@ export default function DemoDashboard() {
                       return (
                         <tr key={p.id} className="hover:bg-slate-50/70 transition-colors group">
                           
-                          {/* Tour Name & Guide (Badges limpios sin quiebres de texto antiestéticos) */}
+                          {/* Tour Name & Guide */}
                           <td className="px-4 py-3.5">
                             <div className="flex items-start gap-2.5">
                               <div className="w-9 h-9 rounded-xl bg-slate-100/90 group-hover:bg-blue-50 text-slate-700 group-hover:text-blue-600 flex items-center justify-center shrink-0 text-base border border-slate-200/80 group-hover:border-blue-200 transition-colors shadow-2xs mt-0.5">
@@ -622,22 +746,22 @@ export default function DemoDashboard() {
                             </span>
                           </td>
 
-                          {/* Date: Libre de solapamiento, 100% visible */}
-                          <td className="px-4 py-3.5 hidden xl:table-cell text-xs text-slate-600 font-medium whitespace-nowrap min-w-[130px]">
+                          {/* Date: Libre de solapamiento */}
+                          <td className="px-4 py-3.5 hidden xl:table-cell text-xs text-slate-600 font-medium whitespace-nowrap min-w-[120px]">
                             <div className="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200/60 w-fit">
                               <CalendarDays size={13} className="text-slate-400 shrink-0" />
                               <span className="font-mono text-xs font-bold text-slate-700">{p.date}</span>
                             </div>
                           </td>
 
-                          {/* Action buttons: Flujo natural sin encimarse sobre Fecha */}
-                          <td className="px-5 py-3.5 text-right whitespace-nowrap min-w-[290px]">
+                          {/* Action buttons: Sticky right column, 100% visible on any screen */}
+                          <td className="px-4 py-3.5 text-right whitespace-nowrap min-w-[270px] sticky right-0 bg-white/95 group-hover:bg-slate-50/95 backdrop-blur-md shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.08)] z-10 transition-colors">
                             <div className="flex items-center justify-end gap-1.5">
                               
                               {/* Primary: Ver / Editar */}
                               <Link
                                 href={`/demo/preview?slug=${p.slug}`}
-                                className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-xl font-bold text-xs transition-all shadow-xs hover:scale-102 active:scale-98 shrink-0"
+                                className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-xl font-bold text-xs transition-all shadow-xs hover:scale-102 active:scale-98 shrink-0"
                                 title="Abrir editor y previsualizador"
                               >
                                 <Eye size={13} />
@@ -647,7 +771,7 @@ export default function DemoDashboard() {
                               {/* Export / Deploy Modal */}
                               <button
                                 onClick={() => setSelectedLandingForDeploy(p)}
-                                className="inline-flex items-center gap-1 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/90 px-2.5 py-1.5 rounded-xl font-bold text-xs transition-colors cursor-pointer shrink-0"
+                                className="inline-flex items-center gap-1 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/90 px-2 py-1.5 rounded-xl font-bold text-xs transition-colors cursor-pointer shrink-0"
                                 title="Exportar ZIP o desplegar en Vercel"
                               >
                                 <Download size={13} className="text-amber-700" />
@@ -655,7 +779,7 @@ export default function DemoDashboard() {
                               </button>
 
                               {/* Fast Action Icons in clean tactile 32px buttons */}
-                              <div className="flex items-center gap-1 ml-1 border-l border-slate-200/80 pl-1.5 shrink-0">
+                              <div className="flex items-center gap-1 ml-0.5 border-l border-slate-200/80 pl-1.5 shrink-0">
                                 <a
                                   href={`/p/${p.slug}`}
                                   target="_blank"
@@ -663,7 +787,7 @@ export default function DemoDashboard() {
                                   className="w-8 h-8 rounded-xl bg-slate-100/90 hover:bg-blue-50 text-slate-500 hover:text-blue-600 border border-slate-200/80 flex items-center justify-center transition-all hover:scale-105"
                                   title="Abrir página pública en pestaña nueva"
                                 >
-                                  <ExternalLink size={14} />
+                                  <ExternalLink size={13} />
                                 </a>
 
                                 <button
@@ -675,7 +799,7 @@ export default function DemoDashboard() {
                                   }`}
                                   title={isCopied ? '¡Enlace copiado!' : 'Copiar enlace público'}
                                 >
-                                  {isCopied ? <Check size={14} /> : <Copy size={14} />}
+                                  {isCopied ? <Check size={13} /> : <Copy size={13} />}
                                 </button>
 
                                 <button
@@ -683,7 +807,7 @@ export default function DemoDashboard() {
                                   className="w-8 h-8 rounded-xl bg-slate-100/90 hover:bg-red-50 text-slate-400 hover:text-red-600 border border-slate-200/80 flex items-center justify-center transition-all hover:scale-105 cursor-pointer"
                                   title="Eliminar proyecto"
                                 >
-                                  <Trash2 size={14} />
+                                  <Trash2 size={13} />
                                 </button>
                               </div>
                             </div>
