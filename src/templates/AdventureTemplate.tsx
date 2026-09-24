@@ -177,68 +177,84 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
   return (
     <div className="min-h-screen bg-[#FDFDFD] font-sans text-slate-800 selection:bg-slate-900 selection:text-white">
       
-      {/* 1. TOP NAVBAR */}
-      <nav className="sticky top-0 w-full z-40 bg-white/90 backdrop-blur-md border-b border-slate-100 px-4 sm:px-8 py-3.5 flex justify-between items-center transition-all">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center font-black text-xs shadow-sm">
-            <Mountain size={16} />
+      {/* 1. TOP NAVBAR (Espacioso, Robusto & Alta Presencia) */}
+      <nav className="sticky top-0 w-full z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-xs transition-all">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 sm:py-5 flex justify-between items-center gap-4">
+          
+          {/* Brand Logo & Authority Badge */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-sm shadow-md shadow-slate-900/10 shrink-0">
+              <Mountain size={22} className="text-white" />
+            </div>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2">
+                <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 leading-none">
+                  Trek<span className="text-blue-600">Explorer</span>
+                </span>
+                <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[10px] font-black uppercase tracking-wider border border-blue-200/60">
+                  Perú
+                </span>
+              </div>
+              <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 mt-1 hidden xs:block">
+                Expediciones de Montaña & Aventura
+              </span>
+            </div>
           </div>
-          <span className="text-base sm:text-lg font-black tracking-tight text-slate-900">
-            Trek<span className="text-blue-600">Explorer</span>
-          </span>
-        </div>
 
-        {!isMobile && (
-          <div className="hidden md:flex items-center gap-7 text-xs font-bold text-slate-600">
-            <a href="#destinos" className="hover:text-slate-900 transition-colors">Destinos</a>
-            <a href="#iconic" className="hover:text-slate-900 transition-colors">Tours Icónicos</a>
-            <a href="#itinerario" className="hover:text-slate-900 transition-colors">Itinerario</a>
-            <a href="#incluye" className="hover:text-slate-900 transition-colors">Qué Incluye</a>
-            <a href="#soporte-faq" className="hover:text-slate-900 transition-colors">FAQ</a>
-          </div>
-        )}
+          {/* Nav Links */}
+          {!isMobile && (
+            <div className="hidden lg:flex items-center gap-8 xl:gap-10 text-[14px] font-extrabold text-slate-700">
+              <a href="#destinos" className="hover:text-blue-600 transition-colors py-1">Destinos</a>
+              <a href="#iconic" className="hover:text-blue-600 transition-colors py-1">Tours Icónicos</a>
+              <a href="#itinerario" className="hover:text-blue-600 transition-colors py-1">Itinerario</a>
+              <a href="#incluye" className="hover:text-blue-600 transition-colors py-1">Qué Incluye</a>
+              <a href="#soporte-faq" className="hover:text-blue-600 transition-colors py-1">FAQ</a>
+            </div>
+          )}
 
-        <div className="flex items-center gap-2">
-          {data.objective === 'both' ? (
-            <>
+          {/* Action CTAs */}
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            {data.objective === 'both' ? (
+              <>
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-600/20 hover:scale-102 flex items-center gap-2 cursor-pointer"
+                >
+                  <MessageCircle size={17} />
+                  <span className="hidden sm:inline">WhatsApp</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setIsQuoteOpen(true)}
+                  className="bg-slate-900 hover:bg-slate-800 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm transition-all shadow-md hover:scale-102 flex items-center gap-2 cursor-pointer"
+                >
+                  <FileText size={17} />
+                  <span>Cotizar</span>
+                </button>
+              </>
+            ) : isQuote ? (
+              <button
+                type="button"
+                onClick={() => setIsQuoteOpen(true)}
+                className="bg-slate-900 hover:bg-slate-800 text-white px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-full font-extrabold text-xs sm:text-sm transition-all shadow-lg hover:shadow-slate-900/20 hover:scale-102 active:scale-98 flex items-center gap-2.5 cursor-pointer"
+              >
+                <FileText size={18} />
+                <span>Cotizar Expedición</span>
+              </button>
+            ) : (
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 sm:px-4 py-2 rounded-full font-bold text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+                className="bg-slate-900 hover:bg-slate-800 text-white px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-full font-extrabold text-xs sm:text-sm transition-all shadow-lg hover:shadow-slate-900/20 hover:scale-102 active:scale-98 flex items-center gap-2.5 cursor-pointer"
               >
-                <MessageCircle size={14} />
-                <span className="hidden sm:inline">WhatsApp</span>
+                <MessageCircle size={18} />
+                <span>Reservar por WhatsApp</span>
               </a>
-              <button
-                type="button"
-                onClick={() => setIsQuoteOpen(true)}
-                className="bg-slate-900 hover:bg-slate-800 text-white px-3.5 sm:px-4 py-2 rounded-full font-bold text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
-              >
-                <FileText size={14} />
-                <span>Cotizar</span>
-              </button>
-            </>
-          ) : isQuote ? (
-            <button
-              type="button"
-              onClick={() => setIsQuoteOpen(true)}
-              className="bg-slate-900 hover:bg-slate-800 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
-            >
-              <FileText size={14} />
-              <span>Cotizar Expedición</span>
-            </button>
-          ) : (
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-slate-900 hover:bg-slate-800 text-white px-4 sm:px-5 py-2 rounded-full font-bold text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
-            >
-              <MessageCircle size={14} />
-              <span>Reservar por WhatsApp</span>
-            </a>
-          )}
+            )}
+          </div>
         </div>
       </nav>
 
