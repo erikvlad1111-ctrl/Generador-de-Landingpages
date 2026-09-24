@@ -442,18 +442,149 @@ export const INITIAL_LANDINGS: LandingData[] = [
         'Piedra de los 12 Ángulos:Ingeniería milimétrica incaica.'
       ]
     }
+  },
+  {
+    id: '6',
+    name: 'Cusco Luxury Collection VIP',
+    slug: 'cusco-luxury-collection',
+    tier: 'advance',
+    guideName: 'Lic. Mateo Quispe & Concierge',
+    guideCert: 'Guía Oficial Colegiado DIRCETUR Cusco — Carné N° 4812',
+    guideLanguages: 'Español, English & Français',
+    guideAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop',
+    whatsapp: '+51984123456',
+    price: '$680 USD',
+    duration: '2 Días / 1 Noche',
+    difficulty: 'Confortable / Moderada',
+    groupType: '100% Privado Exclusivo',
+    targetAudience: 'Familias, Parejas VIP y Exploradores Exigentes',
+    destination: 'Cusco, Valle Sagrado & Machu Picchu',
+    altitude: '3,400 msnm',
+    objective: 'both',
+    template: 'premium',
+    language: 'es',
+    status: 'published',
+    date: '2026-09-24',
+    views: '1,450',
+    heroImage: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=2070&auto=format&fit=crop'
+    ],
+    hero: {
+      badge: 'Experiencia Exclusiva VIP',
+      title: 'Machu Picchu VIP & Tren Hiram Bingham',
+      subtitle: 'Descubre la maravilla del mundo con traslados en Mercedes Benz, tren con coche observatorio de lujo y un guía historiador colegiado exclusivo para ti.',
+      cta: 'Solicitar Cotización Privada'
+    },
+    about: {
+      title: 'Un viaje sagrado diseñado para los más exigentes',
+      content: 'Evita las largas colas y el estrés del turismo masivo. Nuestro servicio VIP te brinda acceso preferente, almuerzo gourmet en Belmond Sanctuary Lodge y asesoría personalizada de puerta a puerta.'
+    },
+    features: {
+      title: 'Privilegios de la Experiencia Presidencial',
+      items: [
+        'Tren Belmond Hiram Bingham:Viaja con música en vivo, cóctel de bienvenida Pisco Sour y coche observatorio al aire libre.',
+        'Guía Historiador Privado:Explicaciones profundas y personalizadas al ritmo de tu grupo.',
+        'Gastronomía de Autor:Almuerzo buffet gourmet incluido a las faldas de la ciudadela sagrada.',
+        'Asistencia 24/7 de Conserjería:Coordinador de viaje disponible permanentemente para cualquier solicitud.'
+      ]
+    },
+    includedServices: [
+      'Transporte turístico privado de alta gama (SUV ejecutiva climatizada con chofer profesional)',
+      'Boletos de ingreso preferenciales y completos a todos los recintos arqueológicos y monumentos',
+      'Tren panorámico de primera clase (Hiram Bingham de Belmond o Vistadome Observatory con servicio a bordo)',
+      'Guía oficial historiador colegiado bilingüe dedicado exclusivamente a tu grupo sin apuros',
+      'Gastronomía de autor: almuerzo gourmet de tiempos con maridaje o experiencia culinaria privada',
+      'Protocolo de altitud: balón de oxígeno medicinal de emergencia, oxímetro de pulso y botiquín de altura',
+      'Pick-up y drop-off de puerta a puerta en el lobby de tu hotel o villa en Cusco o Valle Sagrado',
+      'Kit de bienvenida andino con amenidades selectas y servicio de conserjería personalizada 24/7'
+    ],
+    notIncluded: [
+      'Vuelos comerciales internacionales o domésticos',
+      'Propinas voluntarias para guía y personal de servicio',
+      'Bebidas alcohólicas premium fuera del menú establecido',
+      'Seguro médico de viaje de alta montaña'
+    ],
+    whatToBring: [
+      'Pasaporte original físico vigente',
+      'Ropa cómoda y abrigadora para la tarde/noche',
+      'Calzado cómodo para caminata ligera',
+      'Bloqueador solar SPF 50+ y repelente de insectos',
+      'Cámara fotográfica o teléfono con batería cargada'
+    ],
+    itinerary: [
+      {
+        step: 'Día 1',
+        title: 'Cusco a Aguas Calientes en Tren de Lujo Hiram Bingham',
+        desc: 'Recojo privado en tu hotel en Cusco hacia la estación. Viaje escénico a través de la cuenca del Valle Sagrado con música andina a bordo y vistas panorámicas. Llegada al pueblo de Machu Picchu e instalación en hotel boutique 5 estrellas.'
+      },
+      {
+        step: 'Día 2',
+        title: 'Exploración Mística de Machu Picchu & Almuerzo Gourmet',
+        desc: 'Ascenso en bus exclusivo hacia la ciudadela inca. Visita guiada privada de 3 horas por los recintos sagrados, templos y terrazas. Almuerzo buffet de autor en Belmond Sanctuary Lodge y retorno en tren de primera clase a Cusco.'
+      }
+    ],
+    faqs: [
+      {
+        q: '¿Qué incluye exactamente el servicio VIP?',
+        a: 'Incluye boletos de tren de lujo ida y vuelta, entradas circuito preferente a Machu Picchu, guía privado certificado, almuerzo gourmet y transporte privado desde y hacia tu hotel en Cusco.'
+      },
+      {
+        q: '¿Con cuánta anticipación debo reservar?',
+        a: 'Recomendamos reservar con al menos 3 a 4 semanas de antelación debido al cupo limitado diario de los trenes de lujo y accesos a la ciudadela.'
+      }
+    ],
+    trustBadges: [
+      'Licencia Oficial DIRCETUR Cusco',
+      'Sello Internacional Safe Travels',
+      'Operador Formal RUC 20 Verificado',
+      'Atención Médica & Oxígeno Permanente'
+    ],
+    testimonials: [
+      {
+        name: 'Alejandro y Marcela',
+        origin: 'Madrid, España',
+        comment: 'La mejor experiencia de nuestra vida en Perú. Carlos, nuestro guía, nos explicó la historia con una pasión que jamás olvidaremos.',
+        rating: 5
+      },
+      {
+        name: 'David Miller',
+        origin: 'California, USA',
+        comment: 'Zero stress, luxury train ride was stunning. Worth every single dollar. 100% recommended!',
+        rating: 5
+      }
+    ],
+    officeAddress: 'Portal de Carnicerías 236, Plaza de Armas, Centro Histórico, Cusco - Perú',
+    officeHours: 'Lunes a Domingo: 07:00 AM – 09:00 PM (Horario Corrido)',
+    mapsUrl: 'https://maps.google.com/?q=Plaza+de+Armas+Cusco+Peru'
   }
 ];
 
-const STORAGE_KEY = 'cusco_creativos_landings_v3';
+const STORAGE_KEY = 'cusco_creativos_landings_v4';
 
 export function getStoredLandings(): LandingData[] {
   if (typeof window === 'undefined') return INITIAL_LANDINGS;
   try {
     const data = localStorage.getItem(STORAGE_KEY);
     if (!data) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_LANDINGS));
-      return INITIAL_LANDINGS;
+      // Check if previous versions had custom landings
+      let migrated: LandingData[] = [...INITIAL_LANDINGS];
+      try {
+        const oldData = localStorage.getItem('cusco_creativos_landings_v3') || localStorage.getItem('cusco_creativos_landings_v2');
+        if (oldData) {
+          const oldList: LandingData[] = JSON.parse(oldData);
+          if (Array.isArray(oldList)) {
+            const initialIds = new Set(INITIAL_LANDINGS.map(l => l.id));
+            const customItems = oldList.filter(l => !initialIds.has(l.id));
+            migrated = [...INITIAL_LANDINGS, ...customItems];
+          }
+        }
+      } catch {}
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
+      return migrated;
     }
     const parsed: LandingData[] = JSON.parse(data);
     if (Array.isArray(parsed)) {
@@ -463,6 +594,13 @@ export function getStoredLandings(): LandingData[] {
         if (!existingIds.has(init.id)) {
           parsed.push(init);
           updated = true;
+        } else if (init.id === '6') {
+          // Always ensure Cusco Luxury Collection has latest template & content
+          const idx = parsed.findIndex(p => p.id === '6');
+          if (idx >= 0 && (parsed[idx].template !== 'premium' || !parsed[idx].slug.includes('luxury'))) {
+            parsed[idx] = init;
+            updated = true;
+          }
         }
       }
       if (updated) {

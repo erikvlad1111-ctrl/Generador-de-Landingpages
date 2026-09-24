@@ -374,8 +374,14 @@ export default function DemoDashboard() {
                                 }`}>
                                   {p.tier || 'advance'}
                                 </span>
-                                <span className={`text-[11px] font-bold ${p.template === 'agency-portal' ? 'text-[#FF5500]' : 'text-slate-500 capitalize'}`}>
-                                  {p.template === 'agency-portal' ? 'Diseño 1' : p.template}
+                                <span className={`text-[11px] font-bold ${
+                                  p.template === 'agency-portal' 
+                                    ? 'text-[#FF5500]' 
+                                    : p.template === 'premium'
+                                    ? 'text-amber-600 font-extrabold'
+                                    : 'text-slate-500 capitalize'
+                                }`}>
+                                  {p.template === 'agency-portal' ? 'Diseño 1' : p.template === 'premium' ? '👑 Luxury VIP' : p.template}
                                 </span>
                               </div>
                               <Link 
@@ -527,7 +533,7 @@ export default function DemoDashboard() {
                           <td className="px-4 py-3.5">
                             <div className="flex items-start gap-2.5">
                               <div className="w-9 h-9 rounded-xl bg-slate-100/90 group-hover:bg-blue-50 text-slate-700 group-hover:text-blue-600 flex items-center justify-center shrink-0 text-base border border-slate-200/80 group-hover:border-blue-200 transition-colors shadow-2xs mt-0.5">
-                                {p.template === 'agency-portal' ? '🔥' : p.template === 'adventure' ? '🏔️' : p.template === 'premium' ? '✨' : p.template === 'boho-nature' ? '📷' : '🏛️'}
+                                {p.template === 'agency-portal' ? '🔥' : p.template === 'adventure' ? '🏔️' : p.template === 'premium' ? '👑' : p.template === 'boho-nature' ? '📷' : '🏛️'}
                               </div>
                               <div className="min-w-0 space-y-1 flex-1">
                                 <div className="flex items-center gap-1.5 flex-wrap">
@@ -571,9 +577,11 @@ export default function DemoDashboard() {
                             <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold ${
                               p.template === 'agency-portal' 
                                 ? 'bg-orange-50 text-[#FF5500] border border-orange-200 font-bold' 
+                                : p.template === 'premium'
+                                ? 'bg-amber-50 text-amber-600 border border-amber-300 font-bold'
                                 : 'capitalize bg-slate-100 text-slate-600 border border-slate-200/60'
                             }`}>
-                              {p.template === 'agency-portal' ? 'Diseño 1' : p.template}
+                              {p.template === 'agency-portal' ? 'Diseño 1' : p.template === 'premium' ? '👑 Luxury VIP' : p.template}
                             </span>
                           </td>
 

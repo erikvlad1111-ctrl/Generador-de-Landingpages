@@ -414,13 +414,13 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
   },
   {
     id: 'luxury-sunset',
-    name: '6. Luxury Sunset & Gold Collection',
+    name: '6. Cusco Luxury Collection VIP',
     subtitle: 'Moodboard Crepuscular VIP en Modo Oscuro con Acentos de Oro Imperial',
     category: 'Alta Gama & VIP',
     template: 'premium',
     recommendedTier: 'advance',
     targetTour: 'Machu Picchu Hiram Bingham VIP, Vuelos en Helicóptero, Glamping de Lujo',
-    demoSlug: 'machu-picchu-vip',
+    demoSlug: 'cusco-luxury-collection',
     likesCount: 3150,
     previewImage: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
     gridSampleImages: [

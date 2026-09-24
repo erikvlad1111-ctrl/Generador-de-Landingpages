@@ -2103,91 +2103,203 @@ export default function NewLandingDemo() {
 
               {/* 3. PLANTILLA PREMIUM: LUJO & EXCLUSIVO (VIP) */}
               {template === 'premium' && (
-                <div className="flex flex-col min-h-full bg-gradient-to-b from-[#141210] to-[#0A0A0A]">
-                  <div className="p-4 space-y-3">
-                    <div className="flex justify-between items-center text-[10px] pb-2 border-b border-amber-500/20">
-                      <span className="text-amber-400 font-black tracking-widest flex items-center gap-1">
-                        <Crown size={12} /> CUSCO LUXURY VIP
+                <div className="flex flex-col min-h-full bg-[#0a080e] text-stone-200">
+                  {/* Top Live Trust Strip */}
+                  <div className="bg-gradient-to-r from-amber-950/80 via-black to-amber-950/80 border-b border-amber-500/20 px-3 py-1.5 flex items-center justify-between text-[8px] text-amber-300 font-bold">
+                    <span className="flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                      Salidas Diarias 2026
+                    </span>
+                    <span className="text-amber-200">⭐ 4.9/5 • Safe Travels</span>
+                  </div>
+
+                  {/* Header bar */}
+                  <div className="px-4 py-2.5 flex items-center justify-between border-b border-amber-500/15 bg-black/40 backdrop-blur-md">
+                    <div className="flex items-center gap-1.5">
+                      <Crown size={13} className="text-amber-400 shrink-0" />
+                      <span className="text-[11px] font-black tracking-widest text-amber-300">
+                        CUSCO LUXURY VIP
                       </span>
-                      <span className="bg-amber-500/20 text-amber-300 font-bold px-2 py-0.5 rounded-full text-[9px] border border-amber-500/30">
-                        5 STARS
-                      </span>
                     </div>
-
-                    <div className="relative h-44 rounded-2xl overflow-hidden border border-amber-500/30">
-                      <Image src={activeHeroImg} alt="Luxury" fill sizes="400px" className="object-cover opacity-80" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent" />
-                      <div className="absolute bottom-2 left-2 right-2">
-                        <span className="text-[9px] text-amber-300 font-bold uppercase tracking-wider block">Servicio Privado Exclusivo</span>
-                        <h3 className="text-sm font-black text-white line-clamp-1">{name || 'Machu Picchu Hiram Bingham VIP'}</h3>
-                      </div>
-                    </div>
-
-                    <div className="space-y-1.5 text-[10px] text-stone-300">
-                      <div className="p-2 rounded-xl bg-stone-900/90 border border-stone-800 space-y-1">
-                        <div className="flex justify-between text-white font-bold">
-                          <span>Almuerzo Gourmet Belmond</span>
-                          <span className="text-amber-400">Incluido</span>
-                        </div>
-                        <div className="flex justify-between text-stone-400 text-[9px]">
-                          <span>Guía Historiador Colegiado</span>
-                          <span>{guideName || 'Carlos Mendoza'}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2 pt-1">
-                      <div className="flex items-baseline justify-between">
-                        <span className="text-[10px] text-stone-400 uppercase">Tarifa por persona:</span>
-                        <span className="text-base font-black text-amber-400">{price || '$890 USD'}</span>
-                      </div>
-                      <div className="w-full bg-gradient-to-r from-amber-500 to-amber-700 text-stone-950 font-black py-2.5 px-3 rounded-xl text-center text-xs shadow-lg flex items-center justify-center gap-1.5">
-                        <Crown size={14} />
-                        <span>{objective === 'quote' ? 'Solicitar Propuesta VIP' : objective === 'both' ? 'WhatsApp & Propuesta VIP' : 'Asesor Privado en Vivo'}</span>
-                      </div>
+                    <div className="flex items-center gap-1 text-[8px] font-bold text-amber-400/80 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
+                      <span>ES</span>
+                      <span>•</span>
+                      <span>EN</span>
+                      <span>•</span>
+                      <span>FR</span>
                     </div>
                   </div>
 
-                  {/* Mini Tour Catalog Section */}
-                  <div className="p-3 bg-[#080706] border-t border-amber-500/20 space-y-2 flex-1">
-                    <div className="flex items-center justify-between text-[10px]">
-                      <span className="font-extrabold text-amber-200">Catálogo de Tours Exclusivos</span>
-                      <span className="text-amber-400 font-bold text-[9px]">Ver todos (6)</span>
+                  <div className="p-3.5 space-y-3">
+                    {/* Hero Card */}
+                    <div className="relative h-48 rounded-2xl overflow-hidden border border-amber-500/30 shadow-lg shadow-black/80">
+                      <Image src={activeHeroImg} alt="Luxury" fill sizes="400px" className="object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0a080e] via-[#0a080e]/40 to-transparent" />
+                      
+                      <div className="absolute top-2 left-2 flex items-center gap-1 bg-amber-500/90 text-stone-950 px-2 py-0.5 rounded-full text-[8px] font-black tracking-wider uppercase shadow-md">
+                        <Crown size={9} />
+                        <span>Colección Privada 5★</span>
+                      </div>
+
+                      <div className="absolute bottom-2.5 left-2.5 right-2.5 space-y-1">
+                        <span className="text-[9px] text-amber-300 font-bold uppercase tracking-wider block">
+                          Servicio Privado Exclusivo
+                        </span>
+                        <h3 className="text-sm font-black text-white leading-tight line-clamp-2">
+                          {name || 'Cusco Luxury Collection VIP'}
+                        </h3>
+                        <div className="flex items-center justify-between pt-1">
+                          <span className="text-xs font-black text-amber-400">
+                            {price || '$890 USD'} <span className="text-[8px] font-normal text-stone-300">/ persona</span>
+                          </span>
+                          <span className="text-[8px] text-stone-300 bg-stone-900/80 px-2 py-0.5 rounded-md border border-stone-700">
+                            {duration || '2 Días / 1 Noche'}
+                          </span>
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="bg-stone-900/90 rounded-xl p-2 border border-amber-500/20 flex items-center gap-2.5">
-                      <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-stone-800 shrink-0">
-                        <Image src={activeHeroImg} alt="Tour" fill sizes="80px" className="object-cover" />
+                    {/* Dual Action Buttons */}
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-black py-2 px-2 rounded-xl text-center text-[10px] shadow-md flex items-center justify-center gap-1 cursor-pointer">
+                        <Crown size={12} className="shrink-0" />
+                        <span className="truncate">{objective === 'quote' ? 'Solicitar VIP' : 'Propuesta VIP'}</span>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-[11px] font-black text-white truncate">{name || 'Machu Picchu Hiram Bingham VIP'}</h4>
-                        <p className="text-[9px] text-stone-400">{duration || 'Full Day'} • {destination || 'Cusco'}</p>
-                        <span className="text-xs font-black text-amber-400">{price || '$890 USD'}</span>
+                      <div className="bg-stone-900/90 border border-emerald-500/40 text-emerald-300 font-bold py-2 px-2 rounded-xl text-center text-[10px] flex items-center justify-center gap-1">
+                        <MessageCircle size={12} className="text-emerald-400 shrink-0" />
+                        <span className="truncate">WhatsApp</span>
                       </div>
                     </div>
 
-                    {/* Mini Oficina Física & Google Maps Card */}
-                    <div className="p-2.5 bg-stone-900/95 rounded-xl border border-amber-500/20 space-y-1 text-[9px]">
-                      <div className="flex items-center gap-1.5 text-amber-400 font-bold">
-                        <MapPin size={11} className="text-amber-400 shrink-0" />
-                        <span>Oficina Física en Cusco:</span>
+                    {/* Sensory Highlights (Momentos Inolvidables) */}
+                    <div className="bg-gradient-to-br from-amber-950/30 to-stone-950 p-2.5 rounded-xl border border-amber-500/20 space-y-2">
+                      <div className="flex items-center justify-between text-[10px]">
+                        <span className="font-extrabold text-amber-300 flex items-center gap-1">
+                          <Sparkles size={11} className="text-amber-400" /> Vivencias Sensoriales
+                        </span>
+                        <span className="text-stone-400 text-[8px]">100% Incluido</span>
                       </div>
-                      <p className="text-stone-300 line-clamp-1 text-[8px] pl-4">
-                        {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
-                      </p>
-                      <div className="flex items-center justify-between pt-1 pl-4 text-[8px]">
-                        <span className="text-emerald-400 font-semibold">{officeHours || 'Lun-Dom: 8am - 8pm'}</span>
-                        <span className="text-blue-400 font-bold flex items-center gap-0.5">
-                          <Navigation size={8} /> Maps Conectado
+                      <div className="grid grid-cols-3 gap-1.5 text-center text-[8px]">
+                        <div className="p-1.5 rounded-lg bg-stone-900/80 border border-amber-500/10">
+                          <span className="block text-[12px] mb-0.5">🍷</span>
+                          <span className="font-bold text-stone-200 line-clamp-1">Belmond Lodge</span>
+                        </div>
+                        <div className="p-1.5 rounded-lg bg-stone-900/80 border border-amber-500/10">
+                          <span className="block text-[12px] mb-0.5">🎷</span>
+                          <span className="font-bold text-stone-200 line-clamp-1">Hiram Bingham</span>
+                        </div>
+                        <div className="p-1.5 rounded-lg bg-stone-900/80 border border-amber-500/10">
+                          <span className="block text-[12px] mb-0.5">🚗</span>
+                          <span className="font-bold text-stone-200 line-clamp-1">SUV Privada</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Tours Catalog Mini List */}
+                    <div className="space-y-2 pt-1">
+                      <div className="flex items-center justify-between text-[10px]">
+                        <span className="font-extrabold text-white flex items-center gap-1">
+                          <Landmark size={11} className="text-amber-400" /> Tours & Paquetes Privados
+                        </span>
+                        <span className="text-amber-400 font-bold text-[8px] bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">6 VIP</span>
+                      </div>
+
+                      {/* Tour 1 */}
+                      <div className="bg-stone-900/90 rounded-xl p-2 border border-amber-500/20 flex items-center gap-2">
+                        <div className="relative w-11 h-11 rounded-lg overflow-hidden bg-stone-800 shrink-0 border border-amber-500/30">
+                          <Image src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=300&auto=format&fit=crop" alt="Hiram Bingham" fill sizes="80px" className="object-cover" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-[10px] font-black text-white truncate">Machu Picchu Hiram Bingham</h4>
+                          <p className="text-[8px] text-stone-400">Full Day • Belmond Lodge</p>
+                          <span className="text-[10px] font-black text-amber-400">$890 USD</span>
+                        </div>
+                        <span className="text-[8px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-1 rounded-md shrink-0">
+                          Ver
+                        </span>
+                      </div>
+
+                      {/* Tour 2 */}
+                      <div className="bg-stone-900/90 rounded-xl p-2 border border-amber-500/20 flex items-center gap-2">
+                        <div className="relative w-11 h-11 rounded-lg overflow-hidden bg-stone-800 shrink-0 border border-amber-500/30">
+                          <Image src="https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=300&auto=format&fit=crop" alt="Valle Sagrado VIP" fill sizes="80px" className="object-cover" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-[10px] font-black text-white truncate">Valle Sagrado & Hacienda</h4>
+                          <p className="text-[8px] text-stone-400">Huayoccari • Privado</p>
+                          <span className="text-[10px] font-black text-amber-400">$290 USD</span>
+                        </div>
+                        <span className="text-[8px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-1 rounded-md shrink-0">
+                          Ver
+                        </span>
+                      </div>
+
+                      {/* Tour 3 */}
+                      <div className="bg-stone-900/90 rounded-xl p-2 border border-amber-500/20 flex items-center gap-2">
+                        <div className="relative w-11 h-11 rounded-lg overflow-hidden bg-stone-800 shrink-0 border border-amber-500/30">
+                          <Image src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=300&auto=format&fit=crop" alt="Humantay Glamping" fill sizes="80px" className="object-cover" />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h4 className="text-[10px] font-black text-white truncate">Humantay Glamping Dome</h4>
+                          <p className="text-[8px] text-stone-400">Domo Geodésico • Chef</p>
+                          <span className="text-[10px] font-black text-amber-400">$320 USD</span>
+                        </div>
+                        <span className="text-[8px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-1 rounded-md shrink-0">
+                          Ver
                         </span>
                       </div>
                     </div>
 
+                    {/* Ficha Técnica & Concierge */}
+                    <div className="p-2.5 rounded-xl bg-stone-900/95 border border-amber-500/20 space-y-1.5 text-[9px]">
+                      <div className="flex items-center justify-between text-amber-300 font-bold">
+                        <span className="flex items-center gap-1">
+                          <ShieldCheck size={11} className="text-amber-400" />
+                          Garantía Luxury
+                        </span>
+                        <span className="text-emerald-400 text-[8px]">100% Privado</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-1 text-[8px] text-stone-300 pt-0.5">
+                        <div className="bg-black/40 p-1.5 rounded border border-stone-800">
+                          <span className="text-amber-400/80 block">Guía Asignado:</span>
+                          <span className="font-bold text-white">{guideName || 'Carlos Mendoza'}</span>
+                        </div>
+                        <div className="bg-black/40 p-1.5 rounded border border-stone-800">
+                          <span className="text-amber-400/80 block">Seguridad:</span>
+                          <span className="font-bold text-white">Oxígeno & Médico</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Salón VIP & Ubicación Física */}
+                    <div className="p-2.5 bg-gradient-to-br from-stone-900 to-black rounded-xl border border-amber-500/30 space-y-1.5 text-[9px]">
+                      <div className="flex items-center justify-between text-amber-400 font-bold">
+                        <span className="flex items-center gap-1">
+                          <MapPin size={11} className="text-amber-400 shrink-0" />
+                          Salón VIP Plaza de Armas:
+                        </span>
+                        <span className="text-blue-400 font-bold text-[8px] flex items-center gap-0.5">
+                          <Navigation size={8} /> Maps Conectado
+                        </span>
+                      </div>
+                      <p className="text-stone-300 text-[8px] pl-3.5">
+                        {officeAddress || 'Portal de Carnicerías 236, Plaza de Armas, Centro Histórico, Cusco'}
+                      </p>
+                      <div className="flex items-center justify-between pt-0.5 pl-3.5 text-[8px]">
+                        <span className="text-emerald-400 font-semibold">{officeHours || 'Lun-Dom: 07:00 AM - 09:00 PM'}</span>
+                        <span className="text-amber-300 font-medium">Café de Especialidad</span>
+                      </div>
+                    </div>
+
                     {/* Certifications Footer */}
-                    <div className="pt-1 flex items-center justify-center gap-3 text-[8px] text-amber-400/80 font-bold">
+                    <div className="pt-2 pb-3 flex items-center justify-center gap-2.5 text-[7px] text-amber-400/70 font-bold tracking-wider">
                       <span>✓ MINCETUR</span>
+                      <span>•</span>
                       <span>✓ DIRCETUR</span>
+                      <span>•</span>
                       <span>✓ SAFE TRAVELS</span>
+                      <span>•</span>
+                      <span>✓ RUC 20</span>
                     </div>
                   </div>
 
