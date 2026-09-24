@@ -704,8 +704,8 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               </div>
             </div>
 
-            {/* Grid of Rich Cinematic Inclusion Cards with Soft Photos */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
+            {/* Grid of Compact & Refined Inclusion Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-6xl mx-auto">
               {data.features.items.map((item, idx) => {
                 const parts = item.split(':');
                 const title = parts[0].trim();
@@ -720,53 +720,53 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 return (
                   <div
                     key={idx}
-                    className="bg-slate-900/90 border border-slate-800 hover:border-blue-500/50 rounded-3xl overflow-hidden shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 group flex flex-col justify-between"
+                    className="bg-slate-900/90 border border-slate-800 hover:border-blue-500/50 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 group flex flex-col justify-between"
                   >
                     <div>
-                      {/* Soft Image Header */}
-                      <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-950">
+                      {/* Compact Soft Image Header */}
+                      <div className="relative h-28 sm:h-32 w-full overflow-hidden bg-slate-950">
                         <Image
                           src={meta.image}
                           alt={title}
                           fill
-                          sizes="(max-width: 768px) 100vw, 400px"
-                          className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                          sizes="(max-width: 768px) 100vw, 360px"
+                          className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                         />
                         {/* Soft Gradient Overlay for Readability */}
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent" />
                         <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-transparent transition-colors" />
 
                         {/* Top Category Badge */}
-                        <div className="absolute top-3.5 left-3.5 bg-slate-950/75 backdrop-blur-md px-3 py-1 rounded-full border border-white/15 text-[11px] font-black text-slate-200">
+                        <div className="absolute top-2.5 left-2.5 bg-slate-950/80 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/10 text-[10px] font-black text-slate-200">
                           {meta.category}
                         </div>
 
                         {/* Top Feature Pill Badge */}
-                        <div className="absolute top-3.5 right-3.5 bg-emerald-500/90 backdrop-blur-sm text-white text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-sm">
+                        <div className="absolute top-2.5 right-2.5 bg-emerald-500/90 backdrop-blur-sm text-white text-[9px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider shadow-xs">
                           {meta.badge}
                         </div>
 
                         {/* Floating Icon Container */}
-                        <div className="absolute -bottom-3 left-6 w-11 h-11 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-600/40 border-2 border-slate-900 shrink-0">
-                          <IconComponent size={20} className="text-white" />
+                        <div className="absolute -bottom-2.5 left-4 w-8 h-8 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-600/30 border-2 border-slate-900 shrink-0">
+                          <IconComponent size={15} className="text-white" />
                         </div>
                       </div>
 
                       {/* Content Area */}
-                      <div className="p-6 pt-6 text-left space-y-2">
-                        <h3 className="text-base sm:text-lg font-black text-white group-hover:text-blue-400 transition-colors line-clamp-2">
+                      <div className="p-4 sm:p-5 pt-3.5 text-left space-y-1.5">
+                        <h3 className="text-sm sm:text-base font-black text-white group-hover:text-blue-400 transition-colors line-clamp-1 leading-snug">
                           {title}
                         </h3>
-                        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                        <p className="text-xs text-slate-300 leading-relaxed font-normal line-clamp-2">
                           {userCustomDesc || meta.defaultDesc}
                         </p>
                       </div>
                     </div>
 
                     {/* Card Footer Confirmation */}
-                    <div className="p-6 pt-0 flex items-center justify-between border-t border-slate-800/80 mt-4 text-[11px] text-slate-400 font-bold">
+                    <div className="p-4 sm:p-5 pt-0 flex items-center justify-between border-t border-slate-800/80 mt-2 text-[10px] sm:text-[11px] text-slate-400 font-bold">
                       <span className="flex items-center gap-1.5 text-emerald-400 font-black">
-                        <Check size={14} className="stroke-[3]" />
+                        <Check size={13} className="stroke-[3]" />
                         <span>
                           {currentLang === 'en' ? '100% Guaranteed Service' : currentLang === 'fr' ? 'Service Garanti' : currentLang === 'pt' ? 'Serviço Garantido' : currentLang === 'it' ? 'Servizio Garantito' : 'Servicio 100% Incluido'}
                         </span>
@@ -780,29 +780,29 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               })}
             </div>
 
-            {/* Expedition Standards & Quality Assurance Strip (Y Más Cosas) */}
-            <div className="mt-14 sm:mt-16 pt-10 border-t border-slate-800/80">
-              <div className="text-center mb-8 space-y-1">
-                <span className="text-[11px] font-black uppercase tracking-wider text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full border border-blue-500/20">
+            {/* Expedition Standards & Quality Assurance Strip */}
+            <div className="mt-10 sm:mt-12 pt-8 border-t border-slate-800/80 max-w-6xl mx-auto">
+              <div className="text-center mb-6 space-y-1">
+                <span className="text-[10px] font-black uppercase tracking-wider text-blue-400 bg-blue-500/10 px-2.5 py-0.5 rounded-full border border-blue-500/20">
                   {currentLang === 'en' ? 'Expedition Quality Assurance' : currentLang === 'fr' ? 'Garantie d’Excellence' : currentLang === 'pt' ? 'Garantia de Qualidade' : currentLang === 'it' ? 'Garanzia di Qualità' : 'Garantía de Excelencia en Montaña'}
                 </span>
-                <h3 className="text-lg sm:text-2xl font-black text-white">
+                <h3 className="text-base sm:text-xl font-black text-white">
                   {currentLang === 'en' ? 'Our High-Altitude Safety & Comfort Standards' : currentLang === 'fr' ? 'Nos Standards de Haute Montagne & Confort' : currentLang === 'pt' ? 'Nossos Padrões de Segurança & Conforto' : currentLang === 'it' ? 'I Nostri Standard di Alta Quota & Sicurezza' : 'Nuestros Estándares de Seguridad & Confort en Altura'}
                 </h3>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-left">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 text-left">
                 {/* 1. Chef */}
-                <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4.5 hover:border-slate-700 transition-colors space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center font-bold">
-                      <Utensils size={16} />
+                <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-3.5 hover:border-slate-700 transition-colors space-y-1.5">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-amber-500/15 text-amber-400 flex items-center justify-center font-bold shrink-0">
+                      <Utensils size={14} />
                     </div>
-                    <strong className="text-xs sm:text-sm font-black text-white">
+                    <strong className="text-xs font-black text-white truncate">
                       {currentLang === 'en' ? 'Expedition Mountain Chef' : 'Chef de Alta Montaña'}
                     </strong>
                   </div>
-                  <p className="text-[11px] text-slate-400 leading-relaxed font-normal">
+                  <p className="text-[11px] text-slate-400 leading-snug font-normal line-clamp-2">
                     {currentLang === 'en'
                       ? '3 hot gourmet meals daily prepared fresh on the trail with balanced nutritional calories.'
                       : 'Comidas calientes 3 veces al día elaboradas con insumos andinos frescos y balance calórico.'}
@@ -810,16 +810,16 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 </div>
 
                 {/* 2. Health & Oxygen */}
-                <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4.5 hover:border-slate-700 transition-colors space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-rose-500/15 text-rose-400 flex items-center justify-center font-bold">
-                      <HeartPulse size={16} />
+                <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-3.5 hover:border-slate-700 transition-colors space-y-1.5">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-rose-500/15 text-rose-400 flex items-center justify-center font-bold shrink-0">
+                      <HeartPulse size={14} />
                     </div>
-                    <strong className="text-xs sm:text-sm font-black text-white">
+                    <strong className="text-xs font-black text-white truncate">
                       {currentLang === 'en' ? '24/7 Oxygen Monitoring' : 'Oxígeno & Oximetría 24/7'}
                     </strong>
                   </div>
-                  <p className="text-[11px] text-slate-400 leading-relaxed font-normal">
+                  <p className="text-[11px] text-slate-400 leading-snug font-normal line-clamp-2">
                     {currentLang === 'en'
                       ? 'Daily saturation health checks twice a day and medical emergency oxygen tank at all camps.'
                       : 'Monitoreo diario de saturación con oxímetro digital y balón de oxígeno en cada campamento.'}
@@ -827,16 +827,16 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 </div>
 
                 {/* 3. Mules & Horses */}
-                <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4.5 hover:border-slate-700 transition-colors space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-blue-500/15 text-blue-400 flex items-center justify-center font-bold">
-                      <Backpack size={16} />
+                <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-3.5 hover:border-slate-700 transition-colors space-y-1.5">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-blue-500/15 text-blue-400 flex items-center justify-center font-bold shrink-0">
+                      <Backpack size={14} />
                     </div>
-                    <strong className="text-xs sm:text-sm font-black text-white">
+                    <strong className="text-xs font-black text-white truncate">
                       {currentLang === 'en' ? 'Pack Horses & Duffel Bag' : 'Arrieros & Caballos de Carga'}
                     </strong>
                   </div>
-                  <p className="text-[11px] text-slate-400 leading-relaxed font-normal">
+                  <p className="text-[11px] text-slate-400 leading-snug font-normal line-clamp-2">
                     {currentLang === 'en'
                       ? 'Up to 7 kg duffel bag carried by horses so you hike comfortably with just a daypack.'
                       : 'Duffel bag de hasta 7 kg llevado por caballos para que camines ligero con mochila de ataque.'}
@@ -844,16 +844,16 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 </div>
 
                 {/* 4. Domes */}
-                <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4.5 hover:border-slate-700 transition-colors space-y-2">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-xl bg-emerald-500/15 text-emerald-400 flex items-center justify-center font-bold">
-                      <Tent size={16} />
+                <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-3.5 hover:border-slate-700 transition-colors space-y-1.5">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-emerald-500/15 text-emerald-400 flex items-center justify-center font-bold shrink-0">
+                      <Tent size={14} />
                     </div>
-                    <strong className="text-xs sm:text-sm font-black text-white">
+                    <strong className="text-xs font-black text-white truncate">
                       {currentLang === 'en' ? 'Sky Glass Thermal Domes' : 'Domos de Cristal Térmicos'}
                     </strong>
                   </div>
-                  <p className="text-[11px] text-slate-400 leading-relaxed font-normal">
+                  <p className="text-[11px] text-slate-400 leading-snug font-normal line-clamp-2">
                     {currentLang === 'en'
                       ? 'Insulated 4-season geodesic domes with real beds and panoramic views of the glaciers.'
                       : 'Cúpulas 4 estaciones aislantes del frío con camas confortables y vista directa al nevado.'}
