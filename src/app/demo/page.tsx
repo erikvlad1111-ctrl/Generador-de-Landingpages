@@ -492,13 +492,13 @@ export default function DemoDashboard() {
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-slate-50/90 text-slate-500 text-[11px] uppercase tracking-wider font-extrabold border-b border-slate-200/80 select-none">
-                    <th className="px-5 py-3.5 min-w-[280px]">Tour & Guía Asignado</th>
-                    <th className="px-4 py-3.5 hidden md:table-cell whitespace-nowrap">Plantilla</th>
-                    <th className="px-4 py-3.5 hidden sm:table-cell whitespace-nowrap">Objetivo</th>
-                    <th className="px-4 py-3.5 whitespace-nowrap">Estado</th>
-                    <th className="px-4 py-3.5 hidden lg:table-cell whitespace-nowrap text-center">Vistas</th>
-                    <th className="px-4 py-3.5 hidden xl:table-cell whitespace-nowrap">Fecha</th>
-                    <th className="px-4 py-3.5 whitespace-nowrap text-right sticky right-0 bg-slate-50/95 backdrop-blur-xs z-10 border-l border-slate-200/80 shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.06)] min-w-[210px]">
+                    <th className="px-5 py-3.5 min-w-[240px]">Tour & Guía Asignado</th>
+                    <th className="px-4 py-3.5 hidden md:table-cell whitespace-nowrap min-w-[90px]">Plantilla</th>
+                    <th className="px-4 py-3.5 hidden sm:table-cell whitespace-nowrap min-w-[100px]">Objetivo</th>
+                    <th className="px-4 py-3.5 whitespace-nowrap min-w-[110px]">Estado</th>
+                    <th className="px-4 py-3.5 hidden lg:table-cell whitespace-nowrap text-center min-w-[70px]">Vistas</th>
+                    <th className="px-4 py-3.5 hidden xl:table-cell whitespace-nowrap min-w-[130px]">Fecha</th>
+                    <th className="px-5 py-3.5 whitespace-nowrap text-right sticky right-0 bg-slate-50/95 backdrop-blur-xs z-10 border-l border-slate-200/80 shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.06)] min-w-[315px]">
                       Acciones
                     </th>
                   </tr>
@@ -569,7 +569,7 @@ export default function DemoDashboard() {
                           </td>
 
                           {/* Template */}
-                          <td className="px-4 py-3.5 hidden md:table-cell whitespace-nowrap">
+                          <td className="px-4 py-3.5 hidden md:table-cell whitespace-nowrap min-w-[90px]">
                             <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold ${
                               p.template === 'agency-portal' 
                                 ? 'bg-orange-50 text-[#FF5500] border border-orange-200 font-bold' 
@@ -580,7 +580,7 @@ export default function DemoDashboard() {
                           </td>
 
                           {/* Objective */}
-                          <td className="px-4 py-3.5 hidden sm:table-cell whitespace-nowrap">
+                          <td className="px-4 py-3.5 hidden sm:table-cell whitespace-nowrap min-w-[100px]">
                             <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md text-xs font-bold ${
                               p.objective === 'both'
                                 ? 'bg-purple-50 text-purple-700 border border-purple-200/60'
@@ -593,7 +593,7 @@ export default function DemoDashboard() {
                           </td>
 
                           {/* Status with interactive Toggle */}
-                          <td className="px-4 py-3.5 whitespace-nowrap">
+                          <td className="px-4 py-3.5 whitespace-nowrap min-w-[110px]">
                             <button
                               onClick={() => handleToggleStatus(p.id, p.status)}
                               className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold transition-all cursor-pointer shadow-2xs ${
@@ -610,74 +610,74 @@ export default function DemoDashboard() {
                           </td>
 
                           {/* Views */}
-                          <td className="px-4 py-3.5 hidden lg:table-cell text-xs font-mono font-bold text-slate-600 whitespace-nowrap text-center">
+                          <td className="px-4 py-3.5 hidden lg:table-cell text-xs font-mono font-bold text-slate-600 whitespace-nowrap text-center min-w-[70px]">
                             <span className="px-2 py-0.5 bg-slate-100 rounded-md">
                               {p.views || '0'}
                             </span>
                           </td>
 
-                          {/* Date */}
-                          <td className="px-4 py-3.5 hidden xl:table-cell text-xs text-slate-400 font-medium whitespace-nowrap">
-                            <div className="flex items-center gap-1.5">
-                              <CalendarDays size={13} className="text-slate-400" />
-                              <span>{p.date}</span>
+                          {/* Date: con ancho garantizado para que nunca se tape */}
+                          <td className="px-4 py-3.5 hidden xl:table-cell text-xs text-slate-500 font-medium whitespace-nowrap min-w-[130px]">
+                            <div className="flex items-center gap-1.5 text-slate-600">
+                              <CalendarDays size={14} className="text-slate-400 shrink-0" />
+                              <span className="font-mono text-[11px] font-semibold">{p.date}</span>
                             </div>
                           </td>
 
-                          {/* Action buttons: Sticky, Always fully visible & Never cut off */}
-                          <td className="px-4 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white/95 group-hover:bg-slate-50/95 backdrop-blur-xs transition-colors border-l border-slate-200/70 shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.06)] z-10">
-                            <div className="flex items-center justify-end gap-1.5">
+                          {/* Action buttons: Sticky, Always fully visible, with comfortable tactile 32px icons */}
+                          <td className="px-5 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white/95 group-hover:bg-slate-50/95 backdrop-blur-xs transition-colors border-l border-slate-200/70 shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.06)] z-10 min-w-[315px]">
+                            <div className="flex items-center justify-end gap-2">
                               
                               {/* Primary: Ver / Editar */}
                               <Link
                                 href={`/demo/preview?slug=${p.slug}`}
-                                className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-xs transition-all shadow-xs hover:scale-102 active:scale-98 shrink-0"
+                                className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-xl font-bold text-xs transition-all shadow-xs hover:scale-102 active:scale-98 shrink-0"
                                 title="Abrir editor y previsualizador"
                               >
-                                <Eye size={13} />
+                                <Eye size={14} />
                                 <span>Ver / Editar</span>
                               </Link>
 
                               {/* Export / Deploy Modal */}
                               <button
                                 onClick={() => setSelectedLandingForDeploy(p)}
-                                className="inline-flex items-center gap-1 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/90 px-2.5 py-1.5 rounded-lg font-bold text-xs transition-colors cursor-pointer shrink-0"
+                                className="inline-flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/90 px-2.5 py-1.5 rounded-xl font-bold text-xs transition-colors cursor-pointer shrink-0"
                                 title="Exportar ZIP o desplegar en Vercel"
                               >
-                                <Download size={13} className="text-amber-700" />
+                                <Download size={14} className="text-amber-700" />
                                 <span>Exportar</span>
                               </button>
 
-                              {/* Fast Action Icons in compact group */}
-                              <div className="flex items-center gap-0.5 ml-1 border-l border-slate-200 pl-1 shrink-0">
+                              {/* Fast Action Icons in clean tactile 32px buttons */}
+                              <div className="flex items-center gap-1.5 ml-1 border-l border-slate-200/80 pl-2 shrink-0">
                                 <a
                                   href={`/p/${p.slug}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 border border-transparent hover:border-blue-200 transition-colors"
+                                  className="w-8 h-8 rounded-xl bg-slate-100/90 hover:bg-blue-50 text-slate-500 hover:text-blue-600 border border-slate-200/80 flex items-center justify-center transition-all hover:scale-105"
                                   title="Abrir página pública en pestaña nueva"
                                 >
-                                  <ExternalLink size={13} />
+                                  <ExternalLink size={15} />
                                 </a>
 
                                 <button
                                   onClick={() => handleCopyLink(p.slug)}
-                                  className={`p-1.5 rounded-lg transition-colors border cursor-pointer ${
+                                  className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all hover:scale-105 border cursor-pointer ${
                                     isCopied 
                                       ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs' 
-                                      : 'text-slate-400 hover:text-slate-700 hover:bg-slate-100 border-transparent hover:border-slate-200'
+                                      : 'bg-slate-100/90 hover:bg-emerald-50 text-slate-500 hover:text-emerald-700 border-slate-200/80'
                                   }`}
                                   title={isCopied ? '¡Enlace copiado!' : 'Copiar enlace público'}
                                 >
-                                  {isCopied ? <Check size={13} /> : <Copy size={13} />}
+                                  {isCopied ? <Check size={15} /> : <Copy size={15} />}
                                 </button>
 
                                 <button
                                   onClick={() => handleDelete(p.id, p.name)}
-                                  className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 rounded-lg transition-colors cursor-pointer"
-                                  title="Eliminar"
+                                  className="w-8 h-8 rounded-xl bg-slate-100/90 hover:bg-red-50 text-slate-400 hover:text-red-600 border border-slate-200/80 flex items-center justify-center transition-all hover:scale-105 cursor-pointer"
+                                  title="Eliminar proyecto"
                                 >
-                                  <Trash2 size={13} />
+                                  <Trash2 size={15} />
                                 </button>
                               </div>
                             </div>
