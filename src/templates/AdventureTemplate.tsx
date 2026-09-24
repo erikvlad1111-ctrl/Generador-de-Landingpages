@@ -6,7 +6,7 @@ import {
   MapPin, Clock, Star, CheckCircle, MessageCircle, HelpCircle, FileText, 
   ShieldCheck, XCircle, Backpack, Calendar, ArrowRight, Heart, Flame, 
   Plane, Compass, Users, Sparkles, Navigation, Phone, Check, ChevronRight,
-  Send, Mountain
+  Send, Mountain, Building2
 } from 'lucide-react';
 import { LandingData, LanguageType } from '@/types/landing';
 import { ADVENTURE_I18N, ADVENTURE_LANGUAGES } from './adventureI18n';
@@ -702,44 +702,175 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </div>
       </section>
 
-      {/* 11. OFICINA FÍSICA & MAPS CONECTADO */}
-      <section className="py-12 sm:py-16 px-4 sm:px-8 max-w-4xl mx-auto">
-        <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 text-left">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-1.5 text-blue-600 font-bold text-xs">
-              <MapPin size={15} /> {t.office.badge}
+      {/* 11. BASE DE OPERACIONES, OFICINA FÍSICA & SERVICIOS AL EXPEDICIONARIO */}
+      <section className="py-16 sm:py-24 px-4 sm:px-8 bg-slate-50/70 border-t border-slate-200/80">
+        <div className="max-w-6xl mx-auto space-y-10 sm:space-y-12">
+          
+          {/* Section Header */}
+          <div className="text-center max-w-3xl mx-auto space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-800 text-xs font-black uppercase tracking-wider shadow-2xs">
+              <Building2 size={13} className="text-blue-600" />
+              <span>{t.office.badge}</span>
             </div>
-            <h3 className="text-lg sm:text-xl font-black text-slate-900">
+            <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
               {t.office.title}
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-600">
-              {data.officeAddress || t.office.address}
-            </p>
-            <p className="text-[11px] text-emerald-600 font-bold">
-              {data.officeHours || t.office.hours}
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
+              {t.office.subtitle}
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto shrink-0">
-            <a
-              href={data.mapsUrl || 'https://maps.google.com'}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-5 py-3 rounded-full flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-            >
-              <Navigation size={14} className="text-blue-600" />
-              <span>{t.office.mapsBtn}</span>
-            </a>
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-5 py-3 rounded-full flex items-center justify-center gap-1.5 transition-colors shadow-sm cursor-pointer"
-            >
-              <MessageCircle size={14} />
-              <span>{t.office.chatBtn}</span>
-            </a>
+          {/* 2-Columns Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+            
+            {/* Left Column (5 Cols): The Physical Hub Card */}
+            <div className="lg:col-span-5 bg-white rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col justify-between">
+              <div>
+                {/* Photo Preview of Cusco Base */}
+                <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-slate-100">
+                  <Image
+                    src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=700&auto=format&fit=crop"
+                    alt="Plaza de Armas Cusco Base"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 450px"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent" />
+                  
+                  {/* Floating Live Status Pill */}
+                  <div className="absolute top-3.5 left-3.5 bg-emerald-500 text-white text-[11px] font-black px-3 py-1 rounded-full flex items-center gap-1.5 shadow-md">
+                    <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                    <span>{t.office.statusBadge}</span>
+                  </div>
+
+                  {/* Distance Pill */}
+                  <div className="absolute bottom-3.5 left-3.5 right-3.5 text-white flex items-center gap-1.5 text-xs font-bold drop-shadow-md">
+                    <MapPin size={15} className="text-rose-400 shrink-0" />
+                    <span className="truncate">{t.office.distanceBadge}</span>
+                  </div>
+                </div>
+
+                {/* Office Info Body */}
+                <div className="p-6 text-left space-y-4">
+                  <div>
+                    <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+                      {t.office.addressTitle}
+                    </span>
+                    <p className="text-sm sm:text-base font-black text-slate-900 mt-0.5">
+                      {data.officeAddress || t.office.address}
+                    </p>
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-100 flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
+                      <Clock size={16} />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase block">
+                        {t.office.hoursTitle}
+                      </span>
+                      <strong className="text-xs sm:text-sm font-extrabold text-slate-800">
+                        {data.officeHours || t.office.hours}
+                      </strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="p-6 pt-0 space-y-2.5">
+                <a
+                  href={data.mapsUrl || 'https://maps.google.com/?q=Plaza+de+Armas+Cusco'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-sm hover:scale-101 cursor-pointer"
+                >
+                  <Navigation size={15} className="text-blue-400" />
+                  <span>{t.office.mapsBtn}</span>
+                </a>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-2xs hover:scale-101 cursor-pointer"
+                  >
+                    <MessageCircle size={14} />
+                    <span className="truncate">{t.office.chatBtn}</span>
+                  </a>
+
+                  <a
+                    href={`tel:${cleanPhone}`}
+                    className="bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold py-2.5 px-3 rounded-xl flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                  >
+                    <Phone size={14} className="text-slate-600" />
+                    <span className="truncate">{t.office.callBtn}</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column (7 Cols): 3 Exclusive Expedition Amenities */}
+            <div className="lg:col-span-7 flex flex-col justify-between gap-4">
+              <div className="text-left">
+                <h3 className="text-base sm:text-lg font-black text-slate-900">
+                  {t.office.servicesTitle}
+                </h3>
+              </div>
+
+              <div className="space-y-3.5">
+                {t.office.features.map((feat, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-2xs hover:shadow-md hover:border-blue-300 transition-all text-left flex items-start gap-4 group"
+                  >
+                    <div className="w-11 h-11 rounded-2xl bg-blue-50 text-blue-600 group-hover:bg-slate-900 group-hover:text-white flex items-center justify-center shrink-0 transition-colors shadow-2xs mt-0.5">
+                      {feat.icon === 'briefing' ? (
+                        <Compass size={20} />
+                      ) : feat.icon === 'luggage' ? (
+                        <Backpack size={20} />
+                      ) : (
+                        <Sparkles size={20} />
+                      )}
+                    </div>
+                    
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2 mb-1 flex-wrap">
+                        <h4 className="font-black text-sm sm:text-base text-slate-900 group-hover:text-blue-600 transition-colors">
+                          {feat.title}
+                        </h4>
+                        <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/80">
+                          {feat.badge}
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
+                        {feat.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Guarantees Pill Strip */}
+              <div className="bg-white/80 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-4 flex flex-wrap items-center justify-between gap-3 text-[11px] font-bold text-slate-600">
+                <span className="flex items-center gap-1.5">
+                  <ShieldCheck size={14} className="text-emerald-600" />
+                  <span>{t.office.guarantees.dircetur}</span>
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <CheckCircle size={14} className="text-blue-600" />
+                  <span>{t.office.guarantees.verified}</span>
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="text-slate-900">🔐</span>
+                  <span>{t.office.guarantees.lockers}</span>
+                </span>
+              </div>
+            </div>
+
           </div>
+
         </div>
       </section>
 

@@ -95,10 +95,29 @@ export interface AdventureI18nTexts {
   office: {
     badge: string;
     title: string;
+    subtitle: string;
+    addressTitle: string;
     address: string;
+    hoursTitle: string;
     hours: string;
+    statusBadge: string;
+    distanceBadge: string;
     mapsBtn: string;
     chatBtn: string;
+    callBtn: string;
+    servicesTitle: string;
+    features: Array<{
+      icon: 'briefing' | 'luggage' | 'acclimatization';
+      title: string;
+      desc: string;
+      badge: string;
+    }>;
+    guarantees: {
+      dircetur: string;
+      verified: string;
+      lockers: string;
+      support: string;
+    };
   };
 }
 
@@ -232,12 +251,45 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       ]
     },
     office: {
-      badge: 'Base de Operaciones en Cusco',
-      title: 'Oficina Física y Atención Personalizada',
-      address: 'Portal de Panes N° 123, Plaza de Armas, Cusco - Perú',
+      badge: 'Base de Operaciones & Hub de Expedición',
+      title: 'Oficina Física y Atención Personalizada en Cusco',
+      subtitle: 'A pasos de la Plaza de Armas del Cusco. Visítanos en persona para tu briefing previo, custodia gratuita de equipaje o para tomar un té de coca de aclimatación con nuestros guías colegiados.',
+      addressTitle: 'Dirección Oficial en Centro Histórico:',
+      address: 'Portal de Panes N° 123, Plaza de Armas, Centro Histórico, Cusco - Perú',
+      hoursTitle: 'Horario de Atención Corrido:',
       hours: 'Lunes a Domingo: 08:00 AM – 08:00 PM (Horario Corrido)',
-      mapsBtn: 'Ver en Google Maps',
-      chatBtn: 'Hablar con un Asesor'
+      statusBadge: 'Abierto Ahora • Atención Continua',
+      distanceBadge: 'A solo 40 metros de la Plaza de Armas',
+      mapsBtn: 'Cómo Llegar en Google Maps',
+      chatBtn: 'Hablar con Recepción WhatsApp',
+      callBtn: 'Llamar a Central: (084) 240-980',
+      servicesTitle: 'Servicios y Beneficios Exclusivos en Nuestra Base:',
+      features: [
+        {
+          icon: 'briefing',
+          title: 'Briefing Informativo Previo',
+          desc: 'La noche anterior a las 6:00 PM, tu guía líder te espera en nuestra sala para revisar el mapa 3D de la ruta, clima en los pasos y dudas técnicas.',
+          badge: 'Reunión Clave'
+        },
+        {
+          icon: 'luggage',
+          title: 'Custodia Gratuita de Equipaje',
+          desc: 'Deja tus maletas grandes y compras en casilleros seguros con videovigilancia 24/7 sin costo adicional mientras tú caminas ligero por la montaña.',
+          badge: '100% Gratuito'
+        },
+        {
+          icon: 'acclimatization',
+          title: 'Estación de Aclimatación & Pesaje',
+          desc: 'Mate de coca y muña andino ilimitado, báscula digital para el peso reglamentario del duffel bag y chequeo de oximetría gratuito.',
+          badge: 'Salud & Altitud'
+        }
+      ],
+      guarantees: {
+        dircetur: 'Licencia Oficial DIRCETUR N° 2026-CC-EXP',
+        verified: 'Local Comercial Físico Verificado',
+        lockers: 'Custodia con Cámaras de Seguridad 24/7',
+        support: 'Protocolo de Evacuación Médica y Soporte'
+      }
     }
   },
   en: {
@@ -361,12 +413,45 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       ]
     },
     office: {
-      badge: 'Operations Base in Cusco',
-      title: 'Physical Office & Personalized Concierge',
-      address: 'Portal de Panes N° 123, Plaza de Armas, Cusco - Peru',
-      hours: 'Monday to Sunday: 08:00 AM – 08:00 PM',
-      mapsBtn: 'Open in Google Maps',
-      chatBtn: 'Chat with Trip Advisor'
+      badge: 'Operations Base & Expedition Hub',
+      title: 'Walk-In Office & Personalized Traveler Concierge',
+      subtitle: 'Located right off Cusco’s Main Plaza de Armas. Meet us in person for your pre-trek briefing, free luggage storage, or complimentary acclimatization coca tea with our certified mountain guides.',
+      addressTitle: 'Official Historic Center Address:',
+      address: 'Portal de Panes N° 123, Main Plaza de Armas, Historic District, Cusco - Peru',
+      hoursTitle: 'Walk-In Operating Hours:',
+      hours: 'Monday to Sunday: 08:00 AM – 08:00 PM (Every Day)',
+      statusBadge: 'Open Now • Continuous Service',
+      distanceBadge: 'Just 40 meters from Main Plaza',
+      mapsBtn: 'Get Walking Route on Google Maps',
+      chatBtn: 'Chat with Front Desk WhatsApp',
+      callBtn: 'Call Front Desk: +51 (084) 240-980',
+      servicesTitle: 'Exclusive Expedition Amenities at Our Hub:',
+      features: [
+        {
+          icon: 'briefing',
+          title: 'Pre-Trek Evening Briefing',
+          desc: 'Meet your lead guide the evening before at 6:00 PM to review detailed 3D topographic maps, high pass weather, and packing checklist.',
+          badge: 'Key Briefing'
+        },
+        {
+          icon: 'luggage',
+          title: 'Complimentary Secure Luggage Storage',
+          desc: 'Safely store your suitcases and city clothes in 24/7 CCTV-monitored lockers at zero extra charge while you hike.',
+          badge: '100% Free'
+        },
+        {
+          icon: 'acclimatization',
+          title: 'Acclimatization Station & Bag Weigh-In',
+          desc: 'Enjoy unlimited organic coca & muña tea, digital scales for duffel bags carried by horsemen, and free pulse oximeter check.',
+          badge: 'Altitude Health'
+        }
+      ],
+      guarantees: {
+        dircetur: 'DIRCETUR Official Tour Operator License',
+        verified: 'Verified Physical Commercial Headquarters',
+        lockers: '24/7 CCTV Monitored Lockers',
+        support: 'Emergency Evacuation Protocol & Satellite Support'
+      }
     }
   },
   fr: {
@@ -490,12 +575,45 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       ]
     },
     office: {
-      badge: 'Base Opérationnelle à Cusco',
-      title: 'Agence Physique & Accueil Personnalisé',
-      address: 'Portal de Panes N° 123, Plaza de Armas, Cusco - Pérou',
-      hours: 'Lundi au Dimanche : 08h00 – 20h00',
-      mapsBtn: 'Ouvrir sur Google Maps',
-      chatBtn: 'Discuter avec un Conseiller'
+      badge: 'Base Opérationnelle & Hub d’Expédition',
+      title: 'Agence Physique & Accueil Personnalisé à Cusco',
+      subtitle: 'À quelques pas de la Plaza de Armas de Cusco. Venez nous rencontrer pour votre briefing préparatoire, consigne de bagages gratuite ou pour déguster une infusion de coca avec nos guides certifiés.',
+      addressTitle: 'Adresse au Centre Historique :',
+      address: 'Portal de Panes N° 123, Plaza de Armas, Centre Historique, Cusco - Pérou',
+      hoursTitle: 'Horaires d’Ouverture :',
+      hours: 'Lundi au Dimanche : 08h00 – 20h00 (Tous les Jours)',
+      statusBadge: 'Ouvert Maintenant • Accueil Continu',
+      distanceBadge: 'À 40 mètres de la Plaza de Armas',
+      mapsBtn: 'Itinéraire sur Google Maps',
+      chatBtn: 'Contacter la Réception WhatsApp',
+      callBtn: 'Appeler l’Agence : +51 (084) 240-980',
+      servicesTitle: 'Services Exclusifs à Notre Base :',
+      features: [
+        {
+          icon: 'briefing',
+          title: 'Briefing Préparatoire la Veille',
+          desc: 'La veille à 18h00, votre guide vous accueille pour étudier la carte topographique 3D, le climat des cols et ajuster votre sac.',
+          badge: 'Réunion Clé'
+        },
+        {
+          icon: 'luggage',
+          title: 'Consigne Sécurisée de Bagages',
+          desc: 'Déposez vos valises encombrantes dans nos casiers sécurisés sous vidéosurveillance 24/7 sans frais supplémentaires pendant votre trek.',
+          badge: '100% Gratuit'
+        },
+        {
+          icon: 'acclimatization',
+          title: 'Espace Acclimatation & Pesée',
+          desc: 'Infusions andines à volonté (coca et muña), balance électronique pour le sac confié aux muletiers et contrôle d’oxymétrie gratuit.',
+          badge: 'Santé Altitude'
+        }
+      ],
+      guarantees: {
+        dircetur: 'Agrément Officiel DIRCETUR Pérou',
+        verified: 'Établissement Physique Vérifié',
+        lockers: 'Casiers Sécurisés Vidéosurveillance 24/7',
+        support: 'Protocoles Médicaux & Suivi Satellite'
+      }
     }
   },
   pt: {
@@ -619,12 +737,45 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       ]
     },
     office: {
-      badge: 'Base de Operações em Cusco',
-      title: 'Escritório Físico & Atendimento Personalizado',
-      address: 'Portal de Panes N° 123, Plaza de Armas, Cusco - Peru',
-      hours: 'Segunda a Domingo: 08:00 – 20:00 (Horário Contínuo)',
-      mapsBtn: 'Ver no Google Maps',
-      chatBtn: 'Falar com Especialista'
+      badge: 'Base de Operações & Hub de Expedição',
+      title: 'Escritório Físico & Atendimento Personalizado em Cusco',
+      subtitle: 'A poucos passos da Plaza de Armas de Cusco. Visite-nos pessoalmente para seu briefing prévio, guarda-volumes gratuito ou para tomar um chá de coca de aclimatação com nossos guias credenciados.',
+      addressTitle: 'Endereço no Centro Histórico:',
+      address: 'Portal de Panes N° 123, Plaza de Armas, Centro Histórico, Cusco - Peru',
+      hoursTitle: 'Horário de Funcionamento:',
+      hours: 'Segunda a Domingo: 08:00 – 20:00 (Ininterrupto)',
+      statusBadge: 'Aberto Agora • Atendimento Contínuo',
+      distanceBadge: 'A apenas 40 metros da Plaza de Armas',
+      mapsBtn: 'Como Chegar no Google Maps',
+      chatBtn: 'Falar com a Recepção no WhatsApp',
+      callBtn: 'Ligar para Recepção: +51 (084) 240-980',
+      servicesTitle: 'Benefícios e Serviços Exclusivos em Nossa Base:',
+      features: [
+        {
+          icon: 'briefing',
+          title: 'Briefing Prévio com o Guia Líder',
+          desc: 'Na noite anterior às 18:00, seu guia líder o espera para revisar o mapa 3D da trilha, a previsão nos passos de altitude e tirar dúvidas.',
+          badge: 'Reunião Chave'
+        },
+        {
+          icon: 'luggage',
+          title: 'Guarda-Volumes Gratuito e Seguro',
+          desc: 'Deixe suas malas grandes e compras em armários monitorados por câmeras 24 horas por dia sem custo extra durante sua caminhada.',
+          badge: '100% Gratuito'
+        },
+        {
+          icon: 'acclimatization',
+          title: 'Estação de Aclimatação & Pesagem',
+          desc: 'Chá de coca e muña andino à vontade, balança digital para checar o peso permitido das bolsas dos tropeiros e oximetria gratuita.',
+          badge: 'Saúde Andina'
+        }
+      ],
+      guarantees: {
+        dircetur: 'Licença Oficial DIRCETUR Operadora de Turismo',
+        verified: 'Estabelecimento Comercial Físico Verificado',
+        lockers: 'Armários com Câmeras de Segurança 24/7',
+        support: 'Protocolo de Evacuação e Suporte Satelital'
+      }
     }
   },
   it: {
@@ -748,12 +899,45 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       ]
     },
     office: {
-      badge: 'Base Operativa a Cusco',
-      title: 'Ufficio e Assistenza Personalizzata',
-      address: 'Portal de Panes N° 123, Plaza de Armas, Cusco - Perù',
+      badge: 'Base Operativa & Hub di Spedizione',
+      title: 'Ufficio Fisico & Assistenza Personalizzata a Cusco',
+      subtitle: 'A pochi passi dalla Plaza de Armas di Cusco. Vieni a trovarci per il briefing prima della partenza, deposito bagagli gratuito o per sorseggiare un tè di coca di acclimatazione con le nostre guide ufficiali.',
+      addressTitle: 'Indirizzo Ufficiale Centro Storico:',
+      address: 'Portal de Panes N° 123, Plaza de Armas, Centro Storico, Cusco - Perù',
+      hoursTitle: 'Orari di Apertura Continuato:',
       hours: 'Lunedì a Domenica: 08:00 – 20:00 (Orario Continuato)',
-      mapsBtn: 'Apri su Google Maps',
-      chatBtn: 'Parla con un Consulente'
+      statusBadge: 'Aperto Ora • Servizio Continuo',
+      distanceBadge: 'A soli 40 metri dalla Plaza de Armas',
+      mapsBtn: 'Indicazioni su Google Maps',
+      chatBtn: 'Parla con la Reception su WhatsApp',
+      callBtn: 'Chiama la Reception: +51 (084) 240-980',
+      servicesTitle: 'Servizi Esclusivi per i Nostri Viaggiatori:',
+      features: [
+        {
+          icon: 'briefing',
+          title: 'Briefing Informativo della Vigilia',
+          desc: 'La sera precedente alle 18:00, la guida ti aspetta per analizzare la mappa 3D del percorso, il meteo sui valichi d’alta quota e verificare l’equipaggiamento.',
+          badge: 'Incontro Chiave'
+        },
+        {
+          icon: 'luggage',
+          title: 'Deposito Bagagli Gratuito e Protetto',
+          desc: 'Lascia le valigie ingombranti nei nostri armadietti videosorvegliati 24/7 a costo zero mentre cammini sui sentieri di montagna.',
+          badge: '100% Gratuito'
+        },
+        {
+          icon: 'acclimatization',
+          title: 'Area Acclimatazione & Pesa Borse',
+          desc: 'Infusioni andine di coca e muña senza limiti, bilancia digitale per i borsoni dei mulattieri e controllo gratuito dell’ossigenazione.',
+          badge: 'Salute & Quota'
+        }
+      ],
+      guarantees: {
+        dircetur: 'Licenza Ufficiale DIRCETUR Tour Operator',
+        verified: 'Sede Commerciale Fisica Verificata',
+        lockers: 'Armadietti con Videosorveglianza 24/7',
+        support: 'Protocollo Medico d’Emergenza e Supporto'
+      }
     }
   }
 };
