@@ -625,8 +625,8 @@ export default function DemoDashboard() {
                     <th className="px-3.5 py-3.5 hidden sm:table-cell whitespace-nowrap">Objetivo</th>
                     <th className="px-3.5 py-3.5 whitespace-nowrap">Estado</th>
                     <th className="px-3.5 py-3.5 hidden lg:table-cell whitespace-nowrap text-center">Vistas</th>
-                    <th className="px-4 py-3.5 hidden xl:table-cell whitespace-nowrap min-w-[120px]">Fecha</th>
-                    <th className="px-4 py-3.5 whitespace-nowrap text-right min-w-[270px] sticky right-0 bg-slate-50/95 backdrop-blur-md shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.08)] z-20">
+                    <th className="px-4 py-3.5 hidden xl:table-cell whitespace-nowrap min-w-[160px] pr-8">Fecha</th>
+                    <th className="px-4 py-3.5 whitespace-nowrap text-right min-w-[260px] sticky right-0 bg-slate-50/95 backdrop-blur-md shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.08)] z-20">
                       Acciones
                     </th>
                   </tr>
@@ -681,7 +681,7 @@ export default function DemoDashboard() {
                                   </span>
                                 </div>
 
-                                {/* Guía y Precio en badges estructurados con whitespace-nowrap */}
+                                {/* Guía, Precio y Fecha siempre visibles */}
                                 <div className="flex items-center gap-1.5 flex-wrap text-xs">
                                   <span className="inline-flex items-center gap-1 text-[11px] font-medium text-slate-600 bg-slate-100/90 border border-slate-200/70 px-2 py-0.5 rounded-md whitespace-nowrap">
                                     <User size={11} className="text-slate-400 shrink-0" />
@@ -690,6 +690,11 @@ export default function DemoDashboard() {
                                   <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded-md whitespace-nowrap">
                                     <Tag size={11} className="text-emerald-500 shrink-0" />
                                     <span>{p.price || 'S/ Consultar'}</span>
+                                  </span>
+                                  {/* Badge de fecha visible en pantallas donde la columna se oculta o compacta */}
+                                  <span className="inline-flex xl:hidden items-center gap-1 text-[11px] font-medium text-slate-600 bg-slate-100/90 border border-slate-200/70 px-2 py-0.5 rounded-md whitespace-nowrap font-mono" title={`Fecha de creación: ${p.date}`}>
+                                    <CalendarDays size={11} className="text-blue-500 shrink-0" />
+                                    <span>{p.date}</span>
                                   </span>
                                 </div>
                               </div>
@@ -746,16 +751,16 @@ export default function DemoDashboard() {
                             </span>
                           </td>
 
-                          {/* Date: Libre de solapamiento */}
-                          <td className="px-4 py-3.5 hidden xl:table-cell text-xs text-slate-600 font-medium whitespace-nowrap min-w-[120px]">
-                            <div className="flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200/60 w-fit">
-                              <CalendarDays size={13} className="text-slate-400 shrink-0" />
-                              <span className="font-mono text-xs font-bold text-slate-700">{p.date}</span>
+                          {/* Date: 100% visible, sin solapamiento con la columna sticky de acciones */}
+                          <td className="px-4 py-3.5 hidden xl:table-cell text-xs text-slate-600 font-medium whitespace-nowrap min-w-[160px] pr-8">
+                            <div className="inline-flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200/80 shadow-2xs" title={`Fecha de creación: ${p.date}`}>
+                              <CalendarDays size={13} className="text-blue-500 shrink-0" />
+                              <span className="font-mono text-xs font-bold text-slate-800 tracking-tight">{p.date}</span>
                             </div>
                           </td>
 
                           {/* Action buttons: Sticky right column, 100% visible on any screen */}
-                          <td className="px-4 py-3.5 text-right whitespace-nowrap min-w-[270px] sticky right-0 bg-white/95 group-hover:bg-slate-50/95 backdrop-blur-md shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.08)] z-10 transition-colors">
+                          <td className="px-4 py-3.5 text-right whitespace-nowrap min-w-[260px] sticky right-0 bg-white/95 group-hover:bg-slate-50/95 backdrop-blur-md shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.08)] z-10 transition-colors">
                             <div className="flex items-center justify-end gap-1.5">
                               
                               {/* Primary: Ver / Editar */}
@@ -784,7 +789,7 @@ export default function DemoDashboard() {
                                   href={`/p/${p.slug}`}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="w-8 h-8 rounded-xl bg-slate-100/90 hover:bg-blue-50 text-slate-500 hover:text-blue-600 border border-slate-200/80 flex items-center justify-center transition-all hover:scale-105"
+                                  className="w-7.5 h-7.5 rounded-xl bg-slate-100/90 hover:bg-blue-50 text-slate-500 hover:text-blue-600 border border-slate-200/80 flex items-center justify-center transition-all hover:scale-105"
                                   title="Abrir página pública en pestaña nueva"
                                 >
                                   <ExternalLink size={13} />
@@ -792,7 +797,7 @@ export default function DemoDashboard() {
 
                                 <button
                                   onClick={() => handleCopyLink(p.slug)}
-                                  className={`w-8 h-8 rounded-xl flex items-center justify-center transition-all hover:scale-105 border cursor-pointer ${
+                                  className={`w-7.5 h-7.5 rounded-xl flex items-center justify-center transition-all hover:scale-105 border cursor-pointer ${
                                     isCopied 
                                       ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs' 
                                       : 'bg-slate-100/90 hover:bg-emerald-50 text-slate-500 hover:text-emerald-700 border-slate-200/80'
@@ -804,7 +809,7 @@ export default function DemoDashboard() {
 
                                 <button
                                   onClick={() => handleDelete(p.id, p.name)}
-                                  className="w-8 h-8 rounded-xl bg-slate-100/90 hover:bg-red-50 text-slate-400 hover:text-red-600 border border-slate-200/80 flex items-center justify-center transition-all hover:scale-105 cursor-pointer"
+                                  className="w-7.5 h-7.5 rounded-xl bg-slate-100/90 hover:bg-red-50 text-slate-400 hover:text-red-600 border border-slate-200/80 flex items-center justify-center transition-all hover:scale-105 cursor-pointer"
                                   title="Eliminar proyecto"
                                 >
                                   <Trash2 size={13} />
