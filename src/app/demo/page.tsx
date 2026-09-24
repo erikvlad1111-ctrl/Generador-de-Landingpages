@@ -492,13 +492,15 @@ export default function DemoDashboard() {
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-slate-50/90 text-slate-500 text-[11px] uppercase tracking-wider font-extrabold border-b border-slate-200/80 select-none">
-                    <th className="px-5 py-3.5 min-w-[340px]">Tour & Guía Asignado</th>
+                    <th className="px-5 py-3.5 min-w-[280px]">Tour & Guía Asignado</th>
                     <th className="px-4 py-3.5 hidden md:table-cell whitespace-nowrap">Plantilla</th>
                     <th className="px-4 py-3.5 hidden sm:table-cell whitespace-nowrap">Objetivo</th>
                     <th className="px-4 py-3.5 whitespace-nowrap">Estado</th>
                     <th className="px-4 py-3.5 hidden lg:table-cell whitespace-nowrap text-center">Vistas</th>
                     <th className="px-4 py-3.5 hidden xl:table-cell whitespace-nowrap">Fecha</th>
-                    <th className="px-5 py-3.5 whitespace-nowrap text-right min-w-[220px]">Acciones</th>
+                    <th className="px-4 py-3.5 whitespace-nowrap text-right sticky right-0 bg-slate-50/95 backdrop-blur-xs z-10 border-l border-slate-200/80 shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.06)] min-w-[210px]">
+                      Acciones
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-sm">
@@ -622,14 +624,14 @@ export default function DemoDashboard() {
                             </div>
                           </td>
 
-                          {/* Action buttons: Sleek & Clean */}
-                          <td className="px-5 py-3.5 text-right whitespace-nowrap">
+                          {/* Action buttons: Sticky, Always fully visible & Never cut off */}
+                          <td className="px-4 py-3.5 text-right whitespace-nowrap sticky right-0 bg-white/95 group-hover:bg-slate-50/95 backdrop-blur-xs transition-colors border-l border-slate-200/70 shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.06)] z-10">
                             <div className="flex items-center justify-end gap-1.5">
                               
                               {/* Primary: Ver / Editar */}
                               <Link
                                 href={`/demo/preview?slug=${p.slug}`}
-                                className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 rounded-lg font-bold text-xs transition-all shadow-xs hover:scale-102 active:scale-98"
+                                className="inline-flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-lg font-bold text-xs transition-all shadow-xs hover:scale-102 active:scale-98 shrink-0"
                                 title="Abrir editor y previsualizador"
                               >
                                 <Eye size={13} />
@@ -639,45 +641,45 @@ export default function DemoDashboard() {
                               {/* Export / Deploy Modal */}
                               <button
                                 onClick={() => setSelectedLandingForDeploy(p)}
-                                className="inline-flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 hover:text-slate-900 border border-slate-200/80 px-2.5 py-1.5 rounded-lg font-semibold text-xs transition-colors cursor-pointer"
-                                title="Exportar ZIP o desplegar"
+                                className="inline-flex items-center gap-1 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/90 px-2.5 py-1.5 rounded-lg font-bold text-xs transition-colors cursor-pointer shrink-0"
+                                title="Exportar ZIP o desplegar en Vercel"
                               >
-                                <Download size={13} className="text-slate-500" />
-                                <span className="hidden sm:inline">Exportar</span>
+                                <Download size={13} className="text-amber-700" />
+                                <span>Exportar</span>
                               </button>
 
-                              {/* Direct Link in New Tab */}
-                              <a
-                                href={`/p/${p.slug}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 border border-transparent hover:border-blue-200 transition-colors"
-                                title="Abrir página pública en pestaña nueva"
-                              >
-                                <ExternalLink size={14} />
-                              </a>
+                              {/* Fast Action Icons in compact group */}
+                              <div className="flex items-center gap-0.5 ml-1 border-l border-slate-200 pl-1 shrink-0">
+                                <a
+                                  href={`/p/${p.slug}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-1.5 rounded-lg text-slate-400 hover:text-blue-600 hover:bg-blue-50 border border-transparent hover:border-blue-200 transition-colors"
+                                  title="Abrir página pública en pestaña nueva"
+                                >
+                                  <ExternalLink size={13} />
+                                </a>
 
-                              {/* Copy Public Link */}
-                              <button
-                                onClick={() => handleCopyLink(p.slug)}
-                                className={`p-1.5 rounded-lg transition-colors border cursor-pointer ${
-                                  isCopied 
-                                    ? 'bg-emerald-600 text-white border-emerald-600' 
-                                    : 'text-slate-400 hover:text-slate-700 hover:bg-slate-100 border-transparent hover:border-slate-200'
-                                }`}
-                                title="Copiar enlace"
-                              >
-                                {isCopied ? <Check size={14} /> : <Copy size={14} />}
-                              </button>
+                                <button
+                                  onClick={() => handleCopyLink(p.slug)}
+                                  className={`p-1.5 rounded-lg transition-colors border cursor-pointer ${
+                                    isCopied 
+                                      ? 'bg-emerald-600 text-white border-emerald-600 shadow-xs' 
+                                      : 'text-slate-400 hover:text-slate-700 hover:bg-slate-100 border-transparent hover:border-slate-200'
+                                  }`}
+                                  title={isCopied ? '¡Enlace copiado!' : 'Copiar enlace público'}
+                                >
+                                  {isCopied ? <Check size={13} /> : <Copy size={13} />}
+                                </button>
 
-                              {/* Delete */}
-                              <button
-                                onClick={() => handleDelete(p.id, p.name)}
-                                className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 rounded-lg transition-colors cursor-pointer"
-                                title="Eliminar"
-                              >
-                                <Trash2 size={14} />
-                              </button>
+                                <button
+                                  onClick={() => handleDelete(p.id, p.name)}
+                                  className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 rounded-lg transition-colors cursor-pointer"
+                                  title="Eliminar"
+                                >
+                                  <Trash2 size={13} />
+                                </button>
+                              </div>
                             </div>
                           </td>
                         </tr>

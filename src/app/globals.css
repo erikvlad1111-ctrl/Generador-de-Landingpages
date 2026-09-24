@@ -29,16 +29,28 @@ body {
   background: #94a3b8;
 }
 
-/* Modern Clean Data Table Container: Zero native scrollbar clutter */
+/* Modern Clean Data Table Container: Smooth, subtle scrollbar when needed */
 .modern-table-container {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
 }
 
 .modern-table-container::-webkit-scrollbar {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
+  height: 6px;
+}
+
+.modern-table-container::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 9999px;
+}
+
+.modern-table-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+.modern-table-container::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
 /* Modern Button Shine and Dynamic Float Animations */
