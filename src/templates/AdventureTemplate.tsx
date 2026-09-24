@@ -8,7 +8,8 @@ import {
   Plane, Compass, Users, Sparkles, Navigation, Phone, Check, ChevronRight,
   Send, Mountain
 } from 'lucide-react';
-import { LandingData } from '@/types/landing';
+import { LandingData, LanguageType } from '@/types/landing';
+import { ADVENTURE_I18N, ADVENTURE_LANGUAGES } from './adventureI18n';
 import QuoteModal from '@/components/common/QuoteModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
@@ -19,174 +20,12 @@ interface TemplateProps {
   viewMode?: 'desktop' | 'tablet' | 'mobile';
 }
 
-// Top Searched Spots (matching the pill cards in the image)
-const SEARCHED_SPOTS = [
-  {
-    id: 'salkantay',
-    name: 'Salkantay Trek',
-    tours: '450 Tours',
-    badge: '5 Días • 4,630 msnm',
-    image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=400&auto=format&fit=crop',
-    price: '$350 USD'
-  },
-  {
-    id: 'inca-trail',
-    name: 'Camino Inca',
-    tours: '380 Tours',
-    badge: '4 Días • Puerta del Sol',
-    image: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=400&auto=format&fit=crop',
-    price: '$420 USD'
-  },
-  {
-    id: 'ausangate',
-    name: 'Ausangate 7 Lagunas',
-    tours: '600 Tours',
-    badge: 'Glaciares & Aguas Termales',
-    image: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=400&auto=format&fit=crop',
-    price: '$310 USD'
-  },
-  {
-    id: 'choquequirao',
-    name: 'Choquequirao',
-    tours: '250 Tours',
-    badge: 'Cuna de Oro Inca',
-    image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=400&auto=format&fit=crop',
-    price: '$290 USD'
-  },
-  {
-    id: 'humantay',
-    name: 'Laguna Humantay',
-    tours: '520 Tours',
-    badge: 'Turquesa Andina',
-    image: 'https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=400&auto=format&fit=crop',
-    price: 'S/ 160 PEN'
-  },
-  {
-    id: 'vinicunca',
-    name: 'Montaña 7 Colores',
-    tours: '780 Tours',
-    badge: 'Cordillera Arcoíris',
-    image: 'https://images.unsplash.com/photo-1533050487297-09b450131914?q=80&w=400&auto=format&fit=crop',
-    price: 'S/ 150 PEN'
-  },
-  {
-    id: 'inca-jungle',
-    name: 'Inca Jungle Trail',
-    tours: '670 Tours',
-    badge: 'Downhill & Rafting',
-    image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=400&auto=format&fit=crop',
-    price: '$280 USD'
-  },
-  {
-    id: 'lares-trek',
-    name: 'Valle de Lares',
-    tours: '320 Tours',
-    badge: 'Cultura Viva & Termas',
-    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=400&auto=format&fit=crop',
-    price: '$320 USD'
-  }
-];
-
-// Iconic Locations Cards (matching the 3x2 grid in the image)
-const ICONIC_LOCATIONS = [
-  {
-    id: 'salkantay-classic',
-    title: 'Salkantay Trek a Machu Picchu',
-    desc: 'Atraviesa el legendario paso de 4,630 msnm, duerme en domos de cristal y desciende por ceja de selva hasta la ciudadela inca.',
-    image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=600&auto=format&fit=crop',
-    rating: '5.0',
-    price: '$350',
-    detail: '• 5 Días Todo Incluido'
-  },
-  {
-    id: 'inca-trail-classic',
-    title: 'Camino Inca Clásico 4D/3N',
-    desc: 'El sendero empedrado original de los emperadores incas con vistas de ensueño sobre Wiñay Wayna y la entrada por el Inti Punku.',
-    image: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=600&auto=format&fit=crop',
-    rating: '5.0',
-    price: '$420',
-    detail: '• Permisos Oficiales DIRCETUR'
-  },
-  {
-    id: 'ausangate-circuit',
-    title: 'Circuito Ausangate & 7 Lagunas',
-    desc: 'Rodea el apu tutelar sagrado de Cusco frente a manadas de alpacas y relájate en las aguas termales de Pacchanta.',
-    image: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=600&auto=format&fit=crop',
-    rating: '4.9',
-    price: '$310',
-    detail: '• Almuerzo Buffet Andino'
-  },
-  {
-    id: 'choquequirao-trek',
-    title: 'Choquequirao: La Ciudad Perdida',
-    desc: 'Una expedición de pura adrenalina hacia la fortaleza hermana de Machu Picchu, suspendida en el cañón del río Apurímac.',
-    image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=600&auto=format&fit=crop',
-    rating: '5.0',
-    price: '$290',
-    detail: '• Guiado Arqueológico Experto'
-  },
-  {
-    id: 'inca-jungle-adventure',
-    title: 'Inca Jungle Multideporte',
-    desc: 'Bicicleta de montaña desde el Abra Málaga, tirolesa de 1,000m sobre el río y baños termales de Cocalmayo hacia Santa Teresa.',
-    image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=600&auto=format&fit=crop',
-    rating: '4.8',
-    price: '$280',
-    detail: '• Equipo Técnico Incluido'
-  },
-  {
-    id: 'humantay-turquoise',
-    title: 'Laguna Humantay & Domos Soraypampa',
-    desc: 'Caminata hacia la joya turquesa de los Andes a los pies del nevado Humantay con pausas fotográficas y desayuno campestre.',
-    image: 'https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=600&auto=format&fit=crop',
-    rating: '4.9',
-    price: 'S/ 160',
-    detail: '• Salidas Diarias Confirmadas'
-  }
-];
-
-const DEFAULT_EXPEDITION_REVIEWS = [
-  {
-    name: 'David & Sarah Miller',
-    origin: 'Austin, Texas (USA)',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop',
-    rating: 5,
-    date: 'Agosto 2026',
-    route: 'Camino Inca Clásico 4D',
-    comment: 'Best trekking experience of our lives! The porters, camping gear, and historical insights reaching the Sun Gate at sunrise made it completely unforgettable.'
-  },
-  {
-    name: 'Matthieu & Élodie Laurent',
-    origin: 'Lyon, Francia',
-    avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop',
-    rating: 5,
-    date: 'Julio 2026',
-    route: 'Circuito Ausangate & 7 Lagunas',
-    comment: 'Une organisation sans faille. Des paysages à couper le souffle et un respect total des communautés andines. Les chevaux de secours et le matériel étaient impeccables.'
-  },
-  {
-    name: 'Sofía & Lucas Valdivia',
-    origin: 'Santiago, Chile',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop',
-    rating: 5,
-    date: 'Junio 2026',
-    route: 'Laguna Humantay & Glamping',
-    comment: 'Excelente ritmo de caminata para aclimatarse. Los bastones de trekking y el té de muña en el campamento hicieron que todo fuera muy seguro y reconfortante.'
-  },
-  {
-    name: 'Elena & Marco Rossi',
-    origin: 'Milán, Italia',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop',
-    rating: 5,
-    date: 'Mayo 2026',
-    route: 'Salkantay Trek 5D/4N',
-    comment: 'Guías oficiales de primer nivel, oxígeno disponible en todo momento y vistas de los glaciares que parecen de película. ¡Recomendadísimo!'
-  }
-];
-
 export default function AdventureTemplate({ data, viewMode = 'desktop' }: TemplateProps) {
+  const [currentLang, setCurrentLang] = useState<LanguageType>(data.language || 'es');
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [likedCards, setLikedCards] = useState<Record<string, boolean>>({});
+
+  const t = ADVENTURE_I18N[currentLang] || ADVENTURE_I18N.es;
 
   const toggleLike = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -201,17 +40,19 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
   // Ensure balanced multi-testimonial grid (minimum 4 reviews)
   const userReviews = data.testimonials && data.testimonials.length > 0 ? data.testimonials : [];
-  const allTestimonials = [
-    ...userReviews.map((r, i) => ({
-      ...r,
-      avatar: (r as any).avatar || DEFAULT_EXPEDITION_REVIEWS[i % DEFAULT_EXPEDITION_REVIEWS.length].avatar,
-      route: (r as any).route || 'Expedición Salkantay & Cusco',
-      date: (r as any).date || 'Septiembre 2026'
-    })),
-    ...DEFAULT_EXPEDITION_REVIEWS.filter(
-      def => !userReviews.some(u => u.name && def.name && u.name.toLowerCase().trim() === def.name.toLowerCase().trim())
-    )
-  ].slice(0, 4);
+  const allTestimonials = userReviews.length > 0
+    ? [
+        ...userReviews.map((r, i) => ({
+          ...r,
+          avatar: (r as any).avatar || t.testimonials.items[i % t.testimonials.items.length].avatar,
+          route: (r as any).route || t.testimonials.items[i % t.testimonials.items.length].route,
+          date: (r as any).date || t.testimonials.items[i % t.testimonials.items.length].date
+        })),
+        ...t.testimonials.items.filter(
+          def => !userReviews.some(u => u.name && def.name && u.name.toLowerCase().trim() === def.name.toLowerCase().trim())
+        )
+      ].slice(0, 4)
+    : t.testimonials.items;
 
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const encodedMsg = encodeURIComponent(
@@ -230,14 +71,14 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
   return (
     <div className="min-h-screen bg-[#FDFDFD] font-sans text-slate-800 selection:bg-slate-900 selection:text-white">
       
-      {/* 1. TOP NAVBAR (Espacioso, Robusto & Alta Presencia) */}
+      {/* 1. TOP NAVBAR (Espacioso, Robusto & Multi-Idioma) */}
       <nav className="sticky top-0 w-full z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-xs transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 sm:py-5 flex justify-between items-center gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 sm:py-4 flex justify-between items-center gap-3 sm:gap-4">
           
           {/* Brand Logo & Authority Badge */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-sm shadow-md shadow-slate-900/10 shrink-0">
-              <Mountain size={22} className="text-white" />
+          <div className="flex items-center gap-3 shrink-0">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-sm shadow-md shadow-slate-900/10 shrink-0">
+              <Mountain size={20} className="text-white" />
             </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
@@ -245,69 +86,91 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   Trek<span className="text-blue-600">Explorer</span>
                 </span>
                 <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[10px] font-black uppercase tracking-wider border border-blue-200/60">
-                  Perú
+                  {t.brand.badge}
                 </span>
               </div>
               <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 mt-1 hidden xs:block">
-                Expediciones de Montaña & Aventura
+                {t.brand.subtitle}
               </span>
             </div>
           </div>
 
-          {/* Nav Links */}
+          {/* Nav Links (Desktop) */}
           {!isMobile && (
-            <div className="hidden lg:flex items-center gap-8 xl:gap-10 text-[14px] font-extrabold text-slate-700">
-              <a href="#destinos" className="hover:text-blue-600 transition-colors py-1">Destinos</a>
-              <a href="#iconic" className="hover:text-blue-600 transition-colors py-1">Tours Icónicos</a>
-              <a href="#itinerario" className="hover:text-blue-600 transition-colors py-1">Itinerario</a>
-              <a href="#incluye" className="hover:text-blue-600 transition-colors py-1">Qué Incluye</a>
-              <a href="#soporte-faq" className="hover:text-blue-600 transition-colors py-1">FAQ</a>
+            <div className="hidden lg:flex items-center gap-7 xl:gap-8 text-[13.5px] font-extrabold text-slate-700">
+              <a href="#destinos" className="hover:text-blue-600 transition-colors py-1">{t.nav.destinations}</a>
+              <a href="#iconic" className="hover:text-blue-600 transition-colors py-1">{t.nav.iconic}</a>
+              <a href="#itinerario" className="hover:text-blue-600 transition-colors py-1">{t.nav.itinerary}</a>
+              <a href="#incluye" className="hover:text-blue-600 transition-colors py-1">{t.nav.included}</a>
+              <a href="#soporte-faq" className="hover:text-blue-600 transition-colors py-1">{t.nav.faq}</a>
             </div>
           )}
 
-          {/* Action CTAs */}
-          <div className="flex items-center gap-2.5 sm:gap-3">
+          {/* Right Controls: Language Selector Pill + CTAs */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* Language Selector Pill */}
+            <div className="flex items-center bg-slate-100 border border-slate-200/90 rounded-full p-0.5 text-[11px] font-bold shadow-2xs">
+              {ADVENTURE_LANGUAGES.map(({ code, label, flag }) => (
+                <button
+                  key={code}
+                  type="button"
+                  onClick={() => setCurrentLang(code)}
+                  title={label}
+                  className={`px-1.5 sm:px-2.5 py-1 rounded-full uppercase transition-all duration-200 cursor-pointer flex items-center gap-1 ${
+                    currentLang === code
+                      ? 'bg-slate-900 text-white font-black shadow-xs'
+                      : 'text-slate-500 hover:text-slate-900'
+                  }`}
+                >
+                  <span className="text-xs">{flag}</span>
+                  <span className="text-[10px] sm:text-[11px] font-black hidden xs:inline">{code.toUpperCase()}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* CTAs */}
             {data.objective === 'both' ? (
               <>
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-emerald-600 hover:bg-emerald-500 text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-600/20 hover:scale-102 flex items-center gap-2 cursor-pointer"
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-600/20 hover:scale-102 flex items-center gap-1.5 cursor-pointer"
                 >
-                  <MessageCircle size={17} />
-                  <span className="hidden sm:inline">WhatsApp</span>
+                  <MessageCircle size={15} />
+                  <span className="hidden md:inline">WhatsApp</span>
                 </a>
                 <button
                   type="button"
                   onClick={() => setIsQuoteOpen(true)}
-                  className="bg-slate-900 hover:bg-slate-800 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-bold text-xs sm:text-sm transition-all shadow-md hover:scale-102 flex items-center gap-2 cursor-pointer"
+                  className="bg-slate-900 hover:bg-slate-800 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all shadow-md hover:scale-102 flex items-center gap-1.5 cursor-pointer"
                 >
-                  <FileText size={17} />
-                  <span>Cotizar</span>
+                  <FileText size={15} />
+                  <span>{t.nav.quoteBtn}</span>
                 </button>
               </>
             ) : isQuote ? (
               <button
                 type="button"
                 onClick={() => setIsQuoteOpen(true)}
-                className="bg-slate-900 hover:bg-slate-800 text-white px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-full font-extrabold text-xs sm:text-sm transition-all shadow-lg hover:shadow-slate-900/20 hover:scale-102 active:scale-98 flex items-center gap-2.5 cursor-pointer"
+                className="bg-slate-900 hover:bg-slate-800 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-extrabold text-xs sm:text-sm transition-all shadow-lg hover:shadow-slate-900/20 hover:scale-102 active:scale-98 flex items-center gap-2 cursor-pointer"
               >
-                <FileText size={18} />
-                <span>Cotizar Expedición</span>
+                <FileText size={16} />
+                <span>{t.nav.quoteBtn}</span>
               </button>
             ) : (
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-slate-900 hover:bg-slate-800 text-white px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-full font-extrabold text-xs sm:text-sm transition-all shadow-lg hover:shadow-slate-900/20 hover:scale-102 active:scale-98 flex items-center gap-2.5 cursor-pointer"
+                className="bg-slate-900 hover:bg-slate-800 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-extrabold text-xs sm:text-sm transition-all shadow-lg hover:shadow-slate-900/20 hover:scale-102 active:scale-98 flex items-center gap-2 cursor-pointer"
               >
-                <MessageCircle size={18} />
-                <span>Reservar por WhatsApp</span>
+                <MessageCircle size={16} />
+                <span>{t.nav.whatsappBtn}</span>
               </a>
             )}
           </div>
+
         </div>
       </nav>
 
@@ -337,22 +200,21 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               {/* Pill Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold shadow-sm">
                 <span className="text-xs">🌐</span>
-                <span>{data.hero?.badge || 'Discover the World • Aventura & Trekking'}</span>
+                <span>{data.hero?.badge || t.hero.badge}</span>
               </div>
 
               {/* Main Headline */}
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-md">
-                Travel the Best <br />
-                <span className="text-white">It&apos;s a Big World,</span> <br />
+                {t.hero.titleLine1} <br />
+                <span className="text-white">{t.hero.titleLine2}</span> <br />
                 <span className="text-white flex items-center gap-2">
-                  Go Explore! <span className="inline-block animate-bounce">🚀</span>
+                  {t.hero.titleLine3}
                 </span>
               </h1>
 
               {/* Tour Subtitle / Description */}
               <p className="text-sm sm:text-base text-slate-200 leading-relaxed max-w-xl font-normal drop-shadow-sm">
-                {data.hero?.subtitle || data.about?.content || 
-                  'Un trekking legendario de alta montaña cruzando nevados imponentes, ceja de selva y plantaciones de café hasta la ciudadela inca de Machu Picchu.'}
+                {data.hero?.subtitle || data.about?.content || t.hero.subtitle}
               </p>
 
               {/* Buttons Row */}
@@ -363,7 +225,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                     onClick={() => setIsQuoteOpen(true)}
                     className="bg-white hover:bg-slate-100 text-slate-950 font-black px-7 py-3.5 rounded-full text-sm shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
                   >
-                    <span>{data.hero?.cta || 'Cotizar Expedición'}</span>
+                    <span>{data.hero?.cta || t.hero.ctaQuote}</span>
                     <ArrowRight size={16} />
                   </button>
                 ) : (
@@ -373,7 +235,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                     rel="noopener noreferrer"
                     className="bg-white hover:bg-slate-100 text-slate-950 font-black px-7 py-3.5 rounded-full text-sm shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
                   >
-                    <span>{data.hero?.cta || 'Reservar Directo por WhatsApp'}</span>
+                    <span>{data.hero?.cta || t.hero.ctaWhatsapp}</span>
                     <ArrowRight size={16} />
                   </a>
                 )}
@@ -383,12 +245,12 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   className="bg-white/10 hover:bg-white/20 text-white font-bold px-5 py-3.5 rounded-full text-sm backdrop-blur-md border border-white/25 shadow-sm hover:border-white/40 transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <Compass size={16} className="text-blue-400" />
-                  <span>Ver Itinerario</span>
+                  <span>{t.hero.viewItinerary}</span>
                 </a>
 
                 {data.price && (
                   <div className="px-4 py-3 rounded-full bg-blue-600/90 text-white backdrop-blur-md border border-blue-400/40 font-black text-xs shadow-md">
-                    Desde {data.price}
+                    {t.hero.fromPrice} {data.price}
                   </div>
                 )}
               </div>
@@ -403,10 +265,10 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   <div className="flex items-center justify-between pb-2 border-b border-white/10">
                     <div className="flex items-center gap-2 text-xs font-black text-emerald-400">
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                      <span>Salidas Diarias Confirmadas</span>
+                      <span>{t.hero.dailyDepartures}</span>
                     </div>
                     <span className="bg-white/10 px-2 py-0.5 rounded-md text-[10px] font-bold text-slate-300">
-                      2026 Season
+                      {t.hero.season}
                     </span>
                   </div>
 
@@ -416,7 +278,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                         <MapPin size={16} />
                       </div>
                       <div>
-                        <span className="text-[10px] text-slate-400 block font-semibold">Punto más alto:</span>
+                        <span className="text-[10px] text-slate-400 block font-semibold">{t.hero.highestPoint}:</span>
                         <strong className="text-white text-xs sm:text-sm font-black">{data.altitude || '4,630 msnm (Paso Salkantay)'}</strong>
                       </div>
                     </div>
@@ -425,7 +287,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   <div className="pt-1 flex items-center justify-between text-xs text-slate-300 border-t border-white/10">
                     <div className="flex items-center gap-1.5">
                       <ShieldCheck size={14} className="text-emerald-400 shrink-0" />
-                      <span>Guía: <strong className="text-white">{data.guideName || 'Guía Colegiado'}</strong></span>
+                      <span>{t.hero.licensedGuide}: <strong className="text-white">{data.guideName || (currentLang === 'es' ? 'Guía Colegiado' : currentLang === 'en' ? 'Licensed Guide' : currentLang === 'fr' ? 'Guide Certifié' : currentLang === 'pt' ? 'Guia Certificado' : 'Guida Ufficiale')}</strong></span>
                     </div>
                     <span className="text-[11px] font-mono text-blue-300 font-bold">{data.duration || '5 Días / 4 Noches'}</span>
                   </div>
@@ -448,11 +310,11 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
                   {/* Rating copy */}
                   <div className="text-left leading-tight">
-                    <span className="block text-[11px] sm:text-xs font-bold text-slate-900">Our Happy Customers</span>
+                    <span className="block text-[11px] sm:text-xs font-bold text-slate-900">{t.hero.happyCustomers}</span>
                     <div className="flex items-center gap-1 text-[11px] text-slate-600 font-semibold">
                       <Star size={12} className="fill-amber-400 text-amber-400" />
                       <span className="text-slate-900 font-black">4.9</span>
-                      <span>(10.2k Reviews)</span>
+                      <span>({t.hero.reviewsCount})</span>
                     </div>
                   </div>
                 </div>
@@ -464,7 +326,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </div>
       </section>
 
-      {/* 3. PARTNERS / TRUST LOGOS BAR (Exact match to image) */}
+      {/* 3. PARTNERS / TRUST LOGOS BAR */}
       <section className="border-y border-slate-100 bg-slate-50/70 py-6 px-4 sm:px-8">
         <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-8 sm:gap-14 opacity-75 grayscale hover:grayscale-0 transition-all text-slate-500 font-bold text-sm sm:text-base">
           <div className="flex items-center gap-1.5 tracking-tight font-black text-slate-700">
@@ -488,20 +350,20 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </div>
       </section>
 
-      {/* 4. SECTION: EXPLORE TOP SEARCHED SPOTS (Exact match to image) */}
+      {/* 4. SECTION: EXPLORE TOP SEARCHED SPOTS */}
       <section id="destinos" className="py-14 sm:py-20 px-4 sm:px-8 max-w-7xl mx-auto text-center">
         <div className="max-w-2xl mx-auto mb-10 sm:mb-14 space-y-3">
           <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight flex items-center justify-center gap-2">
-            Explore Top Searched Spots <span className="text-amber-500">🔥</span>
+            {t.searchedSpots.title} <span className="text-amber-500">🔥</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
-            Uncover the top travel destinations that are trending right now. These popular spots offer something for every traveler, from high altitude adventure to cultural Andean immersion. Plan your next trip today!
+            {t.searchedSpots.subtitle}
           </p>
         </div>
 
         {/* Grid of 8 Horizontal Capsule Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 max-w-6xl mx-auto">
-          {SEARCHED_SPOTS.map((spot) => (
+          {t.searchedSpots.spots.map((spot) => (
             <a
               key={spot.id}
               href={createWhatsAppLink(spot.name)}
@@ -539,22 +401,22 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </div>
       </section>
 
-      {/* 5. SECTION: EXPLORE ICONIC LOCATIONS (Exact match to image 3-col grid) */}
+      {/* 5. SECTION: EXPLORE ICONIC LOCATIONS */}
       <section id="iconic" className="py-14 sm:py-20 px-4 sm:px-8 bg-slate-50/60 border-t border-slate-100">
         <div className="max-w-7xl mx-auto">
           
           <div className="max-w-2xl mx-auto text-center mb-10 sm:mb-14 space-y-3">
             <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight flex items-center justify-center gap-2">
-              Explore Iconic Locations <span className="text-blue-500">✈️</span>
+              {t.iconic.title} <span className="text-blue-500">✈️</span>
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
-              Discover the world&apos;s top destinations that promise unforgettable experiences. From scenic wonders to cultural hotspots, these places are waiting for you to explore. Dive into the beauty and charm of each unique location.
+              {t.iconic.subtitle}
             </p>
           </div>
 
           {/* 3 Columns Grid of Tour Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 max-w-6xl mx-auto">
-            {ICONIC_LOCATIONS.map((tour) => {
+            {t.iconic.tours.map((tour) => {
               const isLiked = likedCards[tour.id];
               return (
                 <div
@@ -619,7 +481,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                       rel="noopener noreferrer"
                       className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-xs hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
                     >
-                      <span>See More</span>
+                      <span>{t.iconic.detailsBtn}</span>
                       <ArrowRight size={12} />
                     </a>
                   </div>
@@ -631,18 +493,18 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </div>
       </section>
 
-      {/* 6. TOUR ITINERARY SECTION (Detallado para la Landing) */}
+      {/* 6. TOUR ITINERARY SECTION */}
       {data.itinerary && data.itinerary.length > 0 && (
         <section id="itinerario" className="py-14 sm:py-20 px-4 sm:px-8 max-w-4xl mx-auto">
           <div className="text-center mb-10 space-y-2">
             <div className="inline-flex items-center gap-1.5 text-blue-600 font-black text-xs uppercase tracking-wider bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
-              <Calendar size={13} /> Itinerario Detallado
+              <Calendar size={13} /> {t.itinerary.badge}
             </div>
             <h2 className="text-2xl sm:text-4xl font-black text-slate-900">
-              Paso a Paso de la Aventura
+              {t.itinerary.title}
             </h2>
             <p className="text-xs sm:text-sm text-slate-500">
-              Cronograma diseñado por guías certificados DIRCETUR con aclimatación gradual y paradas estratégicas.
+              {t.itinerary.subtitle}
             </p>
           </div>
 
@@ -654,7 +516,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 </div>
                 <div className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 w-full shadow-xs text-left">
                   <span className="text-[11px] uppercase font-black tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md inline-block mb-1.5">
-                    {item.step}
+                    {item.step || `${t.itinerary.dayPrefix} ${idx + 1}`}
                   </span>
                   <h3 className="font-black text-slate-900 text-sm sm:text-base mb-1">{item.title}</h3>
                   <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
@@ -671,10 +533,10 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-10 sm:mb-14 space-y-2">
               <span className="text-emerald-400 font-bold text-xs uppercase tracking-wider">
-                Equipamiento & Servicios
+                {t.inclusions.title}
               </span>
               <h2 className="text-2xl sm:text-4xl font-black">
-                {data.features.title || '¿Qué incluye la expedición?'}
+                {data.features.title || t.inclusions.includedTitle}
               </h2>
             </div>
 
@@ -705,6 +567,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           tier={tier}
           theme="adventure"
           isMobile={isMobile}
+          lang={currentLang}
         />
       )}
 
@@ -717,7 +580,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               <div className="bg-white p-6 rounded-3xl border border-rose-100 shadow-xs text-left">
                 <div className="flex items-center gap-2 text-rose-600 font-black text-sm sm:text-base mb-4">
                   <XCircle size={20} className="shrink-0" />
-                  <h3>Qué NO está incluido</h3>
+                  <h3>{t.inclusions.notIncludedTitle}</h3>
                 </div>
                 <ul className="space-y-2.5 text-xs sm:text-sm text-slate-600">
                   {data.notIncluded.map((item, idx) => (
@@ -735,7 +598,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               <div className="bg-white p-6 rounded-3xl border border-blue-100 shadow-xs text-left">
                 <div className="flex items-center gap-2 text-blue-700 font-black text-sm sm:text-base mb-4">
                   <Backpack size={20} className="shrink-0" />
-                  <h3>Qué llevar en tu mochila</h3>
+                  <h3>{t.inclusions.whatToBringTitle}</h3>
                 </div>
                 <ul className="space-y-2.5 text-xs sm:text-sm text-slate-600">
                   {data.whatToBring.map((item, idx) => (
@@ -759,19 +622,19 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14 space-y-3">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-amber-800 text-xs font-black uppercase tracking-wider shadow-2xs">
               <span>⭐</span>
-              <span>4.9 / 5.0 • Más de 10,200 Expedicionarios Felices</span>
+              <span>{t.testimonials.badge}</span>
             </div>
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight">
-              Lo que dicen nuestros expedicionarios
+              {t.testimonials.title}
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 leading-relaxed">
-              Testimonios reales y verificados de viajeros de todo el mundo que cruzaron los Andes con nuestros guías oficiales.
+              {t.testimonials.subtitle}
             </p>
           </div>
 
           {/* Grid of 4 Cards (2x2 on tablet/desktop) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
-            {allTestimonials.map((t, idx) => (
+            {allTestimonials.map((reviewItem, idx) => (
               <div 
                 key={idx} 
                 className="bg-white p-6 sm:p-7 rounded-3xl shadow-sm hover:shadow-md border border-slate-200/90 hover:border-blue-300 transition-all text-left flex flex-col justify-between space-y-4 group"
@@ -780,19 +643,19 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   {/* Top Row: Stars + Verified Badge */}
                   <div className="flex items-center justify-between gap-2 flex-wrap">
                     <div className="flex gap-1 text-amber-400">
-                      {[...Array(t.rating || 5)].map((_, i) => (
+                      {[...Array(reviewItem.rating || 5)].map((_, i) => (
                         <Star key={i} size={16} className="fill-amber-400 text-amber-400" />
                       ))}
                     </div>
                     <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
                       <CheckCircle size={11} className="text-emerald-600" />
-                      Expedición Verificada
+                      {t.testimonials.verifiedTrip}
                     </span>
                   </div>
 
                   {/* Quote text */}
                   <p className="text-slate-700 text-xs sm:text-sm leading-relaxed italic">
-                    &quot;{t.comment}&quot;
+                    &quot;{reviewItem.comment}&quot;
                   </p>
                 </div>
 
@@ -801,21 +664,21 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   <div className="flex items-center gap-3 min-w-0">
                     <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-200 relative shrink-0 border-2 border-white shadow-xs">
                       <Image 
-                        src={(t as any).avatar || DEFAULT_EXPEDITION_REVIEWS[idx % DEFAULT_EXPEDITION_REVIEWS.length].avatar} 
-                        alt={t.name} 
+                        src={(reviewItem as any).avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop'} 
+                        alt={reviewItem.name} 
                         fill 
                         sizes="40px" 
                         className="object-cover" 
                       />
                     </div>
                     <div className="min-w-0">
-                      <h4 className="font-extrabold text-slate-900 text-xs sm:text-sm truncate">{t.name}</h4>
-                      <p className="text-[11px] text-slate-400 truncate">{t.origin}</p>
+                      <h4 className="font-extrabold text-slate-900 text-xs sm:text-sm truncate">{reviewItem.name}</h4>
+                      <p className="text-[11px] text-slate-400 truncate">{reviewItem.origin}</p>
                     </div>
                   </div>
-                  {(t as any).route && (
+                  {(reviewItem as any).route && (
                     <span className="text-[10px] sm:text-[11px] font-semibold text-slate-500 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-100 shrink-0 hidden sm:block">
-                      {(t as any).route}
+                      {(reviewItem as any).route}
                     </span>
                   )}
                 </div>
@@ -826,13 +689,13 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           {/* Bottom Trust Indicators */}
           <div className="mt-10 sm:mt-14 pt-8 border-t border-slate-200/60 flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-xs font-bold text-slate-500">
             <span className="flex items-center gap-1.5">
-              <span className="text-emerald-600 text-base">✓</span> 100% Reseñas de Viajeros Reales
+              <span className="text-emerald-600 text-base">✓</span> {t.testimonials.bottomGuarantees.realReviews}
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="text-blue-600 text-base">🛡️</span> Guías Oficiales Colegiados DIRCETUR
+              <span className="text-blue-600 text-base">🛡️</span> {t.testimonials.bottomGuarantees.dircetur}
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="text-amber-500 text-base">★</span> Certificado de Excelencia 2026
+              <span className="text-amber-500 text-base">★</span> {t.testimonials.bottomGuarantees.excellence}
             </span>
           </div>
 
@@ -844,16 +707,16 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row items-center justify-between gap-6 text-left">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-1.5 text-blue-600 font-bold text-xs">
-              <MapPin size={15} /> Base de Operaciones en Cusco
+              <MapPin size={15} /> {t.office.badge}
             </div>
             <h3 className="text-lg sm:text-xl font-black text-slate-900">
-              Oficina Física y Atención Personalizada
+              {t.office.title}
             </h3>
             <p className="text-xs sm:text-sm text-slate-600">
-              {data.officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco - Perú'}
+              {data.officeAddress || t.office.address}
             </p>
             <p className="text-[11px] text-emerald-600 font-bold">
-              {data.officeHours || 'Lunes a Domingo: 08:00 AM – 08:00 PM (Horario Corrido)'}
+              {data.officeHours || t.office.hours}
             </p>
           </div>
 
@@ -865,7 +728,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               className="bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold px-5 py-3 rounded-full flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
             >
               <Navigation size={14} className="text-blue-600" />
-              <span>Ver en Google Maps</span>
+              <span>{t.office.mapsBtn}</span>
             </a>
             <a
               href={whatsappUrl}
@@ -874,7 +737,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold px-5 py-3 rounded-full flex items-center justify-center gap-1.5 transition-colors shadow-sm cursor-pointer"
             >
               <MessageCircle size={14} />
-              <span>Contactar Guía</span>
+              <span>{t.office.chatBtn}</span>
             </a>
           </div>
         </div>
@@ -890,6 +753,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         tier={tier}
         theme="adventure"
         isMobile={isMobile}
+        lang={currentLang}
       />
 
       {/* 13. FOOTER */}
@@ -912,7 +776,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       {isMobile && (
         <div className="fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 flex items-center justify-between gap-3 shadow-2xl">
           <div className="min-w-0">
-            <span className="text-[10px] text-slate-400 font-bold block uppercase">Tarifa desde</span>
+            <span className="text-[10px] text-slate-400 font-bold block uppercase">{t.hero.fromPrice}</span>
             <span className="text-base font-black text-slate-900">{data.price || '$350 USD'}</span>
           </div>
           <div className="flex items-center gap-2">
@@ -923,7 +787,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 className="bg-slate-900 hover:bg-slate-800 text-white font-black text-xs px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 cursor-pointer"
               >
                 <FileText size={14} />
-                <span>Cotizar</span>
+                <span>{t.nav.quoteBtn}</span>
               </button>
             ) : (
               <a
@@ -933,7 +797,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 className="bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs px-5 py-2.5 rounded-full shadow-md flex items-center gap-1.5 cursor-pointer"
               >
                 <MessageCircle size={14} />
-                <span>Reservar</span>
+                <span>{t.nav.bookNow}</span>
               </a>
             )}
           </div>
@@ -941,7 +805,12 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       )}
 
       {/* Quote Modal */}
-      <QuoteModal isOpen={isQuoteOpen} onClose={() => setIsQuoteOpen(false)} landing={data} />
+      <QuoteModal 
+        isOpen={isQuoteOpen} 
+        onClose={() => setIsQuoteOpen(false)} 
+        landing={data} 
+        lang={currentLang} 
+      />
     </div>
   );
 }
