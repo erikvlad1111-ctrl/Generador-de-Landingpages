@@ -248,7 +248,7 @@ const DICTIONARIES = {
     guideBio: 'Especialista local credenciado com certificação de primeiros socorros em áreas remotas e protocolo médico de altitude.',
     directLine: 'Atendimento Direto',
     includedServicesBadge: 'Serviços & Privilégios Oficiais',
-    includedServicesTitle: 'Serviços Incluídos na sua Experiência (Ponto 7)',
+    includedServicesTitle: 'Serviços Incluídos na sua Experiência',
     includedServicesDesc: 'Tudo o que você precisa para uma viagem confortável, segura e inesquecível sem surpresas.',
     catalogBadge: 'Catálogo Exclusivo 2026',
     catalogTitle: 'Passeios em Destaque em Cusco e Peru',
@@ -463,6 +463,13 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   
   // 1. Estados reactivos de interacción
   const [lang, setLang] = useState<LanguageType>(data?.language || 'es');
+
+  React.useEffect(() => {
+    if (data?.language && data.language !== lang) {
+      setLang(data.language);
+    }
+  }, [data?.language]);
+
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [showWaTooltip, setShowWaTooltip] = useState<boolean>(true);
   const [isQuoteOpen, setIsQuoteOpen] = useState<boolean>(false);
@@ -511,25 +518,21 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
   const getLocalizedDifficulty = (diff?: string) => {
     const val = diff || 'Moderada';
-    if (lang === 'es') return val;
     return translateText(val, lang);
   };
 
   const getLocalizedGroupType = (group?: string) => {
     const val = group || 'Grupo Reducido';
-    if (lang === 'es') return val;
     return translateText(val, lang);
   };
 
   const getLocalizedTargetAudience = (aud?: string) => {
     const val = aud || 'Viajeros Internacionales & Familias';
-    if (lang === 'es') return val;
     return translateText(val, lang);
   };
 
   const getLocalizedDuration = (dur?: string) => {
     const val = dur || 'Full Day';
-    if (lang === 'es') return val;
     return translateText(val, lang);
   };
 
@@ -542,7 +545,6 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       'Almuerzo buffet y degustaciones gastronómicas'
     ];
 
-    if (lang === 'es') return baseList;
     return baseList.map(srv => translateText(srv, lang));
   };
 
@@ -554,7 +556,6 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       { step: '01:30 PM', title: 'Almuerzo Campestre & Retorno a Cusco', desc: 'Almuerzo buffet campestre en valle andino y retorno cómodo a la ciudad de Cusco.' }
     ];
 
-    if (lang === 'es') return base;
     return base.map((it, idx) => translateItineraryItem(it, lang, idx));
   };
 
@@ -565,7 +566,6 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       'Seguro médico personal de viaje internacional',
       'Gastos o snacks personales no detallados'
     ];
-    if (lang === 'es') return base;
     return base.map(item => translateText(item, lang));
   };
 
@@ -577,7 +577,6 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       'Bloqueador solar (SPF 50+), lentes de sol y gorro',
       'Dinero en efectivo en soles peruanos'
     ];
-    if (lang === 'es') return base;
     return base.map(item => translateText(item, lang));
   };
 
@@ -589,7 +588,6 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       'Guía Colegiado Bilingüe',
       'Balón de Oxígeno & Botiquín de Altura'
     ];
-    if (lang === 'es') return base;
     return base.map(badge => translateText(badge, lang));
   };
 

@@ -148,8 +148,8 @@ export interface AdventureI18nTexts {
 export const ADVENTURE_LANGUAGES: Array<{ code: LanguageType; label: string; flag: string }> = [
   { code: 'es', label: 'Español', flag: '🇪🇸' },
   { code: 'en', label: 'English', flag: '🇺🇸' },
-  { code: 'fr', label: 'Français', flag: '🇫🇷' },
   { code: 'pt', label: 'Português', flag: '🇧🇷' },
+  { code: 'fr', label: 'Français', flag: '🇫🇷' },
   { code: 'it', label: 'Italiano', flag: '🇮🇹' }
 ];
 
@@ -170,10 +170,10 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       badge: 'Perú'
     },
     hero: {
-      badge: 'Discover the World • Aventura & Trekking',
-      titleLine1: 'Travel the Best',
-      titleLine2: "It's a Big World,",
-      titleLine3: 'Go Explore! 🚀',
+      badge: 'Descubre el Mundo • Aventura & Trekking',
+      titleLine1: 'Viaja a lo Grande',
+      titleLine2: 'El Mundo es Gigante,',
+      titleLine3: '¡Sal a Explorar! 🚀',
       subtitle: 'Un trekking legendario de alta montaña cruzando nevados imponentes, ceja de selva y plantaciones de café hasta la ciudadela inca de Machu Picchu.',
       ctaWhatsapp: 'Reservar Directo por WhatsApp',
       ctaQuote: 'Cotizar Expedición',
@@ -568,7 +568,7 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       badge: 'Pérou'
     },
     hero: {
-      badge: 'Discover the World • Trekking Haute Montagne',
+      badge: 'Découvrez le Monde • Trekking Haute Montagne',
       titleLine1: 'Voyagez au Sommet',
       titleLine2: 'Le Monde est Vaste,',
       titleLine3: 'Partez Explorer! 🚀',
@@ -767,7 +767,7 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       badge: 'Peru'
     },
     hero: {
-      badge: 'Discover the World • Trekking nos Andes',
+      badge: 'Descubra o Mundo • Trekking nos Andes',
       titleLine1: 'Viaje ao Máximo',
       titleLine2: 'O Mundo é Gigante,',
       titleLine3: 'Vá Explorar! 🚀',
@@ -966,7 +966,7 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       badge: 'Perù'
     },
     hero: {
-      badge: 'Discover the World • Trekking ad Alta Quota',
+      badge: 'Scopri il Mondo • Trekking ad Alta Quota',
       titleLine1: 'Viaggia al Meglio',
       titleLine2: 'Il Mondo è Grande,',
       titleLine3: 'Vai ad Esplorare! 🚀',

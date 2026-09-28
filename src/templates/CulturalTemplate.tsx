@@ -13,6 +13,7 @@ import QuoteModal from '@/components/common/QuoteModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
 import { CULTURAL_I18N } from './culturalI18n';
+import { translateText } from '@/data/translations';
 
 interface TemplateProps {
   data: LandingData;
@@ -29,6 +30,12 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
   const [currentLang, setCurrentLang] = useState<LanguageType>(data.language || 'es');
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [activeEventIndex, setActiveEventIndex] = useState(0);
+
+  React.useEffect(() => {
+    if (data.language && data.language !== currentLang) {
+      setCurrentLang(data.language);
+    }
+  }, [data.language]);
 
   const t = CULTURAL_I18N[currentLang] || CULTURAL_I18N.es;
 
@@ -107,7 +114,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           <div className="flex items-center gap-2.5">
             {/* Language Selector Pill */}
             <div className="flex items-center bg-black/45 backdrop-blur-md rounded-full border border-white/20 p-0.5 text-[10px] sm:text-[11px] font-bold shadow-inner">
-              {(['es', 'en', 'fr', 'pt', 'it'] as LanguageType[]).map((langKey) => (
+              {(['es', 'en', 'pt', 'fr', 'it'] as LanguageType[]).map((langKey) => (
                 <button
                   key={langKey}
                   type="button"
@@ -152,10 +159,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         {/* Hero Central Titles & Circular Icons (Animated Entry) */}
         <div className="relative z-20 max-w-4xl mx-auto px-4 pt-16 sm:pt-24 pb-28 sm:pb-36 text-center space-y-4 sm:space-y-6 animate-fade-in-up">
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-black tracking-tight drop-shadow-xl text-white italic">
-            {data.hero?.title || 'Cusco Imperial'}
+            {data.hero?.title ? translateText(data.hero.title, currentLang) : (currentLang === 'en' ? 'Imperial Cusco' : currentLang === 'fr' ? 'Cusco Impérial' : currentLang === 'pt' ? 'Cusco Imperial' : currentLang === 'it' ? 'Cusco Imperiale' : 'Cusco Imperial')}
           </h1>
           <p className="text-base sm:text-xl text-red-100 font-serif max-w-2xl mx-auto drop-shadow-md">
-            {data.hero?.subtitle || t.heroSubtitleDefault}
+            {data.hero?.subtitle ? translateText(data.hero.subtitle, currentLang) : t.heroSubtitleDefault}
           </p>
 
           {/* 3 Circular Quick Action Icons (Centerpiece with Animated Glow & Beacon Ring) */}
@@ -248,7 +255,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
                 {/* Micro CTA indicator visible on hover */}
                 <div className="mt-2 text-red-700 text-[10px] font-black uppercase tracking-wider opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all flex items-center gap-1">
-                  <span>Consultar</span>
+                  <span>{currentLang === 'en' ? 'Inquire' : currentLang === 'fr' ? 'Consulter' : currentLang === 'pt' ? 'Consultar' : currentLang === 'it' ? 'Richiedi' : 'Consultar'}</span>
                   <ArrowRight size={11} className="animate-bounce-x" />
                 </div>
               </a>
@@ -387,7 +394,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                   type="button"
                   onClick={() => setActiveEventIndex(prev => (prev === 0 ? t.agenda.events.length - 1 : prev - 1))}
                   className="w-8 h-8 rounded-full bg-red-700 text-white flex items-center justify-center shadow-xs hover:bg-red-800 hover:scale-110 active:scale-90 transition-all duration-200 cursor-pointer"
-                  title="Anterior"
+                  title={currentLang === 'en' ? 'Previous' : currentLang === 'fr' ? 'Précédent' : currentLang === 'pt' ? 'Anterior' : currentLang === 'it' ? 'Precedente' : 'Anterior'}
                 >
                   <ChevronLeft size={16} />
                 </button>
@@ -395,7 +402,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                   type="button"
                   onClick={() => setActiveEventIndex(prev => (prev === t.agenda.events.length - 1 ? 0 : prev + 1))}
                   className="w-8 h-8 rounded-full bg-red-700 text-white flex items-center justify-center shadow-xs hover:bg-red-800 hover:scale-110 active:scale-90 transition-all duration-200 cursor-pointer"
-                  title="Siguiente"
+                  title={currentLang === 'en' ? 'Next' : currentLang === 'fr' ? 'Suivant' : currentLang === 'pt' ? 'Próximo' : currentLang === 'it' ? 'Successivo' : 'Siguiente'}
                 >
                   <ChevronRight size={16} />
                 </button>
@@ -573,10 +580,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 </div>
                 <div className="cultural-card-hover bg-white border border-stone-200 group-hover:border-red-300 rounded-2xl p-4 sm:p-5 w-full shadow-xs hover:shadow-md text-left transition-all">
                   <span className="text-[11px] uppercase font-black tracking-wider text-red-800 bg-red-50 border border-red-200 px-2.5 py-0.5 rounded-md inline-block mb-1.5">
-                    {item.step}
+                    {item.step ? translateText(item.step, currentLang) : item.step}
                   </span>
-                  <h3 className="font-serif font-bold text-stone-900 text-sm sm:text-base mb-1 group-hover:text-red-700 transition-colors">{item.title}</h3>
-                  <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
+                  <h3 className="font-serif font-bold text-stone-900 text-sm sm:text-base mb-1 group-hover:text-red-700 transition-colors">{translateText(item.title, currentLang)}</h3>
+                  <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">{translateText(item.desc, currentLang)}</p>
                 </div>
               </div>
             ))}
@@ -590,7 +597,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-10 space-y-2">
               <h2 className="text-2xl sm:text-4xl font-serif font-bold text-stone-900">
-                {data.features.title || t.features.defaultTitle}
+                {data.features.title ? translateText(data.features.title, currentLang) : t.features.defaultTitle}
               </h2>
             </div>
 
@@ -599,9 +606,9 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 <div key={idx} className="cultural-card-hover bg-white p-5 rounded-2xl border border-stone-200 hover:border-red-300 shadow-2xs hover:shadow-md flex items-start gap-3.5 text-left transition-all group">
                   <CheckCircle2 className="text-red-700 shrink-0 mt-0.5 group-hover:scale-110 transition-transform" size={20} />
                   <div>
-                    <h3 className="font-bold text-stone-900 text-sm sm:text-base group-hover:text-red-700 transition-colors">{item.split(':')[0]}</h3>
+                    <h3 className="font-bold text-stone-900 text-sm sm:text-base group-hover:text-red-700 transition-colors">{translateText(item.split(':')[0], currentLang)}</h3>
                     <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
-                      {item.split(':')[1] || t.features.defaultDesc}
+                      {item.split(':')[1] ? translateText(item.split(':')[1], currentLang) : t.features.defaultDesc}
                     </p>
                   </div>
                 </div>
@@ -773,6 +780,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           tier={tier}
           theme="cultural"
           isMobile={isMobile}
+          lang={currentLang}
         />
       )}
 
@@ -991,7 +999,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
       )}
 
       {/* Quote Modal */}
-      <QuoteModal isOpen={isQuoteOpen} onClose={() => setIsQuoteOpen(false)} landing={data} />
+      <QuoteModal isOpen={isQuoteOpen} onClose={() => setIsQuoteOpen(false)} landing={data} lang={currentLang} />
     </div>
   );
 }

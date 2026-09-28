@@ -782,30 +782,37 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
 // --- TRADUCTOR INTELIGENTE DE TEXTO LIBRE ---
 export function translateText(text: string | undefined, targetLang: LanguageType): string {
   if (!text) return '';
-  if (targetLang === 'es') return text;
-
   const trimmed = text.trim();
+  const lowerTrimmed = trimmed.toLowerCase();
+
+  // 1. Comprobación directa en claves de PHRASE_MAP
   if (PHRASE_MAP[trimmed] && PHRASE_MAP[trimmed][targetLang]) {
     return PHRASE_MAP[trimmed][targetLang];
   }
 
-  // Comprobación exacta insensible a mayúsculas/minúsculas
-  const lowerTrimmed = trimmed.toLowerCase();
+  // 2. Búsqueda inversa insensible a mayúsculas: si el texto actual está en portugués, inglés, etc.
   for (const [key, val] of Object.entries(PHRASE_MAP)) {
-    if (key.toLowerCase() === lowerTrimmed && val[targetLang]) {
-      return val[targetLang];
+    if (key.toLowerCase() === lowerTrimmed) {
+      if (val[targetLang]) return val[targetLang];
+    }
+    for (const [langCode, langText] of Object.entries(val)) {
+      if (langText.toLowerCase() === lowerTrimmed) {
+        if (val[targetLang]) return val[targetLang];
+      }
     }
   }
 
   // Heurísticas semánticas para Títulos de Tours
-  if (lowerTrimmed.includes('machu picchu') && (lowerTrimmed.includes('lujo') || lowerTrimmed.includes('tren') || lowerTrimmed.includes('vip') || lowerTrimmed.includes('panorámico') || lowerTrimmed.includes('panoramico'))) {
+  if (lowerTrimmed.includes('machu picchu') && (lowerTrimmed.includes('lujo') || lowerTrimmed.includes('tren') || lowerTrimmed.includes('vip') || lowerTrimmed.includes('panorámico') || lowerTrimmed.includes('panoramico') || lowerTrimmed.includes('panoramique') || lowerTrimmed.includes('panoramic'))) {
+    if (targetLang === 'es') return 'Machu Picchu de Lujo con Tren Panorámico';
     if (targetLang === 'en') return 'Luxury Machu Picchu with Scenic Panoramic Train';
     if (targetLang === 'pt') return 'Machu Picchu de Luxo com Trem Panorâmico';
     if (targetLang === 'fr') return 'Machu Picchu de Luxe avec Train Panoramique';
     if (targetLang === 'it') return 'Machu Picchu di Lusso con Treno Panoramico';
   }
 
-  if (lowerTrimmed.includes('vinicunca') || lowerTrimmed.includes('7 colores') || lowerTrimmed.includes('siete colores') || lowerTrimmed.includes('valle rojo')) {
+  if (lowerTrimmed.includes('vinicunca') || lowerTrimmed.includes('7 colores') || lowerTrimmed.includes('siete colores') || lowerTrimmed.includes('7 cores') || lowerTrimmed.includes('7 couleurs') || lowerTrimmed.includes('7 colori') || lowerTrimmed.includes('valle rojo') || lowerTrimmed.includes('rainbow mountain')) {
+    if (targetLang === 'es') return 'Montaña de 7 Colores (Vinicunca) & Valle Rojo';
     if (targetLang === 'en') return 'Rainbow Mountain (Vinicunca) & Red Valley VIP';
     if (targetLang === 'pt') return 'Montanha das 7 Cores (Vinicunca) & Vale Vermelho';
     if (targetLang === 'fr') return 'Montagne des 7 Couleurs (Vinicunca) & Vallée Rouge';
@@ -813,6 +820,7 @@ export function translateText(text: string | undefined, targetLang: LanguageType
   }
 
   if (lowerTrimmed.includes('humantay')) {
+    if (targetLang === 'es') return 'Laguna Humantay Turquesa & Glaciar';
     if (targetLang === 'en') return 'Turquoise Humantay Lake & Glacier Trek';
     if (targetLang === 'pt') return 'Laguna Humantay Turquesa & Geleira Andina';
     if (targetLang === 'fr') return 'Lagune Humantay Turquoise & Glacier Andin';
@@ -820,20 +828,23 @@ export function translateText(text: string | undefined, targetLang: LanguageType
   }
 
   if (lowerTrimmed.includes('salkantay')) {
+    if (targetLang === 'es') return 'Tour Salkantay Trek Clásico hacia Machu Picchu';
     if (targetLang === 'en') return 'Classic Salkantay Trek to Machu Picchu 5D';
     if (targetLang === 'pt') return 'Trilha Salkantay Clássica para Machu Picchu 5D';
     if (targetLang === 'fr') return 'Trek Salkantay Classique vers le Machu Picchu 5J';
     if (targetLang === 'it') return 'Trek Salkantay Classico verso Machu Picchu 5G';
   }
 
-  if (lowerTrimmed.includes('valle sagrado')) {
+  if (lowerTrimmed.includes('valle sagrado') || lowerTrimmed.includes('sacred valley') || lowerTrimmed.includes('vallée sacrée') || lowerTrimmed.includes('valle sacra')) {
+    if (targetLang === 'es') return 'Valle Sagrado de los Incas VIP';
     if (targetLang === 'en') return 'Sacred Valley of the Incas VIP Cultural Journey';
     if (targetLang === 'pt') return 'Vale Sagrado dos Incas VIP & Cultura Viva';
     if (targetLang === 'fr') return 'Vallée Sacrée des Incas VIP & Culture Vivante';
     if (targetLang === 'it') return 'Valle Sacra degli Inca VIP & Cultura Viva';
   }
 
-  if (lowerTrimmed.includes('city tour') || (lowerTrimmed.includes('cusco') && lowerTrimmed.includes('ruinas'))) {
+  if (lowerTrimmed.includes('city tour') || (lowerTrimmed.includes('cusco') && (lowerTrimmed.includes('ruinas') || lowerTrimmed.includes('sitios') || lowerTrimmed.includes('sites') || lowerTrimmed.includes('siti')))) {
+    if (targetLang === 'es') return 'City Tour Cusco Ancestral & 4 Ruinas Arqueológicas';
     if (targetLang === 'en') return 'Ancestral Cusco City Tour & 4 Archaeological Ruins';
     if (targetLang === 'pt') return 'City Tour Cusco Ancestral & 4 Sítios Arqueológicos';
     if (targetLang === 'fr') return 'City Tour Cusco Ancestral & 4 Sites Archéologiques';
@@ -841,21 +852,24 @@ export function translateText(text: string | undefined, targetLang: LanguageType
   }
 
   // Heurísticas semánticas para Subtítulos y Descripciones
-  if (lowerTrimmed.includes('maravilla del mundo') || lowerTrimmed.includes('hoteles 5 estrellas') || lowerTrimmed.includes('guía oficial exclusivo')) {
+  if (lowerTrimmed.includes('maravilla del mundo') || lowerTrimmed.includes('maravilha do mundo') || lowerTrimmed.includes('wonder of the world') || lowerTrimmed.includes('merveille du monde') || lowerTrimmed.includes('meraviglia del mondo') || lowerTrimmed.includes('hoteles 5 estrellas') || lowerTrimmed.includes('guía oficial exclusivo')) {
+    if (targetLang === 'es') return 'Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia.';
     if (targetLang === 'en') return 'Discover the wonder of the world with private luxury transfers, 5-star comfort and an official certified historian guide dedicated exclusively to you and your family.';
     if (targetLang === 'pt') return 'Descubra a maravilha do mundo com traslados privados, conforto 5 estrelas e um guia oficial exclusivo para você e sua família.';
     if (targetLang === 'fr') return 'Découvrez la merveille du monde avec transferts privés, confort 5 étoiles et un guide officiel exclusif pour vous et votre famille.';
     if (targetLang === 'it') return 'Scopri la meraviglia del mondo con trasferimenti privati, comfort a 5 stelle e una guida ufficiale esclusiva per te e la tua famiglia.';
   }
 
-  if (lowerTrimmed.includes('magia de los andes') || lowerTrimmed.includes('salidas diarias')) {
+  if (lowerTrimmed.includes('magia de los andes') || lowerTrimmed.includes('magia dos andes') || lowerTrimmed.includes('magic of the andes') || lowerTrimmed.includes('salidas diarias') || lowerTrimmed.includes('saídas diárias') || lowerTrimmed.includes('daily departures')) {
+    if (targetLang === 'es') return 'Montaña de 7 Colores & Valle Rojo • Vive la magia de los Andes con operadores colegiados y salidas diarias.';
     if (targetLang === 'en') return 'Experience the magic of the Peruvian Andes with official accredited tour operators and guaranteed daily departures.';
     if (targetLang === 'pt') return 'Viva a magia dos Andes peruanos com operadores credenciados e saídas diárias garantidas.';
     if (targetLang === 'fr') return 'Vivez la magie des Andes péruviennes avec des opérateurs agréés et des départs quotidiens garantis.';
     if (targetLang === 'it') return 'Vivi la magia delle Ande peruviane con operatori abilitati e partenze giornaliere garantite.';
   }
 
-  if (lowerTrimmed.includes('operador turístico') || lowerTrimmed.includes('formal en cusco')) {
+  if (lowerTrimmed.includes('operador turístico') || lowerTrimmed.includes('operador turistico') || lowerTrimmed.includes('tour operator') || lowerTrimmed.includes('formal en cusco')) {
+    if (targetLang === 'es') return 'Operador turístico oficial y colegiado en Cusco con licencia DIRCETUR y excelencia garantizada.';
     if (targetLang === 'en') return 'Official certified tourism operator in Cusco with proven excellence and DIRCETUR license.';
     if (targetLang === 'pt') return 'Operador turístico oficial e registrado em Cusco com excelência comprovada e credencial DIRCETUR.';
     if (targetLang === 'fr') return 'Opérateur touristique officiel et agréé à Cusco avec excellence reconnue et licence DIRCETUR.';
@@ -863,8 +877,9 @@ export function translateText(text: string | undefined, targetLang: LanguageType
   }
 
   // Heurísticas para Especificaciones Técnicas
-  if (lowerTrimmed.includes('msnm') || lowerTrimmed.includes('m.a.s.l.') || lowerTrimmed.includes('metros')) {
+  if (lowerTrimmed.includes('msnm') || lowerTrimmed.includes('m.a.s.l.') || lowerTrimmed.includes('metros') || lowerTrimmed.includes('mslm')) {
     const num = text.replace(/[^0-9,.]/g, '');
+    if (targetLang === 'es') return `${num} msnm`;
     if (targetLang === 'en') return `${num} m.a.s.l.`;
     if (targetLang === 'fr') return `${num} m d’altitude`;
     if (targetLang === 'pt') return `${num} m de altitude`;
@@ -1108,25 +1123,31 @@ const ITINERARY_DICTIONARY: Record<string, Record<LanguageType, { title: string;
 };
 
 export function translateItineraryItem(item: ItineraryItem, targetLang: LanguageType, index: number): ItineraryItem {
-  if (targetLang === 'es') return item;
-
   let step = item.step;
   const num = item.step.replace(/[^0-9]/g, '') || String(index + 1);
-  if (item.step.toLowerCase().includes('día') || item.step.toLowerCase().includes('dia')) {
+  if (item.step.toLowerCase().includes('día') || item.step.toLowerCase().includes('dia') || item.step.toLowerCase().includes('day') || item.step.toLowerCase().includes('jour') || item.step.toLowerCase().includes('giorno')) {
     if (targetLang === 'en') step = `Day ${num}`;
-    if (targetLang === 'pt') step = `Dia ${num}`;
-    if (targetLang === 'fr') step = `Jour ${num}`;
-    if (targetLang === 'it') step = `Giorno ${num}`;
+    else if (targetLang === 'pt') step = `Dia ${num}`;
+    else if (targetLang === 'fr') step = `Jour ${num}`;
+    else if (targetLang === 'it') step = `Giorno ${num}`;
+    else step = `Día ${num}`;
   }
 
-  // Comprobar coincidencia exacta en el diccionario
-  const matched = ITINERARY_DICTIONARY[item.title.trim()];
-  if (matched && matched[targetLang]) {
-    return {
-      step,
-      title: matched[targetLang].title,
-      desc: matched[targetLang].desc
-    };
+  // Comprobar coincidencia directa o inversa en el diccionario
+  const trimmedTitle = item.title.trim().toLowerCase();
+  for (const [key, val] of Object.entries(ITINERARY_DICTIONARY)) {
+    if (
+      key.toLowerCase() === trimmedTitle ||
+      Object.values(val).some(v => v.title.toLowerCase() === trimmedTitle)
+    ) {
+      if (val[targetLang]) {
+        return {
+          step,
+          title: val[targetLang].title,
+          desc: val[targetLang].desc
+        };
+      }
+    }
   }
 
   // Traducción inteligente por contenido
@@ -1134,8 +1155,11 @@ export function translateItineraryItem(item: ItineraryItem, targetLang: Language
   let title = item.title;
   let desc = item.desc;
 
-  if (lower.includes('recojo') || lower.includes('pickup') || lower.includes('llegada')) {
-    if (targetLang === 'en') {
+  if (lower.includes('recojo') || lower.includes('pickup') || lower.includes('llegada') || lower.includes('embarque') || lower.includes('prise en charge') || lower.includes('prelievo') || lower.includes('transfer')) {
+    if (targetLang === 'es') {
+      title = 'Recojo en Hotel & Traslado Panorámico';
+      desc = 'Recojo puntual en tu alojamiento con asistencia médica preventiva y refrigerio ligero.';
+    } else if (targetLang === 'en') {
       title = 'Hotel Pickup & Scenic Transfer';
       desc = 'Prompt hotel pickup with altitude prevention check and light scenic refreshments.';
     } else if (targetLang === 'pt') {
@@ -1148,8 +1172,11 @@ export function translateItineraryItem(item: ItineraryItem, targetLang: Language
       title = 'Prelievo in Hotel & Trasferimento Panoramico';
       desc = 'Partenza puntuale dall’hotel con assistenza preventiva per l’altitudine.';
     }
-  } else if (lower.includes('desayuno') || lower.includes('breakfast')) {
-    if (targetLang === 'en') {
+  } else if (lower.includes('desayuno') || lower.includes('breakfast') || lower.includes('café da manhã') || lower.includes('cafe da manha') || lower.includes('petit-déjeuner') || lower.includes('colazione')) {
+    if (targetLang === 'es') {
+      title = 'Desayuno Buffet Andino Energético';
+      desc = 'Desayuno nutritivo preparado con ingredientes locales para cargar energías antes del ascenso.';
+    } else if (targetLang === 'en') {
       title = 'High-Energy Andean Buffet Breakfast';
       desc = 'Nutritious breakfast prepared with local ingredients to energize your ascent.';
     } else if (targetLang === 'pt') {
@@ -1162,8 +1189,11 @@ export function translateItineraryItem(item: ItineraryItem, targetLang: Language
       title = 'Colazione a Buffet Andina Energetica';
       desc = 'Colazione nutriente preparata con ingredienti locali per l’ascesa.';
     }
-  } else if (lower.includes('machu picchu') || lower.includes('citadel') || lower.includes('ciudadela')) {
-    if (targetLang === 'en') {
+  } else if (lower.includes('machu picchu') || lower.includes('citadel') || lower.includes('ciudadela') || lower.includes('cidadela') || lower.includes('citadelle') || lower.includes('cittadella')) {
+    if (targetLang === 'es') {
+      title = 'Exploración Guiada de la Ciudadela Machu Picchu';
+      desc = 'Recorrido guiado exclusivo por templos, fuentes ceremoniales y andenes agrícolas panorámicos.';
+    } else if (targetLang === 'en') {
       title = 'Guided Exploration of Machu Picchu Citadel';
       desc = 'Exclusive guided tour through temples, ceremonial fountains, and iconic agricultural terraces.';
     } else if (targetLang === 'pt') {
@@ -1176,8 +1206,11 @@ export function translateItineraryItem(item: ItineraryItem, targetLang: Language
       title = 'Esplorazione Guidata della Cittadella di Machu Picchu';
       desc = 'Tour guidato esclusivo tra templi, fontane cerimoniali e terrazzamenti panoramici.';
     }
-  } else if (lower.includes('almuerzo') || lower.includes('retorno') || lower.includes('return')) {
-    if (targetLang === 'en') {
+  } else if (lower.includes('almuerzo') || lower.includes('lunch') || lower.includes('almoço') || lower.includes('almoco') || lower.includes('déjeuner') || lower.includes('pranzo') || lower.includes('retorno') || lower.includes('return') || lower.includes('retour') || lower.includes('rientro')) {
+    if (targetLang === 'es') {
+      title = 'Almuerzo Campestre & Retorno a Cusco';
+      desc = 'Almuerzo buffet campestre en valle andino y retorno cómodo a la ciudad de Cusco.';
+    } else if (targetLang === 'en') {
       title = 'Country Buffet Lunch & Return to Cusco';
       desc = 'Celebratory valley buffet lunch followed by a comfortable scenic drive back to Cusco.';
     } else if (targetLang === 'pt') {
@@ -1190,6 +1223,10 @@ export function translateItineraryItem(item: ItineraryItem, targetLang: Language
       title = 'Pranzo a Buffet Campestre & Ritorno a Cusco';
       desc = 'Pranzo celebrativo nella vallata andina e rientro confortevole a Cusco.';
     }
+  }
+
+  if (targetLang === 'es' && title === item.title && desc === item.desc) {
+    return { ...item, step };
   }
 
   return { step, title, desc };

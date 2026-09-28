@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { LandingData, LanguageType } from '@/types/landing';
 import { ADVENTURE_I18N, ADVENTURE_LANGUAGES } from './adventureI18n';
+import { translateText } from '@/data/translations';
 import QuoteModal from '@/components/common/QuoteModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
@@ -25,6 +26,12 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [likedCards, setLikedCards] = useState<Record<string, boolean>>({});
   const [activeInclusionFilter, setActiveInclusionFilter] = useState<string>('all');
+
+  React.useEffect(() => {
+    if (data.language && data.language !== currentLang) {
+      setCurrentLang(data.language);
+    }
+  }, [data.language]);
 
   const t = ADVENTURE_I18N[currentLang] || ADVENTURE_I18N.es;
 
@@ -180,10 +187,16 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       id: 'other',
       image: defaultPhotos[idx % defaultPhotos.length],
       icon: ShieldCheck,
-      badge: currentLang === 'en' ? 'Included Service' : 'Servicio Oficial',
-      category: currentLang === 'en' ? 'Safety & Logistics' : 'Seguridad & Logística',
+      badge: currentLang === 'en' ? 'Included Service' : currentLang === 'fr' ? 'Service Inclus' : currentLang === 'pt' ? 'Serviço Incluso' : currentLang === 'it' ? 'Servizio Incluso' : 'Servicio Oficial',
+      category: currentLang === 'en' ? 'Safety & Logistics' : currentLang === 'fr' ? 'Sécurité & Logistique' : currentLang === 'pt' ? 'Segurança & Logística' : currentLang === 'it' ? 'Sicurezza & Logistica' : 'Seguridad & Logística',
       defaultDesc: currentLang === 'en'
         ? 'Comprehensive expedition service operated directly by certified bilingual guides with top-tier mountain equipment.'
+        : currentLang === 'fr'
+        ? 'Service d’expédition complet opéré par des guides certifiés avec équipement de haute montagne.'
+        : currentLang === 'pt'
+        ? 'Serviço de expedição completo operado diretamente por guias certificados com equipamentos de alta montanha.'
+        : currentLang === 'it'
+        ? 'Servizio di spedizione completo gestito da guide alpine certificate con equipaggiamento professionale.'
         : 'Servicio integral operado directamente por guías locales colegiados con equipamiento técnico de alta montaña.'
     };
   };
@@ -334,7 +347,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
               {/* Tour Subtitle / Description */}
               <p className="text-sm sm:text-base text-slate-200 leading-relaxed max-w-xl font-normal drop-shadow-sm">
-                {data.hero?.subtitle || data.about?.content || t.hero.subtitle}
+                {translateText(data.hero?.subtitle || data.about?.content || t.hero.subtitle, currentLang)}
               </p>
 
               {/* Buttons Row */}
@@ -345,7 +358,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                     onClick={() => setIsQuoteOpen(true)}
                     className="bg-white hover:bg-slate-100 text-slate-950 font-black px-7 py-3.5 rounded-full text-sm shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
                   >
-                    <span>{data.hero?.cta || t.hero.ctaQuote}</span>
+                    <span>{data.hero?.cta ? translateText(data.hero.cta, currentLang) : t.hero.ctaQuote}</span>
                     <ArrowRight size={16} />
                   </button>
                 ) : (
@@ -355,7 +368,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                     rel="noopener noreferrer"
                     className="bg-white hover:bg-slate-100 text-slate-950 font-black px-7 py-3.5 rounded-full text-sm shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
                   >
-                    <span>{data.hero?.cta || t.hero.ctaWhatsapp}</span>
+                    <span>{data.hero?.cta ? translateText(data.hero.cta, currentLang) : t.hero.ctaWhatsapp}</span>
                     <ArrowRight size={16} />
                   </a>
                 )}
@@ -566,7 +579,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                         type="button"
                         onClick={(e) => toggleLike(tour.id, e)}
                         className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-white/80 hover:bg-white text-slate-700 flex items-center justify-center backdrop-blur-md shadow-xs active:scale-90 transition-all cursor-pointer"
-                        title="Guardar en favoritos"
+                        title={currentLang === 'en' ? 'Save to favorites' : currentLang === 'fr' ? 'Ajouter aux favoris' : currentLang === 'pt' ? 'Salvar nos favoritos' : currentLang === 'it' ? 'Salva nei preferiti' : 'Guardar en favoritos'}
                       >
                         <Heart
                           size={15}
@@ -636,10 +649,10 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 </div>
                 <div className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 w-full shadow-xs text-left">
                   <span className="text-[11px] uppercase font-black tracking-wider text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md inline-block mb-1.5">
-                    {item.step || `${t.itinerary.dayPrefix} ${idx + 1}`}
+                    {item.step ? translateText(item.step, currentLang) : `${t.itinerary.dayPrefix} ${idx + 1}`}
                   </span>
-                  <h3 className="font-black text-slate-900 text-sm sm:text-base mb-1">{item.title}</h3>
-                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
+                  <h3 className="font-black text-slate-900 text-sm sm:text-base mb-1">{translateText(item.title, currentLang)}</h3>
+                  <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{translateText(item.desc, currentLang)}</p>
                 </div>
               </div>
             ))}
@@ -682,11 +695,11 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               <div className="pt-4 flex flex-wrap items-center justify-center gap-2">
                 {[
                   { id: 'all', label: currentLang === 'en' ? 'All Inclusions (6)' : currentLang === 'fr' ? 'Tous les Services (6)' : currentLang === 'pt' ? 'Todos os Serviços (6)' : currentLang === 'it' ? 'Tutti i Servizi (6)' : 'Todos los Servicios (6)' },
-                  { id: 'transport', label: currentLang === 'en' ? '🚐 Transport & Vans' : '🚐 Transporte & Buses' },
-                  { id: 'camps', label: currentLang === 'en' ? '⛺ Sky Domes & Camps' : '⛺ Domos & Campamento' },
-                  { id: 'food', label: currentLang === 'en' ? '👨‍🍳 Mountain Chef & Food' : '👨‍🍳 Chef & Alimentación' },
-                  { id: 'tickets', label: currentLang === 'en' ? '🎫 Machu Picchu Tickets' : '🎫 Boletos Machu Picchu' },
-                  { id: 'health', label: currentLang === 'en' ? '🩺 Oxygen & Medical' : '🩺 Oxígeno & Primeros Auxilios' }
+                  { id: 'transport', label: currentLang === 'en' ? '🚐 Transport & Vans' : currentLang === 'fr' ? '🚐 Transport & Minibus' : currentLang === 'pt' ? '🚐 Transporte & Vans' : currentLang === 'it' ? '🚐 Trasporti & Minibus' : '🚐 Transporte & Buses' },
+                  { id: 'camps', label: currentLang === 'en' ? '⛺ Sky Domes & Camps' : currentLang === 'fr' ? '⛺ Dômes Célestes & Camps' : currentLang === 'pt' ? '⛺ Domos & Acampamento' : currentLang === 'it' ? '⛺ Domi Panoramici & Tende' : '⛺ Domos & Campamento' },
+                  { id: 'food', label: currentLang === 'en' ? '👨‍🍳 Mountain Chef & Food' : currentLang === 'fr' ? '👨‍🍳 Chef & Gastronomie' : currentLang === 'pt' ? '👨‍🍳 Chef & Refeições' : currentLang === 'it' ? '👨‍🍳 Chef & Alimentazione' : '👨‍🍳 Chef & Alimentación' },
+                  { id: 'tickets', label: currentLang === 'en' ? '🎫 Machu Picchu Tickets' : currentLang === 'fr' ? '🎫 Billets Machu Picchu' : currentLang === 'pt' ? '🎫 Ingressos Machu Picchu' : currentLang === 'it' ? '🎫 Biglietti Machu Picchu' : '🎫 Boletos Machu Picchu' },
+                  { id: 'health', label: currentLang === 'en' ? '🩺 Oxygen & Medical' : currentLang === 'fr' ? '🩺 Oxygène & Secours' : currentLang === 'pt' ? '🩺 Oxigênio & Primeiros Socorros' : currentLang === 'it' ? '🩺 Ossigeno & Pronto Soccorso' : '🩺 Oxígeno & Primeros Auxilios' }
                 ].map((filterTab) => (
                   <button
                     key={filterTab.id}
@@ -754,11 +767,11 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                             <IconComponent size={16} />
                           </div>
                           <h3 className="text-sm sm:text-base font-black text-white group-hover:text-blue-400 transition-colors line-clamp-1 leading-snug">
-                            {title}
+                            {translateText(title, currentLang)}
                           </h3>
                         </div>
                         <p className="text-xs text-slate-300 leading-relaxed font-normal line-clamp-2">
-                          {userCustomDesc || meta.defaultDesc}
+                          {translateText(userCustomDesc || meta.defaultDesc, currentLang)}
                         </p>
                       </div>
                     </div>
@@ -799,12 +812,18 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                       <Utensils size={14} />
                     </div>
                     <strong className="text-xs font-black text-white truncate">
-                      {currentLang === 'en' ? 'Expedition Mountain Chef' : 'Chef de Alta Montaña'}
+                      {currentLang === 'en' ? 'Expedition Mountain Chef' : currentLang === 'fr' ? 'Chef de Haute Montagne' : currentLang === 'pt' ? 'Chef de Alta Montanha' : currentLang === 'it' ? 'Chef di Alta Quota' : 'Chef de Alta Montaña'}
                     </strong>
                   </div>
                   <p className="text-[11px] text-slate-400 leading-snug font-normal line-clamp-2">
                     {currentLang === 'en'
                       ? '3 hot gourmet meals daily prepared fresh on the trail with balanced nutritional calories.'
+                      : currentLang === 'fr'
+                      ? '3 repas chauds gastronomiques préparés chaque jour avec des produits andins frais.'
+                      : currentLang === 'pt'
+                      ? '3 refeições quentes balanceadas por dia preparadas na hora com ingredientes andinos frescos.'
+                      : currentLang === 'it'
+                      ? '3 pasti caldi abbondanti al giorno preparati freschi con prodotti andini locali.'
                       : 'Comidas calientes 3 veces al día elaboradas con insumos andinos frescos y balance calórico.'}
                   </p>
                 </div>
@@ -816,12 +835,18 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                       <HeartPulse size={14} />
                     </div>
                     <strong className="text-xs font-black text-white truncate">
-                      {currentLang === 'en' ? '24/7 Oxygen Monitoring' : 'Oxígeno & Oximetría 24/7'}
+                      {currentLang === 'en' ? '24/7 Oxygen Monitoring' : currentLang === 'fr' ? 'Oxygène & Oximétrie 24/7' : currentLang === 'pt' ? 'Oxigênio & Oximetria 24/7' : currentLang === 'it' ? 'Ossigeno & Saturimetro 24/7' : 'Oxígeno & Oximetría 24/7'}
                     </strong>
                   </div>
                   <p className="text-[11px] text-slate-400 leading-snug font-normal line-clamp-2">
                     {currentLang === 'en'
                       ? 'Daily saturation health checks twice a day and medical emergency oxygen tank at all camps.'
+                      : currentLang === 'fr'
+                      ? 'Contrôle quotidien de saturation à l’oxymètre et bouteille d’oxygène médical à chaque camp.'
+                      : currentLang === 'pt'
+                      ? 'Monitoramento diário de oxigenação com oxímetro de pulso e cilindro de oxigênio em cada acampamento.'
+                      : currentLang === 'it'
+                      ? 'Controllo quotidiano dell’ossigenazione con pulsossimetro e bombola di ossigeno medicinale portatile.'
                       : 'Monitoreo diario de saturación con oxímetro digital y balón de oxígeno en cada campamento.'}
                   </p>
                 </div>
@@ -833,12 +858,18 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                       <Backpack size={14} />
                     </div>
                     <strong className="text-xs font-black text-white truncate">
-                      {currentLang === 'en' ? 'Pack Horses & Duffel Bag' : 'Arrieros & Caballos de Carga'}
+                      {currentLang === 'en' ? 'Pack Horses & Duffel Bag' : currentLang === 'fr' ? 'Muletiers & Chevaux de Bât' : currentLang === 'pt' ? 'Arreios & Cavalos de Carga' : currentLang === 'it' ? 'Cavalli da Carico & Borsone' : 'Arrieros & Caballos de Carga'}
                     </strong>
                   </div>
                   <p className="text-[11px] text-slate-400 leading-snug font-normal line-clamp-2">
                     {currentLang === 'en'
                       ? 'Up to 7 kg duffel bag carried by horses so you hike comfortably with just a daypack.'
+                      : currentLang === 'fr'
+                      ? 'Sac marin jusqu’à 7 kg transporté par les chevaux pour marcher léger avec votre sac de jour.'
+                      : currentLang === 'pt'
+                      ? 'Duffel bag de até 7 kg levado por cavalos para você caminhar leve apenas com mochila de ataque.'
+                      : currentLang === 'it'
+                      ? 'Borsone fino a 7 kg trasportato da cavalli per farti camminare leggero con zainetto da giorno.'
                       : 'Duffel bag de hasta 7 kg llevado por caballos para que camines ligero con mochila de ataque.'}
                   </p>
                 </div>
@@ -850,12 +881,18 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                       <Tent size={14} />
                     </div>
                     <strong className="text-xs font-black text-white truncate">
-                      {currentLang === 'en' ? 'Sky Glass Thermal Domes' : 'Domos de Cristal Térmicos'}
+                      {currentLang === 'en' ? 'Sky Glass Thermal Domes' : currentLang === 'fr' ? 'Dômes Géodésiques Chauffés' : currentLang === 'pt' ? 'Domos Térmicos de Vidro' : currentLang === 'it' ? 'Domi Geodetici Termici' : 'Domos de Cristal Térmicos'}
                     </strong>
                   </div>
                   <p className="text-[11px] text-slate-400 leading-snug font-normal line-clamp-2">
                     {currentLang === 'en'
                       ? 'Insulated 4-season geodesic domes with real beds and panoramic views of the glaciers.'
+                      : currentLang === 'fr'
+                      ? 'Dômes 4 saisons isolés du froid avec vrais lits confortables et vue directe sur les glaciers.'
+                      : currentLang === 'pt'
+                      ? 'Domos 4 estações isolantes do frio com camas confortáveis e vista frontal para os nevados.'
+                      : currentLang === 'it'
+                      ? 'Domi 4 stagioni termicamente isolati con letti comodi e vista panoramica diretta sui ghiacciai.'
                       : 'Cúpulas 4 estaciones aislantes del frío con camas confortables y vista directa al nevado.'}
                   </p>
                 </div>
@@ -894,7 +931,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   {data.notIncluded.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <span className="text-rose-500 font-bold shrink-0">✕</span>
-                      <span>{item}</span>
+                      <span>{translateText(item, currentLang)}</span>
                     </li>
                   ))}
                 </ul>
@@ -912,7 +949,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   {data.whatToBring.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <span className="text-blue-500 font-bold shrink-0">✓</span>
-                      <span>{item}</span>
+                      <span>{translateText(item, currentLang)}</span>
                     </li>
                   ))}
                 </ul>

@@ -883,14 +883,14 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           origin: '🇪🇸 Madrid, Espagne',
           date: 'Visite effectuée le 02 Août 2026',
           stars: 5,
-          comment: 'Como docente de historia del arte, buscaba un guiado sin mitos inventados. La preparación académica del guía y su respeto por las fuentes cronistas coloniales me pareció extraordinaria. Diez sobre diez.'
+          comment: 'En tant que professeure d’histoire de l’art, je cherchais une visite sans légendes inventées. La rigueur académique du guide et son respect des chroniques coloniales étaient tout simplement remarquables. Dix sur dix.'
         },
         {
           name: 'Michael & Sarah Jenkins',
           origin: '🇺🇸 Boston, USA',
           date: 'Visite effectuée le 19 Juillet 2026',
           stars: 5,
-          comment: 'The best tour we took in Peru! Small group, zero rush, crystal-clear audio receivers, and fascinating insights into Inca astronomy that you simply cannot get on standard commercial buses.'
+          comment: 'Le meilleur circuit que nous ayons fait au Pérou ! Petit groupe, aucune précipitation, casques audio impeccables et explications passionnantes sur l’astronomie inca qu’on ne trouve dans aucun bus touristique.'
         }
       ]
     },
@@ -1145,7 +1145,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           origin: '🇺🇸 Boston, EUA',
           date: 'Passeio realizado em 19 de Julho de 2026',
           stars: 5,
-          comment: 'The best tour we took in Peru! Small group, zero rush, crystal-clear audio receivers, and fascinating insights into Inca astronomy that you simply cannot get on standard commercial buses.'
+          comment: 'O melhor passeio que fizemos no Peru! Grupo pequeno, sem correria, fones de áudio nítidos e explicações fascinantes sobre a astronomia inca que você não encontra em ônibus turísticos comerciais.'
         }
       ]
     },
@@ -1400,7 +1400,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           origin: '🇺🇸 Boston, USA',
           date: 'Visita effettuata il 19 Luglio 2026',
           stars: 5,
-          comment: 'The best tour we took in Peru! Small group, zero rush, crystal-clear audio receivers, and fascinating insights into Inca astronomy that you simply cannot get on standard commercial buses.'
+          comment: 'Il miglior tour che abbiamo fatto in Perù! Piccolo gruppo, nessuna fretta, ricevitori audio chiarissimi e approfondimenti affascinanti sull’astronomia inca che non trovi nei tour commerciali.'
         }
       ]
     },

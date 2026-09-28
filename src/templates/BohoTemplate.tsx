@@ -28,10 +28,12 @@ import {
   SlidersHorizontal,
   Check
 } from 'lucide-react';
-import { LandingData } from '@/types/landing';
+import { LandingData, LanguageType } from '@/types/landing';
 import QuoteModal from '@/components/common/QuoteModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
+import { BOHO_I18N, BOHO_LANGUAGES } from './bohoI18n';
+import { translateText, translateItineraryItem } from '@/data/translations';
 
 interface TemplateProps {
   data: LandingData;
@@ -218,6 +220,15 @@ const COMMUNITY_REVIEWS: ReviewItem[] = [
 ];
 
 export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplateProps) {
+  const [currentLang, setCurrentLang] = useState<LanguageType>(data.language || 'es');
+
+  React.useEffect(() => {
+    if (data.language && data.language !== currentLang) {
+      setCurrentLang(data.language);
+    }
+  }, [data.language]);
+
+  const t = BOHO_I18N[currentLang] || BOHO_I18N.es;
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [selectedTourCategory, setSelectedTourCategory] = useState<string>('all');
   const [selectedReviewCategory, setSelectedReviewCategory] = useState<string>('all');
@@ -231,10 +242,21 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
   const isBasic = tier === 'basic';
   const isPro = tier === 'pro';
   const isAdvance = tier === 'advance';
-  const lang = data.language || 'es';
 
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
-  const encodedMsg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, vi su bitácora de viaje de "${data.name || data.hero?.title}" y me gustaría consultar disponibilidad.`);
+  const rawTourTitle = data.name || data.hero?.title || 'Tour en Cusco';
+  const localizedTourTitle = translateText(rawTourTitle, currentLang);
+  const encodedMsg = encodeURIComponent(
+    currentLang === 'en'
+      ? `Hello ${data.guideName || 'Cusco Creativos'}, I saw your travel journal for "${localizedTourTitle}" and would like to check availability.`
+      : currentLang === 'pt'
+      ? `Olá ${data.guideName || 'Cusco Creativos'}, vi seu diário de viagem de "${localizedTourTitle}" e gostaria de consultar disponibilidade.`
+      : currentLang === 'fr'
+      ? `Bonjour ${data.guideName || 'Cusco Creativos'}, j’ai vu votre carnet de voyage pour "${localizedTourTitle}" et souhaite vérifier la disponibilité.`
+      : currentLang === 'it'
+      ? `Ciao ${data.guideName || 'Cusco Creativos'}, ho visto il vostro diario di viaggio per "${localizedTourTitle}" e vorrei verificare la disponibilità.`
+      : `Hola ${data.guideName || 'Cusco Creativos'}, vi su bitácora de viaje de "${localizedTourTitle}" y me gustaría consultar disponibilidad.`
+  );
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
   const heroImg = data.heroImage || 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop';
@@ -288,7 +310,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               Boho Travel Journal
             </span>
             <span className="text-[9px] sm:text-[10px] text-stone-500 font-sans tracking-tight truncate">
-              Inspirado en Pinterest • Cusco, Perú
+              {currentLang === 'en' ? 'Pinterest Inspired • Cusco, Peru' : currentLang === 'pt' ? 'Inspirado no Pinterest • Cusco, Peru' : currentLang === 'fr' ? 'Inspiré de Pinterest • Cusco, Pérou' : currentLang === 'it' ? 'Ispirato a Pinterest • Cusco, Perù' : 'Inspirado en Pinterest • Cusco, Perú'}
             </span>
           </div>
         </div>
@@ -296,33 +318,52 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         {/* Desktop Navigation Links */}
         {!isMobile && !isFree && (
           <nav className="hidden lg:flex items-center gap-5 text-xs tracking-wider uppercase font-medium text-stone-600">
-            <a href="#sobre-tour" className="hover:text-[#C86D51] transition-colors">Sobre el Tour</a>
-            <a href="#galeria" className="hover:text-[#C86D51] transition-colors">{isBasic ? 'Postales' : 'Pines & Fotos'}</a>
+            <a href="#sobre-tour" className="hover:text-[#C86D51] transition-colors">{t.nav.journal}</a>
+            <a href="#galeria" className="hover:text-[#C86D51] transition-colors">{isBasic ? 'Postales' : t.nav.gallery}</a>
             
             {(isPro || isAdvance) && (
-              <a href="#itinerario" className="hover:text-[#C86D51] transition-colors">Bitácora</a>
+              <a href="#itinerario" className="hover:text-[#C86D51] transition-colors">{t.journal.badge || 'Bitácora'}</a>
             )}
 
-            <a href="#tours" className="hover:text-[#C86D51] transition-colors">Mejores Tours</a>
+            <a href="#tours" className="hover:text-[#C86D51] transition-colors">{t.nav.tours}</a>
 
             {(isPro || isAdvance) && (
-              <a href="#mapa" className="hover:text-[#C86D51] transition-colors">Mapa</a>
+              <a href="#mapa" className="hover:text-[#C86D51] transition-colors">{t.nav.map}</a>
             )}
 
-            <a href="#resenas" className="hover:text-[#C86D51] transition-colors">Reseñas</a>
+            <a href="#resenas" className="hover:text-[#C86D51] transition-colors">{t.nav.reviews}</a>
 
             {(isPro || isAdvance) && (
-              <a href="#guia-campo" className="hover:text-[#C86D51] transition-colors">Guía de Campo</a>
+              <a href="#guia-campo" className="hover:text-[#C86D51] transition-colors">{t.nav.fieldGuide}</a>
             )}
 
             <a href="#soporte-faq" className="hover:text-[#C86D51] transition-colors">
-              {isBasic ? 'Consultas' : 'Soporte & FAQ'}
+              {isBasic ? (currentLang === 'en' ? 'Inquiries' : 'Consultas') : t.nav.faq}
             </a>
           </nav>
         )}
 
-        {/* Header Action Button */}
-        <div className="flex items-center gap-1.5 shrink-0">
+        {/* Header Action Button & Language Pill */}
+        <div className="flex items-center gap-2 shrink-0">
+          {/* 5-Language Switcher Pill */}
+          <div className="flex items-center bg-stone-200/80 rounded-full p-0.5 border border-stone-300/80 shadow-2xs">
+            {BOHO_LANGUAGES.map((l) => (
+              <button
+                key={l.code}
+                type="button"
+                onClick={() => setCurrentLang(l.code)}
+                className={`px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase transition-all duration-200 cursor-pointer ${
+                  currentLang === l.code
+                    ? 'bg-[#C86D51] text-white font-black shadow-xs scale-102'
+                    : 'text-stone-600 hover:text-stone-900 hover:bg-white/50'
+                }`}
+                title={l.label}
+              >
+                {l.code}
+              </button>
+            ))}
+          </div>
+
           {data.objective === 'both' ? (
             <>
               <a
@@ -332,14 +373,14 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 className="bg-[#588157] hover:bg-[#476846] text-white px-2.5 sm:px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1 cursor-pointer"
               >
                 <MessageCircle size={14} />
-                <span className="hidden sm:inline">WhatsApp</span>
+                <span className="hidden sm:inline">{t.cta.whatsapp}</span>
               </a>
               <button
                 onClick={() => setIsQuoteOpen(true)}
                 className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-2.5 sm:px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1 cursor-pointer"
               >
                 <FileText size={14} />
-                <span className="hidden sm:inline">Cotizar</span>
+                <span className="hidden sm:inline">{t.cta.quote}</span>
               </button>
             </>
           ) : isQuote ? (
@@ -348,7 +389,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-3 sm:px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
             >
               <FileText size={14} />
-              <span>Cotizar</span>
+              <span>{t.cta.quote}</span>
             </button>
           ) : (
             <a
@@ -358,7 +399,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               className="bg-[#588157] hover:bg-[#476846] text-white px-3 sm:px-4 py-2 rounded-full font-medium text-xs transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
             >
               <MessageCircle size={14} />
-              <span>WhatsApp</span>
+              <span>{t.cta.whatsapp}</span>
             </a>
           )}
         </div>
@@ -368,37 +409,37 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
       {!isFree && (
         <div className="lg:hidden sticky top-[53px] z-30 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-stone-200/70 py-2 px-3 overflow-x-auto scrollbar-none flex items-center gap-2">
           <a href="#sobre-tour" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            📖 Sobre el Tour
+            📖 {t.nav.journal}
           </a>
           <a href="#galeria" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            🖼️ {isBasic ? 'Postales' : 'Pines & Fotos'}
+            🖼️ {isBasic ? (currentLang === 'en' ? 'Postcards' : 'Postales') : t.nav.gallery}
           </a>
           {(isPro || isAdvance) && (
             <a href="#itinerario" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-              ⏱️ Bitácora
+              ⏱️ {t.journal.badge || 'Bitácora'}
             </a>
           )}
           <a href="#tours" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            ⭐ Mejores Tours
+            ⭐ {t.nav.tours}
           </a>
           {(isPro || isAdvance) && (
             <a href="#mapa" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-              🗺️ Mapa GPS
+              🗺️ {t.nav.map}
             </a>
           )}
           <a href="#resenas" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            💬 Reseñas 4.9★
+            💬 {t.nav.reviews}
           </a>
           {(isPro || isAdvance) && (
             <a href="#guia-campo" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-              📸 Tips Fotos
+              📸 {t.nav.fieldGuide}
             </a>
           )}
           <a href="#mochila" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            🎒 Mochila
+            🎒 {t.nav.backpack}
           </a>
           <a href="#soporte-faq" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            ❓ FAQ
+            ❓ {t.nav.faq}
           </a>
         </div>
       )}
@@ -433,24 +474,24 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             <div className="flex flex-wrap gap-2 pt-1">
               <span className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl bg-white border border-stone-200 text-stone-700 text-[11px] sm:text-xs flex items-center gap-1.5 shadow-2xs">
                 <Compass size={13} className="text-[#C86D51]" />
-                {data.duration || 'Full Day'}
+                {translateText(data.duration || 'Full Day', currentLang)}
               </span>
               <span className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl bg-white border border-stone-200 text-stone-700 text-[11px] sm:text-xs flex items-center gap-1.5 shadow-2xs">
                 <MapPin size={13} className="text-[#588157]" />
-                {data.destination || 'Cusco & Valle Sagrado'}
+                {translateText(data.destination || 'Cusco & Valle Sagrado', currentLang)}
               </span>
               <span className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl bg-white border border-stone-200 text-stone-700 text-[11px] sm:text-xs flex items-center gap-1.5 shadow-2xs">
                 <Users size={13} className="text-stone-500" />
-                {data.groupType || 'Grupos Reducidos'}
+                {translateText(data.groupType || 'Grupos Reducidos', currentLang)}
               </span>
             </div>
 
             {/* Price & Primary CTA */}
             <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
               <div className="bg-white px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl border border-stone-200/90 shadow-2xs inline-flex sm:block items-baseline gap-2 self-start">
-                <span className="text-[10px] text-stone-500 uppercase tracking-wider font-semibold block">Inversión</span>
+                <span className="text-[10px] text-stone-500 uppercase tracking-wider font-semibold block">{t.hero.investment}</span>
                 <span className="text-xl sm:text-2xl font-serif font-bold text-stone-900">{data.price || 'S/ 180'}</span>
-                <span className="text-[11px] text-stone-500 sm:ml-1">/ viajero</span>
+                <span className="text-[11px] text-stone-500 sm:ml-1">{t.hero.perTraveler}</span>
               </div>
 
               {data.objective === 'both' ? (
@@ -462,14 +503,14 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                     className="flex-1 sm:flex-initial bg-[#588157] hover:bg-[#476846] text-white px-4 py-3 rounded-2xl font-semibold text-xs transition-all shadow-md active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     <MessageCircle size={16} />
-                    <span>WhatsApp</span>
+                    <span>{t.cta.whatsapp}</span>
                   </a>
                   <button
                     onClick={() => setIsQuoteOpen(true)}
                     className="flex-1 sm:flex-initial bg-[#C86D51] hover:bg-[#b05d43] text-white px-4 py-3 rounded-2xl font-semibold text-xs transition-all shadow-md active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     <FileText size={16} />
-                    <span>Cotizar</span>
+                    <span>{t.cta.quote}</span>
                   </button>
                 </div>
               ) : isQuote ? (
@@ -478,7 +519,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                   className="w-full sm:w-auto bg-[#C86D51] hover:bg-[#b05d43] text-white px-6 py-3.5 rounded-2xl font-semibold text-xs sm:text-sm transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <FileText size={16} />
-                  <span>{data.hero?.cta || 'Cotizar Experiencia'}</span>
+                  <span>{translateText(data.hero?.cta || t.cta.quote, currentLang)}</span>
                 </button>
               ) : (
                 <a
@@ -488,7 +529,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                   className="w-full sm:w-auto bg-[#588157] hover:bg-[#476846] text-white px-6 py-3.5 rounded-2xl font-semibold text-xs sm:text-sm transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <MessageCircle size={16} />
-                  <span>{data.hero?.cta || 'Reservar por WhatsApp'}</span>
+                  <span>{translateText(data.hero?.cta || t.cta.whatsapp, currentLang)}</span>
                 </a>
               )}
             </div>
@@ -496,7 +537,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             {/* Micro Reassurance Banner */}
             <p className="text-[11px] text-stone-500 flex items-center gap-1.5 pt-1 font-serif italic">
               <CheckCircle2 size={13} className="text-[#588157] shrink-0" />
-              <span>Respuesta en minutos • Coordinación directa con el guía</span>
+              <span>{t.hero.quickResponse}</span>
             </p>
           </div>
 
@@ -543,7 +584,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                   &quot;{data.name}&quot;
                 </p>
                 <p className="text-[9px] sm:text-[10px] font-sans uppercase tracking-widest text-stone-400 mt-0.5">
-                  Guía Oficial: {data.guideName || 'Cusco Creativos'}
+                  {currentLang === 'en' ? 'Official Guide' : currentLang === 'pt' ? 'Guia Oficial' : currentLang === 'fr' ? 'Guide Officiel' : currentLang === 'it' ? 'Guida Ufficiale' : 'Guía Oficial'}: {data.guideName || 'Cusco Creativos'}
                 </p>
               </div>
             </div>
@@ -558,13 +599,13 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
           <div className="max-w-5xl mx-auto flex flex-col sm:flex-row justify-center sm:justify-between items-center gap-2.5 sm:gap-4 text-center sm:text-left">
             <div className="flex items-center gap-2 text-stone-600 text-xs font-serif italic">
               <ShieldCheck size={16} className="text-[#588157] shrink-0" />
-              <span>Garantía de servicio oficial y seguro en Cusco</span>
+              <span>{currentLang === 'en' ? 'Official and safe service guarantee in Cusco' : currentLang === 'pt' ? 'Garantia de serviço oficial e seguro em Cusco' : currentLang === 'fr' ? 'Garantie de service officiel et sécurisé à Cusco' : currentLang === 'it' ? 'Garanzia di servizio ufficiale e sicuro a Cusco' : 'Garantía de servicio oficial y seguro en Cusco'}</span>
             </div>
             <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
               {data.trustBadges.map((badge, idx) => (
                 <span key={idx} className="inline-flex items-center gap-1 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-stone-100 border border-stone-200 text-stone-700 text-[10px] sm:text-xs font-medium">
                   <CheckCircle2 size={12} className="text-[#C86D51]" />
-                  {badge}
+                  {translateText(badge, currentLang)}
                 </span>
               ))}
             </div>
@@ -581,19 +622,19 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             
             <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
               <span className="text-[11px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center gap-1.5">
-                <Bookmark size={13} /> Bitácora de Campo • Sobre la Experiencia
+                <Bookmark size={13} /> {t.about.badge}
               </span>
               <span className="text-[10px] sm:text-[11px] font-mono text-stone-500 bg-stone-100 px-2 py-0.5 rounded-full">
-                {data.destination || 'Cusco'}
+                {translateText(data.destination || 'Cusco', currentLang)}
               </span>
             </div>
 
             <h2 className="text-xl sm:text-3xl font-serif font-medium text-stone-900 leading-snug">
-              {data.about?.title || 'Una experiencia curada para conectar con el paisaje andino'}
+              {data.about?.title ? translateText(data.about.title, currentLang) : t.about.defaultTitle}
             </h2>
 
             <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-sans">
-              {data.about?.content || 'Diseñada para quienes buscan desconectar de las prisas y conectar con la majestuosidad de las montañas andinas. Viajamos en grupos reducidos con paradas estratégicas en los mejores miradores, café orgánico de altura y un guía especializado que te asesorará para capturar fotos inolvidables.'}
+              {data.about?.content ? translateText(data.about.content, currentLang) : t.about.defaultContent}
             </p>
 
             {/* Highlights Chips: 3-column on desktop, stacked or compact on mobile */}
@@ -601,22 +642,22 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               <div className="flex items-center gap-2.5 text-xs text-stone-700 bg-[#FAF7F2] p-2.5 sm:p-3 rounded-2xl border border-stone-200/70">
                 <Camera size={16} className="text-[#C86D51] shrink-0" />
                 <div>
-                  <strong className="block text-stone-900 font-serif text-xs">Horario Dorado</strong>
-                  <span className="text-[10px] text-stone-500">Mejor luz fotográfica</span>
+                  <strong className="block text-stone-900 font-serif text-xs">{t.about.goldenHour}</strong>
+                  <span className="text-[10px] text-stone-500">{t.about.goldenHourDesc}</span>
                 </div>
               </div>
               <div className="flex items-center gap-2.5 text-xs text-stone-700 bg-[#FAF7F2] p-2.5 sm:p-3 rounded-2xl border border-stone-200/70">
                 <Compass size={16} className="text-[#588157] shrink-0" />
                 <div>
-                  <strong className="block text-stone-900 font-serif text-xs">Ritmo Pausado</strong>
-                  <span className="text-[10px] text-stone-500">Sin apuros ni carreras</span>
+                  <strong className="block text-stone-900 font-serif text-xs">{t.about.slowPace}</strong>
+                  <span className="text-[10px] text-stone-500">{t.about.slowPaceDesc}</span>
                 </div>
               </div>
               <div className="flex items-center gap-2.5 text-xs text-stone-700 bg-[#FAF7F2] p-2.5 sm:p-3 rounded-2xl border border-stone-200/70">
                 <ShieldCheck size={16} className="text-amber-600 shrink-0" />
                 <div>
-                  <strong className="block text-stone-900 font-serif text-xs">Aclimatación Segura</strong>
-                  <span className="text-[10px] text-stone-500">Oxígeno y botiquín</span>
+                  <strong className="block text-stone-900 font-serif text-xs">{t.about.safeAcclimatization}</strong>
+                  <span className="text-[10px] text-stone-500">{t.about.safeAcclimatizationDesc}</span>
                 </div>
               </div>
             </div>
@@ -691,13 +732,13 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             {/* Header with Boho mood */}
             <div className="text-center space-y-2 max-w-2xl mx-auto">
               <span className="text-[11px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center justify-center gap-1.5">
-                <Compass size={13} /> Colección Curada en Cusco
+                <Compass size={13} /> {t.tours.badge}
               </span>
               <h2 className="text-xl sm:text-4xl font-serif text-stone-900">
-                Nuestros Mejores Tours & Rutas Andinas
+                {t.tours.title}
               </h2>
               <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-sans">
-                Explora otras bitácoras de viaje diseñadas con la misma filosofía: grupos pequeños, estética fotográfica y trato humano.
+                {t.tours.subtitle}
               </p>
             </div>
 
@@ -705,10 +746,10 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             {isAdvance && (
               <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
                 {[
-                  { id: 'all', label: 'Todos los Circuitos' },
-                  { id: 'lagunas', label: 'Lagunas & Glaciares' },
-                  { id: 'valle', label: 'Valles & Salineras' },
-                  { id: 'trek', label: 'Trekking & Aventura' }
+                  { id: 'all', label: t.tours.categories.all },
+                  { id: 'lagunas', label: t.tours.categories.lagunas },
+                  { id: 'valle', label: t.tours.categories.valle },
+                  { id: 'trek', label: t.tours.categories.montana }
                 ].map(cat => (
                   <button
                     key={cat.id}
@@ -728,7 +769,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             {/* Mobile View Toggle Helper (Carrusel ↔ vs Lista ↕) */}
             <div className="flex items-center justify-between sm:hidden px-1 text-[11px] text-stone-500">
               <span className="font-serif italic flex items-center gap-1">
-                <span>Desliza para ver más</span>
+                <span>{currentLang === 'en' ? 'Swipe to explore more' : currentLang === 'pt' ? 'Deslize para ver mais' : currentLang === 'fr' ? 'Glissez pour en voir plus' : currentLang === 'it' ? 'Scorri per vedere di più' : 'Desliza para ver más'}</span>
                 <ChevronRight size={12} className="text-[#C86D51] animate-pulse" />
               </span>
               <button
@@ -736,7 +777,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 className="flex items-center gap-1 text-[#C86D51] font-bold bg-white px-2 py-0.5 rounded-lg border border-stone-200 shadow-2xs"
               >
                 <SlidersHorizontal size={11} />
-                <span>{mobileTourLayout === 'carousel' ? 'Ver en Lista' : 'Ver en Carrusel'}</span>
+                <span>{mobileTourLayout === 'carousel' ? (currentLang === 'en' ? 'List View' : currentLang === 'pt' ? 'Ver em Lista' : currentLang === 'fr' ? 'Vue Liste' : currentLang === 'it' ? 'Vista Elenco' : 'Ver en Lista') : (currentLang === 'en' ? 'Carousel View' : currentLang === 'pt' ? 'Ver em Carrossel' : currentLang === 'fr' ? 'Vue Carrousel' : currentLang === 'it' ? 'Vista Carosello' : 'Ver en Carrusel')}</span>
               </button>
             </div>
 
@@ -792,7 +833,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                         <div className="flex flex-wrap gap-1.5 text-[9px] sm:text-[10px] text-stone-500 font-sans">
                           <span className="flex items-center gap-1 bg-[#FAF7F2] px-2 py-0.5 rounded-md border border-stone-200/70">
                             <Clock size={10} className="text-[#C86D51]" />
-                            {tour.duration}
+                            {translateText(tour.duration, currentLang)}
                           </span>
                           <span className="flex items-center gap-1 bg-[#FAF7F2] px-2 py-0.5 rounded-md border border-stone-200/70">
                             <Mountain size={10} className="text-[#588157]" />
@@ -800,16 +841,16 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                           </span>
                           <span className="flex items-center gap-1 bg-[#FAF7F2] px-2 py-0.5 rounded-md border border-stone-200/70">
                             <Compass size={10} className="text-stone-400" />
-                            {tour.difficulty}
+                            {translateText(tour.difficulty, currentLang)}
                           </span>
                         </div>
 
                         <h3 className="font-serif font-bold text-stone-900 text-sm sm:text-lg group-hover:text-[#C86D51] transition-colors leading-snug line-clamp-2">
-                          {tour.title}
+                          {translateText(tour.title, currentLang)}
                         </h3>
 
                         <p className="text-xs text-stone-600 leading-relaxed font-sans line-clamp-2 sm:line-clamp-3">
-                          {tour.description}
+                          {translateText(tour.description, currentLang)}
                         </p>
 
                         {/* Highlights list */}
@@ -817,7 +858,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                           {tour.highlights.slice(0, 2).map((h, hIdx) => (
                             <li key={hIdx} className="flex items-center gap-1.5 truncate">
                               <Check size={11} className="text-[#588157] shrink-0" />
-                              <span className="truncate">{h}</span>
+                              <span className="truncate">{translateText(h, currentLang)}</span>
                             </li>
                           ))}
                         </ul>
@@ -832,14 +873,14 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                           className="flex-1 bg-[#588157] hover:bg-[#476846] text-white py-2 sm:py-2.5 px-3 rounded-xl font-medium text-xs text-center transition-all flex items-center justify-center gap-1.5 shadow-2xs active:scale-95 cursor-pointer"
                         >
                           <MessageCircle size={13} />
-                          <span>Consultar</span>
+                          <span>{currentLang === 'en' ? 'Inquire' : currentLang === 'pt' ? 'Consultar' : currentLang === 'fr' ? 'Consulter' : currentLang === 'it' ? 'Consulta' : 'Consultar'}</span>
                         </a>
                         <button
                           onClick={() => setIsQuoteOpen(true)}
                           className="bg-[#FAF7F2] hover:bg-stone-100 border border-stone-200 text-stone-700 py-2 sm:py-2.5 px-3 rounded-xl font-medium text-xs transition-all flex items-center justify-center gap-1 active:scale-95 cursor-pointer"
                         >
                           <FileText size={13} className="text-[#C86D51]" />
-                          <span>Cotizar</span>
+                          <span>{t.cta.quote}</span>
                         </button>
                       </div>
                     </div>
@@ -851,7 +892,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             {/* Note on availability */}
             <div className="text-center pt-1">
               <p className="text-[11px] sm:text-xs text-stone-500 font-serif italic">
-                ¿Buscas un circuito combinado o privado? Podemos armar tu bitácora personalizada en Cusco a tu medida.
+                {currentLang === 'en' ? 'Looking for a combined or private tour? We can tailor your custom Cusco travel journal.' : currentLang === 'pt' ? 'Procurando um circuito combinado ou privado? Podemos montar seu roteiro personalizado em Cusco sob medida.' : currentLang === 'fr' ? 'Vous cherchez un circuit combiné ou privé ? Nous pouvons concevoir votre itinéraire sur mesure à Cusco.' : currentLang === 'it' ? 'Cerchi un tour combinato o privato? Possiamo creare il tuo itinerario personalizzato a Cusco.' : '¿Buscas un circuito combinado o privado? Podemos armar tu bitácora personalizada en Cusco a tu medida.'}
               </p>
             </div>
 
@@ -1075,13 +1116,13 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             {/* Header */}
             <div className="text-center space-y-1.5 sm:space-y-2 max-w-2xl mx-auto">
               <span className="text-[11px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center justify-center gap-1.5">
-                <Heart size={13} className="text-rose-500 fill-rose-500" /> Libro de Visitas • Calificaciones Reales
+                <Heart size={13} className="text-rose-500 fill-rose-500" /> {t.reviews.badge}
               </span>
               <h2 className="text-xl sm:text-4xl font-serif text-stone-900">
-                Reseñas de la Comunidad Viajera
+                {t.reviews.title}
               </h2>
               <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-sans">
-                Historias, notas y recomendaciones dejadas por fotógrafos, parejas y exploradores de todo el mundo.
+                {t.reviews.subtitle}
               </p>
             </div>
 
@@ -1098,15 +1139,17 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                         <Star key={i} size={15} fill="currentColor" />
                       ))}
                     </div>
-                    <span className="text-[11px] text-stone-500 block">sobre 5.0 puntos</span>
+                    <span className="text-[11px] text-stone-500 block">
+                      {currentLang === 'en' ? 'out of 5.0 stars' : currentLang === 'pt' ? 'de 5.0 pontos' : currentLang === 'fr' ? 'sur 5.0 points' : currentLang === 'it' ? 'su 5.0 punti' : 'sobre 5.0 puntos'}
+                    </span>
                   </div>
                 </div>
                 <p className="text-xs text-stone-600">
-                  Basado en más de <strong>+340 opiniones</strong> en TripAdvisor y Google.
+                  {currentLang === 'en' ? 'Based on over +340 verified reviews on TripAdvisor and Google.' : currentLang === 'pt' ? 'Baseado em mais de +340 avaliações no TripAdvisor e Google.' : currentLang === 'fr' ? 'Basé sur plus de +340 avis vérifiés sur TripAdvisor et Google.' : currentLang === 'it' ? 'Basato su oltre +340 recensioni verificate su TripAdvisor e Google.' : 'Basado en más de +340 opiniones en TripAdvisor y Google.'}
                 </p>
                 <div className="flex items-center justify-center md:justify-start gap-1 text-[11px] text-[#588157] font-semibold pt-0.5">
                   <ThumbsUp size={12} />
-                  <span>98% de recomendación directa</span>
+                  <span>{currentLang === 'en' ? '98% direct recommendation' : currentLang === 'pt' ? '98% de recomendação direta' : currentLang === 'fr' ? '98% de recommandation directe' : currentLang === 'it' ? '98% di raccomandazione diretta' : '98% de recomendación directa'}</span>
                 </div>
               </div>
 
@@ -1371,7 +1414,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               <div className="bg-white p-5 sm:p-8 rounded-3xl border border-stone-200 shadow-xs space-y-3 sm:space-y-4">
                 <div className="flex items-center gap-2 text-[#588157]">
                   <CheckCircle2 size={18} />
-                  <h3 className="font-serif font-bold text-base sm:text-lg text-stone-900">¿Qué Incluye el Servicio?</h3>
+                  <h3 className="font-serif font-bold text-base sm:text-lg text-stone-900">{t.mochila.tabIncludes}</h3>
                 </div>
                 <ul className="space-y-2.5 text-xs sm:text-sm text-stone-600">
                   {(data.features?.items || [
@@ -1382,7 +1425,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                   ]).map((item, i) => (
                     <li key={i} className="flex items-start gap-2">
                       <span className="text-[#588157] font-bold">✓</span>
-                      <span>{item}</span>
+                      <span>{translateText(item, currentLang)}</span>
                     </li>
                   ))}
                 </ul>
@@ -1392,11 +1435,21 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               <div className="bg-[#FAF7F2] p-5 sm:p-8 rounded-3xl border border-[#C86D51]/30 shadow-xs space-y-3 sm:space-y-4 flex flex-col justify-between">
                 <div className="space-y-1.5">
                   <span className="text-[10px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51]">
-                    Atención Inmediata
+                    {currentLang === 'en' ? 'Immediate Support' : currentLang === 'pt' ? 'Atendimento Imediato' : currentLang === 'fr' ? 'Support Immédiat' : currentLang === 'it' ? 'Assistenza Immediata' : 'Atención Inmediata'}
                   </span>
-                  <h3 className="font-serif font-bold text-base sm:text-lg text-stone-900">¿Deseas confirmar disponibilidad?</h3>
+                  <h3 className="font-serif font-bold text-base sm:text-lg text-stone-900">
+                    {currentLang === 'en' ? 'Want to check availability?' : currentLang === 'pt' ? 'Deseja confirmar disponibilidade?' : currentLang === 'fr' ? 'Vous souhaitez vérifier la disponibilité ?' : currentLang === 'it' ? 'Vuoi verificare la disponibilità?' : '¿Deseas confirmar disponibilidad?'}
+                  </h3>
                   <p className="text-xs text-stone-600 leading-relaxed">
-                    Escríbenos directamente para coordinar fecha de salida y número de viajeros con respuesta en minutos.
+                    {currentLang === 'en' 
+                      ? 'Message us directly to coordinate departure date and number of travelers with quick reply in minutes.'
+                      : currentLang === 'pt'
+                      ? 'Envie uma mensagem diretamente para coordenar a data de saída e o número de viajantes com resposta em minutos.'
+                      : currentLang === 'fr'
+                      ? 'Écrivez-nous directement pour convenir d’une date de départ et du nombre de voyageurs avec réponse rapide.'
+                      : currentLang === 'it'
+                      ? 'Scrivici direttamente per concordare la data di partenza e il numero di partecipanti con risposta in pochi minuti.'
+                      : 'Escríbenos directamente para coordinar fecha de salida y número de viajeros con respuesta en minutos.'}
                   </p>
                 </div>
                 <a
@@ -1406,7 +1459,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                   className="bg-[#588157] hover:bg-[#476846] text-white py-3 px-4 rounded-2xl font-bold text-xs transition-all shadow-md flex items-center justify-center gap-2 active:scale-95 cursor-pointer"
                 >
                   <MessageCircle size={15} />
-                  <span>Consultar por WhatsApp</span>
+                  <span>{t.cta.whatsapp}</span>
                 </a>
               </div>
             </div>
@@ -1422,7 +1475,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                     activeMochilaTab === 'incluye' ? 'bg-white text-stone-900 shadow-2xs' : 'text-stone-500'
                   }`}
                 >
-                  ✓ Incluye
+                  ✓ {t.mochila.tabIncludes}
                 </button>
                 <button
                   onClick={() => setActiveMochilaTab('no-incluye')}
@@ -1430,7 +1483,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                     activeMochilaTab === 'no-incluye' ? 'bg-white text-stone-900 shadow-2xs' : 'text-stone-500'
                   }`}
                 >
-                  ✕ No Incluye
+                  ✕ {t.mochila.tabNotIncludes}
                 </button>
                 <button
                   onClick={() => setActiveMochilaTab('mochila')}
@@ -1438,7 +1491,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                     activeMochilaTab === 'mochila' ? 'bg-white text-stone-900 shadow-2xs' : 'text-stone-500'
                   }`}
                 >
-                  🎒 Mochila
+                  🎒 {t.mochila.tabBackpack}
                 </button>
               </div>
 
@@ -1452,7 +1505,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 `}>
                   <div className="flex items-center gap-2 text-[#588157]">
                     <CheckCircle2 size={17} />
-                    <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900">¿Qué Incluye?</h3>
+                    <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900">{t.mochila.tabIncludes}</h3>
                   </div>
                   <ul className="space-y-2 text-xs text-stone-600">
                     {(data.features?.items || [
@@ -1464,7 +1517,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                     ]).map((item, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <span className="text-[#588157] font-bold">✓</span>
-                        <span>{item}</span>
+                        <span>{translateText(item, currentLang)}</span>
                       </li>
                     ))}
                   </ul>
@@ -1477,7 +1530,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 `}>
                   <div className="flex items-center gap-2 text-stone-500">
                     <XCircle size={17} />
-                    <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900">No Incluye</h3>
+                    <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900">{t.mochila.tabNotIncludes}</h3>
                   </div>
                   <ul className="space-y-2 text-xs text-stone-600">
                     {(data.notIncluded || [
@@ -1488,7 +1541,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                     ]).map((item, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <span className="text-stone-400 font-bold">✕</span>
-                        <span>{item}</span>
+                        <span>{translateText(item, currentLang)}</span>
                       </li>
                     ))}
                   </ul>
@@ -1501,7 +1554,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 `}>
                   <div className="flex items-center gap-2 text-[#C86D51]">
                     <Backpack size={17} />
-                    <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900">Mochila de Viaje</h3>
+                    <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900">{t.mochila.tabBackpack}</h3>
                   </div>
                   <ul className="space-y-2 text-xs text-stone-700">
                     {(data.whatToBring || [
@@ -1513,7 +1566,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                     ]).map((item, i) => (
                       <li key={i} className="flex items-start gap-2">
                         <span className="text-[#C86D51] font-bold">•</span>
-                        <span>{item}</span>
+                        <span>{translateText(item, currentLang)}</span>
                       </li>
                     ))}
                   </ul>
@@ -1530,14 +1583,14 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
       {!isFree && (
         <TourSupportAndFaqs
           faqs={data.faqs}
-          tourName={data.name || data.hero?.title || 'Tour Cusco'}
+          tourName={localizedTourTitle}
           whatsapp={data.whatsapp}
           guideName={data.guideName}
-          destination={data.destination || 'Cusco'}
+          destination={translateText(data.destination || 'Cusco', currentLang)}
           tier={tier}
           theme="boho-nature"
           isMobile={isMobile}
-          lang={lang}
+          lang={currentLang}
         />
       )}
 
@@ -1546,11 +1599,21 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         <div className="max-w-xl mx-auto space-y-2">
           <div className="inline-flex items-center gap-1.5 text-stone-400 text-[10px] sm:text-xs uppercase tracking-widest font-serif">
             <Camera size={13} className="text-[#C86D51]" />
-            <span>Boho Travel Journal • Edición Limitada</span>
+            <span>Boho Travel Journal • {currentLang === 'en' ? 'Limited Edition' : currentLang === 'pt' ? 'Edição Limitada' : currentLang === 'fr' ? 'Édition Limitée' : currentLang === 'it' ? 'Edizione Limitata' : 'Edición Limitada'}</span>
           </div>
-          <h3 className="text-xl sm:text-3xl font-serif text-white">¿Listo para vivir esta experiencia?</h3>
+          <h3 className="text-xl sm:text-3xl font-serif text-white">
+            {currentLang === 'en' ? 'Ready to live this experience?' : currentLang === 'pt' ? 'Pronto para viver esta experiência?' : currentLang === 'fr' ? 'Prêt à vivre cette expérience ?' : currentLang === 'it' ? 'Pronto a vivere questa esperienza?' : '¿Listo para vivir esta experiencia?'}
+          </h3>
           <p className="text-xs text-stone-400 leading-relaxed">
-            Reserva con anticipación para asegurar cupos en grupos reducidos con atención personalizada y asesoría fotográfica.
+            {currentLang === 'en' 
+              ? 'Book in advance to secure spots in small groups with personalized attention and photo coaching.'
+              : currentLang === 'pt'
+              ? 'Reserve com antecedência para garantir vagas em grupos reduzidos com atenção personalizada e dicas de fotografia.'
+              : currentLang === 'fr'
+              ? 'Réservez à l’avance pour garantir vos places en petits groupes avec accompagnement personnalisé et conseils photo.'
+              : currentLang === 'it'
+              ? 'Prenota in anticipo per assicurarti posti in piccoli gruppi con attenzione personalizzata e consigli fotografici.'
+              : 'Reserva con anticipación para asegurar cupos en grupos reducidos con atención personalizada y asesoría fotográfica.'}
           </p>
         </div>
 
@@ -1561,7 +1624,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               className="w-full sm:w-auto bg-[#C86D51] hover:bg-[#b05d43] text-white px-6 py-3 rounded-full font-medium text-xs transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
             >
               <FileText size={14} />
-              <span>Solicitar Cotización Formal</span>
+              <span>{t.cta.quote}</span>
             </button>
           ) : (
             <a
@@ -1571,14 +1634,14 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               className="w-full sm:w-auto bg-[#588157] hover:bg-[#476846] text-white px-6 py-3 rounded-full font-medium text-xs transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
             >
               <MessageCircle size={14} />
-              <span>Hablar con el Guía por WhatsApp</span>
+              <span>{currentLang === 'en' ? 'Chat on WhatsApp with Guide' : currentLang === 'pt' ? 'Falar com o Guia pelo WhatsApp' : currentLang === 'fr' ? 'Parler au Guide sur WhatsApp' : currentLang === 'it' ? 'Parla con la Guida su WhatsApp' : 'Hablar con el Guía por WhatsApp'}</span>
             </a>
           )}
         </div>
 
         <div className="border-t border-stone-800 pt-5 max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between text-[10px] sm:text-[11px] text-stone-500 gap-1.5">
-          <span>© {new Date().getFullYear()} Cusco Creativos S.A.C. • Plantilla Boho Travel Journal</span>
-          <span>Inspirado en la estética editorial de viajes & Pinterest</span>
+          <span>{t.footer.rights}</span>
+          <span>{t.footer.madeWithLove}</span>
         </div>
       </footer>
 
@@ -1589,11 +1652,13 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             <span className="text-base font-serif font-bold text-stone-900 leading-none">
               {data.price || 'S/ 180'}
             </span>
-            <span className="text-[10px] text-stone-500 font-sans">/ pers.</span>
+            <span className="text-[10px] text-stone-500 font-sans">
+              {currentLang === 'en' ? '/ pers.' : currentLang === 'pt' ? '/ pessoa' : currentLang === 'fr' ? '/ pers.' : currentLang === 'it' ? '/ persona' : '/ pers.'}
+            </span>
           </div>
           <div className="flex items-center gap-1 text-[10px] text-amber-600 font-medium pt-0.5">
             <Star size={10} className="fill-amber-500 text-amber-500" />
-            <span>4.9 (340+ reseñas)</span>
+            <span>4.9 ({currentLang === 'en' ? '340+ reviews' : currentLang === 'pt' ? '340+ avaliações' : currentLang === 'fr' ? '340+ avis' : currentLang === 'it' ? '340+ recensioni' : '340+ reseñas'})</span>
           </div>
         </div>
 
@@ -1605,7 +1670,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 className="bg-white border border-stone-300 text-stone-800 text-[11px] font-serif font-bold px-3 py-2 rounded-xl active:scale-95 transition-all shadow-xs flex items-center gap-1 cursor-pointer"
               >
                 <FileText size={12} className="text-[#C86D51]" />
-                <span>Cotizar</span>
+                <span>{t.cta.quote}</span>
               </button>
               <a
                 href={whatsappUrl}
@@ -1614,7 +1679,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 className="bg-[#588157] hover:bg-[#476846] text-white text-[11px] font-bold px-3.5 py-2 rounded-xl active:scale-95 transition-all shadow-md flex items-center gap-1 cursor-pointer"
               >
                 <MessageCircle size={13} />
-                <span>WhatsApp</span>
+                <span>{t.cta.whatsapp}</span>
               </a>
             </>
           ) : isQuote ? (
@@ -1623,7 +1688,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               className="bg-[#C86D51] hover:bg-[#b05d43] text-white text-xs font-bold px-4 py-2.5 rounded-xl active:scale-95 transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
             >
               <FileText size={14} />
-              <span>Cotizar Ahora</span>
+              <span>{t.cta.quote}</span>
             </button>
           ) : (
             <a
@@ -1633,7 +1698,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               className="bg-[#588157] hover:bg-[#476846] text-white text-xs font-bold px-4 py-2.5 rounded-xl active:scale-95 transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
             >
               <MessageCircle size={14} />
-              <span>Reservar Tour</span>
+              <span>{t.cta.whatsapp}</span>
             </a>
           )}
         </div>

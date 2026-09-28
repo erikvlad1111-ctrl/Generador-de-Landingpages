@@ -64,12 +64,7 @@ const getInitialForumQuestions = (
   lang: LanguageType = 'es',
   themeColor: string = 'bg-[#FF5500]'
 ): ForumQuestion[] => {
-  const isEn = lang === 'en';
-  const isPt = lang === 'pt';
-  const isFr = lang === 'fr';
-  const isIt = lang === 'it';
-
-  if (isEn) {
+  if (lang === 'en') {
     return [
       {
         id: 'fq-1',
@@ -172,28 +167,325 @@ const getInitialForumQuestions = (
     ];
   }
 
-  // Default Spanish & Multi-Language Translations
+  if (lang === 'pt') {
+    return [
+      {
+        id: 'fq-1',
+        title: `O serviço de traslado inclui hotéis no centro histórico de ${destination}?`,
+        author: 'Rodrigo & Camila',
+        timeAgo: 'Há 2 horas',
+        category: 'Logística & Traslado',
+        views: 34,
+        description: `Estamos hospedados em um casarão histórico perto da Plaza de Armas em ruas de paralelepípedos. O transporte busca direto na porta do hotel?`,
+        replies: [
+          {
+            id: 'r-1',
+            author: guideName || 'Guia Oficial',
+            role: 'guide',
+            roleLabel: 'Guia Credenciado DIRCETUR',
+            avatarBg: 'bg-emerald-600',
+            timeAgo: 'Há 1 hora',
+            content: `Olá Rodrigo! Sim, coordenamos o embarque na porta do hotel ou no ponto de acesso mais próximo a menos de 50 metros com auxílio integral de bagagens.`
+          },
+          {
+            id: 'r-2',
+            author: 'Atendimento ao Cliente',
+            role: 'admin',
+            roleLabel: 'Concierge Cusco',
+            avatarBg: themeColor,
+            timeAgo: 'Há 45 min',
+            content: `Na noite anterior entre 19h e 20h30 reconfirmamos o horário exato pelo WhatsApp pessoal.`
+          }
+        ]
+      },
+      {
+        id: 'fq-2',
+        title: `Quais precauções e assistência médica vocês oferecem contra o mal da altitude (soroche) no ${tourName}?`,
+        author: 'Dra. Beatriz Mendes',
+        timeAgo: 'Ontem às 16:30',
+        category: 'Saúde & Altitude',
+        views: 68,
+        description: `Viajo com familiares idosos sensíveis à altitude. Os veículos e guias possuem oxigênio medicinal e monitoramento durante todo o trajeto?`,
+        replies: [
+          {
+            id: 'r-3',
+            author: guideName || 'Guia de Montanha',
+            role: 'guide',
+            roleLabel: 'Guia Oficial Especialista',
+            avatarBg: 'bg-emerald-600',
+            timeAgo: 'Ontem às 17:15',
+            content: `Todas as nossas unidades e guias levam cilindro de oxigênio medicinal portátil, oxímetro de pulso para medir saturação em tempo real e kit andino completo de primeiros socorros.`
+          },
+          {
+            id: 'r-4',
+            author: 'Equipe Médica',
+            role: 'admin',
+            roleLabel: 'Suporte Oficial',
+            avatarBg: themeColor,
+            timeAgo: 'Ontem às 18:00',
+            content: `Recomendamos descanso prévio em Cusco e oferecemos chá de coca bem quente antes de iniciar a caminhada.`
+          }
+        ]
+      },
+      {
+        id: 'fq-3',
+        title: `É possível remarcar a data do passeio se houver chuva intensa ou atraso de voos?`,
+        author: 'Fernando Silva',
+        timeAgo: 'Há 3 dias',
+        category: 'Políticas & Reservas',
+        views: 52,
+        description: `Há custo adicional para remarcar caso o clima ou atrasos nos voos afetem nossa programação em Cusco?`,
+        replies: [
+          {
+            id: 'r-5',
+            author: 'Central de Reservas',
+            role: 'admin',
+            roleLabel: 'Atendimento Oficial',
+            avatarBg: themeColor,
+            timeAgo: 'Há 3 dias',
+            content: `Zero penalidade. Remarcamos a data para o dia seguinte sem custo ou adaptamos o itinerário com segurança total.`
+          }
+        ]
+      },
+      {
+        id: 'fq-4',
+        title: `Vocês possuem guarda-volumes seguro enquanto realizamos o passeio?`,
+        author: 'Luciana Martins',
+        timeAgo: 'Há 4 dias',
+        category: 'Bagagem & Conforto',
+        views: 41,
+        description: `Fazemos check-out do hotel bem cedo e gostaríamos de guardar nossas malas grandes com segurança durante o passeio.`,
+        replies: [
+          {
+            id: 'r-6',
+            author: 'Lounge Concierge',
+            role: 'admin',
+            roleLabel: 'Hospitalidade Privada',
+            avatarBg: themeColor,
+            timeAgo: 'Há 4 dias',
+            content: `Com certeza! Oferecemos guarda-volumes privado com segurança 24 horas no nosso escritório do Centro Histórico de Cusco, totalmente cortesia para nossos passageiros.`
+          }
+        ]
+      }
+    ];
+  }
+
+  if (lang === 'fr') {
+    return [
+      {
+        id: 'fq-1',
+        title: `La prise en charge inclut-elle les hôtels du centre historique de ${destination} ?`,
+        author: 'Marc & Chloé',
+        timeAgo: 'Il y a 2 heures',
+        category: 'Logistique & Transferts',
+        views: 34,
+        description: `Nous logeons dans un hôtel colonial près de la Plaza de Armas dans des ruelles piétonnes pavées. Votre véhicule vient-il directement nous chercher ?`,
+        replies: [
+          {
+            id: 'r-1',
+            author: guideName || 'Guide Officiel',
+            role: 'guide',
+            roleLabel: 'Guide Diplômé DIRCETUR',
+            avatarBg: 'bg-emerald-600',
+            timeAgo: 'Il y a 1 heure',
+            content: `Bonjour ! Oui, nous assurons la prise en charge porte-à-porte à la réception de votre hôtel ou au point carrossable le plus proche à moins de 50 mètres avec assistance bagages.`
+          },
+          {
+            id: 'r-2',
+            author: 'Service Client',
+            role: 'admin',
+            roleLabel: 'Conciergerie Cusco',
+            avatarBg: themeColor,
+            timeAgo: 'Il y a 45 min',
+            content: `La veille entre 19h00 et 20h30, nous reconfirmons l’horaire exact de départ directement sur votre WhatsApp personnel.`
+          }
+        ]
+      },
+      {
+        id: 'fq-2',
+        title: `Quelles précautions médicales prenez-vous contre le mal de l'altitude (soroche) pour ${tourName} ?`,
+        author: 'Valérie Jenkins',
+        timeAgo: 'Hier à 16:30',
+        category: 'Santé & Altitude',
+        views: 68,
+        description: `Je voyage avec des proches sensibles à l’altitude. Vos véhicules et guides disposent-ils d’oxygène médical tout au long du trajet ?`,
+        replies: [
+          {
+            id: 'r-3',
+            author: guideName || 'Guide Principal',
+            role: 'guide',
+            roleLabel: 'Guide de Montagne Agréé',
+            avatarBg: 'bg-emerald-600',
+            timeAgo: 'Hier à 17:15',
+            content: `Toutes nos unités et nos guides disposent d’une bouteille d’oxygène médical portative, d’un oxymètre de pouls pour surveiller la saturation en temps réel et d’une trousse andine de premiers secours.`
+          },
+          {
+            id: 'r-4',
+            author: 'Équipe Médicale',
+            role: 'admin',
+            roleLabel: 'Support Officiel',
+            avatarBg: themeColor,
+            timeAgo: 'Hier à 18:00',
+            content: `Nous recommandons 24h de repos préalable à Cusco et offrons une infusion de coca bien chaude avant le début de l'ascension.`
+          }
+        ]
+      },
+      {
+        id: 'fq-3',
+        title: `Peut-on reporter la date de l'excursion en cas de mauvais temps ou de vol retardé ?`,
+        author: 'David Miller',
+        timeAgo: 'Il y a 3 jours',
+        category: 'Politiques & Réservations',
+        views: 52,
+        description: `Y a-t-il des pénalités si les conditions météo ou un retard aérien nécessitent d’ajuster nos dates de voyage ?`,
+        replies: [
+          {
+            id: 'r-5',
+            author: 'Bureau des Réservations',
+            role: 'admin',
+            roleLabel: 'Support Client',
+            avatarBg: themeColor,
+            timeAgo: 'Il y a 3 jours',
+            content: `Aucune pénalité. Nous reprogrammons sans frais pour le jour suivant ou adaptons le circuit afin d’assurer votre entière sécurité.`
+          }
+        ]
+      },
+      {
+        id: 'fq-4',
+        title: `Proposez-vous une consigne à bagages sécurisée pendant l’excursion ?`,
+        author: 'Sophie Laurent',
+        timeAgo: 'Il y a 4 jours',
+        category: 'Bagages & Confort',
+        views: 41,
+        description: `Nous libérons notre chambre d'hôtel tôt le matin et souhaitons mettre nos grandes valises en sécurité pendant l'excursion.`,
+        replies: [
+          {
+            id: 'r-6',
+            author: 'Concierge Salon VIP',
+            role: 'admin',
+            roleLabel: 'Hospitalité Privée',
+            avatarBg: themeColor,
+            timeAgo: 'Il y a 4 jours',
+            content: `Oui absolument ! Nous mettons gratuitement à votre disposition une consigne à bagages sécurisée et surveillée 24h/24 dans notre salon du centre historique de Cusco.`
+          }
+        ]
+      }
+    ];
+  }
+
+  if (lang === 'it') {
+    return [
+      {
+        id: 'fq-1',
+        title: `Il servizio di prelievo include gli hotel nel centro storico di ${destination}?`,
+        author: 'Matteo & Federica',
+        timeAgo: '2 ore fa',
+        category: 'Logistica & Prelievi',
+        views: 34,
+        description: `Alloggiamo in un hotel coloniale vicino alla Plaza de Armas in una via pedonale. Il transfer arriva direttamente alla reception?`,
+        replies: [
+          {
+            id: 'r-1',
+            author: guideName || 'Guida Ufficiale',
+            role: 'guide',
+            roleLabel: 'Guida Abilitata DIRCETUR',
+            avatarBg: 'bg-emerald-600',
+            timeAgo: '1 ora fa',
+            content: `Ciao! Sì, organizziamo il prelievo alla porta o al punto carrabile più vicino entro 50 metri con assistenza completa bagagli.`
+          },
+          {
+            id: 'r-2',
+            author: 'Servizio Clienti',
+            role: 'admin',
+            roleLabel: 'Concierge Cusco',
+            avatarBg: themeColor,
+            timeAgo: '45 min fa',
+            content: `La sera precedente tra le 19:00 e le 20:30 riconfermiamo l’orario esatto via WhatsApp personale.`
+          }
+        ]
+      },
+      {
+        id: 'fq-2',
+        title: `Quali precauzioni mediche e assistenza offrite per il mal di montagna (soroche) durante ${tourName}?`,
+        author: 'Ing. Gianluca Rossi',
+        timeAgo: 'Ieri alle 16:30',
+        category: 'Salute & Altitudine',
+        views: 68,
+        description: `Viaggio con persone sensibili all'altitudine. I veicoli e le guide dispongono di ossigeno medicale portatile lungo il percorso?`,
+        replies: [
+          {
+            id: 'r-3',
+            author: guideName || 'Guida Principale',
+            role: 'guide',
+            roleLabel: 'Guida di Montagna Certificata',
+            avatarBg: 'bg-emerald-600',
+            timeAgo: 'Ieri alle 17:15',
+            content: `Tutti i nostri mezzi e le nostre guide portano bombole di ossigeno medicale, saturimetro per monitorare i parametri e kit di pronto soccorso andino.`
+          },
+          {
+            id: 'r-4',
+            author: 'Team Medico',
+            role: 'admin',
+            roleLabel: 'Supporto Ufficiale',
+            avatarBg: themeColor,
+            timeAgo: 'Ieri alle 18:00',
+            content: `Consigliamo un giorno di riposo previo a Cusco e offriamo infuso di coca caldo prima di iniziare l'escursione.`
+          }
+        ]
+      },
+      {
+        id: 'fq-3',
+        title: `È possibile riprogrammare la data del tour in caso di maltempo o ritardi aerei?`,
+        author: 'Chiara Moretti',
+        timeAgo: '3 giorni fa',
+        category: 'Politiche & Prenotazioni',
+        views: 52,
+        description: `Ci sono penali se le condizioni meteo o i voli per Cusco subiscono modifiche o ritardi?`,
+        replies: [
+          {
+            id: 'r-5',
+            author: 'Ufficio Prenotazioni',
+            role: 'admin',
+            roleLabel: 'Assistenza Clienti',
+            avatarBg: themeColor,
+            timeAgo: '3 giorni fa',
+            content: `Nessuna penale. Riprogrammiamo per il giorno seguente senza costi o modifichiamo l’itinerario per garantire la massima sicurezza.`
+          }
+        ]
+      },
+      {
+        id: 'fq-4',
+        title: `È disponibile un deposito bagagli sicuro durante lo svolgimento del tour?`,
+        author: 'Elena Rostova',
+        timeAgo: '4 giorni fa',
+        category: 'Bagagli & Comfort',
+        views: 41,
+        description: `Lasciamo la stanza d'hotel la mattina presto e vorremmo custodire i nostri bagagli grandi in sicurezza durante il tour.`,
+        replies: [
+          {
+            id: 'r-6',
+            author: 'Lounge Concierge',
+            role: 'admin',
+            roleLabel: 'Ospitalità Privata',
+            avatarBg: themeColor,
+            timeAgo: '4 giorni fa',
+            content: `Certamente! Mettiamo a disposizione un deposito bagagli privato custodito 24 ore su 24 presso la nostra sede nel centro storico di Cusco, a titolo gratuito per i nostri ospiti.`
+          }
+        ]
+      }
+    ];
+  }
+
+  // Default Spanish (100% puro español, sin fugas de portugués o inglés)
   return [
     {
       id: 'fq-1',
-      title: isPt 
-        ? `O serviço de traslado inclui hotéis no centro histórico de ${destination}?` 
-        : isFr 
-        ? `La prise en charge inclut-elle les hôtels du centre historique de ${destination} ?` 
-        : isIt 
-        ? `Il servizio di prelievo include gli hotel nel centro storico di ${destination}?` 
-        : `¿El servicio de recojo incluye hoteles en el centro histórico de ${destination}?`,
+      title: `¿El servicio de recojo incluye hoteles en el centro histórico de ${destination}?`,
       author: 'Marcos & Elena',
-      timeAgo: isPt ? 'Há 2 horas' : isFr ? 'Il y a 2 heures' : isIt ? '2 ore fa' : 'Hace 2 horas',
-      category: isPt ? 'Logística & Traslado' : isFr ? 'Logistique & Transferts' : isIt ? 'Logistica & Prelievi' : 'Logística & Recojo en Hotel',
+      timeAgo: 'Hace 2 horas',
+      category: 'Logística & Recojo en Hotel',
       views: 34,
-      description: isPt 
-        ? `Estamos hospedados em uma casona perto da Plaza de Armas com ruas estreitas. O transporte busca direto na porta?`
-        : isFr 
-        ? `Nous logeons dans un hôtel colonial près de la Plaza de Armas dans des ruelles piétonnes. Venez-vous directement à l’hôtel ?`
-        : isIt
-        ? `Alloggiamo in un hotel coloniale vicino alla Plaza de Armas. Il transfer arriva direttamente alla reception ?`
-        : `Nos hospedamos en un hotel boutique cerca de la Plaza de Armas en calles peatonales empedradas. ¿Llegan directamente hasta la puerta del hotel?`,
+      description: `Nos hospedamos en un hotel boutique cerca de la Plaza de Armas en calles peatonales empedradas. ¿Llegan directamente hasta la puerta del hotel?`,
       replies: [
         {
           id: 'r-1',
@@ -202,13 +494,7 @@ const getInitialForumQuestions = (
           roleLabel: 'Guía Colegiado DIRCETUR',
           avatarBg: 'bg-emerald-600',
           timeAgo: 'Hace 1 hora',
-          content: isPt 
-            ? `Olá! Sim, coordenamos o embarque na porta do hotel ou no ponto de acesso mais próximo a menos de 50 metros com auxílio de bagagens.`
-            : isFr 
-            ? `Bonjour ! Oui, nous venons à la porte de votre hébergement ou au point le plus proche à moins de 50 mètres avec portage des bagages.`
-            : isIt
-            ? `Ciao ! Sì, organizziamo il prelievo alla porta o al punto carrabile più vicino entro 50 metri con assistenza bagagli.`
-            : `¡Hola Marcos! Sí, coordinamos recojo puerta a puerta en tu hotel o el punto de acceso vehicular más cercano a menos de 50 metros. Nuestro asistente te acompaña personalmente con el equipaje.`
+          content: `¡Hola Marcos! Sí, coordinamos recojo puerta a puerta en tu hotel o el punto de acceso vehicular más cercano a menos de 50 metros. Nuestro asistente te acompaña personalmente con el equipaje.`
         },
         {
           id: 'r-2',
@@ -217,36 +503,18 @@ const getInitialForumQuestions = (
           roleLabel: 'Soporte Cusco Concierge',
           avatarBg: themeColor,
           timeAgo: 'Hace 45 minutos',
-          content: isPt
-            ? `Na noite anterior entre 19h e 20h30 reconfirmamos o horário exato pelo WhatsApp.`
-            : isFr
-            ? `La veille entre 19h00 et 20h30, nous reconfirmons l’horaire exact directement sur votre WhatsApp.`
-            : isIt
-            ? `La sera precedente tra le 19:00 e le 20:30 riconfermiamo l’orario esatto via WhatsApp.`
-            : `La noche anterior entre las 19:00 y 20:30 hrs reconfirmamos la hora exacta de recojo directamente a tu WhatsApp personal.`
+          content: `La noche anterior entre las 19:00 y 20:30 hrs reconfirmamos la hora exacta de recojo directamente a tu WhatsApp personal.`
         }
       ]
     },
     {
       id: 'fq-2',
-      title: isPt 
-        ? `Quais precauções vocês tomam contra o mal da altitude (soroche) no ${tourName}?` 
-        : isFr 
-        ? `Quelles précautions prenez-vous contre le mal des montagnes sur ${tourName} ?` 
-        : isIt 
-        ? `Quali precauzioni adottate per il mal di montagna durante ${tourName}?` 
-        : `¿Qué asistencia médica y protocolos aplican para el mal de altura (soroche) en ${tourName}?`,
+      title: `¿Qué asistencia médica y protocolos aplican para el mal de altura (soroche) en ${tourName}?`,
       author: 'Valeria Ruiz',
       timeAgo: 'Ayer a las 16:30',
-      category: isPt ? 'Saúde & Altitude' : isFr ? 'Santé & Altitude' : isIt ? 'Salute & Altitudine' : 'Salud & Altura (Soroche)',
+      category: 'Salud & Altura (Soroche)',
       views: 68,
-      description: isPt
-        ? `Viajo com familiares idosos. Os veículos e guias possuem oxigênio medicinal portátil durante todo o trajeto?`
-        : isFr
-        ? `Je voyage avec ma famille. Vos véhicules disposent-ils d’oxygène médical et de moniteurs de santé ?`
-        : isIt
-        ? `Viaggio con la famiglia. I veicoli e le guide dispongono di ossigeno medicale ?`
-        : `Viajo con mi familia y personas mayores. ¿Cuentan con oxígeno medicinal permanente y monitoreo de salud durante todo el trayecto?`,
+      description: `Viajo con mi familia y personas mayores. ¿Cuentan con oxígeno medicinal permanente y monitoreo de salud durante todo el trayecto?`,
       replies: [
         {
           id: 'r-3',
@@ -270,16 +538,10 @@ const getInitialForumQuestions = (
     },
     {
       id: 'fq-3',
-      title: isPt 
-        ? `É possível remarcar a data do passeio se houver chuva intensa ou atraso de voos?` 
-        : isFr 
-        ? `Peut-on reporter la date en cas de fortes pluies ou de vols retardés ?` 
-        : isIt 
-        ? `È possibile riprogrammare la data del tour in caso di maltempo o ritardi aerei ?` 
-        : `¿Se puede reprogramar la fecha del tour si hay lluvia intensa o demora en vuelos?`,
+      title: `¿Se puede reprogramar la fecha del tour si hay lluvia intensa o demora en vuelos?`,
       author: 'Fernando Mendoza',
       timeAgo: 'Hace 3 días',
-      category: isPt ? 'Políticas & Reservas' : isFr ? 'Politiques & Réservations' : isIt ? 'Politiche & Prenotazioni' : 'Políticas & Reservas',
+      category: 'Políticas & Reservas',
       views: 52,
       description: `¿Tienen costo adicional las reprogramaciones de fecha si las condiciones climáticas o los vuelos a Cusco sufren alteraciones?`,
       replies: [
@@ -296,16 +558,10 @@ const getInitialForumQuestions = (
     },
     {
       id: 'fq-4',
-      title: isPt 
-        ? `Vocês possuem guarda-volumes seguro enquanto realizamos o passeio?` 
-        : isFr 
-        ? `Proposez-vous une consigne à bagages sécurisée pendant l’excursion ?` 
-        : isIt 
-        ? `Avete un deposito bagagli sicuro durante lo svolgimento del tour ?` 
-        : `¿Podemos dejar nuestras maletas grandes en custodia segura durante el tour?`,
+      title: `¿Podemos dejar nuestras maletas grandes en custodia segura durante el tour?`,
       author: 'Sophie Laurent',
       timeAgo: 'Hace 4 días',
-      category: isPt ? 'Bagagem & Conforto' : isFr ? 'Bagages & Confort' : isIt ? 'Bagagli & Comfort' : 'Equipaje & Custodia Segura',
+      category: 'Equipaje & Custodia Segura',
       views: 41,
       description: `Hacemos check-out del hotel temprano en la mañana y queremos saber si podemos guardar nuestro equipaje principal de forma segura.`,
       replies: [
@@ -714,7 +970,82 @@ export default function TourSupportAndFaqs({
       : 'Participa en nuestro foro de consultas públicas con respuestas del equipo oficial o consulta nuestras preguntas frecuentes verificadas.',
     tabForum: isMobile ? (lang === 'en' ? 'Forum' : lang === 'pt' ? 'Fórum' : lang === 'fr' ? 'Forum' : lang === 'it' ? 'Forum' : 'Foro') : (lang === 'en' ? 'Community Forum' : lang === 'pt' ? 'Fórum da Comunidade' : lang === 'fr' ? 'Forum Communautaire' : lang === 'it' ? 'Forum della Community' : 'Foro de Ayuda & Comunidad'),
     tabFaq: isMobile ? 'FAQs' : (lang === 'en' ? 'Verified FAQs' : lang === 'pt' ? 'Perguntas Frequentes (FAQ)' : lang === 'fr' ? 'Foire Aux Questions (FAQ)' : lang === 'it' ? 'Domande Frequenti (FAQ)' : 'Preguntas Frecuentes (FAQ)'),
-    tabTicket: isMobile ? (lang === 'en' ? 'Helpdesk' : lang === 'pt' ? 'Suporte' : lang === 'fr' ? 'Support' : lang === 'it' ? 'Supporto' : 'Mesa Ayuda') : (lang === 'en' ? 'Private Helpdesk' : lang === 'pt' ? 'Mesa de Ajuda Privada' : lang === 'fr' ? 'Assistance Privée' : lang === 'it' ? 'Assistenza Privata' : 'Mesa de Ayuda Privada')
+    tabTicket: isMobile ? (lang === 'en' ? 'Helpdesk' : lang === 'pt' ? 'Suporte' : lang === 'fr' ? 'Support' : lang === 'it' ? 'Supporto' : 'Mesa Ayuda') : (lang === 'en' ? 'Private Helpdesk' : lang === 'pt' ? 'Mesa de Ajuda Privada' : lang === 'fr' ? 'Assistance Privée' : lang === 'it' ? 'Assistenza Privata' : 'Mesa de Ayuda Privada'),
+    forumSub: lang === 'en' ? 'Public Conversation & Support' : lang === 'pt' ? 'Conversa Pública & Atendimento' : lang === 'fr' ? 'Conversation Publique & Support' : lang === 'it' ? 'Conversazione Pubblica & Assistenza' : 'Conversación Pública y Asistencia',
+    forumTitle: lang === 'en' ? 'Help Forum' : lang === 'pt' ? 'Fórum de Dúvidas' : lang === 'fr' ? 'Forum d’Aide' : lang === 'it' ? 'Forum di Assistenza' : 'Foro de Ayuda',
+    forumDesc: lang === 'en' ? 'Post your question and get answers from our administrators, guides, and travelers.' : lang === 'pt' ? 'Publique sua pergunta e receba respostas da equipe oficial, guias e comunidade.' : lang === 'fr' ? 'Posez votre question et recevez les réponses de l’administrateur, des guides et des voyageurs.' : lang === 'it' ? 'Pubblica la tua domanda e ricevi risposte dall’amministratore, dalle guide e dai viaggiatori.' : 'Publica tu pregunta o problema y recibe respuestas del administrador, diseñadores y guías.',
+    newQuestionBtn: lang === 'en' ? 'New Question' : lang === 'pt' ? 'Nova Pergunta' : lang === 'fr' ? 'Nouvelle Question' : lang === 'it' ? 'Nuova Domanda' : 'Nueva Pregunta',
+    searchPlaceholder: isMobile 
+      ? (lang === 'en' ? '🔎 Search forum...' : lang === 'pt' ? '🔎 Buscar no fórum...' : lang === 'fr' ? '🔎 Chercher sur le forum...' : lang === 'it' ? '🔎 Cerca nel forum...' : '🔎 Buscar en el foro...')
+      : (lang === 'en' ? '🔎 Search forum (e.g. pickup, altitude, cancellation)...' : lang === 'pt' ? '🔎 Buscar no fórum (ex: traslado, altitude, cancelamento)...' : lang === 'fr' ? '🔎 Chercher sur le forum (ex : prise en charge, altitude, report)...' : lang === 'it' ? '🔎 Cerca nel forum (es: prelievo, altitudine, cancellazione)...' : '🔎 Buscar en el foro (ej. imágenes, soroche, cancelaciones)...'),
+    categories: lang === 'en'
+      ? ['All', 'Logistics & Hotel Pickup', 'Altitude & Health', 'Booking & Rescheduling', 'Luggage & Gear']
+      : lang === 'pt'
+      ? ['Todas', 'Logística & Traslado', 'Saúde & Altitude', 'Políticas & Reservas', 'Bagagem & Conforto']
+      : lang === 'fr'
+      ? ['Toutes', 'Logistique & Transferts', 'Santé & Altitude', 'Politiques & Réservations', 'Bagages & Confort']
+      : lang === 'it'
+      ? ['Tutte', 'Logistica & Prelievi', 'Salute & Altitudine', 'Politiche & Prenotazioni', 'Bagagli & Comfort']
+      : ['Todas', 'Logística & Recojo', 'Salud & Altura', 'Políticas & Reservas', 'Equipaje & Custodia'],
+    modalTitle: lang === 'en' ? 'Create New Question in Forum' : lang === 'pt' ? 'Criar Nova Pergunta no Fórum' : lang === 'fr' ? 'Créer une Nouvelle Question' : lang === 'it' ? 'Crea Nuova Domanda nel Forum' : 'Crear Nueva Pregunta en el Foro',
+    modalQuestionTitle: lang === 'en' ? 'Question Title' : lang === 'pt' ? 'Título da Pergunta' : lang === 'fr' ? 'Titre de la Question' : lang === 'it' ? 'Titolo della Domanda' : 'Título de la Pregunta',
+    modalQuestionPlaceholder: lang === 'en' ? 'E.g. How does hotel pickup work?' : lang === 'pt' ? 'Ex: Como funciona o traslado no hotel?' : lang === 'fr' ? 'Ex : Comment se passe la prise en charge ?' : lang === 'it' ? 'Es: Come funziona il prelievo in hotel?' : 'Ej. ¿Cómo funciona el recojo en el hotel?',
+    modalAuthor: lang === 'en' ? 'Your Name / Handle' : lang === 'pt' ? 'Seu Nome / Usuário' : lang === 'fr' ? 'Votre Nom / Pseudo' : lang === 'it' ? 'Il tuo Nome / Username' : 'Tu Nombre / Usuario',
+    modalCategory: lang === 'en' ? 'Category' : lang === 'pt' ? 'Categoria' : lang === 'fr' ? 'Catégorie' : lang === 'it' ? 'Categoria' : 'Categoría',
+    modalDesc: lang === 'en' ? 'Detailed Description' : lang === 'pt' ? 'Descrição Detalhada' : lang === 'fr' ? 'Description Détaillée' : lang === 'it' ? 'Descrizione Dettagliata' : 'Descripción Detallada',
+    modalDescPlaceholder: lang === 'en' ? 'Describe your question in detail...' : lang === 'pt' ? 'Descreva sua dúvida com detalhes...' : lang === 'fr' ? 'Décrivez votre demande en détail...' : lang === 'it' ? 'Descrivi la tua richiesta in dettaglio...' : 'Describe qué problema tienes o qué deseas consultar en detalle...',
+    cancel: lang === 'en' ? 'Cancel' : lang === 'pt' ? 'Cancelar' : lang === 'fr' ? 'Annuler' : lang === 'it' ? 'Annulla' : 'Cancelar',
+    publish: lang === 'en' ? 'Publish Question' : lang === 'pt' ? 'Publicar Pergunta' : lang === 'fr' ? 'Publier la Question' : lang === 'it' ? 'Pubblica Domanda' : 'Publicar Pregunta',
+    backToList: lang === 'en' ? 'Back to forum list' : lang === 'pt' ? 'Voltar à lista do fórum' : lang === 'fr' ? 'Retour à la liste du forum' : lang === 'it' ? 'Torna alla lista del forum' : 'Volver a la lista del foro',
+    views: lang === 'en' ? 'views' : lang === 'pt' ? 'visualizações' : lang === 'fr' ? 'vues' : lang === 'it' ? 'visite' : 'vistas',
+    repliesLabel: lang === 'en' ? 'Replies' : lang === 'pt' ? 'Respostas' : lang === 'fr' ? 'Réponses' : lang === 'it' ? 'Risposte' : 'Respuestas',
+    communityBadge: lang === 'en' ? 'Community' : lang === 'pt' ? 'Comunidade' : lang === 'fr' ? 'Communauté' : lang === 'it' ? 'Community' : 'Comunidad',
+    noRepliesYet: lang === 'en' ? 'No replies yet on this question. Be the first to answer!' : lang === 'pt' ? 'Ainda não há respostas nesta pergunta. Seja o primeiro a responder!' : lang === 'fr' ? 'Aucune réponse pour le moment. Soyez le premier à répondre !' : lang === 'it' ? 'Non ci sono ancora risposte a questa domanda. Sii il primo a rispondere!' : 'Aún no hay respuestas en esta pregunta. ¡Sé el primero en responder!',
+    officialGuideBadge: lang === 'en' ? 'Official Guide' : lang === 'pt' ? 'Guia Credenciado' : lang === 'fr' ? 'Guide Agréé' : lang === 'it' ? 'Guida Abilitata' : 'Guía Colegiado',
+    writeReplyTitle: lang === 'en' ? 'Write a Reply' : lang === 'pt' ? 'Escrever Resposta' : lang === 'fr' ? 'Rédiger une Réponse' : lang === 'it' ? 'Scrivi una Risposta' : 'Escribir Respuesta',
+    yourNamePlaceholder: lang === 'en' ? 'Your Name' : lang === 'pt' ? 'Seu Nome' : lang === 'fr' ? 'Votre Nom' : lang === 'it' ? 'Il tuo Nome' : 'Tu Nombre',
+    yourReplyPlaceholder: lang === 'en' ? 'Write your public reply...' : lang === 'pt' ? 'Escreva sua resposta pública...' : lang === 'fr' ? 'Écrivez votre réponse publique...' : lang === 'it' ? 'Scrivi la tua risposta pubblica...' : 'Escribe tu respuesta pública...',
+    replyBtn: lang === 'en' ? 'Post Reply' : lang === 'pt' ? 'Enviar Resposta' : lang === 'fr' ? 'Publier Réponse' : lang === 'it' ? 'Invia Risposta' : 'Responder',
+    noQuestionsFound: lang === 'en' ? 'No questions found matching your search.' : lang === 'pt' ? 'Nenhuma pergunta encontrada com este termo.' : lang === 'fr' ? 'Aucune question trouvée avec ce terme.' : lang === 'it' ? 'Nessuna domanda trovata con questo termine.' : 'No encontramos preguntas con el término buscado.',
+    beFirstToAsk: lang === 'en' ? 'Be the first to ask about this topic' : lang === 'pt' ? 'Seja o primeiro a perguntar sobre este assunto' : lang === 'fr' ? 'Soyez le premier à poser une question sur ce sujet' : lang === 'it' ? 'Sii il primo a fare una domanda su questo argomento' : 'Sé el primero en preguntar sobre este tema',
+    viewRepliesLink: lang === 'en' ? 'View replies →' : lang === 'pt' ? 'Ver respostas →' : lang === 'fr' ? 'Voir réponses →' : lang === 'it' ? 'Vedi risposte →' : 'Ver respuestas →',
+    ticketDeskBadge: lang === 'en' ? 'Local Cusco Support Desk' : lang === 'pt' ? 'Mesa de Atendimento em Cusco' : lang === 'fr' ? 'Assistance Locale à Cusco' : lang === 'it' ? 'Ufficio Assistenza Locale a Cusco' : 'Mesa de Ayuda Local en Cusco',
+    ticketTitle: lang === 'en' ? 'Need assistance or have a special request?' : lang === 'pt' ? 'Precisa de assistência ou tem um pedido especial?' : lang === 'fr' ? 'Besoin d’aide ou d’une demande particulière ?' : lang === 'it' ? 'Hai bisogno di assistenza o di una richiesta speciale?' : '¿Necesitas asistencia o tienes una solicitud especial?',
+    ticketDesc: lang === 'en'
+      ? 'We are on call to coordinate hotel pickups, special dietary requirements, altitude acclimatization and last-minute reservations.'
+      : lang === 'pt'
+      ? 'Estamos à disposição para coordenar traslados no hotel, dietas especiais, aclimatação e reservas de última hora.'
+      : lang === 'fr'
+      ? 'Nous sommes disponibles pour coordonner votre prise en charge à l’hôtel, régimes spéciaux, acclimatation et réservations de dernière minute.'
+      : lang === 'it'
+      ? 'Siamo a disposizione per coordinare prelievi in hotel, diete particolari, acclimatazione e prenotazioni dell’ultimo minuto.'
+      : 'Estamos disponibles para coordinar recojo en tu hotel, dietas especiales, aclimatación a la altura y reservas de último minuto.',
+    officeLabel: lang === 'en' ? 'Cusco Office: ' : lang === 'pt' ? 'Central Cusco: ' : lang === 'fr' ? 'Agence Cusco : ' : lang === 'it' ? 'Sede Cusco: ' : 'Central Cusco: ',
+    hoursLabel: lang === 'en' ? 'Hours: ' : lang === 'pt' ? 'Atendimento: ' : lang === 'fr' ? 'Horaires : ' : lang === 'it' ? 'Orari: ' : 'Atención: ',
+    licenseLabel: lang === 'en' ? 'Official License ' : lang === 'pt' ? 'Credencial ' : lang === 'fr' ? 'Agrément ' : lang === 'it' ? 'Abilitazione ' : 'Acreditación ',
+    guideLabel: lang === 'en' ? 'Lead Guide: ' : lang === 'pt' ? 'Guia Oficial: ' : lang === 'fr' ? 'Guide Référent : ' : lang === 'it' ? 'Guida Ufficiale: ' : 'Guía Oficial: ',
+    chatWaGuide: lang === 'en' ? `Chat on WhatsApp with ${guideName}` : lang === 'pt' ? `Conversar no WhatsApp com ${guideName}` : lang === 'fr' ? `Échanger sur WhatsApp avec ${guideName}` : lang === 'it' ? `Chatta su WhatsApp con ${guideName}` : `Chatear por WhatsApp con ${guideName}`,
+    protectedInquiry: lang === 'en' ? 'Protected Private Inquiry' : lang === 'pt' ? 'Consulta Privada Protegida' : lang === 'fr' ? 'Demande Privée Sécurisée' : lang === 'it' ? 'Richiesta Privata Protetta' : 'Consulta Privada Protegida',
+    antiSpamActive: lang === 'en' ? 'Anti-Spam Active' : lang === 'pt' ? 'Anti-Spam Ativo' : lang === 'fr' ? 'Anti-Spam Actif' : lang === 'it' ? 'Anti-Spam Attivo' : 'Anti-Spam Activo',
+    successTitle: lang === 'en' ? 'Inquiry Successfully Registered!' : lang === 'pt' ? 'Consulta Registrada com Sucesso!' : lang === 'fr' ? 'Demande Enregistrée avec Succès !' : lang === 'it' ? 'Richiesta Registrata con Successo!' : '¡Consulta Registrada con Éxito!',
+    successDesc: (name: string, guide: string, contact: string) => lang === 'en' 
+      ? `Thank you ${name || 'traveler'}. Guide ${guide} will get back to your contact ${contact} shortly.` 
+      : lang === 'pt'
+      ? `Obrigado ${name || 'viajante'}. O guia ${guide} responderá ao seu contato ${contact} em instantes.`
+      : lang === 'fr'
+      ? `Merci ${name || 'voyageur'}. Le guide ${guide} vous répondra au ${contact} dans les plus brefs délais.`
+      : lang === 'it'
+      ? `Grazie ${name || 'viaggiatore'}. La guida ${guide} ti risponderà al contatto ${contact} a breve.`
+      : `Gracias ${name || 'viajero'}. El guía ${guide} responderá a tu número ${contact} en los próximos minutos.`,
+    sendAnotherBtn: lang === 'en' ? 'Send another inquiry' : lang === 'pt' ? 'Enviar outra consulta' : lang === 'fr' ? 'Envoyer une autre demande' : lang === 'it' ? 'Invia un’altra richiesta' : 'Enviar otra consulta',
+    categoryField: lang === 'en' ? 'Category' : lang === 'pt' ? 'Categoria' : lang === 'fr' ? 'Catégorie' : lang === 'it' ? 'Categoria' : 'Categoría',
+    nameField: lang === 'en' ? 'Your Name' : lang === 'pt' ? 'Seu Nome' : lang === 'fr' ? 'Votre Nom' : lang === 'it' ? 'Il tuo Nome' : 'Tu Nombre',
+    whatsappField: lang === 'en' ? 'WhatsApp or Phone' : lang === 'pt' ? 'WhatsApp ou Telefone' : lang === 'fr' ? 'WhatsApp ou Téléphone' : lang === 'it' ? 'WhatsApp o Telefono' : 'WhatsApp',
+    inquiryQuestionField: lang === 'en' ? 'How can we assist you?' : lang === 'pt' ? 'Como podemos te ajudar?' : lang === 'fr' ? 'Comment pouvons-nous vous aider ?' : lang === 'it' ? 'Come possiamo aiutarti?' : '¿Qué deseas consultar?',
+    inquiryPlaceholder: lang === 'en' ? 'E.g. Vegetarian meal options? Pickup in Sacred Valley?' : lang === 'pt' ? 'Ex: Opções vegetarianas? Traslado no Vale Sagrado?' : lang === 'fr' ? 'Ex : Repas végétariens ? Prise en charge dans la Vallée Sacrée ?' : lang === 'it' ? 'Es: Opzioni vegetariane? Prelievo nella Valle Sacra?' : 'Ej. ¿Tienen opción vegetariana? ¿Recogen en Ollantaytambo?',
+    securityChallenge: lang === 'en' ? 'Security: How much is ' : lang === 'pt' ? 'Segurança: Quanto é ' : lang === 'fr' ? 'Sécurité : Combien font ' : lang === 'it' ? 'Sicurezza: Quanto fa ' : 'Seguridad: ¿Cuánto es ',
+    validatingAndSending: lang === 'en' ? 'Verifying and sending...' : lang === 'pt' ? 'Validando e enviando...' : lang === 'fr' ? 'Validation et envoi...' : lang === 'it' ? 'Verifica e invio...' : 'Validando y enviando...',
+    sendProtectedBtn: lang === 'en' ? 'Send Protected Inquiry' : lang === 'pt' ? 'Enviar Consulta Protegida' : lang === 'fr' ? 'Envoyer la Demande Sécurisée' : lang === 'it' ? 'Invia Richiesta Protetta' : 'Enviar Consulta Protegida'
   };
 
   return (
