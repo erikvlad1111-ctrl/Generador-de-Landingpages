@@ -1221,7 +1221,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       )}
 
       {/* 18. SALÓN VIP & PUNTO DE ENCUENTRO EN CUSCO CON PATIO VIRREINAL */}
-      <section id="lounge-vip" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-b border-neutral-900`}>
+      <section id="lounge-vip" className={`relative ${isMobile ? 'py-16 px-4' : 'py-32 md:py-36 px-6 sm:px-10 lg:px-12'} overflow-hidden border-b border-neutral-900`}>
         {/* Background Image de toda la sección */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <Image
@@ -1235,15 +1235,15 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent" />
         </div>
 
-        <div className="max-w-5xl mx-auto relative z-10">
-          <div className="relative overflow-hidden rounded-3xl border border-amber-500/40 shadow-[0_25px_60px_rgba(0,0,0,0.85)] p-6 sm:p-12 group bg-neutral-950/60 backdrop-blur-md">
+        <div className="max-w-6xl xl:max-w-7xl mx-auto relative z-10">
+          <div className="relative overflow-hidden rounded-3xl border border-amber-500/40 shadow-[0_30px_80px_rgba(0,0,0,0.9)] p-8 sm:p-14 lg:p-16 xl:p-20 group bg-neutral-950/60 backdrop-blur-md">
             {/* Soft Luxury Lounge Background Image */}
             <div className="absolute inset-0 z-0 pointer-events-none">
               <Image
                 src="https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=2000&auto=format&fit=crop"
                 alt="Lounge Concierge en Cusco"
                 fill
-                sizes="(max-width: 1024px) 100vw, 1200px"
+                sizes="(max-width: 1280px) 100vw, 1400px"
                 className="object-cover object-center opacity-65 filter brightness-95 saturate-110 transition-transform duration-1000 group-hover:scale-105"
               />
               {/* Soft Luxury Overlays for high readability and warmth without choking the image */}
@@ -1252,28 +1252,28 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
               <div className="absolute inset-0 bg-amber-500/[0.04]" />
             </div>
 
-            <div className={`relative z-10 grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-12 gap-10'} items-center`}>
+            <div className={`relative z-10 grid ${isMobile ? 'grid-cols-1 gap-8' : 'md:grid-cols-12 gap-10 lg:gap-14 xl:gap-16'} items-center`}>
               
-              <div className={`${isMobile ? 'text-center' : 'md:col-span-7 text-left'} space-y-4`}>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono">
-                  <MapPin size={12} className="text-amber-400" />
+              <div className={`${isMobile ? 'text-center' : 'md:col-span-7 text-left'} space-y-5 lg:space-y-6`}>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[11px] uppercase tracking-[0.22em] font-bold font-mono">
+                  <MapPin size={13} className="text-amber-400" />
                   <span>Atención Presencial & Salón Privado</span>
                 </div>
-                <h3 className={`${isMobile ? 'text-2xl' : 'text-3xl sm:text-4xl'} font-serif font-bold text-white`}>
+                <h3 className={`${isMobile ? 'text-2xl' : 'text-3xl sm:text-4xl lg:text-5xl'} font-serif font-bold text-white tracking-tight leading-tight`}>
                   Lounge Concierge en Cusco
                 </h3>
-                <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+                <p className="text-sm sm:text-base text-neutral-200/90 font-light leading-relaxed max-w-2xl">
                   Visítanos antes de tu salida para relajarte, degustar café orgánico cusqueño de especialidad y coordinar los últimos detalles de tu expedición en un ambiente cálido y seguro.
                 </p>
 
-                <div className="space-y-2.5 pt-2">
-                  <div className="flex items-center gap-2.5 text-xs text-neutral-200">
-                    <MapPin size={16} className="text-amber-400 shrink-0" />
-                    <span>{data.officeAddress || 'Portal de Carnicerías 236, Plaza de Armas, Cusco, Perú'}</span>
+                <div className="space-y-3 pt-2">
+                  <div className="flex items-center gap-3 text-xs sm:text-sm text-neutral-200">
+                    <MapPin size={18} className="text-amber-400 shrink-0" />
+                    <span className="font-medium">{data.officeAddress || 'Portal de Carnicerías 236, Plaza de Armas, Cusco, Perú'}</span>
                   </div>
-                  <div className="flex items-center gap-2.5 text-xs text-neutral-200">
-                    <Clock size={16} className="text-amber-400 shrink-0" />
-                    <span>{data.officeHours || 'Lunes a Domingo: 07:00 – 21:00 hrs'}</span>
+                  <div className="flex items-center gap-3 text-xs sm:text-sm text-neutral-200">
+                    <Clock size={18} className="text-amber-400 shrink-0" />
+                    <span className="font-medium">{data.officeHours || 'Lunes a Domingo: 07:00 – 21:00 hrs'}</span>
                   </div>
                 </div>
 
@@ -1282,38 +1282,38 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                     href={data.mapsUrl || 'https://maps.google.com/?q=Plaza+de+Armas+Cusco'}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-neutral-950 font-bold px-5 py-3 rounded-xl text-xs uppercase tracking-wider transition-all hover:scale-102 cursor-pointer shadow-lg shadow-amber-400/20"
+                    className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-neutral-950 font-bold px-7 py-3.5 rounded-xl text-xs sm:text-sm uppercase tracking-wider transition-all hover:scale-102 cursor-pointer shadow-lg shadow-amber-400/20"
                   >
-                    <ExternalLink size={15} />
+                    <ExternalLink size={16} />
                     <span>Abrir Ubicación en Google Maps</span>
                   </a>
                 </div>
               </div>
 
               {/* Lounge Amenities Grid */}
-              <div className={`${isMobile ? 'mt-2' : 'md:col-span-5'} grid grid-cols-2 gap-3.5`}>
-                <div className="bg-neutral-950/80 backdrop-blur-md p-4 rounded-2xl border border-neutral-800 text-center space-y-1.5 shadow-md">
-                  <Coffee size={22} className="text-amber-400 mx-auto" />
-                  <p className="text-xs font-bold text-neutral-100">Café de Especialidad</p>
-                  <p className="text-[10px] text-neutral-400">De cortesía para huéspedes</p>
+              <div className={`${isMobile ? 'mt-3' : 'md:col-span-5'} grid grid-cols-2 gap-4 lg:gap-5`}>
+                <div className="bg-neutral-950/80 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-neutral-800/90 hover:border-amber-500/40 transition-all text-center space-y-2 shadow-lg group/item">
+                  <Coffee size={28} className="text-amber-400 mx-auto transition-transform group-hover/item:scale-110" />
+                  <p className="text-xs sm:text-sm font-bold text-neutral-100">Café de Especialidad</p>
+                  <p className="text-[11px] sm:text-xs text-neutral-300 font-light">De cortesía para huéspedes</p>
                 </div>
 
-                <div className="bg-neutral-950/80 backdrop-blur-md p-4 rounded-2xl border border-neutral-800 text-center space-y-1.5 shadow-md">
-                  <Wifi size={22} className="text-amber-400 mx-auto" />
-                  <p className="text-xs font-bold text-neutral-100">Wi-Fi Starlink</p>
-                  <p className="text-[10px] text-neutral-400">Alta velocidad en sala</p>
+                <div className="bg-neutral-950/80 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-neutral-800/90 hover:border-amber-500/40 transition-all text-center space-y-2 shadow-lg group/item">
+                  <Wifi size={28} className="text-amber-400 mx-auto transition-transform group-hover/item:scale-110" />
+                  <p className="text-xs sm:text-sm font-bold text-neutral-100">Wi-Fi Starlink</p>
+                  <p className="text-[11px] sm:text-xs text-neutral-300 font-light">Alta velocidad en sala</p>
                 </div>
 
-                <div className="bg-neutral-950/80 backdrop-blur-md p-4 rounded-2xl border border-neutral-800 text-center space-y-1.5 shadow-md">
-                  <Backpack size={22} className="text-amber-400 mx-auto" />
-                  <p className="text-xs font-bold text-neutral-100">Custodia Segura</p>
-                  <p className="text-[10px] text-neutral-400">Guardaequipaje 24 hrs</p>
+                <div className="bg-neutral-950/80 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-neutral-800/90 hover:border-amber-500/40 transition-all text-center space-y-2 shadow-lg group/item">
+                  <Backpack size={28} className="text-amber-400 mx-auto transition-transform group-hover/item:scale-110" />
+                  <p className="text-xs sm:text-sm font-bold text-neutral-100">Custodia Segura</p>
+                  <p className="text-[11px] sm:text-xs text-neutral-300 font-light">Guardaequipaje 24 hrs</p>
                 </div>
 
-                <div className="bg-neutral-950/80 backdrop-blur-md p-4 rounded-2xl border border-neutral-800 text-center space-y-1.5 shadow-md">
-                  <ShieldCheck size={22} className="text-amber-400 mx-auto" />
-                  <p className="text-xs font-bold text-neutral-100">Oxigenoterapia</p>
-                  <p className="text-[10px] text-neutral-400">Aclimatación preventiva</p>
+                <div className="bg-neutral-950/80 backdrop-blur-md p-5 sm:p-6 rounded-2xl border border-neutral-800/90 hover:border-amber-500/40 transition-all text-center space-y-2 shadow-lg group/item">
+                  <ShieldCheck size={28} className="text-amber-400 mx-auto transition-transform group-hover/item:scale-110" />
+                  <p className="text-xs sm:text-sm font-bold text-neutral-100">Oxigenoterapia</p>
+                  <p className="text-[11px] sm:text-xs text-neutral-300 font-light">Aclimatación preventiva</p>
                 </div>
               </div>
 
