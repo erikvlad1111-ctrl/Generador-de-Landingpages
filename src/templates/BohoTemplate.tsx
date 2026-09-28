@@ -231,6 +231,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
   const isBasic = tier === 'basic';
   const isPro = tier === 'pro';
   const isAdvance = tier === 'advance';
+  const lang = data.language || 'es';
 
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const encodedMsg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, vi su bitácora de viaje de "${data.name || data.hero?.title}" y me gustaría consultar disponibilidad.`);
@@ -1536,6 +1537,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
           tier={tier}
           theme="boho-nature"
           isMobile={isMobile}
+          lang={lang}
         />
       )}
 

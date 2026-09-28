@@ -57,86 +57,271 @@ interface TourSupportAndFaqsProps {
   lang?: LanguageType;
 }
 
-const INITIAL_FORUM_QUESTIONS: ForumQuestion[] = [
-  {
-    id: 'fq-1',
-    title: '¿Cómo puedo cambiar las imágenes de mi landing?',
-    author: 'Erik',
-    timeAgo: 'Hace 2 horas',
-    category: 'Editor & Diseño',
-    views: 18,
-    description: 'Quiero cambiar las imágenes de mi landing pero no encuentro la opción para reemplazar la portada de Vinicunca y las fotos del catálogo.',
-    replies: [
+const getInitialForumQuestions = (
+  tourName: string,
+  destination: string,
+  guideName: string,
+  lang: LanguageType = 'es',
+  themeColor: string = 'bg-[#FF5500]'
+): ForumQuestion[] => {
+  const isEn = lang === 'en';
+  const isPt = lang === 'pt';
+  const isFr = lang === 'fr';
+  const isIt = lang === 'it';
+
+  if (isEn) {
+    return [
       {
-        id: 'r-1',
-        author: 'Administrador',
-        role: 'admin',
-        roleLabel: 'Soporte Cusco Creativos',
-        avatarBg: 'bg-[#FF5500]',
-        timeAgo: 'Hace 1 hora',
-        content: 'Debes entrar al Editor → Galería → Editar imágenes. En la Fase 5 podrás regenerarlas automáticamente con IA.'
+        id: 'fq-1',
+        title: `Does the pickup service include hotels in ${destination} historic center?`,
+        author: 'Marcus & Sarah',
+        timeAgo: '2 hours ago',
+        category: 'Logistics & Hotel Pickup',
+        views: 34,
+        description: `We are staying at a colonial boutique hotel near the main square with pedestrian cobblestone streets. Can your private transport pick us up right at the door?`,
+        replies: [
+          {
+            id: 'r-1',
+            author: guideName || 'Official Guide',
+            role: 'guide',
+            roleLabel: 'Official DIRCETUR Guide',
+            avatarBg: 'bg-emerald-600',
+            timeAgo: '1 hour ago',
+            content: `Hello Marcus! Yes, we coordinate door-to-door pickup from your hotel lobby or the nearest accessible vehicle point within 50 meters, with our staff assisting with luggage.`
+          },
+          {
+            id: 'r-2',
+            author: 'Customer Care',
+            role: 'admin',
+            roleLabel: 'Cusco Concierge Desk',
+            avatarBg: themeColor,
+            timeAgo: '45 mins ago',
+            content: `The evening prior between 7:00 PM and 8:30 PM, we reconfirm the exact pickup time directly via your personal WhatsApp.`
+          }
+        ]
       },
       {
-        id: 'r-2',
-        author: 'Diseñador',
-        role: 'designer',
-        roleLabel: 'Equipo Creativo',
-        avatarBg: 'bg-purple-600',
-        timeAgo: 'Hace 45 minutos',
-        content: 'También puedes reemplazarlas desde la sección "Imágenes" del proyecto cargando fotos WebP de alta velocidad.'
-      }
-    ]
-  },
-  {
-    id: 'fq-2',
-    title: '¿Qué precauciones toman si un viajero siente mal de altura (soroche)?',
-    author: 'Valeria Ruiz',
-    timeAgo: 'Ayer a las 16:30',
-    category: 'Salud & Altura',
-    views: 45,
-    description: 'Viajo con mis padres mayores y me preocupa la subida a Vinicunca (5,000 msnm). ¿Llevan balón de oxígeno en la movilidad y en la ruta?',
-    replies: [
-      {
-        id: 'r-3',
-        author: 'Carlos Quispe',
-        role: 'guide',
-        roleLabel: 'Guía Oficial DIRCETUR',
-        avatarBg: 'bg-emerald-600',
-        timeAgo: 'Ayer a las 17:15',
-        content: 'Llevamos permanentemente balón de oxígeno medicinal portátil, oxímetro de pulso para medir saturación en tiempo real y botiquín andino. Además, tenemos opción de caballo de auxilio en el control.'
+        id: 'fq-2',
+        title: `What precautions and medical support do you provide for altitude sickness (soroche) on ${tourName}?`,
+        author: 'Valerie Jenkins',
+        timeAgo: 'Yesterday at 4:30 PM',
+        category: 'Health & Altitude Care',
+        views: 68,
+        description: `I am traveling with family members sensitive to altitude. Do your vehicles and field guides carry medical oxygen throughout the route?`,
+        replies: [
+          {
+            id: 'r-3',
+            author: guideName || 'Lead Expedition Guide',
+            role: 'guide',
+            roleLabel: 'Certified Mountain Guide',
+            avatarBg: 'bg-emerald-600',
+            timeAgo: 'Yesterday at 5:15 PM',
+            content: `All our tour vehicles and guides carry portable medical oxygen tanks, fingertip pulse oximeters to monitor saturation in real time, and Andean first aid essentials.`
+          },
+          {
+            id: 'r-4',
+            author: 'Operations Team',
+            role: 'admin',
+            roleLabel: 'Official Support',
+            avatarBg: themeColor,
+            timeAgo: 'Yesterday at 6:00 PM',
+            content: `We recommend taking it easy on your first day in Cusco and enjoying complimentary coca tea before beginning the tour.`
+          }
+        ]
       },
       {
-        id: 'r-4',
-        author: 'Administrador',
-        role: 'admin',
-        roleLabel: 'Soporte Oficial',
-        avatarBg: 'bg-[#FF5500]',
-        timeAgo: 'Ayer a las 18:00',
-        content: 'Recomendamos descansar mínimo 1 día previo en Cusco y tomar abundante mate de coca antes de ascender.'
-      }
-    ]
-  },
-  {
-    id: 'fq-3',
-    title: '¿Se puede reprogramar la fecha del tour si hay lluvia intensa o imprevisto?',
-    author: 'Fernando Mendoza',
-    timeAgo: 'Hace 3 días',
-    category: 'Políticas & Reservas',
-    views: 32,
-    description: '¿Tienen costo adicional las reprogramaciones de fecha si las condiciones climáticas no son seguras?',
-    replies: [
+        id: 'fq-3',
+        title: `Can we reschedule the date if there are flight delays or bad weather?`,
+        author: 'David Miller',
+        timeAgo: '3 days ago',
+        category: 'Policies & Booking',
+        views: 52,
+        description: `Are there any penalties if weather conditions or airline delays require adjusting our travel schedule?`,
+        replies: [
+          {
+            id: 'r-5',
+            author: 'Booking Desk',
+            role: 'admin',
+            roleLabel: 'Customer Support',
+            avatarBg: themeColor,
+            timeAgo: '3 days ago',
+            content: `Zero penalties. We reschedule for the next suitable day free of charge with 24 hours notice or adapt the itinerary to ensure total safety.`
+          }
+        ]
+      },
       {
-        id: 'r-5',
-        author: 'Administrador',
-        role: 'admin',
-        roleLabel: 'Atención al Cliente',
-        avatarBg: 'bg-[#FF5500]',
-        timeAgo: 'Hace 3 días',
-        content: 'Cero penalidad. Coordinamos la reprogramación para el día siguiente sin costo o cambiamos por un circuito en el Valle Sagrado a menor altitud.'
+        id: 'fq-4',
+        title: `Do you provide secure luggage storage while we are on the tour?`,
+        author: 'Sophie Laurent',
+        timeAgo: '4 days ago',
+        category: 'Luggage & Comfort',
+        views: 41,
+        description: `We check out of our hotel early in the morning and would like to store our large bags safely while taking the tour.`,
+        replies: [
+          {
+            id: 'r-6',
+            author: 'Lounge Concierge',
+            role: 'admin',
+            roleLabel: 'Private Hospitality',
+            avatarBg: themeColor,
+            timeAgo: '4 days ago',
+            content: `Yes! We offer complimentary 24/7 guarded luggage storage at our historic center lounge for all our guests.`
+          }
+        ]
       }
-    ]
+    ];
   }
-];
+
+  // Default Spanish & Multi-Language Translations
+  return [
+    {
+      id: 'fq-1',
+      title: isPt 
+        ? `O serviço de traslado inclui hotéis no centro histórico de ${destination}?` 
+        : isFr 
+        ? `La prise en charge inclut-elle les hôtels du centre historique de ${destination} ?` 
+        : isIt 
+        ? `Il servizio di prelievo include gli hotel nel centro storico di ${destination}?` 
+        : `¿El servicio de recojo incluye hoteles en el centro histórico de ${destination}?`,
+      author: 'Marcos & Elena',
+      timeAgo: isPt ? 'Há 2 horas' : isFr ? 'Il y a 2 heures' : isIt ? '2 ore fa' : 'Hace 2 horas',
+      category: isPt ? 'Logística & Traslado' : isFr ? 'Logistique & Transferts' : isIt ? 'Logistica & Prelievi' : 'Logística & Recojo en Hotel',
+      views: 34,
+      description: isPt 
+        ? `Estamos hospedados em uma casona perto da Plaza de Armas com ruas estreitas. O transporte busca direto na porta?`
+        : isFr 
+        ? `Nous logeons dans un hôtel colonial près de la Plaza de Armas dans des ruelles piétonnes. Venez-vous directement à l’hôtel ?`
+        : isIt
+        ? `Alloggiamo in un hotel coloniale vicino alla Plaza de Armas. Il transfer arriva direttamente alla reception ?`
+        : `Nos hospedamos en un hotel boutique cerca de la Plaza de Armas en calles peatonales empedradas. ¿Llegan directamente hasta la puerta del hotel?`,
+      replies: [
+        {
+          id: 'r-1',
+          author: guideName || 'Guía Oficial',
+          role: 'guide',
+          roleLabel: 'Guía Colegiado DIRCETUR',
+          avatarBg: 'bg-emerald-600',
+          timeAgo: 'Hace 1 hora',
+          content: isPt 
+            ? `Olá! Sim, coordenamos o embarque na porta do hotel ou no ponto de acesso mais próximo a menos de 50 metros com auxílio de bagagens.`
+            : isFr 
+            ? `Bonjour ! Oui, nous venons à la porte de votre hébergement ou au point le plus proche à moins de 50 mètres avec portage des bagages.`
+            : isIt
+            ? `Ciao ! Sì, organizziamo il prelievo alla porta o al punto carrabile più vicino entro 50 metri con assistenza bagagli.`
+            : `¡Hola Marcos! Sí, coordinamos recojo puerta a puerta en tu hotel o el punto de acceso vehicular más cercano a menos de 50 metros. Nuestro asistente te acompaña personalmente con el equipaje.`
+        },
+        {
+          id: 'r-2',
+          author: 'Atención al Cliente',
+          role: 'admin',
+          roleLabel: 'Soporte Cusco Concierge',
+          avatarBg: themeColor,
+          timeAgo: 'Hace 45 minutos',
+          content: isPt
+            ? `Na noite anterior entre 19h e 20h30 reconfirmamos o horário exato pelo WhatsApp.`
+            : isFr
+            ? `La veille entre 19h00 et 20h30, nous reconfirmons l’horaire exact directement sur votre WhatsApp.`
+            : isIt
+            ? `La sera precedente tra le 19:00 e le 20:30 riconfermiamo l’orario esatto via WhatsApp.`
+            : `La noche anterior entre las 19:00 y 20:30 hrs reconfirmamos la hora exacta de recojo directamente a tu WhatsApp personal.`
+        }
+      ]
+    },
+    {
+      id: 'fq-2',
+      title: isPt 
+        ? `Quais precauções vocês tomam contra o mal da altitude (soroche) no ${tourName}?` 
+        : isFr 
+        ? `Quelles précautions prenez-vous contre le mal des montagnes sur ${tourName} ?` 
+        : isIt 
+        ? `Quali precauzioni adottate per il mal di montagna durante ${tourName}?` 
+        : `¿Qué asistencia médica y protocolos aplican para el mal de altura (soroche) en ${tourName}?`,
+      author: 'Valeria Ruiz',
+      timeAgo: 'Ayer a las 16:30',
+      category: isPt ? 'Saúde & Altitude' : isFr ? 'Santé & Altitude' : isIt ? 'Salute & Altitudine' : 'Salud & Altura (Soroche)',
+      views: 68,
+      description: isPt
+        ? `Viajo com familiares idosos. Os veículos e guias possuem oxigênio medicinal portátil durante todo o trajeto?`
+        : isFr
+        ? `Je voyage avec ma famille. Vos véhicules disposent-ils d’oxygène médical et de moniteurs de santé ?`
+        : isIt
+        ? `Viaggio con la famiglia. I veicoli e le guide dispongono di ossigeno medicale ?`
+        : `Viajo con mi familia y personas mayores. ¿Cuentan con oxígeno medicinal permanente y monitoreo de salud durante todo el trayecto?`,
+      replies: [
+        {
+          id: 'r-3',
+          author: guideName || 'Carlos Mendoza',
+          role: 'guide',
+          roleLabel: 'Guía Oficial DIRCETUR',
+          avatarBg: 'bg-emerald-600',
+          timeAgo: 'Ayer a las 17:15',
+          content: `Todas nuestras unidades de transporte y guías llevan permanentemente balón de oxígeno medicinal portátil, oxímetro de pulso para medir saturación en tiempo real y botiquín andino completo de primeros auxilios.`
+        },
+        {
+          id: 'r-4',
+          author: 'Equipo Médico',
+          role: 'admin',
+          roleLabel: 'Soporte Oficial',
+          avatarBg: themeColor,
+          timeAgo: 'Ayer a las 18:00',
+          content: `Recomendamos descansar mínimo 1 día previo en Cusco, hidratarse bien y disfrutar del mate de coca de cortesía antes del ascenso.`
+        }
+      ]
+    },
+    {
+      id: 'fq-3',
+      title: isPt 
+        ? `É possível remarcar a data do passeio se houver chuva intensa ou atraso de voos?` 
+        : isFr 
+        ? `Peut-on reporter la date en cas de fortes pluies ou de vols retardés ?` 
+        : isIt 
+        ? `È possibile riprogrammare la data del tour in caso di maltempo o ritardi aerei ?` 
+        : `¿Se puede reprogramar la fecha del tour si hay lluvia intensa o demora en vuelos?`,
+      author: 'Fernando Mendoza',
+      timeAgo: 'Hace 3 días',
+      category: isPt ? 'Políticas & Reservas' : isFr ? 'Politiques & Réservations' : isIt ? 'Politiche & Prenotazioni' : 'Políticas & Reservas',
+      views: 52,
+      description: `¿Tienen costo adicional las reprogramaciones de fecha si las condiciones climáticas o los vuelos a Cusco sufren alteraciones?`,
+      replies: [
+        {
+          id: 'r-5',
+          author: 'Atención al Cliente',
+          role: 'admin',
+          roleLabel: 'Atención al Cliente',
+          avatarBg: themeColor,
+          timeAgo: 'Hace 3 días',
+          content: `Cero penalidad. Coordinamos la reprogramación de fecha para el día siguiente sin costo o adaptamos el itinerario a un circuito protegido para garantizar tu seguridad.`
+        }
+      ]
+    },
+    {
+      id: 'fq-4',
+      title: isPt 
+        ? `Vocês possuem guarda-volumes seguro enquanto realizamos o passeio?` 
+        : isFr 
+        ? `Proposez-vous une consigne à bagages sécurisée pendant l’excursion ?` 
+        : isIt 
+        ? `Avete un deposito bagagli sicuro durante lo svolgimento del tour ?` 
+        : `¿Podemos dejar nuestras maletas grandes en custodia segura durante el tour?`,
+      author: 'Sophie Laurent',
+      timeAgo: 'Hace 4 días',
+      category: isPt ? 'Bagagem & Conforto' : isFr ? 'Bagages & Confort' : isIt ? 'Bagagli & Comfort' : 'Equipaje & Custodia Segura',
+      views: 41,
+      description: `Hacemos check-out del hotel temprano en la mañana y queremos saber si podemos guardar nuestro equipaje principal de forma segura.`,
+      replies: [
+        {
+          id: 'r-6',
+          author: 'Lounge Concierge',
+          role: 'admin',
+          roleLabel: 'Atención al Huésped',
+          avatarBg: themeColor,
+          timeAgo: 'Hace 4 días',
+          content: `Totalmente. Contamos con guardaequipaje privado con custodia segura las 24 horas en nuestra oficina del Centro Histórico de Cusco sin ningún costo adicional para nuestros pasajeros.`
+        }
+      ]
+    }
+  ];
+};
 
 export default function TourSupportAndFaqs({
   faqs = [],
@@ -174,8 +359,16 @@ export default function TourSupportAndFaqs({
   const themeCardBorderHover = isBoho ? 'hover:border-[#C86D51]/50' : isCultural ? 'hover:border-red-600/50' : 'hover:border-[#FF5500]/40';
   const themeAdminAvatar = isBoho ? 'bg-[#C86D51]' : isPremium ? 'bg-amber-600' : isAdventure ? 'bg-emerald-600' : isCultural ? 'bg-red-700' : 'bg-[#FF5500]';
 
-  // Forum Threads State
-  const [forumQuestions, setForumQuestions] = useState<ForumQuestion[]>(INITIAL_FORUM_QUESTIONS);
+  // Forum Threads State with contextual travel consultations
+  const defaultQuestions = getInitialForumQuestions(
+    tourName || 'Tour en Cusco',
+    destination || 'Cusco',
+    guideName || 'Carlos Mendoza',
+    lang,
+    themeAdminAvatar
+  );
+
+  const [forumQuestions, setForumQuestions] = useState<ForumQuestion[]>(defaultQuestions);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(isEn ? 'All' : 'Todas');
   const [activeQuestionId, setActiveQuestionId] = useState<string | null>(null);
@@ -184,7 +377,7 @@ export default function TourSupportAndFaqs({
   // New Question Form
   const [newTitle, setNewTitle] = useState('');
   const [newAuthor, setNewAuthor] = useState('');
-  const [newCategory, setNewCategory] = useState(isEn ? 'Editor & Design' : 'Editor & Diseño');
+  const [newCategory, setNewCategory] = useState(isEn ? 'Logistics & Hotel Pickup' : 'Logística & Recojo en Hotel');
   const [newDescription, setNewDescription] = useState('');
 
   // New Reply Form
@@ -211,26 +404,30 @@ export default function TourSupportAndFaqs({
   const [mathAnswer, setMathAnswer] = useState('');
   const [spamError, setSpamError] = useState<string | null>(null);
 
-  // Load forum threads from localStorage
+  // Load forum threads from localStorage with theme and lang isolation
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('cusco_creativos_forum_threads');
+      const storageKey = `cusco_creativos_forum_threads_v4_${theme}_${lang}`;
+      const saved = localStorage.getItem(storageKey);
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
           setForumQuestions(parsed);
+          return;
         }
       }
     } catch {
       // ignore
     }
-  }, []);
+    setForumQuestions(defaultQuestions);
+  }, [tourName, destination, guideName, lang, theme]);
 
   // Save forum threads to localStorage
   const saveQuestions = (updated: ForumQuestion[]) => {
     setForumQuestions(updated);
     try {
-      localStorage.setItem('cusco_creativos_forum_threads', JSON.stringify(updated));
+      const storageKey = `cusco_creativos_forum_threads_v4_${theme}_${lang}`;
+      localStorage.setItem(storageKey, JSON.stringify(updated));
     } catch {
       // ignore
     }
@@ -454,10 +651,15 @@ export default function TourSupportAndFaqs({
 
   // Filtered Forum Questions
   const filteredQuestions = forumQuestions.filter(q => {
-    const matchesCategory = selectedCategory === 'Todas' || q.category === selectedCategory;
+    const isAll = selectedCategory === 'Todas' || selectedCategory === 'All';
+    const matchesCategory = isAll || 
+      q.category.toLowerCase().includes(selectedCategory.toLowerCase()) || 
+      selectedCategory.toLowerCase().includes(q.category.toLowerCase());
     const matchesSearch = searchQuery.trim() === '' || 
       q.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      q.description.toLowerCase().includes(searchQuery.toLowerCase());
+      q.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      q.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      q.replies.some(r => r.content.toLowerCase().includes(searchQuery.toLowerCase()) || r.author.toLowerCase().includes(searchQuery.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
@@ -635,14 +837,17 @@ export default function TourSupportAndFaqs({
                 </div>
 
                 <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none w-full">
-                  {['Todas', 'Editor & Diseño', 'Salud & Altura', 'Políticas & Reservas'].map((cat) => (
+                  {(isEn 
+                    ? ['All', 'Logistics & Hotel Pickup', 'Altitude & Health', 'Booking & Rescheduling', 'Luggage & Gear'] 
+                    : ['Todas', 'Logística & Recojo', 'Salud & Altura', 'Políticas & Reservas', 'Equipaje & Custodia']
+                  ).map((cat) => (
                     <button
                       key={cat}
                       type="button"
                       onClick={() => setSelectedCategory(cat)}
                       className={`px-3 py-1.5 sm:py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
                         selectedCategory === cat
-                          ? (isBoho ? 'bg-[#C86D51] text-white shadow-xs' : isCultural ? 'bg-red-700 text-white shadow-xs' : 'bg-stone-900 text-white')
+                          ? (isBoho ? 'bg-[#C86D51] text-white shadow-xs' : isCultural ? 'bg-red-700 text-white shadow-xs' : isPremium ? 'bg-amber-500 text-stone-900 shadow-xs' : isAdventure ? 'bg-emerald-600 text-white shadow-xs' : 'bg-stone-900 text-white')
                           : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
                       }`}
                     >
@@ -709,10 +914,18 @@ export default function TourSupportAndFaqs({
                       onChange={(e) => setNewCategory(e.target.value)}
                       className={`w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:ring-2 ${themeFocusRing}`}
                     >
-                      <option value="Editor & Diseño">Editor & Diseño (Imágenes, Textos, Secciones)</option>
-                      <option value="Salud & Altura">Salud & Altura (Oxígeno, Aclimatación, Protocolos)</option>
-                      <option value="Políticas & Reservas">Políticas & Reservas (Pagos, Cancelación, Fechas)</option>
-                      <option value="Logística & Recojo">Logística & Recojo (Hoteles, Horarios, Rutas)</option>
+                      <option value={isEn ? 'Logistics & Hotel Pickup' : 'Logística & Recojo en Hotel'}>
+                        {isEn ? 'Logistics & Hotel Pickup (Timing, vehicle, address)' : 'Logística & Recojo en Hotel (Horarios, transporte, ruta)'}
+                      </option>
+                      <option value={isEn ? 'Altitude & Health Protocols' : 'Salud & Altura'}>
+                        {isEn ? 'Altitude & Health Protocols (Oxygen, soroche, acclimatization)' : 'Salud & Altura (Oxígeno, soroche, aclimatación)'}
+                      </option>
+                      <option value={isEn ? 'Booking & Rescheduling' : 'Políticas & Reservas'}>
+                        {isEn ? 'Booking & Rescheduling (Date changes, refunds, weather)' : 'Políticas & Reservas (Cambio de fecha, reembolsos, clima)'}
+                      </option>
+                      <option value={isEn ? 'Luggage & Trekking Gear' : 'Equipaje & Custodia'}>
+                        {isEn ? 'Luggage & Trekking Gear (Daypack, storage, clothing)' : 'Equipaje & Custodia (Mochila, guardería, vestimenta)'}
+                      </option>
                     </select>
                   </div>
 
@@ -811,13 +1024,25 @@ export default function TourSupportAndFaqs({
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                              <div className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full ${reply.role === 'admin' ? themeAdminAvatar : (reply.avatarBg || 'bg-stone-700')} text-white flex items-center justify-center font-bold text-[10px] sm:text-xs`}>
+                              <div className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full ${reply.role === 'admin' ? themeAdminAvatar : reply.role === 'guide' ? (isBoho ? 'bg-[#A45A42]' : isPremium ? 'bg-amber-600' : isAdventure ? 'bg-emerald-700' : isCultural ? 'bg-red-800' : 'bg-stone-800') : (reply.avatarBg || 'bg-stone-700')} text-white flex items-center justify-center font-bold text-[10px] sm:text-xs shadow-xs`}>
                                 {reply.author.charAt(0)}
                               </div>
                               <div>
-                                <span className="font-extrabold text-xs text-stone-900 block leading-tight">
-                                  {reply.author}
-                                </span>
+                                <div className="flex items-center gap-1.5">
+                                  <span className="font-extrabold text-xs text-stone-900 block leading-tight">
+                                    {reply.author}
+                                  </span>
+                                  {reply.role === 'guide' && (
+                                    <span className="inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded-full bg-emerald-500/10 text-emerald-700 text-[9px] font-bold">
+                                      ✓ {isEn ? 'Official Guide' : 'Guía Colegiado'}
+                                    </span>
+                                  )}
+                                  {reply.role === 'admin' && (
+                                    <span className="inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded-full bg-amber-500/10 text-amber-700 text-[9px] font-bold">
+                                      ★ Concierge
+                                    </span>
+                                  )}
+                                </div>
                                 <span className="text-[9px] sm:text-[10px] text-stone-500 font-medium">
                                   {reply.roleLabel}
                                 </span>
@@ -933,16 +1158,16 @@ export default function TourSupportAndFaqs({
                       <div className={`pt-2 flex ${isMobile ? 'flex-col gap-1.5 items-start' : 'items-center justify-between'} text-xs border-t border-stone-100`}>
                         <span className="text-[11px] font-bold text-stone-700 flex flex-wrap items-center gap-1.5">
                           <MessageCircle size={14} className={themeAccentText} />
-                          <span>{q.replies.length} respuestas</span>
-                          {q.replies.some(r => r.role === 'admin') && (
+                          <span>{q.replies.length} {isEn ? (q.replies.length === 1 ? 'reply' : 'replies') : (q.replies.length === 1 ? 'respuesta' : 'respuestas')}</span>
+                          {q.replies.some(r => r.role === 'admin' || r.role === 'guide') && (
                             <span className="bg-emerald-500/10 text-emerald-700 text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-bold">
-                              ✓ Respondido por Admin
+                              ✓ {isEn ? 'Answered by Guide / Concierge' : 'Respondido por Guía Oficial'}
                             </span>
                           )}
                         </span>
 
                         <span className={`text-[11px] font-bold ${themeAccentText} group-hover:underline`}>
-                          Ver respuestas &rarr;
+                          {isEn ? 'View replies →' : 'Ver respuestas →'}
                         </span>
                       </div>
                     </div>

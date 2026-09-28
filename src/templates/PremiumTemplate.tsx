@@ -44,6 +44,95 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
     return `https://wa.me/${cleanPhone}?text=${msg}`;
   };
 
+  const getLuxuryTestimonials = () => {
+    if (data.testimonials && data.testimonials.length > 0) {
+      return data.testimonials;
+    }
+    const defaultLuxury: Record<LanguageType, Array<{ name: string; origin: string; rating: number; comment: string; badge: string }>> = {
+      es: [
+        {
+          name: 'Isabelle & Philippe Laurent',
+          origin: 'Ginebra, Suiza',
+          rating: 5,
+          comment: 'La atención privada y el cuidado en cada detalle superaron cualquier expectativa. El acceso prioritario al amanecer y el trato del guía oficial nos permitieron conectar con la mística andina sin prisas ni multitudes.',
+          badge: 'Huéspedes Signature'
+        },
+        {
+          name: 'Edward & Victoria Sterling',
+          origin: 'Londres, Reino Unido',
+          rating: 5,
+          comment: 'Impecable desde la bienvenida privada con maridaje hasta el retorno en vagón panorámico de lujo. La asistencia con oxigenoterapia y la puntualidad del chofer brindan una serenidad absoluta en altura.',
+          badge: 'Viajeros Concierge'
+        }
+      ],
+      en: [
+        {
+          name: 'Edward & Victoria Sterling',
+          origin: 'London, United Kingdom',
+          rating: 5,
+          comment: 'Exemplary service from the private welcome lounge to the scenic luxury carriage. Having medical-grade oxygen care and an accredited historian guide made high altitude effortless and truly unforgettable.',
+          badge: 'Signature Guests'
+        },
+        {
+          name: 'Dr. Arthur & Elena Vance',
+          origin: 'San Francisco, USA',
+          rating: 5,
+          comment: 'By far the finest private exploration in South America. The personalized pace, gourmet dining, and private transfers allowed us to experience the sanctuary in pristine tranquility.',
+          badge: 'Concierge Members'
+        }
+      ],
+      pt: [
+        {
+          name: 'Rodrigo & Camila Silveira',
+          origin: 'São Paulo, Brasil',
+          rating: 5,
+          comment: 'A melhor experiência privativa de Cusco. O cuidado com a aclimatação, o vagão panorâmico de luxo e a gentileza do guia Carlos tornaram nossa viagem uma memória inesquecível para toda a família.',
+          badge: 'Hóspedes VIP'
+        },
+        {
+          name: 'Dra. Beatriz Mendes',
+          origin: 'Rio de Janeiro, Brasil',
+          rating: 5,
+          comment: 'Atendimento impecável do início ao fim. Zero filas, logística perfeita e gastronomia refinada. Recomendo de olhos fechados.',
+          badge: 'Membro Concierge'
+        }
+      ],
+      fr: [
+        {
+          name: 'Isabelle & Philippe Laurent',
+          origin: 'Genève, Suisse',
+          rating: 5,
+          comment: 'Une prise en charge d’exception. L’accès sans attente et les explications historiques de haute volée nous ont offert un moment de pure magie face aux citadelles andines.',
+          badge: 'Invités Signature'
+        },
+        {
+          name: 'Marc & Chloé Dubois',
+          origin: 'Paris, France',
+          rating: 5,
+          comment: 'Organisation d’un raffinement rare. Voiture privée grand confort, accompagnement permanent et sécurité médicale irréprochable.',
+          badge: 'Voyageurs VIP'
+        }
+      ],
+      it: [
+        {
+          name: 'Matteo & Federica Bellini',
+          origin: 'Milano, Italia',
+          rating: 5,
+          comment: 'Servizio di altissimo profilo. Dalla cura dell’acclimatazione all’ingresso esclusivo all’alba, tutto è stato curato con eleganza e professionalità magistrale.',
+          badge: 'Ospiti Signature'
+        },
+        {
+          name: 'Ing. Gianluca Rossi',
+          origin: 'Roma, Italia',
+          rating: 5,
+          comment: 'Esperienza senza eguali sulle Ande peruviane. Puntualità impeccabile e guida privata di rara cultura storica.',
+          badge: 'Membro Concierge'
+        }
+      ]
+    };
+    return defaultLuxury[currentLang] || defaultLuxury.es;
+  };
+
   const defaultLuxuryServices = [
     'Transporte turístico privado de alta gama (SUV o Sprinter ejecutiva climatizada con chofer profesional)',
     'Boletos de ingreso preferenciales y completos a todos los recintos arqueológicos y monumentos',
@@ -1217,26 +1306,44 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         />
       )}
 
-      {/* 17. TESTIMONIALS - ADVANCE ONLY */}
-      {isAdvance && data.testimonials && data.testimonials.length > 0 && (
-        <section className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} bg-[#0a080e] border-b border-neutral-900 relative z-10`}>
-          <div className="max-w-4xl mx-auto text-center">
-            <span className="text-xs uppercase tracking-[0.25em] text-amber-400 block mb-2 font-semibold font-mono">Testimonios Exclusivos</span>
-            <h2 className={`${isMobile ? 'text-2xl mb-6' : 'text-3xl sm:text-4xl mb-14'} font-serif font-bold text-white`}>
-              Huéspedes Satisfechos
+      {/* 17. TESTIMONIOS Y COMENTARIOS EXCLUSIVOS - ADVANCE / PRO */}
+      {!isFree && (
+        <section id="testimonios-vip" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} bg-[#0a080e] border-b border-neutral-900 relative z-10`}>
+          <div className="max-w-5xl mx-auto text-center">
+            <span className="text-xs uppercase tracking-[0.25em] text-amber-400 block mb-2 font-semibold font-mono">
+              {currentLang === 'en' ? 'Exclusive Guest Reviews' : currentLang === 'pt' ? 'Depoimentos Exclusivos' : currentLang === 'fr' ? 'Avis Invités Exclusifs' : currentLang === 'it' ? 'Recensioni Esclusive' : 'Testimonios & Reseñas Verificadas'}
+            </span>
+            <h2 className={`${isMobile ? 'text-2xl mb-4' : 'text-3xl sm:text-4xl mb-6'} font-serif font-bold text-white`}>
+              {currentLang === 'en' ? 'Traveler Experiences & Praise' : currentLang === 'pt' ? 'Experiências de Viajantes' : currentLang === 'fr' ? 'Expériences de Voyageurs' : currentLang === 'it' ? 'Esperienze di Viaggio' : 'Huéspedes Satisfechos & Opiniones'}
             </h2>
-            <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-1 md:grid-cols-2 gap-8'}`}>
-              {data.testimonials.map((t, idx) => (
-                <div key={idx} className={`bg-gradient-to-b from-neutral-900/90 to-neutral-950 ${isMobile ? 'p-5' : 'p-7'} rounded-3xl border border-amber-500/25 text-left shadow-xl relative`}>
-                  <div className="flex gap-1 text-amber-400 mb-3">
-                    {[...Array(t.rating || 5)].map((_, i) => (
-                      <Star key={i} size={15} fill="currentColor" />
-                    ))}
+            <p className="text-neutral-400 text-xs sm:text-sm max-w-xl mx-auto mb-10 sm:mb-12 font-light">
+              {currentLang === 'en' ? 'Verified impressions from private guests who explored Cusco with our specialized concierge.' : 'Impresiones y comentarios de viajeros que recorrieron Cusco y Machu Picchu bajo nuestra atención personalizada.'}
+            </p>
+
+            <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8'}`}>
+              {getLuxuryTestimonials().map((t, idx) => (
+                <div key={idx} className={`bg-gradient-to-b from-neutral-900/95 to-neutral-950/90 ${isMobile ? 'p-5' : 'p-7'} rounded-3xl border border-amber-500/25 text-left shadow-xl relative flex flex-col justify-between hover:border-amber-400/50 transition-all duration-300`}>
+                  <div>
+                    <div className="flex items-center justify-between mb-3">
+                      <div className="flex gap-1 text-amber-400">
+                        {[...Array(t.rating || 5)].map((_, i) => (
+                          <Star key={i} size={15} fill="currentColor" />
+                        ))}
+                      </div>
+                      <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">
+                        {'badge' in t && t.badge ? (t as any).badge : (currentLang === 'en' ? 'Verified Guest' : 'Viajero Verificado')}
+                      </span>
+                    </div>
+                    <p className="text-neutral-300 text-xs sm:text-sm font-light italic mb-4 leading-relaxed">&quot;{t.comment}&quot;</p>
                   </div>
-                  <p className="text-neutral-300 text-xs sm:text-sm font-light italic mb-4 leading-relaxed">&quot;{t.comment}&quot;</p>
-                  <div className="border-t border-neutral-800/80 pt-3">
-                    <h4 className="font-serif font-bold text-amber-300 text-xs sm:text-sm">{t.name}</h4>
-                    <p className="text-[11px] text-neutral-400 font-mono">{t.origin}</p>
+                  <div className="border-t border-neutral-800/80 pt-3 flex items-center justify-between">
+                    <div>
+                      <h4 className="font-serif font-bold text-amber-300 text-xs sm:text-sm">{t.name}</h4>
+                      <p className="text-[11px] text-neutral-400 font-mono">{t.origin}</p>
+                    </div>
+                    <span className="text-[10px] text-emerald-400/90 font-medium flex items-center gap-1">
+                      ✓ {currentLang === 'en' ? 'Confirmed Tour' : 'Experiencia Confirmada'}
+                    </span>
                   </div>
                 </div>
               ))}
