@@ -23,6 +23,7 @@ import {
   HeartHandshake
 } from 'lucide-react';
 import { FAQItem, PlanTier, TemplateType, LanguageType } from '@/types/landing';
+import { translateText } from '@/data/translations';
 
 interface ForumReply {
   id: string;
@@ -838,7 +839,10 @@ export default function TourSupportAndFaqs({
   };
 
   const displayFaqs: FAQItem[] = (faqs && faqs.length > 0)
-    ? faqs
+    ? faqs.map(f => ({
+        q: translateText(f.q, lang),
+        a: translateText(f.a, lang)
+      }))
     : (ALL_FAQS[lang] || ALL_FAQS.es);
 
   // Handler for New Question
@@ -907,7 +911,7 @@ export default function TourSupportAndFaqs({
 
   // Filtered Forum Questions
   const filteredQuestions = forumQuestions.filter(q => {
-    const isAll = selectedCategory === 'Todas' || selectedCategory === 'All';
+    const isAll = selectedCategory === st.categories[0] || selectedCategory === 'Todas' || selectedCategory === 'All' || selectedCategory === 'Toutes' || selectedCategory === 'Tutte';
     const matchesCategory = isAll || 
       q.category.toLowerCase().includes(selectedCategory.toLowerCase()) || 
       selectedCategory.toLowerCase().includes(q.category.toLowerCase());
@@ -1048,6 +1052,28 @@ export default function TourSupportAndFaqs({
     sendProtectedBtn: lang === 'en' ? 'Send Protected Inquiry' : lang === 'pt' ? 'Enviar Consulta Protegida' : lang === 'fr' ? 'Envoyer la Demande Sécurisée' : lang === 'it' ? 'Invia Richiesta Protetta' : 'Enviar Consulta Protegida'
   };
 
+  useEffect(() => {
+    setSelectedCategory(st.categories[0]);
+  }, [lang]);
+
+  const replyText = (count: number) => {
+    if (lang === 'en') return count === 1 ? 'reply' : 'replies';
+    if (lang === 'pt') return count === 1 ? 'resposta' : 'respostas';
+    if (lang === 'fr') return count === 1 ? 'réponse' : 'réponses';
+    if (lang === 'it') return count === 1 ? 'risposta' : 'risposte';
+    return count === 1 ? 'respuesta' : 'respuestas';
+  };
+
+  const answeredByGuide = lang === 'en'
+    ? 'Answered by Guide / Concierge'
+    : lang === 'pt'
+    ? 'Respondido por Guia Oficial'
+    : lang === 'fr'
+    ? 'Répondu par Guide Officiel'
+    : lang === 'it'
+    ? 'Risposto da Guida Ufficiale'
+    : 'Respondido por Guía Oficial';
+
   return (
     <section id="soporte-faq" className={`${isMobile ? 'py-8 px-3' : 'py-20 px-6 sm:px-8'} ${isBoho ? 'bg-[#FAF7F2]' : isCultural ? 'bg-[#FFFDF9]' : 'bg-[#F9F7F4]'} border-t border-stone-200 transition-colors duration-300`}>
       <div className="max-w-5xl mx-auto space-y-6 sm:space-y-10">
@@ -1124,13 +1150,13 @@ export default function TourSupportAndFaqs({
               <div className={`flex ${isMobile ? 'flex-col items-stretch gap-3' : 'flex-col sm:flex-row items-start sm:items-center justify-between gap-4'}`}>
                 <div className="space-y-1">
                   <div className={`inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider ${themeAccentText}`}>
-                    <Sparkles size={13} /> <span>Conversación Pública y Asistencia</span>
+                    <Sparkles size={13} /> <span>{st.forumSub}</span>
                   </div>
                   <h3 className={`${isMobile ? 'text-lg' : 'text-lg sm:text-2xl'} ${themeTitleClass}`}>
-                    Foro de Ayuda
+                    {st.forumTitle}
                   </h3>
                   <p className="text-xs sm:text-sm text-stone-500 leading-relaxed">
-                    Publica tu pregunta o problema y recibe respuestas del administrador, diseñadores y guías.
+                    {st.forumDesc}
                   </p>
                 </div>
 
@@ -1142,7 +1168,7 @@ export default function TourSupportAndFaqs({
                   } rounded-xl sm:rounded-2xl font-bold uppercase tracking-wider transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 cursor-pointer shrink-0`}
                 >
                   <Plus size={15} />
-                  <span>Nueva Pregunta</span>
+                  <span>{st.newQuestionBtn}</span>
                 </button>
               </div>
 
@@ -1152,7 +1178,7 @@ export default function TourSupportAndFaqs({
                   <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
                   <input
                     type="text"
-                    placeholder={isMobile ? "🔎 Buscar en el foro..." : "🔎 Buscar en el foro (ej. imágenes, soroche, cancelaciones)..."}
+                    placeholder={st.searchPlaceholder}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className={`w-full bg-stone-50 border border-stone-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-stone-900 placeholder:text-stone-400 outline-none focus:ring-2 ${themeFocusRing}`}
@@ -1168,10 +1194,7 @@ export default function TourSupportAndFaqs({
                 </div>
 
                 <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none w-full">
-                  {(isEn 
-                    ? ['All', 'Logistics & Hotel Pickup', 'Altitude & Health', 'Booking & Rescheduling', 'Luggage & Gear'] 
-                    : ['Todas', 'Logística & Recojo', 'Salud & Altura', 'Políticas & Reservas', 'Equipaje & Custodia']
-                  ).map((cat) => (
+                  {st.categories.map((cat) => (
                     <button
                       key={cat}
                       type="button"
@@ -1195,7 +1218,7 @@ export default function TourSupportAndFaqs({
                 <div className="flex items-center justify-between pb-3 border-b border-stone-100">
                   <h4 className={`font-bold text-sm sm:text-base text-stone-900 flex items-center gap-2 ${isBoho ? 'font-serif' : ''}`}>
                     <MessageSquare size={16} className={themeAccentText} />
-                    <span>Crear Nueva Pregunta en el Foro</span>
+                    <span>{st.modalTitle}</span>
                   </h4>
                   <button
                     onClick={() => setShowNewQuestionModal(false)}
@@ -1209,12 +1232,12 @@ export default function TourSupportAndFaqs({
                   <div className={`grid ${isMobile ? 'grid-cols-1 gap-3' : 'grid-cols-1 sm:grid-cols-3 gap-3'}`}>
                     <div className={isMobile ? 'col-span-1' : 'sm:col-span-2'}>
                       <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 mb-1">
-                        Título de la Pregunta
+                        {st.modalQuestionTitle}
                       </label>
                       <input
                         type="text"
                         required
-                        placeholder="Ej. ¿Cómo cambiar las imágenes de mi landing?"
+                        placeholder={st.modalQuestionPlaceholder}
                         value={newTitle}
                         onChange={(e) => setNewTitle(e.target.value)}
                         className={`w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:ring-2 ${themeFocusRing}`}
@@ -1223,12 +1246,12 @@ export default function TourSupportAndFaqs({
 
                     <div>
                       <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 mb-1">
-                        Tu Nombre / Usuario
+                        {st.modalAuthor}
                       </label>
                       <input
                         type="text"
                         required
-                        placeholder="Ej. Erik"
+                        placeholder={st.modalAuthor}
                         value={newAuthor}
                         onChange={(e) => setNewAuthor(e.target.value)}
                         className={`w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:ring-2 ${themeFocusRing}`}
@@ -1238,36 +1261,29 @@ export default function TourSupportAndFaqs({
 
                   <div>
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 mb-1">
-                      Categoría
+                      {st.modalCategory}
                     </label>
                     <select
                       value={newCategory}
                       onChange={(e) => setNewCategory(e.target.value)}
                       className={`w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:ring-2 ${themeFocusRing}`}
                     >
-                      <option value={isEn ? 'Logistics & Hotel Pickup' : 'Logística & Recojo en Hotel'}>
-                        {isEn ? 'Logistics & Hotel Pickup (Timing, vehicle, address)' : 'Logística & Recojo en Hotel (Horarios, transporte, ruta)'}
-                      </option>
-                      <option value={isEn ? 'Altitude & Health Protocols' : 'Salud & Altura'}>
-                        {isEn ? 'Altitude & Health Protocols (Oxygen, soroche, acclimatization)' : 'Salud & Altura (Oxígeno, soroche, aclimatación)'}
-                      </option>
-                      <option value={isEn ? 'Booking & Rescheduling' : 'Políticas & Reservas'}>
-                        {isEn ? 'Booking & Rescheduling (Date changes, refunds, weather)' : 'Políticas & Reservas (Cambio de fecha, reembolsos, clima)'}
-                      </option>
-                      <option value={isEn ? 'Luggage & Trekking Gear' : 'Equipaje & Custodia'}>
-                        {isEn ? 'Luggage & Trekking Gear (Daypack, storage, clothing)' : 'Equipaje & Custodia (Mochila, guardería, vestimenta)'}
-                      </option>
+                      {st.categories.slice(1).map((catName) => (
+                        <option key={catName} value={catName}>
+                          {catName}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
                   <div>
                     <label className="block text-[11px] font-bold uppercase tracking-wider text-stone-700 mb-1">
-                      Descripción Detallada
+                      {st.modalDesc}
                     </label>
                     <textarea
                       rows={3}
                       required
-                      placeholder="Describe qué problema tienes o qué deseas consultar en detalle..."
+                      placeholder={st.modalDescPlaceholder}
                       value={newDescription}
                       onChange={(e) => setNewDescription(e.target.value)}
                       className={`w-full bg-stone-50 border border-stone-200 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 outline-none focus:ring-2 ${themeFocusRing} resize-none`}
@@ -1280,13 +1296,13 @@ export default function TourSupportAndFaqs({
                       onClick={() => setShowNewQuestionModal(false)}
                       className="px-4 py-2.5 rounded-xl text-xs font-bold text-stone-500 hover:text-stone-800 hover:bg-stone-100 transition-all cursor-pointer"
                     >
-                      Cancelar
+                      {st.cancel}
                     </button>
                     <button
                       type="submit"
                       className={`${themeButtonPrimary} px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer`}
                     >
-                      Publicar Pregunta
+                      {st.publish}
                     </button>
                   </div>
                 </form>
@@ -1302,7 +1318,7 @@ export default function TourSupportAndFaqs({
                   className={`inline-flex items-center gap-2 text-xs font-bold ${themeAccentText} hover:underline cursor-pointer`}
                 >
                   <ArrowLeft size={14} />
-                  <span>Volver a la lista del foro</span>
+                  <span>{st.backToList}</span>
                 </button>
 
                 {/* Pregunta Principal */}
@@ -1319,7 +1335,7 @@ export default function TourSupportAndFaqs({
                     <span>{activeQuestion.timeAgo}</span>
                     <span>•</span>
                     <span className="flex items-center gap-1 text-stone-400">
-                      <Eye size={12} /> {activeQuestion.views} vistas
+                      <Eye size={12} /> {activeQuestion.views} {st.views}
                     </span>
                   </div>
 
@@ -1337,14 +1353,14 @@ export default function TourSupportAndFaqs({
                   <div className="flex items-center justify-between">
                     <h4 className={`font-bold text-xs sm:text-sm text-stone-900 flex items-center gap-2 uppercase tracking-wider ${isBoho ? 'font-serif' : ''}`}>
                       <MessageCircle size={16} className={themeAccentText} />
-                      <span>Respuestas ({activeQuestion.replies.length})</span>
+                      <span>{st.repliesLabel} ({activeQuestion.replies.length})</span>
                     </h4>
-                    <span className="text-[10px] sm:text-[11px] text-stone-400">Comunidad</span>
+                    <span className="text-[10px] sm:text-[11px] text-stone-400">{st.communityBadge}</span>
                   </div>
 
                   {activeQuestion.replies.length === 0 ? (
                     <p className="text-xs text-stone-400 italic p-4 bg-stone-50 rounded-xl text-center">
-                      Aún no hay respuestas en esta pregunta. ¡Sé el primero en responder!
+                      {st.noRepliesYet}
                     </p>
                   ) : (
                     <div className="space-y-2.5 sm:space-y-3">
@@ -1365,7 +1381,7 @@ export default function TourSupportAndFaqs({
                                   </span>
                                   {reply.role === 'guide' && (
                                     <span className="inline-flex items-center gap-0.5 px-1.5 py-0.2 rounded-full bg-emerald-500/10 text-emerald-700 text-[9px] font-bold">
-                                      ✓ {isEn ? 'Official Guide' : 'Guía Colegiado'}
+                                      ✓ {st.officialGuideBadge}
                                     </span>
                                   )}
                                   {reply.role === 'admin' && (
@@ -1395,14 +1411,14 @@ export default function TourSupportAndFaqs({
                 {/* Formulario para Agregar Respuesta */}
                 <div className="pt-3 border-t border-stone-200 space-y-3">
                   <h5 className="font-bold text-xs text-stone-900 uppercase tracking-wider">
-                    Escribir Respuesta
+                    {st.writeReplyTitle}
                   </h5>
 
                   <div className={`grid ${isMobile ? 'grid-cols-1 gap-2.5' : 'grid-cols-1 sm:grid-cols-4 gap-3'}`}>
                     <div className={isMobile ? 'col-span-1' : 'sm:col-span-1'}>
                       <input
                         type="text"
-                        placeholder="Tu Nombre"
+                        placeholder={st.yourNamePlaceholder}
                         value={replyAuthor}
                         onChange={(e) => setReplyAuthor(e.target.value)}
                         className={`w-full bg-stone-50 border border-stone-200 rounded-xl px-3 py-2 text-xs text-stone-900 outline-none focus:ring-2 ${themeFocusRing}`}
@@ -1411,7 +1427,7 @@ export default function TourSupportAndFaqs({
                     <div className={isMobile ? 'col-span-1' : 'sm:col-span-3'}>
                       <input
                         type="text"
-                        placeholder="Escribe tu respuesta pública..."
+                        placeholder={st.yourReplyPlaceholder}
                         value={replyContent}
                         onChange={(e) => setReplyContent(e.target.value)}
                         onKeyDown={(e) => {
@@ -1432,7 +1448,7 @@ export default function TourSupportAndFaqs({
                       className={`${isBoho ? 'bg-[#C86D51] hover:bg-[#b05d43]' : 'bg-stone-900 hover:bg-[#FF5500]'} text-white ${isMobile ? 'w-full justify-center' : 'px-5'} py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all cursor-pointer flex items-center gap-2`}
                     >
                       <Send size={13} />
-                      <span>Responder</span>
+                      <span>{st.replyBtn}</span>
                     </button>
                   </div>
                 </div>
@@ -1444,13 +1460,13 @@ export default function TourSupportAndFaqs({
                 {filteredQuestions.length === 0 ? (
                   <div className="bg-white p-6 sm:p-8 rounded-3xl border border-stone-200 text-center space-y-3">
                     <p className="text-xs text-stone-500">
-                      No encontramos preguntas con el término &quot;{searchQuery}&quot;.
+                      {st.noQuestionsFound}
                     </p>
                     <button
                       onClick={() => setShowNewQuestionModal(true)}
                       className={`${themeButtonPrimary} px-4 py-2 rounded-xl text-xs font-bold cursor-pointer`}
                     >
-                      Sé el primero en preguntar sobre este tema
+                      {st.beFirstToAsk}
                     </button>
                   </div>
                 ) : (
@@ -1474,7 +1490,7 @@ export default function TourSupportAndFaqs({
                         </div>
 
                         <span className="text-[10px] text-stone-400 flex items-center gap-1">
-                          <Eye size={12} /> {q.views} vistas
+                          <Eye size={12} /> {q.views} {st.views}
                         </span>
                       </div>
 
@@ -1489,16 +1505,16 @@ export default function TourSupportAndFaqs({
                       <div className={`pt-2 flex ${isMobile ? 'flex-col gap-1.5 items-start' : 'items-center justify-between'} text-xs border-t border-stone-100`}>
                         <span className="text-[11px] font-bold text-stone-700 flex flex-wrap items-center gap-1.5">
                           <MessageCircle size={14} className={themeAccentText} />
-                          <span>{q.replies.length} {isEn ? (q.replies.length === 1 ? 'reply' : 'replies') : (q.replies.length === 1 ? 'respuesta' : 'respuestas')}</span>
+                          <span>{q.replies.length} {replyText(q.replies.length)}</span>
                           {q.replies.some(r => r.role === 'admin' || r.role === 'guide') && (
                             <span className="bg-emerald-500/10 text-emerald-700 text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-bold">
-                              ✓ {isEn ? 'Answered by Guide / Concierge' : 'Respondido por Guía Oficial'}
+                              ✓ {answeredByGuide}
                             </span>
                           )}
                         </span>
 
                         <span className={`text-[11px] font-bold ${themeAccentText} group-hover:underline`}>
-                          {isEn ? 'View replies →' : 'Ver respuestas →'}
+                          {st.viewRepliesLink}
                         </span>
                       </div>
                     </div>
@@ -1570,36 +1586,34 @@ export default function TourSupportAndFaqs({
               <div className={`${isMobile ? 'w-full' : 'lg:col-span-7'} space-y-4`}>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-emerald-300 text-[10px] sm:text-[11px] font-bold uppercase tracking-wider">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  {isEn ? 'Local Cusco Support Desk' : 'Mesa de Ayuda Local en Cusco'}
+                  {st.ticketDeskBadge}
                 </div>
 
                 <h3 className={`${isMobile ? 'text-lg leading-snug' : 'text-xl sm:text-2xl'} font-bold tracking-tight text-white ${isBoho ? 'font-serif' : ''}`}>
-                  {isEn ? 'Need assistance or have a special request?' : '¿Necesitas asistencia o tienes una solicitud especial?'}
+                  {st.ticketTitle}
                 </h3>
 
                 <p className="text-xs sm:text-sm text-stone-300 leading-relaxed">
-                  {isEn 
-                    ? 'We are on call to coordinate hotel pickups, special dietary requirements, altitude acclimatization and last-minute reservations.'
-                    : 'Estamos disponibles para coordinar recojo en tu hotel, dietas especiales, aclimatación a la altura y reservas de último minuto.'}
+                  {st.ticketDesc}
                 </p>
 
                 {/* Service Features Badges */}
                 <div className={`grid ${isMobile ? 'grid-cols-1 gap-2' : 'grid-cols-1 sm:grid-cols-2 gap-3'} pt-2`}>
                   <div className="flex items-center gap-2.5 text-xs text-stone-300 bg-white/5 p-2.5 rounded-xl border border-white/10">
                     <PhoneCall size={16} className="text-emerald-400 shrink-0" />
-                    <span className="truncate">{isEn ? 'Cusco Office: ' : 'Central Cusco: '}<strong>{whatsapp || '+51 984 123 456'}</strong></span>
+                    <span className="truncate">{st.officeLabel}<strong>{whatsapp || '+51 984 123 456'}</strong></span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-stone-300 bg-white/5 p-2.5 rounded-xl border border-white/10">
                     <Clock size={16} className="text-amber-400 shrink-0" />
-                    <span>{isEn ? 'Hours: ' : 'Atención: '}<strong>06:00 AM - 09:30 PM</strong></span>
+                    <span>{st.hoursLabel}<strong>06:00 AM - 09:30 PM</strong></span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-stone-300 bg-white/5 p-2.5 rounded-xl border border-white/10">
                     <ShieldCheck size={16} className="text-blue-400 shrink-0" />
-                    <span>{isEn ? 'Official License ' : 'Acreditación '}<strong>DIRCETUR Cusco</strong></span>
+                    <span>{st.licenseLabel}<strong>DIRCETUR Cusco</strong></span>
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-stone-300 bg-white/5 p-2.5 rounded-xl border border-white/10">
                     <HeartHandshake size={16} className="text-rose-400 shrink-0" />
-                    <span className="truncate">{isEn ? 'Official Guide: ' : 'Guía Oficial: '}<strong>{guideName}</strong></span>
+                    <span className="truncate">{st.guideLabel}<strong>{guideName}</strong></span>
                   </div>
                 </div>
 
@@ -1611,7 +1625,7 @@ export default function TourSupportAndFaqs({
                     className={`bg-[#25D366] hover:bg-[#20bd5a] text-white ${isMobile ? 'w-full justify-center text-xs py-3' : 'px-5 py-3 text-xs sm:text-sm'} rounded-xl font-bold transition-all shadow-md inline-flex items-center gap-2 cursor-pointer hover:scale-102`}
                   >
                     <MessageCircle size={18} />
-                    <span>{isEn ? `Chat on WhatsApp with ${guideName}` : `Chatear por WhatsApp con ${guideName}`}</span>
+                    <span>{st.chatWaGuide}</span>
                   </a>
                 </div>
               </div>
@@ -1621,22 +1635,22 @@ export default function TourSupportAndFaqs({
                 <div className="flex items-center justify-between pb-2 border-b border-white/10">
                   <h4 className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
                     <Send size={15} className={themeAccentText} />
-                    Consulta Privada Protegida
+                    {st.protectedInquiry}
                   </h4>
                   <span className="text-[10px] text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-400/30 flex items-center gap-1">
-                    <ShieldCheck size={11} /> Anti-Spam Activo
+                    <ShieldCheck size={11} /> {st.antiSpamActive}
                   </span>
                 </div>
 
                 {formSubmitted ? (
                   <div className="bg-emerald-500/20 border border-emerald-400/40 p-4 rounded-xl text-center space-y-2 animate-in zoom-in-95 duration-200">
                     <CheckCircle2 size={24} className="text-emerald-400 mx-auto" />
-                    <h5 className="text-xs font-bold text-white">¡Consulta Registrada con Éxito!</h5>
+                    <h5 className="text-xs font-bold text-white">{st.successTitle}</h5>
                     <span className="inline-block bg-white/20 text-white font-mono text-[11px] px-2.5 py-0.5 rounded-md">
                       Ticket #{ticketId}
                     </span>
                     <p className="text-[11px] text-stone-200">
-                      Gracias {senderName || 'viajero'}. El guía {guideName} responderá a tu número {senderContact} en los próximos minutos.
+                      {st.successDesc(senderName, guideName, senderContact)}
                     </p>
                     <button
                       type="button"
@@ -1647,7 +1661,7 @@ export default function TourSupportAndFaqs({
                       }}
                       className="text-[10px] text-emerald-300 hover:text-white underline pt-1 cursor-pointer"
                     >
-                      Enviar otra consulta
+                      {st.sendAnotherBtn}
                     </button>
                   </div>
                 ) : (
@@ -1667,24 +1681,25 @@ export default function TourSupportAndFaqs({
                     {/* Category selector */}
                     <div>
                       <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-300 mb-1">
-                        Categoría
+                        {st.categoryField}
                       </label>
                       <select
                         value={ticketCategory}
                         onChange={(e) => setTicketCategory(e.target.value)}
                         className={`w-full bg-stone-900 border border-white/20 rounded-xl px-3 py-2 text-xs text-white outline-none focus:ring-2 ${isBoho ? 'focus:ring-[#C86D51]' : 'focus:ring-[#FF5500]'}`}
                       >
-                        <option value="Logística y Horarios de Recojo">Logística y Horarios de Recojo</option>
-                        <option value="Aclimatación y Altitud (Soroche)">Aclimatación y Altitud (Soroche)</option>
-                        <option value="Reserva Directa y Métodos de Pago">Reserva Directa y Métodos de Pago</option>
-                        <option value="Requerimiento Especial / Grupo Privado">Requerimiento Especial / Grupo Privado</option>
+                        {st.categories.slice(1).map((catName) => (
+                          <option key={catName} value={catName}>
+                            {catName}
+                          </option>
+                        ))}
                       </select>
                     </div>
 
                     <div className={`grid ${isMobile ? 'grid-cols-1 gap-2' : 'grid-cols-2 gap-2.5'}`}>
                       <div>
                         <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-300 mb-1">
-                          Tu Nombre
+                          {st.nameField}
                         </label>
                         <input
                           type="text"
@@ -1698,7 +1713,7 @@ export default function TourSupportAndFaqs({
 
                       <div>
                         <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-300 mb-1">
-                          WhatsApp
+                          {st.whatsappField}
                         </label>
                         <input
                           type="text"
@@ -1713,12 +1728,12 @@ export default function TourSupportAndFaqs({
 
                     <div>
                       <label className="block text-[10px] font-bold uppercase tracking-wider text-stone-300 mb-1">
-                        ¿Qué deseas consultar?
+                        {st.inquiryQuestionField}
                       </label>
                       <textarea
                         rows={2}
                         required
-                        placeholder="Ej. ¿Tienen opción vegetariana? ¿Recogen en Ollantaytambo?"
+                        placeholder={st.inquiryPlaceholder}
                         value={senderQuestion}
                         onChange={(e) => setSenderQuestion(e.target.value)}
                         className={`w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-stone-400 outline-none focus:ring-2 ${isBoho ? 'focus:ring-[#C86D51]' : 'focus:ring-[#FF5500]'} resize-none`}
@@ -1730,7 +1745,7 @@ export default function TourSupportAndFaqs({
                       <div className="flex items-center gap-2">
                         <Bot size={15} className={`${isBoho ? 'text-[#C86D51]' : 'text-[#FF8844]'} shrink-0`} />
                         <span className="text-[10px] sm:text-[11px] text-stone-200 font-semibold">
-                          Seguridad: ¿Cuánto es <strong>{mathNum1} + {mathNum2}</strong>?
+                          {st.securityChallenge}<strong>{mathNum1} + {mathNum2}</strong>?
                         </span>
                       </div>
                       <input
@@ -1757,11 +1772,11 @@ export default function TourSupportAndFaqs({
                       className={`w-full ${isBoho ? 'bg-[#C86D51] hover:bg-[#b05d43]' : 'bg-[#FF5500] hover:bg-[#E04B00]'} text-white font-bold py-2.5 rounded-xl text-xs transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50`}
                     >
                       {isSubmitting ? (
-                        <span>Validando y enviando...</span>
+                        <span>{st.validatingAndSending}</span>
                       ) : (
                         <>
                           <Send size={14} />
-                          <span>Enviar Consulta Protegida</span>
+                          <span>{st.sendProtectedBtn}</span>
                         </>
                       )}
                     </button>
