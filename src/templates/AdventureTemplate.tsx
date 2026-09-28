@@ -80,13 +80,13 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
   const getFeatureMetadata = (rawItem: string, idx: number) => {
     const lower = rawItem.toLowerCase();
     
-    if (lower.includes('domo') || lower.includes('campamento') || lower.includes('carpa') || lower.includes('equipado')) {
+    if (lower.includes('domo') || lower.includes('campamento') || lower.includes('carpa') || lower.includes('equipado') || lower.includes('dome') || lower.includes('camp') || lower.includes('tent') || lower.includes('tenda') || lower.includes('tende') || lower.includes('acampamento')) {
       return {
         id: 'camps',
         image: 'https://images.unsplash.com/photo-1510312305653-8ed496efae75?q=80&w=700&auto=format&fit=crop',
         icon: Tent,
         badge: currentLang === 'en' ? 'Sky Glass Domes' : currentLang === 'fr' ? 'Dômes Célestes' : currentLang === 'pt' ? 'Domos de Cristal' : currentLang === 'it' ? 'Domi di Vetro' : 'Domos Panorámicos',
-        category: currentLang === 'en' ? 'Comfort & Night Sky' : 'Confort & Domos Térmicos',
+        category: currentLang === 'en' ? 'Comfort & Night Sky' : currentLang === 'fr' ? 'Confort & Ciel Étoilé' : currentLang === 'pt' ? 'Conforto & Céu Estrelado' : currentLang === 'it' ? 'Comfort & Cielo Stellato' : 'Confort & Domos Térmicos',
         defaultDesc: currentLang === 'en' 
           ? 'Rest under the Andean Milky Way in geodesic thermal domes with real beds, feather duvets, and panoramic glacier views.'
           : currentLang === 'fr'
@@ -99,13 +99,13 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       };
     }
     
-    if (lower.includes('alimento') || lower.includes('comida') || lower.includes('nutritiva') || lower.includes('chef') || lower.includes('desayuno')) {
+    if (lower.includes('alimento') || lower.includes('comida') || lower.includes('nutritiva') || lower.includes('chef') || lower.includes('desayuno') || lower.includes('almuerzo') || lower.includes('meal') || lower.includes('food') || lower.includes('dining') || lower.includes('refeição') || lower.includes('refeicao') || lower.includes('repas') || lower.includes('pasto') || lower.includes('pasti')) {
       return {
         id: 'food',
         image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=700&auto=format&fit=crop',
         icon: Utensils,
         badge: currentLang === 'en' ? 'High Altitude Gourmet' : currentLang === 'fr' ? 'Chef de Montagne' : currentLang === 'pt' ? 'Chef de Montanha' : currentLang === 'it' ? 'Chef di Spedizione' : 'Chef de Montaña',
-        category: currentLang === 'en' ? 'Nutrition & Energy' : 'Gastronomía Andina & Energía',
+        category: currentLang === 'en' ? 'Nutrition & Energy' : currentLang === 'fr' ? 'Nutrition & Énergie' : currentLang === 'pt' ? 'Nutrição & Energia' : currentLang === 'it' ? 'Nutrizione & Energia' : 'Gastronomía Andina & Energía',
         defaultDesc: currentLang === 'en'
           ? '3 hearty gourmet hot meals daily prepared fresh by your mountain chef. Vegan, vegetarian, and gluten-free diets fully accommodated.'
           : currentLang === 'fr'
@@ -118,13 +118,13 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       };
     }
     
-    if (lower.includes('oxígeno') || lower.includes('oxigeno') || lower.includes('botiquín') || lower.includes('botiquin') || lower.includes('altura') || lower.includes('médic')) {
+    if (lower.includes('oxígeno') || lower.includes('oxigeno') || lower.includes('botiquín') || lower.includes('botiquin') || lower.includes('altura') || lower.includes('médic') || lower.includes('medic') || lower.includes('oxygen') || lower.includes('medical') || lower.includes('first aid') || lower.includes('oxigênio') || lower.includes('oxigenio') || lower.includes('oxygène') || lower.includes('soccorso') || lower.includes('altitude')) {
       return {
         id: 'health',
         image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=700&auto=format&fit=crop',
         icon: HeartPulse,
         badge: currentLang === 'en' ? 'Vital Safety' : currentLang === 'fr' ? 'Sécurité Vitale' : currentLang === 'pt' ? 'Segurança Vital' : currentLang === 'it' ? 'Sicurezza Vitale' : 'Seguridad Vital',
-        category: currentLang === 'en' ? 'Health & Medical' : 'Salud & Monitoreo 4,600m',
+        category: currentLang === 'en' ? 'Health & Medical' : currentLang === 'fr' ? 'Santé & Suivi Altitude' : currentLang === 'pt' ? 'Saúde & Monitoramento' : currentLang === 'it' ? 'Salute & Monitoraggio' : 'Salud & Monitoreo 4,600m',
         defaultDesc: currentLang === 'en'
           ? 'Continuous pulse oximeter saturation checks twice daily, portable medical emergency oxygen tank, and specialized wilderness first aid kit.'
           : currentLang === 'fr'
@@ -137,13 +137,13 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       };
     }
     
-    if (lower.includes('entrada') || lower.includes('boleto') || lower.includes('machu') || lower.includes('ticket') || lower.includes('tren')) {
+    if (lower.includes('entrada') || lower.includes('boleto') || lower.includes('machu') || lower.includes('ticket') || lower.includes('tickets') || lower.includes('tren') || lower.includes('train') || lower.includes('trem') || lower.includes('treno') || lower.includes('billet') || lower.includes('biglietto') || lower.includes('ingresso')) {
       return {
         id: 'tickets',
         image: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=700&auto=format&fit=crop',
         icon: Ticket,
         badge: currentLang === 'en' ? 'Guaranteed Circuit' : currentLang === 'fr' ? 'Circuit Garanti' : currentLang === 'pt' ? 'Circuito Garantido' : currentLang === 'it' ? 'Circuito Garantito' : 'Circuito Garantizado',
-        category: currentLang === 'en' ? 'Sanctuary Access' : 'Acceso Oficial Machu Picchu',
+        category: currentLang === 'en' ? 'Sanctuary Access' : currentLang === 'fr' ? 'Accès Sanctuaire' : currentLang === 'pt' ? 'Acesso ao Santuário' : currentLang === 'it' ? 'Accesso al Santuario' : 'Acceso Oficial Machu Picchu',
         defaultDesc: currentLang === 'en'
           ? 'Official entrance ticket reserved in your name for Circuit 1 or 2, plus panoramic Expedition/Voyager train ride through the Sacred Valley.'
           : currentLang === 'fr'
@@ -156,8 +156,8 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       };
     }
     
-    if (lower.includes('transporte') || lower.includes('mollepata') || lower.includes('bus') || lower.includes('ida y vuelta') || lower.includes('retorno')) {
-      const isReturn = lower.includes('vuelta') || lower.includes('retorno');
+    if (lower.includes('transporte') || lower.includes('mollepata') || lower.includes('bus') || lower.includes('ida y vuelta') || lower.includes('retorno') || lower.includes('transport') || lower.includes('van') || lower.includes('shuttle') || lower.includes('transfer') || lower.includes('traslado') || lower.includes('trasferimento')) {
+      const isReturn = lower.includes('vuelta') || lower.includes('retorno') || lower.includes('return') || lower.includes('retour') || lower.includes('volta');
       return {
         id: 'transport',
         image: isReturn 
@@ -165,7 +165,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           : 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=700&auto=format&fit=crop',
         icon: Bus,
         badge: currentLang === 'en' ? 'Private Van Service' : currentLang === 'fr' ? 'Transport Privé' : currentLang === 'pt' ? 'Transporte Turístico' : currentLang === 'it' ? 'Trasferimento Diretto' : 'Transporte Turístico',
-        category: currentLang === 'en' ? 'Door-to-Door Logistics' : 'Logística Puerta a Puerta',
+        category: currentLang === 'en' ? 'Door-to-Door Logistics' : currentLang === 'fr' ? 'Logistique Porte-à-Porte' : currentLang === 'pt' ? 'Logística Porta a Porta' : currentLang === 'it' ? 'Logistica Porta a Porta' : 'Logística Puerta a Puerta',
         defaultDesc: currentLang === 'en'
           ? 'Pick-up from your Cusco hotel in air-conditioned modern tourist sprinters with licensed professional drivers experienced on Andean roads.'
           : currentLang === 'fr'
@@ -677,7 +677,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 <span>{t.inclusions.title}</span>
               </div>
               <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
-                {data.features.title || t.inclusions.includedTitle}
+                {translateText(data.features.title || t.inclusions.includedTitle, currentLang)}
               </h2>
               <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal max-w-2xl mx-auto">
                 {currentLang === 'en'
@@ -730,6 +730,16 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 const matchesFilter = activeInclusionFilter === 'all' || meta.id === activeInclusionFilter;
                 if (!matchesFilter) return null;
 
+                const isGenericPlaceholder = !userCustomDesc || 
+                  userCustomDesc.includes('seguridad turística') || 
+                  userCustomDesc.includes('seguridad turistica') ||
+                  userCustomDesc.includes('tourist safety standards') ||
+                  userCustomDesc.includes('segurança turística') ||
+                  userCustomDesc.includes('sécurité touristique') ||
+                  userCustomDesc.includes('sicurezza turistica');
+
+                const cardDescription = isGenericPlaceholder ? meta.defaultDesc : translateText(userCustomDesc, currentLang);
+
                 return (
                   <div
                     key={idx}
@@ -771,7 +781,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                           </h3>
                         </div>
                         <p className="text-xs text-slate-300 leading-relaxed font-normal line-clamp-2">
-                          {translateText(userCustomDesc || meta.defaultDesc, currentLang)}
+                          {cardDescription}
                         </p>
                       </div>
                     </div>

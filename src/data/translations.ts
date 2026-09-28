@@ -407,7 +407,21 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Transport touristique Cusco - Mollepata aller-retour',
     it: 'Trasporto turistico Cusco - Mollepata andata e ritorno'
   },
+  'Tourist transportation Cusco - Mollepata round-trip': {
+    es: 'Transporte turístico Cusco - Mollepata',
+    en: 'Tourist transportation Cusco - Mollepata round-trip',
+    pt: 'Transporte turístico Cusco - Mollepata ida e volta',
+    fr: 'Transport touristique Cusco - Mollepata aller-retour',
+    it: 'Trasporto turistico Cusco - Mollepata andata e ritorno'
+  },
   'Domos de cristal y campamentos equipados': {
+    es: 'Domos de cristal y campamentos equipados',
+    en: 'Sky glass domes and fully equipped mountain campsites',
+    pt: 'Dormitórios domos de cristal e acampamentos equipados',
+    fr: 'Dômes de verre et campements de montagne équipés',
+    it: 'Domi di vetro e accampamenti montani attrezzati'
+  },
+  'Sky glass domes and fully equipped mountain campsites': {
     es: 'Domos de cristal y campamentos equipados',
     en: 'Sky glass domes and fully equipped mountain campsites',
     pt: 'Dormitórios domos de cristal e acampamentos equipados',
@@ -420,6 +434,55 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     pt: 'Alimentação nutritiva de montanha preparada por chefs locais',
     fr: 'Repas nutritifs de montagne préparés par des chefs de camp',
     it: 'Pasti montani nutrienti preparati da chef locali'
+  },
+  'Nutritious mountain meals prepared by local camp chefs': {
+    es: 'Alimentación nutritiva de montaña',
+    en: 'Nutritious mountain meals prepared by local camp chefs',
+    pt: 'Alimentação nutritiva de montanha preparada por chefs locais',
+    fr: 'Repas nutritifs de montagne préparés par des chefs de camp',
+    it: 'Pasti montani nutrienti preparati da chef locali'
+  },
+  '¿Qué hace inolvidable esta experiencia?': {
+    es: '¿Qué hace inolvidable esta experiencia?',
+    en: 'What Makes This Experience Unforgettable?',
+    pt: 'O que torna esta experiência inesquecível?',
+    fr: 'Qu’est-ce qui rend cette expérience inoubliable ?',
+    it: 'Cosa rende questa esperienza indimenticabile?'
+  },
+  'What Makes This Experience Unforgettable?': {
+    es: '¿Qué hace inolvidable esta experiencia?',
+    en: 'What Makes This Experience Unforgettable?',
+    pt: 'O que torna esta experiência inesquecível?',
+    fr: 'Qu’est-ce qui rend cette expérience inoubliable ?',
+    it: 'Cosa rende questa esperienza indimenticabile?'
+  },
+  'What makes this experience unforgettable?': {
+    es: '¿Qué hace inolvidable esta experiencia?',
+    en: 'What Makes This Experience Unforgettable?',
+    pt: 'O que torna esta experiência inesquecível?',
+    fr: 'Qu’est-ce qui rend cette expérience inoubliable ?',
+    it: 'Cosa rende questa esperienza indimenticabile?'
+  },
+  'What makes this tour exceptional?': {
+    es: '¿Qué hace inolvidable esta experiencia?',
+    en: 'What Makes This Experience Unforgettable?',
+    pt: 'O que torna esta experiência inesquecível?',
+    fr: 'Qu’est-ce qui rend cette expérience inoubliable ?',
+    it: 'Cosa rende questa esperienza indimenticabile?'
+  },
+  'Servicio 100% coordinado y garantizado con estándares de seguridad turística.': {
+    es: 'Servicio 100% coordinado y garantizado con estándares de seguridad turística.',
+    en: '100% coordinated and guaranteed service under official tourism safety standards.',
+    pt: 'Serviço 100% coordenado e garantido com padrões oficiais de segurança turística.',
+    fr: 'Service 100% coordonné et garanti selon les normes officielles de sécurité touristique.',
+    it: 'Servizio coordinato e garantito al 100% con standard ufficiali di sicurezza turistica.'
+  },
+  '100% coordinated and guaranteed service under official tourism safety standards.': {
+    es: 'Servicio 100% coordinado y garantizado con estándares de seguridad turística.',
+    en: '100% coordinated and guaranteed service under official tourism safety standards.',
+    pt: 'Serviço 100% coordenado e garantido com padrões oficiais de segurança turística.',
+    fr: 'Service 100% coordonné et garanti selon les normes officielles de sécurité touristique.',
+    it: 'Servizio coordinato e garantito al 100% con standard ufficiali di sicurezza turistica.'
   },
   'Entradas y boleto a Machu Picchu': {
     es: 'Entradas y boleto a Machu Picchu',
@@ -874,6 +937,24 @@ export function translateText(text: string | undefined, targetLang: LanguageType
     if (targetLang === 'pt') return 'Operador turístico oficial e registrado em Cusco com excelência comprovada e credencial DIRCETUR.';
     if (targetLang === 'fr') return 'Opérateur touristique officiel et agréé à Cusco avec excellence reconnue et licence DIRCETUR.';
     if (targetLang === 'it') return 'Operatore turistico ufficiale e autorizzato a Cusco con comprovata eccellenza e licenza DIRCETUR.';
+  }
+
+  // Heurística para título de características e inclusiones ("¿Qué hace inolvidable esta experiencia?")
+  if (lowerTrimmed.includes('hace inolvidable') || lowerTrimmed.includes('makes this experience') || lowerTrimmed.includes('makes this tour') || lowerTrimmed.includes('torna esta experiência') || lowerTrimmed.includes('torna esta experiencia') || lowerTrimmed.includes('rend cette expérience') || lowerTrimmed.includes('rende questa esperienza')) {
+    if (targetLang === 'es') return '¿Qué hace inolvidable esta experiencia?';
+    if (targetLang === 'en') return 'What Makes This Experience Unforgettable?';
+    if (targetLang === 'pt') return 'O Que Torna Esta Experiência Inesquecível?';
+    if (targetLang === 'fr') return 'Qu’est-ce qui rend cette expérience inoubliable ?';
+    if (targetLang === 'it') return 'Cosa rende questa esperienza indimenticabile?';
+  }
+
+  // Heurística para descripción estándar de servicios incluidos ("Servicio 100% coordinado...")
+  if (lowerTrimmed.includes('seguridad turística') || lowerTrimmed.includes('seguridad turistica') || lowerTrimmed.includes('tourist safety') || lowerTrimmed.includes('segurança turística') || lowerTrimmed.includes('sécurité touristique') || lowerTrimmed.includes('sicurezza turistica')) {
+    if (targetLang === 'es') return 'Servicio 100% coordinado y garantizado con estándares de seguridad turística.';
+    if (targetLang === 'en') return '100% coordinated and guaranteed service under official tourism safety standards.';
+    if (targetLang === 'pt') return 'Serviço 100% coordenado e garantido com padrões oficiais de segurança turística.';
+    if (targetLang === 'fr') return 'Service 100% coordonné et garanti selon les normes officielles de sécurité touristique.';
+    if (targetLang === 'it') return 'Servizio coordinato e garantito al 100% con standard ufficiali di sicurezza turistica.';
   }
 
   // Heurísticas para Especificaciones Técnicas
