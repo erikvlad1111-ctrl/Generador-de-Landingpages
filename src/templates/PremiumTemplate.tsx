@@ -1235,8 +1235,22 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
 
         <div className="max-w-5xl mx-auto relative z-10">
-          <div className="bg-gradient-to-b from-neutral-900/90 via-neutral-900/75 to-neutral-950 backdrop-blur-2xl p-6 sm:p-12 rounded-3xl border border-amber-500/35 shadow-[0_25px_60px_rgba(0,0,0,0.85)]">
-            <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-12 gap-10'} items-center`}>
+          <div className="relative overflow-hidden rounded-3xl border border-amber-500/35 shadow-[0_25px_60px_rgba(0,0,0,0.85)] p-6 sm:p-12 group">
+            {/* Soft Luxury Lounge Background Image */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+              <Image
+                src="https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=2000&auto=format&fit=crop"
+                alt="Lounge Concierge en Cusco"
+                fill
+                sizes="(max-width: 1024px) 100vw, 1200px"
+                className="object-cover object-center opacity-30 filter saturate-110 brightness-90 transition-transform duration-1000 group-hover:scale-105"
+              />
+              {/* Soft Luxury Overlays for high readability and warmth */}
+              <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/95 via-neutral-950/85 to-neutral-950/90 backdrop-blur-[2px]" />
+              <div className="absolute inset-0 bg-gradient-to-b from-amber-500/5 via-transparent to-neutral-950/60" />
+            </div>
+
+            <div className={`relative z-10 grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-12 gap-10'} items-center`}>
               
               <div className={`${isMobile ? 'text-center' : 'md:col-span-7 text-left'} space-y-4`}>
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono">
