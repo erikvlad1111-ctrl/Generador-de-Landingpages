@@ -35,7 +35,9 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
   const heroImg = data.heroImage || 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop';
   const gallery1 = data.galleryImages?.[0] || 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop';
-  const guideAvatarImg = data.guideAvatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop';
+  const guideAvatarImg = (data.guideAvatar && !data.guideAvatar.includes('photo-1534528741775')) 
+    ? data.guideAvatar 
+    : '/images/tour-guide-carlos.jpg';
 
   const getTourWaUrl = (tourTitle: string) => {
     const msg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, deseo consultar disponibilidad y tarifa VIP para el tour "${tourTitle}".`);
@@ -888,75 +890,98 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       </section>
 
       {/* 11. PERFIL DEL GUÍA CONCIERGE OFICIAL CON AMBIENTE DE PALACIO */}
-      <section id="guia-concierge" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden`}>
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
+      <section id="guia-concierge" className={`relative ${isMobile ? 'py-16 px-4' : 'py-32 md:py-36 px-6 sm:px-10 lg:px-12'} overflow-hidden border-b border-neutral-900`}>
+        {/* Background Image de la sección */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
           <Image
             src="https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=2000&auto=format&fit=crop"
             alt="Cusco Colonial Estate Background"
             fill
             sizes="100vw"
-            className="object-cover opacity-15 filter contrast-125"
+            className="object-cover opacity-35 filter contrast-110 brightness-75"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a080e] via-[#0a080e]/90 to-[#0a080e]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a080e]/90 via-[#0a080e]/70 to-[#0a080e]/95" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent" />
         </div>
 
-        <div className="max-w-5xl mx-auto relative z-10">
-          <div className="bg-gradient-to-b from-neutral-900/90 via-neutral-900/70 to-neutral-950 backdrop-blur-2xl border border-amber-500/35 rounded-3xl p-6 sm:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.8)] relative overflow-hidden">
+        <div className="max-w-6xl xl:max-w-7xl mx-auto relative z-10">
+          <div className="relative overflow-hidden rounded-3xl border border-amber-500/40 shadow-[0_30px_80px_rgba(0,0,0,0.9)] p-8 sm:p-14 lg:p-16 xl:p-20 group bg-neutral-950/70 backdrop-blur-xl">
             
-            <div className="absolute top-0 right-0 w-80 h-80 bg-amber-500/10 blur-[100px] rounded-full pointer-events-none" />
+            {/* Soft Background Image dentro de la tarjeta */}
+            <div className="absolute inset-0 z-0 pointer-events-none">
+              <Image
+                src="https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2000&auto=format&fit=crop"
+                alt="Andean Luxury Concierge Background"
+                fill
+                sizes="(max-width: 1280px) 100vw, 1400px"
+                className="object-cover object-center opacity-30 filter brightness-90 saturate-110 transition-transform duration-1000 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/95 via-neutral-950/80 to-neutral-950/90" />
+              <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/60 via-transparent to-neutral-950/70" />
+              <div className="absolute inset-0 bg-amber-500/[0.04]" />
+            </div>
 
-            <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-12 gap-10'} items-center`}>
+            <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/10 blur-[120px] rounded-full pointer-events-none" />
+
+            <div className={`relative z-10 grid ${isMobile ? 'grid-cols-1 gap-8' : 'md:grid-cols-12 gap-10 lg:gap-14 xl:gap-16'} items-center`}>
               
               {/* Guide Avatar & Badges */}
               <div className={`${isMobile ? 'mx-auto' : 'md:col-span-5'} flex flex-col items-center text-center`}>
-                <div className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full p-1.5 bg-gradient-to-b from-amber-400 via-amber-500/50 to-neutral-800 shadow-[0_0_35px_rgba(245,158,11,0.35)] mb-4">
-                  <div className="relative w-full h-full rounded-full overflow-hidden">
+                <div className="relative w-48 h-48 sm:w-56 sm:h-56 lg:w-64 lg:h-64 rounded-full p-2 bg-gradient-to-tr from-amber-400 via-amber-500/80 to-amber-300 shadow-[0_0_50px_rgba(245,158,11,0.45)] mb-5 group/avatar">
+                  <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-neutral-950 bg-neutral-900">
                     <Image 
                       src={guideAvatarImg} 
                       alt={data.guideName || 'Guía Oficial Concierge'} 
                       fill 
-                      sizes="250px" 
-                      className="object-cover"
+                      sizes="300px" 
+                      className="object-cover object-top transition-transform duration-700 group-hover/avatar:scale-105"
                     />
                   </div>
-                  <div className="absolute bottom-1 right-2 w-10 h-10 rounded-full bg-neutral-950 border-2 border-amber-400 flex items-center justify-center text-amber-300 shadow-lg">
-                    <Award size={20} />
+                  <div className="absolute bottom-1 right-2 sm:bottom-2 sm:right-3 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-neutral-950 border-2 border-amber-400 flex items-center justify-center text-amber-300 shadow-xl">
+                    <Award size={22} className="text-amber-400" />
                   </div>
                 </div>
 
-                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/35 text-amber-300 text-[10px] uppercase tracking-widest font-mono font-bold shadow-sm">
-                  <Crown size={12} className="text-amber-400" />
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[11px] sm:text-xs uppercase tracking-[0.2em] font-mono font-bold shadow-md">
+                  <Crown size={13} className="text-amber-400 shrink-0" />
                   <span>Acreditación Oficial DIRCETUR</span>
                 </div>
               </div>
 
               {/* Guide Bio & Message */}
-              <div className={`${isMobile ? 'text-center' : 'md:col-span-7 text-left'} space-y-4`}>
+              <div className={`${isMobile ? 'text-center' : 'md:col-span-7 text-left'} space-y-5 lg:space-y-6`}>
                 <div>
-                  <p className="text-[10px] uppercase tracking-[0.25em] text-amber-400/80 font-mono font-bold mb-1">
-                    Tu Anfitrión & Especialista Asignado
-                  </p>
-                  <h3 className={`${isMobile ? 'text-2xl' : 'text-3xl sm:text-4xl'} font-serif font-bold text-white`}>
-                    {data.guideName || 'Lic. Mateo Quispe & Equipo Concierge'}
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[11px] uppercase tracking-[0.22em] font-bold font-mono mb-2">
+                    <Sparkles size={12} className="text-amber-400" />
+                    <span>Tu Anfitrión & Especialista Asignado</span>
+                  </div>
+                  <h3 className={`${isMobile ? 'text-2xl' : 'text-3xl sm:text-4xl lg:text-5xl'} font-serif font-bold text-white tracking-tight leading-tight`}>
+                    {data.guideName || 'Carlos Mendoza'}
                   </h3>
-                  <p className="text-xs sm:text-sm text-amber-300/85 font-medium mt-1">
-                    {data.guideCert || 'Guía Oficial Colegiado DIRCETUR Cusco — Carné N° 4812'}
+                  <p className="text-xs sm:text-sm text-amber-300/90 font-medium mt-1.5 flex items-center gap-2 justify-center md:justify-start">
+                    <ShieldCheck size={16} className="text-amber-400 shrink-0" />
+                    <span>{data.guideCert || 'Guía Historiador Senior DIRCETUR Cusco'}</span>
                   </p>
                 </div>
 
-                <blockquote className="text-neutral-300 text-xs sm:text-sm font-light italic leading-relaxed border-l-2 border-amber-500/50 pl-4 py-1 bg-amber-500/5 rounded-r-xl">
+                <blockquote className="text-neutral-200 text-xs sm:text-sm lg:text-base font-light italic leading-relaxed border-l-4 border-amber-400 pl-5 py-2.5 bg-amber-500/[0.05] rounded-r-2xl shadow-inner">
                   &quot;Mi compromiso es abrir las puertas de la historia viva de los Andes con la máxima comodidad, discreción y elegancia para ti y tu familia. Cada paso se adapta a tu bienestar.&quot;
                 </blockquote>
 
-                <div className="grid grid-cols-2 gap-3 pt-2">
-                  <div className="bg-neutral-950/80 p-3.5 rounded-2xl border border-neutral-800">
-                    <p className="text-[10px] uppercase tracking-wider text-amber-400 font-mono font-semibold">Idiomas Fluidos</p>
-                    <p className="text-xs font-bold text-neutral-100 mt-0.5">{data.guideLanguages || 'Español, English & Français'}</p>
+                <div className="grid grid-cols-2 gap-4 pt-1">
+                  <div className="bg-neutral-950/80 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-neutral-800/90 hover:border-amber-500/40 transition-all shadow-md group/card">
+                    <div className="flex items-center gap-2 text-amber-400 font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-1">
+                      <Languages size={15} />
+                      <span>Idiomas Fluidos</span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-bold text-neutral-100">{data.guideLanguages || 'Español e Inglés bilingüe nativo'}</p>
                   </div>
-                  <div className="bg-neutral-950/80 p-3.5 rounded-2xl border border-neutral-800">
-                    <p className="text-[10px] uppercase tracking-wider text-amber-400 font-mono font-semibold">Experiencia</p>
-                    <p className="text-xs font-bold text-neutral-100 mt-0.5">+12 Años en Rutas de Lujo</p>
+                  <div className="bg-neutral-950/80 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-neutral-800/90 hover:border-amber-500/40 transition-all shadow-md group/card">
+                    <div className="flex items-center gap-2 text-amber-400 font-mono text-[10px] sm:text-xs font-semibold uppercase tracking-wider mb-1">
+                      <Clock size={15} />
+                      <span>Experiencia</span>
+                    </div>
+                    <p className="text-xs sm:text-sm font-bold text-neutral-100">+12 Años en Rutas de Lujo</p>
                   </div>
                 </div>
 
@@ -965,9 +990,9 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-neutral-950 px-6 py-3 rounded-full font-bold text-xs uppercase tracking-wider shadow-xl shadow-amber-400/25 hover:scale-105 transition-all cursor-pointer"
+                    className="inline-flex items-center gap-2.5 bg-gradient-to-r from-amber-400 via-amber-500 to-amber-400 hover:from-amber-300 hover:to-amber-400 text-neutral-950 px-8 py-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider shadow-2xl shadow-amber-400/25 hover:scale-105 transition-all cursor-pointer"
                   >
-                    <MessageCircle size={16} />
+                    <MessageCircle size={18} />
                     <span>Conversar con el Guía Concierge</span>
                   </a>
                 </div>

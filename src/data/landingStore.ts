@@ -469,7 +469,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
     guideName: 'Lic. Mateo Quispe & Concierge',
     guideCert: 'Guía Oficial Colegiado DIRCETUR Cusco — Carné N° 4812',
     guideLanguages: 'Español, English & Français',
-    guideAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop',
+    guideAvatar: '/images/tour-guide-carlos.jpg',
     whatsapp: '+51984123456',
     price: '$680 USD',
     duration: '2 Días / 1 Noche',
