@@ -1222,20 +1222,21 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
       {/* 18. SALÓN VIP & PUNTO DE ENCUENTRO EN CUSCO CON PATIO VIRREINAL */}
       <section id="lounge-vip" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-b border-neutral-900`}>
-        {/* Background Image */}
-        <div className="absolute inset-0 z-0">
+        {/* Background Image de toda la sección */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
           <Image
             src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=2000&auto=format&fit=crop"
             alt="Luxury Cusco Hotel Patio Background"
             fill
             sizes="100vw"
-            className="object-cover opacity-25 filter saturate-75"
+            className="object-cover opacity-45 filter saturate-100 brightness-85"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a080e] via-[#0a080e]/88 to-[#0a080e]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a080e]/85 via-[#0a080e]/60 to-[#0a080e]/90" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent" />
         </div>
 
         <div className="max-w-5xl mx-auto relative z-10">
-          <div className="relative overflow-hidden rounded-3xl border border-amber-500/35 shadow-[0_25px_60px_rgba(0,0,0,0.85)] p-6 sm:p-12 group">
+          <div className="relative overflow-hidden rounded-3xl border border-amber-500/40 shadow-[0_25px_60px_rgba(0,0,0,0.85)] p-6 sm:p-12 group bg-neutral-950/60 backdrop-blur-md">
             {/* Soft Luxury Lounge Background Image */}
             <div className="absolute inset-0 z-0 pointer-events-none">
               <Image
@@ -1243,11 +1244,12 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 alt="Lounge Concierge en Cusco"
                 fill
                 sizes="(max-width: 1024px) 100vw, 1200px"
-                className="object-cover object-center opacity-30 filter saturate-110 brightness-90 transition-transform duration-1000 group-hover:scale-105"
+                className="object-cover object-center opacity-65 filter brightness-95 saturate-110 transition-transform duration-1000 group-hover:scale-105"
               />
-              {/* Soft Luxury Overlays for high readability and warmth */}
-              <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/95 via-neutral-950/85 to-neutral-950/90 backdrop-blur-[2px]" />
-              <div className="absolute inset-0 bg-gradient-to-b from-amber-500/5 via-transparent to-neutral-950/60" />
+              {/* Soft Luxury Overlays for high readability and warmth without choking the image */}
+              <div className="absolute inset-0 bg-gradient-to-r from-neutral-950/85 via-neutral-950/60 to-neutral-950/75" />
+              <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/60 via-transparent to-neutral-950/70" />
+              <div className="absolute inset-0 bg-amber-500/[0.04]" />
             </div>
 
             <div className={`relative z-10 grid ${isMobile ? 'grid-cols-1 gap-6' : 'md:grid-cols-12 gap-10'} items-center`}>
