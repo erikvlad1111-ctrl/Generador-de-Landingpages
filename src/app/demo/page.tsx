@@ -86,14 +86,19 @@ export default function DemoDashboard() {
     };
   }, [filteredProjects, viewMode, showFullDetails]);
 
-  const scrollToStart = () => {
-    tableContainerRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
+  const scrollLeft = () => {
+    if (!tableContainerRef.current) return;
+    const current = tableContainerRef.current.scrollLeft;
+    const target = Math.max(0, current - 350);
+    tableContainerRef.current.scrollTo({ left: target, behavior: 'smooth' });
   };
 
-  const scrollToEnd = () => {
-    if (tableContainerRef.current) {
-      tableContainerRef.current.scrollTo({ left: tableContainerRef.current.scrollWidth, behavior: 'smooth' });
-    }
+  const scrollRight = () => {
+    if (!tableContainerRef.current) return;
+    const current = tableContainerRef.current.scrollLeft;
+    const max = tableContainerRef.current.scrollWidth - tableContainerRef.current.clientWidth;
+    const target = Math.min(max, current + 350);
+    tableContainerRef.current.scrollTo({ left: target, behavior: 'smooth' });
   };
 
 
@@ -569,10 +574,10 @@ export default function DemoDashboard() {
                       ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
                       : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300/80 hover:border-slate-400'
                   }`}
-                  title="Alternar vista extendida para ver la fecha completa, slug de URL y ruta"
+                  title="Alternar vista para ver fecha completa, enlace y ruta"
                 >
                   <CalendarDays size={15} className={showFullDetails ? 'text-blue-100' : 'text-blue-600'} />
-                  <span>{showFullDetails ? 'Ocultar Fecha Completa' : 'Ver Fecha Completa & Slugs'}</span>
+                  <span>{showFullDetails ? 'Ocultar fecha completa' : 'Ver fecha completa'}</span>
                 </button>
 
                 <span className="hidden md:inline text-slate-400">|</span>
@@ -600,30 +605,30 @@ export default function DemoDashboard() {
                 <div className="flex items-center gap-1.5">
                   <button
                     type="button"
-                    onClick={scrollToStart}
+                    onClick={scrollLeft}
                     disabled={!canScrollLeft}
                     className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs sm:text-[13px] font-bold transition-all border min-h-[36px] ${
                       canScrollLeft 
                         ? 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300 shadow-2xs active:scale-98 cursor-pointer' 
                         : 'bg-slate-100/70 text-slate-300 border-slate-200/60 cursor-default'
                     }`}
-                    title="Ir al inicio de la tabla (Tour y datos)"
+                    title="Desplazar tabla a la izquierda"
                   >
                     <ChevronLeft size={16} />
-                    <span>Inicio</span>
+                    <span>Izquierda</span>
                   </button>
                   <button
                     type="button"
-                    onClick={scrollToEnd}
+                    onClick={scrollRight}
                     disabled={!canScrollRight}
                     className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs sm:text-[13px] font-bold transition-all border min-h-[36px] ${
                       canScrollRight 
                         ? 'bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200 shadow-2xs active:scale-98 cursor-pointer' 
                         : 'bg-slate-100/70 text-slate-300 border-slate-200/60 cursor-default'
                     }`}
-                    title="Ir directamente a la columna de Acciones"
+                    title="Desplazar tabla a la derecha"
                   >
-                    <span>Acciones</span>
+                    <span>Derecha</span>
                     <ChevronRight size={16} />
                   </button>
                 </div>
