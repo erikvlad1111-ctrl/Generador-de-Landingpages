@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo, useRef } from 'react';
 import Link from 'next/link';
 import { 
-  FileText, Globe, CalendarDays, Sparkles, TrendingUp, ArrowUpRight, 
+  FileText, Globe, CalendarDays, Sparkles, Languages, CheckCircle2,
   ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download,
   Layers, Pin, LayoutTemplate, LayoutGrid, List, User, Tag,
   ChevronLeft, ChevronRight, SlidersHorizontal
@@ -106,7 +106,7 @@ export default function DemoDashboard() {
 
   const totalPublished = projects.filter(p => p.status === 'published').length;
   const totalLandings = projects.length;
-  const totalViews = projects.reduce((acc, curr) => acc + (parseInt(curr.views || '0', 10) || 0), 0);
+  const totalDrafts = totalLandings - totalPublished;
 
   const handleToggleStatus = (id: string, currentStatus: 'published' | 'draft') => {
     const nextStatus = currentStatus === 'published' ? 'draft' : 'published';
@@ -184,66 +184,72 @@ export default function DemoDashboard() {
         </div>
       </div>
 
-      {/* 2. INTERACTIVE METRIC CARDS */}
+      {/* 2. REAL SOFTWARE DATA & CAPABILITIES METRIC CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        {/* Card 1: Landings Creadas */}
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-blue-300 transition-all group">
           <div className="flex justify-between items-center mb-3">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Proyectos</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Landings</span>
             <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform">
               <FileText size={20} />
             </div>
           </div>
           <div className="flex items-baseline gap-2">
             <span className="text-3xl font-extrabold text-slate-900">{totalLandings}</span>
-            <span className="text-xs text-slate-400 font-medium">landings</span>
+            <span className="text-xs text-slate-400 font-medium">proyectos</span>
           </div>
-          <p className="text-xs text-slate-500 mt-2 flex items-center gap-1">
-            <span className="text-emerald-600 font-bold flex items-center"><ArrowUpRight size={14} /> 100%</span> optimizadas
+          <p className="text-xs text-slate-500 mt-2 flex items-center gap-1.5 font-medium">
+            <CheckCircle2 size={13} className="text-blue-600 shrink-0" />
+            <span>{totalPublished} publicadas • {totalDrafts} borradores</span>
           </p>
         </div>
 
+        {/* Card 2: Plantillas Disponibles */}
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-purple-300 transition-all group">
+          <div className="flex justify-between items-center mb-3">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Plantillas Turísticas</span>
+            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <LayoutTemplate size={20} />
+            </div>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <span className="text-3xl font-extrabold text-slate-900">5</span>
+            <span className="text-xs text-purple-700 font-bold">diseños web</span>
+          </div>
+          <p className="text-xs text-slate-500 mt-2 truncate" title="Portal Agencia, Aventura, Lujo VIP, Cultural y Boho">
+            Portal, Aventura, VIP, Cultural, Boho
+          </p>
+        </div>
+
+        {/* Card 3: Soporte Multilingüe */}
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-emerald-300 transition-all group">
           <div className="flex justify-between items-center mb-3">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Publicadas Online</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Soporte Multilingüe</span>
             <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Globe size={20} />
+              <Languages size={20} />
             </div>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-slate-900">{totalPublished}</span>
-            <span className="text-xs text-emerald-600 font-bold">
-              {Math.round((totalPublished / (totalLandings || 1)) * 100)}% del catálogo
-            </span>
+            <span className="text-3xl font-extrabold text-slate-900">5</span>
+            <span className="text-xs text-emerald-600 font-bold">idiomas IA</span>
           </div>
-          <p className="text-xs text-slate-500 mt-2">Visibles con dominio público</p>
+          <p className="text-xs text-slate-500 mt-2">Español, English, Português, FR, IT</p>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-indigo-300 transition-all group">
-          <div className="flex justify-between items-center mb-3">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Vistas Registradas</span>
-            <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Eye size={20} />
-            </div>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-slate-900">{totalViews.toLocaleString()}</span>
-            <span className="text-xs text-indigo-600 font-bold">+18% sem.</span>
-          </div>
-          <p className="text-xs text-slate-500 mt-2">Impactos a turistas potenciales</p>
-        </div>
-
+        {/* Card 4: Formatos de Exportación */}
         <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-amber-300 transition-all group">
           <div className="flex justify-between items-center mb-3">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Conversión WhatsApp</span>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Formatos de Entrega</span>
             <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <TrendingUp size={20} />
+              <Download size={20} />
             </div>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-slate-900">14.8%</span>
-            <span className="text-xs text-amber-600 font-bold">Promedio</span>
+            <span className="text-3xl font-extrabold text-slate-900">2</span>
+            <span className="text-xs text-amber-600 font-bold">modos autónomos</span>
           </div>
-          <p className="text-xs text-slate-500 mt-2">Clicks directos a contacto</p>
+          <p className="text-xs text-slate-500 mt-2">Paquete ZIP (HTML/CSS) o Vercel</p>
         </div>
       </div>
 
@@ -481,11 +487,11 @@ export default function DemoDashboard() {
                           </div>
 
                           <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100">
-                            <span className="text-[10px] text-slate-400 block font-semibold uppercase">Objetivo & Impactos</span>
+                            <span className="text-[10px] text-slate-400 block font-semibold uppercase">Objetivo & Idioma</span>
                             <span className="font-bold text-slate-700 block truncate">
                               {p.objective === 'both' ? '⚡ Híbrido' : p.objective === 'whatsapp' ? '💬 WhatsApp' : '📋 Cotización'}
                             </span>
-                            <span className="text-slate-500 text-xs font-mono font-bold">👁️ {p.views || '0'} vistas</span>
+                            <span className="text-blue-700 text-xs font-semibold uppercase tracking-wider font-mono">🌐 {p.language || 'es'}</span>
                           </div>
                         </div>
                       </div>
@@ -624,7 +630,7 @@ export default function DemoDashboard() {
                     <th className="px-3.5 py-3.5 hidden md:table-cell whitespace-nowrap">Plantilla</th>
                     <th className="px-3.5 py-3.5 hidden sm:table-cell whitespace-nowrap">Objetivo</th>
                     <th className="px-3.5 py-3.5 whitespace-nowrap">Estado</th>
-                    <th className="px-3.5 py-3.5 hidden lg:table-cell whitespace-nowrap text-center">Vistas</th>
+                    <th className="px-3.5 py-3.5 hidden lg:table-cell whitespace-nowrap text-center">Idioma</th>
                     <th className="px-4 py-3.5 hidden xl:table-cell whitespace-nowrap min-w-[160px] pr-8">Fecha</th>
                     <th className="px-4 py-3.5 whitespace-nowrap text-right min-w-[260px] sticky right-0 bg-slate-50/95 backdrop-blur-md shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.08)] z-20">
                       Acciones
@@ -744,10 +750,10 @@ export default function DemoDashboard() {
                             </button>
                           </td>
 
-                          {/* Views */}
-                          <td className="px-3 py-3.5 hidden lg:table-cell text-xs font-mono font-bold text-slate-600 whitespace-nowrap text-center">
-                            <span className="px-2 py-0.5 bg-slate-100 rounded-md">
-                              {p.views || '0'}
+                          {/* Language */}
+                          <td className="px-3 py-3.5 hidden lg:table-cell text-xs font-mono font-bold text-slate-700 whitespace-nowrap text-center">
+                            <span className="px-2 py-0.5 bg-slate-100 rounded-md uppercase font-semibold text-slate-700">
+                              {p.language || 'es'}
                             </span>
                           </td>
 
@@ -848,8 +854,8 @@ export default function DemoDashboard() {
                   <span className="w-2 h-2 rounded-full bg-amber-500"></span>
                   <span>{totalLandings - totalPublished} Borradores</span>
                 </span>
-                <span className="inline-flex items-center gap-1.5 text-slate-400">
-                  <span>{totalViews} vistas acumuladas</span>
+                <span className="inline-flex items-center gap-1.5 text-slate-500 font-medium">
+                  <span>5 Plantillas • 5 Idiomas • Exportación ZIP</span>
                 </span>
               </div>
             </div>
