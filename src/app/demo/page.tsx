@@ -20,38 +20,39 @@ export default function DemoDashboard() {
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
   const [selectedLandingForDeploy, setSelectedLandingForDeploy] = useState<LandingData | null>(null);
 
-  // Table horizontal scroll sync refs and state
+  // Table scroll & column view controls
   const tableContainerRef = useRef<HTMLDivElement>(null);
-  const topScrollRef = useRef<HTMLDivElement>(null);
-  const [tableScrollWidth, setTableScrollWidth] = useState(1200);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [showFullDetails, setShowFullDetails] = useState(false);
 
-  const isSyncingTopScroll = useRef(false);
-  const isSyncingTableScroll = useRef(false);
-
-  const handleTopScroll = () => {
-    if (isSyncingTableScroll.current) return;
-    isSyncingTopScroll.current = true;
-    if (tableContainerRef.current && topScrollRef.current) {
-      tableContainerRef.current.scrollLeft = topScrollRef.current.scrollLeft;
+  const updateScrollState = () => {
+    if (tableContainerRef.current) {
       const el = tableContainerRef.current;
-      setCanScrollLeft(el.scrollLeft > 10);
-      setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+      const maxScroll = el.scrollWidth - el.clientWidth;
+      setCanScrollLeft(el.scrollLeft > 8);
+      setCanScrollRight(maxScroll > 8 && el.scrollLeft < maxScroll - 8);
+      setScrollProgress(maxScroll > 0 ? Math.round((el.scrollLeft / maxScroll) * 100) : 0);
     }
-    setTimeout(() => { isSyncingTopScroll.current = false; }, 50);
   };
 
   const handleTableScroll = () => {
-    if (isSyncingTopScroll.current) return;
-    isSyncingTableScroll.current = true;
-    if (tableContainerRef.current && topScrollRef.current) {
-      topScrollRef.current.scrollLeft = tableContainerRef.current.scrollLeft;
-      const el = tableContainerRef.current;
-      setCanScrollLeft(el.scrollLeft > 10);
-      setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+    updateScrollState();
+  };
+
+  const formatFullDate = (dateStr: string) => {
+    if (!dateStr) return 'Reciente';
+    try {
+      const [year, month, day] = dateStr.split('-');
+      if (!year || !month || !day) return dateStr;
+      const months = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+      const mIndex = parseInt(month, 10) - 1;
+      const mName = months[mIndex] || month;
+      return `${day} ${mName}, ${year}`;
+    } catch {
+      return dateStr;
     }
-    setTimeout(() => { isSyncingTopScroll.current = false; }, 50);
   };
 
   useEffect(() => {
@@ -76,22 +77,14 @@ export default function DemoDashboard() {
   }, [projects, searchQuery, statusFilter, objectiveFilter]);
 
   useEffect(() => {
-    const measure = () => {
-      if (tableContainerRef.current) {
-        const el = tableContainerRef.current;
-        setTableScrollWidth(el.scrollWidth);
-        setCanScrollLeft(el.scrollLeft > 10);
-        setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
-      }
-    };
-    measure();
-    const timer = setTimeout(measure, 150);
-    window.addEventListener('resize', measure);
+    updateScrollState();
+    const timer = setTimeout(updateScrollState, 150);
+    window.addEventListener('resize', updateScrollState);
     return () => {
       clearTimeout(timer);
-      window.removeEventListener('resize', measure);
+      window.removeEventListener('resize', updateScrollState);
     };
-  }, [filteredProjects, viewMode]);
+  }, [filteredProjects, viewMode, showFullDetails]);
 
   const scrollToStart = () => {
     tableContainerRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
@@ -558,81 +551,113 @@ export default function DemoDashboard() {
         )}
 
         {/* ========================================================= */}
-        {/* VISTA 2: TABLA MODERNA Y FLUIDA (ESTILO SAAS PREMIUM)     */}
+        {/* VISTA 2: TABLA MODERNA Y FLUIDA (AJUSTADA AL 100% DE ANCHO) */}
         {/* ========================================================= */}
         {viewMode === 'table' && (
-          <div className="rounded-2xl border border-slate-200/90 bg-white shadow-xs overflow-hidden animate-in fade-in duration-300">
+          <div className="w-full max-w-full rounded-2xl border border-slate-200/90 bg-white shadow-xs overflow-hidden animate-in fade-in duration-300">
             
-            {/* BARRA SUPERIOR DE CONTROL Y DESPLAZAMIENTO HORIZONTAL */}
-            <div className="bg-slate-50/95 border-b border-slate-200/90 px-4 py-2 flex items-center justify-between gap-3 text-xs select-none">
-              <div className="flex items-center gap-2 text-slate-500 font-medium">
-                <span className="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 px-2.5 py-1 rounded-lg text-[11px] font-bold border border-blue-200/70 shadow-2xs">
-                  <SlidersHorizontal size={12} className="text-blue-600" />
-                  Barra de Desplazamiento
-                </span>
-                <span className="hidden sm:inline text-slate-400">|</span>
-                <span className="hidden sm:inline text-slate-500 text-[11px]">
-                  Desplázate horizontalmente o usa los botones directos para ver todas las acciones
+            {/* BARRA SUPERIOR: HERRAMIENTAS, FECHA COMPLETA Y CONTROL DE ANCHO */}
+            <div className="bg-slate-50/95 border-b border-slate-200/90 px-3.5 sm:px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs select-none">
+              
+              {/* Botón interactivo para ver fecha completa y detalles técnicos */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <button
+                  type="button"
+                  onClick={() => setShowFullDetails(!showFullDetails)}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border cursor-pointer shadow-2xs ${
+                    showFullDetails
+                      ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                      : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300/80 hover:border-slate-400'
+                  }`}
+                  title="Alternar vista extendida para ver la fecha completa, slug de URL y ruta"
+                >
+                  <CalendarDays size={13} className={showFullDetails ? 'text-blue-100' : 'text-blue-600'} />
+                  <span>{showFullDetails ? 'Ocultar Fecha Completa' : 'Ver Fecha Completa & Slugs'}</span>
+                </button>
+
+                <span className="hidden md:inline text-slate-400">|</span>
+                <span className="text-[11px] text-slate-500 font-medium hidden sm:inline">
+                  {showFullDetails 
+                    ? 'Mostrando fecha completa formateada y enlaces directos' 
+                    : 'Ajustada al 100% del ancho del navegador'}
                 </span>
               </div>
 
-              {/* Botones de navegación horizontal rápida */}
-              <div className="flex items-center gap-1.5 shrink-0">
-                <button
-                  type="button"
-                  onClick={scrollToStart}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border ${
-                    canScrollLeft 
-                      ? 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300 shadow-2xs active:scale-98' 
-                      : 'bg-slate-100 text-slate-400 border-slate-200 cursor-default'
-                  }`}
-                  title="Ir al inicio de la tabla (Tour y datos)"
-                >
-                  <ChevronLeft size={14} />
-                  <span>Inicio</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={scrollToEnd}
-                  className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer border ${
-                    canScrollRight 
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white border-blue-600 shadow-2xs active:scale-98' 
-                      : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300 shadow-2xs'
-                  }`}
-                  title="Ir directamente a la columna de Acciones"
-                >
-                  <span>Ir a Acciones</span>
-                  <ChevronRight size={14} />
-                </button>
+              {/* Indicador de Desplazamiento y Botones de Navegación Suave */}
+              <div className="flex items-center gap-2 shrink-0">
+                {(canScrollLeft || canScrollRight) && (
+                  <div className="hidden sm:flex items-center gap-2 pr-1 text-[11px] text-slate-500">
+                    <span className="text-[10px] uppercase font-bold text-slate-400">Desplazamiento:</span>
+                    <div className="w-16 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-blue-600 rounded-full transition-all duration-150" 
+                        style={{ width: `${Math.max(scrollProgress, 12)}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex items-center gap-1">
+                  <button
+                    type="button"
+                    onClick={scrollToStart}
+                    disabled={!canScrollLeft}
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all border ${
+                      canScrollLeft 
+                        ? 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300 shadow-2xs active:scale-98 cursor-pointer' 
+                        : 'bg-slate-100/70 text-slate-300 border-slate-200/60 cursor-default'
+                    }`}
+                    title="Ir al inicio de la tabla (Tour y datos)"
+                  >
+                    <ChevronLeft size={13} />
+                    <span className="hidden xs:inline">Inicio</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={scrollToEnd}
+                    disabled={!canScrollRight}
+                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all border ${
+                      canScrollRight 
+                        ? 'bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200 shadow-2xs active:scale-98 cursor-pointer' 
+                        : 'bg-slate-100/70 text-slate-300 border-slate-200/60 cursor-default'
+                    }`}
+                    title="Ir directamente a la columna de Acciones"
+                  >
+                    <span className="hidden xs:inline">Acciones</span>
+                    <ChevronRight size={13} />
+                  </button>
+                </div>
               </div>
             </div>
 
-            {/* Barra de desplazamiento nativa superior sincronizada */}
-            <div 
-              ref={topScrollRef}
-              onScroll={handleTopScroll}
-              className="overflow-x-auto modern-table-container bg-slate-100/80 border-b border-slate-200/90 h-3 cursor-ew-resize"
-              title="Arrastra esta barra superior para desplazarte por la tabla"
-            >
-              <div style={{ width: `${Math.max(tableScrollWidth, 1100)}px` }} className="h-1" />
-            </div>
-
-            {/* Table Scrollable Container with synchronized scroll */}
+            {/* Table Container: Smooth native scroll when needed, strictly contained within page */}
             <div 
               ref={tableContainerRef}
               onScroll={handleTableScroll}
-              className="overflow-x-auto modern-table-container relative"
+              className="w-full max-w-full overflow-x-auto modern-table-container relative overscroll-x-contain"
             >
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-slate-50/90 text-slate-500 text-[11px] uppercase tracking-wider font-extrabold border-b border-slate-200/80 select-none">
-                    <th className="px-4 py-3.5 min-w-[220px]">Tour & Guía Asignado</th>
+                    <th className="px-4 py-3.5 min-w-[200px]">Tour & Guía Asignado</th>
                     <th className="px-3.5 py-3.5 hidden md:table-cell whitespace-nowrap">Plantilla</th>
                     <th className="px-3.5 py-3.5 hidden sm:table-cell whitespace-nowrap">Objetivo</th>
                     <th className="px-3.5 py-3.5 whitespace-nowrap">Estado</th>
                     <th className="px-3.5 py-3.5 hidden lg:table-cell whitespace-nowrap text-center">Idioma</th>
-                    <th className="px-4 py-3.5 hidden xl:table-cell whitespace-nowrap min-w-[160px] pr-8">Fecha</th>
-                    <th className="px-4 py-3.5 whitespace-nowrap text-right min-w-[260px] sticky right-0 bg-slate-50/95 backdrop-blur-md shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.08)] z-20">
+                    
+                    {/* Fecha de Registro: siempre visible si showFullDetails está activo o en pantallas grandes */}
+                    <th className={`px-4 py-3.5 whitespace-nowrap ${showFullDetails ? 'table-cell min-w-[160px]' : 'hidden xl:table-cell min-w-[130px]'}`}>
+                      {showFullDetails ? '📅 Fecha Completa' : 'Fecha'}
+                    </th>
+
+                    {/* Enlace / Slug Web: solo en modo detallado */}
+                    {showFullDetails && (
+                      <th className="px-3.5 py-3.5 whitespace-nowrap min-w-[160px]">
+                        Enlace Web
+                      </th>
+                    )}
+
+                    <th className="px-4 py-3.5 whitespace-nowrap text-right min-w-[220px] sticky right-0 bg-slate-50/95 backdrop-blur-md shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.08)] z-20">
                       Acciones
                     </th>
                   </tr>
@@ -757,13 +782,32 @@ export default function DemoDashboard() {
                             </span>
                           </td>
 
-                          {/* Date: 100% visible, sin solapamiento con la columna sticky de acciones */}
-                          <td className="px-4 py-3.5 hidden xl:table-cell text-xs text-slate-600 font-medium whitespace-nowrap min-w-[160px] pr-8">
-                            <div className="inline-flex items-center gap-2 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-200/80 shadow-2xs" title={`Fecha de creación: ${p.date}`}>
-                              <CalendarDays size={13} className="text-blue-500 shrink-0" />
-                              <span className="font-mono text-xs font-bold text-slate-800 tracking-tight">{p.date}</span>
+                          {/* Date: Compacta o completa según showFullDetails */}
+                          <td className={`px-4 py-3.5 text-xs text-slate-600 font-medium whitespace-nowrap ${showFullDetails ? 'table-cell' : 'hidden xl:table-cell min-w-[130px]'}`}>
+                            <div className="inline-flex items-center gap-1.5 bg-slate-50 px-2.5 py-1 rounded-lg border border-slate-200/80 shadow-2xs" title={`Fecha de creación: ${p.date}`}>
+                              <CalendarDays size={12} className="text-blue-500 shrink-0" />
+                              <span className="font-semibold text-slate-800 tracking-tight">
+                                {showFullDetails ? formatFullDate(p.date) : p.date}
+                              </span>
                             </div>
                           </td>
+
+                          {/* Enlace / Slug (Modo Detallado) */}
+                          {showFullDetails && (
+                            <td className="px-3.5 py-3.5 whitespace-nowrap text-xs">
+                              <div className="inline-flex items-center gap-1 bg-slate-100/90 px-2 py-1 rounded-lg border border-slate-200 text-slate-700 font-mono text-[11px]">
+                                <span className="truncate max-w-[110px]">/p/{p.slug}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => handleCopyLink(p.slug)}
+                                  className="text-slate-400 hover:text-blue-600 p-0.5 rounded cursor-pointer transition-colors"
+                                  title="Copiar enlace directo"
+                                >
+                                  {isCopied ? <Check size={12} className="text-emerald-500" /> : <Copy size={12} />}
+                                </button>
+                              </div>
+                            </td>
+                          )}
 
                           {/* Action buttons: Sticky right column, 100% visible on any screen */}
                           <td className="px-4 py-3.5 text-right whitespace-nowrap min-w-[260px] sticky right-0 bg-white/95 group-hover:bg-slate-50/95 backdrop-blur-md shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.08)] z-10 transition-colors">
