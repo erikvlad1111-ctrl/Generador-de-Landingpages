@@ -88,23 +88,22 @@ export interface LandingDesign {
 const AVAILABLE_DESIGNS: LandingDesign[] = [
   {
     id: 'peru-portal-agency',
-    name: 'Diseño 1',
-    subtitle: 'Portal Oficial de Agencia Perú (Vinicunca Orange): Alta conversión con acentos naranja, métricas de confianza, FAQ y sellos DIRCETUR',
+    name: '1. Portal Oficial de Agencia & Multidía',
+    subtitle: 'Diseño corporativo de alta conversión: Hero panorámico, sellos DIRCETUR, RUC formal, métricas de confianza y módulo FAQ interactivo.',
     category: 'Alta Conversión & Portal Oficial',
     template: 'agency-portal',
     recommendedTier: 'advance',
-    targetTour: 'Vinicunca 7 Colores, Paquetes Multidía, Circuitos Cusco & Valle Sagrado',
+    targetTour: 'Machu Picchu VIP, Paquetes Multidía, Circuitos Cusco & Valle Sagrado',
     demoSlug: 'machu-picchu-vip',
     isFeatured: true,
     likesCount: 3840,
-    previewImage: '/images/travelers/traveler-machu-picchu.jpg',
+    previewImage: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
     gridSampleImages: [
-      'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=2070&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=2070&auto=format&fit=crop'
     ],
-    tags: ['Diseño 1', 'Hero Vinicunca', 'Botones Naranjas', 'Alta Conversión'],
-    targetAudience: 'Agencias turísticas formales, operadores receptivos y agencias que invierten en pauta de Facebook, Instagram o Google Ads.',
+    tags: ['Diseño 1', 'Hero Panorámico', 'Alta Conversión', 'Sellos DIRCETUR', 'Acordeón FAQ'],
+    targetAudience: 'Agencias turísticas formales, operadores receptivos y empresas que invierten en pauta de Facebook, Instagram o Google Ads.',
     conversionImpact: '+42% en contactos calificados y reservas multidía',
     benefits: [
       {
@@ -119,8 +118,13 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
       },
       {
         title: 'Filtro FAQ que Ahorra Tiempo',
-        description: 'Acordeón interactivo con las 8 preguntas críticas (aclimatación, maletas, pagos) para reducir consultas repetitivas.',
+        description: 'Acordeón interactivo con las preguntas críticas (aclimatación, maletas, pagos) para reducir consultas repetitivas.',
         badge: 'Ahorro Soporte'
+      },
+      {
+        title: 'Soporte Multilingüe Nativo',
+        description: 'Conmutador de 5 idiomas (ES, EN, PT, FR, IT) para captar turismo receptivo internacional.',
+        badge: 'Internacional'
       }
     ],
     colorPalette: [
@@ -138,10 +142,10 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
     },
     style: {
       aestheticName: 'Corporate Neobrutalism Suave',
-      description: 'Líneas limpias, sombras nítidas, contrastes potentes entre naranja y negro carbón con esquinas de 24px que transmiten orden.',
-      layoutPattern: 'Hero panorámico + Barra de métricas 3 columnas + Grid de tours destacados + Banner sticky',
+      description: 'Líneas limpias, sombras nítidas, contrastes potentes entre naranja y negro carbón con esquinas de 24px que transmiten solidez institucional.',
+      layoutPattern: 'Hero panorámico + Barra de métricas 3 columnas + Grid de tours destacados + Acordeón FAQ + Banner sticky',
       spacingAndBorders: 'Bordes redondeados de 24px (rounded-3xl) y bordes sutiles de 1px en slate-200.',
-      visualElements: ['Badges de estrellas TripAdvisor', 'Sellos oficiales DIRCETUR', 'Acordeón FAQ animado'],
+      visualElements: ['Badges de estrellas TripAdvisor', 'Sellos oficiales DIRCETUR', 'Acordeón FAQ animado', 'Botón flotante WhatsApp'],
       microInteractions: 'Botón con pulso suave de atención, elevación en hover y feedback táctil.'
     },
     includedComponents: [
@@ -154,13 +158,13 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
     ]
   },
   {
-    id: 'boho-journal',
+    id: 'boho-nature',
     name: '2. Boho Travel Journal & Polaroids',
-    subtitle: 'Bitácora de Viajes con Fotos Polaroids Inclinadas y Cinta Washi Adhesiva',
+    subtitle: 'Bitácora de viajes inspiradora con fotos polaroids inclinadas, notas de campo estilo scrapbook y tonos orgánicos cálidos.',
     category: 'Editorial & Storytelling',
     template: 'boho-nature',
     recommendedTier: 'advance',
-    targetTour: 'Laguna Humantay, Salineras de Maras, Rutas Fotográficas en Cusco',
+    targetTour: 'Laguna Humantay, Salineras de Maras, Rutas Fotográficas, Retiros & Naturaleza',
     demoSlug: 'laguna-humantay-boho',
     likesCount: 2420,
     previewImage: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=2070&auto=format&fit=crop',
@@ -168,7 +172,7 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
       'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop'
     ],
-    tags: ['Polaroids Inclinadas', 'Washi Tape', 'Notas de Campo', 'Pinterest Aesthetic'],
+    tags: ['Diseño 2', 'Polaroids Inclinadas', 'Washi Tape', 'Notas de Campo', 'Pinterest Aesthetic'],
     targetAudience: 'Turistas jóvenes, parejas, fotógrafos, nómadas digitales y viajeros visuales que comparten contenido en Instagram y Pinterest.',
     conversionImpact: '+65% en tiempo de permanencia en página y tasa de guardado',
     benefits: [
@@ -186,6 +190,11 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
         title: 'Diferenciación de Marca Inmediata',
         description: 'Rompe con los sitios turísticos convencionales aburridos; posiciona a la agencia como curadora de vivencias estéticas.',
         badge: 'Estilo Único'
+      },
+      {
+        title: 'Módulo Checklist de Mochila',
+        description: 'Lista visual clasificada con lo indispensable que debe llevar el viajero (calzado, capas térmicas, cámara).',
+        badge: 'Utilidad'
       }
     ],
     colorPalette: [
@@ -219,102 +228,43 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
     ]
   },
   {
-    id: 'editorial-magazine',
-    name: '3. Editorial Magazine & Moodboard',
-    subtitle: 'Revista de Alta Gama con Collage Asimétrico, Espacio Negativo y Tipografía Serif',
-    category: 'Vogue Travel Style',
-    template: 'boho-nature',
-    recommendedTier: 'pro',
-    targetTour: 'Valle Sagrado de los Incas, Rutas Gastronómicas y Cafés de Altura',
-    demoSlug: 'machu-picchu-vip',
-    likesCount: 1980,
-    previewImage: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=2029&auto=format&fit=crop',
-    gridSampleImages: [
-      'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop'
-    ],
-    tags: ['Tipografía Serif', 'Collage Editorial', 'Citas Célebres', 'Filtro Mate'],
-    targetAudience: 'Viajeros culturales exigentes, amantes del diseño, la gastronomía y la arquitectura; público internacional de alto poder adquisitivo.',
-    conversionImpact: '+35% en valor percibido permitiendo comercializar tours con precios más altos',
-    benefits: [
-      {
-        title: 'Elevación de Ticket Promedio',
-        description: 'La estética de publicaciones como Kinfolk o Condé Nast Traveler justifica tarifas superiores.',
-        badge: 'Ticket Alto'
-      },
-      {
-        title: 'Sofisticación Visual con Espacio Negativo',
-        description: 'Composiciones respirables y tipografía refinada que proyectan serenidad y exclusividad.',
-        badge: 'Lujo Silencioso'
-      },
-      {
-        title: 'Reseñas con Formato de Crítica Editorial',
-        description: 'Testimonios presentados con estética de reseña periodística de alta reputación.',
-        badge: 'Autoridad'
-      }
-    ],
-    colorPalette: [
-      { name: 'Blanco Nieve', hex: '#FFFFFF', role: 'Espacios negativos amplios que aportan aire y modernidad' },
-      { name: 'Tierra Arcillosa', hex: '#9C583F', role: 'Acento terroso elegante para titulares y llamados' },
-      { name: 'Gris Editorial', hex: '#44403C', role: 'Texto oscuro de alta legibilidad y sutileza visual' },
-      { name: 'Dorado Suave', hex: '#D4AF37', role: 'Detalles mínimos de orfebrería y sellos de calidad' }
-    ],
-    typography: {
-      headingFont: 'Cormorant Garamond / Playfair (Serif)',
-      bodyFont: 'Inter (Ligero & Espaciado)',
-      category: 'Serif Clásica de Lujo + Sans-Serif Minimalista',
-      sampleTitle: 'EL VALLE SAGRADO: UN VIAJE A TRAVÉS DE LOS SENTIDOS',
-      hierarchyNotes: 'Títulos principales en mayúsculas espaciadas (tracking +0.15em) con sutileza aristocrática y epígrafes en cursiva.'
-    },
-    style: {
-      aestheticName: 'Kinfolk & Vogue Editorial Minimalism',
-      description: 'Inspirado en publicaciones de arte y viajes de autor. Enfoque en la belleza plástica de los paisajes andinos sin estridencias.',
-      layoutPattern: 'Cuadrícula asimétrica 2:1 + Citas destacadas a columna completa + Galería dorada',
-      spacingAndBorders: 'Márgenes amplios y respirables, bordes limpios sin sombras pesadas y filtro con grano sutil.',
-      visualElements: ['Líneas divisorias ultrafinas', 'Citas entrecomilladas gigantes', 'Numeración romana'],
-      microInteractions: 'Transiciones ultra suaves al hacer hover y botones con subrayado animado.'
-    },
-    includedComponents: [
-      'Portada estilo revista con titular principal y subtítulo poético',
-      'Manifiesto de la experiencia y filosofía de viaje consciente',
-      'Itinerario estructurado como capítulos de libro (Capítulo I, II, III)',
-      'Galería fotográfica con pies de foto explicativos',
-      'Módulo de reservación VIP con concierge privado'
-    ]
-  },
-  {
-    id: 'adventure-pinboard',
-    name: '4. Adventure & Outdoor Pinboard',
-    subtitle: 'Tablero Técnico de Montaña con Insignias de Altitud msnm, Dificultad y Coordenadas GPS',
+    id: 'adventure',
+    name: '3. Adventure & Mountain Explorer',
+    subtitle: 'Panel técnico de alta montaña con insignias de altitud msnm, dificultad física, protocolo médico y coordenadas GPS.',
     category: 'Trekking & Expedición',
     template: 'adventure',
     recommendedTier: 'pro',
-    targetTour: 'Salkantay Trek, Ausangate Circuit, Choquequirao, Rutas de Alta Montaña',
-    demoSlug: 'salkantay-trek',
+    targetTour: 'Salkantay Trek, Valle Sagrado Cuatrimotos, Ausangate Circuit, Choquequirao, Rutas de Montaña',
+    demoSlug: 'valle-sagrado-aventura',
     likesCount: 2680,
     previewImage: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop',
     gridSampleImages: [
       'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1533587851505-d119e13fa0d7?q=80&w=2070&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop'
     ],
-    tags: ['Altitud msnm', 'Coordenadas GPS', 'Insignias DIRCETUR', 'Outdoor Explorer'],
-    targetAudience: 'Trekkeros, senderistas, montañistas y exploradores que necesitan certezas sobre seguridad física y equipo antes de reservar.',
+    tags: ['Diseño 3', 'Altitud msnm', 'Coordenadas GPS', 'Insignias DIRCETUR', 'Outdoor Explorer'],
+    targetAudience: 'Trekkeros, senderistas, deportistas de aventura y exploradores que necesitan certezas sobre exigencia física y equipo antes de reservar.',
     conversionImpact: '+50% en conversión de rutas exigentes gracias a la precisión técnica',
     benefits: [
       {
         title: 'Seguridad Técnica que Elimina Miedos',
-        description: 'Muestra altitud máxima (ej. 4,630 msnm), dificultad, kilómetros y horas por día para disipar dudas físicas.',
+        description: 'Muestra altitud máxima (ej. 4,630 msnm), dificultad física, desniveles y horas de caminata por día.',
         badge: 'Seguridad'
       },
       {
         title: 'Respaldo Médico & Oxígeno Garantizado',
-        description: 'Destaca de inmediato la presencia de balón de oxígeno, botiquín de primeros auxilios y caballos de apoyo.',
+        description: 'Destaca de inmediato la presencia de balón de oxígeno, botiquín de primeros auxilios y guías de montaña certificados.',
         badge: 'Paz Mental'
       },
       {
         title: 'Checklist de Mochila Interactivo',
         description: 'Lista clasificada de ropa térmica, calzado adecuado y medicación para que el cliente viaje preparado.',
         badge: 'Equipamiento'
+      },
+      {
+        title: 'Ficha de Elevación y Terreno',
+        description: 'Perfil altimétrico claro que permite al viajero dimensionar el reto día a día.',
+        badge: 'Precisión'
       }
     ],
     colorPalette: [
@@ -348,13 +298,13 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
     ]
   },
   {
-    id: 'andean-craft',
-    name: '5. Andean Heritage & Scrapbook',
-    subtitle: 'Álbum Artesanal con Sellos Incas, Texturas Terracota e Historia Viva',
+    id: 'cultural',
+    name: '4. Andean Heritage & Historia Viva',
+    subtitle: 'Álbum cultural con sellos incas, arquitectura megalítica, perfil de guía colegiado y desglose del Boleto Turístico.',
     category: 'Cultura & Tradición',
     template: 'cultural',
     recommendedTier: 'basic',
-    targetTour: 'City Tour Cusco, Qorikancha, Sacsayhuamán, Maras & Moray, Rutas Arqueológicas',
+    targetTour: 'City Tour Cusco, Qorikancha, Sacsayhuamán, Maras & Moray, Rutas Arqueológicas & Museos',
     demoSlug: 'city-tour-cusco',
     likesCount: 1650,
     previewImage: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
@@ -362,13 +312,13 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
       'https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?q=80&w=2074&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop'
     ],
-    tags: ['Sellos de Piedra', 'Texturas de Telar', 'Historia Viva', 'Scrapbook'],
+    tags: ['Diseño 4', 'Sellos de Piedra', 'Texturas de Telar', 'Historia Viva', 'Boleto Turístico'],
     targetAudience: 'Familias, historiadores, amantes de la arqueología y la arquitectura colonial que valoran guías con títulos universitarios.',
     conversionImpact: '+40% en reservas directas de City Tour y paquetes arqueológicos',
     benefits: [
       {
         title: 'Autoridad con Guías Colegiados',
-        description: 'Diferencia a la agencia destacando guías titulados y registrados en el Colegio de Licenciados de Turismo del Cusco.',
+        description: 'Diferencia a la agencia destacando guías titulados y registrados en el Colegio de Licenciados de Turismo del Cusco (COLITUR).',
         badge: 'Guías Oficiales'
       },
       {
@@ -380,6 +330,11 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
         title: 'Claridad sobre el Boleto Turístico',
         description: 'Explica con precisión qué ingresos incluye el boleto (BTC) y cuáles se abonan aparte para evitar reclamos.',
         badge: 'Cero Sorpresas'
+      },
+      {
+        title: 'Itinerario Cultural Detallado',
+        description: 'Cronograma de tiempos de traslado, paradas arqueológicas y recomendaciones de altura.',
+        badge: 'Puntualidad'
       }
     ],
     colorPalette: [
@@ -413,21 +368,21 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
     ]
   },
   {
-    id: 'luxury-sunset',
-    name: '6. Cusco Luxury Collection VIP',
-    subtitle: 'Moodboard Crepuscular VIP en Modo Oscuro con Acentos de Oro Imperial',
+    id: 'premium',
+    name: '5. Cusco Luxury Collection VIP',
+    subtitle: 'Diseño crepuscular en modo oscuro con acentos de Oro Imperial, concierge privado y cotizador para experiencias de alto ticket.',
     category: 'Alta Gama & VIP',
     template: 'premium',
     recommendedTier: 'advance',
-    targetTour: 'Machu Picchu Hiram Bingham VIP, Vuelos en Helicóptero, Glamping de Lujo',
+    targetTour: 'Machu Picchu Hiram Bingham VIP, Vuelos en Helicóptero, Glamping de Lujo, Trenes Belmond',
     demoSlug: 'cusco-luxury-collection',
     likesCount: 3150,
-    previewImage: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
+    previewImage: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop',
     gridSampleImages: [
-      'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=2070&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop'
     ],
-    tags: ['Dark Mode Luxury', 'Detalles en Oro', 'Fotos a Contraluz', 'Atención VIP'],
+    tags: ['Diseño 5', 'Dark Mode Luxury', 'Detalles en Oro', 'Fotos a Contraluz', 'Atención VIP'],
     targetAudience: 'Viajeros de ultra lujo, ejecutivos, celebridades y familias que buscan privacidad total y servicios 5 estrellas.',
     conversionImpact: '+28% en solicitudes de cotizaciones personalizadas de más de $1,000 USD',
     benefits: [
@@ -445,12 +400,17 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
         title: 'Módulo de Privilegios Exclusivos',
         description: 'Sección para vagón de tren Hiram Bingham, traslados en Mercedes-Benz privados y concierge 24/7.',
         badge: 'Servicio 5★'
+      },
+      {
+        title: 'Canal VIP de Respuesta Rápida',
+        description: 'Enlace directo a asistente ejecutivo personal con soporte telefónico y por WhatsApp.',
+        badge: 'Concierge 24/7'
       }
     ],
     colorPalette: [
       { name: 'Negro Azabache', hex: '#0A0A0A', role: 'Fondo negro profundo mate que elimina distracciones' },
       { name: 'Oro Imperial', hex: '#F59E0B', role: 'Acento metálico para botones de cotización y badges de lujo' },
-      { name: 'Champán', hex: '#FDE68A', role: 'Subtítulos y reflejos luminosos elegantes' },
+      { name: 'Champán Luminoso', hex: '#FDE68A', role: 'Subtítulos y reflejos luminosos elegantes' },
       { name: 'Gris Carbón', hex: '#262626', role: 'Tarjetas flotantes elevadas con bordes de luz tenue' }
     ],
     typography: {
@@ -476,70 +436,6 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
       'Modal de cotización para familias y grupos VIP',
       'Contacto directo por canal reservado de WhatsApp'
     ]
-  },
-  {
-    id: 'minimalist-polaroid',
-    name: '7. Minimalist Polaroid Wall',
-    subtitle: 'Mural Limpio con Postales Analógicas, Carga Instantánea y Enfoque Directo a WhatsApp',
-    category: 'Minimalista Urbano',
-    template: 'boho-nature',
-    recommendedTier: 'free',
-    targetTour: 'Free Walking Tours, Rutas de Cafés & Pisco, Experiencias Cortas de 2 Horas',
-    demoSlug: 'free-walking-tour-cusco',
-    likesCount: 1270,
-    previewImage: 'https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?q=80&w=2074&auto=format&fit=crop',
-    gridSampleImages: [
-      'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop'
-    ],
-    tags: ['Minimalista', 'Carga Instantánea', 'Free Tour', 'Mobile-First'],
-    targetAudience: 'Mochileros en hostales, turistas con tiempo limitado y guías independientes que buscan reservas rápidas.',
-    conversionImpact: '+55% en rapidez de reserva: el usuario contacta en menos de 20 segundos',
-    benefits: [
-      {
-        title: 'Carga Relámpago (< 0.8s)',
-        description: 'Optimizada al milisegundo para turistas que caminan por la Plaza de Armas con datos móviles lentos.',
-        badge: '< 0.8s'
-      },
-      {
-        title: 'Cero Fricción para Reservar',
-        description: 'Sin formularios largos: un solo toque abre directamente la conversación de WhatsApp con fecha prellenada.',
-        badge: '1 Toque'
-      },
-      {
-        title: 'Píldoras Informativas al Grano',
-        description: 'Punto de encuentro claro, horario de salida y política de propinas voluntarias sin confusiones.',
-        badge: 'Claridad Total'
-      }
-    ],
-    colorPalette: [
-      { name: 'Blanco Lino', hex: '#FDFBF7', role: 'Fondo minimalista ultra liviano que ahorra batería y datos' },
-      { name: 'Pizarra', hex: '#334155', role: 'Texto nítido de alto contraste para lectura a pleno sol' },
-      { name: 'Verde WhatsApp', hex: '#25D366', role: 'El botón más visible para llamada a la acción inmediata' },
-      { name: 'Gris Perla', hex: '#E2E8F0', role: 'Líneas y separadores limpios sin recargar la pantalla' }
-    ],
-    typography: {
-      headingFont: 'Plus Jakarta Sans (Bold 700)',
-      bodyFont: 'Inter (Regular 400)',
-      category: 'Sans-Serif Funcional & Limpia',
-      sampleTitle: 'FREE WALKING TOUR CUSCO HISTÓRICO • SALIDAS 10:00 AM Y 3:00 PM',
-      hierarchyNotes: 'Tipografía sin adornos innecesarios, diseñada para máxima legibilidad y lectura veloz en smartphones.'
-    },
-    style: {
-      aestheticName: 'Minimalist Clean & Fast Action Wall',
-      description: 'Limpio y directo como la pizarra de anuncios de un café de San Blas. Fotografías auténticas y datos puntuales.',
-      layoutPattern: 'Foto única de alto impacto + Píldoras de información clave + Botón gigante de WhatsApp',
-      spacingAndBorders: 'Estructura centrada en móviles con botones táctiles grandes (48px+ de altura).',
-      visualElements: ['Marco de postal analógica con fecha', 'Botón verde WhatsApp vibrante', 'Viñetas de verificación'],
-      microInteractions: 'Feedback táctil al pulsar el botón de WhatsApp y cambio suave de color en píldoras.'
-    },
-    includedComponents: [
-      'Foto postal representativa del centro histórico',
-      'Puntos de encuentro y horario exacto de concentración',
-      'Píldora explicativa de "¿Cómo funciona el Free Tour?"',
-      'Testimonios breves de mochileros verificados',
-      'Botón gigante con enlace directo al WhatsApp del guía'
-    ]
   }
 ];
 
@@ -560,11 +456,9 @@ export default function PinterestGalleryPage() {
     'all', 
     'Alta Conversión & Portal Oficial',
     'Editorial & Storytelling', 
-    'Vogue Travel Style', 
     'Trekking & Expedición', 
     'Cultura & Tradición', 
-    'Alta Gama & VIP', 
-    'Minimalista Urbano'
+    'Alta Gama & VIP'
   ];
 
   const tiers = ['all', 'advance', 'pro', 'basic', 'free'];
@@ -628,14 +522,14 @@ export default function PinterestGalleryPage() {
             </h1>
 
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
-              Explora nuestros <strong>7 arquetipos visuales y de conversión</strong> para turismo en Cusco y Perú. Cada diseño incluye su ficha técnica con <strong>beneficios, paleta de colores con roles, tipografías y estilos visuales</strong>.
+              Explora nuestros <strong>5 arquetipos visuales y de conversión</strong> para turismo en Cusco y Perú. Cada diseño incluye su ficha técnica con <strong>bondades, cualidades, beneficios, paleta de colores, tipografías y estilos visuales</strong>.
             </p>
           </div>
 
           {/* Quick Metrics Badge Row */}
           <div className="grid grid-cols-2 gap-3 shrink-0">
             <div className="bg-white/5 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 text-center">
-              <span className="text-xl font-black text-white block leading-none">7</span>
+              <span className="text-xl font-black text-white block leading-none">5</span>
               <span className="text-[11px] text-slate-400 font-semibold mt-1 block">Diseños Listos</span>
             </div>
             <div className="bg-white/5 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 text-center">
@@ -707,7 +601,7 @@ export default function PinterestGalleryPage() {
                   : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200/80'
               }`}
             >
-              {cat === 'all' ? 'Todos los Estilos (7)' : cat}
+              {cat === 'all' ? 'Todos los Estilos (5)' : cat}
             </button>
           ))}
         </div>
@@ -718,7 +612,7 @@ export default function PinterestGalleryPage() {
         <div className="bg-white rounded-3xl p-12 text-center border border-slate-200 space-y-3">
           <LayoutTemplate size={36} className="mx-auto text-slate-300" />
           <h3 className="text-sm font-bold text-slate-700">No hay diseños que coincidan con la búsqueda</h3>
-          <p className="text-xs text-slate-500">Intenta restablecer los filtros para ver los 7 diseños.</p>
+          <p className="text-xs text-slate-500">Intenta restablecer los filtros para ver los 5 diseños.</p>
           <button
             onClick={() => { setSelectedCategory('all'); setSelectedTier('all'); setSearchQuery(''); }}
             className="text-xs font-bold text-blue-600 hover:underline cursor-pointer"
