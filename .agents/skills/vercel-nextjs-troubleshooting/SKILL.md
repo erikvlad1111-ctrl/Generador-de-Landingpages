@@ -242,6 +242,42 @@ Revisar si el componente embebe directamente el JSX dentro de un `div` con ancho
 
 ---
 
+## 8. Pantalla "This page couldn’t load / Reload to try again, or go back" al Terminar de Generar Páginas (Temporal Dead Zone - TDZ)
+
+### Síntoma
+Al finalizar el asistente de generación de landing pages en `/demo/new` y redirigir a `/demo/preview?slug=...` (o al visitar `/p/[slug]`), la pantalla colapsa con el error de App Router / React:
+```text
+This page couldn’t load
+Reload to try again, or go back.
+
+[Reload]
+[Back]
+```
+En la consola de desarrollo del navegador se aprecia el error fatal:
+```text
+ReferenceError: Cannot access 'st' before initialization
+at TourSupportAndFaqs (TourSupportAndFaqs.tsx:914:40)
+```
+
+### Causa Raíz
+Dentro de `src/components/common/TourSupportAndFaqs.tsx`, el filtrado de preguntas (`filteredQuestions`) intentaba leer `st.categories[0]` en una línea anterior a la declaración del objeto `const st = { ... }`.
+En JavaScript/TypeScript, las variables declaradas con `const` y `let` residen en la *Temporal Dead Zone (TDZ)* antes de su inicialización física en el cuerpo de la función. Al ejecutarse la renderización del componente en tiempo de ejecución, cualquier acceso prematuro detona un `ReferenceError` fatal que tumba la jerarquía de React completa.
+
+### Comando de Diagnóstico
+Revisar si hay variables de configuración o diccionarios `const` referenciados antes de su declaración:
+```bash
+grep -n "st.categories" src/components/common/TourSupportAndFaqs.tsx
+grep -n "const st =" src/components/common/TourSupportAndFaqs.tsx
+```
+
+### Solución Paso a Paso
+1. **Reordenar Declaraciones en el Componente:**
+   Mover la declaración completa del diccionario `const st = { ... };` inmediatamente después de los handlers de estado y **antes** de cualquier computación o filtro derivado (`filteredQuestions`).
+2. **Validar la Navegación del Generador:**
+   Verificar que al completar el formulario en `/demo/new`, la transición a `/demo/preview?slug=...` renderice de inmediato el canvas con las 5 plantillas sin excepciones.
+
+---
+
 ## Lista de Verificación Antes de Desplegar
 - [ ] Ejecutar `npm run lint` y verificar que salga con código 0.
 - [ ] Ejecutar `npm run build` localmente y comprobar que todas las rutas se generen sin errores.
@@ -249,4 +285,5 @@ Revisar si el componente embebe directamente el JSX dentro de un `div` con ancho
 - [ ] Verificar que el Framework Preset en Vercel sea `Next.js`.
 - [ ] Validar que en celular (375px) `document.documentElement.scrollWidth === document.documentElement.clientWidth`.
 - [ ] Validar que el botón "Móvil" en `/demo/preview` muestre la réplica exacta de 390px sin desbordes de escritorio.
+
 

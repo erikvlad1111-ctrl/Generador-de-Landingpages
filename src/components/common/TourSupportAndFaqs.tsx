@@ -889,7 +889,6 @@ export default function TourSupportAndFaqs({
       author: replyAuthor.trim() || 'Viajero de la Comunidad',
       role: 'user',
       roleLabel: 'Comunidad',
-      avatarBg: 'bg-stone-700',
       timeAgo: 'Justo ahora',
       content: replyContent.trim()
     };
@@ -907,56 +906,6 @@ export default function TourSupportAndFaqs({
 
     saveQuestions(updated);
     setReplyContent('');
-  };
-
-  // Filtered Forum Questions
-  const filteredQuestions = forumQuestions.filter(q => {
-    const isAll = selectedCategory === st.categories[0] || selectedCategory === 'Todas' || selectedCategory === 'All' || selectedCategory === 'Toutes' || selectedCategory === 'Tutte';
-    const matchesCategory = isAll || 
-      q.category.toLowerCase().includes(selectedCategory.toLowerCase()) || 
-      selectedCategory.toLowerCase().includes(q.category.toLowerCase());
-    const matchesSearch = searchQuery.trim() === '' || 
-      q.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      q.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      q.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      q.replies.some(r => r.content.toLowerCase().includes(searchQuery.toLowerCase()) || r.author.toLowerCase().includes(searchQuery.toLowerCase()));
-    return matchesCategory && matchesSearch;
-  });
-
-  const activeQuestion = forumQuestions.find(q => q.id === activeQuestionId);
-
-  // Private Inquiry Anti-Spam Submit
-  const handleQuickInquiry = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSpamError(null);
-
-    // 1. Capa 1: Honeypot
-    if (honeypot.trim().length > 0) {
-      setSpamError('Detección Anti-Spam: Envío bloqueado por actividad automatizada.');
-      return;
-    }
-
-    // 2. Capa 2: Time-Gate
-    const elapsed = Date.now() - formLoadTime.current;
-    if (elapsed < 2500) {
-      setSpamError('Envío demasiado rápido. Por favor tómate un momento para revisar tu consulta.');
-      return;
-    }
-
-    // 3. Capa 3: Desafío matemático
-    const expected = mathNum1 + mathNum2;
-    if (parseInt(mathAnswer.trim(), 10) !== expected) {
-      setSpamError(`Verificación de seguridad: ¿Cuánto es ${mathNum1} + ${mathNum2}? Por favor introduce el resultado correcto.`);
-      return;
-    }
-
-    setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      const genId = `CONS-${Math.floor(1000 + Math.random() * 9000)}`;
-      setTicketId(genId);
-      setFormSubmitted(true);
-    }, 600);
   };
 
   const st = {
@@ -1009,7 +958,7 @@ export default function TourSupportAndFaqs({
     writeReplyTitle: lang === 'en' ? 'Write a Reply' : lang === 'pt' ? 'Escrever Resposta' : lang === 'fr' ? 'Rédiger une Réponse' : lang === 'it' ? 'Scrivi una Risposta' : 'Escribir Respuesta',
     yourNamePlaceholder: lang === 'en' ? 'Your Name' : lang === 'pt' ? 'Seu Nome' : lang === 'fr' ? 'Votre Nom' : lang === 'it' ? 'Il tuo Nome' : 'Tu Nombre',
     yourReplyPlaceholder: lang === 'en' ? 'Write your public reply...' : lang === 'pt' ? 'Escreva sua resposta pública...' : lang === 'fr' ? 'Écrivez votre réponse publique...' : lang === 'it' ? 'Scrivi la tua risposta pubblica...' : 'Escribe tu respuesta pública...',
-    replyBtn: lang === 'en' ? 'Post Reply' : lang === 'pt' ? 'Enviar Resposta' : lang === 'fr' ? 'Publier Réponse' : lang === 'it' ? 'Invia Risposta' : 'Responder',
+    replyBtn: lang === 'en' ? 'Post Reply' : lang === 'pt' ? 'Enviar Resposta' : lang === 'fr' ? 'Publier Réponse' : lang === 'it' ? 'Invia Resposta' : 'Responder',
     noQuestionsFound: lang === 'en' ? 'No questions found matching your search.' : lang === 'pt' ? 'Nenhuma pergunta encontrada com este termo.' : lang === 'fr' ? 'Aucune question trouvée avec ce terme.' : lang === 'it' ? 'Nessuna domanda trovata con questo termine.' : 'No encontramos preguntas con el término buscado.',
     beFirstToAsk: lang === 'en' ? 'Be the first to ask about this topic' : lang === 'pt' ? 'Seja o primeiro a perguntar sobre este assunto' : lang === 'fr' ? 'Soyez le premier à poser une question sur ce sujet' : lang === 'it' ? 'Sii il primo a fare una domanda su questo argomento' : 'Sé el primero en preguntar sobre este tema',
     viewRepliesLink: lang === 'en' ? 'View replies →' : lang === 'pt' ? 'Ver respostas →' : lang === 'fr' ? 'Voir réponses →' : lang === 'it' ? 'Vedi risposte →' : 'Ver respuestas →',
@@ -1050,6 +999,56 @@ export default function TourSupportAndFaqs({
     securityChallenge: lang === 'en' ? 'Security: How much is ' : lang === 'pt' ? 'Segurança: Quanto é ' : lang === 'fr' ? 'Sécurité : Combien font ' : lang === 'it' ? 'Sicurezza: Quanto fa ' : 'Seguridad: ¿Cuánto es ',
     validatingAndSending: lang === 'en' ? 'Verifying and sending...' : lang === 'pt' ? 'Validando e enviando...' : lang === 'fr' ? 'Validation et envoi...' : lang === 'it' ? 'Verifica e invio...' : 'Validando y enviando...',
     sendProtectedBtn: lang === 'en' ? 'Send Protected Inquiry' : lang === 'pt' ? 'Enviar Consulta Protegida' : lang === 'fr' ? 'Envoyer la Demande Sécurisée' : lang === 'it' ? 'Invia Richiesta Protetta' : 'Enviar Consulta Protegida'
+  };
+
+  // Filtered Forum Questions
+  const filteredQuestions = forumQuestions.filter(q => {
+    const isAll = selectedCategory === st.categories[0] || selectedCategory === 'Todas' || selectedCategory === 'All' || selectedCategory === 'Toutes' || selectedCategory === 'Tutte';
+    const matchesCategory = isAll || 
+      q.category.toLowerCase().includes(selectedCategory.toLowerCase()) || 
+      selectedCategory.toLowerCase().includes(q.category.toLowerCase());
+    const matchesSearch = searchQuery.trim() === '' || 
+      q.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+      q.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      q.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      q.replies.some(r => r.content.toLowerCase().includes(searchQuery.toLowerCase()) || r.author.toLowerCase().includes(searchQuery.toLowerCase()));
+    return matchesCategory && matchesSearch;
+  });
+
+  const activeQuestion = forumQuestions.find(q => q.id === activeQuestionId);
+
+  // Private Inquiry Anti-Spam Submit
+  const handleQuickInquiry = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSpamError(null);
+
+    // 1. Capa 1: Honeypot
+    if (honeypot.trim().length > 0) {
+      setSpamError('Detección Anti-Spam: Envío bloqueado por actividad automatizada.');
+      return;
+    }
+
+    // 2. Capa 2: Time-Gate
+    const elapsed = Date.now() - formLoadTime.current;
+    if (elapsed < 2500) {
+      setSpamError('Envío demasiado rápido. Por favor tómate un momento para revisar tu consulta.');
+      return;
+    }
+
+    // 3. Capa 3: Desafío matemático
+    const expected = mathNum1 + mathNum2;
+    if (parseInt(mathAnswer.trim(), 10) !== expected) {
+      setSpamError(`Verificación de seguridad: ¿Cuánto es ${mathNum1} + ${mathNum2}? Por favor introduce el resultado correcto.`);
+      return;
+    }
+
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      const genId = `CONS-${Math.floor(1000 + Math.random() * 9000)}`;
+      setTicketId(genId);
+      setFormSubmitted(true);
+    }, 600);
   };
 
   useEffect(() => {
