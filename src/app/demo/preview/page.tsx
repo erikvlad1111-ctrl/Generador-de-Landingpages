@@ -24,7 +24,7 @@ import {
 import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, saveLandingToStorage, LandingData } from '@/data/landingStore';
-import { TemplateType, PlanTier } from '@/types/landing';
+import { TemplateType, PlanTier, LanguageType } from '@/types/landing';
 
 function DemoPreviewContent() {
   const searchParams = useSearchParams();
@@ -47,10 +47,13 @@ function DemoPreviewContent() {
       selected = list[0] || null;
     }
     if (selected) {
+      const activeTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery)) ? tierQuery : selected.tier;
+      const isFreeOrBasic = activeTier === 'free' || activeTier === 'basic';
       return {
         ...selected,
         ...(templateQuery ? { template: templateQuery } : {}),
-        ...(tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery) ? { tier: tierQuery } : {})
+        ...(tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery) ? { tier: tierQuery } : {}),
+        ...(isFreeOrBasic ? { language: 'es' as LanguageType, languages: ['es' as LanguageType] } : {})
       };
     }
     return null;
@@ -114,12 +117,14 @@ function DemoPreviewContent() {
 
   const handleSaveEdits = (e: React.FormEvent) => {
     e.preventDefault();
+    const isFreeOrBasic = editTier === 'free' || editTier === 'basic';
     const updated: LandingData = {
       ...landing,
       template: editTemplate,
       tier: editTier,
       price: editPrice,
       whatsapp: editWhatsapp,
+      ...(isFreeOrBasic ? { language: 'es' as LanguageType, languages: ['es' as LanguageType] } : {}),
       hero: {
         ...landing.hero,
         title: editHeroTitle,

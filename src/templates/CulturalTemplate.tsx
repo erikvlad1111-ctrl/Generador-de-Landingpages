@@ -27,27 +27,41 @@ const AGENDA_IMAGES = [
 ];
 
 export default function CulturalTemplate({ data, viewMode = 'desktop' }: TemplateProps) {
-  const [currentLang, setCurrentLang] = useState<LanguageType>(data.language || 'es');
-  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
-  const [activeEventIndex, setActiveEventIndex] = useState(0);
-
-  React.useEffect(() => {
-    if (data.language && data.language !== currentLang) {
-      setCurrentLang(data.language);
-    }
-  }, [data.language]);
-
-  const t = CULTURAL_I18N[currentLang] || CULTURAL_I18N.es;
-
   const isQuote = data.objective === 'quote';
   const isMobile = viewMode === 'mobile';
-
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const tier = data.tier || 'advance';
   const isFree = tier === 'free';
   const isBasic = tier === 'basic';
   const isPro = tier === 'pro';
   const isAdvance = tier === 'advance';
+
+  // En planes Gratuito y Básico se fuerza estrictamente a Español ('es') por defecto (sin selector)
+  const defaultLang: LanguageType = (isFree || isBasic)
+    ? 'es'
+    : (isPro && !['es', 'en'].includes(data.language || 'es'))
+      ? 'es'
+      : (data.language || 'es');
+
+  const [currentLang, setCurrentLang] = useState<LanguageType>(defaultLang);
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+  const [activeEventIndex, setActiveEventIndex] = useState(0);
+
+  React.useEffect(() => {
+    if (isFree || isBasic) {
+      if (currentLang !== 'es') setCurrentLang('es');
+    } else if (isPro) {
+      if (data.language && ['es', 'en'].includes(data.language) && data.language !== currentLang) {
+        setCurrentLang(data.language);
+      } else if (!['es', 'en'].includes(currentLang)) {
+        setCurrentLang('es');
+      }
+    } else if (data.language && data.language !== currentLang) {
+      setCurrentLang(data.language);
+    }
+  }, [data.language, isFree, isBasic, isPro]);
+
+  const t = CULTURAL_I18N[currentLang] || CULTURAL_I18N.es;
 
   // Filtrado de idiomas según nivel de plan (Guía de Niveles)
   // Free / Basic: Sin selector de idiomas

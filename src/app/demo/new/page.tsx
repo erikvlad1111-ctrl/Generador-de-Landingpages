@@ -461,6 +461,10 @@ export default function NewLandingDemo() {
       const qTier = searchParams.get('tier') as PlanTier;
       if (qTier && ['free', 'basic', 'pro', 'advance'].includes(qTier)) {
         setTier(qTier);
+        if (qTier === 'free' || qTier === 'basic') {
+          setLanguage('es');
+          setSelectedLanguages(['es']);
+        }
       }
     }
   }, []);
@@ -477,6 +481,11 @@ export default function NewLandingDemo() {
   );
 
   const handleToggleLanguage = (langId: LanguageType) => {
+    // En planes Gratuito y Básico el idioma está bloqueado estrictamente a Español
+    if (tier === 'free' || tier === 'basic') return;
+    // En plan Pro solo se permiten Español e Inglés
+    if (tier === 'pro' && langId !== 'es' && langId !== 'en') return;
+
     if (selectedLanguages.includes(langId)) {
       if (selectedLanguages.length > 1) {
         const next = selectedLanguages.filter(l => l !== langId);
@@ -520,11 +529,21 @@ export default function NewLandingDemo() {
     setWhatToBring(preset.whatToBring || []);
     setTrustBadges(preset.trustBadges || []);
     if (preset.aiTone) setAiTone(preset.aiTone);
-    if (preset.tier) setTier(preset.tier);
+    if (preset.tier) {
+      setTier(preset.tier);
+      if (preset.tier === 'free' || preset.tier === 'basic') {
+        setLanguage('es');
+        setSelectedLanguages(['es']);
+      } else if (preset.tier === 'pro') {
+        setLanguage('es');
+        setSelectedLanguages(['es', 'en']);
+      } else {
+        setLanguage(preset.language);
+        setSelectedLanguages([preset.language, preset.language === 'en' ? 'es' : 'en']);
+      }
+    }
     setObjective(preset.objective);
     setTemplate(preset.template);
-    setLanguage(preset.language);
-    setSelectedLanguages([preset.language, preset.language === 'en' ? 'es' : 'en']);
     setSelectedHeroImage(SAMPLE_TOUR_IMAGES[preset.imageIndex].url);
     setCustomImageUrl('');
     setDescription(preset.description);
@@ -600,6 +619,14 @@ export default function NewLandingDemo() {
       setLoadingStep(step);
       if (step >= steps.length) {
         clearInterval(interval);
+        const isFreeOrBasic = tier === 'free' || tier === 'basic';
+        const finalLang: LanguageType = isFreeOrBasic ? 'es' : language;
+        const finalLanguages: LanguageType[] = isFreeOrBasic 
+          ? ['es'] 
+          : tier === 'pro'
+          ? (selectedLanguages.filter(l => l === 'es' || l === 'en').length > 0 ? selectedLanguages.filter(l => l === 'es' || l === 'en') : ['es', 'en'])
+          : selectedLanguages;
+
         const generated = simulateAiGeneration({
           name,
           guideName,
@@ -610,8 +637,8 @@ export default function NewLandingDemo() {
           description,
           objective,
           template,
-          language,
-          languages: selectedLanguages,
+          language: finalLang,
+          languages: finalLanguages,
           tier,
           heroImage: activeHeroImg,
           galleryImages,
@@ -903,7 +930,11 @@ export default function NewLandingDemo() {
               {/* Gratuito */}
               <button
                 type="button"
-                onClick={() => setTier('free')}
+                onClick={() => {
+                  setTier('free');
+                  setLanguage('es');
+                  setSelectedLanguages(['es']);
+                }}
                 className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
                   tier === 'free'
                     ? 'border-stone-700 bg-stone-50 shadow-sm ring-2 ring-stone-400/20'
@@ -915,14 +946,18 @@ export default function NewLandingDemo() {
                   <span className="text-[10px] bg-stone-200 text-stone-800 font-extrabold px-2 py-0.5 rounded-md">1 SECCIÓN</span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Hero de alto impacto + botón directo a WhatsApp. Ideal para captación exprés o free tours.
+                  Hero de alto impacto + botón directo a WhatsApp. Idioma único: Español.
                 </p>
               </button>
 
               {/* Básico */}
               <button
                 type="button"
-                onClick={() => setTier('basic')}
+                onClick={() => {
+                  setTier('basic');
+                  setLanguage('es');
+                  setSelectedLanguages(['es']);
+                }}
                 className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
                   tier === 'basic'
                     ? 'border-emerald-600 bg-emerald-50/80 shadow-sm ring-2 ring-emerald-500/20'
@@ -934,14 +969,20 @@ export default function NewLandingDemo() {
                   <span className="text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-2 py-0.5 rounded-md">ESTÁNDAR</span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Hero + Sobre el tour + Qué incluye + Formulario de contacto y botón WhatsApp.
+                  Hero + Ficha + Acerca de + Qué incluye. Idioma único: Español.
                 </p>
               </button>
 
               {/* Pro */}
               <button
                 type="button"
-                onClick={() => setTier('pro')}
+                onClick={() => {
+                  setTier('pro');
+                  if (!selectedLanguages.includes('es') || selectedLanguages.some(l => l !== 'es' && l !== 'en')) {
+                    setSelectedLanguages(['es', 'en']);
+                    setLanguage('es');
+                  }
+                }}
                 className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
                   tier === 'pro'
                     ? 'border-blue-600 bg-blue-50/80 shadow-sm ring-2 ring-blue-500/20'
@@ -953,7 +994,7 @@ export default function NewLandingDemo() {
                   <span className="text-[10px] bg-blue-100 text-blue-800 font-extrabold px-2 py-0.5 rounded-md">RECOMENDADO</span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Todo en Básico + Itinerario detallado día a día + Exclusiones & Qué llevar + Sellos oficiales DIRCETUR.
+                  Todo en Básico + Itinerario + Mochila + Sellos. Hasta 2 idiomas (ES / EN).
                 </p>
               </button>
 
@@ -972,7 +1013,7 @@ export default function NewLandingDemo() {
                   <span className="text-[10px] bg-purple-100 text-purple-800 font-extrabold px-2 py-0.5 rounded-md">ALTA CONVERSIÓN</span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Todo en Pro + Galería completa + Preguntas Frecuentes (FAQs) del Tour + Testimonios de clientes + Reservas WhatsApp.
+                  Todo en Pro + Galería + FAQs + Testimonios + Catálogo. Hasta 5 idiomas.
                 </p>
               </button>
             </div>
@@ -993,15 +1034,31 @@ export default function NewLandingDemo() {
               </div>
             </div>
 
-            <div className="bg-blue-50/60 border border-blue-200/60 rounded-2xl p-3.5 flex items-start gap-3">
-              <div className="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs mt-0.5">
-                <Check size={16} strokeWidth={3} />
+            {(tier === 'free' || tier === 'basic') ? (
+              <div className="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 flex items-start gap-3">
+                <div className="w-7 h-7 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 shadow-xs mt-0.5">
+                  <Check size={16} strokeWidth={3} />
+                </div>
+                <div className="text-xs text-amber-900 leading-relaxed">
+                  <strong className="block mb-0.5">Idioma único por defecto: Español</strong>
+                  En los planes <strong>Gratuito</strong> y <strong>Básico</strong> la landing se genera en idioma <strong>Español</strong> (sin selector de idiomas). Los selectores multilingües están disponibles a partir del plan <strong>Pro</strong> (2 idiomas) y <strong>Advance</strong> (5 idiomas).
+                </div>
               </div>
-              <div className="text-xs text-slate-600 leading-relaxed">
-                <strong className="text-slate-900 block mb-0.5">Puedes marcar 2, 3 o los 5 idiomas al mismo tiempo:</strong>
-                Haz clic sobre las tarjetas para marcarlas o desmarcarlas. La landing generada incluirá un selector de banderas interactivo para que los turistas alternen entre los idiomas que hayas seleccionado.
+            ) : (
+              <div className="bg-blue-50/60 border border-blue-200/60 rounded-2xl p-3.5 flex items-start gap-3">
+                <div className="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-xs mt-0.5">
+                  <Check size={16} strokeWidth={3} />
+                </div>
+                <div className="text-xs text-slate-600 leading-relaxed">
+                  <strong className="text-slate-900 block mb-0.5">
+                    {tier === 'pro' ? 'Plan Pro: Hasta 2 idiomas (Español e Inglés)' : 'Plan Advance: Hasta 5 idiomas activos al mismo tiempo:'}
+                  </strong>
+                  {tier === 'pro'
+                    ? 'La landing incluirá un selector interactivo bilingüe (ES / EN) optimizado para turismo receptivo.'
+                    : 'Haz clic sobre las tarjetas para marcarlas o desmarcarlas. La landing generada incluirá un selector de banderas interactivo con hasta 5 idiomas.'}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Language Selection Visual Cards Grid (5 Languages Multi-Select) */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -1047,24 +1104,32 @@ export default function NewLandingDemo() {
                   badge: 'Aventura & Arte'
                 }
               ].map((langItem) => {
-                const isSelected = selectedLanguages.includes(langItem.id);
+                const isFreeOrBasic = tier === 'free' || tier === 'basic';
+                const isPro = tier === 'pro';
+                const isLocked = isFreeOrBasic ? langItem.id !== 'es' : isPro ? (langItem.id !== 'es' && langItem.id !== 'en') : false;
+                const isSelected = selectedLanguages.includes(langItem.id) && !isLocked;
                 const isPrimary = language === langItem.id;
                 return (
                   <button
                     key={langItem.id}
                     type="button"
+                    disabled={isLocked}
                     onClick={() => handleToggleLanguage(langItem.id)}
-                    className={`relative p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
-                      isSelected
-                        ? 'border-blue-600 bg-blue-50/90 shadow-md ring-2 ring-blue-500/20 scale-[1.02]'
-                        : 'border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/70'
+                    className={`relative p-3.5 rounded-2xl border-2 text-left transition-all flex flex-col justify-between ${
+                      isLocked
+                        ? 'opacity-40 cursor-not-allowed bg-slate-50 border-slate-200'
+                        : isSelected
+                        ? 'border-blue-600 bg-blue-50/90 shadow-md ring-2 ring-blue-500/20 scale-[1.02] cursor-pointer'
+                        : 'border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50/70 cursor-pointer'
                     }`}
                   >
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-2xl">{langItem.flag}</span>
                         <div className={`w-5 h-5 rounded-md flex items-center justify-center border transition-all ${
-                          isSelected 
+                          isLocked
+                            ? 'border-slate-200 bg-slate-100 text-slate-400'
+                            : isSelected 
                             ? 'bg-blue-600 border-blue-600 text-white shadow-xs' 
                             : 'border-slate-300 bg-white'
                         }`}>
@@ -1083,9 +1148,13 @@ export default function NewLandingDemo() {
 
                     <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
                       <span className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded ${
-                        isSelected ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600'
+                        isLocked
+                          ? 'bg-slate-200 text-slate-500'
+                          : isSelected
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-slate-100 text-slate-600'
                       }`}>
-                        {isSelected ? '✓ Marcado' : '+ Clic para marcar'}
+                        {isLocked ? (isFreeOrBasic ? '🔒 Plan Pro/Advance' : '🔒 Plan Advance') : isSelected ? '✓ Activo' : '+ Clic para activar'}
                       </span>
                     </div>
                   </button>
@@ -1094,64 +1163,72 @@ export default function NewLandingDemo() {
             </div>
 
             {/* Quick multi-language preset pills */}
-            <div className="pt-2 flex flex-wrap items-center gap-2 text-xs border-t border-slate-100">
-              <span className="text-slate-500 text-[11px] font-bold">Presets rápidos:</span>
-              <button
-                type="button"
-                onClick={() => { setSelectedLanguages(['en', 'es']); setLanguage('es'); }}
-                className={`px-3 py-1.5 rounded-xl text-[11px] font-extrabold border transition-all cursor-pointer ${
-                  selectedLanguages.length === 2 && selectedLanguages.includes('en') && selectedLanguages.includes('es')
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
-                }`}
-              >
-                2 Idiomas: Bilingüe (🇺🇸 EN + 🇵🇪 ES)
-              </button>
-              <button
-                type="button"
-                onClick={() => { setSelectedLanguages(['en', 'es', 'pt']); setLanguage('es'); }}
-                className={`px-3 py-1.5 rounded-xl text-[11px] font-extrabold border transition-all cursor-pointer ${
-                  selectedLanguages.length === 3 && selectedLanguages.includes('pt') && selectedLanguages.includes('en') && selectedLanguages.includes('es')
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
-                }`}
-              >
-                3 Idiomas: Trilingüe (🇺🇸 EN + 🇵🇪 ES + 🇧🇷 PT)
-              </button>
-              <button
-                type="button"
-                onClick={() => { setSelectedLanguages(['en', 'es', 'pt', 'fr', 'it']); setLanguage('es'); }}
-                className={`px-3 py-1.5 rounded-xl text-[11px] font-extrabold border transition-all cursor-pointer ${
-                  selectedLanguages.length === 5
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                    : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
-                }`}
-              >
-                Todos los 5 Idiomas 🌐 (EN + ES + PT + FR + IT)
-              </button>
-              <button
-                type="button"
-                onClick={() => { setSelectedLanguages(['es']); setLanguage('es'); }}
-                className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
-                  selectedLanguages.length === 1 && selectedLanguages[0] === 'es'
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
-                }`}
-              >
-                Solo Español 🇵🇪
-              </button>
-              <button
-                type="button"
-                onClick={() => { setSelectedLanguages(['en']); setLanguage('en'); }}
-                className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
-                  selectedLanguages.length === 1 && selectedLanguages[0] === 'en'
-                    ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
-                    : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
-                }`}
-              >
-                Solo Inglés 🇺🇸
-              </button>
-            </div>
+            {!(tier === 'free' || tier === 'basic') && (
+              <div className="pt-2 flex flex-wrap items-center gap-2 text-xs border-t border-slate-100">
+                <span className="text-slate-500 text-[11px] font-bold">Presets rápidos:</span>
+                <button
+                  type="button"
+                  onClick={() => { setSelectedLanguages(['en', 'es']); setLanguage('es'); }}
+                  className={`px-3 py-1.5 rounded-xl text-[11px] font-extrabold border transition-all cursor-pointer ${
+                    selectedLanguages.length === 2 && selectedLanguages.includes('en') && selectedLanguages.includes('es')
+                      ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                      : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                  }`}
+                >
+                  2 Idiomas: Bilingüe (🇺🇸 EN + 🇵🇪 ES)
+                </button>
+                {tier === 'advance' && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => { setSelectedLanguages(['en', 'es', 'pt']); setLanguage('es'); }}
+                      className={`px-3 py-1.5 rounded-xl text-[11px] font-extrabold border transition-all cursor-pointer ${
+                        selectedLanguages.length === 3 && selectedLanguages.includes('pt') && selectedLanguages.includes('en') && selectedLanguages.includes('es')
+                          ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                          : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                      }`}
+                    >
+                      3 Idiomas: Trilingüe (🇺🇸 EN + 🇵🇪 ES + 🇧🇷 PT)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => { setSelectedLanguages(['en', 'es', 'pt', 'fr', 'it']); setLanguage('es'); }}
+                      className={`px-3 py-1.5 rounded-xl text-[11px] font-extrabold border transition-all cursor-pointer ${
+                        selectedLanguages.length === 5
+                          ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                          : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                      }`}
+                    >
+                      Todos los 5 Idiomas 🌐 (EN + ES + PT + FR + IT)
+                    </button>
+                  </>
+                )}
+                <button
+                  type="button"
+                  onClick={() => { setSelectedLanguages(['es']); setLanguage('es'); }}
+                  className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                    selectedLanguages.length === 1 && selectedLanguages[0] === 'es'
+                      ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                      : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                  }`}
+                >
+                  Solo Español 🇵🇪
+                </button>
+                {tier !== 'pro' && (
+                  <button
+                    type="button"
+                    onClick={() => { setSelectedLanguages(['en']); setLanguage('en'); }}
+                    className={`px-2.5 py-1 rounded-xl text-[11px] font-bold border transition-all cursor-pointer ${
+                      selectedLanguages.length === 1 && selectedLanguages[0] === 'en'
+                        ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
+                        : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
+                    }`}
+                  >
+                    Solo Inglés 🇺🇸
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
           {/* PASO 5: OBJETIVO Y ESTRATEGIA COMERCIAL */}

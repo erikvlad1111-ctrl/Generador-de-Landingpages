@@ -22,24 +22,6 @@ interface TemplateProps {
 }
 
 export default function AdventureTemplate({ data, viewMode = 'desktop' }: TemplateProps) {
-  const [currentLang, setCurrentLang] = useState<LanguageType>(data.language || 'es');
-  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
-  const [likedCards, setLikedCards] = useState<Record<string, boolean>>({});
-  const [activeInclusionFilter, setActiveInclusionFilter] = useState<string>('all');
-
-  React.useEffect(() => {
-    if (data.language && data.language !== currentLang) {
-      setCurrentLang(data.language);
-    }
-  }, [data.language]);
-
-  const t = ADVENTURE_I18N[currentLang] || ADVENTURE_I18N.es;
-
-  const toggleLike = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setLikedCards(prev => ({ ...prev, [id]: !prev[id] }));
-  };
-
   const isQuote = data.objective === 'quote';
   const isMobile = viewMode === 'mobile';
   const tier = data.tier || 'advance';
@@ -47,6 +29,39 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
   const isBasic = tier === 'basic';
   const isPro = tier === 'pro';
   const isAdvance = tier === 'advance';
+
+  // En planes Gratuito y Básico se fuerza estrictamente a Español ('es') por defecto (sin selector)
+  const defaultLang: LanguageType = (isFree || isBasic)
+    ? 'es'
+    : (isPro && !['es', 'en'].includes(data.language || 'es'))
+      ? 'es'
+      : (data.language || 'es');
+
+  const [currentLang, setCurrentLang] = useState<LanguageType>(defaultLang);
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+  const [likedCards, setLikedCards] = useState<Record<string, boolean>>({});
+  const [activeInclusionFilter, setActiveInclusionFilter] = useState<string>('all');
+
+  React.useEffect(() => {
+    if (isFree || isBasic) {
+      if (currentLang !== 'es') setCurrentLang('es');
+    } else if (isPro) {
+      if (data.language && ['es', 'en'].includes(data.language) && data.language !== currentLang) {
+        setCurrentLang(data.language);
+      } else if (!['es', 'en'].includes(currentLang)) {
+        setCurrentLang('es');
+      }
+    } else if (data.language && data.language !== currentLang) {
+      setCurrentLang(data.language);
+    }
+  }, [data.language, isFree, isBasic, isPro]);
+
+  const t = ADVENTURE_I18N[currentLang] || ADVENTURE_I18N.es;
+
+  const toggleLike = (id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setLikedCards(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   // Language filtering according to Guía de Niveles:
   // Free / Basic: Sin selector de idiomas

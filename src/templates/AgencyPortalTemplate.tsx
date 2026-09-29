@@ -461,14 +461,36 @@ const DICTIONARIES = {
 export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 'desktop' }: AgencyPortalTemplateProps) {
   const isMobile = viewMode === 'mobile';
   
-  // 1. Estados reactivos de interacción
-  const [lang, setLang] = useState<LanguageType>(data?.language || 'es');
+  // 1. Jerarquía de contenidos y plan (Guía de Niveles)
+  const planTier: PlanTier = data?.tier || 'pro';
+  const isFree = planTier === 'free';
+  const isBasic = planTier === 'basic';
+  const isPro = planTier === 'pro';
+  const isAdvance = planTier === 'advance';
+
+  // En planes Gratuito y Básico se fuerza estrictamente a Español ('es') por defecto (sin selector)
+  const defaultLang: LanguageType = (isFree || isBasic)
+    ? 'es'
+    : (isPro && !['es', 'en'].includes(data?.language || 'es'))
+      ? 'es'
+      : (data?.language || 'es');
+
+  // 2. Estados reactivos de interacción
+  const [lang, setLang] = useState<LanguageType>(defaultLang);
 
   React.useEffect(() => {
-    if (data?.language && data.language !== lang) {
+    if (isFree || isBasic) {
+      if (lang !== 'es') setLang('es');
+    } else if (isPro) {
+      if (data?.language && ['es', 'en'].includes(data.language) && data.language !== lang) {
+        setLang(data.language);
+      } else if (!['es', 'en'].includes(lang)) {
+        setLang('es');
+      }
+    } else if (data?.language && data.language !== lang) {
       setLang(data.language);
     }
-  }, [data?.language]);
+  }, [data?.language, isFree, isBasic, isPro]);
 
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [showWaTooltip, setShowWaTooltip] = useState<boolean>(true);
@@ -476,15 +498,14 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const [selectedTourForQuote, setSelectedTourForQuote] = useState<string>('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
-  // 2. Parámetros y datos dinámicos
+  // 3. Parámetros y datos dinámicos
   const brandName = data?.name || 'Cusco Tours';
   const whatsappNumber = (data?.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const guideName = data?.guideName || 'Carlos Mendoza';
   const destination = data?.destination || 'Cusco, Perú';
   const objective: ObjectiveType = data?.objective || 'whatsapp';
-  const planTier: PlanTier = data?.tier || 'pro';
 
-  // 3. Diccionario Multi-Idioma reactivo (ES / EN / PT / FR / IT)
+  // 4. Diccionario Multi-Idioma reactivo (ES / EN / PT / FR / IT)
   const dict = DICTIONARIES[lang] || DICTIONARIES.es;
   const t = {
     ...dict,
@@ -492,12 +513,6 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
     whySubtitle: lang === 'en' ? 'Official local agency with over a decade curating unforgettable memories across the Peruvian Andes.' : lang === 'pt' ? 'Agência local credenciada com mais de uma década organizando experiências inesquecíveis nos Andes peruanos.' : lang === 'fr' ? 'Agence locale agréée forte de plus d’une décennie d’expérience dans l’organisation de souvenirs inoubliables.' : lang === 'it' ? 'Agenzia locale accreditata con oltre un decennio di esperienza nella creazione di ricordi indimenticabili.' : 'Somos una agencia local acreditada con más de 10 años organizando viajes inolvidables en Cusco y todo el Perú.',
     footerRights: `© 2026 ${brandName}. ${lang === 'en' ? 'Authorized Tourism Operator.' : lang === 'pt' ? 'Operador Turístico Autorizado.' : lang === 'fr' ? 'Opérateur Touristique Autorisé.' : lang === 'it' ? 'Operatore Turistico Autorizzato.' : 'Operador Turístico Autorizado.'}`
   };
-
-  // 4. Jerarquía de contenidos
-  const isFree = planTier === 'free';
-  const isBasic = planTier === 'basic';
-  const isPro = planTier === 'pro';
-  const isAdvance = planTier === 'advance';
 
   // -----------------------------------------------------------
   // 5. HELPERS DE TRADUCCIÓN DINÁMICA DE 5 IDIOMAS

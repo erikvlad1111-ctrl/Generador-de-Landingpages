@@ -714,7 +714,10 @@ export function simulateAiGeneration(params: {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)+/g, "");
 
-  const lang = params.language || 'es';
+  const tier = params.tier || 'advance';
+  const isFreeOrBasic = tier === 'free' || tier === 'basic';
+  // Planes Gratuito y Básico siempre se generan en idioma español por defecto
+  const lang: LanguageType = isFreeOrBasic ? 'es' : (params.language || 'es');
   const isEn = lang === 'en';
   const isPt = lang === 'pt';
   const isFr = lang === 'fr';
@@ -858,7 +861,7 @@ export function simulateAiGeneration(params: {
     id: Date.now().toString(),
     name: params.name,
     slug: slug || 'tour-nuevo',
-    tier: params.tier || 'advance',
+    tier,
     guideName: params.guideName || 'Guía Cusco Creativos',
     guideCert: params.guideCert || 'Guía Oficial Colegiado DIRCETUR',
     guideLanguages: params.guideLanguages || 'Español, Inglés y Francés',
@@ -880,8 +883,8 @@ export function simulateAiGeneration(params: {
     difficulty: params.difficulty || 'Moderada',
     objective: params.objective,
     template: params.template,
-    language: params.language,
-    languages: params.languages && params.languages.length > 0 ? params.languages : [params.language],
+    language: lang,
+    languages: isFreeOrBasic ? ['es'] : (params.languages && params.languages.length > 0 ? params.languages : [lang]),
     status: 'draft',
     date: new Date().toISOString().split('T')[0],
     views: '0',

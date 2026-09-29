@@ -220,21 +220,6 @@ const COMMUNITY_REVIEWS: ReviewItem[] = [
 ];
 
 export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplateProps) {
-  const [currentLang, setCurrentLang] = useState<LanguageType>(data.language || 'es');
-
-  React.useEffect(() => {
-    if (data.language && data.language !== currentLang) {
-      setCurrentLang(data.language);
-    }
-  }, [data.language]);
-
-  const t = BOHO_I18N[currentLang] || BOHO_I18N.es;
-  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
-  const [selectedTourCategory, setSelectedTourCategory] = useState<string>('all');
-  const [selectedReviewCategory, setSelectedReviewCategory] = useState<string>('all');
-  const [mobileTourLayout, setMobileTourLayout] = useState<'carousel' | 'list'>('carousel');
-  const [activeMochilaTab, setActiveMochilaTab] = useState<'incluye' | 'no-incluye' | 'mochila'>('incluye');
-
   const isQuote = data.objective === 'quote';
   const isMobile = viewMode === 'mobile';
   const tier = data.tier || 'advance';
@@ -242,6 +227,36 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
   const isBasic = tier === 'basic';
   const isPro = tier === 'pro';
   const isAdvance = tier === 'advance';
+
+  // En planes Gratuito y Básico se fuerza estrictamente a Español ('es') por defecto (sin selector)
+  const defaultLang: LanguageType = (isFree || isBasic)
+    ? 'es'
+    : (isPro && !['es', 'en'].includes(data.language || 'es'))
+      ? 'es'
+      : (data.language || 'es');
+
+  const [currentLang, setCurrentLang] = useState<LanguageType>(defaultLang);
+
+  React.useEffect(() => {
+    if (isFree || isBasic) {
+      if (currentLang !== 'es') setCurrentLang('es');
+    } else if (isPro) {
+      if (data.language && ['es', 'en'].includes(data.language) && data.language !== currentLang) {
+        setCurrentLang(data.language);
+      } else if (!['es', 'en'].includes(currentLang)) {
+        setCurrentLang('es');
+      }
+    } else if (data.language && data.language !== currentLang) {
+      setCurrentLang(data.language);
+    }
+  }, [data.language, isFree, isBasic, isPro]);
+
+  const t = BOHO_I18N[currentLang] || BOHO_I18N.es;
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+  const [selectedTourCategory, setSelectedTourCategory] = useState<string>('all');
+  const [selectedReviewCategory, setSelectedReviewCategory] = useState<string>('all');
+  const [mobileTourLayout, setMobileTourLayout] = useState<'carousel' | 'list'>('carousel');
+  const [activeMochilaTab, setActiveMochilaTab] = useState<'incluye' | 'no-incluye' | 'mochila'>('incluye');
 
   // Filtrado de idiomas según nivel de plan (Guía de Niveles)
   // Free / Basic: Sin selector de idiomas
