@@ -350,9 +350,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               <a href="#itinerario" className="hover:text-[#C86D51] transition-colors">{t.journal.badge || 'Bitácora'}</a>
             )}
 
-            {isAdvance && (
-              <a href="#tours" className="hover:text-[#C86D51] transition-colors">{t.nav.tours}</a>
-            )}
+            <a href="#tours" className="hover:text-[#C86D51] transition-colors">{t.nav.tours}</a>
 
             {(isPro || isAdvance) && (
               <a href="#mapa" className="hover:text-[#C86D51] transition-colors">{t.nav.map}</a>
@@ -757,9 +755,8 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </section>
       )}
 
-      {/* SECTION: MEJORES TOURS (Otras Bitácoras de la Colección - ADVANCE ONLY) */}
-      {isAdvance && (
-        <section id="tours" className="py-12 sm:py-20 px-4 sm:px-8 max-w-6xl mx-auto overflow-hidden">
+      {/* SECTION: MEJORES TOURS (Otras Bitácoras de la Colección - DISPONIBLE EN TODOS LOS PLANES) */}
+      <section id="tours" className="py-12 sm:py-20 px-4 sm:px-8 max-w-6xl mx-auto overflow-hidden">
           <div className="space-y-6 sm:space-y-10">
             
             {/* Header with Boho mood */}
@@ -931,7 +928,6 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
           </div>
         </section>
-      )}
 
       {/* SECTION: MAPA DE RUTA & COORDENADAS DE CAMPO - PRO & ADVANCE ONLY */}
       {!isFree && (isPro || isAdvance) && (

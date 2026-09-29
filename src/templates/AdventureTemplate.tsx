@@ -258,8 +258,8 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           {/* Nav Links (Desktop) */}
           {!isFree && !isMobile && (
             <div className="hidden lg:flex items-center gap-7 xl:gap-8 text-[13.5px] font-extrabold text-slate-700">
-              {isAdvance && <a href="#destinos" className="hover:text-blue-600 transition-colors py-1">{t.nav.destinations}</a>}
-              {isAdvance && <a href="#iconic" className="hover:text-blue-600 transition-colors py-1">{t.nav.iconic}</a>}
+              <a href="#destinos" className="hover:text-blue-600 transition-colors py-1">{t.nav.destinations}</a>
+              <a href="#iconic" className="hover:text-blue-600 transition-colors py-1">{t.nav.iconic}</a>
               {(isPro || isAdvance) && <a href="#itinerario" className="hover:text-blue-600 transition-colors py-1">{t.nav.itinerary}</a>}
               <a href="#incluye" className="hover:text-blue-600 transition-colors py-1">{t.nav.included}</a>
               {isAdvance && <a href="#soporte-faq" className="hover:text-blue-600 transition-colors py-1">{t.nav.faq}</a>}
@@ -514,9 +514,8 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </section>
       )}
 
-      {/* 4. SECTION: EXPLORE TOP SEARCHED SPOTS (ADVANCE ONLY) */}
-      {isAdvance && (
-        <section id="destinos" className="py-14 sm:py-20 px-4 sm:px-8 max-w-7xl mx-auto text-center">
+      {/* 4. SECTION: EXPLORE TOP SEARCHED SPOTS (DISPONIBLE EN TODOS LOS PLANES) */}
+      <section id="destinos" className="py-14 sm:py-20 px-4 sm:px-8 max-w-7xl mx-auto text-center">
         <div className="max-w-2xl mx-auto mb-10 sm:mb-14 space-y-3">
           <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight flex items-center justify-center gap-2">
             {t.searchedSpots.title} <span className="text-amber-500">🔥</span>
@@ -565,11 +564,9 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           ))}
         </div>
       </section>
-      )}
 
-      {/* 5. SECTION: EXPLORE ICONIC LOCATIONS (ADVANCE ONLY) */}
-      {isAdvance && (
-        <section id="iconic" className="py-14 sm:py-20 px-4 sm:px-8 bg-slate-50/60 border-t border-slate-100">
+      {/* 5. SECTION: EXPLORE ICONIC LOCATIONS (DISPONIBLE EN TODOS LOS PLANES) */}
+      <section id="iconic" className="py-14 sm:py-20 px-4 sm:px-8 bg-slate-50/60 border-t border-slate-100">
         <div className="max-w-7xl mx-auto">
           
           <div className="max-w-2xl mx-auto text-center mb-10 sm:mb-14 space-y-3">
@@ -659,7 +656,6 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
         </div>
       </section>
-      )}
 
       {/* 6. TOUR ITINERARY SECTION (PRO & ADVANCE) */}
       {(isPro || isAdvance) && data.itinerary && data.itinerary.length > 0 && (

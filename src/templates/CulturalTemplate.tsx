@@ -127,7 +127,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           {!isFree && !isMobile && (
             <div className="hidden xl:flex items-center gap-5 text-[11px] font-bold tracking-wider uppercase text-stone-200">
               <a href="#actualites" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.cronicas}</a>
-              {isAdvance && <a href="#agenda" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.agenda}</a>}
+              <a href="#agenda" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.agenda}</a>
               {(isPro || isAdvance) && <a href="#territorio" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.territorio}</a>}
               {(isPro || isAdvance) && <a href="#itinerario" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.itinerario}</a>}
               {(isPro || isAdvance) && <a href="#conseils" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.conseils}</a>}
@@ -388,9 +388,8 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
       </section>
       )}
 
-      {/* 4. SECTION: AGENDA (ADVANCE ONLY) */}
-      {isAdvance && (
-        <section id="agenda" className="py-16 sm:py-24 px-4 sm:px-8 bg-red-50/30 border-y border-red-200/50">
+      {/* 4. SECTION: AGENDA (DISPONIBLE EN TODOS LOS PLANES) */}
+      <section id="agenda" className="py-16 sm:py-24 px-4 sm:px-8 bg-red-50/30 border-y border-red-200/50">
         <div className="max-w-7xl mx-auto">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -497,7 +496,6 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
         </div>
       </section>
-      )}
 
       {/* 5. SECTION: LE TERRITOIRE / EL TERRITORIO SAGRADO (PRO & ADVANCE) */}
       {(isPro || isAdvance) && (

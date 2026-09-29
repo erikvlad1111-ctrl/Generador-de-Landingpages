@@ -943,10 +943,10 @@ export default function NewLandingDemo() {
               >
                 <div className="flex items-center justify-between mb-1.5">
                   <span className="text-xs font-black text-stone-900 uppercase tracking-wider">Gratuito</span>
-                  <span className="text-[10px] bg-stone-200 text-stone-800 font-extrabold px-2 py-0.5 rounded-md">1 SECCIÓN</span>
+                  <span className="text-[10px] bg-stone-200 text-stone-800 font-extrabold px-2 py-0.5 rounded-md">HERO + TOURS</span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Hero de alto impacto + botón directo a WhatsApp. Idioma único: Español.
+                  Hero de alto impacto + sección de tours destacados + WhatsApp directo. Idioma único: Español.
                 </p>
               </button>
 
@@ -969,7 +969,7 @@ export default function NewLandingDemo() {
                   <span className="text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-2 py-0.5 rounded-md">ESTÁNDAR</span>
                 </div>
                 <p className="text-xs text-slate-600 leading-relaxed">
-                  Hero + Ficha + Acerca de + Qué incluye. Idioma único: Español.
+                  Hero + Ficha + Acerca de + Qué incluye + Catálogo de tours. Idioma único: Español.
                 </p>
               </button>
 

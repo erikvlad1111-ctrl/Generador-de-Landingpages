@@ -22,7 +22,7 @@ Cada una de las 5 plantillas (`agency-portal`, `boho-nature`, `adventure`, `cult
 | **Selector de Idiomas** | ❌ Oculto (1 idioma) | ❌ Oculto (1 idioma) | ✅ Sí (ES / EN) | ✅ Sí (5 Idiomas: ES, EN, PT, FR, IT) |
 | **FAQs / Foro de Soporte** | ❌ Oculto | ❌ Oculto | ❌ Oculto | ✅ Sí (Acordeón interactivo) |
 | **Testimonios y Reseñas Verificadas** | ❌ Oculto | ❌ Oculto | ❌ Oculto | ✅ Sí |
-| **Catálogo de Tours Extras / Paquetes Multidía** | ❌ Oculto | ❌ Oculto | ❌ Oculto | ✅ Sí |
+| **Catálogo de Tours / Circuitos Destacados** | ✅ Sí | ✅ Sí | ✅ Sí | ✅ Sí (Completo Multidía) |
 | **Banner de Plan Gratuito en Footer** | ✅ Visible | ❌ Oculto | ❌ Oculto | ❌ Oculto |
 
 ## 2. Errores Diagnosticados y Solucionados
@@ -63,3 +63,8 @@ Cada una de las 5 plantillas (`agency-portal`, `boho-nature`, `adventure`, `cult
   2. En `simulateAiGeneration`, si `tier === 'free' || tier === 'basic'`, fijar `language: 'es'` y `languages: ['es']` para que el contenido persuasivo generado por IA se redacte en español.
   3. En `/demo/new`, bloquear las tarjetas de otros idiomas en Gratuito/Básico y mostrar aviso explicativo contextual.
   4. En `/demo/preview`, sincronizar `language: 'es'` cuando `tier === 'free' || tier === 'basic'`.
+
+### Error 4: Sección de Tours requerida en todos los planes
+- **Síntoma:** Al seleccionar planes Gratuito, Básico o Pro, la sección de tours quedaba oculta por estar condicionada a `isAdvance`.
+- **Causa Raíz:** La sección de tours y sus enlaces de navegación estaban envueltos en `{isAdvance && (...) }`.
+- **Solución:** Remover el gating condicional `{isAdvance && (` de las secciones de tours (`#tours`, `#destinos`, `#iconic`, `#agenda`) y sus correspondientes enlaces en los menús de navegación en las 5 plantillas, manteniéndola visible en todos los planes.

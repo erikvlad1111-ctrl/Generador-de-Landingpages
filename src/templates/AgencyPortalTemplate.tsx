@@ -933,7 +933,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           {/* Desktop Navigation Links (Always single line with whitespace-nowrap) */}
           {!isFree && !isMobile && (
             <nav className="hidden lg:flex items-center gap-3.5 xl:gap-6 text-xs xl:text-[13px] font-bold text-stone-700 tracking-wide uppercase">
-              {isAdvance && <a href="#tours" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navTours}</a>}
+              <a href="#tours" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navTours}</a>
               <a href="#galeria" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navGallery}</a>
               {isAdvance && <a href="#paquetes" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navPackages}</a>}
               {(isPro || isAdvance) && <a href="#por-que-nosotros" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navWhyUs}</a>}
@@ -999,16 +999,14 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               
               {/* Navigation Links Grid */}
               <div className="grid grid-cols-2 gap-2">
-                {isAdvance && (
-                  <a
-                    href="#tours"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
-                  >
-                    <MapPin size={15} className="text-[#FF5500] shrink-0" />
-                    <span>{t.navTours}</span>
-                  </a>
-                )}
+                <a
+                  href="#tours"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                >
+                  <MapPin size={15} className="text-[#FF5500] shrink-0" />
+                  <span>{t.navTours}</span>
+                </a>
                 <a
                   href="#galeria"
                   onClick={() => setMobileMenuOpen(false)}
@@ -1409,9 +1407,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </section>
       )}
 
-      {/* 5. TOURS DESTACADOS / CATÁLOGO EXTRA (ADVANCE ONLY) */}
-      {isAdvance && (
-        <section id="tours" className="py-8 sm:py-20 px-3 sm:px-6 max-w-7xl mx-auto">
+      {/* 5. TOURS DESTACADOS / CATÁLOGO EXTRA (DISPONIBLE EN TODOS LOS PLANES) */}
+      <section id="tours" className="py-8 sm:py-20 px-3 sm:px-6 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 space-y-2 sm:space-y-3 px-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF5500]/10 text-[#FF5500] text-[10px] sm:text-xs font-black uppercase tracking-widest">
             <Sparkles size={12} />
@@ -1535,7 +1532,6 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             ))}
         </div>
       </section>
-      )}
 
       {/* 5.5 TABLERO DE PINES DE INSPIRACIÓN & GALERÍA PINTEREST (PUNTO 1 Y ESTÉTICA PINTEREST) */}
       {!isFree && (

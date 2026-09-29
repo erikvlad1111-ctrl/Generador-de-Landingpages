@@ -351,12 +351,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
               {t.nav.experience}
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
             </a>
-            {isAdvance && (
-              <a href="#tours" className="hover:text-amber-300 transition-colors relative py-1 group">
-                {t.nav.tours}
-                <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
-              </a>
-            )}
+            <a href="#tours" className="hover:text-amber-300 transition-colors relative py-1 group">
+              {t.nav.tours}
+              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+            </a>
             <a href="#sensorial" className="hover:text-amber-300 transition-colors relative py-1 group">
               {t.nav.sensory}
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
@@ -612,9 +610,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 6. NUEVA SECCIÓN: NUESTROS TOURS & EXPEDICIONES PRIVADAS (ADVANCE ONLY) */}
-      {isAdvance && (
-        <section id="tours" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-t border-amber-500/15`}>
+      {/* 6. NUEVA SECCIÓN: NUESTROS TOURS & EXPEDICIONES PRIVADAS (DISPONIBLE EN TODOS LOS PLANES) */}
+      <section id="tours" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-t border-amber-500/15`}>
         {/* Subtle Ambient Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-amber-600/8 blur-[160px] rounded-full pointer-events-none" />
 
@@ -748,7 +745,6 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           </div>
         </div>
       </section>
-      )}
 
       {/* 7. MOMENTOS INOLVIDABLES & EXPERIENCIAS SENSORIALES (BÁSICO, PRO, ADVANCE) */}
       {!isFree && (

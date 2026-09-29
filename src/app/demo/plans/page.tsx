@@ -48,14 +48,14 @@ const TIER_SUMMARIES: TierSummary[] = [
     badge: 'Express',
     badgeClass: 'bg-slate-900 text-white shadow-2xs',
     targetTour: 'Free Walking Tours y Campañas Rápidas',
-    scope: '1 sección directa de captación',
-    sectionsCount: '1 Sección',
+    scope: 'Captación directa con catálogo de circuitos',
+    sectionsCount: 'Hero + Tours',
     icon: <Compass className="text-slate-800" size={20} />,
     iconContainerClass: 'bg-slate-100 border-slate-300/80 text-slate-800',
     cardClass: 'bg-slate-50/80 border-slate-300 ring-1 ring-slate-400/25 shadow-xs hover:shadow-md hover:border-slate-400',
     tourClass: 'text-slate-900 font-bold',
     btnClass: 'bg-slate-900 hover:bg-slate-800 text-white shadow-xs hover:scale-101 active:scale-98',
-    recommendedUse: 'Promociones flash y captación directa en 1 toque por WhatsApp sin scroll.',
+    recommendedUse: 'Promociones flash y captación directa en 1 toque por WhatsApp con catálogo de circuitos.',
     ctaText: 'Crear Gratuito'
   },
   {
@@ -65,13 +65,13 @@ const TIER_SUMMARIES: TierSummary[] = [
     badgeClass: 'bg-emerald-600 text-white shadow-2xs',
     targetTour: 'City Tour, Museos y 1/2 Jornada',
     scope: 'Estructura web esencial para presencia formal',
-    sectionsCount: '4 Secciones',
+    sectionsCount: '5 Secciones',
     icon: <Zap className="text-emerald-700" size={20} />,
     iconContainerClass: 'bg-emerald-100/90 border-emerald-300/80 text-emerald-800',
     cardClass: 'bg-emerald-50/50 border-emerald-300 ring-1 ring-emerald-500/25 shadow-xs hover:shadow-md hover:border-emerald-400',
     tourClass: 'text-emerald-900 font-bold',
     btnClass: 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs hover:scale-101 active:scale-98',
-    recommendedUse: 'Recorridos tradicionales que requieren descripción clara y qué incluye.',
+    recommendedUse: 'Recorridos tradicionales con descripción clara, qué incluye y catálogo de tours.',
     ctaText: 'Crear Básico'
   },
   {
@@ -81,13 +81,13 @@ const TIER_SUMMARIES: TierSummary[] = [
     badgeClass: 'bg-blue-600 text-white shadow-2xs',
     targetTour: 'Full Days, Aventura y Trekking',
     scope: 'Alta conversión con itinerario y logística clara',
-    sectionsCount: '7 Secciones',
+    sectionsCount: '8 Secciones',
     icon: <Sparkles className="text-blue-700" size={20} />,
     iconContainerClass: 'bg-blue-100/90 border-blue-300/80 text-blue-800',
     cardClass: 'bg-blue-50/50 border-blue-300 ring-2 ring-blue-500/30 shadow-xs hover:shadow-md hover:border-blue-400',
     tourClass: 'text-blue-900 font-bold',
     btnClass: 'bg-blue-600 hover:bg-blue-700 text-white shadow-xs hover:scale-101 active:scale-98',
-    recommendedUse: 'Tours de 1 o 2 días con itinerario cronológico, checklist de mochila y sellos DIRCETUR.',
+    recommendedUse: 'Tours de 1 o 2 días con itinerario cronológico, checklist de mochila, sellos DIRCETUR y tours.',
     ctaText: 'Crear Pro'
   },
   {
@@ -97,13 +97,13 @@ const TIER_SUMMARIES: TierSummary[] = [
     badgeClass: 'bg-purple-600 text-white shadow-2xs',
     targetTour: 'Expediciones Multidía y Tours VIP',
     scope: 'Experiencia completa de alto rendimiento y reservas',
-    sectionsCount: '9+ Secciones',
+    sectionsCount: '10+ Secciones',
     icon: <Crown className="text-purple-700" size={20} />,
     iconContainerClass: 'bg-purple-100/90 border-purple-300/80 text-purple-800',
     cardClass: 'bg-purple-50/50 border-purple-300 ring-1 ring-purple-500/25 shadow-xs hover:shadow-md hover:border-purple-400',
     tourClass: 'text-purple-900 font-bold',
     btnClass: 'bg-purple-600 hover:bg-purple-700 text-white shadow-xs hover:scale-101 active:scale-98',
-    recommendedUse: 'Paquetes de lujo con galería HD, FAQs interactivas, testimonios y cotizador VIP.',
+    recommendedUse: 'Paquetes de lujo con galería HD, FAQs interactivas, testimonios, cotizador VIP y catálogo.',
     ctaText: 'Crear Advance'
   }
 ];
@@ -132,6 +132,14 @@ const COMPARISON_MATRIX: MatrixRow[] = [
   { 
     module: 'Botón Directo a WhatsApp del Guía', 
     desc: 'Enlace preconfigurado con el nombre del tour, fecha y origen', 
+    free: true, 
+    basic: true, 
+    pro: true, 
+    advance: true 
+  },
+  { 
+    module: 'Sección / Catálogo de Tours y Circuitos', 
+    desc: 'Exhibición de tours destacados y circuitos turísticos para reserva directa', 
     free: true, 
     basic: true, 
     pro: true, 
