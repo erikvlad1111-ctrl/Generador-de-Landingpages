@@ -243,6 +243,16 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
   const isPro = tier === 'pro';
   const isAdvance = tier === 'advance';
 
+  // Filtrado de idiomas según nivel de plan (Guía de Niveles)
+  // Free / Basic: Sin selector de idiomas
+  // Pro: ES / EN (máximo 2 idiomas)
+  // Advance: Todos los 5 idiomas
+  const displayBohoLanguages = isFree || isBasic
+    ? []
+    : isPro
+    ? BOHO_LANGUAGES.filter(l => l.code === 'es' || l.code === 'en')
+    : BOHO_LANGUAGES;
+
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const rawTourTitle = data.name || data.hero?.title || 'Tour en Cusco';
   const localizedTourTitle = translateText(rawTourTitle, currentLang);
@@ -325,44 +335,52 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               <a href="#itinerario" className="hover:text-[#C86D51] transition-colors">{t.journal.badge || 'Bitácora'}</a>
             )}
 
-            <a href="#tours" className="hover:text-[#C86D51] transition-colors">{t.nav.tours}</a>
+            {isAdvance && (
+              <a href="#tours" className="hover:text-[#C86D51] transition-colors">{t.nav.tours}</a>
+            )}
 
             {(isPro || isAdvance) && (
               <a href="#mapa" className="hover:text-[#C86D51] transition-colors">{t.nav.map}</a>
             )}
 
-            <a href="#resenas" className="hover:text-[#C86D51] transition-colors">{t.nav.reviews}</a>
+            {isAdvance && (
+              <a href="#resenas" className="hover:text-[#C86D51] transition-colors">{t.nav.reviews}</a>
+            )}
 
             {(isPro || isAdvance) && (
               <a href="#guia-campo" className="hover:text-[#C86D51] transition-colors">{t.nav.fieldGuide}</a>
             )}
 
-            <a href="#soporte-faq" className="hover:text-[#C86D51] transition-colors">
-              {isBasic ? (currentLang === 'en' ? 'Inquiries' : 'Consultas') : t.nav.faq}
-            </a>
+            {isAdvance && (
+              <a href="#soporte-faq" className="hover:text-[#C86D51] transition-colors">
+                {t.nav.faq}
+              </a>
+            )}
           </nav>
         )}
 
         {/* Header Action Button & Language Pill */}
         <div className="flex items-center gap-2 shrink-0">
-          {/* 5-Language Switcher Pill */}
-          <div className="flex items-center bg-stone-200/80 rounded-full p-0.5 border border-stone-300/80 shadow-2xs">
-            {BOHO_LANGUAGES.map((l) => (
-              <button
-                key={l.code}
-                type="button"
-                onClick={() => setCurrentLang(l.code)}
-                className={`px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase transition-all duration-200 cursor-pointer ${
-                  currentLang === l.code
-                    ? 'bg-[#C86D51] text-white font-black shadow-xs scale-102'
-                    : 'text-stone-600 hover:text-stone-900 hover:bg-white/50'
-                }`}
-                title={l.label}
-              >
-                {l.code}
-              </button>
-            ))}
-          </div>
+          {/* Language Switcher Pill (Pro & Advance) */}
+          {displayBohoLanguages.length > 1 && (
+            <div className="flex items-center bg-stone-200/80 rounded-full p-0.5 border border-stone-300/80 shadow-2xs">
+              {displayBohoLanguages.map((l) => (
+                <button
+                  key={l.code}
+                  type="button"
+                  onClick={() => setCurrentLang(l.code)}
+                  className={`px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase transition-all duration-200 cursor-pointer ${
+                    currentLang === l.code
+                      ? 'bg-[#C86D51] text-white font-black shadow-xs scale-102'
+                      : 'text-stone-600 hover:text-stone-900 hover:bg-white/50'
+                  }`}
+                  title={l.label}
+                >
+                  {l.code}
+                </button>
+              ))}
+            </div>
+          )}
 
           {data.objective === 'both' ? (
             <>
@@ -724,8 +742,8 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </section>
       )}
 
-      {/* SECTION: MEJORES TOURS (Otras Bitácoras de la Colección) - FOR BASIC, PRO, ADVANCE */}
-      {!isFree && (
+      {/* SECTION: MEJORES TOURS (Otras Bitácoras de la Colección - ADVANCE ONLY) */}
+      {isAdvance && (
         <section id="tours" className="py-12 sm:py-20 px-4 sm:px-8 max-w-6xl mx-auto overflow-hidden">
           <div className="space-y-6 sm:space-y-10">
             
@@ -1108,8 +1126,8 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </section>
       )}
 
-      {/* SECTION: RESEÑAS & LIBRO DE VISITAS - FOR BASIC, PRO, ADVANCE */}
-      {!isFree && (
+      {/* SECTION: RESEÑAS & LIBRO DE VISITAS - ADVANCE ONLY */}
+      {isAdvance && (
         <section id="resenas" className="py-12 sm:py-20 px-4 sm:px-8 max-w-6xl mx-auto overflow-hidden">
           <div className="space-y-8 sm:space-y-12">
             
@@ -1579,8 +1597,8 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </section>
       )}
 
-      {/* Tour Support & FAQs - FOR BASIC, PRO, ADVANCE (Hidden on Free) */}
-      {!isFree && (
+      {/* Tour Support & FAQs - ADVANCE ONLY */}
+      {isAdvance && (
         <TourSupportAndFaqs
           faqs={data.faqs}
           tourName={localizedTourTitle}
@@ -1643,6 +1661,13 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
           <span>{t.footer.rights}</span>
           <span>{t.footer.madeWithLove}</span>
         </div>
+
+        {/* Banner de Plan Gratuito */}
+        {isFree && (
+          <div className="bg-stone-950 text-stone-300 py-3 px-4 text-center text-xs font-semibold border-t border-stone-800 mt-4 rounded-xl">
+            <p>⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
+          </div>
+        )}
       </footer>
 
       {/* FLOATING MOBILE CONVERSION BAR (Persistent Bottom Quick Booking Bar) */}

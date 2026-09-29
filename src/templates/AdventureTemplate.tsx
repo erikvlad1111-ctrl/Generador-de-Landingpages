@@ -44,7 +44,19 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
   const isMobile = viewMode === 'mobile';
   const tier = data.tier || 'advance';
   const isFree = tier === 'free';
+  const isBasic = tier === 'basic';
+  const isPro = tier === 'pro';
   const isAdvance = tier === 'advance';
+
+  // Language filtering according to Guía de Niveles:
+  // Free / Basic: Sin selector de idiomas
+  // Pro: ES / EN (máximo 2 idiomas)
+  // Advance: Todos los 5 idiomas
+  const displayAdventureLanguages = isFree || isBasic
+    ? []
+    : isPro
+    ? ADVENTURE_LANGUAGES.filter(l => l.code === 'es' || l.code === 'en')
+    : ADVENTURE_LANGUAGES;
 
   // Ensure balanced multi-testimonial grid (minimum 4 reviews)
   const userReviews = data.testimonials && data.testimonials.length > 0 ? data.testimonials : [];
@@ -229,37 +241,39 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           </div>
 
           {/* Nav Links (Desktop) */}
-          {!isMobile && (
+          {!isFree && !isMobile && (
             <div className="hidden lg:flex items-center gap-7 xl:gap-8 text-[13.5px] font-extrabold text-slate-700">
-              <a href="#destinos" className="hover:text-blue-600 transition-colors py-1">{t.nav.destinations}</a>
-              <a href="#iconic" className="hover:text-blue-600 transition-colors py-1">{t.nav.iconic}</a>
-              <a href="#itinerario" className="hover:text-blue-600 transition-colors py-1">{t.nav.itinerary}</a>
+              {isAdvance && <a href="#destinos" className="hover:text-blue-600 transition-colors py-1">{t.nav.destinations}</a>}
+              {isAdvance && <a href="#iconic" className="hover:text-blue-600 transition-colors py-1">{t.nav.iconic}</a>}
+              {(isPro || isAdvance) && <a href="#itinerario" className="hover:text-blue-600 transition-colors py-1">{t.nav.itinerary}</a>}
               <a href="#incluye" className="hover:text-blue-600 transition-colors py-1">{t.nav.included}</a>
-              <a href="#soporte-faq" className="hover:text-blue-600 transition-colors py-1">{t.nav.faq}</a>
+              {isAdvance && <a href="#soporte-faq" className="hover:text-blue-600 transition-colors py-1">{t.nav.faq}</a>}
             </div>
           )}
 
           {/* Right Controls: Language Selector Pill + CTAs */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Language Selector Pill */}
-            <div className="flex items-center bg-slate-100 border border-slate-200/90 rounded-full p-0.5 text-[11px] font-bold shadow-2xs">
-              {ADVENTURE_LANGUAGES.map(({ code, label, flag }) => (
-                <button
-                  key={code}
-                  type="button"
-                  onClick={() => setCurrentLang(code)}
-                  title={label}
-                  className={`px-1.5 sm:px-2.5 py-1 rounded-full uppercase transition-all duration-200 cursor-pointer flex items-center gap-1 ${
-                    currentLang === code
-                      ? 'bg-slate-900 text-white font-black shadow-xs'
-                      : 'text-slate-500 hover:text-slate-900'
-                  }`}
-                >
-                  <span className="text-xs">{flag}</span>
-                  <span className="text-[10px] sm:text-[11px] font-black hidden xs:inline">{code.toUpperCase()}</span>
-                </button>
-              ))}
-            </div>
+            {/* Language Selector Pill (Pro & Advance) */}
+            {displayAdventureLanguages.length > 1 && (
+              <div className="flex items-center bg-slate-100 border border-slate-200/90 rounded-full p-0.5 text-[11px] font-bold shadow-2xs">
+                {displayAdventureLanguages.map(({ code, label, flag }) => (
+                  <button
+                    key={code}
+                    type="button"
+                    onClick={() => setCurrentLang(code)}
+                    title={label}
+                    className={`px-1.5 sm:px-2.5 py-1 rounded-full uppercase transition-all duration-200 cursor-pointer flex items-center gap-1 ${
+                      currentLang === code
+                        ? 'bg-slate-900 text-white font-black shadow-xs'
+                        : 'text-slate-500 hover:text-slate-900'
+                    }`}
+                  >
+                    <span className="text-xs">{flag}</span>
+                    <span className="text-[10px] sm:text-[11px] font-black hidden xs:inline">{code.toUpperCase()}</span>
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* CTAs */}
             {data.objective === 'both' ? (
@@ -459,32 +473,35 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </div>
       </section>
 
-      {/* 3. PARTNERS / TRUST LOGOS BAR */}
-      <section className="border-y border-slate-100 bg-slate-50/70 py-6 px-4 sm:px-8">
-        <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-8 sm:gap-14 opacity-75 grayscale hover:grayscale-0 transition-all text-slate-500 font-bold text-sm sm:text-base">
-          <div className="flex items-center gap-1.5 tracking-tight font-black text-slate-700">
-            <span>🦉</span> tripadvisor
+      {/* 3. PARTNERS / TRUST LOGOS BAR (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
+        <section className="border-y border-slate-100 bg-slate-50/70 py-6 px-4 sm:px-8">
+          <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-8 sm:gap-14 opacity-75 grayscale hover:grayscale-0 transition-all text-slate-500 font-bold text-sm sm:text-base">
+            <div className="flex items-center gap-1.5 tracking-tight font-black text-slate-700">
+              <span>🦉</span> tripadvisor
+            </div>
+            <div className="tracking-tight font-extrabold text-slate-700">
+              Expedia
+            </div>
+            <div className="flex items-center gap-1 tracking-tight font-bold text-slate-700">
+              <span>🔴</span> airbnb
+            </div>
+            <div className="tracking-widest font-black italic text-slate-700">
+              ORBITZ
+            </div>
+            <div className="tracking-tight font-black text-slate-700">
+              Booking<span className="text-blue-600">.com</span>
+            </div>
+            <div className="flex items-center gap-1 text-xs text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+              <ShieldCheck size={14} /> DIRCETUR Oficial
+            </div>
           </div>
-          <div className="tracking-tight font-extrabold text-slate-700">
-            Expedia
-          </div>
-          <div className="flex items-center gap-1 tracking-tight font-bold text-slate-700">
-            <span>🔴</span> airbnb
-          </div>
-          <div className="tracking-widest font-black italic text-slate-700">
-            ORBITZ
-          </div>
-          <div className="tracking-tight font-black text-slate-700">
-            Booking<span className="text-blue-600">.com</span>
-          </div>
-          <div className="flex items-center gap-1 text-xs text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-            <ShieldCheck size={14} /> DIRCETUR Oficial
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* 4. SECTION: EXPLORE TOP SEARCHED SPOTS */}
-      <section id="destinos" className="py-14 sm:py-20 px-4 sm:px-8 max-w-7xl mx-auto text-center">
+      {/* 4. SECTION: EXPLORE TOP SEARCHED SPOTS (ADVANCE ONLY) */}
+      {isAdvance && (
+        <section id="destinos" className="py-14 sm:py-20 px-4 sm:px-8 max-w-7xl mx-auto text-center">
         <div className="max-w-2xl mx-auto mb-10 sm:mb-14 space-y-3">
           <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight flex items-center justify-center gap-2">
             {t.searchedSpots.title} <span className="text-amber-500">🔥</span>
@@ -533,9 +550,11 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           ))}
         </div>
       </section>
+      )}
 
-      {/* 5. SECTION: EXPLORE ICONIC LOCATIONS */}
-      <section id="iconic" className="py-14 sm:py-20 px-4 sm:px-8 bg-slate-50/60 border-t border-slate-100">
+      {/* 5. SECTION: EXPLORE ICONIC LOCATIONS (ADVANCE ONLY) */}
+      {isAdvance && (
+        <section id="iconic" className="py-14 sm:py-20 px-4 sm:px-8 bg-slate-50/60 border-t border-slate-100">
         <div className="max-w-7xl mx-auto">
           
           <div className="max-w-2xl mx-auto text-center mb-10 sm:mb-14 space-y-3">
@@ -625,9 +644,10 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
         </div>
       </section>
+      )}
 
-      {/* 6. TOUR ITINERARY SECTION */}
-      {data.itinerary && data.itinerary.length > 0 && (
+      {/* 6. TOUR ITINERARY SECTION (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && data.itinerary && data.itinerary.length > 0 && (
         <section id="itinerario" className="py-14 sm:py-20 px-4 sm:px-8 max-w-4xl mx-auto">
           <div className="text-center mb-10 space-y-2">
             <div className="inline-flex items-center gap-1.5 text-blue-600 font-black text-xs uppercase tracking-wider bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
@@ -926,8 +946,8 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         />
       )}
 
-      {/* 9. LOGISTICS: QUÉ LLEVAR & QUÉ NO INCLUYE */}
-      {((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
+      {/* 9. LOGISTICS: QUÉ LLEVAR & QUÉ NO INCLUYE (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && ((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
         <section className="py-12 sm:py-16 px-4 sm:px-8 max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {/* Qué NO incluye */}
@@ -969,8 +989,9 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </section>
       )}
 
-      {/* 10. TESTIMONIALS */}
-      <section className="py-16 sm:py-24 px-4 sm:px-8 bg-gradient-to-b from-slate-50/80 via-white to-slate-50/80 border-t border-slate-100">
+      {/* 10. TESTIMONIALS (ADVANCE ONLY) */}
+      {isAdvance && (
+        <section className="py-16 sm:py-24 px-4 sm:px-8 bg-gradient-to-b from-slate-50/80 via-white to-slate-50/80 border-t border-slate-100">
         <div className="max-w-6xl mx-auto">
           
           {/* Header with Social Proof */}
@@ -1056,9 +1077,11 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
         </div>
       </section>
+      )}
 
-      {/* 11. BASE DE OPERACIONES, OFICINA FÍSICA & SERVICIOS AL EXPEDICIONARIO */}
-      <section className="py-16 sm:py-24 px-4 sm:px-8 bg-slate-50/70 border-t border-slate-200/80">
+      {/* 11. BASE DE OPERACIONES, OFICINA FÍSICA & SERVICIOS AL EXPEDICIONARIO (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
+        <section className="py-16 sm:py-24 px-4 sm:px-8 bg-slate-50/70 border-t border-slate-200/80">
         <div className="max-w-6xl mx-auto space-y-10 sm:space-y-12">
           
           {/* Section Header */}
@@ -1228,19 +1251,22 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
         </div>
       </section>
+      )}
 
-      {/* 12. TOUR SUPPORT & FAQS */}
-      <TourSupportAndFaqs
-        faqs={data.faqs}
-        tourName={data.name || data.hero?.title || 'Tour de Aventura'}
-        whatsapp={data.whatsapp}
-        guideName={data.guideName}
-        destination={data.destination || 'Cusco'}
-        tier={tier}
-        theme="adventure"
-        isMobile={isMobile}
-        lang={currentLang}
-      />
+      {/* 12. TOUR SUPPORT & FAQS (ADVANCE ONLY) */}
+      {isAdvance && (
+        <TourSupportAndFaqs
+          faqs={data.faqs}
+          tourName={data.name || data.hero?.title || 'Tour de Aventura'}
+          whatsapp={data.whatsapp}
+          guideName={data.guideName}
+          destination={data.destination || 'Cusco'}
+          tier={tier}
+          theme="adventure"
+          isMobile={isMobile}
+          lang={currentLang}
+        />
+      )}
 
       {/* 13. FOOTER COMPLETO DE ALTA AUTORIDAD & CONVERSIÓN */}
       <footer className="bg-slate-950 text-slate-400 text-xs border-t border-slate-800/80 pt-14 pb-24 sm:pb-12 px-4 sm:px-8 relative overflow-hidden">
@@ -1430,6 +1456,13 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               <a href="#soporte-faq" className="hover:text-white transition-colors">{t.footer.privacy}</a>
             </div>
           </div>
+
+          {/* Banner de Plan Gratuito */}
+          {isFree && (
+            <div className="bg-slate-900 text-slate-300 py-3 px-4 text-center text-xs font-semibold border-t border-slate-800 rounded-xl mt-4">
+              <p>⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
+            </div>
+          )}
 
         </div>
       </footer>

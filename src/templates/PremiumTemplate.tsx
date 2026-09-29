@@ -38,8 +38,19 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const tier = data.tier || 'advance';
   const isFree = tier === 'free';
+  const isBasic = tier === 'basic';
   const isPro = tier === 'pro';
   const isAdvance = tier === 'advance';
+
+  // Language filtering according to Guía de Niveles:
+  // Free / Basic: Sin selector de idiomas
+  // Pro: ES / EN (máximo 2 idiomas)
+  // Advance: Todos los 5 idiomas
+  const displayPremiumLanguages = isFree || isBasic
+    ? []
+    : isPro
+    ? PREMIUM_LANGUAGES.filter(l => l.code === 'es' || l.code === 'en')
+    : PREMIUM_LANGUAGES;
   const encodedMsg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, estoy interesado en la experiencia VIP "${data.name}". ¿Podrían brindarme disponibilidad?`);
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
@@ -319,16 +330,18 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           </div>
         </div>
 
-        {!isMobile && (
+        {!isFree && !isMobile && (
           <nav className="hidden xl:flex items-center gap-6 text-[11px] uppercase tracking-[0.2em] text-neutral-300 shrink-0 font-medium">
             <a href="#itinerario" className="hover:text-amber-300 transition-colors relative py-1 group">
               {t.nav.experience}
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
             </a>
-            <a href="#tours" className="hover:text-amber-300 transition-colors relative py-1 group">
-              {t.nav.tours}
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
-            </a>
+            {isAdvance && (
+              <a href="#tours" className="hover:text-amber-300 transition-colors relative py-1 group">
+                {t.nav.tours}
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+              </a>
+            )}
             <a href="#sensorial" className="hover:text-amber-300 transition-colors relative py-1 group">
               {t.nav.sensory}
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
@@ -341,36 +354,42 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
               {t.nav.amenities}
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
             </a>
-            <a href="#guia-concierge" className="hover:text-amber-300 transition-colors relative py-1 group">
-              {t.nav.concierge}
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
-            </a>
-            <a href="#lounge-vip" className="hover:text-amber-300 transition-colors relative py-1 group">
-              {t.nav.lounge}
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
-            </a>
+            {(isPro || isAdvance) && (
+              <a href="#guia-concierge" className="hover:text-amber-300 transition-colors relative py-1 group">
+                {t.nav.concierge}
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+              </a>
+            )}
+            {isAdvance && (
+              <a href="#lounge-vip" className="hover:text-amber-300 transition-colors relative py-1 group">
+                {t.nav.lounge}
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+              </a>
+            )}
           </nav>
         )}
 
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
-          {/* Subtle Champagne Gold Language Selector */}
-          <div className="flex items-center bg-neutral-900/90 border border-amber-500/25 rounded-full p-0.5 text-[9px] sm:text-[10px] font-bold">
-            {PREMIUM_LANGUAGES.map((l) => (
-              <button
-                key={l.code}
-                type="button"
-                onClick={() => setCurrentLang(l.code)}
-                className={`px-1.5 sm:px-2 py-0.5 rounded-full uppercase transition-all duration-200 cursor-pointer ${
-                  currentLang === l.code 
-                    ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-neutral-950 font-extrabold shadow-xs' 
-                    : 'text-neutral-400 hover:text-amber-200'
-                }`}
-                title={l.label}
-              >
-                {l.code}
-              </button>
-            ))}
-          </div>
+          {/* Subtle Champagne Gold Language Selector (Pro & Advance) */}
+          {displayPremiumLanguages.length > 1 && (
+            <div className="flex items-center bg-neutral-900/90 border border-amber-500/25 rounded-full p-0.5 text-[9px] sm:text-[10px] font-bold">
+              {displayPremiumLanguages.map((l) => (
+                <button
+                  key={l.code}
+                  type="button"
+                  onClick={() => setCurrentLang(l.code)}
+                  className={`px-1.5 sm:px-2 py-0.5 rounded-full uppercase transition-all duration-200 cursor-pointer ${
+                    currentLang === l.code 
+                      ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-neutral-950 font-extrabold shadow-xs' 
+                      : 'text-neutral-400 hover:text-amber-200'
+                  }`}
+                  title={l.label}
+                >
+                  {l.code}
+                </button>
+              ))}
+            </div>
+          )}
 
           {data.objective === 'both' ? (
             <div className="flex items-center gap-1.5 sm:gap-2">
@@ -517,8 +536,9 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
 
-      {/* 4. THREE FLOATING PILLARS OF EXCELLENCE */}
-      <section className={`relative z-30 ${isMobile ? 'mt-4 px-3' : '-mt-12 max-w-5xl mx-auto px-4'}`}>
+      {/* 4. THREE FLOATING PILLARS OF EXCELLENCE (BÁSICO, PRO, ADVANCE) */}
+      {!isFree && (
+        <section className={`relative z-30 ${isMobile ? 'mt-4 px-3' : '-mt-12 max-w-5xl mx-auto px-4'}`}>
         <div className={`bg-gradient-to-b from-neutral-900/95 via-neutral-900/85 to-[#120f18]/95 backdrop-blur-xl rounded-3xl border border-amber-500/35 ${isMobile ? 'p-4 grid grid-cols-1 gap-3.5' : 'p-7 grid grid-cols-1 md:grid-cols-3 gap-6'} shadow-[0_20px_50px_rgba(0,0,0,0.85)]`}>
           
           <div className="flex items-center gap-4 p-2 rounded-2xl group hover:bg-amber-500/10 transition-colors">
@@ -561,6 +581,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
         </div>
       </section>
+      )}
 
       {/* 5. TRUST BADGES - PRO & ADVANCE ONLY */}
       {(isPro || isAdvance) && data.trustBadges && data.trustBadges.length > 0 && (
@@ -576,8 +597,9 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 6. NUEVA SECCIÓN: NUESTROS TOURS & EXPEDICIONES PRIVADAS */}
-      <section id="tours" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-t border-amber-500/15`}>
+      {/* 6. NUEVA SECCIÓN: NUESTROS TOURS & EXPEDICIONES PRIVADAS (ADVANCE ONLY) */}
+      {isAdvance && (
+        <section id="tours" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-t border-amber-500/15`}>
         {/* Subtle Ambient Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-amber-600/8 blur-[160px] rounded-full pointer-events-none" />
 
@@ -711,9 +733,11 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           </div>
         </div>
       </section>
+      )}
 
-      {/* 7. MOMENTOS INOLVIDABLES & EXPERIENCIAS SENSORIALES */}
-      <section id="sensorial" className={`${isMobile ? 'py-14 px-4' : 'py-22 px-8'} max-w-6xl mx-auto relative z-10`}>
+      {/* 7. MOMENTOS INOLVIDABLES & EXPERIENCIAS SENSORIALES (BÁSICO, PRO, ADVANCE) */}
+      {!isFree && (
+        <section id="sensorial" className={`${isMobile ? 'py-14 px-4' : 'py-22 px-8'} max-w-6xl mx-auto relative z-10`}>
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono mb-3 shadow-[0_0_20px_rgba(245,158,11,0.25)]">
             <Sparkle size={13} className="text-amber-400" />
@@ -772,9 +796,11 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           })}
         </div>
       </section>
+      )}
 
-      {/* 8. FICHA TÉCNICA DE ALTA EXPEDICIÓN */}
-      <section id="ficha-tecnica" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-amber-500/15`}>
+      {/* 8. FICHA TÉCNICA DE ALTA EXPEDICIÓN (BÁSICO, PRO, ADVANCE) */}
+      {!isFree && (
+        <section id="ficha-tecnica" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-amber-500/15`}>
         {/* Background Image with Deep Vignette */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -908,6 +934,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           </div>
         </div>
       </section>
+      )}
 
       {/* 9. ABOUT SECTION - ART GALLERY PASSEPARTOUT PRESENTATION */}
       {!isFree && (
@@ -975,8 +1002,9 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 10. SERVICIOS & AMENIDADES DE ALTA GAMA INCLUIDOS */}
-      <section id="amenidades" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-amber-500/20`}>
+      {/* 10. SERVICIOS & AMENIDADES DE ALTA GAMA INCLUIDOS (BÁSICO, PRO, ADVANCE) */}
+      {!isFree && (
+        <section id="amenidades" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-amber-500/20`}>
         {/* Background Image with Deep Luxury Fade */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -1029,9 +1057,11 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           </div>
         </div>
       </section>
+      )}
 
-      {/* 11. PERFIL DEL GUÍA CONCIERGE OFICIAL CON AMBIENTE DE PALACIO */}
-      <section id="guia-concierge" className={`relative ${isMobile ? 'py-16 px-4' : 'py-32 md:py-36 px-6 sm:px-10 lg:px-12'} overflow-hidden border-b border-neutral-900`}>
+      {/* 11. PERFIL DEL GUÍA CONCIERGE OFICIAL CON AMBIENTE DE PALACIO (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
+        <section id="guia-concierge" className={`relative ${isMobile ? 'py-16 px-4' : 'py-32 md:py-36 px-6 sm:px-10 lg:px-12'} overflow-hidden border-b border-neutral-900`}>
         {/* Background Image de la sección */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <Image
@@ -1155,9 +1185,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           </div>
         </div>
       </section>
+      )}
 
-      {/* 12. ITINERARIO TIMELINE CON FONDO DE CORDILLERA */}
-      {data.itinerary && data.itinerary.length > 0 && (
+      {/* 12. ITINERARIO TIMELINE CON FONDO DE CORDILLERA (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && data.itinerary && data.itinerary.length > 0 && (
         <section id="itinerario-timeline" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-amber-500/20`}>
           <div className="absolute inset-0 z-0">
             <Image
@@ -1243,8 +1274,9 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 14. COMPROMISO DE EXCELENCIA & GARANTÍAS CON CIELO ESTRELLADO ANDINO */}
-      <section id="garantias" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-neutral-900`}>
+      {/* 14. COMPROMISO DE EXCELENCIA & GARANTÍAS (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
+        <section id="garantias" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-neutral-900`}>
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -1326,9 +1358,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           </div>
         </div>
       </section>
+      )}
 
-      {/* 15. LOGISTICS: EXCLUSIONES & EQUIPAJE VIP */}
-      {((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
+      {/* 15. LOGISTICS: EXCLUSIONES & EQUIPAJE VIP (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && ((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
         <section className={`${isMobile ? 'py-10 px-4' : 'py-20 px-8'} bg-[#0a080e] border-b border-neutral-900 relative z-10`}>
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             
@@ -1388,8 +1421,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         />
       )}
 
-      {/* 17. TESTIMONIOS Y COMENTARIOS EXCLUSIVOS - ADVANCE / PRO */}
-      {!isFree && (
+      {/* 17. TESTIMONIOS Y COMENTARIOS EXCLUSIVOS (ADVANCE ONLY) */}
+      {isAdvance && (
         <section id="testimonios-vip" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} bg-[#0a080e] border-b border-neutral-900 relative z-10`}>
           <div className="max-w-5xl mx-auto text-center">
             <span className="text-xs uppercase tracking-[0.25em] text-amber-400 block mb-2 font-semibold font-mono">
@@ -1434,8 +1467,9 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 18. SALÓN VIP & PUNTO DE ENCUENTRO EN CUSCO CON PATIO VIRREINAL */}
-      <section id="lounge-vip" className={`relative ${isMobile ? 'py-16 px-4' : 'py-32 md:py-36 px-6 sm:px-10 lg:px-12'} overflow-hidden border-b border-neutral-900`}>
+      {/* 18. SALÓN VIP & PUNTO DE ENCUENTRO EN CUSCO (ADVANCE ONLY) */}
+      {isAdvance && (
+        <section id="lounge-vip" className={`relative ${isMobile ? 'py-16 px-4' : 'py-32 md:py-36 px-6 sm:px-10 lg:px-12'} overflow-hidden border-b border-neutral-900`}>
         {/* Background Image de toda la sección */}
         <div className="absolute inset-0 z-0 pointer-events-none">
           <Image
@@ -1537,19 +1571,22 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           </div>
         </div>
       </section>
+      )}
 
-      {/* 19. TOUR SUPPORT & FAQS */}
-      <TourSupportAndFaqs
-        faqs={data.faqs}
-        tourName={translateText(data.name || data.hero?.title || 'Experiencia VIP', currentLang)}
-        whatsapp={data.whatsapp}
-        guideName={data.guideName}
-        destination={translateText(data.destination || 'Cusco', currentLang)}
-        tier={tier}
-        theme="premium"
-        isMobile={isMobile}
-        lang={currentLang}
-      />
+      {/* 19. TOUR SUPPORT & FAQS (ADVANCE ONLY) */}
+      {isAdvance && (
+        <TourSupportAndFaqs
+          faqs={data.faqs}
+          tourName={translateText(data.name || data.hero?.title || 'Experiencia VIP', currentLang)}
+          whatsapp={data.whatsapp}
+          guideName={data.guideName}
+          destination={translateText(data.destination || 'Cusco', currentLang)}
+          tier={tier}
+          theme="premium"
+          isMobile={isMobile}
+          lang={currentLang}
+        />
+      )}
 
       {/* 20. MAJESTIC FINAL CALL TO ACTION */}
       {!isFree && (
@@ -1615,8 +1652,13 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       )}
 
       {/* 21. FOOTER */}
-      <footer className="py-8 text-center text-neutral-500 text-xs border-t border-neutral-900 relative z-10 bg-[#0a080e]">
+      <footer className="py-8 text-center text-neutral-500 text-xs border-t border-neutral-900 relative z-10 bg-[#0a080e] px-4 space-y-3">
         <p className="tracking-wide">{t.footer.rights}</p>
+        {isFree && (
+          <div className="bg-neutral-900 text-stone-300 py-3 px-4 text-center text-xs font-semibold border border-neutral-800 rounded-xl max-w-xl mx-auto">
+            <p>⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
+          </div>
+        )}
       </footer>
 
       {/* Quote Modal */}

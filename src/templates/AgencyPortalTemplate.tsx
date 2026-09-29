@@ -821,10 +821,23 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
     }
   };
 
-  // Idiomas seleccionados en el generador (Paso 4)
-  const activeLanguages: LanguageType[] = (data?.languages && data.languages.length > 0)
+  // Idiomas seleccionados en el generador adaptados al nivel del plan (Guía de Niveles)
+  // Free / Basic: 1 idioma fijo (sin selector)
+  // Pro: Hasta 2 idiomas (ES / EN)
+  // Advance: Hasta 5 idiomas (ES, EN, PT, FR, IT)
+  const baseLanguages: LanguageType[] = (data?.languages && data.languages.length > 0)
     ? data.languages
     : (['es', 'en', 'pt', 'fr', 'it'] as LanguageType[]);
+
+  const activeLanguages: LanguageType[] = isFree || isBasic
+    ? [lang]
+    : isPro
+    ? baseLanguages.filter(l => l === 'es' || l === 'en').length > 0
+      ? baseLanguages.filter(l => l === 'es' || l === 'en')
+      : ['es', 'en']
+    : baseLanguages;
+
+  const showLangSelector = (isPro || isAdvance) && activeLanguages.length > 1;
 
   return (
     <div className={`min-h-screen bg-[#FDFDFD] text-stone-900 font-sans selection:bg-[#FF5500] selection:text-white w-full max-w-full overflow-x-hidden pb-16 sm:pb-0 ${isMobile ? 'text-xs' : ''}`}>
@@ -858,24 +871,26 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               {t.officialBar}
             </span>
 
-            {/* Language Selector: Sleek, compact and responsive */}
-            <div className="flex items-center bg-stone-800/90 rounded-lg p-0.5 border border-stone-700/80 shadow-xs">
-              {activeLanguages.map((l) => (
-                <button
-                  key={l}
-                  onClick={() => setLang(l)}
-                  className={`px-1 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-[10px] font-bold uppercase transition-all cursor-pointer flex items-center gap-0.5 sm:gap-1 shrink-0 ${
-                    lang === l 
-                      ? 'bg-[#FF5500] text-white shadow-xs font-black' 
-                      : 'text-stone-400 hover:text-white'
-                  }`}
-                  title={l === 'es' ? 'Español' : l === 'en' ? 'English' : l === 'pt' ? 'Português' : l === 'fr' ? 'Français' : 'Italiano'}
-                >
-                  <span className="text-[10px] sm:text-xs leading-none">{l === 'es' ? '🇵🇪' : l === 'en' ? '🇺🇸' : l === 'pt' ? '🇧🇷' : l === 'fr' ? '🇫🇷' : '🇮🇹'}</span>
-                  <span className="hidden xs:inline sm:inline text-[8px] sm:text-[10px]">{l.toUpperCase()}</span>
-                </button>
-              ))}
-            </div>
+            {/* Language Selector: Only for Pro (max 2) & Advance (5) */}
+            {showLangSelector && (
+              <div className="flex items-center bg-stone-800/90 rounded-lg p-0.5 border border-stone-700/80 shadow-xs">
+                {activeLanguages.map((l) => (
+                  <button
+                    key={l}
+                    onClick={() => setLang(l)}
+                    className={`px-1 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-[10px] font-bold uppercase transition-all cursor-pointer flex items-center gap-0.5 sm:gap-1 shrink-0 ${
+                      lang === l 
+                        ? 'bg-[#FF5500] text-white shadow-xs font-black' 
+                        : 'text-stone-400 hover:text-white'
+                    }`}
+                    title={l === 'es' ? 'Español' : l === 'en' ? 'English' : l === 'pt' ? 'Português' : l === 'fr' ? 'Français' : 'Italiano'}
+                  >
+                    <span className="text-[10px] sm:text-xs leading-none">{l === 'es' ? '🇵🇪' : l === 'en' ? '🇺🇸' : l === 'pt' ? '🇧🇷' : l === 'fr' ? '🇫🇷' : '🇮🇹'}</span>
+                    <span className="hidden xs:inline sm:inline text-[8px] sm:text-[10px]">{l.toUpperCase()}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
         </div>
@@ -903,12 +918,12 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           {/* Desktop Navigation Links (Always single line with whitespace-nowrap) */}
           {!isFree && !isMobile && (
             <nav className="hidden lg:flex items-center gap-3.5 xl:gap-6 text-xs xl:text-[13px] font-bold text-stone-700 tracking-wide uppercase">
-              <a href="#tours" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navTours}</a>
+              {isAdvance && <a href="#tours" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navTours}</a>}
               <a href="#galeria" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navGallery}</a>
-              {!isBasic && <a href="#paquetes" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navPackages}</a>}
-              <a href="#por-que-nosotros" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navWhyUs}</a>
-              {!isBasic && <a href="#resenas" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navReviews}</a>}
-              <a href="#soporte-faq" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navFaq}</a>
+              {isAdvance && <a href="#paquetes" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navPackages}</a>}
+              {(isPro || isAdvance) && <a href="#por-que-nosotros" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navWhyUs}</a>}
+              {isAdvance && <a href="#resenas" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navReviews}</a>}
+              {isAdvance && <a href="#soporte-faq" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navFaq}</a>}
             </nav>
           )}
 
@@ -969,14 +984,16 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               
               {/* Navigation Links Grid */}
               <div className="grid grid-cols-2 gap-2">
-                <a
-                  href="#tours"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
-                >
-                  <MapPin size={15} className="text-[#FF5500] shrink-0" />
-                  <span>{t.navTours}</span>
-                </a>
+                {isAdvance && (
+                  <a
+                    href="#tours"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                  >
+                    <MapPin size={15} className="text-[#FF5500] shrink-0" />
+                    <span>{t.navTours}</span>
+                  </a>
+                )}
                 <a
                   href="#galeria"
                   onClick={() => setMobileMenuOpen(false)}
@@ -985,7 +1002,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   <Pin size={15} className="text-[#FF5500] shrink-0" />
                   <span>{t.navGallery}</span>
                 </a>
-                {!isBasic && (
+                {isAdvance && (
                   <a
                     href="#paquetes"
                     onClick={() => setMobileMenuOpen(false)}
@@ -995,15 +1012,17 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     <span>{t.navPackages}</span>
                   </a>
                 )}
-                <a
-                  href="#por-que-nosotros"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
-                >
-                  <ShieldCheck size={15} className="text-[#FF5500] shrink-0" />
-                  <span>{t.navWhyUs}</span>
-                </a>
-                {!isBasic && (
+                {(isPro || isAdvance) && (
+                  <a
+                    href="#por-que-nosotros"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                  >
+                    <ShieldCheck size={15} className="text-[#FF5500] shrink-0" />
+                    <span>{t.navWhyUs}</span>
+                  </a>
+                )}
+                {isAdvance && (
                   <a
                     href="#resenas"
                     onClick={() => setMobileMenuOpen(false)}
@@ -1013,39 +1032,43 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     <span>{t.navReviews}</span>
                   </a>
                 )}
-                <a
-                  href="#soporte-faq"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
-                >
-                  <BadgeCheck size={15} className="text-[#FF5500] shrink-0" />
-                  <span>{t.navFaq}</span>
-                </a>
+                {isAdvance && (
+                  <a
+                    href="#soporte-faq"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                  >
+                    <BadgeCheck size={15} className="text-[#FF5500] shrink-0" />
+                    <span>{t.navFaq}</span>
+                  </a>
+                )}
               </div>
 
-              {/* Selector de Idiomas en Móvil */}
-              <div className="pt-3 border-t border-stone-100">
-                <span className="text-[10px] font-black uppercase text-stone-400 block mb-2 tracking-wider">
-                  {lang === 'en' ? 'Select Language' : lang === 'pt' ? 'Selecionar Idioma' : lang === 'fr' ? 'Sélectionner la Langue' : lang === 'it' ? 'Seleziona Lingua' : 'Seleccionar Idioma'}
-                </span>
-                <div className="grid grid-cols-5 gap-1.5">
-                  {activeLanguages.map((l) => (
-                    <button
-                      key={l}
-                      type="button"
-                      onClick={() => { setLang(l); setMobileMenuOpen(false); }}
-                      className={`p-2 rounded-xl text-xs font-bold flex flex-col items-center justify-center gap-1 transition-all cursor-pointer ${
-                        lang === l 
-                          ? 'bg-[#FF5500] text-white shadow-md font-black ring-2 ring-[#FF5500]/30' 
-                          : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
-                      }`}
-                    >
-                      <span className="text-base leading-none">{l === 'es' ? '🇵🇪' : l === 'en' ? '🇺🇸' : l === 'pt' ? '🇧🇷' : l === 'fr' ? '🇫🇷' : '🇮🇹'}</span>
-                      <span className="uppercase text-[10px] font-bold">{l}</span>
-                    </button>
-                  ))}
+              {/* Selector de Idiomas en Móvil (Solo Pro y Advance) */}
+              {showLangSelector && (
+                <div className="pt-3 border-t border-stone-100">
+                  <span className="text-[10px] font-black uppercase text-stone-400 block mb-2 tracking-wider">
+                    {lang === 'en' ? 'Select Language' : lang === 'pt' ? 'Selecionar Idioma' : lang === 'fr' ? 'Sélectionner la Langue' : lang === 'it' ? 'Seleziona Lingua' : 'Seleccionar Idioma'}
+                  </span>
+                  <div className={`grid ${activeLanguages.length <= 2 ? 'grid-cols-2' : 'grid-cols-5'} gap-1.5`}>
+                    {activeLanguages.map((l) => (
+                      <button
+                        key={l}
+                        type="button"
+                        onClick={() => { setLang(l); setMobileMenuOpen(false); }}
+                        className={`p-2 rounded-xl text-xs font-bold flex flex-col items-center justify-center gap-1 transition-all cursor-pointer ${
+                          lang === l 
+                            ? 'bg-[#FF5500] text-white shadow-md font-black ring-2 ring-[#FF5500]/30' 
+                            : 'bg-stone-100 text-stone-700 hover:bg-stone-200'
+                        }`}
+                      >
+                        <span className="text-base leading-none">{l === 'es' ? '🇵🇪' : l === 'en' ? '🇺🇸' : l === 'pt' ? '🇧🇷' : l === 'fr' ? '🇫🇷' : '🇮🇹'}</span>
+                        <span className="uppercase text-[10px] font-bold">{l}</span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Acciones directas en Móvil */}
               <div className="pt-3 border-t border-stone-100 flex flex-col gap-2">
@@ -1337,40 +1360,43 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       </section>
 
-      {/* 4.6 SERVICIOS Y PRIVILEGIOS INCLUIDOS (PUNTO 7 DEL GENERADOR) */}
-      <section className="py-8 sm:py-12 bg-white border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6">
-          <div className="bg-gradient-to-br from-stone-900 via-stone-850 to-stone-950 text-white rounded-3xl p-6 sm:p-9 shadow-lg border border-stone-800">
-            <div className="max-w-3xl mb-6 space-y-1.5">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF5500]/20 text-[#FF8844] text-[10px] sm:text-xs font-black uppercase tracking-widest border border-[#FF5500]/30">
-                <CheckCircle2 size={13} /> {t.includedServicesBadge}
-              </span>
-              <h3 className="text-xl sm:text-3xl font-black text-white tracking-tight">
-                {t.includedServicesTitle}
-              </h3>
-              <p className="text-xs sm:text-sm text-stone-300">
-                {t.includedServicesDesc}
-              </p>
-            </div>
+      {/* 4.6 SERVICIOS Y PRIVILEGIOS INCLUIDOS (PUNTO 7 DEL GENERADOR - BÁSICO, PRO, ADVANCE) */}
+      {!isFree && (
+        <section className="py-8 sm:py-12 bg-white border-b border-stone-200">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6">
+            <div className="bg-gradient-to-br from-stone-900 via-stone-850 to-stone-950 text-white rounded-3xl p-6 sm:p-9 shadow-lg border border-stone-800">
+              <div className="max-w-3xl mb-6 space-y-1.5">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF5500]/20 text-[#FF8844] text-[10px] sm:text-xs font-black uppercase tracking-widest border border-[#FF5500]/30">
+                  <CheckCircle2 size={13} /> {t.includedServicesBadge}
+                </span>
+                <h3 className="text-xl sm:text-3xl font-black text-white tracking-tight">
+                  {t.includedServicesTitle}
+                </h3>
+                <p className="text-xs sm:text-sm text-stone-300">
+                  {t.includedServicesDesc}
+                </p>
+              </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-              {getLocalizedIncludedServices(data?.includedServices).map((srv, idx) => (
-                <div key={idx} className="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-[#FF5500]/50 transition-colors">
-                  <div className="w-7 h-7 rounded-xl bg-[#FF5500] text-white flex items-center justify-center shrink-0 shadow-xs font-bold text-xs mt-0.5">
-                    ✓
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+                {getLocalizedIncludedServices(data?.includedServices).map((srv, idx) => (
+                  <div key={idx} className="flex items-start gap-3 p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-[#FF5500]/50 transition-colors">
+                    <div className="w-7 h-7 rounded-xl bg-[#FF5500] text-white flex items-center justify-center shrink-0 shadow-xs font-bold text-xs mt-0.5">
+                      ✓
+                    </div>
+                    <span className="text-xs sm:text-sm text-stone-200 font-medium leading-snug">
+                      {srv}
+                    </span>
                   </div>
-                  <span className="text-xs sm:text-sm text-stone-200 font-medium leading-snug">
-                    {srv}
-                  </span>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* 5. TOURS DESTACADOS (1 COLUMNA EN MÓVIL) */}
-      <section id="tours" className="py-8 sm:py-20 px-3 sm:px-6 max-w-7xl mx-auto">
+      {/* 5. TOURS DESTACADOS / CATÁLOGO EXTRA (ADVANCE ONLY) */}
+      {isAdvance && (
+        <section id="tours" className="py-8 sm:py-20 px-3 sm:px-6 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 space-y-2 sm:space-y-3 px-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF5500]/10 text-[#FF5500] text-[10px] sm:text-xs font-black uppercase tracking-widest">
             <Sparkles size={12} />
@@ -1494,6 +1520,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             ))}
         </div>
       </section>
+      )}
 
       {/* 5.5 TABLERO DE PINES DE INSPIRACIÓN & GALERÍA PINTEREST (PUNTO 1 Y ESTÉTICA PINTEREST) */}
       {!isFree && (
@@ -1508,8 +1535,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         />
       )}
 
-      {/* 6. ITINERARIO DÍA A DÍA DETALLADO (PUNTO 8 DEL GENERADOR) */}
-      {(data?.itinerary && data.itinerary.length > 0) && (
+      {/* 6. ITINERARIO DÍA A DÍA DETALLADO (PRO & ADVANCE ONLY) */}
+      {((isPro || isAdvance) && data?.itinerary && data.itinerary.length > 0) && (
         <section className="py-10 sm:py-20 bg-stone-900 text-white border-y border-stone-800">
           <div className="max-w-5xl mx-auto px-3 sm:px-6 space-y-6 sm:space-y-10">
             <div className="text-center space-y-2">
@@ -1542,8 +1569,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </section>
       )}
 
-      {/* 6.1 LOGÍSTICA: QUÉ NO INCLUYE & QUÉ LLEVAR EN LA MOCHILA (PUNTO 9 DEL GENERADOR) */}
-      {((data?.notIncluded && data.notIncluded.length > 0) || (data?.whatToBring && data.whatToBring.length > 0)) && (
+      {/* 6.1 LOGÍSTICA: QUÉ NO INCLUYE & QUÉ LLEVAR EN LA MOCHILA (PRO & ADVANCE ONLY) */}
+      {((isPro || isAdvance) && ((data?.notIncluded && data.notIncluded.length > 0) || (data?.whatToBring && data.whatToBring.length > 0))) && (
         <section className="py-10 sm:py-16 bg-stone-100 border-b border-stone-200">
           <div className="max-w-6xl mx-auto px-3 sm:px-6">
             <div className="text-center max-w-2xl mx-auto mb-8 space-y-1.5">
@@ -1597,8 +1624,9 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
 
 
-      {/* 7. ¿POR QUÉ ELEGIRNOS? & PROTOCOLO DE ALTURA & DISTINTIVOS (PUNTO 10 DEL GENERADOR) */}
-      <section id="por-que-nosotros" className="py-10 sm:py-24 bg-[#F9F7F4] border-y border-stone-200">
+      {/* 7. ¿POR QUÉ ELEGIRNOS? & PROTOCOLO DE ALTURA & DISTINTIVOS (PRO & ADVANCE ONLY) */}
+      {(isPro || isAdvance) && (
+        <section id="por-que-nosotros" className="py-10 sm:py-24 bg-[#F9F7F4] border-y border-stone-200">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 space-y-8 sm:space-y-16">
           <div className={`grid ${isMobile ? 'grid-cols-1 gap-6' : 'grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14'} items-center`}>
             
@@ -1687,9 +1715,10 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           </div>
         </div>
       </section>
+      )}
 
-      {/* 8. PAQUETES TURÍSTICOS (1 COLUMNA EN MÓVIL) */}
-      {!isFree && !isBasic && (
+      {/* 8. PAQUETES TURÍSTICOS (ADVANCE ONLY) */}
+      {isAdvance && (
         <section id="paquetes" className="py-10 sm:py-20 bg-stone-50 border-t border-stone-200">
           <div className="max-w-7xl mx-auto px-3 sm:px-6">
             <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 space-y-1 sm:space-y-2 px-2">
@@ -1757,8 +1786,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </section>
       )}
 
-      {/* 9. TESTIMONIOS VERIFICADOS (1 COLUMNA EN MÓVIL) */}
-      {!isFree && !isBasic && (
+      {/* 9. TESTIMONIOS VERIFICADOS (ADVANCE ONLY) */}
+      {isAdvance && (
         <section id="resenas" className="py-10 sm:py-20 bg-[#141211] text-white relative overflow-hidden">
           <div className="max-w-7xl mx-auto px-3 sm:px-6 relative z-10 space-y-6 sm:space-y-10">
             <div className="text-center max-w-2xl mx-auto space-y-2 px-2">
@@ -1809,13 +1838,13 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </section>
       )}
 
-      {/* 9.5 TURISMO SOSTENIBLE, INSIGNIAS DE REPUTACIÓN Y FEED EN VIVO #CUSCOTRAVELERS */}
-      {!isFree && (
+      {/* 9.5 TURISMO SOSTENIBLE, INSIGNIAS DE REPUTACIÓN Y FEED EN VIVO (ADVANCE ONLY) */}
+      {isAdvance && (
         <SustainabilityAndSocialProof lang={lang} brandName={brandName} isMobile={isMobile} />
       )}
 
-      {/* 10. FORO DE SOPORTE & FAQ */}
-      {!isFree && (
+      {/* 10. FORO DE SOPORTE & FAQ (ADVANCE ONLY) */}
+      {isAdvance && (
         <TourSupportAndFaqs
           faqs={data?.faqs}
           tourName={translateText(data?.name || brandName, lang)}
@@ -1829,8 +1858,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         />
       )}
 
-      {/* 10.5 GARANTÍA DE FLEXIBILIDAD Y OFICINA FÍSICA EN CUSCO */}
-      {!isFree && (
+      {/* 10.5 GARANTÍA DE FLEXIBILIDAD Y OFICINA FÍSICA EN CUSCO (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
         <TrustGuaranteeAndOffice 
           lang={lang} 
           whatsapp={whatsappNumber} 
@@ -1873,8 +1902,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </div>
       )}
 
-      {/* 13. SELLOS DE ACREDITACIÓN OFICIAL */}
-      {!isFree && (
+      {/* 13. SELLOS DE ACREDITACIÓN OFICIAL (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
         <section className="bg-white py-6 sm:py-8 border-b border-stone-200">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center space-y-3 sm:space-y-4">
             <p className="text-[10px] sm:text-[11px] font-black uppercase tracking-widest text-stone-400">

@@ -45,6 +45,19 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const tier = data.tier || 'advance';
   const isFree = tier === 'free';
+  const isBasic = tier === 'basic';
+  const isPro = tier === 'pro';
+  const isAdvance = tier === 'advance';
+
+  // Filtrado de idiomas según nivel de plan (Guía de Niveles)
+  // Free / Basic: Sin selector de idiomas
+  // Pro: ES / EN (máximo 2 idiomas)
+  // Advance: Todos los 5 idiomas
+  const displayCulturalLanguages: LanguageType[] = isFree || isBasic
+    ? []
+    : isPro
+    ? ['es', 'en']
+    : ['es', 'en', 'pt', 'fr', 'it'];
 
   const encodedMsg = encodeURIComponent(
     `Hola ${data.guideName || 'Guía Historiador'}, deseo información y disponibilidad para el tour cultural "${data.name || data.hero?.title || 'Cusco Ancestral'}".`
@@ -97,39 +110,41 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           </div>
 
           {/* Nav links (Desktop) */}
-          {!isMobile && (
+          {!isFree && !isMobile && (
             <div className="hidden xl:flex items-center gap-5 text-[11px] font-bold tracking-wider uppercase text-stone-200">
               <a href="#actualites" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.cronicas}</a>
-              <a href="#agenda" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.agenda}</a>
-              <a href="#territorio" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.territorio}</a>
-              <a href="#itinerario" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.itinerario}</a>
-              <a href="#conseils" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.conseils}</a>
-              <a href="#guide" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.guide}</a>
-              <a href="#livre-dor" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.reviews}</a>
+              {isAdvance && <a href="#agenda" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.agenda}</a>}
+              {(isPro || isAdvance) && <a href="#territorio" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.territorio}</a>}
+              {(isPro || isAdvance) && <a href="#itinerario" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.itinerario}</a>}
+              {(isPro || isAdvance) && <a href="#conseils" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.conseils}</a>}
+              {(isPro || isAdvance) && <a href="#guide" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.guide}</a>}
+              {isAdvance && <a href="#livre-dor" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.reviews}</a>}
               <a href="#contacto" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.contact}</a>
             </div>
           )}
 
           {/* Action CTAs & Language Switcher */}
           <div className="flex items-center gap-2.5">
-            {/* Language Selector Pill */}
-            <div className="flex items-center bg-black/45 backdrop-blur-md rounded-full border border-white/20 p-0.5 text-[10px] sm:text-[11px] font-bold shadow-inner">
-              {(['es', 'en', 'pt', 'fr', 'it'] as LanguageType[]).map((langKey) => (
-                <button
-                  key={langKey}
-                  type="button"
-                  onClick={() => setCurrentLang(langKey)}
-                  className={`px-2 py-1 rounded-full uppercase transition-all duration-200 cursor-pointer active:scale-90 ${
-                    currentLang === langKey
-                      ? 'bg-red-700 text-white shadow-xs font-black scale-105'
-                      : 'text-stone-300 hover:text-white hover:bg-white/10 hover:scale-105'
-                  }`}
-                  title={`Idioma: ${langKey.toUpperCase()}`}
-                >
-                  {langKey}
-                </button>
-              ))}
-            </div>
+            {/* Language Selector Pill (Pro & Advance) */}
+            {displayCulturalLanguages.length > 1 && (
+              <div className="flex items-center bg-black/45 backdrop-blur-md rounded-full border border-white/20 p-0.5 text-[10px] sm:text-[11px] font-bold shadow-inner">
+                {displayCulturalLanguages.map((langKey) => (
+                  <button
+                    key={langKey}
+                    type="button"
+                    onClick={() => setCurrentLang(langKey)}
+                    className={`px-2 py-1 rounded-full uppercase transition-all duration-200 cursor-pointer active:scale-90 ${
+                      currentLang === langKey
+                        ? 'bg-red-700 text-white shadow-xs font-black scale-105'
+                        : 'text-stone-300 hover:text-white hover:bg-white/10 hover:scale-105'
+                    }`}
+                    title={`Idioma: ${langKey.toUpperCase()}`}
+                  >
+                    {langKey}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Action CTA Button with Pulsing Shimmer Glow */}
             {isQuote ? (
@@ -213,8 +228,9 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </header>
 
-      {/* 2. OVERLAPPING 5 CIRCULAR QUICK ACCESS CARDS (Continuous Staggered Floating Wave & Vibrant Hover/Tap) */}
-      <section className="relative z-30 -mt-10 sm:-mt-14 max-w-6xl mx-auto px-4">
+      {/* 2. OVERLAPPING 5 CIRCULAR QUICK ACCESS CARDS (BÁSICO, PRO, ADVANCE) */}
+      {!isFree && (
+        <section className="relative z-30 -mt-10 sm:-mt-14 max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-4">
           {t.quickServices.map((item, idx) => {
             const floatClass = [
@@ -263,9 +279,11 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           })}
         </div>
       </section>
+      )}
 
-      {/* 3. SECTION: ACTUALITÉS / PATRIMONIO VIVO (Hover-Lifts, Pulsing CTAs & Image Zooms) */}
-      <section id="actualites" className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto">
+      {/* 3. SECTION: ACTUALITÉS / PATRIMONIO VIVO (BÁSICO, PRO, ADVANCE) */}
+      {!isFree && (
+        <section id="actualites" className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto">
         {/* Section Header */}
         <div className="flex items-baseline justify-between mb-8 sm:mb-12 border-b border-stone-200/70 pb-4">
           <h2 className="text-3xl sm:text-5xl font-serif font-black italic text-stone-900">
@@ -354,9 +372,11 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
         </div>
       </section>
+      )}
 
-      {/* 4. SECTION: AGENDA (Interactive Showcase & Pulsing Action Buttons) */}
-      <section id="agenda" className="py-16 sm:py-24 px-4 sm:px-8 bg-red-50/30 border-y border-red-200/50">
+      {/* 4. SECTION: AGENDA (ADVANCE ONLY) */}
+      {isAdvance && (
+        <section id="agenda" className="py-16 sm:py-24 px-4 sm:px-8 bg-red-50/30 border-y border-red-200/50">
         <div className="max-w-7xl mx-auto">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -463,9 +483,11 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
         </div>
       </section>
+      )}
 
-      {/* 5. SECTION: LE TERRITOIRE / EL TERRITORIO SAGRADO (Animated GPS Beacon & Interactive Pins) */}
-      <section id="territorio" className="relative py-20 sm:py-28 px-4 sm:px-8 text-white overflow-hidden">
+      {/* 5. SECTION: LE TERRITOIRE / EL TERRITORIO SAGRADO (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
+        <section id="territorio" className="relative py-20 sm:py-28 px-4 sm:px-8 text-white overflow-hidden">
         {/* Full-width mountain backdrop */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -556,9 +578,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
         </div>
       </section>
+      )}
 
-      {/* 6. TOUR ITINERARY & INCLUSIONS (Red Accents with Step Highlights) */}
-      {data.itinerary && data.itinerary.length > 0 && (
+      {/* 6. TOUR ITINERARY & INCLUSIONS (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && data.itinerary && data.itinerary.length > 0 && (
         <section id="itinerario" className="py-16 sm:py-24 px-4 sm:px-8 max-w-4xl mx-auto">
           <div className="text-center mb-10 space-y-2">
             <span className="text-xs font-bold text-red-800 uppercase tracking-widest bg-red-100 border border-red-200 px-3 py-1 rounded-full">
@@ -618,8 +641,9 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </section>
       )}
 
-      {/* 8. CONSEILS PRATIQUES / QUÉ LLEVAR EN LA MOCHILA CULTURAL (Hover Lifts & Bounces) */}
-      <section id="conseils" className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto">
+      {/* 8. CONSEILS PRATIQUES / QUÉ LLEVAR EN LA MOCHILA CULTURAL (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
+        <section id="conseils" className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
           <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
             <Backpack size={13} className="animate-soft-float" />
@@ -664,9 +688,11 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           ))}
         </div>
       </section>
+      )}
 
-      {/* 9. VOS MÉDIATEURS DU PATRIMOINE / EQUIPO DE HISTORIADORES CERTIFICADOS (Pulsing Direct Action Buttons) */}
-      <section id="guide" className="py-16 sm:py-24 px-4 sm:px-8 bg-red-50/40 border-t border-red-200/60">
+      {/* 9. VOS MÉDIATEURS DU PATRIMOINE / EQUIPO DE HISTORIADORES CERTIFICADOS (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
+        <section id="guide" className="py-16 sm:py-24 px-4 sm:px-8 bg-red-50/40 border-t border-red-200/60">
         <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12">
           
           {/* Section Header */}
@@ -770,6 +796,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
         </div>
       </section>
+      )}
 
       {/* 10. PINTEREST PINBOARD (PRO & ADVANCE) */}
       {!isFree && (
@@ -784,8 +811,9 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         />
       )}
 
-      {/* 11. LIVRE D'OR DU PATRIMOINE (RESEÑAS & TESTIMONIOS VERIFICADOS) */}
-      <section id="livre-dor" className="py-16 sm:py-24 px-4 sm:px-8 bg-stone-50 border-t border-stone-200">
+      {/* 11. LIVRE D'OR DU PATRIMOINE (RESEÑAS & TESTIMONIOS VERIFICADOS - ADVANCE ONLY) */}
+      {isAdvance && (
+        <section id="livre-dor" className="py-16 sm:py-24 px-4 sm:px-8 bg-stone-50 border-t border-stone-200">
         <div className="max-w-7xl mx-auto space-y-10 sm:space-y-12">
           {/* Header & Rating Summary */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-stone-200 pb-8 text-left">
@@ -879,19 +907,22 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           </div>
         </div>
       </section>
+      )}
 
-      {/* 12. TOUR SUPPORT & FAQS */}
-      <TourSupportAndFaqs
-        faqs={data.faqs}
-        tourName={data.name || data.hero?.title || 'Tour Cultural'}
-        whatsapp={data.whatsapp}
-        guideName={data.guideName}
-        destination={data.destination || 'Cusco'}
-        tier={tier}
-        theme="cultural"
-        isMobile={isMobile}
-        lang={currentLang}
-      />
+      {/* 12. TOUR SUPPORT & FAQS (ADVANCE ONLY) */}
+      {isAdvance && (
+        <TourSupportAndFaqs
+          faqs={data.faqs}
+          tourName={data.name || data.hero?.title || 'Tour Cultural'}
+          whatsapp={data.whatsapp}
+          guideName={data.guideName}
+          destination={data.destination || 'Cusco'}
+          tier={tier}
+          theme="cultural"
+          isMobile={isMobile}
+          lang={currentLang}
+        />
+      )}
 
       {/* 13. MUNICIPAL & HERITAGE FOOTER BLOCK */}
       <footer id="contacto" className="bg-white border-t-2 border-red-700 py-10 px-4 sm:px-8 text-stone-700 text-xs">
@@ -964,6 +995,13 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         <div className="max-w-7xl mx-auto pt-8 mt-8 border-t border-stone-200 text-center text-stone-400 text-[10px]">
           <p>{t.footer.copyright}</p>
         </div>
+
+        {/* Banner de Plan Gratuito */}
+        {isFree && (
+          <div className="bg-stone-900 text-stone-300 py-3 px-4 text-center text-xs font-semibold border-t border-stone-800 rounded-xl mt-4">
+            <p>⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
+          </div>
+        )}
       </footer>
 
       {/* 14. STICKY MOBILE BOTTOM BAR (With Slide-up entrance & pulsating beacon CTA) */}

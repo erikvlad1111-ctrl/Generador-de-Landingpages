@@ -450,10 +450,6 @@ export default function NewLandingDemo() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const searchParams = new URLSearchParams(window.location.search);
-      const qTier = searchParams.get('tier') as PlanTier;
-      if (qTier && ['free', 'basic', 'pro', 'advance'].includes(qTier)) {
-        setTier(qTier);
-      }
       const qTemplate = searchParams.get('template') as TemplateType;
       if (qTemplate && ['agency-portal', 'adventure', 'premium', 'cultural', 'boho-nature'].includes(qTemplate)) {
         setTemplate(qTemplate);
@@ -461,6 +457,10 @@ export default function NewLandingDemo() {
         if (matchingPreset) {
           handleApplyPreset(matchingPreset);
         }
+      }
+      const qTier = searchParams.get('tier') as PlanTier;
+      if (qTier && ['free', 'basic', 'pro', 'advance'].includes(qTier)) {
+        setTier(qTier);
       }
     }
   }, []);

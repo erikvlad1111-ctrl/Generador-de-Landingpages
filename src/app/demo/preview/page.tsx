@@ -30,19 +30,30 @@ function DemoPreviewContent() {
   const searchParams = useSearchParams();
   const slugQuery = searchParams.get('slug');
   const templateQuery = searchParams.get('template') as TemplateType | null;
+  const tierQuery = searchParams.get('tier') as PlanTier | null;
 
   const [landing, setLanding] = useState<LandingData | null>(() => {
     const list = getStoredLandings();
+    let selected: LandingData | null = null;
     if (slugQuery) {
       const found = list.find(item => item.slug === slugQuery);
-      if (found) return templateQuery ? { ...found, template: templateQuery } : found;
+      if (found) selected = found;
     }
-    if (templateQuery) {
+    if (!selected && templateQuery) {
       const foundByTpl = list.find(item => item.template === templateQuery);
-      if (foundByTpl) return foundByTpl;
-      if (list[0]) return { ...list[0], template: templateQuery };
+      if (foundByTpl) selected = foundByTpl;
     }
-    return list[0] || null;
+    if (!selected) {
+      selected = list[0] || null;
+    }
+    if (selected) {
+      return {
+        ...selected,
+        ...(templateQuery ? { template: templateQuery } : {}),
+        ...(tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery) ? { tier: tierQuery } : {})
+      };
+    }
+    return null;
   });
 
   const [viewMode, setViewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
