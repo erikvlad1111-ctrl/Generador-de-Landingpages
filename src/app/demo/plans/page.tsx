@@ -28,12 +28,15 @@ interface TierSummary {
   id: PlanTier;
   name: string;
   badge: string;
-  badgeColor: string;
-  popular?: boolean;
+  badgeClass: string;
   targetTour: string;
   scope: string;
   sectionsCount: string;
   icon: React.ReactNode;
+  iconContainerClass: string;
+  cardClass: string;
+  tourClass: string;
+  btnClass: string;
   recommendedUse: string;
   ctaText: string;
 }
@@ -43,11 +46,15 @@ const TIER_SUMMARIES: TierSummary[] = [
     id: 'free',
     name: 'Gratuito',
     badge: 'Express',
-    badgeColor: 'bg-slate-700 text-white',
+    badgeClass: 'bg-slate-900 text-white shadow-2xs',
     targetTour: 'Free Walking Tours y Campañas Rápidas',
     scope: '1 sección directa de captación',
     sectionsCount: '1 Sección',
-    icon: <Compass className="text-slate-600" size={20} />,
+    icon: <Compass className="text-slate-800" size={20} />,
+    iconContainerClass: 'bg-slate-100 border-slate-300/80 text-slate-800',
+    cardClass: 'bg-slate-50/80 border-slate-300 ring-1 ring-slate-400/25 shadow-xs hover:shadow-md hover:border-slate-400',
+    tourClass: 'text-slate-900 font-bold',
+    btnClass: 'bg-slate-900 hover:bg-slate-800 text-white shadow-xs hover:scale-101 active:scale-98',
     recommendedUse: 'Promociones flash y captación directa en 1 toque por WhatsApp sin scroll.',
     ctaText: 'Crear Gratuito'
   },
@@ -55,11 +62,15 @@ const TIER_SUMMARIES: TierSummary[] = [
     id: 'basic',
     name: 'Básico',
     badge: 'Estándar',
-    badgeColor: 'bg-emerald-600 text-white',
+    badgeClass: 'bg-emerald-600 text-white shadow-2xs',
     targetTour: 'City Tour, Museos y 1/2 Jornada',
     scope: 'Estructura web esencial para presencia formal',
     sectionsCount: '4 Secciones',
-    icon: <Zap className="text-emerald-600" size={20} />,
+    icon: <Zap className="text-emerald-700" size={20} />,
+    iconContainerClass: 'bg-emerald-100/90 border-emerald-300/80 text-emerald-800',
+    cardClass: 'bg-emerald-50/50 border-emerald-300 ring-1 ring-emerald-500/25 shadow-xs hover:shadow-md hover:border-emerald-400',
+    tourClass: 'text-emerald-900 font-bold',
+    btnClass: 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs hover:scale-101 active:scale-98',
     recommendedUse: 'Recorridos tradicionales que requieren descripción clara y qué incluye.',
     ctaText: 'Crear Básico'
   },
@@ -67,12 +78,15 @@ const TIER_SUMMARIES: TierSummary[] = [
     id: 'pro',
     name: 'Pro',
     badge: 'Recomendado',
-    badgeColor: 'bg-blue-600 text-white',
-    popular: true,
+    badgeClass: 'bg-blue-600 text-white shadow-2xs',
     targetTour: 'Full Days, Aventura y Trekking',
     scope: 'Alta conversión con itinerario y logística clara',
     sectionsCount: '7 Secciones',
-    icon: <Sparkles className="text-blue-600" size={20} />,
+    icon: <Sparkles className="text-blue-700" size={20} />,
+    iconContainerClass: 'bg-blue-100/90 border-blue-300/80 text-blue-800',
+    cardClass: 'bg-blue-50/50 border-blue-300 ring-2 ring-blue-500/30 shadow-xs hover:shadow-md hover:border-blue-400',
+    tourClass: 'text-blue-900 font-bold',
+    btnClass: 'bg-blue-600 hover:bg-blue-700 text-white shadow-xs hover:scale-101 active:scale-98',
     recommendedUse: 'Tours de 1 o 2 días con itinerario cronológico, checklist de mochila y sellos DIRCETUR.',
     ctaText: 'Crear Pro'
   },
@@ -80,11 +94,15 @@ const TIER_SUMMARIES: TierSummary[] = [
     id: 'advance',
     name: 'Advance',
     badge: 'VIP Multidía',
-    badgeColor: 'bg-purple-600 text-white',
+    badgeClass: 'bg-purple-600 text-white shadow-2xs',
     targetTour: 'Expediciones Multidía y Tours VIP',
     scope: 'Experiencia completa de alto rendimiento y reservas',
     sectionsCount: '9+ Secciones',
-    icon: <Crown className="text-purple-600" size={20} />,
+    icon: <Crown className="text-purple-700" size={20} />,
+    iconContainerClass: 'bg-purple-100/90 border-purple-300/80 text-purple-800',
+    cardClass: 'bg-purple-50/50 border-purple-300 ring-1 ring-purple-500/25 shadow-xs hover:shadow-md hover:border-purple-400',
+    tourClass: 'text-purple-900 font-bold',
+    btnClass: 'bg-purple-600 hover:bg-purple-700 text-white shadow-xs hover:scale-101 active:scale-98',
     recommendedUse: 'Paquetes de lujo con galería HD, FAQs interactivas, testimonios y cotizador VIP.',
     ctaText: 'Crear Advance'
   }
@@ -280,38 +298,31 @@ export default function PlansPage() {
         {/* Resumen Ejecutivo de los 4 Niveles (Tarjetas Compactas Integradas a la Arquitectura) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pb-2">
           {TIER_SUMMARIES.map((tier) => {
-            const isPro = tier.popular;
             return (
               <div 
                 key={tier.id}
-                className={`p-4 rounded-2xl border transition-all flex flex-col justify-between ${
-                  isPro 
-                    ? 'bg-blue-50/40 border-blue-300 ring-2 ring-blue-500/20 shadow-xs' 
-                    : tier.id === 'advance'
-                    ? 'bg-purple-50/30 border-purple-200'
-                    : 'bg-slate-50/60 border-slate-200/80'
-                }`}
+                className={`p-4 rounded-2xl border transition-all flex flex-col justify-between ${tier.cardClass}`}
               >
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <div className="p-1.5 rounded-lg bg-white border border-slate-200/80 shadow-2xs">
+                      <div className={`p-1.5 rounded-lg border shadow-2xs ${tier.iconContainerClass}`}>
                         {tier.icon}
                       </div>
                       <span className="font-extrabold text-sm text-slate-900">
                         {tier.name}
                       </span>
                     </div>
-                    <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${tier.badgeColor}`}>
+                    <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-full ${tier.badgeClass}`}>
                       {tier.badge}
                     </span>
                   </div>
 
                   <div>
-                    <span className="text-[11px] font-bold text-blue-700 block line-clamp-1">
+                    <span className={`text-[11px] font-bold block line-clamp-1 ${tier.tourClass}`}>
                       {tier.targetTour}
                     </span>
-                    <span className="text-[10px] font-semibold text-slate-500 bg-white px-1.5 py-0.5 rounded border border-slate-200/70 inline-block mt-1">
+                    <span className="text-[10px] font-semibold text-slate-600 bg-white/90 px-1.5 py-0.5 rounded border border-slate-300/80 inline-block mt-1">
                       {tier.sectionsCount}
                     </span>
                   </div>
@@ -321,16 +332,10 @@ export default function PlansPage() {
                   </p>
                 </div>
 
-                <div className="pt-3 mt-3 border-t border-slate-200/70">
+                <div className="pt-3 mt-3 border-t border-slate-200/80">
                   <Link
                     href={`/demo/new?tier=${tier.id}`}
-                    className={`w-full py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
-                      isPro
-                        ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-xs'
-                        : tier.id === 'advance'
-                        ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-xs'
-                        : 'bg-white hover:bg-slate-100 text-slate-800 border border-slate-200'
-                    }`}
+                    className={`w-full py-2.5 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer ${tier.btnClass}`}
                   >
                     <span>{tier.ctaText}</span>
                     <ArrowRight size={12} />
@@ -349,17 +354,29 @@ export default function PlansPage() {
                 <th className="py-3.5 px-4 text-slate-800 min-w-[260px]">
                   Módulo / Componente Técnico
                 </th>
-                <th className="py-3.5 px-4 text-center min-w-[120px]">
-                  Gratuito (1 Secc.)
+                <th className="py-3.5 px-4 text-center min-w-[130px] bg-slate-100/90 text-slate-900 border-x border-slate-200/70">
+                  <div className="flex items-center justify-center gap-1.5">
+                    <Compass size={14} className="text-slate-800" />
+                    <span>Gratuito (1 Secc.)</span>
+                  </div>
                 </th>
-                <th className="py-3.5 px-4 text-center min-w-[120px]">
-                  Básico (4 Secc.)
+                <th className="py-3.5 px-4 text-center min-w-[130px] bg-emerald-50/80 text-emerald-950 border-r border-slate-200/70">
+                  <div className="flex items-center justify-center gap-1.5">
+                    <Zap size={14} className="text-emerald-700" />
+                    <span>Básico (4 Secc.)</span>
+                  </div>
                 </th>
-                <th className="py-3.5 px-4 text-center text-blue-700 bg-blue-50/60 min-w-[150px]">
-                  Pro (7 Secc. • ⭐)
+                <th className="py-3.5 px-4 text-center text-blue-950 bg-blue-50/80 min-w-[150px] border-r border-slate-200/70">
+                  <div className="flex items-center justify-center gap-1.5">
+                    <Sparkles size={14} className="text-blue-700" />
+                    <span>Pro (7 Secc. • ⭐)</span>
+                  </div>
                 </th>
-                <th className="py-3.5 px-4 text-center text-purple-700 bg-purple-50/40 min-w-[160px]">
-                  Advance (9+ Secc. • 👑)
+                <th className="py-3.5 px-4 text-center text-purple-950 bg-purple-50/80 min-w-[160px]">
+                  <div className="flex items-center justify-center gap-1.5">
+                    <Crown size={14} className="text-purple-700" />
+                    <span>Advance (9+ Secc. • 👑)</span>
+                  </div>
                 </th>
               </tr>
             </thead>
@@ -388,54 +405,54 @@ export default function PlansPage() {
                       </td>
                       
                       {/* Free */}
-                      <td className="py-3.5 px-4 text-center text-slate-600">
+                      <td className="py-3.5 px-4 text-center text-slate-800 bg-slate-50/40 border-x border-slate-100">
                         {typeof row.free === 'boolean' ? (
                           row.free ? (
-                            <Check size={16} className="text-emerald-500 mx-auto" />
+                            <Check size={16} className="text-slate-900 font-bold mx-auto" />
                           ) : (
                             <X size={16} className="text-slate-300 mx-auto" />
                           )
                         ) : (
-                          <span className="font-medium text-[11px] text-slate-700">{row.free}</span>
+                          <span className="font-bold text-[11px] text-slate-900 bg-slate-200/80 px-2 py-0.5 rounded">{row.free}</span>
                         )}
                       </td>
 
                       {/* Basic */}
-                      <td className="py-3.5 px-4 text-center text-slate-600">
+                      <td className="py-3.5 px-4 text-center text-emerald-900 bg-emerald-50/30 border-r border-slate-100">
                         {typeof row.basic === 'boolean' ? (
                           row.basic ? (
-                            <Check size={16} className="text-emerald-500 mx-auto" />
+                            <Check size={16} className="text-emerald-600 font-bold mx-auto" />
                           ) : (
                             <X size={16} className="text-slate-300 mx-auto" />
                           )
                         ) : (
-                          <span className="font-medium text-[11px] text-slate-700">{row.basic}</span>
+                          <span className="font-bold text-[11px] text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded">{row.basic}</span>
                         )}
                       </td>
 
                       {/* Pro */}
-                      <td className="py-3.5 px-4 text-center font-bold text-blue-900 bg-blue-50/30">
+                      <td className="py-3.5 px-4 text-center font-bold text-blue-900 bg-blue-50/30 border-r border-slate-100">
                         {typeof row.pro === 'boolean' ? (
                           row.pro ? (
-                            <Check size={16} className="text-blue-600 mx-auto" />
+                            <Check size={16} className="text-blue-600 font-bold mx-auto" />
                           ) : (
                             <X size={16} className="text-slate-300 mx-auto" />
                           )
                         ) : (
-                          <span className="font-bold text-[11px] text-blue-800">{row.pro}</span>
+                          <span className="font-bold text-[11px] text-blue-800 bg-blue-100/80 px-2 py-0.5 rounded">{row.pro}</span>
                         )}
                       </td>
 
                       {/* Advance */}
-                      <td className="py-3.5 px-4 text-center font-bold text-purple-900 bg-purple-50/20">
+                      <td className="py-3.5 px-4 text-center font-bold text-purple-900 bg-purple-50/30">
                         {typeof row.advance === 'boolean' ? (
                           row.advance ? (
-                            <Check size={16} className="text-purple-600 mx-auto" />
+                            <Check size={16} className="text-purple-600 font-bold mx-auto" />
                           ) : (
                             <X size={16} className="text-slate-300 mx-auto" />
                           )
                         ) : (
-                          <span className="font-bold text-[11px] text-purple-800">{row.advance}</span>
+                          <span className="font-bold text-[11px] text-purple-800 bg-purple-100/80 px-2 py-0.5 rounded">{row.advance}</span>
                         )}
                       </td>
                     </tr>
