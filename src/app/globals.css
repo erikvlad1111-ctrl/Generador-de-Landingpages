@@ -29,28 +29,36 @@ body {
   background: #94a3b8;
 }
 
-/* Modern Clean Data Table Container: Smooth, subtle scrollbar when needed */
+/* Modern Clean Data Table Container: Smooth, comfortable scrollbar */
 .modern-table-container {
-  scrollbar-width: thin;
-  scrollbar-color: #cbd5e1 #f8fafc;
+  scrollbar-width: auto;
+  scrollbar-color: #94a3b8 #f1f5f9;
 }
 
 .modern-table-container::-webkit-scrollbar {
-  height: 6px;
+  height: 11px;
 }
 
 .modern-table-container::-webkit-scrollbar-track {
-  background: #f8fafc;
+  background: #f1f5f9;
   border-radius: 9999px;
+  margin: 0 4px;
 }
 
 .modern-table-container::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #94a3b8;
   border-radius: 9999px;
+  border: 2px solid #f1f5f9;
+  cursor: grab;
 }
 
 .modern-table-container::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: #64748b;
+}
+
+.modern-table-container::-webkit-scrollbar-thumb:active {
+  background: #475569;
+  cursor: grabbing;
 }
 
 /* Modern Button Shine and Dynamic Float Animations */

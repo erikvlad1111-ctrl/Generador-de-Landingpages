@@ -564,19 +564,19 @@ export default function DemoDashboard() {
                 <button
                   type="button"
                   onClick={() => setShowFullDetails(!showFullDetails)}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all border cursor-pointer shadow-2xs ${
+                  className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-[13px] font-bold transition-all border cursor-pointer shadow-2xs min-h-[36px] ${
                     showFullDetails
                       ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
                       : 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300/80 hover:border-slate-400'
                   }`}
                   title="Alternar vista extendida para ver la fecha completa, slug de URL y ruta"
                 >
-                  <CalendarDays size={13} className={showFullDetails ? 'text-blue-100' : 'text-blue-600'} />
+                  <CalendarDays size={15} className={showFullDetails ? 'text-blue-100' : 'text-blue-600'} />
                   <span>{showFullDetails ? 'Ocultar Fecha Completa' : 'Ver Fecha Completa & Slugs'}</span>
                 </button>
 
                 <span className="hidden md:inline text-slate-400">|</span>
-                <span className="text-[11px] text-slate-500 font-medium hidden sm:inline">
+                <span className="text-xs text-slate-500 font-medium hidden sm:inline">
                   {showFullDetails 
                     ? 'Mostrando fecha completa formateada y enlaces directos' 
                     : 'Ajustada al 100% del ancho del navegador'}
@@ -584,47 +584,47 @@ export default function DemoDashboard() {
               </div>
 
               {/* Indicador de Desplazamiento y Botones de Navegación Suave */}
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex items-center gap-2.5 shrink-0">
                 {(canScrollLeft || canScrollRight) && (
-                  <div className="hidden sm:flex items-center gap-2 pr-1 text-[11px] text-slate-500">
-                    <span className="text-[10px] uppercase font-bold text-slate-400">Desplazamiento:</span>
-                    <div className="w-16 h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                  <div className="hidden sm:flex items-center gap-2 pr-1 text-xs text-slate-500">
+                    <span className="text-[11px] uppercase font-bold text-slate-400 tracking-wider">Desplazamiento:</span>
+                    <div className="w-24 h-2.5 bg-slate-200 rounded-full overflow-hidden p-0.5 border border-slate-300/50">
                       <div 
                         className="h-full bg-blue-600 rounded-full transition-all duration-150" 
-                        style={{ width: `${Math.max(scrollProgress, 12)}%` }}
+                        style={{ width: `${Math.max(scrollProgress, 14)}%` }}
                       />
                     </div>
                   </div>
                 )}
 
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1.5">
                   <button
                     type="button"
                     onClick={scrollToStart}
                     disabled={!canScrollLeft}
-                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all border ${
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs sm:text-[13px] font-bold transition-all border min-h-[36px] ${
                       canScrollLeft 
                         ? 'bg-white hover:bg-slate-100 text-slate-700 border-slate-300 shadow-2xs active:scale-98 cursor-pointer' 
                         : 'bg-slate-100/70 text-slate-300 border-slate-200/60 cursor-default'
                     }`}
                     title="Ir al inicio de la tabla (Tour y datos)"
                   >
-                    <ChevronLeft size={13} />
-                    <span className="hidden xs:inline">Inicio</span>
+                    <ChevronLeft size={16} />
+                    <span>Inicio</span>
                   </button>
                   <button
                     type="button"
                     onClick={scrollToEnd}
                     disabled={!canScrollRight}
-                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold transition-all border ${
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs sm:text-[13px] font-bold transition-all border min-h-[36px] ${
                       canScrollRight 
                         ? 'bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200 shadow-2xs active:scale-98 cursor-pointer' 
                         : 'bg-slate-100/70 text-slate-300 border-slate-200/60 cursor-default'
                     }`}
                     title="Ir directamente a la columna de Acciones"
                   >
-                    <span className="hidden xs:inline">Acciones</span>
-                    <ChevronRight size={13} />
+                    <span>Acciones</span>
+                    <ChevronRight size={16} />
                   </button>
                 </div>
               </div>
