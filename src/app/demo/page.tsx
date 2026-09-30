@@ -288,6 +288,67 @@ export default function DemoDashboard() {
         </Link>
       </div>
 
+      {/* Quick Demos Strip: 5 World-Class Tourism Templates */}
+      <div className="bg-slate-900 text-white rounded-2xl p-4 sm:p-5 border border-slate-800 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
+            <LayoutTemplate size={18} />
+          </div>
+          <div>
+            <span className="text-xs font-bold text-white block">Demos en Vivo de los 5 Diseños Oficiales</span>
+            <span className="text-[11px] text-slate-400">Abre directamente las landings optimizadas para móvil y escritorio</span>
+          </div>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+          <a
+            href="/p/machu-picchu-full-day?template=agency-portal"
+            target="_blank"
+            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 text-xs font-bold transition-all flex items-center gap-1.5"
+            title="Ver Diseño 1: Portal de Agencia"
+          >
+            <span>🌐 Portal Agencia</span>
+            <ExternalLink size={12} className="text-slate-400" />
+          </a>
+          <a
+            href="/p/laguna-humantay-bitacora-fotografica-paisajismo?template=boho-nature"
+            target="_blank"
+            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-orange-300 border border-slate-700 text-xs font-bold transition-all flex items-center gap-1.5"
+            title="Ver Diseño 2: Boho & Naturaleza"
+          >
+            <span>📷 Boho & Paisaje</span>
+            <ExternalLink size={12} className="text-slate-400" />
+          </a>
+          <a
+            href="/p/machu-picchu-full-day?template=premium"
+            target="_blank"
+            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-yellow-300 border border-slate-700 text-xs font-bold transition-all flex items-center gap-1.5"
+            title="Ver Diseño 3: Machu Picchu VIP"
+          >
+            <span>👑 VIP Lujo</span>
+            <ExternalLink size={12} className="text-slate-400" />
+          </a>
+          <a
+            href="/p/salkantay-trek-5-dias?template=adventure"
+            target="_blank"
+            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-blue-300 border border-slate-700 text-xs font-bold transition-all flex items-center gap-1.5"
+            title="Ver Diseño 4: TrekExplorer Aventura"
+          >
+            <span>🏔️ TrekExplorer</span>
+            <ExternalLink size={12} className="text-slate-400" />
+          </a>
+          <a
+            href="/p/city-tour-cusco-ancestral?template=cultural"
+            target="_blank"
+            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-red-300 border border-slate-700 text-xs font-bold transition-all flex items-center gap-1.5"
+            title="Ver Diseño 5: Cusco Patrimonial"
+          >
+            <span>🏛️ Cultural</span>
+            <ExternalLink size={12} className="text-slate-400" />
+          </a>
+        </div>
+      </div>
+
       {/* 3. CONTROL BAR: SEARCH & INTERACTIVE FILTER TABS */}
       <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-5 sm:p-6 space-y-4">
         <div className="flex flex-col lg:flex-row gap-4 justify-between items-stretch lg:items-center">

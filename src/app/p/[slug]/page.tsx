@@ -47,16 +47,34 @@ function PublicLandingContent() {
     );
   }
 
+  // Sincronizar título dinámico en pestaña del navegador
+  React.useEffect(() => {
+    if (landing?.name) {
+      document.title = `${landing.name} — ${landing.price || 'Cusco'} | Cusco Creativos`;
+    }
+  }, [landing]);
+
   const cleanPhone = (landing.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const encodedMsg = encodeURIComponent(`Hola ${landing.guideName || 'Cusco Creativos'}, vi su página web "${landing.name}" y deseo información para reservar.`);
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
-  const handleCopyLink = () => {
-    if (typeof window !== 'undefined') {
-      navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+  const handleShare = async () => {
+    if (typeof window === 'undefined') return;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `${landing.name} — ${landing.price}`,
+          text: `¡Mira esta experiencia turística en Cusco: "${landing.name}"!`,
+          url: window.location.href,
+        });
+        return;
+      } catch {
+        // Fallback al portapapeles si el usuario cancela o el dispositivo no soporta
+      }
     }
+    navigator.clipboard.writeText(window.location.href);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -77,9 +95,9 @@ function PublicLandingContent() {
 
             <div className="flex items-center gap-1 sm:gap-2 shrink-0">
               <button
-                onClick={handleCopyLink}
+                onClick={handleShare}
                 className="bg-slate-800 hover:bg-slate-700 text-slate-200 px-2 sm:px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1 text-[11px] sm:text-xs font-medium cursor-pointer"
-                title="Copiar enlace directo"
+                title="Compartir o copiar enlace"
               >
                 {copied ? <Check size={13} className="text-emerald-400" /> : <Share2 size={13} />}
                 <span className="hidden md:inline">{copied ? '¡Copiado!' : 'Compartir'}</span>

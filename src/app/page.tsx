@@ -37,50 +37,72 @@ export default function Home() {
           <div>
             <h1 className="font-bold text-base tracking-tight text-white flex items-center gap-2">
               Cusco Creativos
-              <span className="text-[10px] bg-blue-500/20 text-blue-300 font-semibold px-2 py-0.5 rounded-full border border-blue-400/30">
-                Fase 1 MVP
+              <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2.5 py-0.5 rounded-full border border-emerald-400/30">
+                Plataforma SaaS Oficial
               </span>
             </h1>
-            <p className="text-xs text-slate-400">Sistema Generador de Landing Pages para Turismo</p>
+            <p className="text-xs text-slate-400">Generador de Landing Pages para Turismo Receptivo</p>
           </div>
         </div>
         <div className="text-xs text-slate-400 hidden sm:flex items-center gap-1.5">
           <ShieldCheck size={16} className="text-emerald-400" />
-          <span>Acceso Protegido para Agencias</span>
+          <span>Acceso Protegido para Agencias & Operadores</span>
         </div>
       </header>
 
       {/* Main Body: Hero + Login Card */}
       <main className="max-w-6xl mx-auto px-6 py-12 grid md:grid-cols-12 gap-12 items-center w-full my-auto">
-        {/* Left Side: System Value Prop (Fase 1) */}
+        {/* Left Side: System Value Prop */}
         <div className="md:col-span-7 space-y-6">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold">
             <Sparkles size={14} />
-            Plataforma Especializada en Turismo Andino
+            Plataforma Especializada en Turismo Andino & Machu Picchu
           </div>
           <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white leading-tight">
-            Crea landings de alta conversión para tus tours en <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-300">menos de 2 minutos</span>
+            Crea landings de alta conversión para tus tours en <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-300 to-emerald-400">menos de 2 minutos</span>
           </h2>
           <p className="text-slate-300 text-base leading-relaxed max-w-xl">
-            Herramienta diseñada para agencias receptivas y guías certificados de Cusco. Genera páginas vendedoras con copywriting de IA, integración directa con WhatsApp y cotizaciones formales.
+            Diseñado para agencias receptivas y guías certificados de Cusco. Genera páginas vendedoras con 5 diseños de autor, cumplimiento legal INDECOPI, 5 idiomas y conversión directa a WhatsApp.
           </p>
 
           <div className="grid sm:grid-cols-2 gap-3 pt-2">
-            <div className="flex items-center gap-2.5 text-sm text-slate-300 bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-300 bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
               <CheckCircle2 size={18} className="text-emerald-400 shrink-0" />
-              <span>4 Plantillas: Aventura, Lujo, Cultural y Boho Pinterest</span>
+              <span>5 Diseños: Portal Agencia, VIP, Aventura, Cultural y Boho</span>
             </div>
-            <div className="flex items-center gap-2.5 text-sm text-slate-300 bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-300 bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
               <CheckCircle2 size={18} className="text-emerald-400 shrink-0" />
-              <span>Enlace Directo con WhatsApp del Guía</span>
+              <span>Multi-Idioma: Español, Inglés, Portugués, Francés e Italiano</span>
             </div>
-            <div className="flex items-center gap-2.5 text-sm text-slate-300 bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-300 bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
               <CheckCircle2 size={18} className="text-emerald-400 shrink-0" />
-              <span>Generación de Copy persuasivo con IA</span>
+              <span>Libro de Reclamaciones Virtual (Ley N° 29571)</span>
             </div>
-            <div className="flex items-center gap-2.5 text-sm text-slate-300 bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
+            <div className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-300 bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
               <CheckCircle2 size={18} className="text-emerald-400 shrink-0" />
-              <span>Modal de Cotizaciones para Grupos</span>
+              <span>Ficha Técnica, Galería Pinterest y WhatsApp directo</span>
+            </div>
+          </div>
+
+          {/* Demos directas sin login */}
+          <div className="pt-2">
+            <span className="text-xs text-slate-400 font-semibold block mb-2">Explorar Demos en Vivo:</span>
+            <div className="flex flex-wrap gap-2">
+              <a href="/p/machu-picchu-full-day?template=agency-portal" target="_blank" className="px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold transition-all">
+                🌐 Portal Agencia
+              </a>
+              <a href="/p/laguna-humantay-bitacora-fotografica-paisajismo?template=boho-nature" target="_blank" className="px-3 py-1.5 rounded-lg bg-orange-500/10 hover:bg-orange-500/20 text-orange-300 border border-orange-500/30 text-xs font-bold transition-all">
+                📷 Boho & Naturaleza
+              </a>
+              <a href="/p/machu-picchu-full-day?template=premium" target="_blank" className="px-3 py-1.5 rounded-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 text-xs font-bold transition-all">
+                👑 VIP Lujo
+              </a>
+              <a href="/p/salkantay-trek-5-dias?template=adventure" target="_blank" className="px-3 py-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/30 text-xs font-bold transition-all">
+                🏔️ TrekExplorer
+              </a>
+              <a href="/p/city-tour-cusco-ancestral?template=cultural" target="_blank" className="px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/30 text-xs font-bold transition-all">
+                🏛️ Cultural
+              </a>
             </div>
           </div>
         </div>
