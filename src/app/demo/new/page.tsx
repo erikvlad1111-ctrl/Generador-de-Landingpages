@@ -1523,6 +1523,87 @@ export default function NewLandingDemo() {
                 placeholder="Describe la ruta, paisajes, qué hace única a esta experiencia..."
               />
             </div>
+
+            {/* BLOQUE DE CATÁLOGO DE TOURS (DEBAJO DEL TOUR ESTRELLA) */}
+            <div className={`mt-2 p-5 rounded-2xl border transition-all ${
+              template === 'agency-portal'
+                ? 'bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white border-orange-500/40 shadow-lg'
+                : 'bg-slate-50 border-slate-200 text-slate-800'
+            }`}>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${
+                    template === 'agency-portal'
+                      ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30 shadow-inner'
+                      : 'bg-blue-100 text-blue-600'
+                  }`}>
+                    <Layers size={22} />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h4 className={`text-sm font-black ${template === 'agency-portal' ? 'text-white' : 'text-slate-900'}`}>
+                        Catálogo de Tours Complementarios
+                      </h4>
+                      {template === 'agency-portal' ? (
+                        <span className="text-[10px] bg-orange-500/25 text-orange-300 font-extrabold px-2.5 py-0.5 rounded-full border border-orange-400/30">
+                          {catalogTours.length} Tours en Vitrina
+                        </span>
+                      ) : (
+                        <span className="text-[10px] bg-slate-200 text-slate-700 font-bold px-2 py-0.5 rounded-full">
+                          Diseño 1 (Portal de Agencia)
+                        </span>
+                      )}
+                    </div>
+                    <p className={`text-xs mt-1 leading-relaxed ${template === 'agency-portal' ? 'text-slate-300' : 'text-slate-500'}`}>
+                      {template === 'agency-portal' 
+                        ? 'Los campos de arriba configuran tu Tour Estrella (Hero e Itinerario). Tu portal incluye además un catálogo de tours secundarios listos para personalizar o importar desde tus otras landings.'
+                        : 'Estás editando en plantilla monoproducto. Si deseas publicar un sitio web de agencia con vitrina de 6 tours, activa el Portal de Agencia y abre el editor.'}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="shrink-0 flex items-center gap-2">
+                  {template === 'agency-portal' ? (
+                    <button
+                      type="button"
+                      onClick={() => setIsCatalogModalOpen(true)}
+                      className="inline-flex items-center justify-center gap-2 bg-[#FF5500] hover:bg-[#e04b00] text-white px-5 py-3 rounded-xl font-black text-xs transition-all shadow-md shadow-orange-500/25 cursor-pointer hover:scale-102 active:scale-98"
+                    >
+                      <Layers size={16} />
+                      <span>⚙️ Editar Tours del Catálogo</span>
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setTemplate('agency-portal');
+                        setIsCatalogModalOpen(true);
+                      }}
+                      className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl font-bold text-xs transition-all shadow-sm cursor-pointer hover:scale-102"
+                    >
+                      <Layers size={15} />
+                      <span>Cambiar a Portal & Editar Catálogo</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {template === 'agency-portal' && (
+                <div className="pt-3 mt-3 border-t border-white/10 flex flex-wrap items-center gap-2">
+                  <span className="text-[11px] text-slate-400 font-bold shrink-0">Tours en catálogo:</span>
+                  {catalogTours.map((ct, idx) => (
+                    <span
+                      key={ct.id || idx}
+                      className="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/15 px-3 py-1 rounded-lg text-xs text-slate-200 border border-white/10 transition-colors"
+                    >
+                      <span className="text-orange-400 font-bold">#{idx + 2}</span>
+                      <span className="truncate max-w-[130px] font-medium">{ct.title}</span>
+                      <span className="text-emerald-400 font-bold text-[11px]">({ct.price})</span>
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* PASO 7: PERFIL DEL GUÍA TURÍSTICO & SERVICIOS INCLUIDOS */}
