@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { X, CheckCircle, Send, MessageCircle, Calendar, Users, Mail, User, Phone } from 'lucide-react';
 import { LandingData, LanguageType } from '@/types/landing';
 import { translateText } from '@/data/translations';
+import { sanitizeText } from '@/lib/sanitize';
 
 interface QuoteModalProps {
   isOpen: boolean;
@@ -143,6 +144,7 @@ export default function QuoteModal({ isOpen, onClose, landing, lang = 'es' }: Qu
   const [date, setDate] = useState('');
   const [travelers, setTravelers] = useState('2');
   const [notes, setNotes] = useState('');
+  const [botCheck, setBotCheck] = useState('');
 
   if (!isOpen) return null;
 
@@ -152,6 +154,14 @@ export default function QuoteModal({ isOpen, onClose, landing, lang = 'es' }: Qu
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (botCheck) {
+      setSubmitted(true);
+      return;
+    }
+    const safeName = sanitizeText(name);
+    const safeNotes = sanitizeText(notes);
+    setName(safeName);
+    setNotes(safeNotes);
     setSubmitted(true);
   };
 
@@ -217,6 +227,20 @@ export default function QuoteModal({ isOpen, onClose, landing, lang = 'es' }: Qu
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4 text-left">
+              {/* Campo Honeypot Anti-Bot (Invisible) */}
+              <div aria-hidden="true" style={{ position: 'absolute', opacity: 0, zIndex: -1, pointerEvents: 'none', height: 0, overflow: 'hidden' }}>
+                <label htmlFor="user_extra_auth">Security Code</label>
+                <input
+                  type="text"
+                  id="user_extra_auth"
+                  name="user_extra_auth"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={botCheck}
+                  onChange={(e) => setBotCheck(e.target.value)}
+                />
+              </div>
+
               <div>
                 <label className="block text-xs font-semibold text-slate-700 mb-1 flex items-center gap-1.5">
                   <User size={13} className="text-slate-400" /> {t.nameLabel}

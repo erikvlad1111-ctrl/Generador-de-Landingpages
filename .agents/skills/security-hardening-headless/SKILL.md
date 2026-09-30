@@ -138,11 +138,15 @@ Este documento es la **referencia oficial de seguridad** para el despliegue y op
 
 ---
 
-## 3. Checklist de Tareas Pendientes (Para Implementación Futura)
+## 3. Checklist de Seguridad (Estado de Implementación)
 
-- [ ] **Next.js:** Inyectar cabeceras de seguridad (`headers()` en `next.config.ts`).
-- [ ] **Next.js:** Implementar técnica de campo Honeypot invisible en `ComplaintsBookModal.tsx`.
-- [ ] **Next.js:** Implementar técnica de campo Honeypot en `QuoteModal.tsx`.
+### Implementado en el Frontend (Activo en Next.js):
+- [x] **Next.js:** Inyectar cabeceras de seguridad OWASP (`headers()` en `next.config.ts`: X-Frame-Options, X-Content-Type-Options, HSTS, Referrer-Policy, Permissions-Policy).
+- [x] **Next.js:** Implementar técnica de campo Honeypot invisible en `ComplaintsBookModal.tsx`.
+- [x] **Next.js:** Implementar técnica de campo Honeypot en `QuoteModal.tsx`.
+- [x] **Next.js:** Módulo de sanitización y limpieza anti-XSS (`src/lib/sanitize.ts`).
+
+### Pendiente al Integrar WordPress y Dominio (Fase Backend & Cloudflare):
 - [ ] **WordPress:** Crear snippet o plugin MU para bloquear `/wp/v2/users` anónimos.
 - [ ] **WordPress:** Bloquear acceso a `xmlrpc.php` en `.htaccess`.
 - [ ] **WordPress:** Configurar regla CORS autorizando únicamente el dominio de Vercel.

@@ -18,6 +18,7 @@ import {
   Scale
 } from 'lucide-react';
 import { LanguageType } from '@/types/landing';
+import { sanitizeObject } from '@/lib/sanitize';
 
 interface ComplaintsBookModalProps {
   isOpen: boolean;
@@ -269,11 +270,20 @@ export default function ComplaintsBookModal({
 
   const [submittedSheet, setSubmittedSheet] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [honeypot, setHoneypot] = useState('');
 
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Detección silenciosa de Bot (Honeypot)
+    if (honeypot) {
+      setIsSubmitting(false);
+      setSubmittedSheet('REC-2026-0000');
+      return;
+    }
+
     if (!formData.fullName || !formData.docNumber || !formData.email || !formData.detail || !formData.request) {
       alert('Por favor completa todos los campos obligatorios marcados con (*)');
       return;
@@ -282,6 +292,10 @@ export default function ComplaintsBookModal({
       alert('Debes aceptar la declaración jurada conforme al Código del Consumidor.');
       return;
     }
+
+    // Sanitización anti-XSS de los datos ingresados
+    const cleanData = sanitizeObject(formData);
+    setFormData(cleanData);
 
     setIsSubmitting(true);
     setTimeout(() => {
@@ -381,6 +395,20 @@ export default function ComplaintsBookModal({
           ) : (
             /* Formulario Oficial */
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Campo Honeypot de Seguridad Anti-Bot (Invisible para personas reales) */}
+              <div aria-hidden="true" style={{ position: 'absolute', opacity: 0, zIndex: -1, pointerEvents: 'none', height: 0, overflow: 'hidden' }}>
+                <label htmlFor="b_security_code">Security Code</label>
+                <input
+                  type="text"
+                  id="b_security_code"
+                  name="b_security_code"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
+                />
+              </div>
+
               <p className="text-stone-500 dark:text-stone-400 text-xs leading-relaxed">
                 {t.subtitle}
               </p>
