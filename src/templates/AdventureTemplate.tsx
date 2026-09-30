@@ -8,7 +8,8 @@ import {
   Plane, Compass, Users, Sparkles, Navigation, Phone, Check, ChevronRight,
   Send, Mountain, Building2, Mail, BookOpen, Tent, Bus, Utensils, Ticket, HeartPulse, Activity
 } from 'lucide-react';
-import { LandingData, LanguageType } from '@/types/landing';
+import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
+import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import { ADVENTURE_I18N, ADVENTURE_LANGUAGES } from './adventureI18n';
 import { translateText } from '@/data/translations';
 import QuoteModal from '@/components/common/QuoteModal';
@@ -99,6 +100,15 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
     const msg = encodeURIComponent(`Hola ${data.guideName || 'Asesor'}, me interesa el tour "${tourTitle}". ¿Tienen cupos disponibles?`);
     return `https://wa.me/${cleanPhone}?text=${msg}`;
   };
+
+  // Tours secundarios del catálogo (editables desde el modal o sugeridos)
+  const secondaryCatalogTours = React.useMemo(() => {
+    const sourceTours = (data?.catalogTours && data.catalogTours.length > 0)
+      ? data.catalogTours
+      : DEFAULT_SECONDARY_CATALOG_TOURS;
+    const tourLimit = isFree ? 1 : isBasic ? 3 : 5;
+    return sourceTours.slice(0, tourLimit);
+  }, [data?.catalogTours, isFree, isBasic]);
 
   // Hero Hiker photo: use user's hero image or default smiling trekker
   const trekkerHeroImage = data.heroImage || 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=1200&auto=format&fit=crop';
@@ -259,7 +269,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           {!isFree && !isMobile && (
             <div className="hidden lg:flex items-center gap-7 xl:gap-8 text-[13.5px] font-extrabold text-slate-700">
               <a href="#destinos" className="hover:text-blue-600 transition-colors py-1">{t.nav.destinations}</a>
-              <a href="#iconic" className="hover:text-blue-600 transition-colors py-1">{t.nav.iconic}</a>
+              <a href="#tours" className="hover:text-blue-600 transition-colors py-1">{t.nav.iconic}</a>
               {(isPro || isAdvance) && <a href="#itinerario" className="hover:text-blue-600 transition-colors py-1">{t.nav.itinerary}</a>}
               <a href="#incluye" className="hover:text-blue-600 transition-colors py-1">{t.nav.included}</a>
               {isAdvance && <a href="#soporte-faq" className="hover:text-blue-600 transition-colors py-1">{t.nav.faq}</a>}
@@ -565,8 +575,8 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </div>
       </section>
 
-      {/* 5. SECTION: EXPLORE ICONIC LOCATIONS (DISPONIBLE EN TODOS LOS PLANES) */}
-      <section id="iconic" className="py-14 sm:py-20 px-4 sm:px-8 bg-slate-50/60 border-t border-slate-100">
+      {/* 5. SECTION: EXPLORE ICONIC LOCATIONS / TOURS CATALOG (DISPONIBLE EN TODOS LOS PLANES) */}
+      <section id="tours" className="py-14 sm:py-20 px-4 sm:px-8 bg-slate-50/60 border-t border-slate-100">
         <div className="max-w-7xl mx-auto">
           
           <div className="max-w-2xl mx-auto text-center mb-10 sm:mb-14 space-y-3">
@@ -578,9 +588,20 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
             </p>
           </div>
 
-          {/* 3 Columns Grid of Tour Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 max-w-6xl mx-auto">
-            {t.iconic.tours.map((tour) => {
+          {/* Grid of Tour Cards */}
+          <div className={`grid gap-6 sm:gap-7 max-w-6xl mx-auto ${
+            isMobile 
+              ? 'grid-cols-1 max-w-sm' 
+              : isFree 
+              ? 'max-w-md grid-cols-1' 
+              : isBasic 
+              ? 'grid-cols-1 md:grid-cols-3' 
+              : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+          }`}>
+            {secondaryCatalogTours.map((tour) => {
+              const tourTitle = translateText(tour.title, currentLang);
+              const tourLoc = translateText(tour.location, currentLang);
+              const tourCategory = translateText(tour.category, currentLang);
               const isLiked = likedCards[tour.id];
               return (
                 <div
@@ -592,18 +613,25 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                     <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-slate-100">
                       <Image
                         src={tour.image}
-                        alt={tour.title}
+                        alt={tourTitle}
                         fill
                         sizes="(max-width: 768px) 100vw, 400px"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
 
                       {/* Rating Badge (top-left) */}
                       <div className="absolute top-3.5 left-3.5 bg-black/40 backdrop-blur-md text-white text-[11px] font-black px-2.5 py-1 rounded-full flex items-center gap-1 border border-white/20">
                         <Star size={11} className="fill-amber-400 text-amber-400" />
-                        <span>{tour.rating}</span>
+                        <span>{tour.rating || 4.9}</span>
                       </div>
+
+                      {/* Tag Badge */}
+                      {tour.tag && (
+                        <div className="absolute top-3.5 left-20 bg-blue-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
+                          {translateText(tour.tag, currentLang)}
+                        </div>
+                      )}
 
                       {/* Favorite Heart Button (top-right) */}
                       <button
@@ -621,12 +649,20 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
                     {/* Content */}
                     <div className="p-5 text-left space-y-2">
+                      <div className="flex items-center gap-1 text-[11px] text-blue-600 font-bold uppercase tracking-wider">
+                        <MapPin size={11} />
+                        <span>{tourLoc}</span>
+                        <span className="text-slate-300">•</span>
+                        <span className="text-slate-500">{tourCategory}</span>
+                      </div>
                       <h3 className="font-black text-base sm:text-lg text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-1">
-                        {tour.title}
+                        {tourTitle}
                       </h3>
-                      <p className="text-xs text-slate-500 leading-relaxed line-clamp-2">
-                        {tour.desc}
-                      </p>
+                      <div className="flex items-center gap-3 text-xs text-slate-500 pt-1">
+                        <span className="flex items-center gap-1">
+                          <Clock size={12} className="text-slate-400" /> {tour.duration}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
@@ -635,7 +671,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                     <div className="text-left">
                       <div className="flex items-baseline gap-1">
                         <span className="text-lg font-black text-slate-900">{tour.price}</span>
-                        <span className="text-[10px] text-slate-400 font-bold">{tour.detail}</span>
+                        <span className="text-[10px] text-slate-400 font-bold">/ persona</span>
                       </div>
                     </div>
 
@@ -643,7 +679,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                       href={createWhatsAppLink(tour.title)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-xs hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
+                      className="bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold px-4 py-2.5 rounded-full shadow-xs hover:scale-105 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer"
                     >
                       <span>{t.iconic.detailsBtn}</span>
                       <ArrowRight size={12} />

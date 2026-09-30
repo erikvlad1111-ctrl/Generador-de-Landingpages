@@ -28,7 +28,8 @@ import {
   SlidersHorizontal,
   Check
 } from 'lucide-react';
-import { LandingData, LanguageType } from '@/types/landing';
+import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
+import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import QuoteModal from '@/components/common/QuoteModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
@@ -284,6 +285,22 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
   );
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
+  const getTourWaUrl = (tourTitle: string) => {
+    const localizedTitle = translateText(tourTitle, currentLang);
+    const msg = encodeURIComponent(
+      currentLang === 'en'
+        ? `Hello ${data.guideName || 'Cusco Creativos'}, I would like to inquire about the "${localizedTitle}" tour.`
+        : currentLang === 'pt'
+        ? `Olá ${data.guideName || 'Cusco Creativos'}, gostaria de consultar informações sobre o passeio "${localizedTitle}".`
+        : currentLang === 'fr'
+        ? `Bonjour ${data.guideName || 'Cusco Creativos'}, je souhaite des informations sur le circuit "${localizedTitle}".`
+        : currentLang === 'it'
+        ? `Ciao ${data.guideName || 'Cusco Creativos'}, vorrei informazioni sul tour "${localizedTitle}".`
+        : `Hola ${data.guideName || 'Cusco Creativos'}, me gustaría consultar información y disponibilidad para el tour "${localizedTitle}".`
+    );
+    return `https://wa.me/${cleanPhone}?text=${msg}`;
+  };
+
   const heroImg = data.heroImage || 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop';
   const gallery = data.galleryImages && data.galleryImages.length > 0 
     ? data.galleryImages 
@@ -294,16 +311,14 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop'
       ];
 
-  // Filtering curated tours
-  const visibleTours = React.useMemo(() => {
-    let list = CURATED_TOURS;
-    if (selectedTourCategory !== 'all') {
-      list = list.filter(t => t.category === selectedTourCategory);
-    }
-    if (isBasic) return list.slice(0, 2);
-    if (isPro) return list.slice(0, 3);
-    return list; // advance shows all
-  }, [selectedTourCategory, isBasic, isPro]);
+  // Tours secundarios del catálogo (editables desde el modal o sugeridos)
+  const secondaryCatalogTours = React.useMemo(() => {
+    const sourceTours = (data?.catalogTours && data.catalogTours.length > 0)
+      ? data.catalogTours
+      : DEFAULT_SECONDARY_CATALOG_TOURS;
+    const tourLimit = isFree ? 1 : isBasic ? 3 : 5;
+    return sourceTours.slice(0, tourLimit);
+  }, [data?.catalogTours, isFree, isBasic]);
 
   // Filtering reviews
   const visibleReviews = React.useMemo(() => {
@@ -755,180 +770,6 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </section>
       )}
 
-      {/* SECTION: MEJORES TOURS (Otras Bitácoras de la Colección - DISPONIBLE EN TODOS LOS PLANES) */}
-      <section id="tours" className="py-12 sm:py-20 px-4 sm:px-8 max-w-6xl mx-auto overflow-hidden">
-          <div className="space-y-6 sm:space-y-10">
-            
-            {/* Header with Boho mood */}
-            <div className="text-center space-y-2 max-w-2xl mx-auto">
-              <span className="text-[11px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center justify-center gap-1.5">
-                <Compass size={13} /> {t.tours.badge}
-              </span>
-              <h2 className="text-xl sm:text-4xl font-serif text-stone-900">
-                {t.tours.title}
-              </h2>
-              <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-sans">
-                {t.tours.subtitle}
-              </p>
-            </div>
-
-            {/* Category Filter Tabs (Advance Plan) */}
-            {isAdvance && (
-              <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2">
-                {[
-                  { id: 'all', label: t.tours.categories.all },
-                  { id: 'lagunas', label: t.tours.categories.lagunas },
-                  { id: 'valle', label: t.tours.categories.valle },
-                  { id: 'trek', label: t.tours.categories.montana }
-                ].map(cat => (
-                  <button
-                    key={cat.id}
-                    onClick={() => setSelectedTourCategory(cat.id)}
-                    className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-xs font-serif font-medium transition-all cursor-pointer ${
-                      selectedTourCategory === cat.id
-                        ? 'bg-[#C86D51] text-white shadow-xs'
-                        : 'bg-white text-stone-600 border border-stone-200 hover:border-stone-300'
-                    }`}
-                  >
-                    {cat.label}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Mobile View Toggle Helper (Carrusel ↔ vs Lista ↕) */}
-            <div className="flex items-center justify-between sm:hidden px-1 text-[11px] text-stone-500">
-              <span className="font-serif italic flex items-center gap-1">
-                <span>{currentLang === 'en' ? 'Swipe to explore more' : currentLang === 'pt' ? 'Deslize para ver mais' : currentLang === 'fr' ? 'Glissez pour en voir plus' : currentLang === 'it' ? 'Scorri per vedere di più' : 'Desliza para ver más'}</span>
-                <ChevronRight size={12} className="text-[#C86D51] animate-pulse" />
-              </span>
-              <button
-                onClick={() => setMobileTourLayout(prev => prev === 'carousel' ? 'list' : 'carousel')}
-                className="flex items-center gap-1 text-[#C86D51] font-bold bg-white px-2 py-0.5 rounded-lg border border-stone-200 shadow-2xs"
-              >
-                <SlidersHorizontal size={11} />
-                <span>{mobileTourLayout === 'carousel' ? (currentLang === 'en' ? 'List View' : currentLang === 'pt' ? 'Ver em Lista' : currentLang === 'fr' ? 'Vue Liste' : currentLang === 'it' ? 'Vista Elenco' : 'Ver en Lista') : (currentLang === 'en' ? 'Carousel View' : currentLang === 'pt' ? 'Ver em Carrossel' : currentLang === 'fr' ? 'Vue Carrousel' : currentLang === 'it' ? 'Vista Carosello' : 'Ver en Carrusel')}</span>
-              </button>
-            </div>
-
-            {/* Tours Grid / Mobile Snap Carousel */}
-            <div className={`
-              ${mobileTourLayout === 'carousel' 
-                ? 'flex sm:grid overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none gap-4 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none' 
-                : 'grid grid-cols-1 gap-5'
-              }
-              ${visibleTours.length > 1 ? 'sm:grid-cols-2' : ''} 
-              ${isAdvance ? 'lg:grid-cols-3' : ''} 
-              sm:gap-7
-            `}>
-              {visibleTours.map((tour) => {
-                const tourWhatsAppUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(
-                  `Hola ${data.guideName || 'Cusco Creativos'}, vi en su web el tour de "${tour.title}" y deseo consultar fechas disponibles y precio.`
-                )}`;
-
-                return (
-                  <div 
-                    key={tour.id}
-                    className={`
-                      ${mobileTourLayout === 'carousel' ? 'w-[82vw] max-w-[310px] shrink-0 snap-center sm:w-auto sm:max-w-none sm:shrink' : 'w-full'}
-                      bg-white rounded-3xl border border-stone-200/90 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col overflow-hidden group relative
-                    `}
-                  >
-                    {/* Washi tape sticker */}
-                    <div className="w-16 h-3 bg-[#E8DEC8]/90 absolute -top-1 left-8 rotate-1 shadow-2xs z-20" />
-
-                    {/* Image Header */}
-                    <div className="relative aspect-[16/10] overflow-hidden bg-stone-100">
-                      <Image
-                        src={tour.image}
-                        alt={tour.title}
-                        fill
-                        sizes="(max-width: 640px) 310px, 400px"
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                      {/* Floating Badge */}
-                      <div className="absolute top-2.5 left-2.5 bg-[#FAF7F2]/95 backdrop-blur-xs px-2.5 py-0.5 rounded-full border border-stone-200 text-[9px] sm:text-[10px] font-serif font-bold text-[#C86D51] shadow-xs">
-                        {tour.badge}
-                      </div>
-                      {/* Price Pill */}
-                      <div className="absolute bottom-2.5 right-2.5 bg-stone-900/90 backdrop-blur-xs px-2.5 py-1 rounded-xl text-white text-[11px] sm:text-xs font-serif font-bold shadow-md">
-                        {tour.price} <span className="text-[9px] font-normal text-stone-300">/ pers.</span>
-                      </div>
-                    </div>
-
-                    {/* Card Content */}
-                    <div className="p-4 sm:p-6 flex-1 flex flex-col justify-between space-y-3 sm:space-y-4">
-                      <div className="space-y-2">
-                        {/* Specs Chips */}
-                        <div className="flex flex-wrap gap-1.5 text-[9px] sm:text-[10px] text-stone-500 font-sans">
-                          <span className="flex items-center gap-1 bg-[#FAF7F2] px-2 py-0.5 rounded-md border border-stone-200/70">
-                            <Clock size={10} className="text-[#C86D51]" />
-                            {translateText(tour.duration, currentLang)}
-                          </span>
-                          <span className="flex items-center gap-1 bg-[#FAF7F2] px-2 py-0.5 rounded-md border border-stone-200/70">
-                            <Mountain size={10} className="text-[#588157]" />
-                            {tour.altitude}
-                          </span>
-                          <span className="flex items-center gap-1 bg-[#FAF7F2] px-2 py-0.5 rounded-md border border-stone-200/70">
-                            <Compass size={10} className="text-stone-400" />
-                            {translateText(tour.difficulty, currentLang)}
-                          </span>
-                        </div>
-
-                        <h3 className="font-serif font-bold text-stone-900 text-sm sm:text-lg group-hover:text-[#C86D51] transition-colors leading-snug line-clamp-2">
-                          {translateText(tour.title, currentLang)}
-                        </h3>
-
-                        <p className="text-xs text-stone-600 leading-relaxed font-sans line-clamp-2 sm:line-clamp-3">
-                          {translateText(tour.description, currentLang)}
-                        </p>
-
-                        {/* Highlights list */}
-                        <ul className="pt-1 space-y-1 text-[10px] sm:text-[11px] text-stone-600">
-                          {tour.highlights.slice(0, 2).map((h, hIdx) => (
-                            <li key={hIdx} className="flex items-center gap-1.5 truncate">
-                              <Check size={11} className="text-[#588157] shrink-0" />
-                              <span className="truncate">{translateText(h, currentLang)}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Card Action Buttons */}
-                      <div className="pt-2 sm:pt-3 border-t border-stone-100 flex items-center gap-2">
-                        <a
-                          href={tourWhatsAppUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex-1 bg-[#588157] hover:bg-[#476846] text-white py-2 sm:py-2.5 px-3 rounded-xl font-medium text-xs text-center transition-all flex items-center justify-center gap-1.5 shadow-2xs active:scale-95 cursor-pointer"
-                        >
-                          <MessageCircle size={13} />
-                          <span>{currentLang === 'en' ? 'Inquire' : currentLang === 'pt' ? 'Consultar' : currentLang === 'fr' ? 'Consulter' : currentLang === 'it' ? 'Consulta' : 'Consultar'}</span>
-                        </a>
-                        <button
-                          onClick={() => setIsQuoteOpen(true)}
-                          className="bg-[#FAF7F2] hover:bg-stone-100 border border-stone-200 text-stone-700 py-2 sm:py-2.5 px-3 rounded-xl font-medium text-xs transition-all flex items-center justify-center gap-1 active:scale-95 cursor-pointer"
-                        >
-                          <FileText size={13} className="text-[#C86D51]" />
-                          <span>{t.cta.quote}</span>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Note on availability */}
-            <div className="text-center pt-1">
-              <p className="text-[11px] sm:text-xs text-stone-500 font-serif italic">
-                {currentLang === 'en' ? 'Looking for a combined or private tour? We can tailor your custom Cusco travel journal.' : currentLang === 'pt' ? 'Procurando um circuito combinado ou privado? Podemos montar seu roteiro personalizado em Cusco sob medida.' : currentLang === 'fr' ? 'Vous cherchez un circuit combiné ou privé ? Nous pouvons concevoir votre itinéraire sur mesure à Cusco.' : currentLang === 'it' ? 'Cerchi un tour combinato o privato? Possiamo creare il tuo itinerario personalizzato a Cusco.' : '¿Buscas un circuito combinado o privado? Podemos armar tu bitácora personalizada en Cusco a tu medida.'}
-              </p>
-            </div>
-
-          </div>
-        </section>
-
       {/* SECTION: MAPA DE RUTA & COORDENADAS DE CAMPO - PRO & ADVANCE ONLY */}
       {!isFree && (isPro || isAdvance) && (
         <section id="mapa" className="py-12 sm:py-20 px-4 sm:px-8 bg-[#F3EFEA] border-y border-stone-200">
@@ -1137,6 +978,124 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </section>
       )}
 
+      {/* SECTION: CATÁLOGO DE TOURS EDITORIAL / POLAROID */}
+      <section id="tours" className="py-12 sm:py-20 px-4 sm:px-8 max-w-6xl mx-auto">
+        <div className="text-center space-y-2 sm:space-y-3 max-w-2xl mx-auto mb-10 sm:mb-14">
+          <span className="text-[11px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center justify-center gap-1.5">
+            <Compass size={14} className="text-[#C86D51]" /> {t.tours?.badge || 'Bitácoras Disponibles'}
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-serif text-stone-900 tracking-tight">
+            {t.tours?.title || 'Otras Rutas & Experiencias Recomendadas'}
+          </h2>
+          <p className="text-xs sm:text-sm text-stone-600 font-sans leading-relaxed">
+            {t.tours?.subtitle || 'Explora nuestras expediciones curadas para viajeros que buscan autenticidad, fotografía y conexión andina.'}
+          </p>
+        </div>
+
+        <div className={`grid gap-6 sm:gap-8 ${
+          isMobile 
+            ? 'grid-cols-1 max-w-sm mx-auto' 
+            : isFree 
+            ? 'max-w-md mx-auto grid-cols-1' 
+            : isBasic 
+            ? 'grid-cols-1 md:grid-cols-3' 
+            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+        }`}>
+          {secondaryCatalogTours.map((tour) => {
+            const tourTitle = translateText(tour.title, currentLang);
+            const tourLoc = translateText(tour.location, currentLang);
+            const tourCategory = translateText(tour.category, currentLang);
+            const tourTag = translateText(tour.tag, currentLang);
+            return (
+              <div 
+                key={tour.id}
+                className="bg-white p-4 rounded-3xl border border-stone-200 shadow-md hover:shadow-xl hover:border-[#C86D51]/40 transition-all duration-300 flex flex-col justify-between group relative"
+              >
+                {/* Washi tape decorativo */}
+                <div className="w-16 h-3 bg-[#E8DEC8]/80 absolute -top-1.5 left-8 rotate-[-2deg] shadow-2xs pointer-events-none z-10" />
+
+                <div>
+                  <div className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden bg-stone-100 mb-4">
+                    <Image
+                      src={tour.image}
+                      alt={tourTitle}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                    
+                    <div className="absolute top-2.5 left-2.5 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-full text-xs font-serif font-bold text-stone-800 flex items-center gap-1 shadow-xs">
+                      <Star size={12} className="text-amber-500 fill-amber-500" />
+                      <span>{tour.rating || 4.9}</span>
+                    </div>
+
+                    {tourTag && (
+                      <div className="absolute top-2.5 right-2.5 bg-[#C86D51] text-white px-2.5 py-0.5 rounded-full text-[10px] font-sans font-bold uppercase tracking-wider shadow-xs">
+                        {tourTag}
+                      </div>
+                    )}
+
+                    <div className="absolute bottom-2.5 left-2.5 right-2.5 text-white flex items-center justify-between text-xs">
+                      <span className="flex items-center gap-1 bg-black/40 backdrop-blur-xs px-2 py-0.5 rounded-lg text-[11px]">
+                        <Clock size={12} /> {tour.duration}
+                      </span>
+                      <span className="font-serif font-bold bg-[#588157]/90 px-2 py-0.5 rounded-lg text-white text-[11px]">
+                        {tour.price}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5 px-1">
+                    <div className="flex items-center gap-1 text-[11px] text-[#C86D51] font-serif uppercase tracking-wider font-semibold">
+                      <MapPin size={11} />
+                      <span>{tourLoc}</span>
+                      <span className="text-stone-300">•</span>
+                      <span className="text-stone-500">{tourCategory}</span>
+                    </div>
+                    <h3 className="font-serif text-base sm:text-lg font-bold text-stone-900 group-hover:text-[#C86D51] transition-colors line-clamp-2">
+                      {tourTitle}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="pt-4 mt-3 border-t border-stone-100 flex items-center justify-between gap-2 px-1">
+                  <div>
+                    <span className="text-[10px] text-stone-500 uppercase tracking-wider block font-sans">
+                      {t.tours?.fromPrice || 'Tarifa'}
+                    </span>
+                    <span className="font-serif text-base font-bold text-stone-900">
+                      {tour.price}
+                    </span>
+                  </div>
+
+                  {isQuote ? (
+                    <button
+                      type="button"
+                      onClick={() => setIsQuoteOpen(true)}
+                      className="bg-stone-900 hover:bg-[#C86D51] text-white px-3.5 py-2 rounded-xl text-xs font-serif font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <FileText size={13} />
+                      <span>{t.cta.quote || 'Cotizar'}</span>
+                    </button>
+                  ) : (
+                    <a
+                      href={getTourWaUrl(tour.title)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-[#588157] hover:bg-[#466645] text-white px-3.5 py-2 rounded-xl text-xs font-serif font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <MessageCircle size={13} />
+                      <span>{currentLang === 'en' ? 'Inquire' : 'Consultar'}</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
       {/* SECTION: RESEÑAS & LIBRO DE VISITAS - ADVANCE ONLY */}
       {isAdvance && (
         <section id="resenas" className="py-12 sm:py-20 px-4 sm:px-8 max-w-6xl mx-auto overflow-hidden">
@@ -1328,6 +1287,74 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
           </div>
         </section>
       )}
+
+      {/* SECTION: TOURS & EXPEDICIONES DESTACADAS (BOHO JOURNAL) */}
+      <section id="tours" className="py-14 sm:py-20 px-4 sm:px-8 bg-[#FAF7F2] border-t border-stone-200">
+        <div className="max-w-6xl mx-auto space-y-8 sm:space-y-10">
+          <div className="text-center space-y-2 max-w-2xl mx-auto">
+            <span className="text-[11px] sm:text-xs uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center justify-center gap-1.5">
+              <span>📌</span> {currentLang === 'en' ? 'Curated Andean Expeditions' : currentLang === 'pt' ? 'Expedições Andinas Selecionadas' : currentLang === 'fr' ? 'Expéditions Andines Sélectionnées' : currentLang === 'it' ? 'Spedizioni Andine Selezionate' : 'Bitácora de Rutas & Otras Expediciones'}
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-serif text-stone-900">
+              {currentLang === 'en' ? 'More Routes to Discover in Cusco' : currentLang === 'pt' ? 'Outras Rotas para Explorar em Cusco' : currentLang === 'fr' ? 'Autres Itinéraires à Découvrir à Cusco' : currentLang === 'it' ? 'Altri Itinerari da Scoprire a Cusco' : 'Tours Destacados en Cusco & Perú'}
+            </h2>
+            <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-sans">
+              {currentLang === 'en' ? 'Guaranteed departures with certified guides, small groups, and photographic guidance.' : currentLang === 'pt' ? 'Saídas diárias com guias certificados, grupos pequenos e suporte fotográfico.' : currentLang === 'fr' ? 'Départs quotidiens avec guides certifiés, petits groupes et conseils photo.' : currentLang === 'it' ? 'Partenze giornaliere con guide certificate, piccoli gruppi e supporto fotografico.' : 'Salidas diarias garantizadas con guías colegiados, grupos reducidos y asesoría fotográfica.'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {secondaryCatalogTours.map((tour, idx) => (
+              <div 
+                key={tour.id || idx}
+                className="bg-white p-4 pb-5 rounded-2xl border border-stone-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between group relative"
+              >
+                <div className="w-14 h-3 bg-[#E8DEC8]/90 absolute -top-1.5 left-1/2 -translate-x-1/2 rotate-1 shadow-2xs z-10" />
+                <div>
+                  <div className="relative h-48 w-full rounded-xl overflow-hidden bg-stone-100 mb-3">
+                    <Image src={tour.image} alt={tour.title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <div className="absolute top-2.5 left-2.5 bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md text-[10px] text-white font-bold">
+                      {tour.badge || '4.9 ★'}
+                    </div>
+                    {tour.tag && (
+                      <div className="absolute top-2.5 right-2.5 bg-[#C86D51] text-white px-2 py-0.5 rounded-md text-[9px] font-black uppercase tracking-wider">
+                        {tour.tag}
+                      </div>
+                    )}
+                  </div>
+                  <h3 className="font-serif font-bold text-sm sm:text-base text-stone-900 group-hover:text-[#C86D51] transition-colors leading-snug">
+                    {translateText(tour.title, currentLang)}
+                  </h3>
+                  <div className="flex items-center justify-between text-xs text-stone-500 mt-2">
+                    <span className="flex items-center gap-1 font-sans">
+                      <Clock size={12} className="text-stone-400" /> {tour.duration || 'Full Day'}
+                    </span>
+                    <span className="flex items-center gap-1 font-sans">
+                      <MapPin size={12} className="text-[#C86D51]" /> {tour.location || 'Cusco'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="pt-3 mt-3 border-t border-stone-100 flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] text-stone-400 block font-sans">Tarifa estimada:</span>
+                    <span className="font-serif font-black text-base text-[#C86D51]">{tour.price}</span>
+                  </div>
+                  <a
+                    href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, vi su catálogo de tours y me interesa información sobre "${tour.title}".`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-[#588157] hover:bg-[#476846] text-white px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-2xs hover:scale-102 flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <MessageCircle size={13} />
+                    <span>Reservar</span>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* SECTION: GUÍA DE CAMPO DEL FOTÓGRAFO & CONSEJOS (ETC) - PRO & ADVANCE ONLY */}
       {!isFree && (isPro || isAdvance) && (

@@ -8,7 +8,8 @@ import {
   Phone, ArrowRight, ChevronLeft, ChevronRight, BookOpen, Clock, Sparkles, 
   Navigation, Eye, Share2, Award, Check, Ticket, GraduationCap, Quote, Sun, Coins, Globe
 } from 'lucide-react';
-import { LandingData, LanguageType } from '@/types/landing';
+import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
+import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import QuoteModal from '@/components/common/QuoteModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
@@ -83,6 +84,15 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
     return `https://wa.me/${cleanPhone}?text=${msg}`;
   };
 
+  // Tours secundarios del catálogo (editables desde el modal o sugeridos)
+  const secondaryCatalogTours = React.useMemo(() => {
+    const sourceTours = (data?.catalogTours && data.catalogTours.length > 0)
+      ? data.catalogTours
+      : DEFAULT_SECONDARY_CATALOG_TOURS;
+    const tourLimit = isFree ? 1 : isBasic ? 3 : 5;
+    return sourceTours.slice(0, tourLimit);
+  }, [data?.catalogTours, isFree, isBasic]);
+
   // Grand panoramic sunset hero photo over mountain valley
   const heroSunsetBg = data.heroImage || 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop';
   const featuredNewsPhoto = data.galleryImages?.[0] || 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1200&auto=format&fit=crop';
@@ -128,6 +138,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             <div className="hidden xl:flex items-center gap-5 text-[11px] font-bold tracking-wider uppercase text-stone-200">
               <a href="#actualites" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.cronicas}</a>
               <a href="#agenda" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.agenda}</a>
+              <a href="#tours" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{currentLang === 'en' ? 'Tours' : 'Tours'}</a>
               {(isPro || isAdvance) && <a href="#territorio" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.territorio}</a>}
               {(isPro || isAdvance) && <a href="#itinerario" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.itinerario}</a>}
               {(isPro || isAdvance) && <a href="#conseils" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.conseils}</a>}
@@ -494,6 +505,131 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
           </div>
 
+        </div>
+      </section>
+
+      {/* SECTION: CATÁLOGO DE TOURS & RUTAS HISTÓRICAS */}
+      <section id="tours" className="py-14 sm:py-20 px-4 sm:px-8 max-w-7xl mx-auto border-t border-stone-200/80">
+        <div className="max-w-2xl mx-auto text-center mb-10 sm:mb-14 space-y-3">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-800 text-[10px] sm:text-xs font-black uppercase tracking-widest border border-red-200">
+            <Landmark size={13} />
+            <span>{currentLang === 'en' ? 'Historical Routes' : currentLang === 'pt' ? 'Rotas Históricas' : currentLang === 'fr' ? 'Circuits Historiques' : currentLang === 'it' ? 'Rotte Storiche' : 'Rutas Históricas & Arqueología'}</span>
+          </span>
+          <h2 className="text-2xl sm:text-4xl font-serif font-black text-stone-900 tracking-tight">
+            {currentLang === 'en' ? 'Other Guided Cultural Expeditions' : currentLang === 'pt' ? 'Outras Expedições Culturais Guiadas' : currentLang === 'fr' ? 'Autres Expéditions Culturelles Guidées' : currentLang === 'it' ? 'Altre Spedizioni Culturali Guidate' : 'Otros Circuitos & Expediciones Culturales'}
+          </h2>
+          <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
+            {currentLang === 'en'
+              ? 'Immerse yourself in authentic Andean heritage with certified academic historians and respectful local access.'
+              : currentLang === 'pt'
+              ? 'Conecte-se com o patrimônio andino autêntico acompanhado por historiadores credenciados e acessos respeitosos.'
+              : currentLang === 'fr'
+              ? 'Immergez-vous dans l’héritage andin authentique avec des historiens certifiés et des accès privilégiés.'
+              : currentLang === 'it'
+              ? 'Scopri il patrimonio andino autentico con storici accreditati e itinerari curati nel dettaglio.'
+              : 'Conecta con el patrimonio ancestral guiado por historiadores oficiales y recorridos diseñados para el viajero cultural.'}
+          </p>
+        </div>
+
+        {/* Grilla de Tours */}
+        <div className={`grid gap-6 sm:gap-7 max-w-6xl mx-auto ${
+          isMobile 
+            ? 'grid-cols-1 max-w-sm' 
+            : isFree 
+            ? 'max-w-md grid-cols-1' 
+            : isBasic 
+            ? 'grid-cols-1 md:grid-cols-3' 
+            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+        }`}>
+          {secondaryCatalogTours.map((tour) => {
+            const tourTitle = translateText(tour.title, currentLang);
+            const tourLoc = translateText(tour.location, currentLang);
+            const tourCategory = translateText(tour.category, currentLang);
+            const tourTag = translateText(tour.tag, currentLang);
+            return (
+              <div
+                key={tour.id}
+                className="bg-white rounded-3xl overflow-hidden border border-red-200/80 shadow-md hover:shadow-2xl hover:border-red-400 transition-all duration-300 flex flex-col justify-between group text-left"
+              >
+                <div>
+                  <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-stone-100">
+                    <Image
+                      src={tour.image}
+                      alt={tourTitle}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 400px"
+                      className="object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+                    <div className="absolute top-3 left-3 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-full text-xs font-serif font-bold text-stone-800 flex items-center gap-1 shadow-xs">
+                      <Star size={12} className="text-amber-500 fill-amber-500" />
+                      <span>{tour.rating || 4.9}</span>
+                    </div>
+
+                    {tourTag && (
+                      <div className="absolute top-3 right-3 bg-red-700 text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-xs">
+                        {tourTag}
+                      </div>
+                    )}
+
+                    <div className="absolute bottom-3 left-3 right-3 text-white flex items-center justify-between text-xs">
+                      <span className="flex items-center gap-1 bg-black/50 backdrop-blur-xs px-2.5 py-0.5 rounded-lg text-[11px]">
+                        <Clock size={12} /> {tour.duration}
+                      </span>
+                      <span className="font-serif font-bold bg-stone-900/85 px-2.5 py-0.5 rounded-lg text-amber-300 text-[11px]">
+                        {tour.price}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="p-5 space-y-2">
+                    <div className="flex items-center gap-1 text-[11px] text-red-700 font-serif uppercase tracking-wider font-semibold">
+                      <MapPin size={11} />
+                      <span>{tourLoc}</span>
+                      <span className="text-stone-300">•</span>
+                      <span className="text-stone-500">{tourCategory}</span>
+                    </div>
+                    <h3 className="font-serif font-black text-base sm:text-lg text-stone-900 group-hover:text-red-700 transition-colors leading-snug line-clamp-2">
+                      {tourTitle}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="p-5 pt-0 flex items-center justify-between gap-2 border-t border-stone-100 mt-2">
+                  <div>
+                    <span className="text-[10px] text-stone-500 uppercase tracking-wider block font-sans">
+                      {currentLang === 'en' ? 'From' : currentLang === 'pt' ? 'A partir de' : currentLang === 'fr' ? 'À partir de' : currentLang === 'it' ? 'A partire da' : 'Tarifa'}
+                    </span>
+                    <span className="font-serif text-base font-bold text-stone-900">
+                      {tour.price}
+                    </span>
+                  </div>
+
+                  {isQuote ? (
+                    <button
+                      type="button"
+                      onClick={() => setIsQuoteOpen(true)}
+                      className="bg-stone-900 hover:bg-red-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <FileText size={13} />
+                      <span>{t.cta.quote}</span>
+                    </button>
+                  ) : (
+                    <a
+                      href={createWhatsAppLink(tour.title)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-red-700 hover:bg-red-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <MessageCircle size={13} />
+                      <span>{currentLang === 'en' ? 'Inquire' : 'Consultar'}</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 

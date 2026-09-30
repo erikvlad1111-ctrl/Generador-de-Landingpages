@@ -7,7 +7,8 @@ import {
   Coffee, Wifi, ExternalLink, ShieldAlert, Car, Utensils, Check, QrCode,
   Camera, Sun, Wine, Sparkle, Layers
 } from 'lucide-react';
-import { LandingData, LanguageType } from '@/types/landing';
+import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
+import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import QuoteModal from '@/components/common/QuoteModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
@@ -79,6 +80,14 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
     const msg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, deseo consultar disponibilidad y tarifa VIP para el tour "${tourTitle}".`);
     return `https://wa.me/${cleanPhone}?text=${msg}`;
   };
+
+  const secondaryCatalogTours = React.useMemo(() => {
+    const sourceTours = (data?.catalogTours && data.catalogTours.length > 0)
+      ? data.catalogTours
+      : DEFAULT_SECONDARY_CATALOG_TOURS;
+    const tourLimit = isFree ? 1 : isBasic ? 3 : 5;
+    return sourceTours.slice(0, tourLimit);
+  }, [data?.catalogTours, isFree, isBasic]);
 
   const getLuxuryTestimonials = () => {
     if (data.testimonials && data.testimonials.length > 0) {
@@ -1070,6 +1079,130 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       </section>
       )}
 
+      {/* SECTION: CATÁLOGO DE TOURS & EXPEDICIONES VIP */}
+      <section id="tours" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} max-w-6xl mx-auto z-10`}>
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono mb-3 shadow-[0_0_20px_rgba(245,158,11,0.2)]">
+            <Crown size={13} className="text-amber-400" />
+            <span>{currentLang === 'en' ? 'Private Collection' : currentLang === 'pt' ? 'Coleção Privativa' : currentLang === 'fr' ? 'Collection Privée' : currentLang === 'it' ? 'Collezione Privata' : 'Colección Privada'}</span>
+          </div>
+          <h2 className={`${isMobile ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-5xl'} font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-white to-amber-200 mb-3`}>
+            {t.nav.tours || 'Nuestros Tours VIP'}
+          </h2>
+          <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+            {currentLang === 'en' 
+              ? 'Handcrafted private journeys designed for discerning travelers seeking privacy, elevated comfort, and seamless service.'
+              : currentLang === 'pt'
+              ? 'Roteiros privativos sob medida pensados para viajantes exigentes que priorizam privacidade, conforto superior e tranquilidade absoluta.'
+              : currentLang === 'fr'
+              ? 'Voyages privés sur mesure conçus pour les voyageurs exigeants en quête d’intimité, de grand confort et d’un service sans faille.'
+              : currentLang === 'it'
+              ? 'Viaggi privati su misura per viaggiatori esigenti che cercano privacy, comfort elevato e totale serenità.'
+              : 'Expediciones privadas diseñadas a medida para viajeros que priorizan privacidad, confort de alta gama y atención personalizada.'}
+          </p>
+        </div>
+
+        <div className={`grid gap-6 sm:gap-8 ${
+          isMobile 
+            ? 'grid-cols-1 max-w-sm mx-auto' 
+            : isFree 
+            ? 'max-w-md mx-auto grid-cols-1' 
+            : isBasic 
+            ? 'grid-cols-1 md:grid-cols-3' 
+            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+        }`}>
+          {secondaryCatalogTours.map((tour) => {
+            const tourTitle = translateText(tour.title, currentLang);
+            const tourLoc = translateText(tour.location, currentLang);
+            const tourCategory = translateText(tour.category, currentLang);
+            const tourTag = translateText(tour.tag, currentLang);
+            return (
+              <div
+                key={tour.id}
+                className="bg-neutral-900/80 backdrop-blur-xl rounded-3xl border border-amber-500/25 hover:border-amber-400/60 p-5 sm:p-6 transition-all duration-300 flex flex-col justify-between group shadow-[0_10px_35px_rgba(0,0,0,0.6)] hover:-translate-y-1"
+              >
+                <div>
+                  <div className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden bg-neutral-950 mb-4">
+                    <Image
+                      src={tour.image}
+                      alt={tourTitle}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-950/20 to-transparent" />
+
+                    <div className="absolute top-3 left-3 bg-neutral-950/85 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-mono font-bold text-amber-300 flex items-center gap-1 border border-amber-500/30">
+                      <Star size={11} className="text-amber-400 fill-amber-400" />
+                      <span>{tour.rating || 4.9}</span>
+                    </div>
+
+                    {tourTag && (
+                      <div className="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-extrabold uppercase tracking-wider shadow-sm">
+                        {tourTag}
+                      </div>
+                    )}
+
+                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-neutral-200">
+                      <span className="flex items-center gap-1 bg-neutral-950/70 backdrop-blur-xs px-2 py-0.5 rounded-md text-[11px] font-mono">
+                        <Clock size={11} className="text-amber-400" /> {tour.duration}
+                      </span>
+                      <span className="bg-amber-400/20 border border-amber-400/40 text-amber-300 px-2 py-0.5 rounded-md text-[11px] font-mono font-bold">
+                        {tour.price}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1.5 mb-3">
+                    <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] uppercase tracking-widest text-amber-400/80 font-mono font-bold">
+                      <MapPin size={11} />
+                      <span>{tourLoc}</span>
+                      <span className="text-amber-400/30">•</span>
+                      <span>{tourCategory}</span>
+                    </div>
+                    <h3 className="font-serif text-base sm:text-lg font-bold text-neutral-100 group-hover:text-amber-200 transition-colors line-clamp-2">
+                      {tourTitle}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-amber-500/20 flex items-center justify-between gap-2">
+                  <div>
+                    <span className="text-[10px] text-neutral-400 uppercase tracking-widest font-mono block">
+                      {currentLang === 'en' ? 'Private Rate' : currentLang === 'pt' ? 'Tarifa VIP' : currentLang === 'fr' ? 'Tarif Privé' : currentLang === 'it' ? 'Tariffa VIP' : 'Tarifa VIP'}
+                    </span>
+                    <span className="font-serif text-lg font-bold text-amber-300">
+                      {tour.price}
+                    </span>
+                  </div>
+
+                  {isQuote ? (
+                    <button
+                      type="button"
+                      onClick={() => setIsQuoteOpen(true)}
+                      className="bg-amber-500 hover:bg-amber-400 text-neutral-950 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer font-sans"
+                    >
+                      <FileText size={13} />
+                      <span>{t.cta.quote || 'Cotizar'}</span>
+                    </button>
+                  ) : (
+                    <a
+                      href={getTourWaUrl(tour.title)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer font-sans"
+                    >
+                      <MessageCircle size={13} />
+                      <span>{currentLang === 'en' ? 'Inquire' : 'Consultar'}</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
       {/* 11. PERFIL DEL GUÍA CONCIERGE OFICIAL CON AMBIENTE DE PALACIO (PRO & ADVANCE) */}
       {(isPro || isAdvance) && (
         <section id="guia-concierge" className={`relative ${isMobile ? 'py-16 px-4' : 'py-32 md:py-36 px-6 sm:px-10 lg:px-12'} overflow-hidden border-b border-neutral-900`}>
@@ -1583,6 +1716,101 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </div>
       </section>
       )}
+
+      {/* 18.5. COLECCIÓN DE TOURS VIP & EXPERIENCIAS SIGNATURE */}
+      <section id="tours" className={`relative ${isMobile ? 'py-16 px-4' : 'py-24 px-8'} overflow-hidden border-t border-amber-500/20 bg-[#0a080e]`}>
+        <div className="max-w-6xl mx-auto relative z-10 space-y-12">
+          
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono shadow-[0_0_20px_rgba(245,158,11,0.2)]">
+              <Crown size={13} className="text-amber-400" />
+              <span>{currentLang === 'en' ? 'Signature VIP Collection' : currentLang === 'pt' ? 'Coleção VIP Signature' : currentLang === 'fr' ? 'Collection VIP Signature' : currentLang === 'it' ? 'Collezione VIP Signature' : 'Colección Signature VIP'}</span>
+            </div>
+            <h2 className={`${isMobile ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-5xl'} font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-white to-amber-200`}>
+              {currentLang === 'en' ? 'More Private Expeditions in Cusco' : currentLang === 'pt' ? 'Outras Expedições Privadas em Cusco' : currentLang === 'fr' ? 'Autres Expéditions Privées à Cusco' : currentLang === 'it' ? 'Altre Spedizioni Private a Cusco' : 'Otras Experiencias VIP & Rutas Exclusivas'}
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+              {currentLang === 'en' 
+                ? 'High-end Andean journeys operated with private vehicles, licensed historian guides, and complete concierge support.' 
+                : currentLang === 'pt' 
+                ? 'Roteiros andinos de alto padrão operados com transporte exclusivo, guias historiadores credenciados e assistência 24/7.' 
+                : currentLang === 'fr' 
+                ? 'Voyages andins haut de gamme opérés avec véhicules privés, guides historiens agréés et conciergerie 24/7.' 
+                : currentLang === 'it' 
+                ? 'Viaggi andini d’eccellenza operati con veicoli privati, guide storiche accreditate e concierge dedicato.' 
+                : 'Circuitos andinos de alta gama con vehículos ejecutivos, guías historiadores oficiales y asistencia personalizada de puerta a puerta.'}
+            </p>
+          </div>
+
+          <div className={`grid gap-6 ${isMobile ? 'grid-cols-1' : isFree ? 'grid-cols-1 max-w-md mx-auto' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
+            {secondaryCatalogTours.map((tour, idx) => (
+              <div
+                key={tour.id || idx}
+                className="bg-neutral-900/90 rounded-3xl border border-amber-500/30 overflow-hidden shadow-2xl hover:border-amber-400/70 transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
+              >
+                <div>
+                  <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-neutral-950">
+                    <Image
+                      src={tour.image}
+                      alt={tour.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700 brightness-90 contrast-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/20 to-transparent" />
+                    
+                    <div className="absolute top-3 left-3 bg-neutral-950/80 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-mono font-bold text-amber-300 border border-amber-400/30 flex items-center gap-1 shadow-lg">
+                      <Star size={11} className="fill-amber-400 text-amber-400" />
+                      <span>{tour.badge || '5.0 ★'}</span>
+                    </div>
+
+                    {tour.tag && (
+                      <div className="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-lg">
+                        {tour.tag}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="p-5 sm:p-6 space-y-3 text-left">
+                    <h3 className="font-serif font-bold text-base sm:text-lg text-white group-hover:text-amber-300 transition-colors leading-snug">
+                      {translateText(tour.title, currentLang)}
+                    </h3>
+
+                    <div className="flex items-center justify-between text-xs text-neutral-400 pt-1">
+                      <span className="flex items-center gap-1.5">
+                        <Clock size={13} className="text-amber-400" /> {tour.duration || 'Full Day'}
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <MapPin size={13} className="text-amber-400" /> {tour.location || 'Cusco'}
+                      </span>
+                    </div>
+
+                    <div className="pt-3 border-t border-neutral-800 flex items-baseline justify-between">
+                      <span className="text-xs text-neutral-400">Tarifa VIP:</span>
+                      <span className="text-xl font-serif font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">
+                        {tour.price}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-5 pt-0">
+                  <a
+                    href={getTourWaUrl(tour.title)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-neutral-950 font-extrabold text-xs py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md shadow-amber-500/20 active:scale-98 cursor-pointer"
+                  >
+                    <MessageCircle size={14} />
+                    <span>{currentLang === 'en' ? 'Book VIP Journey' : currentLang === 'pt' ? 'Reservar Experiência VIP' : currentLang === 'fr' ? 'Réserver Voyage VIP' : currentLang === 'it' ? 'Prenota Esperienza VIP' : 'Reservar Experiencia VIP'}</span>
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
 
       {/* 19. TOUR SUPPORT & FAQS (ADVANCE ONLY) */}
       {isAdvance && (
