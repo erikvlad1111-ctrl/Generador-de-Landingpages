@@ -24,7 +24,7 @@ export const DEFAULT_SECONDARY_CATALOG_TOURS: CatalogTourItem[] = [
     price: '$280 USD',
     rating: 5.0,
     image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
-    tag: 'Maravilla del Mundo',
+    tag: 'Maravilla',
     badge: '5.0 ★'
   },
   {

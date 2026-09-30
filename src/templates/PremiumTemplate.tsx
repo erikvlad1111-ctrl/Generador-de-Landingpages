@@ -1138,7 +1138,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                     </div>
 
                     {tourTag && (
-                      <div className="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-extrabold uppercase tracking-wider shadow-sm">
+                      <div className="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-extrabold uppercase tracking-wider shadow-sm max-w-[130px] truncate" title={tourTag}>
                         {tourTag}
                       </div>
                     )}

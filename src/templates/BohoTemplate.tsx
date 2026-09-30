@@ -1031,7 +1031,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                     </div>
 
                     {tourTag && (
-                      <div className="absolute top-2.5 right-2.5 bg-[#C86D51] text-white px-2.5 py-0.5 rounded-full text-[10px] font-sans font-bold uppercase tracking-wider shadow-xs">
+                      <div className="absolute top-2.5 right-2.5 bg-[#C86D51] text-white px-2.5 py-0.5 rounded-full text-[10px] font-sans font-bold uppercase tracking-wider shadow-xs max-w-[130px] truncate" title={tourTag}>
                         {tourTag}
                       </div>
                     )}

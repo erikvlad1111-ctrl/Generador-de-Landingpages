@@ -60,6 +60,85 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     it: 'Valle Sacra degli Inca VIP & Cultura Viva'
   },
 
+  // --- ETIQUETAS Y BADGES CORTOS DE TOURS ---
+  'Maravilla del Mundo': {
+    es: 'Maravilla del Mundo',
+    en: 'World Wonder',
+    pt: 'Maravilha do Mundo',
+    fr: 'Merveille du Monde',
+    it: 'Meraviglia del Mondo'
+  },
+  'Maravilla': {
+    es: 'Maravilla',
+    en: 'Wonder',
+    pt: 'Maravilha',
+    fr: 'Merveille',
+    it: 'Meraviglia'
+  },
+  'Glaciar': {
+    es: 'Glaciar',
+    en: 'Glacier',
+    pt: 'Geleira',
+    fr: 'Glacier',
+    it: 'Ghiacciaio'
+  },
+  'Arqueológico': {
+    es: 'Arqueológico',
+    en: 'Archaeological',
+    pt: 'Arqueológico',
+    fr: 'Archéologique',
+    it: 'Archeologico'
+  },
+  'Adrenalina': {
+    es: 'Adrenalina',
+    en: 'Adrenaline',
+    pt: 'Adrenalina',
+    fr: 'Adrénaline',
+    it: 'Adrenalina'
+  },
+  'Recomendado': {
+    es: 'Recomendado',
+    en: 'Recommended',
+    pt: 'Recomendado',
+    fr: 'Recommandé',
+    it: 'Raccomandato'
+  },
+  'Destacado': {
+    es: 'Destacado',
+    en: 'Featured',
+    pt: 'Destaque',
+    fr: 'En Vedette',
+    it: 'In Evidenza'
+  },
+  'Imperdible': {
+    es: 'Imperdible',
+    en: 'Must See',
+    pt: 'Imperdível',
+    fr: 'Incontournable',
+    it: 'Imperdibile'
+  },
+  'Exclusivo VIP': {
+    es: 'Exclusivo VIP',
+    en: 'VIP Exclusive',
+    pt: 'Exclusivo VIP',
+    fr: 'Exclusif VIP',
+    it: 'Esclusivo VIP'
+  },
+  'Más Solicitado': {
+    es: 'Más Solicitado',
+    en: 'Top Pick',
+    pt: 'Mais Procurado',
+    fr: 'Le Plus Demandé',
+    it: 'Più Richiesto'
+  },
+  'Tour Seleccionado': {
+    es: 'Tour Seleccionado',
+    en: 'Selected Tour',
+    pt: 'Selecionado',
+    fr: 'Sélectionné',
+    it: 'Selezionato'
+  },
+
   // --- SUBTÍTULOS Y DESCRIPCIONES ---
   'Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia.': {
     es: 'Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia.',
@@ -890,14 +969,6 @@ export function translateText(text: string | undefined, targetLang: LanguageType
     if (targetLang === 'it') return 'Laguna Humantay Turchese & Ghiacciaio Andino';
   }
 
-  if (lowerTrimmed.includes('salkantay')) {
-    if (targetLang === 'es') return 'Tour Salkantay Trek Clásico hacia Machu Picchu';
-    if (targetLang === 'en') return 'Classic Salkantay Trek to Machu Picchu 5D';
-    if (targetLang === 'pt') return 'Trilha Salkantay Clássica para Machu Picchu 5D';
-    if (targetLang === 'fr') return 'Trek Salkantay Classique vers le Machu Picchu 5J';
-    if (targetLang === 'it') return 'Trek Salkantay Classico verso Machu Picchu 5G';
-  }
-
   if (lowerTrimmed.includes('valle sagrado') || lowerTrimmed.includes('sacred valley') || lowerTrimmed.includes('vallée sacrée') || lowerTrimmed.includes('valle sacra')) {
     if (targetLang === 'es') return 'Valle Sagrado de los Incas VIP';
     if (targetLang === 'en') return 'Sacred Valley of the Incas VIP Cultural Journey';
@@ -914,8 +985,8 @@ export function translateText(text: string | undefined, targetLang: LanguageType
     if (targetLang === 'it') return 'City Tour Cusco Ancestrale & 4 Siti Archeologici';
   }
 
-  // Heurísticas semánticas para Subtítulos y Descripciones
-  if (lowerTrimmed.includes('maravilla del mundo') || lowerTrimmed.includes('maravilha do mundo') || lowerTrimmed.includes('wonder of the world') || lowerTrimmed.includes('merveille du monde') || lowerTrimmed.includes('meraviglia del mondo') || lowerTrimmed.includes('hoteles 5 estrellas') || lowerTrimmed.includes('guía oficial exclusivo')) {
+  // Heurísticas semánticas para Subtítulos y Descripciones (solo si es texto descriptivo largo)
+  if (lowerTrimmed.length > 25 && (lowerTrimmed.includes('descubre') || lowerTrimmed.includes('hoteles 5 estrellas') || lowerTrimmed.includes('guía oficial exclusivo'))) {
     if (targetLang === 'es') return 'Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia.';
     if (targetLang === 'en') return 'Discover the wonder of the world with private luxury transfers, 5-star comfort and an official certified historian guide dedicated exclusively to you and your family.';
     if (targetLang === 'pt') return 'Descubra a maravilha do mundo com traslados privados, conforto 5 estrelas e um guia oficial exclusivo para você e sua família.';
@@ -923,7 +994,7 @@ export function translateText(text: string | undefined, targetLang: LanguageType
     if (targetLang === 'it') return 'Scopri la meraviglia del mondo con trasferimenti privati, comfort a 5 stelle e una guida ufficiale esclusiva per te e la tua famiglia.';
   }
 
-  if (lowerTrimmed.includes('magia de los andes') || lowerTrimmed.includes('magia dos andes') || lowerTrimmed.includes('magic of the andes') || lowerTrimmed.includes('salidas diarias') || lowerTrimmed.includes('saídas diárias') || lowerTrimmed.includes('daily departures')) {
+  if (lowerTrimmed.length > 25 && (lowerTrimmed.includes('magia de los andes') || lowerTrimmed.includes('magia dos andes') || lowerTrimmed.includes('magic of the andes') || lowerTrimmed.includes('salidas diarias') || lowerTrimmed.includes('saídas diárias') || lowerTrimmed.includes('daily departures'))) {
     if (targetLang === 'es') return 'Montaña de 7 Colores & Valle Rojo • Vive la magia de los Andes con operadores colegiados y salidas diarias.';
     if (targetLang === 'en') return 'Experience the magic of the Peruvian Andes with official accredited tour operators and guaranteed daily departures.';
     if (targetLang === 'pt') return 'Viva a magia dos Andes peruanos com operadores credenciados e saídas diárias garantidas.';
@@ -931,7 +1002,7 @@ export function translateText(text: string | undefined, targetLang: LanguageType
     if (targetLang === 'it') return 'Vivi la magia delle Ande peruviane con operatori abilitati e partenze giornaliere garantite.';
   }
 
-  if (lowerTrimmed.includes('operador turístico') || lowerTrimmed.includes('operador turistico') || lowerTrimmed.includes('tour operator') || lowerTrimmed.includes('formal en cusco')) {
+  if (lowerTrimmed.length > 25 && (lowerTrimmed.includes('operador turístico') || lowerTrimmed.includes('operador turistico') || lowerTrimmed.includes('tour operator') || lowerTrimmed.includes('formal en cusco'))) {
     if (targetLang === 'es') return 'Operador turístico oficial y colegiado en Cusco con licencia DIRCETUR y excelencia garantizada.';
     if (targetLang === 'en') return 'Official certified tourism operator in Cusco with proven excellence and DIRCETUR license.';
     if (targetLang === 'pt') return 'Operador turístico oficial e registrado em Cusco com excelência comprovada e credencial DIRCETUR.';

@@ -628,7 +628,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
                       {/* Tag Badge */}
                       {tour.tag && (
-                        <div className="absolute top-3.5 left-20 bg-blue-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
+                        <div className="absolute top-3.5 left-20 bg-blue-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs max-w-[130px] truncate" title={translateText(tour.tag, currentLang)}>
                           {translateText(tour.tag, currentLang)}
                         </div>
                       )}

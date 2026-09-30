@@ -568,7 +568,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                     </div>
 
                     {tourTag && (
-                      <div className="absolute top-3 right-3 bg-red-700 text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-xs">
+                      <div className="absolute top-3 right-3 bg-red-700 text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-xs max-w-[130px] truncate" title={tourTag}>
                         {tourTag}
                       </div>
                     )}

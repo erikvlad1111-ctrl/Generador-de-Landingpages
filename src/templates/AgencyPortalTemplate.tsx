@@ -1445,7 +1445,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     </div>
 
                     {tour.tag && (
-                      <div className="absolute top-2.5 right-2.5 bg-[#FF5500] text-white px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-md">
+                      <div className="absolute top-2.5 right-2.5 bg-[#FF5500] text-white px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-md max-w-[130px] truncate" title={tour.tag}>
                         {tour.tag}
                       </div>
                     )}
