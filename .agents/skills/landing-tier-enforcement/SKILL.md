@@ -68,3 +68,14 @@ Cada una de las 5 plantillas (`agency-portal`, `boho-nature`, `adventure`, `cult
 - **Síntoma:** Al seleccionar planes Gratuito, Básico o Pro, la sección de tours quedaba oculta por estar condicionada a `isAdvance`.
 - **Causa Raíz:** La sección de tours y sus enlaces de navegación estaban envueltos en `{isAdvance && (...) }`.
 - **Solución:** Remover el gating condicional `{isAdvance && (` de las secciones de tours (`#tours`, `#destinos`, `#iconic`, `#agenda`) y sus correspondientes enlaces en los menús de navegación en las 5 plantillas, manteniéndola visible en todos los planes.
+
+### Error 5: Nombre del tour individual en la cabecera del footer y modales legales en lugar de la marca de agencia
+- **Síntoma:** En la Columna 1 del footer y en el encabezado de los modales de Libro de Reclamaciones y Términos Legales, se mostraba el nombre del tour (ej. "Laguna Humantay — Bitácora Fotográfica & Paisajismo" o "Machu Picchu VIP") junto a la licencia DIRCETUR y el RUC.
+- **Causa Raíz:** Las plantillas inyectaban variables dependientes del tour como `data.name` o `rawTourTitle` en la cabecera de la columna corporativa del footer y en las props `agencyName` de `ComplaintsBookModal` y `LegalTermsModal`.
+- **Solución:**
+  1. En `BohoTemplate`: Establecer la marca fija `"Boho Travel Journal"` en la columna 1 y `"Boho Travel Journal • Cusco Creativos S.A.C."` en los modales legales.
+  2. En `PremiumTemplate`: Establecer `"Cusco Creativos VIP Collection"` en la columna 1 y `"Cusco Creativos VIP Collection • Inversiones Turísticas Cusco S.A.C."` en los modales.
+  3. En `AgencyPortalTemplate`: Separar la variable corporativa `brandName = 'Cusco Creativos'` y `fullAgencyName = 'Cusco Creativos Operador Turístico S.A.C.'` de la variable de la ficha técnica `tourTitle = data?.hero?.title || data?.name`, y usar `Cusco Creativos Operador Turístico` en el footer y modales.
+  4. En `CulturalTemplate`: Asignar `"Cusco Patrimonial • Cusco Creativos S.A.C."` a los modales legales.
+  5. En `AdventureTemplate`: Mantener `"TrekExplorer Perú • Cusco Creativos S.A.C."`.
+
