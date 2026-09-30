@@ -588,7 +588,9 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const [legalTab, setLegalTab] = useState<'terms' | 'cancellation' | 'privacy' | 'license'>('terms');
 
   // 3. Parámetros y datos dinámicos
-  const brandName = data?.name || 'Cusco Tours';
+  const tourTitle = data?.hero?.title || data?.name || 'Experiencia Machu Picchu & Cusco';
+  const brandName = 'Cusco Creativos';
+  const fullAgencyName = 'Cusco Creativos Operador Turístico S.A.C.';
   const whatsappNumber = (data?.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const guideName = data?.guideName || 'Carlos Mendoza';
   const destination = data?.destination || 'Cusco, Perú';
@@ -600,7 +602,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
     ...dict,
     whyTitle: lang === 'en' ? `Why travel with ${brandName}?` : lang === 'pt' ? `Por que viajar com ${brandName}?` : lang === 'fr' ? `Pourquoi voyager avec ${brandName} ?` : lang === 'it' ? `Perché viaggiare con ${brandName}?` : `¿Por qué viajar con ${brandName}?`,
     whySubtitle: lang === 'en' ? 'Official local agency with over a decade curating unforgettable memories across the Peruvian Andes.' : lang === 'pt' ? 'Agência local credenciada com mais de uma década organizando experiências inesquecíveis nos Andes peruanos.' : lang === 'fr' ? 'Agence locale agréée forte de plus d’une décennie d’expérience dans l’organisation de souvenirs inoubliables.' : lang === 'it' ? 'Agenzia locale accreditata con oltre un decennio di esperienza nella creazione di ricordi indimenticabili.' : 'Somos una agencia local acreditada con más de 10 años organizando viajes inolvidables en Cusco y todo el Perú.',
-    footerRights: `© 2026 ${brandName}. ${lang === 'en' ? 'Authorized Tourism Operator.' : lang === 'pt' ? 'Operador Turístico Autorizado.' : lang === 'fr' ? 'Opérateur Touristique Autorisé.' : lang === 'it' ? 'Operatore Turistico Autorizzato.' : 'Operador Turístico Autorizado.'}`
+    footerRights: `© 2026 ${fullAgencyName}. ${lang === 'en' ? 'Authorized Tourism Operator.' : lang === 'pt' ? 'Operador Turístico Autorizado.' : lang === 'fr' ? 'Opérateur Touristique Autorisé.' : lang === 'it' ? 'Operatore Turistico Autorizzato.' : 'Operador Turístico Autorizado.'}`
   };
 
   // -----------------------------------------------------------
@@ -1297,7 +1299,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     <Compass size={12} /> {t.techSheetBadge}
                   </span>
                   <span className="text-[10px] bg-stone-100 text-stone-700 font-extrabold px-2.5 py-0.5 rounded-full border border-stone-200">
-                    {translateText(data?.name || brandName, lang)}
+                    {translateText(tourTitle, lang)}
                   </span>
                 </div>
                 <h3 className="text-lg sm:text-2xl font-black text-stone-900 tracking-tight">
@@ -1585,7 +1587,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         <PinterestPinboard
           images={data?.galleryImages && data.galleryImages.length > 0 ? data.galleryImages : [heroImage]}
           destination={translateText(destination, lang)}
-          tourName={translateText(data?.name || brandName, lang)}
+          tourName={translateText(tourTitle, lang)}
           tier={planTier}
           theme="agency-portal"
           isMobile={isMobile}
@@ -1905,7 +1907,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       {isAdvance && (
         <TourSupportAndFaqs
           faqs={data?.faqs}
-          tourName={translateText(data?.name || brandName, lang)}
+          tourName={translateText(tourTitle, lang)}
           whatsapp={whatsappNumber}
           guideName={guideName}
           destination={translateText(destination, lang)}
@@ -2000,7 +2002,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                 </div>
                 <div>
                   <span className="text-base font-black text-white tracking-tight block">
-                    {brandName}
+                    Cusco Creativos Operador Turístico
                   </span>
                   <span className="text-[10px] text-amber-400 font-bold block uppercase tracking-wider">
                     {t.officialBadge} • {t.officialOperator}
@@ -2221,7 +2223,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         isOpen={isComplaintsOpen}
         onClose={() => setIsComplaintsOpen(false)}
         lang={lang}
-        agencyName={brandName}
+        agencyName={fullAgencyName}
         agencyAddress={data?.officeAddress || t.footerAddress}
       />
 
@@ -2231,7 +2233,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         onClose={() => setIsLegalOpen(false)}
         lang={lang}
         initialTab={legalTab}
-        agencyName={brandName}
+        agencyName={fullAgencyName}
       />
     </div>
   );

@@ -1268,7 +1268,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         isOpen={isComplaintsOpen}
         onClose={() => setIsComplaintsOpen(false)}
         lang={currentLang}
-        agencyName={t.footer.townName}
+        agencyName="Cusco Patrimonial • Cusco Creativos S.A.C."
         agencyAddress={data.officeAddress || t.footer.officeDesc}
       />
 
@@ -1278,7 +1278,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         onClose={() => setIsLegalOpen(false)}
         lang={currentLang}
         initialTab={legalTab}
-        agencyName={t.footer.townName}
+        agencyName="Cusco Patrimonial • Cusco Creativos S.A.C."
       />
     </div>
   );

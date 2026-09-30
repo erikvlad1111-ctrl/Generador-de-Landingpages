@@ -1719,7 +1719,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </div>
               <div>
                 <span className="font-serif font-bold text-sm text-white tracking-wide block">
-                  {rawTourTitle}
+                  Boho Travel Journal
                 </span>
                 <span className="text-[10px] text-stone-400 font-sans tracking-wider block">
                   {t.footer.dircetur}
@@ -1960,7 +1960,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         isOpen={isComplaintsOpen}
         onClose={() => setIsComplaintsOpen(false)}
         lang={currentLang}
-        agencyName={rawTourTitle}
+        agencyName="Boho Travel Journal • Cusco Creativos S.A.C."
         agencyAddress={data.officeAddress || t.footer.officeDesc}
       />
 
@@ -1970,7 +1970,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         onClose={() => setIsLegalOpen(false)}
         lang={currentLang}
         initialTab={legalTab}
-        agencyName={rawTourTitle}
+        agencyName="Boho Travel Journal • Cusco Creativos S.A.C."
       />
     </div>
   );

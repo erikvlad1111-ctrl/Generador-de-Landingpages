@@ -1915,7 +1915,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 </div>
                 <div>
                   <span className="font-serif font-black text-white text-base tracking-wide block">
-                    {data.name || 'Machu Picchu VIP'}
+                    Cusco Creativos VIP Collection
                   </span>
                   <span className="text-[10px] text-amber-400/90 tracking-widest uppercase font-bold block">
                     {t.hero.privateConciergeBadge}
@@ -2110,7 +2110,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         isOpen={isComplaintsOpen}
         onClose={() => setIsComplaintsOpen(false)}
         lang={currentLang}
-        agencyName={data.name || 'Machu Picchu VIP'}
+        agencyName="Cusco Creativos VIP Collection • Inversiones Turísticas Cusco S.A.C."
         agencyAddress={data.officeAddress || t.footer.officeDesc}
       />
 
@@ -2120,7 +2120,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         onClose={() => setIsLegalOpen(false)}
         lang={currentLang}
         initialTab={legalTab}
-        agencyName={data.name || 'Machu Picchu VIP'}
+        agencyName="Cusco Creativos VIP Collection • Inversiones Turísticas Cusco S.A.C."
       />
     </div>
   );
