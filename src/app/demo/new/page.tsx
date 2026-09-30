@@ -12,9 +12,11 @@ import {
   Plus, Trash2, XCircle, Backpack, ShieldCheck, Share2, Calendar,
   Star, ArrowRight, Camera, Crown, ChevronDown, Layers, Navigation, Landmark
 } from 'lucide-react';
-import { ObjectiveType, TemplateType, LanguageType, ItineraryItem, PlanTier, LandingData } from '@/types/landing';
+import { ObjectiveType, TemplateType, LanguageType, ItineraryItem, PlanTier, LandingData, CatalogTourItem } from '@/types/landing';
 import { simulateAiGeneration, saveLandingToStorage } from '@/data/landingStore';
 import { SAMPLE_TOUR_IMAGES } from '@/data/sampleImages';
+import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
+import CatalogToursEditorModal from '@/components/common/CatalogToursEditorModal';
 
 const AVAILABLE_TRUST_BADGES = [
   'Licencia Oficial DIRCETUR Cusco',
@@ -446,6 +448,8 @@ export default function NewLandingDemo() {
   const [mapsUrl, setMapsUrl] = useState<string>('');
   const [aiTone, setAiTone] = useState<string>('aventurero');
   const [tier, setTier] = useState<PlanTier>('advance');
+  const [catalogTours, setCatalogTours] = useState<CatalogTourItem[]>(DEFAULT_SECONDARY_CATALOG_TOURS);
+  const [isCatalogModalOpen, setIsCatalogModalOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -656,7 +660,8 @@ export default function NewLandingDemo() {
           officeAddress,
           officeHours,
           mapsUrl,
-          aiTone
+          aiTone,
+          catalogTours: template === 'agency-portal' ? catalogTours : undefined
         });
         saveLandingToStorage(generated);
         router.push(`/demo/preview?slug=${generated.slug}`);
@@ -844,6 +849,56 @@ export default function NewLandingDemo() {
               })}
             </div>
           </div>
+
+          {/* PASO 1.5: EDITOR DE CATÁLOGO DE TOURS (PORTAL DE AGENCIA) */}
+          {template === 'agency-portal' && (
+            <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950 text-white rounded-3xl p-6 sm:p-7 border border-orange-500/30 shadow-xl space-y-4 animate-in fade-in slide-in-from-top-3 duration-300">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-12 h-12 rounded-2xl bg-orange-500/20 border border-orange-500/30 text-orange-400 flex items-center justify-center shrink-0 shadow-inner">
+                    <Layers size={22} />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-sm sm:text-base font-black text-white">
+                        Catálogo de Tours del Portal de Agencia
+                      </h3>
+                      <span className="text-[10px] bg-orange-500/25 text-orange-300 font-extrabold px-2.5 py-0.5 rounded-full border border-orange-400/30">
+                        {catalogTours.length} Tours en Vitrina
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-300 mt-1 leading-relaxed max-w-xl">
+                      El tour que configures en este formulario es tu <strong>Tour Estrella</strong> (aparece en el Hero y en el itinerario oficial). Debajo, tu portal incluye un catálogo con 5 tours secundarios sugeridos para dar presencia completa de agencia.
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setIsCatalogModalOpen(true)}
+                  className="inline-flex items-center justify-center gap-2 bg-[#FF5500] hover:bg-[#e04b00] text-white px-5 py-3 rounded-2xl font-black text-xs transition-all shadow-lg shadow-orange-500/25 shrink-0 cursor-pointer hover:scale-102 active:scale-98"
+                >
+                  <Layers size={16} />
+                  <span>Personalizar Tours del Catálogo</span>
+                </button>
+              </div>
+
+              {/* Quick Preview Chips of the 5 tours */}
+              <div className="pt-3 border-t border-white/10 flex flex-wrap items-center gap-2">
+                <span className="text-[11px] text-slate-400 font-bold shrink-0">Tours en vitrina:</span>
+                {catalogTours.map((ct, idx) => (
+                  <span
+                    key={ct.id || idx}
+                    className="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/15 px-3 py-1 rounded-xl text-xs text-slate-200 border border-white/10 transition-colors"
+                  >
+                    <span className="text-orange-400 font-bold">#{idx + 2}</span>
+                    <span className="truncate max-w-[130px] font-medium">{ct.title}</span>
+                    <span className="text-emerald-400 font-bold text-[11px]">({ct.price})</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* PASO 2: FOTOGRAFÍA DE PORTADA (HERO) */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
@@ -2758,6 +2813,15 @@ export default function NewLandingDemo() {
         </div>
 
       </div>
+
+      {/* MODAL DE EDICIÓN DEL CATÁLOGO DE TOURS (PORTAL DE AGENCIA) */}
+      <CatalogToursEditorModal
+        isOpen={isCatalogModalOpen}
+        onClose={() => setIsCatalogModalOpen(false)}
+        currentTours={catalogTours}
+        onSave={(updated) => setCatalogTours(updated)}
+        currentSignatureTourName={name}
+      />
     </div>
   );
 }

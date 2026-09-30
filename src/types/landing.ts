@@ -21,6 +21,20 @@ export interface TestimonialItem {
   rating: number;
 }
 
+export interface CatalogTourItem {
+  id: string;
+  title: string;
+  category?: string;
+  categoryKey?: string;
+  location?: string;
+  duration?: string;
+  price: string;
+  rating?: number;
+  image: string;
+  tag?: string;
+  badge?: string;
+}
+
 export interface LandingData {
   id: string;
   name: string;
@@ -49,6 +63,7 @@ export interface LandingData {
   views: string;
   heroImage?: string;
   galleryImages?: string[];
+  catalogTours?: CatalogTourItem[];
   hero: {
     badge: string;
     title: string;
@@ -73,3 +88,4 @@ export interface LandingData {
   officeHours?: string;
   mapsUrl?: string;
 }
+

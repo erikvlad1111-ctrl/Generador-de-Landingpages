@@ -30,7 +30,8 @@ import {
   Menu,
   X
 } from 'lucide-react';
-import { LandingData, PlanTier, ObjectiveType, LanguageType } from '@/types/landing';
+import { LandingData, PlanTier, ObjectiveType, LanguageType, CatalogTourItem } from '@/types/landing';
+import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import QuoteModal from '@/components/common/QuoteModal';
@@ -621,7 +622,28 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   // -----------------------------------------------------------
   // 6. CATÁLOGO DE TOURS MULTI-IDIOMA
   // -----------------------------------------------------------
-  const DEFAULT_FEATURED_TOURS = [
+  // -----------------------------------------------------------
+  // 6. CATÁLOGO DE TOURS MULTI-IDIOMA (Tour Estrella + Catálogo Secundario)
+  // -----------------------------------------------------------
+  const rawSecondaryTours = (data?.catalogTours && data.catalogTours.length > 0)
+    ? data.catalogTours
+    : DEFAULT_SECONDARY_CATALOG_TOURS;
+
+  const secondaryTours = rawSecondaryTours.map((sec, idx) => ({
+    id: sec.id || `custom-cat-tour-${idx}`,
+    title: translateText(sec.title, lang),
+    category: translateText(sec.category || 'Tour Destacado', lang),
+    categoryKey: sec.categoryKey || 'all',
+    location: translateText(sec.location || destination, lang),
+    duration: getLocalizedDuration(sec.duration),
+    price: sec.price || '$45 USD',
+    rating: sec.rating || 4.9,
+    image: sec.image || heroImage,
+    tag: translateText(sec.tag || 'Destacado', lang),
+    badge: sec.badge || '4.9 ★'
+  }));
+
+  const allFeaturedTours = [
     {
       id: 'tour-creado-usuario',
       title: translateText(data?.name, lang) || (lang === 'en' ? 'Signature Andean Tour' : lang === 'pt' ? 'Passeio Andino Principal' : lang === 'fr' ? 'Circuit Andin Principal' : lang === 'it' ? 'Tour Andino Principale' : 'Tour Principal Seleccionado'),
@@ -635,75 +657,12 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       tag: lang === 'en' ? 'Selected Tour' : lang === 'pt' ? 'Selecionado' : lang === 'fr' ? 'Sélectionné' : lang === 'it' ? 'Selezionato' : 'Tour Seleccionado',
       badge: '4.9 ★'
     },
-    {
-      id: '2',
-      title: lang === 'en' ? 'Humantay Turquoise Lake & Glacier' : lang === 'pt' ? 'Laguna Humantay Turquesa & Geleira' : lang === 'fr' ? 'Lagune Humantay Turquoise & Glacier' : lang === 'it' ? 'Laguna Humantay Turchese & Ghiacciaio' : 'Laguna Humantay Turquesa & Glaciar',
-      category: lang === 'en' ? 'Nature & Photography' : lang === 'pt' ? 'Natureza & Fotografia' : lang === 'fr' ? 'Nature & Photographie' : lang === 'it' ? 'Natura & Fotografia' : 'Naturaleza & Fotografía',
-      categoryKey: 'trekking',
-      location: 'Anta - Mollepata',
-      duration: 'Full Day (05:00 - 18:00)',
-      price: '$40 USD',
-      rating: 4.8,
-      image: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=2070&auto=format&fit=crop',
-      tag: lang === 'en' ? 'Glacier Trek' : lang === 'pt' ? 'Geleira' : lang === 'fr' ? 'Glacier' : lang === 'it' ? 'Ghiacciaio' : 'Glaciar',
-      badge: '4.8 ★'
-    },
-    {
-      id: '3',
-      title: lang === 'en' ? 'Machu Picchu Panoramic Train & Guided Tour' : lang === 'pt' ? 'Machu Picchu Mágico em Trem Panorâmico' : lang === 'fr' ? 'Machu Picchu Magique en Train Panoramique' : lang === 'it' ? 'Machu Picchu Magico in Treno Panoramico' : 'Machu Picchu Mágico en Tren Panorámico',
-      category: lang === 'en' ? 'Wonder of the World' : lang === 'pt' ? 'Maravilha do Mundo' : lang === 'fr' ? 'Merveille du Monde' : lang === 'it' ? 'Meraviglia del Mondo' : 'Historia & Maravilla',
-      categoryKey: 'machu',
-      location: 'Aguas Calientes',
-      duration: lang === 'en' ? '1 Full Day' : lang === 'pt' ? '1 Dia Completo' : lang === 'fr' ? '1 Journée' : lang === 'it' ? '1 Giorno' : '1 Día Completo',
-      price: '$280 USD',
-      rating: 5.0,
-      image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
-      tag: lang === 'en' ? 'Top Wonder' : lang === 'pt' ? 'Maravilha' : lang === 'fr' ? 'Merveille' : lang === 'it' ? 'Meraviglia' : 'Maravilla del Mundo',
-      badge: '5.0 ★'
-    },
-    {
-      id: '4',
-      title: lang === 'en' ? 'Sacred Valley VIP Cultural Journey' : lang === 'pt' ? 'Vale Sagrado dos Incas VIP' : lang === 'fr' ? 'Vallée Sacrée des Incas VIP' : lang === 'it' ? 'Valle Sacra degli Inca VIP' : 'Valle Sagrado de los Incas VIP',
-      category: lang === 'en' ? 'Culture & Archaeology' : lang === 'pt' ? 'Cultura & Arqueologia' : lang === 'fr' ? 'Culture & Archéologie' : lang === 'it' ? 'Cultura & Archeologia' : 'Cultura & Arqueología',
-      categoryKey: 'cultura',
-      location: 'Pisac - Ollantaytambo',
-      duration: 'Full Day',
-      price: '$55 USD',
-      rating: 4.9,
-      image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
-      tag: lang === 'en' ? 'Archaeology' : lang === 'pt' ? 'Arqueológico' : lang === 'fr' ? 'Archéologie' : lang === 'it' ? 'Archeologico' : 'Arqueológico',
-      badge: '4.9 ★'
-    },
-    {
-      id: '5',
-      title: lang === 'en' ? 'Machu Picchu 2 Days & Aguas Calientes Hotel' : lang === 'pt' ? 'Machu Picchu 2 Dias com Hotel em Aguas Calientes' : lang === 'fr' ? 'Machu Picchu 2 Jours & Hôtel à Aguas Calientes' : lang === 'it' ? 'Machu Picchu 2 Giorni & Hotel ad Aguas Calientes' : 'Machu Picchu 2 Días con Noche en Aguas Calientes',
-      category: lang === 'en' ? 'Complete Journey' : lang === 'pt' ? 'Experiência Completa' : lang === 'fr' ? 'Séjour Complet' : lang === 'it' ? 'Soggiorno Completo' : 'Experiencia Completa',
-      categoryKey: 'machu',
-      location: 'Machu Picchu Pueblo',
-      duration: lang === 'en' ? '2 Days / 1 Night' : lang === 'pt' ? '2 Dias / 1 Noite' : lang === 'fr' ? '2 Jours / 1 Nuit' : lang === 'it' ? '2 Giorni / 1 Notte' : '2 Días / 1 Noche',
-      price: '$340 USD',
-      rating: 5.0,
-      image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=2029&auto=format&fit=crop',
-      tag: lang === 'en' ? 'Recommended' : lang === 'pt' ? 'Recomendado' : lang === 'fr' ? 'Recommandé' : lang === 'it' ? 'Consigliato' : 'Recomendado',
-      badge: '5.0 ★'
-    },
-    {
-      id: '6',
-      title: lang === 'en' ? 'Huacachina Oasis & Ballestas Islands' : lang === 'pt' ? 'Huacachina Oasis & Ilhas Ballestas' : lang === 'fr' ? 'Oasis de Huacachina & Îles Ballestas' : lang === 'it' ? 'Oasi di Huacachina & Isole Ballestas' : 'Huacachina Oasis & Islas Ballestas',
-      category: lang === 'en' ? 'Desert & Wildlife' : lang === 'pt' ? 'Costa & Deserto' : lang === 'fr' ? 'Désert & Faune' : lang === 'it' ? 'Deserto & Fauna' : 'Costa & Desierto',
-      categoryKey: 'adrenalina',
-      location: 'Ica - Paracas',
-      duration: 'Full Day',
-      price: '$95 USD',
-      rating: 4.8,
-      image: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop',
-      tag: lang === 'en' ? 'Adrenaline' : lang === 'pt' ? 'Adrenalina' : lang === 'fr' ? 'Adrénaline' : lang === 'it' ? 'Adrenalina' : 'Adrenalina',
-      badge: '4.8 ★'
-    }
+    ...secondaryTours
   ];
 
   const tourLimit = isFree ? 1 : isBasic ? 3 : 6;
-  const displayTours = DEFAULT_FEATURED_TOURS.slice(0, tourLimit);
+  const displayTours = allFeaturedTours.slice(0, tourLimit);
+
 
   // -----------------------------------------------------------
   // 7. PAQUETES TURÍSTICOS MULTI-IDIOMA

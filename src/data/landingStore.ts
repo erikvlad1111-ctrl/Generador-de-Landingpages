@@ -1,4 +1,4 @@
-import { LandingData, ObjectiveType, TemplateType, LanguageType, PlanTier } from '@/types/landing';
+import { LandingData, ObjectiveType, TemplateType, LanguageType, PlanTier, CatalogTourItem } from '@/types/landing';
 export type { LandingData };
 
 export const INITIAL_LANDINGS: LandingData[] = [
@@ -703,6 +703,7 @@ export function simulateAiGeneration(params: {
   trustBadges?: string[];
   aiTone?: string;
   guideAvatar?: string;
+  catalogTours?: CatalogTourItem[];
   officeAddress?: string;
   officeHours?: string;
   mapsUrl?: string;
@@ -948,6 +949,7 @@ export function simulateAiGeneration(params: {
     ],
     faqs,
     testimonials,
+    catalogTours: params.catalogTours,
     officeAddress: params.officeAddress,
     officeHours: params.officeHours,
     mapsUrl: params.mapsUrl
