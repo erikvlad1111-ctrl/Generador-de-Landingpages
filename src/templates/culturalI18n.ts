@@ -137,6 +137,14 @@ export interface CulturalI18nTexts {
     hoursDesc: string;
     contactBtn: string;
     copyright: string;
+    complaintsBook: string;
+    terms: string;
+    cancellation: string;
+    privacy: string;
+    safeTravels: string;
+    dirceturLic: string;
+    legalNotice: string;
+    paymentsTitle: string;
   };
   mobileSticky: {
     tariffLabel: string;
@@ -392,7 +400,15 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       hoursTitle: 'Horario de Atención',
       hoursDesc: 'Lunes a Domingo de 08:00 AM a 08:00 PM (Horario Corrido)',
       contactBtn: '¡Contáctanos por WhatsApp!',
-      copyright: '© 2026 Cusco Creativos S.A.C. — Edición Patrimonial y Cultural. Todos los derechos reservados.'
+      copyright: '© 2026 Cusco Creativos S.A.C. — Edición Patrimonial y Cultural. RUC 20608945123. Todos los derechos reservados.',
+      complaintsBook: 'Libro de Reclamaciones Virtual',
+      terms: 'Términos y Condiciones del Servicio',
+      cancellation: 'Políticas de Cancelación y Devolución',
+      privacy: 'Protección de Datos Personales (Ley N° 29733)',
+      safeTravels: 'Sello Internacional Safe Travels • Turismo Bioseguro',
+      dirceturLic: 'Licencia Oficial DIRCETUR Cusco N° 2026-CC-EXP',
+      legalNotice: 'Establecimiento formal con Libro de Reclamaciones conforme a la Ley N° 29571.',
+      paymentsTitle: 'Métodos de Pago Oficiales y Seguros'
     },
     mobileSticky: {
       tariffLabel: 'Tarifa Cultural',
@@ -647,7 +663,15 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       hoursTitle: 'Opening Hours',
       hoursDesc: 'Monday to Sunday, 08:00 AM to 08:00 PM (Continuous)',
       contactBtn: 'Chat with us on WhatsApp!',
-      copyright: '© 2026 Cusco Creativos S.A.C. — Cultural & Heritage Edition. All rights reserved.'
+      copyright: '© 2026 Cusco Creativos S.A.C. — Cultural & Heritage Edition. Tax ID 20608945123. All rights reserved.',
+      complaintsBook: 'Virtual Complaints & Claims Book',
+      terms: 'Service Terms and Conditions',
+      cancellation: 'Cancellation & Refund Policies',
+      privacy: 'Personal Data Protection (Peruvian Law 29733)',
+      safeTravels: 'Safe Travels Global Seal • Safe Tourism Protocols',
+      dirceturLic: 'Official DIRCETUR Cusco License No. 2026-CC-EXP',
+      legalNotice: 'Licensed commercial establishment with Virtual Complaints Book under Law 29571.',
+      paymentsTitle: 'Official & Secure Payment Methods'
     },
     mobileSticky: {
       tariffLabel: 'Cultural Fare',
@@ -902,7 +926,15 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       hoursTitle: 'Horaires d’ouverture',
       hoursDesc: 'Du Lundi au Dimanche de 08h00 à 20h00 (En continu)',
       contactBtn: 'Contactez-nous sur WhatsApp !',
-      copyright: '© 2026 Cusco Creativos S.A.C. — Édition Patrimoniale et Culturelle. Tous droits réservés.'
+      copyright: '© 2026 Cusco Creativos S.A.C. — Édition Patrimoniale et Culturelle. RUC 20608945123. Tous droits réservés.',
+      complaintsBook: 'Livre Virtuel de Réclamations',
+      terms: 'Conditions Générales de Vente',
+      cancellation: 'Politiques d’Annulation et de Remboursement',
+      privacy: 'Protection des Données Personnelles (Loi 29733)',
+      safeTravels: 'Label International Safe Travels',
+      dirceturLic: 'Licence Officielle DIRCETUR Cusco N° 2026-CC-EXP',
+      legalNotice: 'Établissement agréé disposant du Livre de Réclamations selon la Loi N° 29571.',
+      paymentsTitle: 'Moyens de Paiement Sécurisés'
     },
     mobileSticky: {
       tariffLabel: 'Tarif Culturel',
@@ -1157,7 +1189,15 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       hoursTitle: 'Horário de Funcionamento',
       hoursDesc: 'De Segunda a Domingo, das 08:00 às 20:00 (Ininterrupto)',
       contactBtn: 'Fale conosco no WhatsApp!',
-      copyright: '© 2026 Cusco Creativos S.A.C. — Edição Patrimonial e Cultural. Todos os direitos reservados.'
+      copyright: '© 2026 Cusco Creativos S.A.C. — Edição Patrimonial e Cultural. RUC 20608945123. Todos os direitos reservados.',
+      complaintsBook: 'Livro Virtual de Reclamações',
+      terms: 'Termos e Condições do Serviço',
+      cancellation: 'Políticas de Cancelamento e Reembolso',
+      privacy: 'Proteção de Dados Pessoais (Lei Nº 29733)',
+      safeTravels: 'Selo Internacional Safe Travels',
+      dirceturLic: 'Licença Oficial DIRCETUR Cusco Nº 2026-CC-EXP',
+      legalNotice: 'Estabelecimento formal com Livro de Reclamações conforme a Lei Nº 29571.',
+      paymentsTitle: 'Métodos de Pagamento Seguros'
     },
     mobileSticky: {
       tariffLabel: 'Tarifa Cultural',
@@ -1412,7 +1452,15 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       hoursTitle: 'Orari di Apertura',
       hoursDesc: 'Dal Lunedì alla Domenica, dalle 08:00 alle 20:00 (Continuato)',
       contactBtn: 'Contattaci su WhatsApp!',
-      copyright: '© 2026 Cusco Creativos S.A.C. — Edizione Patrimoniale e Culturale. Tutti i diritti riservati.'
+      copyright: '© 2026 Cusco Creativos S.A.C. — Edizione Patrimoniale e Culturale. P. IVA 20608945123. Tutti i diritti riservati.',
+      complaintsBook: 'Registro Virtuale dei Reclami',
+      terms: 'Termini e Condizioni del Servizio',
+      cancellation: 'Politiche di Cancellazione e Rimborsi',
+      privacy: 'Protezione Dati Personali (Legge N° 29733)',
+      safeTravels: 'Sigillo Internazionale Safe Travels',
+      dirceturLic: 'Licenza Ufficiale DIRCETUR Cusco N° 2026-CC-EXP',
+      legalNotice: 'Struttura autorizzata con Registro Reclami a norma della Legge N° 29571.',
+      paymentsTitle: 'Metodi di Pagamento Ufficiali e Sicuri'
     },
     mobileSticky: {
       tariffLabel: 'Tariffa Culturale',

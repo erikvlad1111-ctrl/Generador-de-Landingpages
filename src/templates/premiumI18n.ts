@@ -85,6 +85,16 @@ export interface PremiumI18nTexts {
     dirceturCert: string;
     safeTravels: string;
     sanctuaryProtected: string;
+    complaintsBook: string;
+    terms: string;
+    cancellation: string;
+    privacy: string;
+    brandDesc: string;
+    officeTitle: string;
+    officeDesc: string;
+    hoursTitle: string;
+    hoursDesc: string;
+    paymentsTitle: string;
   };
 }
 
@@ -210,7 +220,17 @@ export const PREMIUM_I18N: Record<LanguageType, PremiumI18nTexts> = {
       rights: '© 2026 Cusco Creativos VIP Collection. Todos los derechos reservados.',
       dirceturCert: 'Operador Registrado DIRCETUR Cusco N° CC-VIP-2026',
       safeTravels: 'Certificación Internacional Safe Travels',
-      sanctuaryProtected: 'Patrimonio Protegido UNESCO • Machu Picchu'
+      sanctuaryProtected: 'Patrimonio Protegido UNESCO • Machu Picchu',
+      complaintsBook: 'Libro de Reclamaciones Virtual',
+      terms: 'Términos y Condiciones VIP',
+      cancellation: 'Políticas de Cancelación & Reembolso',
+      privacy: 'Protección de Datos Personales (Ley 29733)',
+      brandDesc: 'Colección de viajes privados de alta gama, trenes panorámicos de primera clase y concierge exclusivo 24/7 en Cusco y Machu Picchu.',
+      officeTitle: 'Concierge Central & Sala VIP',
+      officeDesc: 'Portal de Carnicerías 234, Centro Histórico, Cusco - Perú',
+      hoursTitle: 'Atención Ininterrumpida',
+      hoursDesc: 'Lunes a Domingo • Asistencia Privada 24 Horas',
+      paymentsTitle: 'Métodos de Pago Internacionales'
     }
   },
 
@@ -327,7 +347,17 @@ export const PREMIUM_I18N: Record<LanguageType, PremiumI18nTexts> = {
       rights: '© 2026 Cusco Creativos VIP Collection. All rights reserved.',
       dirceturCert: 'DIRCETUR Cusco Registered Luxury Tour Operator N° CC-VIP-2026',
       safeTravels: 'Safe Travels Global Seal of Approval',
-      sanctuaryProtected: 'UNESCO World Heritage Sanctuary • Machu Picchu'
+      sanctuaryProtected: 'UNESCO World Heritage Sanctuary • Machu Picchu',
+      complaintsBook: 'Virtual Complaints & Claims Book',
+      terms: 'VIP Terms and Conditions',
+      cancellation: 'Cancellation & Refund Policies',
+      privacy: 'Personal Data Protection (Law 29733)',
+      brandDesc: 'Exclusive private luxury journeys, first-class observatory train passes, and dedicated 24/7 concierge across Cusco & Machu Picchu.',
+      officeTitle: 'Central Concierge & VIP Lounge',
+      officeDesc: 'Portal de Carnicerías 234, Historic Center, Cusco - Peru',
+      hoursTitle: 'Around-the-Clock Support',
+      hoursDesc: 'Monday to Sunday • 24/7 Private Assistance',
+      paymentsTitle: 'International Secure Payments'
     }
   },
 
@@ -444,7 +474,17 @@ export const PREMIUM_I18N: Record<LanguageType, PremiumI18nTexts> = {
       rights: '© 2026 Cusco Creativos VIP Collection. Todos os direitos reservados.',
       dirceturCert: 'Operador de Turismo Registrado DIRCETUR Cusco N° CC-VIP-2026',
       safeTravels: 'Certificação Internacional Safe Travels',
-      sanctuaryProtected: 'Patrimônio Mundial UNESCO • Machu Picchu'
+      sanctuaryProtected: 'Patrimônio Mundial UNESCO • Machu Picchu',
+      complaintsBook: 'Livro Virtual de Reclamações',
+      terms: 'Termos e Condições VIP',
+      cancellation: 'Políticas de Cancelamento & Reembolso',
+      privacy: 'Proteção de Dados Pessoais (Lei 29733)',
+      brandDesc: 'Coleção de viagens privativas de luxo, trens panorâmicos de primeira classe e concierge exclusivo 24/7 em Cusco e Machu Picchu.',
+      officeTitle: 'Concierge Central & Sala VIP',
+      officeDesc: 'Portal de Carnicerías 234, Centro Histórico, Cusco - Peru',
+      hoursTitle: 'Atendimento Ininterrupto',
+      hoursDesc: 'Segunda a Domingo • Assistência Privativa 24 Horas',
+      paymentsTitle: 'Pagamentos Internacionais Seguros'
     }
   },
 
@@ -561,7 +601,17 @@ export const PREMIUM_I18N: Record<LanguageType, PremiumI18nTexts> = {
       rights: '© 2026 Cusco Creativos VIP Collection. Tous droits réservés.',
       dirceturCert: 'Opérateur de Tourisme Agréé DIRCETUR Cusco N° CC-VIP-2026',
       safeTravels: 'Label International de Confiance Safe Travels',
-      sanctuaryProtected: 'Patrimoine Mondial UNESCO • Machu Picchu'
+      sanctuaryProtected: 'Patrimoine Mondial UNESCO • Machu Picchu',
+      complaintsBook: 'Livre Virtuel de Réclamations',
+      terms: 'Conditions Générales VIP',
+      cancellation: 'Politiques d’Annulation & Remboursement',
+      privacy: 'Protection des Données Personnelles (Loi 29733)',
+      brandDesc: 'Voyages d’exception entièrement privés, trains panoramiques de première classe et service concierge dédié 24/7 à Cusco et Machu Picchu.',
+      officeTitle: 'Concierge Central & Salon VIP',
+      officeDesc: 'Portal de Carnicerías 234, Centre Historique, Cusco - Pérou',
+      hoursTitle: 'Assistance Continue',
+      hoursDesc: 'Lundi au Dimanche • Assistance Privée 24 Heures sur 24',
+      paymentsTitle: 'Paiements Sécurisés Internationaux'
     }
   },
 
@@ -678,7 +728,17 @@ export const PREMIUM_I18N: Record<LanguageType, PremiumI18nTexts> = {
       rights: '© 2026 Cusco Creativos VIP Collection. Tutti i diritti riservati.',
       dirceturCert: 'Operatore Turistico Ufficiale Registrato DIRCETUR Cusco N° CC-VIP-2026',
       safeTravels: 'Certificazione Internazionale Safe Travels',
-      sanctuaryProtected: 'Patrimonio Mondiale UNESCO • Machu Picchu'
+      sanctuaryProtected: 'Patrimonio Mondiale UNESCO • Machu Picchu',
+      complaintsBook: 'Registro Virtuale dei Reclami',
+      terms: 'Termini e Condizioni VIP',
+      cancellation: 'Politiche di Cancellazione & Rimborsi',
+      privacy: 'Protezione Dati Personali (Legge 29733)',
+      brandDesc: 'Collezione di viaggi privati d’alta gamma, treni panoramici di prima classe e concierge dedicato 24/7 a Cusco e Machu Picchu.',
+      officeTitle: 'Concierge Centrale & Salone VIP',
+      officeDesc: 'Portal de Carnicerías 234, Centro Storico, Cusco - Perù',
+      hoursTitle: 'Assistenza Continuativa',
+      hoursDesc: 'Lunedì a Domenica • Assistenza Privata 24 Ore su 24',
+      paymentsTitle: 'Pagamenti Sicuri Internazionali'
     }
   }
 };

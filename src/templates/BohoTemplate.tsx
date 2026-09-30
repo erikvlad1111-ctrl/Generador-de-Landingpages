@@ -26,11 +26,18 @@ import {
   ThumbsUp,
   ChevronRight,
   SlidersHorizontal,
-  Check
+  Check,
+  BookOpen,
+  Lock,
+  Building2,
+  Phone,
+  Mail
 } from 'lucide-react';
 import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import QuoteModal from '@/components/common/QuoteModal';
+import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
+import LegalTermsModal from '@/components/common/LegalTermsModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
 import { BOHO_I18N, BOHO_LANGUAGES } from './bohoI18n';
@@ -254,6 +261,9 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
   const t = BOHO_I18N[currentLang] || BOHO_I18N.es;
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+  const [isComplaintsOpen, setIsComplaintsOpen] = useState(false);
+  const [isLegalOpen, setIsLegalOpen] = useState(false);
+  const [legalTab, setLegalTab] = useState<'terms' | 'cancellation' | 'privacy' | 'license'>('terms');
   const [selectedTourCategory, setSelectedTourCategory] = useState<string>('all');
   const [selectedReviewCategory, setSelectedReviewCategory] = useState<string>('all');
   const [mobileTourLayout, setMobileTourLayout] = useState<'carousel' | 'list'>('carousel');
@@ -1650,9 +1660,11 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         />
       )}
 
-      {/* Bottom CTA Banner */}
-      <footer className="bg-stone-900 text-stone-300 py-10 sm:py-12 px-4 sm:px-8 text-center space-y-5">
-        <div className="max-w-xl mx-auto space-y-2">
+      {/* Bottom CTA Banner & Regulatory Footer */}
+      <footer className="bg-stone-900 text-stone-300 pt-12 pb-24 sm:pb-12 px-4 sm:px-8 space-y-12 border-t border-stone-800 relative z-10">
+        
+        {/* Pre-Footer Boho Experience CTA */}
+        <div className="max-w-xl mx-auto space-y-4 text-center">
           <div className="inline-flex items-center gap-1.5 text-stone-400 text-[10px] sm:text-xs uppercase tracking-widest font-serif">
             <Camera size={13} className="text-[#C86D51]" />
             <span>Boho Travel Journal • {currentLang === 'en' ? 'Limited Edition' : currentLang === 'pt' ? 'Edição Limitada' : currentLang === 'fr' ? 'Édition Limitée' : currentLang === 'it' ? 'Edizione Limitata' : 'Edición Limitada'}</span>
@@ -1671,38 +1683,207 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               ? 'Prenota in anticipo per assicurarti posti in piccoli gruppi con attenzione personalizzata e consigli fotografici.'
               : 'Reserva con anticipación para asegurar cupos en grupos reducidos con atención personalizada y asesoría fotográfica.'}
           </p>
+
+          <div className="flex flex-wrap justify-center items-center gap-2.5 pt-2">
+            {isQuote ? (
+              <button
+                type="button"
+                onClick={() => setIsQuoteOpen(true)}
+                className="w-full sm:w-auto bg-[#C86D51] hover:bg-[#b05d43] text-white px-6 py-3 rounded-full font-medium text-xs transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <FileText size={14} />
+                <span>{t.cta.quote}</span>
+              </button>
+            ) : (
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto bg-[#588157] hover:bg-[#476846] text-white px-6 py-3 rounded-full font-medium text-xs transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <MessageCircle size={14} />
+                <span>{currentLang === 'en' ? 'Chat on WhatsApp with Guide' : currentLang === 'pt' ? 'Falar com o Guia pelo WhatsApp' : currentLang === 'fr' ? 'Parler au Guide sur WhatsApp' : currentLang === 'it' ? 'Parla con la Guida su WhatsApp' : 'Hablar con el Guía por WhatsApp'}</span>
+              </a>
+            )}
+          </div>
         </div>
 
-        <div className="flex flex-wrap justify-center items-center gap-2.5">
-          {isQuote ? (
-            <button
-              onClick={() => setIsQuoteOpen(true)}
-              className="w-full sm:w-auto bg-[#C86D51] hover:bg-[#b05d43] text-white px-6 py-3 rounded-full font-medium text-xs transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <FileText size={14} />
-              <span>{t.cta.quote}</span>
-            </button>
-          ) : (
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto bg-[#588157] hover:bg-[#476846] text-white px-6 py-3 rounded-full font-medium text-xs transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <MessageCircle size={14} />
-              <span>{currentLang === 'en' ? 'Chat on WhatsApp with Guide' : currentLang === 'pt' ? 'Falar com o Guia pelo WhatsApp' : currentLang === 'fr' ? 'Parler au Guide sur WhatsApp' : currentLang === 'it' ? 'Parla con la Guida su WhatsApp' : 'Hablar con el Guía por WhatsApp'}</span>
-            </a>
-          )}
+        {/* 4-Column Directory */}
+        <div className="max-w-7xl mx-auto pt-8 border-t border-stone-800 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 text-left text-xs">
+          
+          {/* Col 1: Boho Philosophy & Regulatory License (4 cols) */}
+          <div className="lg:col-span-4 space-y-3">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-[#C86D51]/15 border border-[#C86D51]/30 flex items-center justify-center text-[#C86D51] shrink-0">
+                <Camera size={18} />
+              </div>
+              <div>
+                <span className="font-serif font-bold text-sm text-white tracking-wide block">
+                  {rawTourTitle}
+                </span>
+                <span className="text-[10px] text-stone-400 font-sans tracking-wider block">
+                  {t.footer.dircetur}
+                </span>
+              </div>
+            </div>
+
+            <p className="text-stone-400 leading-relaxed text-xs">
+              {t.footer.brandDesc}
+            </p>
+
+            <div className="space-y-1.5 pt-1 text-[11px]">
+              <div className="flex items-center gap-2 text-[#588157] font-medium">
+                <ShieldCheck size={14} className="shrink-0" />
+                <span>{t.footer.safeTravels}</span>
+              </div>
+              <div className="flex items-center gap-2 text-stone-400">
+                <Building2 size={14} className="text-stone-500 shrink-0" />
+                <span className="text-[10px] font-mono">RUC: 20608945123 • Cusco Creativos S.A.C.</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Col 2: Routes & Field Experience (3 cols) */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="font-serif text-white font-bold tracking-wide uppercase text-xs">
+              {t.nav.tours}
+            </h4>
+            <ul className="space-y-2 text-stone-400">
+              <li>
+                <a href="#tours-destacados" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <span className="text-[#C86D51]">›</span>
+                  <span>Laguna Humantay Mística</span>
+                </a>
+              </li>
+              <li>
+                <a href="#tours-destacados" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <span className="text-[#C86D51]">›</span>
+                  <span>Ausangate & 7 Lagunas Turquesas</span>
+                </a>
+              </li>
+              <li>
+                <a href="#tours-destacados" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <span className="text-[#C86D51]">›</span>
+                  <span>Valle Sagrado & Salineras de Maras</span>
+                </a>
+              </li>
+              <li>
+                <a href="#journal" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <span className="text-[#C86D51]">›</span>
+                  <span>{t.nav.journal}</span>
+                </a>
+              </li>
+              <li>
+                <a href="#mochila" className="hover:text-white transition-colors flex items-center gap-1.5">
+                  <span className="text-[#C86D51]">›</span>
+                  <span>{t.nav.backpack}</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 3: Legal & INDECOPI (2 cols) */}
+          <div className="lg:col-span-2 space-y-3">
+            <h4 className="font-serif text-white font-bold tracking-wide uppercase text-xs">
+              {currentLang === 'en' ? 'Legal & Trust' : currentLang === 'pt' ? 'Marco Legal' : currentLang === 'fr' ? 'Mentions Légales' : currentLang === 'it' ? 'Normativa' : 'Marco Legal'}
+            </h4>
+            <ul className="space-y-2.5">
+              <li>
+                <button
+                  type="button"
+                  onClick={() => setIsComplaintsOpen(true)}
+                  className="text-left group flex items-start gap-1.5 text-[#C86D51] hover:text-[#d97c5f] font-bold transition-colors cursor-pointer"
+                >
+                  <BookOpen size={14} className="shrink-0 mt-0.5" />
+                  <div>
+                    <span>{t.footer.complaintsBook}</span>
+                    <span className="text-[9px] block text-stone-400 font-sans font-normal">Ley N° 29571 INDECOPI</span>
+                  </div>
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => { setLegalTab('terms'); setIsLegalOpen(true); }}
+                  className="text-stone-400 hover:text-white transition-colors text-left cursor-pointer"
+                >
+                  {t.footer.terms}
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => { setLegalTab('cancellation'); setIsLegalOpen(true); }}
+                  className="text-stone-400 hover:text-white transition-colors text-left cursor-pointer"
+                >
+                  {t.footer.cancellation}
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => { setLegalTab('privacy'); setIsLegalOpen(true); }}
+                  className="text-stone-400 hover:text-white transition-colors text-left cursor-pointer"
+                >
+                  {t.footer.privacy}
+                </button>
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 4: Studio & Contact (3 cols) */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="font-serif text-white font-bold tracking-wide uppercase text-xs">
+              {t.footer.officeTitle}
+            </h4>
+            <div className="space-y-2 text-stone-300">
+              <div className="flex items-start gap-2">
+                <MapPin size={14} className="text-[#C86D51] shrink-0 mt-0.5" />
+                <span>{data.officeAddress || t.footer.officeDesc}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock size={14} className="text-[#588157] shrink-0" />
+                <span>{data.officeHours || t.footer.hoursDesc}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone size={14} className="text-amber-500 shrink-0" />
+                <a href={`tel:${cleanPhone}`} className="hover:text-white transition-colors font-bold">
+                  {data.whatsapp || '+51 984 123 456'}
+                </a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail size={14} className="text-stone-400 shrink-0" />
+                <span className="text-stone-400">hola@cuscocreativos.com</span>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        <div className="border-t border-stone-800 pt-5 max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between text-[10px] sm:text-[11px] text-stone-500 gap-1.5">
-          <span>{t.footer.rights}</span>
-          <span>{t.footer.madeWithLove}</span>
+        {/* Bottom Bar: Copyright, Payments & Made with Love */}
+        <div className="max-w-7xl mx-auto pt-6 border-t border-stone-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-stone-500">
+          <p className="text-center md:text-left">{t.footer.rights}</p>
+
+          <div className="flex flex-wrap items-center justify-center gap-2 text-[10px] font-bold tracking-wider text-stone-400 bg-stone-950/80 px-3.5 py-1.5 rounded-full border border-stone-800">
+            <span className="text-stone-500">💳 {t.footer.paymentsTitle}:</span>
+            <span>VISA</span>
+            <span>•</span>
+            <span>MASTERCARD</span>
+            <span>•</span>
+            <span>AMEX</span>
+            <span>•</span>
+            <span>PAYPAL</span>
+          </div>
+
+          <div className="flex items-center gap-2 text-stone-400 text-[10px]">
+            <Lock size={12} className="text-emerald-500" />
+            <span>{t.footer.madeWithLove}</span>
+          </div>
         </div>
 
         {/* Banner de Plan Gratuito */}
         {isFree && (
-          <div className="bg-stone-950 text-stone-300 py-3 px-4 text-center text-xs font-semibold border-t border-stone-800 mt-4 rounded-xl">
+          <div className="bg-stone-950 text-stone-300 py-3 px-4 text-center text-xs font-semibold border-t border-stone-800 mt-4 rounded-xl max-w-xl mx-auto">
             <p>⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
           </div>
         )}
@@ -1772,6 +1953,24 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         isOpen={isQuoteOpen} 
         onClose={() => setIsQuoteOpen(false)} 
         landing={data}
+      />
+
+      {/* Modal Libro de Reclamaciones */}
+      <ComplaintsBookModal
+        isOpen={isComplaintsOpen}
+        onClose={() => setIsComplaintsOpen(false)}
+        lang={currentLang}
+        agencyName={rawTourTitle}
+        agencyAddress={data.officeAddress || t.footer.officeDesc}
+      />
+
+      {/* Modal Términos y Normativa Legal */}
+      <LegalTermsModal
+        isOpen={isLegalOpen}
+        onClose={() => setIsLegalOpen(false)}
+        lang={currentLang}
+        initialTab={legalTab}
+        agencyName={rawTourTitle}
       />
     </div>
   );

@@ -28,13 +28,18 @@ import {
   Backpack,
   Pin,
   Menu,
-  X
+  X,
+  BookOpen,
+  Lock,
+  Building2
 } from 'lucide-react';
 import { LandingData, PlanTier, ObjectiveType, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import QuoteModal from '@/components/common/QuoteModal';
+import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
+import LegalTermsModal from '@/components/common/LegalTermsModal';
 import SustainabilityAndSocialProof from '@/components/agency-portal/SustainabilityAndSocialProof';
 import TrustGuaranteeAndOffice from '@/components/agency-portal/TrustGuaranteeAndOffice';
 import { translateText, translateItineraryItem } from '@/data/translations';
@@ -128,7 +133,23 @@ const DICTIONARIES = {
     contactNow: 'Contactar Ahora',
     freeBanner: '⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas',
     questionsTooltip: '¿Dudas? Habla con un asesor',
-    certificationsTitle: 'Acreditaciones Oficiales'
+    certificationsTitle: 'Acreditaciones Oficiales',
+    footerRights: '© 2026 Cusco Creativos Operador Turístico S.A.C. RUC: 20608945123. Todos los derechos reservados.',
+    footerLegalTitle: 'Marco Legal & Transparencia',
+    footerComplaints: 'Libro de Reclamaciones Virtual',
+    footerComplaintsBadge: 'Ley N° 29571 INDECOPI',
+    footerTerms: 'Términos y Condiciones',
+    footerCancellation: 'Políticas de Cancelación & Reembolsos',
+    footerPrivacy: 'Protección de Datos Personales',
+    footerLicensing: 'Licencia DIRCETUR N° 2026-CC-EXP',
+    footerDestinationsTitle: 'Rutas & Destinos Principales',
+    footerContactTitle: 'Oficina Central & Operaciones 24/7',
+    footerAddress: 'Portal de Panes 123, Plaza de Armas, Cusco - Perú',
+    footerHours: 'Lunes a Domingo: 06:00 - 21:00 hrs',
+    footerEmergency: 'Línea de Emergencias 24/7',
+    footerEmail: 'reservas@cuscocreativos.com',
+    footerSafePayment: 'Pagos 100% Seguros',
+    footerSsl: 'Cifrado SSL 256-bit Certificado'
   },
   en: {
     officialBar: 'DIRCETUR Cusco • Safe Travels',
@@ -209,7 +230,23 @@ const DICTIONARIES = {
     contactNow: 'Contact Us Now',
     freeBanner: '⚡ Created with Cusco Creativos Web — Fast Tourism Landing Builder',
     questionsTooltip: 'Questions? Chat with an advisor',
-    certificationsTitle: 'Official Certifications'
+    certificationsTitle: 'Official Certifications',
+    footerRights: '© 2026 Cusco Creativos Tour Operator S.A.C. Tax ID: 20608945123. All rights reserved.',
+    footerLegalTitle: 'Legal Framework & Compliance',
+    footerComplaints: 'Virtual Complaints & Claims Book',
+    footerComplaintsBadge: 'Peruvian Law 29571 INDECOPI',
+    footerTerms: 'Terms and Conditions',
+    footerCancellation: 'Cancellation & Refund Policies',
+    footerPrivacy: 'Personal Data Protection',
+    footerLicensing: 'DIRCETUR License N° 2026-CC-EXP',
+    footerDestinationsTitle: 'Featured Routes & Circuits',
+    footerContactTitle: 'Headquarters & 24/7 Support',
+    footerAddress: 'Portal de Panes 123, Plaza de Armas, Cusco - Peru',
+    footerHours: 'Monday to Sunday: 06:00 - 21:00 (Peruvian Time)',
+    footerEmergency: '24/7 Emergency Route Helpline',
+    footerEmail: 'reservas@cuscocreativos.com',
+    footerSafePayment: '100% Secure Payments',
+    footerSsl: '256-Bit SSL Encrypted Protocol'
   },
   pt: {
     officialBar: 'DIRCETUR Cusco • Safe Travels',
@@ -290,7 +327,23 @@ const DICTIONARIES = {
     contactNow: 'Falar Conosco Agora',
     freeBanner: '⚡ Criado com Cusco Creativos Web — Gerador Rápido de Landings Turísticas',
     questionsTooltip: 'Dúvidas? Fale com um consultor',
-    certificationsTitle: 'Acreditações Oficiais'
+    certificationsTitle: 'Acreditações Oficiais',
+    footerRights: '© 2026 Cusco Creativos Operador Turístico S.A.C. RUC: 20608945123. Todos os direitos reservados.',
+    footerLegalTitle: 'Marco Legal & Transparência',
+    footerComplaints: 'Livro Virtual de Reclamações',
+    footerComplaintsBadge: 'Lei Nº 29571 INDECOPI',
+    footerTerms: 'Termos e Condições',
+    footerCancellation: 'Políticas de Cancelamento & Reembolso',
+    footerPrivacy: 'Proteção de Dados Pessoais',
+    footerLicensing: 'Licença DIRCETUR Nº 2026-CC-EXP',
+    footerDestinationsTitle: 'Principais Rotas & Destinos',
+    footerContactTitle: 'Escritório Central & Apoio 24/7',
+    footerAddress: 'Portal de Panes 123, Plaza de Armas, Cusco - Peru',
+    footerHours: 'Segunda a Domingo: 06:00 - 21:00 hrs',
+    footerEmergency: 'Linha de Emergência 24/7',
+    footerEmail: 'reservas@cuscocreativos.com',
+    footerSafePayment: 'Pagamentos 100% Seguros',
+    footerSsl: 'Criptografia SSL de 256 bits'
   },
   fr: {
     officialBar: 'DIRCETUR Cusco • Safe Travels',
@@ -371,7 +424,23 @@ const DICTIONARIES = {
     contactNow: 'Nous Contacter',
     freeBanner: '⚡ Créé avec Cusco Creativos Web — Générateur Rapide de Landing Pages',
     questionsTooltip: 'Des questions ? Échangez avec un conseiller',
-    certificationsTitle: 'Certifications Officielles'
+    certificationsTitle: 'Certifications Officielles',
+    footerRights: '© 2026 Cusco Creativos Tour Operator S.A.C. RUC: 20608945123. Tous droits réservés.',
+    footerLegalTitle: 'Cadre Légal & Conformité',
+    footerComplaints: 'Livre Virtuel de Réclamations',
+    footerComplaintsBadge: 'Loi N° 29571 INDECOPI',
+    footerTerms: 'Conditions Générales de Vente',
+    footerCancellation: 'Politiques d’Annulation & Remboursements',
+    footerPrivacy: 'Protection des Données Personnelles',
+    footerLicensing: 'Licence DIRCETUR N° 2026-CC-EXP',
+    footerDestinationsTitle: 'Circuits & Destinations Phares',
+    footerContactTitle: 'Siège Central & Support 24/7',
+    footerAddress: 'Portal de Panes 123, Plaza de Armas, Cusco - Pérou',
+    footerHours: 'Lundi au Dimanche : 06h00 - 21h00',
+    footerEmergency: 'Ligne d’Urgence 24/7 en Expédition',
+    footerEmail: 'reservas@cuscocreativos.com',
+    footerSafePayment: 'Paiements 100% Sécurisés',
+    footerSsl: 'Chiffrement SSL 256 bits Certifié'
   },
   it: {
     officialBar: 'DIRCETUR Cusco • Safe Travels',
@@ -452,7 +521,23 @@ const DICTIONARIES = {
     contactNow: 'Contattaci Ora',
     freeBanner: '⚡ Creato con Cusco Creativos Web — Generatore Rapido di Landing Turistiche',
     questionsTooltip: 'Dubbi? Parla con un consulente',
-    certificationsTitle: 'Certificazioni Ufficiali'
+    certificationsTitle: 'Certificazioni Ufficiali',
+    footerRights: '© 2026 Cusco Creativos Tour Operator S.A.C. P. IVA: 20608945123. Tutti i diritti riservati.',
+    footerLegalTitle: 'Quadro Normativo & Trasparenza',
+    footerComplaints: 'Registro Virtuale dei Reclami',
+    footerComplaintsBadge: 'Legge N° 29571 INDECOPI',
+    footerTerms: 'Termini e Condizioni',
+    footerCancellation: 'Politiche di Cancellazione & Rimborsi',
+    footerPrivacy: 'Protezione Dati Personali',
+    footerLicensing: 'Licenza DIRCETUR N° 2026-CC-EXP',
+    footerDestinationsTitle: 'Rotte & Destinazioni Principali',
+    footerContactTitle: 'Sede Centrale & Assistenza 24/7',
+    footerAddress: 'Portal de Panes 123, Plaza de Armas, Cusco - Perù',
+    footerHours: 'Lunedì a Domenica: 06:00 - 21:00',
+    footerEmergency: 'Linea Emergenze 24/7 sul Percorso',
+    footerEmail: 'reservas@cuscocreativos.com',
+    footerSafePayment: 'Pagamenti Sicuri al 100%',
+    footerSsl: 'Crittografia SSL 256-bit Certificata'
   }
 };
 
@@ -498,6 +583,9 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const [isQuoteOpen, setIsQuoteOpen] = useState<boolean>(false);
   const [selectedTourForQuote, setSelectedTourForQuote] = useState<string>('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const [isComplaintsOpen, setIsComplaintsOpen] = useState<boolean>(false);
+  const [isLegalOpen, setIsLegalOpen] = useState<boolean>(false);
+  const [legalTab, setLegalTab] = useState<'terms' | 'cancellation' | 'privacy' | 'license'>('terms');
 
   // 3. Parámetros y datos dinámicos
   const brandName = data?.name || 'Cusco Tours';
@@ -1897,11 +1985,199 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </section>
       )}
 
-      {/* 14. FOOTER */}
-      <footer className="bg-[#1C1917] text-stone-400 py-8 sm:py-12 px-4 sm:px-6 text-xs">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-stone-500 text-[10px] sm:text-[11px] text-center sm:text-left">
-          <p>{t.footerRights}</p>
-          <p className="text-stone-400 font-medium">Plataforma Cusco Creativos S.A.C.</p>
+      {/* 14. FOOTER REGULATORIO DE ALTA AUTORIDAD */}
+      <footer className="bg-[#1C1917] text-stone-400 pt-12 pb-24 sm:pb-12 px-4 sm:px-6 text-xs border-t border-stone-800 relative z-10">
+        <div className="max-w-7xl mx-auto space-y-10">
+          
+          {/* Main 4-Column Directory */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 text-left">
+            
+            {/* Col 1: Brand & Official Licensing (4 cols) */}
+            <div className="lg:col-span-4 space-y-3.5">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 shrink-0">
+                  <Compass size={22} />
+                </div>
+                <div>
+                  <span className="text-base font-black text-white tracking-tight block">
+                    {brandName}
+                  </span>
+                  <span className="text-[10px] text-amber-400 font-bold block uppercase tracking-wider">
+                    {t.officialBadge} • {t.officialOperator}
+                  </span>
+                </div>
+              </div>
+
+              <p className="text-stone-400 text-xs leading-relaxed">
+                {data?.hero?.subtitle || data?.about?.content || 'Operador turístico autorizado especializado en experiencias de alta calidad, traslados oficiales y circuitos guiados en Cusco y Machu Picchu.'}
+              </p>
+
+              {/* Badges de Certificación Oficial */}
+              <div className="space-y-1.5 pt-1 text-[11px]">
+                <div className="flex items-center gap-2 text-emerald-400 font-bold">
+                  <ShieldCheck size={14} className="shrink-0" />
+                  <span>{t.footerLicensing}</span>
+                </div>
+                <div className="flex items-center gap-2 text-amber-400 font-bold">
+                  <CheckCircle2 size={14} className="shrink-0" />
+                  <span>MINCETUR Registro Nacional de Turismo</span>
+                </div>
+                <div className="flex items-center gap-2 text-stone-300">
+                  <Building2 size={14} className="text-stone-500 shrink-0" />
+                  <span className="text-[10px] font-mono text-stone-400">RUC: 20608945123 • Cusco Creativos Operador Turístico S.A.C.</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Col 2: Featured Routes & Navigation (3 cols) */}
+            <div className="lg:col-span-3 space-y-3">
+              <h4 className="text-xs font-black text-white uppercase tracking-wider">
+                {t.footerDestinationsTitle}
+              </h4>
+              <ul className="space-y-2 text-xs">
+                <li>
+                  <a href="#tours-catalogo" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
+                    <span className="text-amber-500">›</span>
+                    <span>Machu Picchu Clásico & Vistadome</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#tours-catalogo" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
+                    <span className="text-amber-500">›</span>
+                    <span>Valle Sagrado & Ollantaytambo</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#tours-catalogo" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
+                    <span className="text-amber-500">›</span>
+                    <span>Montaña 7 Colores (Vinicunca)</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#tours-catalogo" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
+                    <span className="text-amber-500">›</span>
+                    <span>Laguna Humantay Turquesa</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#ficha-tecnica" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
+                    <span className="text-amber-500">›</span>
+                    <span>{t.techSheetBadge}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Col 3: Legal & Regulatory INDECOPI (2 cols) */}
+            <div className="lg:col-span-2 space-y-3">
+              <h4 className="text-xs font-black text-white uppercase tracking-wider">
+                {t.footerLegalTitle}
+              </h4>
+              <ul className="space-y-2.5 text-xs">
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => setIsComplaintsOpen(true)}
+                    className="text-left group flex items-start gap-1.5 text-amber-400 hover:text-amber-300 font-bold transition-colors cursor-pointer"
+                  >
+                    <BookOpen size={14} className="shrink-0 mt-0.5" />
+                    <div>
+                      <span>{t.footerComplaints}</span>
+                      <span className="text-[9px] block text-stone-400 font-normal">{t.footerComplaintsBadge}</span>
+                    </div>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => { setLegalTab('terms'); setIsLegalOpen(true); }}
+                    className="text-stone-400 hover:text-white transition-colors text-left cursor-pointer"
+                  >
+                    {t.footerTerms}
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => { setLegalTab('cancellation'); setIsLegalOpen(true); }}
+                    className="text-stone-400 hover:text-white transition-colors text-left cursor-pointer"
+                  >
+                    {t.footerCancellation}
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => { setLegalTab('privacy'); setIsLegalOpen(true); }}
+                    className="text-stone-400 hover:text-white transition-colors text-left cursor-pointer"
+                  >
+                    {t.footerPrivacy}
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Col 4: Central Office & Operations (3 cols) */}
+            <div className="lg:col-span-3 space-y-3">
+              <h4 className="text-xs font-black text-white uppercase tracking-wider">
+                {t.footerContactTitle}
+              </h4>
+              <div className="space-y-2 text-xs text-stone-300">
+                <div className="flex items-start gap-2">
+                  <MapPin size={14} className="text-amber-500 shrink-0 mt-0.5" />
+                  <span>{data?.officeAddress || t.footerAddress}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock size={14} className="text-emerald-400 shrink-0" />
+                  <span>{data?.officeHours || t.footerHours}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Phone size={14} className="text-amber-400 shrink-0" />
+                  <a href={`tel:${whatsappNumber}`} className="hover:text-white transition-colors font-bold">
+                    {data?.whatsapp || '+51 984 123 456'}
+                  </a>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail size={14} className="text-rose-400 shrink-0" />
+                  <span className="text-stone-400">{t.footerEmail}</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Bottom Bar: Copyright, Payment Badges & SSL */}
+          <div className="pt-6 border-t border-stone-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-stone-500">
+            <p className="text-center md:text-left">{t.footerRights}</p>
+
+            {/* Badges de Medios de Pago Aceptados */}
+            <div className="flex flex-wrap items-center justify-center gap-2 text-[10px] font-bold tracking-wider text-stone-400 bg-stone-900/90 px-3.5 py-1.5 rounded-full border border-stone-800">
+              <span className="text-stone-400">💳 {t.footerSafePayment}:</span>
+              <span>VISA</span>
+              <span>•</span>
+              <span>MASTERCARD</span>
+              <span>•</span>
+              <span>AMEX</span>
+              <span>•</span>
+              <span>PAYPAL</span>
+              <span>•</span>
+              <span>YAPE/PLIN</span>
+            </div>
+
+            {/* SSL Badge */}
+            <div className="flex items-center gap-1.5 text-stone-400 text-[10px]">
+              <Lock size={12} className="text-emerald-500" />
+              <span>{t.footerSsl}</span>
+            </div>
+          </div>
+
+          {/* Banner de Plan Gratuito */}
+          {isFree && (
+            <div className="bg-stone-900 text-stone-300 py-3 px-4 text-center text-xs font-semibold border border-stone-800 rounded-xl mt-4 max-w-xl mx-auto">
+              <p>{t.freeBanner}</p>
+            </div>
+          )}
+
         </div>
       </footer>
 
@@ -1938,6 +2214,24 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         onClose={() => setIsQuoteOpen(false)}
         landing={syntheticLanding}
         lang={lang}
+      />
+
+      {/* Modal Libro de Reclamaciones */}
+      <ComplaintsBookModal
+        isOpen={isComplaintsOpen}
+        onClose={() => setIsComplaintsOpen(false)}
+        lang={lang}
+        agencyName={brandName}
+        agencyAddress={data?.officeAddress || t.footerAddress}
+      />
+
+      {/* Modal Términos y Normativa Legal */}
+      <LegalTermsModal
+        isOpen={isLegalOpen}
+        onClose={() => setIsLegalOpen(false)}
+        lang={lang}
+        initialTab={legalTab}
+        agencyName={brandName}
       />
     </div>
   );

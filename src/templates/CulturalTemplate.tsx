@@ -6,11 +6,13 @@ import {
   Landmark, Compass, Users, CheckCircle2, MessageCircle, MapPin, Calendar, 
   Star, HelpCircle, FileText, ShieldCheck, XCircle, Backpack, Search, Mail, 
   Phone, ArrowRight, ChevronLeft, ChevronRight, BookOpen, Clock, Sparkles, 
-  Navigation, Eye, Share2, Award, Check, Ticket, GraduationCap, Quote, Sun, Coins, Globe
+  Navigation, Eye, Share2, Award, Check, Ticket, GraduationCap, Quote, Sun, Coins, Globe, Lock, Building2
 } from 'lucide-react';
 import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import QuoteModal from '@/components/common/QuoteModal';
+import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
+import LegalTermsModal from '@/components/common/LegalTermsModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
 import { CULTURAL_I18N } from './culturalI18n';
@@ -46,6 +48,9 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
   const [currentLang, setCurrentLang] = useState<LanguageType>(defaultLang);
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+  const [isComplaintsOpen, setIsComplaintsOpen] = useState(false);
+  const [isLegalOpen, setIsLegalOpen] = useState(false);
+  const [legalTab, setLegalTab] = useState<'terms' | 'cancellation' | 'privacy' | 'license'>('terms');
   const [activeEventIndex, setActiveEventIndex] = useState(0);
 
   React.useEffect(() => {
@@ -1139,9 +1144,80 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
         </div>
 
-        {/* Legal notice bottom */}
-        <div className="max-w-7xl mx-auto pt-8 mt-8 border-t border-stone-200 text-center text-stone-400 text-[10px]">
+        {/* Regulatory & INDECOPI Section */}
+        <div className="max-w-7xl mx-auto pt-6 mt-6 border-t border-stone-200 grid grid-cols-1 md:grid-cols-12 gap-6 text-left items-center">
+          {/* Col 1: Razón Social & DIRCETUR */}
+          <div className="md:col-span-5 space-y-1">
+            <div className="flex items-center gap-2 text-stone-900 font-bold text-xs">
+              <ShieldCheck size={15} className="text-red-700" />
+              <span>{t.footer.dirceturLic}</span>
+            </div>
+            <p className="text-[11px] text-stone-500">
+              Operado por Cusco Creativos S.A.C. • RUC: 20608945123 • {t.footer.legalNotice}
+            </p>
+          </div>
+
+          {/* Col 2: Libro de Reclamaciones */}
+          <div className="md:col-span-3">
+            <button
+              type="button"
+              onClick={() => setIsComplaintsOpen(true)}
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-900 hover:bg-amber-100 transition-colors font-bold text-[11px] cursor-pointer"
+            >
+              <BookOpen size={14} className="text-amber-700" />
+              <span>{t.footer.complaintsBook}</span>
+            </button>
+          </div>
+
+          {/* Col 3: Legal Terms links */}
+          <div className="md:col-span-4 flex flex-wrap items-center md:justify-end gap-3 text-[11px] text-stone-600 font-medium">
+            <button
+              type="button"
+              onClick={() => { setLegalTab('terms'); setIsLegalOpen(true); }}
+              className="hover:text-red-700 transition-colors cursor-pointer"
+            >
+              {t.footer.terms}
+            </button>
+            <span>•</span>
+            <button
+              type="button"
+              onClick={() => { setLegalTab('cancellation'); setIsLegalOpen(true); }}
+              className="hover:text-red-700 transition-colors cursor-pointer"
+            >
+              {t.footer.cancellation}
+            </button>
+            <span>•</span>
+            <button
+              type="button"
+              onClick={() => { setLegalTab('privacy'); setIsLegalOpen(true); }}
+              className="hover:text-red-700 transition-colors cursor-pointer"
+            >
+              {t.footer.privacy}
+            </button>
+          </div>
+        </div>
+
+        {/* Bottom Bar: Copyright & Payment Badges */}
+        <div className="max-w-7xl mx-auto pt-6 mt-6 border-t border-stone-100 flex flex-col md:flex-row items-center justify-between gap-4 text-center text-stone-400 text-[10px]">
           <p>{t.footer.copyright}</p>
+
+          <div className="flex flex-wrap items-center justify-center gap-2 font-bold tracking-wider text-stone-500 bg-stone-50 px-3 py-1 rounded-full border border-stone-200">
+            <span className="text-stone-400">💳 {t.footer.paymentsTitle}:</span>
+            <span>VISA</span>
+            <span>•</span>
+            <span>MASTERCARD</span>
+            <span>•</span>
+            <span>AMEX</span>
+            <span>•</span>
+            <span>PAYPAL</span>
+            <span>•</span>
+            <span>YAPE</span>
+          </div>
+
+          <div className="flex items-center gap-1.5 text-stone-500">
+            <Lock size={12} className="text-emerald-600" />
+            <span>{t.footer.safeTravels}</span>
+          </div>
         </div>
 
         {/* Banner de Plan Gratuito */}
@@ -1186,6 +1262,24 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
       {/* Quote Modal */}
       <QuoteModal isOpen={isQuoteOpen} onClose={() => setIsQuoteOpen(false)} landing={data} lang={currentLang} />
+
+      {/* Modal Libro de Reclamaciones */}
+      <ComplaintsBookModal
+        isOpen={isComplaintsOpen}
+        onClose={() => setIsComplaintsOpen(false)}
+        lang={currentLang}
+        agencyName={t.footer.townName}
+        agencyAddress={data.officeAddress || t.footer.officeDesc}
+      />
+
+      {/* Modal Términos y Normativa Legal */}
+      <LegalTermsModal
+        isOpen={isLegalOpen}
+        onClose={() => setIsLegalOpen(false)}
+        lang={currentLang}
+        initialTab={legalTab}
+        agencyName={t.footer.townName}
+      />
     </div>
   );
 }

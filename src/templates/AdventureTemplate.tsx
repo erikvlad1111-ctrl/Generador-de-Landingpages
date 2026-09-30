@@ -13,6 +13,8 @@ import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import { ADVENTURE_I18N, ADVENTURE_LANGUAGES } from './adventureI18n';
 import { translateText } from '@/data/translations';
 import QuoteModal from '@/components/common/QuoteModal';
+import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
+import LegalTermsModal from '@/components/common/LegalTermsModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
 
@@ -40,6 +42,9 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
   const [currentLang, setCurrentLang] = useState<LanguageType>(defaultLang);
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+  const [isComplaintsOpen, setIsComplaintsOpen] = useState(false);
+  const [isLegalOpen, setIsLegalOpen] = useState(false);
+  const [legalTab, setLegalTab] = useState<'terms' | 'cancellation' | 'privacy' | 'license'>('terms');
   const [likedCards, setLikedCards] = useState<Record<string, boolean>>({});
   const [activeInclusionFilter, setActiveInclusionFilter] = useState<string>('all');
 
@@ -1472,10 +1477,14 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
               {/* Libro de Reclamaciones */}
               <div className="pt-2">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] font-bold text-slate-400 hover:text-white hover:border-slate-700 transition-all cursor-pointer">
+                <button
+                  type="button"
+                  onClick={() => setIsComplaintsOpen(true)}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] font-bold text-slate-400 hover:text-white hover:border-slate-700 transition-all cursor-pointer"
+                >
                   <BookOpen size={14} className="text-amber-500" />
                   <span>{t.footer.complaintsBook}</span>
-                </div>
+                </button>
               </div>
             </div>
 
@@ -1497,10 +1506,30 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
             </div>
 
             {/* Legal Links */}
-            <div className="flex items-center gap-4 text-slate-400">
-              <a href="#soporte-faq" className="hover:text-white transition-colors">{t.footer.terms}</a>
+            <div className="flex items-center gap-3 text-slate-400">
+              <button
+                type="button"
+                onClick={() => { setLegalTab('terms'); setIsLegalOpen(true); }}
+                className="hover:text-white transition-colors cursor-pointer"
+              >
+                {t.footer.terms}
+              </button>
               <span>•</span>
-              <a href="#soporte-faq" className="hover:text-white transition-colors">{t.footer.privacy}</a>
+              <button
+                type="button"
+                onClick={() => { setLegalTab('cancellation'); setIsLegalOpen(true); }}
+                className="hover:text-white transition-colors cursor-pointer"
+              >
+                {currentLang === 'en' ? 'Cancellations' : currentLang === 'pt' ? 'Cancelamentos' : currentLang === 'fr' ? 'Annulations' : currentLang === 'it' ? 'Cancellazioni' : 'Cancelaciones'}
+              </button>
+              <span>•</span>
+              <button
+                type="button"
+                onClick={() => { setLegalTab('privacy'); setIsLegalOpen(true); }}
+                className="hover:text-white transition-colors cursor-pointer"
+              >
+                {t.footer.privacy}
+              </button>
             </div>
           </div>
 
@@ -1552,6 +1581,24 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         onClose={() => setIsQuoteOpen(false)} 
         landing={data} 
         lang={currentLang} 
+      />
+
+      {/* Modal Libro de Reclamaciones */}
+      <ComplaintsBookModal
+        isOpen={isComplaintsOpen}
+        onClose={() => setIsComplaintsOpen(false)}
+        lang={currentLang}
+        agencyName="TrekExplorer Perú • Cusco Creativos S.A.C."
+        agencyAddress={data.officeAddress || t.office.address}
+      />
+
+      {/* Modal Términos y Normativa Legal */}
+      <LegalTermsModal
+        isOpen={isLegalOpen}
+        onClose={() => setIsLegalOpen(false)}
+        lang={currentLang}
+        initialTab={legalTab}
+        agencyName="TrekExplorer Perú • Cusco Creativos S.A.C."
       />
     </div>
   );

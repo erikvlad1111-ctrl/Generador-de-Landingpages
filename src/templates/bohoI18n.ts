@@ -112,6 +112,16 @@ export interface BohoI18nTexts {
     rights: string;
     safeTravels: string;
     dircetur: string;
+    complaintsBook: string;
+    terms: string;
+    cancellation: string;
+    privacy: string;
+    brandDesc: string;
+    officeTitle: string;
+    officeDesc: string;
+    hoursTitle: string;
+    hoursDesc: string;
+    paymentsTitle: string;
   };
 }
 
@@ -250,7 +260,17 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       madeWithLove: 'Diseñado con alma andina y respeto por la naturaleza',
       rights: '© 2026 Cusco Creativos • Colección Bitácora Andina. Operador formal registrado.',
       safeTravels: 'Sello Internacional Safe Travels',
-      dircetur: 'Licencia Oficial DIRCETUR Cusco'
+      dircetur: 'Licencia Oficial DIRCETUR Cusco N° 2026-CC-BOHO',
+      complaintsBook: 'Libro de Reclamaciones Virtual',
+      terms: 'Términos y Condiciones',
+      cancellation: 'Políticas de Cancelación Flexible',
+      privacy: 'Protección de Datos Personales (Ley 29733)',
+      brandDesc: 'Viajes con encanto, grupos reducidos, fotografía de autor y respeto sagrado por los ecosistemas andinos de Cusco.',
+      officeTitle: 'Atelier / Oficina en Cusco',
+      officeDesc: 'San Blas, Barrio de los Artesanos, Cusco - Perú',
+      hoursTitle: 'Atención Personalizada',
+      hoursDesc: 'Lunes a Domingo • 07:00 a 21:00 hrs',
+      paymentsTitle: 'Métodos de Pago Seguros'
     }
   },
 
@@ -380,7 +400,17 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       madeWithLove: 'Crafted with Andean soul and deep reverence for mother nature',
       rights: '© 2026 Cusco Creativos • Andean Journal Edition. Licensed tourism operator.',
       safeTravels: 'Safe Travels Global Stamp',
-      dircetur: 'DIRCETUR Cusco Official Tourism License'
+      dircetur: 'DIRCETUR Cusco Official Tourism License No. 2026-CC-BOHO',
+      complaintsBook: 'Virtual Complaints & Claims Book',
+      terms: 'Terms and Conditions',
+      cancellation: 'Flexible Cancellation Policies',
+      privacy: 'Personal Data Protection (Law 29733)',
+      brandDesc: 'Mindful travel, small group adventures, artisanal photography and sacred reverence for Andean ecosystems in Cusco.',
+      officeTitle: 'Atelier / Cusco Studio',
+      officeDesc: 'San Blas Historic Artisans Quarter, Cusco - Peru',
+      hoursTitle: 'Personalized Attention',
+      hoursDesc: 'Monday to Sunday • 07:00 to 21:00 (Peruvian Time)',
+      paymentsTitle: 'Secure Payment Methods'
     }
   },
 
@@ -510,7 +540,17 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       madeWithLove: 'Feito com alma andina e amor pela natureza',
       rights: '© 2026 Cusco Creativos • Edição Diário Andino. Operador oficial registrado.',
       safeTravels: 'Selo Internacional Safe Travels',
-      dircetur: 'Licença Oficial DIRCETUR Cusco'
+      dircetur: 'Licença Oficial DIRCETUR Cusco Nº 2026-CC-BOHO',
+      complaintsBook: 'Livro Virtual de Reclamações',
+      terms: 'Termos e Condições',
+      cancellation: 'Políticas de Cancelamento Flexível',
+      privacy: 'Proteção de Dados Pessoais (Lei 29733)',
+      brandDesc: 'Viagens com calma, grupos pequenos, fotografia de autor e respeito aos ecossistemas sagrados dos Andes.',
+      officeTitle: 'Atelier / Escritório em Cusco',
+      officeDesc: 'San Blas, Bairro dos Artesãos, Cusco - Peru',
+      hoursTitle: 'Atendimento Personalizado',
+      hoursDesc: 'Segunda a Domingo • 07:00 às 21:00 (Horário do Peru)',
+      paymentsTitle: 'Métodos de Pagamento Seguros'
     }
   },
 
@@ -640,7 +680,17 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       madeWithLove: 'Créé avec l’âme andine et le respect de la nature',
       rights: '© 2026 Cusco Creativos • Édition Carnet Andin. Opérateur officiel enregistré.',
       safeTravels: 'Label International Safe Travels',
-      dircetur: 'Licence Officielle DIRCETUR Cusco'
+      dircetur: 'Licence Officielle DIRCETUR Cusco N° 2026-CC-BOHO',
+      complaintsBook: 'Livre Virtuel de Réclamations',
+      terms: 'Conditions Générales de Vente',
+      cancellation: 'Politiques d’Annulation Flexible',
+      privacy: 'Protection des Données Personnelles (Loi 29733)',
+      brandDesc: 'Voyages authentiques, petits groupes bienveillants, photographie soignée et profond respect de la nature andine.',
+      officeTitle: 'Atelier / Bureau à Cusco',
+      officeDesc: 'San Blas, Quartier des Artisans, Cusco - Pérou',
+      hoursTitle: 'Assistance Personnalisée',
+      hoursDesc: 'Lundi au Dimanche • 07h00 à 21h00 (Heure du Pérou)',
+      paymentsTitle: 'Paiements Sécurisés'
     }
   },
 
@@ -770,7 +820,17 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       madeWithLove: 'Creato con anima andina e profondo rispetto per la natura',
       rights: '© 2026 Cusco Creativos • Edizione Diario Andino. Operatore ufficiale registrato.',
       safeTravels: 'Sigillo Internazionale Safe Travels',
-      dircetur: 'Licenza Ufficiale DIRCETUR Cusco'
+      dircetur: 'Licenza Ufficiale DIRCETUR Cusco N° 2026-CC-BOHO',
+      complaintsBook: 'Registro Virtuale dei Reclami',
+      terms: 'Termini e Condizioni',
+      cancellation: 'Politiche di Cancellazione Flessibile',
+      privacy: 'Protezione Dati Personali (Legge 29733)',
+      brandDesc: 'Viaggi autentici, piccoli gruppi curati, fotografia d’autore e rispetto sacro per gli ecosistemi andini di Cusco.',
+      officeTitle: 'Atelier / Studio a Cusco',
+      officeDesc: 'San Blas, Quartiere degli Artigiani, Cusco - Perù',
+      hoursTitle: 'Assistenza Dedicata',
+      hoursDesc: 'Lunedì a Domenica • 07:00 alle 21:00 (Fuso orario del Perù)',
+      paymentsTitle: 'Metodi di Pagamento Sicuri'
     }
   }
 };

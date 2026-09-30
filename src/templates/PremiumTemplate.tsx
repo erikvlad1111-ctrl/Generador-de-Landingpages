@@ -5,11 +5,13 @@ import {
   FileText, Star, Calendar, XCircle, Backpack, Gem, Compass, CheckCircle2,
   ChevronRight, ArrowRight, MapPin, Mountain, Users, Languages, HeartHandshake,
   Coffee, Wifi, ExternalLink, ShieldAlert, Car, Utensils, Check, QrCode,
-  Camera, Sun, Wine, Sparkle, Layers
+  Camera, Sun, Wine, Sparkle, Layers, BookOpen, Lock, Building2, Phone, Mail
 } from 'lucide-react';
 import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import QuoteModal from '@/components/common/QuoteModal';
+import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
+import LegalTermsModal from '@/components/common/LegalTermsModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
 import { PREMIUM_I18N, PREMIUM_LANGUAGES } from './premiumI18n';
@@ -40,6 +42,9 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [selectedTourForQuote, setSelectedTourForQuote] = useState<string | null>(null);
+  const [isComplaintsOpen, setIsComplaintsOpen] = useState(false);
+  const [isLegalOpen, setIsLegalOpen] = useState(false);
+  const [legalTab, setLegalTab] = useState<'terms' | 'cancellation' | 'privacy' | 'license'>('terms');
   const [currentLang, setCurrentLang] = useState<LanguageType>(defaultLang);
 
   React.useEffect(() => {
@@ -1890,14 +1895,201 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         </section>
       )}
 
-      {/* 21. FOOTER */}
-      <footer className="py-8 text-center text-neutral-500 text-xs border-t border-neutral-900 relative z-10 bg-[#0a080e] px-4 space-y-3">
-        <p className="tracking-wide">{t.footer.rights}</p>
-        {isFree && (
-          <div className="bg-neutral-900 text-stone-300 py-3 px-4 text-center text-xs font-semibold border border-neutral-800 rounded-xl max-w-xl mx-auto">
-            <p>⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
+      {/* 21. FOOTER VIP DE ALTA AUTORIDAD & REGULATORIO */}
+      <footer className="pt-12 pb-24 sm:pb-12 border-t border-neutral-900 relative z-10 bg-[#0a080e] px-4 sm:px-8 text-neutral-400 text-xs">
+        
+        {/* Glow ambient effects */}
+        <div className="absolute top-0 left-1/3 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 right-1/4 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto space-y-10 relative z-10">
+          
+          {/* Main 4-Column VIP Directory */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 text-left">
+            
+            {/* Col 1: VIP Brand & Licensing (4 cols) */}
+            <div className="lg:col-span-4 space-y-3.5">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500/20 to-neutral-900 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md">
+                  <Crown size={20} />
+                </div>
+                <div>
+                  <span className="font-serif font-black text-white text-base tracking-wide block">
+                    {data.name || 'Machu Picchu VIP'}
+                  </span>
+                  <span className="text-[10px] text-amber-400/90 tracking-widest uppercase font-bold block">
+                    {t.hero.privateConciergeBadge}
+                  </span>
+                </div>
+              </div>
+
+              <p className="text-neutral-400 text-xs leading-relaxed">
+                {t.footer.brandDesc}
+              </p>
+
+              {/* Official Accreditations */}
+              <div className="space-y-1.5 pt-1 text-[11px]">
+                <div className="flex items-center gap-2 text-emerald-400 font-bold">
+                  <ShieldCheck size={14} className="shrink-0" />
+                  <span>{t.footer.dirceturCert}</span>
+                </div>
+                <div className="flex items-center gap-2 text-amber-400 font-bold">
+                  <Award size={14} className="shrink-0" />
+                  <span>{t.footer.safeTravels}</span>
+                </div>
+                <div className="flex items-center gap-2 text-neutral-400">
+                  <Building2 size={14} className="text-neutral-600 shrink-0" />
+                  <span className="text-[10px] font-mono text-neutral-400">RUC: 20608945123 • Inversiones Turísticas Cusco S.A.C.</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Col 2: Exclusive Collections (3 cols) */}
+            <div className="lg:col-span-3 space-y-3">
+              <h4 className="font-serif text-white font-bold text-xs uppercase tracking-wider">
+                {currentLang === 'en' ? 'Private Collections' : currentLang === 'pt' ? 'Coleções Privativas' : currentLang === 'fr' ? 'Collections Privées' : currentLang === 'it' ? 'Collezioni Private' : 'Colecciones Privadas'}
+              </h4>
+              <ul className="space-y-2 text-neutral-400 text-xs">
+                <li>
+                  <a href="#experiencias" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                    <span className="text-amber-500">›</span>
+                    <span>Machu Picchu Signature & Hiram Bingham</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#experiencias" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                    <span className="text-amber-500">›</span>
+                    <span>Valle Sagrado & Almuerzo Gourmet</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#experiencias" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                    <span className="text-amber-500">›</span>
+                    <span>Montaña 7 Colores en Van Executive</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#amenities" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                    <span className="text-amber-500">›</span>
+                    <span>{t.amenities.badge}</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="#lounge" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                    <span className="text-amber-500">›</span>
+                    <span>{t.lounge.badge}</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Col 3: Legal & Regulatory INDECOPI (2 cols) */}
+            <div className="lg:col-span-2 space-y-3">
+              <h4 className="font-serif text-white font-bold text-xs uppercase tracking-wider">
+                {currentLang === 'en' ? 'Legal Framework' : currentLang === 'pt' ? 'Marco Legal' : currentLang === 'fr' ? 'Cadre Légal' : currentLang === 'it' ? 'Normativa Legale' : 'Marco Legal'}
+              </h4>
+              <ul className="space-y-2.5 text-xs">
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => setIsComplaintsOpen(true)}
+                    className="text-left group flex items-start gap-1.5 text-amber-400 hover:text-amber-300 font-bold transition-colors cursor-pointer"
+                  >
+                    <BookOpen size={14} className="shrink-0 mt-0.5 text-amber-500" />
+                    <div>
+                      <span>{t.footer.complaintsBook}</span>
+                      <span className="text-[9px] block text-neutral-500 font-sans font-normal">Ley N° 29571 INDECOPI</span>
+                    </div>
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => { setLegalTab('terms'); setIsLegalOpen(true); }}
+                    className="text-neutral-400 hover:text-white transition-colors text-left cursor-pointer"
+                  >
+                    {t.footer.terms}
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => { setLegalTab('cancellation'); setIsLegalOpen(true); }}
+                    className="text-neutral-400 hover:text-white transition-colors text-left cursor-pointer"
+                  >
+                    {t.footer.cancellation}
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => { setLegalTab('privacy'); setIsLegalOpen(true); }}
+                    className="text-neutral-400 hover:text-white transition-colors text-left cursor-pointer"
+                  >
+                    {t.footer.privacy}
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            {/* Col 4: Central Concierge & 24/7 Support (3 cols) */}
+            <div className="lg:col-span-3 space-y-3">
+              <h4 className="font-serif text-white font-bold text-xs uppercase tracking-wider">
+                {t.footer.officeTitle}
+              </h4>
+              <div className="space-y-2 text-neutral-300 text-xs">
+                <div className="flex items-start gap-2">
+                  <MapPin size={14} className="text-amber-500 shrink-0 mt-0.5" />
+                  <span>{data.officeAddress || t.footer.officeDesc}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock size={14} className="text-emerald-400 shrink-0" />
+                  <span>{data.officeHours || t.footer.hoursDesc}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Phone size={14} className="text-amber-400 shrink-0" />
+                  <a href={`tel:${cleanPhone}`} className="hover:text-amber-400 transition-colors font-bold font-mono">
+                    {data.whatsapp || '+51 984 123 456'}
+                  </a>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail size={14} className="text-neutral-400 shrink-0" />
+                  <span className="text-neutral-400">concierge@cuscocreativos.com</span>
+                </div>
+              </div>
+            </div>
+
           </div>
-        )}
+
+          {/* Bottom Bar: Copyright, Payments & SSL */}
+          <div className="pt-6 border-t border-neutral-900 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-neutral-500">
+            <p className="text-center md:text-left">{t.footer.rights}</p>
+
+            <div className="flex flex-wrap items-center justify-center gap-2 text-[10px] font-bold tracking-wider text-neutral-400 bg-neutral-950 px-3.5 py-1.5 rounded-full border border-neutral-800">
+              <span className="text-neutral-500">💳 {t.footer.paymentsTitle}:</span>
+              <span>AMEX VIP</span>
+              <span>•</span>
+              <span>VISA INFINITE</span>
+              <span>•</span>
+              <span>MASTERCARD BLACK</span>
+              <span>•</span>
+              <span>PAYPAL</span>
+            </div>
+
+            <div className="flex items-center gap-2 text-neutral-400 text-[10px]">
+              <Lock size={12} className="text-emerald-500" />
+              <span>{t.footer.sanctuaryProtected}</span>
+            </div>
+          </div>
+
+          {/* Banner de Plan Gratuito */}
+          {isFree && (
+            <div className="bg-neutral-900 text-stone-300 py-3 px-4 text-center text-xs font-semibold border border-neutral-800 rounded-xl max-w-xl mx-auto">
+              <p>⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
+            </div>
+          )}
+
+        </div>
       </footer>
 
       {/* Quote Modal */}
@@ -1911,6 +2103,24 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           ...data,
           name: selectedTourForQuote || data.name
         }} 
+      />
+
+      {/* Modal Libro de Reclamaciones */}
+      <ComplaintsBookModal
+        isOpen={isComplaintsOpen}
+        onClose={() => setIsComplaintsOpen(false)}
+        lang={currentLang}
+        agencyName={data.name || 'Machu Picchu VIP'}
+        agencyAddress={data.officeAddress || t.footer.officeDesc}
+      />
+
+      {/* Modal Términos y Normativa Legal */}
+      <LegalTermsModal
+        isOpen={isLegalOpen}
+        onClose={() => setIsLegalOpen(false)}
+        lang={currentLang}
+        initialTab={legalTab}
+        agencyName={data.name || 'Machu Picchu VIP'}
       />
     </div>
   );
