@@ -68,3 +68,24 @@ Guía para diagnosticar y solucionar problemas de traducción, mezcla de idiomas
   3. Conectar el modal de nueva pregunta, la vista de detalle de hilo y la pestaña de ticket privado a las claves correspondientes de `st`.
   4. Mapear `displayFaqs` con `translateText` para traducir automáticamente las preguntas y respuestas tanto por defecto como personalizadas.
 
+### Error: Heurística de subtítulos expande etiquetas cortas de tours convirtiéndolas en párrafos completos
+
+- **Síntoma / Mensaje de Error:**
+  En las tarjetas del catálogo de tours de las plantillas (ej. `CulturalTemplate`, `AgencyPortalTemplate`), la etiqueta o pill flotante de la foto mostraba un párrafo completo en mayúsculas: `DESCUBRE LA MARAVILLA DEL MUNDO CON TRASLADOS PRIVADOS, HOTELES 5 ESTRELLAS Y UN GUÍA OFICIAL EXCLUSIVO PARA TI Y TU FAMILIA.` en lugar de una etiqueta corta como `GLACIAR` o `MARAVILLA`.
+
+- **Causa Raíz:**
+  1. En `translations.ts`, una heurística semántica diseñada para subtítulos largos evaluaba `lowerTrimmed.includes('maravilla del mundo')` sin validar la longitud del texto (`lowerTrimmed.length > 25`). Al pasar la etiqueta `tour.tag = 'Maravilla del Mundo'`, la condición se cumplía y reemplazaba la etiqueta corta por una descripción completa de 20 palabras.
+  2. Las etiquetas cortas (`Glaciar`, `Maravilla`, `Arqueológico`, `Adrenalina`, `Recomendado`, etc.) no estaban registradas en `PHRASE_MAP`.
+  3. Los contenedores de los badges en las plantillas carecían de restricción de ancho máximo (`max-w-[130px] truncate`), permitiendo que textos largos deformaran la tarjeta visualmente.
+
+- **Comando de Diagnóstico:**
+  Buscar en `translations.ts` heurísticas permisivas con `includes`:
+  ```bash
+  git grep -n "includes('maravilla del mundo')" src/data/translations.ts
+  ```
+
+- **Solución Paso a Paso:**
+  1. Registrar las etiquetas cortas en `PHRASE_MAP` de `src/data/translations.ts` (`Maravilla del Mundo`, `Maravilla`, `Glaciar`, `Arqueológico`, etc.) para que se resuelvan en el paso 1 sin caer en heurísticas secundarias.
+  2. Requerir `lowerTrimmed.length > 25` y palabras clave descriptivas (`descubre`) en las heurísticas de subtítulos de `translations.ts`.
+  3. Establecer `tag: 'Maravilla'` en `DEFAULT_SECONDARY_CATALOG_TOURS` para mantener homogeneidad visual con `Glaciar` y `Arqueológico`.
+  4. Agregar `max-w-[130px] truncate` y atributo `title` en las 5 plantillas para blindar el tamaño de los badges.
