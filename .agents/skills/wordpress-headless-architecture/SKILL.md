@@ -23,3 +23,19 @@ A solicitud expresa de Jefatura / Dirección de la Agencia Cusco Creativos:
 - **Campo Meta:** `landing_data` (tipo objeto JSON) para almacenar el schema completo de `LandingData`.
 - **Archivo de Conexión:** `src/lib/wordpress.ts` (reemplazo o complemento de `src/lib/supabase.ts`).
 - **Documentación Completa:** Consultar [`docs/fase_wordpress_headless.md`](file:///c:/Users/copyw/.gemini/antigravity-ide/scratch/cusco-creativos-web/docs/fase_wordpress_headless.md).
+
+## Opción Alternativa Oficial: Hosting Unificado sin Vercel (Auto-alojado)
+A solicitud del usuario/agencia, es posible prescindir de Vercel y alojar **tanto el Frontend (Next.js) como el Backend (WordPress)** en el mismo servidor de hosting (cPanel, Hostinger, SiteGround, VPS):
+1. **Método A (Exportación Estática para hosting compartido estándar):**
+   - Configurar `output: 'export'` e `images: { unoptimized: true }` en `next.config.ts`.
+   - Compilar con `npm run build` para generar la carpeta `out/`.
+   - Subir el contenido de `out/` a `public_html/` vía FTP o Administrador de Archivos de cPanel.
+2. **Método B (Node.js en cPanel):**
+   - Utilizar el módulo nativo *"Setup Node.js App"* de cPanel con Node.js 18 o 20 y ejecutar `npm run start`.
+3. **Distribución recomendada de dominios:**
+   - Frontend público: `tuagencia.com` (o dominio raíz).
+   - Backend WordPress / API: `cms.tuagencia.com` (subdominio en el mismo hosting) o subcarpeta `/wp-admin`.
+4. **Beneficios para la agencia:**
+   - Facturación única mensual sin costes adicionales de Vercel.
+   - Todo bajo control del cliente: base de datos MySQL, mediateca de imágenes y archivos estáticos.
+   - Sin límites de ejecución ni cuotas de peticiones de terceros.

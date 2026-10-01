@@ -121,3 +121,41 @@ register_post_meta('landing', 'landing_data', [
 - [ ] Creación de usuario y Application Password en WordPress.
 - [ ] Implementación de `src/lib/wordpress.ts` en Next.js.
 - [ ] Pruebas de guardado y lectura desde el Dashboard.
+
+---
+
+## 7. Estrategia de Despliegue Alternativo: Hosting 100% Autónomo (Sin Vercel)
+
+Si la agencia decide **no utilizar Vercel** para evitar cuotas en la nube y centralizar todos los servicios en su propia infraestructura de hosting (cPanel, Hostinger, SiteGround, VPS):
+
+### A. Método 1: Exportación Estática (Cualquier Hosting Compartido con Apache/Nginx)
+1. **Configuración en `next.config.ts`:**
+   ```typescript
+   const nextConfig: NextConfig = {
+     output: 'export',
+     images: {
+       unoptimized: true, // Las imágenes se cargan directo sin Image Optimization Server
+     },
+   };
+   ```
+2. **Generación de archivos compilados:**
+   ```bash
+   npm run build
+   ```
+   Esto genera una carpeta `/out` con archivos estáticos hiper-optimizados (`.html`, `.js`, `.css`).
+3. **Subida al Hosting:**
+   * El contenido de la carpeta `/out` se sube a `public_html/` del dominio principal.
+   * WordPress corre en una subcarpeta (ej: `public_html/cms/` o en un subdominio `cms.tudominio.com`).
+   * El frontend estático consume la WP REST API directamente desde el navegador del cliente.
+
+### B. Método 2: Node.js Nativo en cPanel ("Setup Node.js App")
+Si el hosting cPanel dispone de la herramienta de Node.js:
+1. Crear una aplicación Node.js versión 18 o 20 desde cPanel.
+2. Subir el repositorio del proyecto.
+3. Ejecutar `npm install` y definir el script de inicio como `npm run start` o `node_modules/next/dist/bin/next start`.
+4. El servidor de hosting mantiene el servicio Next.js activo con soporte completo de SSR y API Routes.
+
+### C. Ventajas Competitivas para la Agencia
+1. **Coste Único:** Se amortiza la infraestructura ya existente sin suscripciones extras.
+2. **Control y Soberanía:** Todo el código, base de datos MySQL, mediateca y logs residen en el servidor propio de la empresa.
+3. **Mantenimiento Autónomo:** Las copias de seguridad de cPanel respaldan simultáneamente el CMS y el Frontend.
