@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { 
   Calculator, Users, Sparkles, Check, MessageCircle, 
-  FileText, ShieldCheck, ArrowRight, Tag, HelpCircle
+  FileText, ShieldCheck, ArrowRight, Tag, HelpCircle,
+  Clock, Compass, MapPin, Star
 } from 'lucide-react';
 import { LanguageType } from '@/types/landing';
 
@@ -14,6 +15,10 @@ export interface CalculatorTourOption {
   title: string;
   price: string;
   basePriceUSD: number;
+  image?: string;
+  duration?: string;
+  category?: string;
+  rating?: number;
 }
 
 interface LiveBudgetCalculatorProps {
@@ -60,11 +65,18 @@ export default function LiveBudgetCalculator({
     id: 'default',
     title: tourTitle,
     price: `$${basePriceUSD} USD`,
-    basePriceUSD: basePriceUSD
+    basePriceUSD: basePriceUSD,
+    image: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop',
+    duration: 'Full Day',
+    category: 'Tour Destacado',
+    rating: 4.9
   };
 
   const currentTourTitle = activeTour.title;
   const currentBasePriceUSD = activeTour.basePriceUSD || basePriceUSD;
+  const currentTourImage = activeTour.image || 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop';
+  const currentTourDuration = activeTour.duration || 'Full Day';
+  const currentTourCategory = activeTour.category || 'Tour';
 
   const [passengers, setPassengers] = useState<number>(2);
   const [serviceTier, setServiceTier] = useState<'standard' | 'vip' | 'panoramic'>('vip');
@@ -87,14 +99,13 @@ export default function LiveBudgetCalculator({
     es: {
       badge: 'Calculadora Interactiva de Tarifas',
       title: 'Cotiza tu Presupuesto al Instante',
-      desc: 'Selecciona el tour, la cantidad de viajeros, categoría de viaje y adicionales para calcular tu tarifa oficial en vivo.',
-      labelChooseTour: '1. Elige el Tour que Deseas Cotizar',
-      labelPassengers: '2. Número de Viajeros',
-      labelTier: '3. Modalidad de Servicio',
+      desc: 'Configura tus preferencias en la columna izquierda y selecciona cualquier tour a la derecha para ver tu presupuesto oficial en vivo.',
+      labelPassengers: '1. Número de Viajeros',
+      labelTier: '2. Modalidad de Servicio',
       tierStd: 'Estándar Compartido',
       tierVip: 'Servicio VIP Privado',
       tierPan: 'Panorámico 360°',
-      labelExtras: '4. Adicionales & Privilegios Opcionales',
+      labelExtras: '3. Adicionales & Privilegios Opcionales',
       extra1: 'Ingreso Especial Huayna Picchu (+ $25 USD/pers)',
       extra2: 'Almuerzo Gourmet Buffet en Valle Sagrado (+ $20 USD/pers)',
       extra3: 'Bastones de Trekking de Fibra de Carbono (+ $10 USD/pers)',
@@ -103,19 +114,32 @@ export default function LiveBudgetCalculator({
       perPerson: 'por persona',
       btnWa: 'Reservar Tarifa por WhatsApp',
       btnQuote: 'Solicitar Cotización Formal',
-      guarantee: 'Tarifa oficial garantizada sin cargos ocultos • Incluye traslados y seguro turístico'
+      guarantee: 'Tarifa oficial garantizada sin cargos ocultos • Incluye traslados y seguro turístico',
+      breakdownTitle: 'Desglose de Cotización',
+      officialRateBadge: 'Tarifa Oficial 2026',
+      selectedTourLabel: 'Tour Seleccionado:',
+      passengersLabel: 'Pasajeros:',
+      tierLabel: 'Modalidad:',
+      groupDiscountLabel: 'Descuento de Grupo (4+):',
+      currencyNotice: 'Moneda seleccionada: {curr} (Cambio en vivo)',
+      // Columna derecha
+      toursHeading: 'Catálogo de Tours Disponibles',
+      toursSubheading: 'Selecciona una ruta para actualizar automáticamente el presupuesto y desglose',
+      quotingNow: 'Cotizando Ahora',
+      fromPrice: 'Desde',
+      optionsCount: 'rutas disponibles',
+      selectedBadge: 'Seleccionado'
     },
     en: {
       badge: 'Interactive Fare Calculator',
       title: 'Calculate Your Tour Budget in Real Time',
-      desc: 'Select your tour, number of travelers, service category and optional perks to get your live quote.',
-      labelChooseTour: '1. Choose Tour to Quote',
-      labelPassengers: '2. Number of Travelers',
-      labelTier: '3. Service Level',
+      desc: 'Set your travelers and options on the left, then pick any tour on the right to see your live quote.',
+      labelPassengers: '1. Number of Travelers',
+      labelTier: '2. Service Level',
       tierStd: 'Standard Group',
       tierVip: 'VIP Private Service',
       tierPan: 'Scenic 360° Panoramic',
-      labelExtras: '4. Optional Add-ons & Perks',
+      labelExtras: '3. Optional Add-ons & Perks',
       extra1: 'Huayna Picchu Special Access (+ $25 USD/pers)',
       extra2: 'Gourmet Buffet Lunch in Sacred Valley (+ $20 USD/pers)',
       extra3: 'Carbon Fiber Trekking Poles (+ $10 USD/pers)',
@@ -124,19 +148,32 @@ export default function LiveBudgetCalculator({
       perPerson: 'per person',
       btnWa: 'Book this Quote via WhatsApp',
       btnQuote: 'Request Official Proposal',
-      guarantee: 'Official guaranteed fare with no hidden fees • Includes certified transfers & tourist insurance'
+      guarantee: 'Official guaranteed fare with no hidden fees • Includes certified transfers & tourist insurance',
+      breakdownTitle: 'Quote Breakdown',
+      officialRateBadge: 'Official 2026 Rate',
+      selectedTourLabel: 'Selected Tour:',
+      passengersLabel: 'Travelers:',
+      tierLabel: 'Service Tier:',
+      groupDiscountLabel: 'Group Discount (4+):',
+      currencyNotice: 'Selected currency: {curr} (Live conversion)',
+      // Right column
+      toursHeading: 'Available Tours & Circuits',
+      toursSubheading: 'Click on any tour to update your live budget quote and WhatsApp message',
+      quotingNow: 'Quoting Now',
+      fromPrice: 'From',
+      optionsCount: 'available routes',
+      selectedBadge: 'Selected'
     },
     pt: {
       badge: 'Calculadora Interativa de Tarifas',
       title: 'Calcule seu Orçamento em Tempo Real',
-      desc: 'Escolha o passeio, número de viajantes, categoria de serviço e adicionais para obter seu orçamento ao vivo.',
-      labelChooseTour: '1. Escolha o Passeio para Cotar',
-      labelPassengers: '2. Número de Viajantes',
-      labelTier: '3. Modalidade de Serviço',
+      desc: 'Ajuste seus viajantes e preferências à esquerda e selecione qualquer passeio à direita para cotação em tempo real.',
+      labelPassengers: '1. Número de Viajantes',
+      labelTier: '2. Modalidade de Serviço',
       tierStd: 'Padrão Compartilhado',
       tierVip: 'Serviço VIP Privado',
       tierPan: 'Panorâmico 360°',
-      labelExtras: '4. Opcionais & Benefícios',
+      labelExtras: '3. Opcionais & Benefícios',
       extra1: 'Ingresso Huayna Picchu (+ $25 USD/pessoa)',
       extra2: 'Almoço Buffet Gourmet (+ $20 USD/pessoa)',
       extra3: 'Bastões de Trilha de Carbono (+ $10 USD/pessoa)',
@@ -145,19 +182,32 @@ export default function LiveBudgetCalculator({
       perPerson: 'por pessoa',
       btnWa: 'Reservar Orçamento no WhatsApp',
       btnQuote: 'Solicitar Cotação Oficial',
-      guarantee: 'Tarifa oficial garantida sem taxas ocultas • Inclui transporte e seguro turístico'
+      guarantee: 'Tarifa oficial garantida sem taxas ocultas • Inclui transporte e seguro turístico',
+      breakdownTitle: 'Detalhamento do Orçamento',
+      officialRateBadge: 'Tarifa Oficial 2026',
+      selectedTourLabel: 'Passeio Selecionado:',
+      passengersLabel: 'Viajantes:',
+      tierLabel: 'Modalidade:',
+      groupDiscountLabel: 'Desconto de Grupo (4+):',
+      currencyNotice: 'Moeda selecionada: {curr} (Câmbio ao vivo)',
+      // Right column
+      toursHeading: 'Catálogo de Passeios Disponíveis',
+      toursSubheading: 'Clique em qualquer passeio para recalcular o orçamento na hora',
+      quotingNow: 'Cotando Agora',
+      fromPrice: 'A partir de',
+      optionsCount: 'roteiros disponíveis',
+      selectedBadge: 'Selecionado'
     },
     fr: {
       badge: 'Calculateur de Tarif Interactif',
       title: 'Calculez votre Budget en Direct',
-      desc: 'Choisissez le circuit, le nombre de voyageurs, la catégorie de service et les options pour obtenir votre devis en direct.',
-      labelChooseTour: '1. Choisissez le Circuit à Deviser',
-      labelPassengers: '2. Nombre de Voyageurs',
-      labelTier: '3. Catégorie de Service',
+      desc: 'Configurez vos préférences à gauche et choisissez votre circuit à droite pour voir votre devis officiel en direct.',
+      labelPassengers: '1. Nombre de Voyageurs',
+      labelTier: '2. Catégorie de Service',
       tierStd: 'Standard Partagé',
       tierVip: 'VIP Privé',
       tierPan: 'Panoramique 360°',
-      labelExtras: '4. Options & Privilèges',
+      labelExtras: '3. Options & Privilèges',
       extra1: 'Entrée Huayna Picchu (+ $25 USD/pers)',
       extra2: 'Déjeuner Buffet Gourmet (+ $20 USD/pers)',
       extra3: 'Bâtons de Marche Carbone (+ $10 USD/pers)',
@@ -166,19 +216,32 @@ export default function LiveBudgetCalculator({
       perPerson: 'par personne',
       btnWa: 'Réserver ce Devis sur WhatsApp',
       btnQuote: 'Demander un Devis Formel',
-      guarantee: 'Tarif officiel garanti sans frais cachés • Assistance et assurance touristique incluses'
+      guarantee: 'Tarif officiel garanti sans frais cachés • Assistance et assurance touristique incluses',
+      breakdownTitle: 'Détail du Devis',
+      officialRateBadge: 'Tarif Officiel 2026',
+      selectedTourLabel: 'Circuit Sélectionné :',
+      passengersLabel: 'Voyageurs :',
+      tierLabel: 'Catégorie :',
+      groupDiscountLabel: 'Remise de Groupe (4+) :',
+      currencyNotice: 'Devise sélectionnée : {curr} (Conversion directe)',
+      // Right column
+      toursHeading: 'Circuits Disponibles à la Carte',
+      toursSubheading: 'Cliquez sur n’importe quel circuit pour recalculer automatiquement votre devis',
+      quotingNow: 'Devis en cours',
+      fromPrice: 'Dès',
+      optionsCount: 'circuits disponibles',
+      selectedBadge: 'Sélectionné'
     },
     it: {
       badge: 'Calcolatore Interattivo di Tariffe',
       title: 'Calcola il tuo Preventivo in Tempo Reale',
-      desc: 'Scegli il tour, il numero di viaggiatori, il livello di servizio e gli optional per calcolare la tua tariffa live.',
-      labelChooseTour: '1. Scegli il Tour da Preventivare',
-      labelPassengers: '2. Numero di Viaggiatori',
-      labelTier: '3. Categoria di Servizio',
+      desc: 'Imposta i tuoi viaggiatori a sinistra e seleziona il tour desiderato a destra per visualizzare il preventivo live.',
+      labelPassengers: '1. Numero di Viaggiatori',
+      labelTier: '2. Categoria di Servizio',
       tierStd: 'Standard Condiviso',
       tierVip: 'Servizio VIP Privato',
       tierPan: 'Panoramico 360°',
-      labelExtras: '4. Optional & Privilegi',
+      labelExtras: '3. Optional & Privilegi',
       extra1: 'Accesso Huayna Picchu (+ $25 USD/pers)',
       extra2: 'Pranzo Buffet Gourmet (+ $20 USD/pers)',
       extra3: 'Bastoncini da Trekking in Carbonio (+ $10 USD/pers)',
@@ -187,19 +250,32 @@ export default function LiveBudgetCalculator({
       perPerson: 'a persona',
       btnWa: 'Prenota Preventivo su WhatsApp',
       btnQuote: 'Richiedi Preventivo Ufficiale',
-      guarantee: 'Tariffa ufficiale garantita senza costi nascosti • Include trasferimenti e assicurazione'
+      guarantee: 'Tariffa ufficiale garantita senza costi nascosti • Include trasferimenti e assicurazione',
+      breakdownTitle: 'Dettaglio Preventivo',
+      officialRateBadge: 'Tariffa Ufficiale 2026',
+      selectedTourLabel: 'Tour Selezionato:',
+      passengersLabel: 'Viaggiatori:',
+      tierLabel: 'Categoria:',
+      groupDiscountLabel: 'Sconto Gruppo (4+):',
+      currencyNotice: 'Valuta selezionata: {curr} (Cambio in tempo reale)',
+      // Right column
+      toursHeading: 'Catalogo dei Tour Disponibili',
+      toursSubheading: 'Fai clic su qualsiasi tour per ricalcolare il preventivo all’istante',
+      quotingNow: 'In Preventivo',
+      fromPrice: 'Da',
+      optionsCount: 'itinerari disponibili',
+      selectedBadge: 'Selezionato'
     }
   }[lang] || {
     badge: 'Calculadora Interactiva de Tarifas',
     title: 'Cotiza tu Presupuesto al Instante',
-    desc: 'Selecciona el tour, la cantidad de viajeros, categoría de viaje y adicionales para calcular tu tarifa oficial en vivo.',
-    labelChooseTour: '1. Elige el Tour que Deseas Cotizar',
-    labelPassengers: '2. Número de Viajeros',
-    labelTier: '3. Modalidad de Servicio',
+    desc: 'Configura tus preferencias en la columna izquierda y selecciona cualquier tour a la derecha para ver tu presupuesto oficial en vivo.',
+    labelPassengers: '1. Número de Viajeros',
+    labelTier: '2. Modalidad de Servicio',
     tierStd: 'Estándar Compartido',
     tierVip: 'Servicio VIP Privado',
     tierPan: 'Panorámico 360°',
-    labelExtras: '4. Adicionales & Privilegios Opcionales',
+    labelExtras: '3. Adicionales & Privilegios Opcionales',
     extra1: 'Ingreso Especial Huayna Picchu (+ $25 USD/pers)',
     extra2: 'Almuerzo Gourmet Buffet en Valle Sagrado (+ $20 USD/pers)',
     extra3: 'Bastones de Trekking de Fibra de Carbono (+ $10 USD/pers)',
@@ -208,7 +284,20 @@ export default function LiveBudgetCalculator({
     perPerson: 'por persona',
     btnWa: 'Reservar Tarifa por WhatsApp',
     btnQuote: 'Solicitar Cotización Formal',
-    guarantee: 'Tarifa oficial garantizada sin cargos ocultos • Incluye traslados y seguro turístico'
+    guarantee: 'Tarifa oficial garantizada sin cargos ocultos • Incluye traslados y seguro turístico',
+    breakdownTitle: 'Desglose de Cotización',
+    officialRateBadge: 'Tarifa Oficial 2026',
+    selectedTourLabel: 'Tour Seleccionado:',
+    passengersLabel: 'Pasajeros:',
+    tierLabel: 'Modalidad:',
+    groupDiscountLabel: 'Descuento de Grupo (4+):',
+    currencyNotice: 'Moneda seleccionada: {curr} (Cambio en vivo)',
+    toursHeading: 'Catálogo de Tours Disponibles',
+    toursSubheading: 'Selecciona una ruta para actualizar automáticamente el presupuesto y desglose',
+    quotingNow: 'Cotizando Ahora',
+    fromPrice: 'Desde',
+    optionsCount: 'rutas disponibles',
+    selectedBadge: 'Seleccionado'
   };
 
   const handleSendWhatsApp = () => {
@@ -234,9 +323,9 @@ export default function LiveBudgetCalculator({
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#FF5500]/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
-        {/* Header */}
+        {/* Header Central */}
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF5500]/20 text-[#FF8844] text-[10px] sm:text-xs font-black uppercase tracking-widest border border-[#FF5500]/30 shadow-md mb-3">
             <Calculator size={13} className="text-[#FF5500]" />
@@ -249,7 +338,7 @@ export default function LiveBudgetCalculator({
             {dict.desc}
           </p>
 
-          {/* Currency Switcher inside calculator */}
+          {/* Currency Switcher */}
           {onCurrencyChange && (
             <div className="flex items-center justify-center gap-2 mt-4">
               <span className="text-xs font-bold text-stone-400">Moneda:</span>
@@ -273,202 +362,160 @@ export default function LiveBudgetCalculator({
           )}
         </div>
 
-        {/* Calculator Main Grid */}
+        {/* Calculator Main Grid: 2 Columnas Balanceadas */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           
-          {/* Controls Column (7 cols) */}
-          <div className="lg:col-span-7 bg-stone-900/90 backdrop-blur-xl rounded-3xl p-5 sm:p-7 border border-stone-800 shadow-2xl space-y-6">
+          {/* ======================================================== */}
+          {/* COLUMNA IZQUIERDA: CONTROLES DE PRECIOS & DESGLOSE (6 cols) */}
+          {/* ======================================================== */}
+          <div className="lg:col-span-6 space-y-6">
             
-            {/* 0. Selector de Tours */}
-            {availableTours && availableTours.length > 0 && (
+            {/* Panel de Configuración de Presupuesto */}
+            <div className="bg-stone-900/90 backdrop-blur-xl rounded-3xl p-5 sm:p-7 border border-stone-800 shadow-2xl space-y-6">
+              
+              {/* 1. Selector de Pasajeros */}
               <div>
-                <div className="flex items-center justify-between mb-2.5">
+                <div className="flex items-center justify-between mb-2">
                   <label className="text-xs font-extrabold uppercase tracking-wider text-stone-300 flex items-center gap-1.5">
-                    <Tag size={14} className="text-[#FF5500]" />
-                    <span>{dict.labelChooseTour}</span>
+                    <Users size={14} className="text-[#FF5500]" />
+                    <span>{dict.labelPassengers}</span>
                   </label>
-                  <span className="text-[10px] text-stone-400 font-bold bg-stone-800/80 px-2 py-0.5 rounded-full border border-stone-700">
-                    {availableTours.length} opciones
-                  </span>
+                  {isGroupDiscount && (
+                    <span className="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">
+                      {dict.discountBadge}
+                    </span>
+                  )}
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-56 overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:#FF5500_#292524]">
-                  {availableTours.map((t) => {
-                    const isSelected = selectedTourId === t.id;
+
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center bg-stone-950 rounded-2xl border border-stone-800 p-1">
+                    <button
+                      type="button"
+                      onClick={() => setPassengers(Math.max(1, passengers - 1))}
+                      className="w-10 h-10 rounded-xl bg-stone-800 hover:bg-stone-700 text-white font-black text-lg flex items-center justify-center transition-colors cursor-pointer"
+                    >
+                      -
+                    </button>
+                    <span className="w-14 text-center font-black text-lg text-white">
+                      {passengers}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setPassengers(Math.min(12, passengers + 1))}
+                      className="w-10 h-10 rounded-xl bg-stone-800 hover:bg-stone-700 text-white font-black text-lg flex items-center justify-center transition-colors cursor-pointer"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <div className="text-xs text-stone-400 leading-tight">
+                    {passengers === 1 ? 'Viajero individual' : `${passengers} personas en tu grupo`}
+                    {isGroupDiscount ? ' (Ahorro de 10% aplicado)' : ' (A partir de 4 pers: 10% OFF)'}
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. Modalidad de Servicio */}
+              <div>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-stone-300 block mb-2">
+                  {dict.labelTier}
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  {[
+                    { key: 'standard' as const, label: dict.tierStd, tag: 'Económico', mult: 1.0 },
+                    { key: 'vip' as const, label: dict.tierVip, tag: 'Recomendado ★', mult: 1.35 },
+                    { key: 'panoramic' as const, label: dict.tierPan, tag: 'Vistadome 360°', mult: 1.60 }
+                  ].map((t) => {
+                    const isSelected = serviceTier === t.key;
                     return (
                       <button
-                        key={t.id}
+                        key={t.key}
                         type="button"
-                        onClick={() => setSelectedTourId(t.id)}
-                        className={`p-3 rounded-2xl text-left border transition-all cursor-pointer flex items-center justify-between gap-2.5 ${
+                        onClick={() => setServiceTier(t.key)}
+                        className={`p-3 rounded-2xl text-left border transition-all cursor-pointer relative flex flex-col justify-between ${
                           isSelected
                             ? 'bg-[#FF5500]/15 border-[#FF5500] ring-1 ring-[#FF5500] shadow-md'
-                            : 'bg-stone-950/70 border-stone-800/90 hover:border-stone-700 text-stone-300 hover:text-white'
+                            : 'bg-stone-950/80 border-stone-800 hover:border-stone-700'
                         }`}
                       >
-                        <div className="min-w-0 flex-1">
-                          <span className={`text-xs font-bold block truncate leading-tight ${isSelected ? 'text-white' : 'text-stone-300'}`}>
-                            {t.title}
+                        <div>
+                          <span className={`text-[9px] font-extrabold uppercase tracking-wider block mb-1 ${isSelected ? 'text-[#FF5500]' : 'text-stone-400'}`}>
+                            {t.tag}
                           </span>
-                          <span className="text-[10px] text-[#FF8844] font-black block mt-1">
-                            Desde {convertPrice(t.basePriceUSD, currency)}
+                          <span className="text-xs font-bold text-white block leading-snug">
+                            {t.label}
                           </span>
                         </div>
-                        {isSelected && (
-                          <div className="w-5 h-5 rounded-full bg-[#FF5500] text-white flex items-center justify-center shrink-0 shadow-sm">
-                            <Check size={12} strokeWidth={3} />
-                          </div>
-                        )}
+                        <span className="text-[11px] font-black text-stone-300 mt-2 block">
+                          {convertPrice(Math.round(currentBasePriceUSD * t.mult), currency)}
+                        </span>
                       </button>
                     );
                   })}
                 </div>
               </div>
-            )}
 
-            {/* 1. Passengers Selector */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <label className="text-xs font-extrabold uppercase tracking-wider text-stone-300 flex items-center gap-1.5">
-                  <Users size={14} className="text-[#FF5500]" />
-                  <span>{dict.labelPassengers}</span>
+              {/* 3. Adicionales Opcionales */}
+              <div>
+                <label className="text-xs font-extrabold uppercase tracking-wider text-stone-300 block mb-2">
+                  {dict.labelExtras}
                 </label>
-                {isGroupDiscount && (
-                  <span className="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">
-                    {dict.discountBadge}
-                  </span>
-                )}
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="flex items-center bg-stone-950 rounded-2xl border border-stone-800 p-1">
-                  <button
-                    type="button"
-                    onClick={() => setPassengers(Math.max(1, passengers - 1))}
-                    className="w-10 h-10 rounded-xl bg-stone-800 hover:bg-stone-700 text-white font-black text-lg flex items-center justify-center transition-colors cursor-pointer"
-                  >
-                    -
-                  </button>
-                  <span className="w-14 text-center font-black text-lg text-white">
-                    {passengers}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setPassengers(Math.min(12, passengers + 1))}
-                    className="w-10 h-10 rounded-xl bg-stone-800 hover:bg-stone-700 text-white font-black text-lg flex items-center justify-center transition-colors cursor-pointer"
-                  >
-                    +
-                  </button>
-                </div>
-                <div className="text-xs text-stone-400 leading-tight">
-                  {passengers === 1 ? 'Viajero individual' : `${passengers} personas en tu grupo`}
-                  {isGroupDiscount ? ' (Ahorro de 10% aplicado)' : ' (A partir de 4 pers: 10% OFF)'}
-                </div>
-              </div>
-            </div>
-
-            {/* 2. Service Tier Selector */}
-            <div>
-              <label className="text-xs font-extrabold uppercase tracking-wider text-stone-300 block mb-2">
-                {dict.labelTier}
-              </label>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                {[
-                  { key: 'standard' as const, label: dict.tierStd, tag: 'Económico', mult: 1.0 },
-                  { key: 'vip' as const, label: dict.tierVip, tag: 'Recomendado ★', mult: 1.35 },
-                  { key: 'panoramic' as const, label: dict.tierPan, tag: 'Vistadome 360°', mult: 1.60 }
-                ].map((t) => {
-                  const isSelected = serviceTier === t.key;
-                  return (
-                    <button
-                      key={t.key}
-                      type="button"
-                      onClick={() => setServiceTier(t.key)}
-                      className={`p-3 rounded-2xl text-left border transition-all cursor-pointer relative flex flex-col justify-between ${
-                        isSelected
-                          ? 'bg-[#FF5500]/15 border-[#FF5500] ring-1 ring-[#FF5500]'
-                          : 'bg-stone-950/80 border-stone-800 hover:border-stone-700'
+                <div className="space-y-2">
+                  {[
+                    { id: 'huayna', label: dict.extra1, checked: extraHuayna, toggle: () => setExtraHuayna(!extraHuayna) },
+                    { id: 'buffet', label: dict.extra2, checked: extraBuffet, toggle: () => setExtraBuffet(!extraBuffet) },
+                    { id: 'poles', label: dict.extra3, checked: extraPoles, toggle: () => setExtraPoles(!extraPoles) }
+                  ].map((extra) => (
+                    <label
+                      key={extra.id}
+                      onClick={extra.toggle}
+                      className={`flex items-center gap-3 p-3 rounded-2xl border cursor-pointer transition-colors ${
+                        extra.checked 
+                          ? 'bg-stone-800/90 border-[#FF5500]/50 text-white' 
+                          : 'bg-stone-950/60 border-stone-800 text-stone-400 hover:text-stone-200'
                       }`}
                     >
-                      <div>
-                        <span className={`text-[9px] font-extrabold uppercase tracking-wider block mb-1 ${isSelected ? 'text-[#FF5500]' : 'text-stone-400'}`}>
-                          {t.tag}
-                        </span>
-                        <span className="text-xs font-bold text-white block leading-snug">
-                          {t.label}
-                        </span>
+                      <div className={`w-5 h-5 rounded-lg border flex items-center justify-center shrink-0 transition-all ${
+                        extra.checked ? 'bg-[#FF5500] border-[#FF5500] text-white' : 'border-stone-700 bg-stone-900'
+                      }`}>
+                        {extra.checked && <Check size={13} strokeWidth={3} />}
                       </div>
-                      <span className="text-[11px] font-black text-stone-300 mt-2 block">
-                        {convertPrice(Math.round(currentBasePriceUSD * t.mult), currency)}
-                      </span>
-                    </button>
-                  );
-                })}
+                      <span className="text-xs font-medium leading-snug">{extra.label}</span>
+                    </label>
+                  ))}
+                </div>
               </div>
+
             </div>
 
-            {/* 3. Optional Extras Checkboxes */}
-            <div>
-              <label className="text-xs font-extrabold uppercase tracking-wider text-stone-300 block mb-2">
-                {dict.labelExtras}
-              </label>
-              <div className="space-y-2">
-                {[
-                  { id: 'huayna', label: dict.extra1, checked: extraHuayna, toggle: () => setExtraHuayna(!extraHuayna) },
-                  { id: 'buffet', label: dict.extra2, checked: extraBuffet, toggle: () => setExtraBuffet(!extraBuffet) },
-                  { id: 'poles', label: dict.extra3, checked: extraPoles, toggle: () => setExtraPoles(!extraPoles) }
-                ].map((extra) => (
-                  <label
-                    key={extra.id}
-                    onClick={extra.toggle}
-                    className={`flex items-center gap-3 p-3 rounded-2xl border cursor-pointer transition-colors ${
-                      extra.checked 
-                        ? 'bg-stone-800/90 border-[#FF5500]/50 text-white' 
-                        : 'bg-stone-950/60 border-stone-800 text-stone-400 hover:text-stone-200'
-                    }`}
-                  >
-                    <div className={`w-5 h-5 rounded-lg border flex items-center justify-center shrink-0 transition-all ${
-                      extra.checked ? 'bg-[#FF5500] border-[#FF5500] text-white' : 'border-stone-700 bg-stone-900'
-                    }`}>
-                      {extra.checked && <Check size={13} strokeWidth={3} />}
-                    </div>
-                    <span className="text-xs font-medium leading-snug">{extra.label}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-          </div>
-
-          {/* Result Card Column (5 cols) */}
-          <div className="lg:col-span-5 bg-gradient-to-b from-stone-900 via-stone-900 to-black rounded-3xl p-6 sm:p-8 border border-stone-800 shadow-2xl flex flex-col justify-between space-y-6">
-            <div>
+            {/* Tarjeta de Resumen / Desglose de Cotización */}
+            <div className="bg-gradient-to-b from-stone-900 via-stone-900 to-black rounded-3xl p-5 sm:p-7 border border-stone-800 shadow-2xl space-y-5">
               <div className="flex items-center justify-between pb-3 border-b border-stone-800">
                 <span className="text-xs font-bold text-stone-400 uppercase tracking-wider">
-                  Desglose de Cotización
+                  {dict.breakdownTitle}
                 </span>
                 <span className="text-[10px] font-black uppercase text-[#FF5500] bg-[#FF5500]/10 px-2 py-0.5 rounded-md">
-                  Tarifa Oficial 2026
+                  {dict.officialRateBadge}
                 </span>
               </div>
 
-              <div className="py-4 space-y-2.5 text-xs text-stone-300">
-                <div className="flex items-center justify-between">
-                  <span className="text-stone-400">Tour Seleccionado:</span>
-                  <span className="font-bold text-white text-right max-w-[200px] truncate" title={currentTourTitle}>
+              <div className="py-1 space-y-2 text-xs text-stone-300">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-stone-400 shrink-0">{dict.selectedTourLabel}</span>
+                  <span className="font-bold text-white text-right truncate max-w-[220px]" title={currentTourTitle}>
                     {currentTourTitle}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-stone-400">Pasajeros:</span>
+                  <span className="text-stone-400">{dict.passengersLabel}</span>
                   <span className="font-bold text-white">{passengers} viajeros</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-stone-400">Modalidad:</span>
+                  <span className="text-stone-400">{dict.tierLabel}</span>
                   <span className="font-bold text-white capitalize">{serviceTier}</span>
                 </div>
                 {isGroupDiscount && (
                   <div className="flex items-center justify-between text-emerald-400">
-                    <span>Descuento de Grupo (4+):</span>
+                    <span>{dict.groupDiscountLabel}</span>
                     <span className="font-bold">-10%</span>
                   </div>
                 )}
@@ -489,37 +536,189 @@ export default function LiveBudgetCalculator({
                   {convertPrice(grandTotalUSD, currency)}
                 </div>
                 <span className="text-[10px] text-stone-400 block">
-                  Moneda seleccionada: {currency} (Cambio en vivo)
+                  {dict.currencyNotice.replace('{curr}', currency)}
                 </span>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="space-y-2.5 pt-1">
+                <button
+                  type="button"
+                  onClick={handleSendWhatsApp}
+                  className="w-full bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white py-3.5 px-4 rounded-2xl font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition-all hover:scale-102 active:scale-98 cursor-pointer"
+                >
+                  <MessageCircle size={17} />
+                  <span>{dict.btnWa}</span>
+                </button>
+
+                {onOpenQuoteModal && (
+                  <button
+                    type="button"
+                    onClick={() => onOpenQuoteModal(currentTourTitle)}
+                    className="w-full bg-stone-800 hover:bg-stone-700 text-white py-3 px-4 rounded-2xl font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-stone-700 transition-all cursor-pointer"
+                  >
+                    <FileText size={15} />
+                    <span>{dict.btnQuote}</span>
+                  </button>
+                )}
+
+                <div className="flex items-center gap-2 text-[10px] text-stone-500 justify-center pt-1 text-center">
+                  <ShieldCheck size={13} className="text-emerald-500 shrink-0" />
+                  <span>{dict.guarantee}</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          {/* ======================================================== */}
+          {/* COLUMNA DERECHA: CATÁLOGO DE TOURS DISPONIBLES (6 cols) */}
+          {/* ======================================================== */}
+          <div className="lg:col-span-6 bg-stone-900/90 backdrop-blur-xl rounded-3xl p-5 sm:p-7 border border-stone-800 shadow-2xl space-y-4">
+            
+            {/* Header de la columna derecha */}
+            <div className="flex items-center justify-between border-b border-stone-800 pb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-xl bg-[#FF5500]/20 flex items-center justify-center text-[#FF5500]">
+                  <Compass size={17} />
+                </div>
+                <div>
+                  <h3 className="text-sm sm:text-base font-black text-white leading-tight">
+                    {dict.toursHeading}
+                  </h3>
+                  <p className="text-[11px] text-stone-400 leading-tight">
+                    {dict.toursSubheading}
+                  </p>
+                </div>
+              </div>
+              {availableTours && (
+                <span className="text-[10px] text-stone-400 font-bold bg-stone-800/80 px-2.5 py-1 rounded-full border border-stone-700 shrink-0">
+                  {availableTours.length} {dict.optionsCount}
+                </span>
+              )}
+            </div>
+
+            {/* Banner Preview del Tour Seleccionado Activo */}
+            <div className="relative rounded-2xl overflow-hidden border border-[#FF5500]/50 shadow-lg group">
+              <div className="h-32 sm:h-36 w-full relative">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img 
+                  src={currentTourImage} 
+                  alt={currentTourTitle}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent" />
+                
+                {/* Badges superiores */}
+                <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between">
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF5500] text-white text-[10px] font-black uppercase tracking-wider shadow-md">
+                    <Check size={11} strokeWidth={3} />
+                    <span>{dict.quotingNow}</span>
+                  </span>
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-amber-300 text-[10px] font-bold border border-white/10">
+                    <Clock size={11} />
+                    <span>{currentTourDuration}</span>
+                  </span>
+                </div>
+
+                {/* Info inferior */}
+                <div className="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+                  <div className="min-w-0 pr-2">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-[#FF8844] block">
+                      {currentTourCategory}
+                    </span>
+                    <h4 className="text-sm sm:text-base font-black text-white truncate drop-shadow-md">
+                      {currentTourTitle}
+                    </h4>
+                  </div>
+                  <div className="text-right shrink-0">
+                    <span className="text-[9px] text-stone-400 block uppercase">
+                      {dict.fromPrice}
+                    </span>
+                    <span className="text-xs sm:text-sm font-black text-white bg-black/60 px-2 py-0.5 rounded-lg border border-white/10 block">
+                      {convertPrice(currentBasePriceUSD, currency)}
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Action Buttons */}
-            <div className="space-y-3 pt-2">
-              <button
-                type="button"
-                onClick={handleSendWhatsApp}
-                className="w-full bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white py-3.5 px-4 rounded-2xl font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition-all hover:scale-102 active:scale-98 cursor-pointer"
-              >
-                <MessageCircle size={17} />
-                <span>{dict.btnWa}</span>
-              </button>
+            {/* Lista Scrolleable de Tours con tarjetas fotográficas */}
+            <div className="space-y-2.5 max-h-[460px] overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:#FF5500_#292524]">
+              {availableTours && availableTours.map((t) => {
+                const isSelected = selectedTourId === t.id;
+                const tourImg = t.image || 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop';
+                const tourDur = t.duration || 'Full Day';
+                const tourCat = t.category || 'Tour';
 
-              {onOpenQuoteModal && (
-                <button
-                  type="button"
-                  onClick={() => onOpenQuoteModal(currentTourTitle)}
-                  className="w-full bg-stone-800 hover:bg-stone-700 text-white py-3 px-4 rounded-2xl font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-stone-700 transition-all cursor-pointer"
-                >
-                  <FileText size={15} />
-                  <span>{dict.btnQuote}</span>
-                </button>
-              )}
+                return (
+                  <button
+                    key={t.id}
+                    type="button"
+                    onClick={() => setSelectedTourId(t.id)}
+                    className={`w-full p-2.5 sm:p-3 rounded-2xl text-left border transition-all cursor-pointer flex items-center gap-3 relative ${
+                      isSelected
+                        ? 'bg-[#FF5500]/15 border-[#FF5500] ring-2 ring-[#FF5500]/70 shadow-lg'
+                        : 'bg-stone-950/70 border-stone-800/80 hover:border-stone-700 hover:bg-stone-900/90 text-stone-300'
+                    }`}
+                  >
+                    {/* Miniatura del Tour */}
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shrink-0 relative bg-stone-900 border border-stone-800">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img 
+                        src={tourImg} 
+                        alt={t.title}
+                        className="w-full h-full object-cover"
+                      />
+                      {isSelected && (
+                        <div className="absolute inset-0 bg-[#FF5500]/30 flex items-center justify-center">
+                          <div className="w-6 h-6 rounded-full bg-[#FF5500] text-white flex items-center justify-center shadow-md">
+                            <Check size={14} strokeWidth={3} />
+                          </div>
+                        </div>
+                      )}
+                    </div>
 
-              <div className="flex items-center gap-2 text-[10px] text-stone-500 justify-center pt-1 text-center">
-                <ShieldCheck size={13} className="text-emerald-500 shrink-0" />
-                <span>{dict.guarantee}</span>
-              </div>
+                    {/* Contenido del Tour */}
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <span className="text-[10px] font-black uppercase text-[#FF8844] truncate">
+                          {tourCat}
+                        </span>
+                        <span className="text-[10px] text-stone-400 flex items-center gap-0.5">
+                          • <Clock size={10} /> {tourDur}
+                        </span>
+                      </div>
+                      
+                      <h4 className={`text-xs sm:text-sm font-bold truncate ${isSelected ? 'text-white' : 'text-stone-200'}`}>
+                        {t.title}
+                      </h4>
+
+                      <div className="flex items-center justify-between mt-1.5">
+                        <div className="flex items-center gap-1 text-[11px] font-black text-white">
+                          <span className="text-[10px] text-stone-400 font-normal">
+                            {dict.fromPrice}
+                          </span>
+                          <span className="text-[#FF8844]">
+                            {convertPrice(t.basePriceUSD, currency)}
+                          </span>
+                        </div>
+
+                        {isSelected ? (
+                          <span className="text-[10px] font-extrabold text-[#FF5500] bg-[#FF5500]/10 px-2 py-0.5 rounded-full border border-[#FF5500]/30">
+                            {dict.selectedBadge}
+                          </span>
+                        ) : (
+                          <span className="text-[10px] font-semibold text-stone-500 hover:text-stone-300">
+                            Seleccionar →
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
 
           </div>

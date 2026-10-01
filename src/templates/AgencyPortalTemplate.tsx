@@ -778,7 +778,11 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         id: 'main-tour',
         title: tourTitle,
         price: convertPrice(mainPriceUSD, currency),
-        basePriceUSD: mainPriceUSD
+        basePriceUSD: mainPriceUSD,
+        image: heroImage,
+        duration: getLocalizedDuration(data?.duration || 'Full Day'),
+        category: translateText('Tour Estrella', lang),
+        rating: 4.9
       },
       ...rawSecondaryTours.slice(0, tourLimit).map((sec, idx) => {
         const baseUSD = parseInt(sec.price?.replace(/[^0-9]/g, '') || '45');
@@ -786,12 +790,16 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           id: sec.id || `sec-tour-${idx}`,
           title: translateText(sec.title, lang),
           price: convertPrice(baseUSD, currency),
-          basePriceUSD: baseUSD
+          basePriceUSD: baseUSD,
+          image: sec.image || heroImage,
+          duration: getLocalizedDuration(sec.duration || 'Full Day'),
+          category: translateText(sec.category || 'Tour Destacado', lang),
+          rating: sec.rating || 4.9
         };
       })
     ];
     return list;
-  }, [tourTitle, data?.price, currency, rawSecondaryTours, tourLimit, lang]);
+  }, [tourTitle, data?.price, currency, rawSecondaryTours, tourLimit, lang, heroImage, data?.duration]);
 
 
   // -----------------------------------------------------------
