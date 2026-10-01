@@ -31,7 +31,11 @@ import {
   X,
   BookOpen,
   Lock,
-  Building2
+  Building2,
+  Printer,
+  Download,
+  Maximize2,
+  CloudSun
 } from 'lucide-react';
 import { LandingData, PlanTier, ObjectiveType, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
@@ -42,6 +46,10 @@ import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
 import LegalTermsModal from '@/components/common/LegalTermsModal';
 import SustainabilityAndSocialProof from '@/components/agency-portal/SustainabilityAndSocialProof';
 import TrustGuaranteeAndOffice from '@/components/agency-portal/TrustGuaranteeAndOffice';
+import LiveBudgetCalculator, { CurrencyType, convertPrice } from '@/components/agency-portal/LiveBudgetCalculator';
+import BrochurePrintModal from '@/components/agency-portal/BrochurePrintModal';
+import LightboxModal from '@/components/agency-portal/LightboxModal';
+import RecentBookingsToast from '@/components/agency-portal/RecentBookingsToast';
 import { translateText, translateItineraryItem } from '@/data/translations';
 
 interface AgencyPortalTemplateProps {
@@ -587,6 +595,12 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const [isLegalOpen, setIsLegalOpen] = useState<boolean>(false);
   const [legalTab, setLegalTab] = useState<'terms' | 'cancellation' | 'privacy' | 'license'>('terms');
 
+  // Nuevas herramientas de conversión (Moneda, Brochure PDF, Lightbox)
+  const [currency, setCurrency] = useState<CurrencyType>('USD');
+  const [isBrochureOpen, setIsBrochureOpen] = useState<boolean>(false);
+  const [lightboxOpen, setLightboxOpen] = useState<boolean>(false);
+  const [lightboxIndex, setLightboxIndex] = useState<number>(0);
+
   // 3. Parámetros y datos dinámicos
   const tourTitle = data?.hero?.title || data?.name || 'Experiencia Machu Picchu & Cusco';
   const brandName = 'Cusco Creativos';
@@ -595,6 +609,27 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const guideName = data?.guideName || 'Carlos Mendoza';
   const destination = data?.destination || 'Cusco, Perú';
   const objective: ObjectiveType = data?.objective || 'whatsapp';
+
+  // Colección de fotos para el Lightbox HD
+  const allGalleryPhotos = React.useMemo(() => {
+    const list = [
+      data?.heroImage || 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop',
+      ...(data?.galleryImages && data.galleryImages.length > 0
+        ? data.galleryImages
+        : [
+            'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop',
+            'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=2070&auto=format&fit=crop'
+          ])
+    ];
+    return Array.from(new Set(list));
+  }, [data?.heroImage, data?.galleryImages]);
+
+  const handleOpenLightbox = (index = 0) => {
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
 
   // 4. Diccionario Multi-Idioma reactivo (ES / EN / PT / FR / IT)
   const dict = DICTIONARIES[lang] || DICTIONARIES.es;
@@ -726,7 +761,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
     categoryKey: sec.categoryKey || 'all',
     location: translateText(sec.location || destination, lang),
     duration: getLocalizedDuration(sec.duration),
-    price: sec.price || '$45 USD',
+    price: convertPrice(parseInt(sec.price?.replace(/[^0-9]/g, '') || '45'), currency),
     rating: sec.rating || 4.9,
     image: sec.image || heroImage,
     tag: translateText(sec.tag || 'Destacado', lang),
@@ -911,9 +946,38 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             </span>
           </div>
           
-          {/* Right: Badge & Language Selector */}
-          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
-            <span className="hidden sm:inline-flex items-center gap-1 bg-[#FF5500]/15 text-[#FF8844] font-bold px-2.5 py-0.5 rounded-full text-[10px] border border-[#FF5500]/30 whitespace-nowrap">
+          {/* Right: Currency, PDF & Language Selector */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+            {/* Currency Selector */}
+            <div className="flex items-center bg-stone-800/95 rounded-lg p-0.5 border border-stone-700/80 shadow-xs" title="Seleccionar moneda de visualización">
+              {(['USD', 'PEN', 'EUR', 'BRL'] as CurrencyType[]).map((cur) => (
+                <button
+                  key={cur}
+                  type="button"
+                  onClick={() => setCurrency(cur)}
+                  className={`px-1 sm:px-1.5 py-0.5 rounded text-[8px] sm:text-[9px] font-black uppercase transition-all cursor-pointer ${
+                    currency === cur
+                      ? 'bg-[#FF5500] text-white shadow-xs'
+                      : 'text-stone-400 hover:text-white'
+                  }`}
+                >
+                  {cur}
+                </button>
+              ))}
+            </div>
+
+            {/* Quick PDF Brochure Download */}
+            <button
+              type="button"
+              onClick={() => setIsBrochureOpen(true)}
+              className="inline-flex items-center gap-1 bg-stone-800/90 hover:bg-[#FF5500] text-stone-200 hover:text-white px-2 py-0.5 rounded-lg text-[9px] sm:text-[10px] font-bold border border-stone-700/80 transition-all cursor-pointer shrink-0"
+              title="Descargar Ficha Técnica en PDF"
+            >
+              <Download size={11} className="text-[#FF8844]" />
+              <span className="hidden xs:inline">Ficha PDF</span>
+            </button>
+
+            <span className="hidden md:inline-flex items-center gap-1 bg-[#FF5500]/15 text-[#FF8844] font-bold px-2.5 py-0.5 rounded-full text-[10px] border border-[#FF5500]/30 whitespace-nowrap">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               {t.officialBar}
             </span>
@@ -1225,18 +1289,71 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </button>
             )}
 
+            {/* Quick Actions: Lightbox HD & PDF Brochure */}
+            <button
+              type="button"
+              onClick={() => handleOpenLightbox(0)}
+              className="w-full sm:w-auto bg-white/15 hover:bg-white/25 backdrop-blur-xl text-white px-4 sm:px-5 py-3 sm:py-3.5 rounded-full font-bold text-xs uppercase transition-all duration-200 shadow-md border border-white/30 hover:scale-103 active:scale-97 cursor-pointer flex items-center justify-center gap-1.5"
+              title="Ver galería fotográfica en pantalla completa"
+            >
+              <Maximize2 size={14} className="text-[#FF8844]" />
+              <span>Fotos HD</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setIsBrochureOpen(true)}
+              className="w-full sm:w-auto bg-white/15 hover:bg-white/25 backdrop-blur-xl text-white px-4 sm:px-5 py-3 sm:py-3.5 rounded-full font-bold text-xs uppercase transition-all duration-200 shadow-md border border-white/30 hover:scale-103 active:scale-97 cursor-pointer flex items-center justify-center gap-1.5"
+              title="Descargar Ficha en PDF"
+            >
+              <Download size={14} className="text-[#FF8844]" />
+              <span>Itinerario PDF</span>
+            </button>
+
             {!isFree && (
               <a
                 href="#tours"
-                className="w-full sm:w-auto bg-white/15 hover:bg-white/30 backdrop-blur-xl text-white px-6 sm:px-8 py-2.5 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-md border border-white/35 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group"
+                className="w-full sm:w-auto bg-white/10 hover:bg-white/20 backdrop-blur-xl text-stone-200 hover:text-white px-4 py-3 sm:py-3.5 rounded-full font-bold text-xs uppercase transition-all duration-200 shadow-xs border border-white/20 hover:scale-103 active:scale-97 cursor-pointer flex items-center justify-center gap-1.5 group"
               >
                 <span>{t.ctaViewMore}</span>
-                <ChevronDown size={15} className="group-hover:translate-y-0.5 transition-transform duration-200 animate-bounce" />
+                <ChevronDown size={14} className="group-hover:translate-y-0.5 transition-transform duration-200 animate-bounce" />
               </a>
             )}
           </div>
         </div>
       </section>
+
+      {/* 3.8 BARRA DE URGENCIA & CLIMA EN VIVO (CONVERSIÓN Y FOMO) */}
+      <div className="bg-gradient-to-r from-stone-950 via-stone-900 to-stone-950 text-white py-2.5 px-3 sm:px-6 border-b border-stone-800 shadow-inner">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-4 text-center sm:text-left text-xs">
+          <div className="flex items-center gap-2 mx-auto sm:mx-0">
+            <span className="flex h-2 w-2 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF5500] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF5500]"></span>
+            </span>
+            <span className="font-black text-stone-200 uppercase tracking-wider text-[11px]">
+              ⚡ Próxima Salida Confirmada:
+            </span>
+            <span className="text-amber-400 font-bold text-[11px]">
+              Mañana 04:30 AM • Solo 4 cupos disponibles
+            </span>
+          </div>
+
+          <div className="flex items-center gap-3 text-[11px] text-stone-400 mx-auto sm:mx-0">
+            <span className="flex items-center gap-1 font-semibold text-stone-300">
+              <CloudSun size={14} className="text-amber-400" /> 18°C Cusco
+            </span>
+            <span className="text-stone-700">•</span>
+            <span className="flex items-center gap-1 font-semibold text-stone-300">
+              <Mountain size={13} className="text-[#FF5500]" /> 2,430m Machu Picchu
+            </span>
+            <span className="text-stone-700">•</span>
+            <span className="text-emerald-400 font-bold">
+              ✓ Clima Óptimo
+            </span>
+          </div>
+        </div>
+      </div>
 
       {/* 4. BARRA DE MÉTRICAS */}
       <section className="bg-white border-b border-stone-200 py-4 sm:py-8 shadow-xs">
@@ -1437,6 +1554,23 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             </div>
           </div>
         </section>
+      )}
+
+      {/* 4.8 CALCULADORA INTERACTIVA DE PRESUPUESTO EN VIVO (CONVERSIÓN DIRECTA) */}
+      {!isFree && (
+        <LiveBudgetCalculator
+          basePriceUSD={parseInt(data?.price?.replace(/[^0-9]/g, '') || '45')}
+          tourTitle={tourTitle}
+          whatsappNumber={whatsappNumber}
+          brandName={brandName}
+          lang={lang}
+          currency={currency}
+          onCurrencyChange={setCurrency}
+          onOpenQuoteModal={(tName) => {
+            setSelectedTourForQuote(tName);
+            setIsQuoteOpen(true);
+          }}
+        />
       )}
 
       {/* 5. TOURS DESTACADOS / CATÁLOGO EXTRA (DISPONIBLE EN TODOS LOS PLANES) */}
@@ -2218,6 +2352,32 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         initialTab={legalTab}
         agencyName={fullAgencyName}
       />
+
+      {/* 17. MODAL BROCHURE ITINERARIO EN PDF */}
+      <BrochurePrintModal
+        isOpen={isBrochureOpen}
+        onClose={() => setIsBrochureOpen(false)}
+        data={data || {}}
+        brandName={brandName}
+        fullAgencyName={fullAgencyName}
+        whatsappNumber={whatsappNumber}
+        lang={lang}
+      />
+
+      {/* 18. MODAL VISOR LIGHTBOX FOTOS EN PANTALLA COMPLETA */}
+      <LightboxModal
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        images={allGalleryPhotos}
+        currentIndex={lightboxIndex}
+        onNavigate={setLightboxIndex}
+        title={tourTitle}
+      />
+
+      {/* 19. SOCIAL PROOF NOTIFICACIONES FLOTANTES EN VIVO */}
+      {!isFree && (
+        <RecentBookingsToast lang={lang} />
+      )}
     </div>
   );
 }
