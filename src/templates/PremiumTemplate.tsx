@@ -90,7 +90,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
     const sourceTours = (data?.catalogTours && data.catalogTours.length > 0)
       ? data.catalogTours
       : DEFAULT_SECONDARY_CATALOG_TOURS;
-    const tourLimit = isFree ? 1 : isBasic ? 3 : 5;
+    const tourLimit = isFree ? 1 : isBasic ? 3 : 6;
     return sourceTours.slice(0, tourLimit);
   }, [data?.catalogTours, isFree, isBasic]);
 

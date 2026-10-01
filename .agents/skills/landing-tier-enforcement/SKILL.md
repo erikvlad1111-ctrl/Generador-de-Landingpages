@@ -79,3 +79,14 @@ Cada una de las 5 plantillas (`agency-portal`, `boho-nature`, `adventure`, `cult
   4. En `CulturalTemplate`: Asignar `"Cusco Patrimonial • Cusco Creativos S.A.C."` a los modales legales.
   5. En `AdventureTemplate`: Mantener `"TrekExplorer Perú • Cusco Creativos S.A.C."`.
 
+### Error 6: Desbalance visual en la sección de tours por mostrar 5 tours en lugar de 6 en cuadrícula 3x2
+- **Síntoma / Mensaje de Error:** La sección de catálogo de tours mostraba solo 5 tarjetas en los 5 diseños, dejando un espacio vacío asimétrico en la segunda fila del layout `lg:grid-cols-3` (3 tarjetas arriba y solo 2 abajo). En el editor y modal se indicaba "5 tours".
+- **Causa Raíz:** `DEFAULT_SECONDARY_CATALOG_TOURS` solo contenía 5 elementos iniciales y las 4 plantillas (`CulturalTemplate`, `PremiumTemplate`, `BohoTemplate`, `AdventureTemplate`) limitaban con `tourLimit = isFree ? 1 : isBasic ? 3 : 5;`. Asimismo, `CatalogToursEditorModal.tsx` y `/demo/new/page.tsx` estaban cableados a 5 tours.
+- **Comando de Diagnóstico:** Inspeccionar `DEFAULT_SECONDARY_CATALOG_TOURS.length` y el selector `tourLimit` en las plantillas.
+- **Solución Paso a Paso:**
+  1. Agregar el 6to tour icónico en `src/data/defaultCatalogTours.ts` (`cat-vinicunca`: "Montaña de 7 Colores & Valle Rojo", categoría 'Aventura & Trekking', precio '$45 USD', rating 4.9).
+  2. Registrar las traducciones completas en `src/data/translations.ts` en los 5 idiomas (es, en, pt, fr, it) para categorías y locaciones del catálogo.
+  3. Actualizar `tourLimit = isFree ? 1 : isBasic ? 3 : 6;` en `CulturalTemplate`, `PremiumTemplate`, `BohoTemplate` y `AdventureTemplate`.
+  4. En `AgencyPortalTemplate`, fijar `displayTours = secondaryTours.slice(0, tourLimit)` para renderizar con consistencia los 6 tours del catálogo en el grid de 3 columnas (2 filas completas de 3).
+  5. Actualizar `CatalogToursEditorModal.tsx` y `src/app/demo/new/page.tsx` para listar del #1 al #6 ("6 Tours en Vitrina").
+

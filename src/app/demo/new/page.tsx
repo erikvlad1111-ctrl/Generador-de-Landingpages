@@ -1494,7 +1494,7 @@ export default function NewLandingDemo() {
                       </span>
                     </div>
                     <p className="text-xs mt-1 leading-relaxed text-slate-300">
-                      Los campos de arriba configuran tu <strong>Tour Estrella principal</strong> (Hero, Ficha e Itinerario). Tu landing incluye además la sección de <strong>Tours recomendados</strong> en la vitrina de las 5 plantillas (listos con valores por defecto o personalizables/importables desde otras landings).
+                      Los campos de arriba configuran tu <strong>Tour Estrella principal</strong> (Hero, Ficha e Itinerario). Tu landing incluye además la sección de <strong>6 tours recomendados</strong> en la vitrina de las 5 plantillas (listos con valores por defecto o personalizables/importables desde otras landings).
                     </p>
                   </div>
                 </div>
@@ -1518,7 +1518,7 @@ export default function NewLandingDemo() {
                     key={ct.id || idx}
                     className="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/15 px-3 py-1 rounded-lg text-xs text-slate-200 border border-white/10 transition-colors"
                   >
-                    <span className="text-orange-400 font-bold">#{idx + 2}</span>
+                    <span className="text-orange-400 font-bold">#{idx + 1}</span>
                     <span className="truncate max-w-[130px] font-medium">{ct.title}</span>
                     <span className="text-emerald-400 font-bold text-[11px]">({ct.price})</span>
                   </span>

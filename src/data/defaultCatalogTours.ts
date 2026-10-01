@@ -65,5 +65,18 @@ export const DEFAULT_SECONDARY_CATALOG_TOURS: CatalogTourItem[] = [
     image: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop',
     tag: 'Adrenalina',
     badge: '4.8 ★'
+  },
+  {
+    id: 'cat-vinicunca',
+    title: 'Montaña de 7 Colores & Valle Rojo',
+    category: 'Aventura & Trekking',
+    categoryKey: 'trekking',
+    location: 'Cusipata - Vinicunca',
+    duration: 'Full Day (04:00 - 17:30)',
+    price: '$45 USD',
+    rating: 4.9,
+    image: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop',
+    tag: 'Imperdible',
+    badge: '4.9 ★'
   }
 ];

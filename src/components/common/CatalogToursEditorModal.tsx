@@ -49,7 +49,7 @@ export default function CatalogToursEditorModal({
   };
 
   const handleResetDefaults = () => {
-    if (confirm('¿Restaurar los 5 tours secundarios sugeridos por defecto?')) {
+    if (confirm('¿Restaurar los 6 tours sugeridos por defecto para el catálogo?')) {
       setTours(DEFAULT_SECONDARY_CATALOG_TOURS);
       setEditingId(null);
     }
@@ -100,11 +100,11 @@ export default function CatalogToursEditorModal({
                   Editor del Catálogo de Tours
                 </h3>
                 <span className="text-[11px] bg-blue-500/20 text-blue-200 font-semibold px-2.5 py-0.5 rounded-full border border-blue-400/20">
-                  Portal de Agencia
+                  6 Tours en Vitrina
                 </span>
               </div>
               <p className="text-xs text-slate-300 mt-0.5">
-                Personaliza las 5 tarjetas complementarias que acompañan a tu Tour Estrella en el catálogo.
+                Personaliza los 6 tours del catálogo que se muestran en la sección de tours en los 5 diseños.
               </p>
             </div>
           </div>
@@ -122,7 +122,7 @@ export default function CatalogToursEditorModal({
           <div className="flex items-center gap-2">
             <Sparkles size={15} className="text-blue-600 shrink-0" />
             <span>
-              <strong>Tour Principal:</strong> {currentSignatureTourName} (se edita en el formulario principal del generador).
+              <strong>Catálogo Multitour (6 Tours):</strong> Configura las 6 tarjetas de la vitrina. El Tour Principal sigue editándose en el formulario.
             </span>
           </div>
           <button
@@ -131,7 +131,7 @@ export default function CatalogToursEditorModal({
             className="inline-flex items-center gap-1.5 text-[11px] font-bold text-blue-700 hover:text-blue-900 hover:underline cursor-pointer ml-auto"
           >
             <RotateCcw size={13} />
-            Restaurar sugerencias por defecto
+            Restaurar 6 tours por defecto
           </button>
         </div>
 
@@ -140,7 +140,7 @@ export default function CatalogToursEditorModal({
           <div className="grid grid-cols-1 gap-4">
             {tours.map((tour, index) => {
               const isEditing = editingId === tour.id;
-              const slotNumber = index + 2; // Slot 1 is the signature tour
+              const slotNumber = index + 1;
 
               return (
                 <div 

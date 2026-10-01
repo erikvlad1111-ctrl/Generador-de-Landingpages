@@ -59,6 +59,115 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Vallée Sacrée des Incas VIP & Culture Vivante',
     it: 'Valle Sacra degli Inca VIP & Cultura Viva'
   },
+  'Machu Picchu Mágico en Tren Panorámico': {
+    es: 'Machu Picchu Mágico en Tren Panorámico',
+    en: 'Magical Machu Picchu by Panoramic Train',
+    pt: 'Machu Picchu Mágico em Trem Panorâmico',
+    fr: 'Machu Picchu Magique en Train Panoramique',
+    it: 'Machu Picchu Magico in Treno Panoramico'
+  },
+  'Machu Picchu 2 Días con Noche en Aguas Calientes': {
+    es: 'Machu Picchu 2 Días con Noche en Aguas Calientes',
+    en: 'Machu Picchu 2 Days with Overnight in Aguas Calientes',
+    pt: 'Machu Picchu 2 Dias com Pernoite em Aguas Calientes',
+    fr: 'Machu Picchu 2 Jours avec Nuit à Aguas Calientes',
+    it: 'Machu Picchu 2 Giorni con Pernottamento ad Aguas Calientes'
+  },
+  'Huacachina Oasis & Islas Ballestas': {
+    es: 'Huacachina Oasis & Islas Ballestas',
+    en: 'Huacachina Oasis & Ballestas Islands Wildlife Safari',
+    pt: 'Oásis Huacachina & Ilhas Ballestas',
+    fr: 'Oasis de Huacachina & Îles Ballestas',
+    it: 'Oasi di Huacachina & Isole Ballestas'
+  },
+
+  // --- CATEGORÍAS DEL CATÁLOGO DE TOURS ---
+  'Aventura & Trekking': {
+    es: 'Aventura & Trekking',
+    en: 'Adventure & Trekking',
+    pt: 'Aventura & Trekking',
+    fr: 'Aventure & Randonnée',
+    it: 'Avventura & Trekking'
+  },
+  'Naturaleza & Fotografía': {
+    es: 'Naturaleza & Fotografía',
+    en: 'Nature & Photography',
+    pt: 'Natureza & Fotografia',
+    fr: 'Nature & Photographie',
+    it: 'Natura & Fotografia'
+  },
+  'Historia & Maravilla': {
+    es: 'Historia & Maravilla',
+    en: 'History & Wonder',
+    pt: 'História & Maravilha',
+    fr: 'Histoire & Merveille',
+    it: 'Storia & Meraviglia'
+  },
+  'Cultura & Arqueología': {
+    es: 'Cultura & Arqueología',
+    en: 'Culture & Archaeology',
+    pt: 'Cultura & Arqueologia',
+    fr: 'Culture & Archéologie',
+    it: 'Cultura & Archeologia'
+  },
+  'Experiencia Completa': {
+    es: 'Experiencia Completa',
+    en: 'Complete Experience',
+    pt: 'Experiência Completa',
+    fr: 'Expérience Complète',
+    it: 'Esperienza Completa'
+  },
+  'Costa & Desierto': {
+    es: 'Costa & Desierto',
+    en: 'Coast & Desert Dunes',
+    pt: 'Costa & Deserto',
+    fr: 'Côte & Désert',
+    it: 'Costa & Deserto'
+  },
+
+  // --- UBICACIONES DEL CATÁLOGO ---
+  'Cusipata - Vinicunca': {
+    es: 'Cusipata - Vinicunca',
+    en: 'Cusipata - Rainbow Mountain',
+    pt: 'Cusipata - Vinicunca',
+    fr: 'Cusipata - Vinicunca',
+    it: 'Cusipata - Vinicunca'
+  },
+  'Anta - Mollepata': {
+    es: 'Anta - Mollepata',
+    en: 'Anta - Mollepata (Humantay)',
+    pt: 'Anta - Mollepata',
+    fr: 'Anta - Mollepata',
+    it: 'Anta - Mollepata'
+  },
+  'Aguas Calientes': {
+    es: 'Aguas Calientes',
+    en: 'Aguas Calientes (Machu Picchu Town)',
+    pt: 'Aguas Calientes (Machu Picchu)',
+    fr: 'Aguas Calientes (Machu Picchu)',
+    it: 'Aguas Calientes (Machu Picchu)'
+  },
+  'Pisac - Ollantaytambo': {
+    es: 'Pisac - Ollantaytambo',
+    en: 'Pisac & Ollantaytambo (Sacred Valley)',
+    pt: 'Pisac & Ollantaytambo (Vale Sagrado)',
+    fr: 'Pisac & Ollantaytambo (Vallée Sacrée)',
+    it: 'Pisac & Ollantaytambo (Valle Sacra)'
+  },
+  'Machu Picchu Pueblo': {
+    es: 'Machu Picchu Pueblo',
+    en: 'Machu Picchu Pueblo (Aguas Calientes)',
+    pt: 'Machu Picchu Pueblo',
+    fr: 'Machu Picchu Pueblo',
+    it: 'Machu Picchu Pueblo'
+  },
+  'Ica - Paracas': {
+    es: 'Ica - Paracas',
+    en: 'Ica & Paracas Reserve',
+    pt: 'Ica & Paracas',
+    fr: 'Ica & Paracas',
+    it: 'Ica & Paracas'
+  },
 
   // --- ETIQUETAS Y BADGES CORTOS DE TOURS ---
   'Maravilla del Mundo': {

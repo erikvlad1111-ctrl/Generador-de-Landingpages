@@ -733,25 +733,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
     badge: sec.badge || '4.9 ★'
   }));
 
-  const allFeaturedTours = [
-    {
-      id: 'tour-creado-usuario',
-      title: translateText(data?.name, lang) || (lang === 'en' ? 'Signature Andean Tour' : lang === 'pt' ? 'Passeio Andino Principal' : lang === 'fr' ? 'Circuit Andin Principal' : lang === 'it' ? 'Tour Andino Principale' : 'Tour Principal Seleccionado'),
-      category: lang === 'en' ? 'Featured Signature Tour' : lang === 'pt' ? 'Passeio Destaque' : lang === 'fr' ? 'Circuit Signature' : lang === 'it' ? 'Tour in Evidenza' : 'Tour Principal Destacado',
-      categoryKey: 'all',
-      location: translateText(destination, lang),
-      duration: getLocalizedDuration(data?.duration),
-      price: data?.price || '$45 USD',
-      rating: 4.9,
-      image: heroImage,
-      tag: lang === 'en' ? 'Selected Tour' : lang === 'pt' ? 'Selecionado' : lang === 'fr' ? 'Sélectionné' : lang === 'it' ? 'Selezionato' : 'Tour Seleccionado',
-      badge: '4.9 ★'
-    },
-    ...secondaryTours
-  ];
-
   const tourLimit = isFree ? 1 : isBasic ? 3 : 6;
-  const displayTours = allFeaturedTours.slice(0, tourLimit);
+  const displayTours = secondaryTours.slice(0, tourLimit);
 
 
   // -----------------------------------------------------------
