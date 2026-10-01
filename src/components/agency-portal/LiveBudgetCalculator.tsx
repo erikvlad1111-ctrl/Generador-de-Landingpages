@@ -9,9 +9,17 @@ import { LanguageType } from '@/types/landing';
 
 export type CurrencyType = 'USD' | 'PEN' | 'EUR' | 'BRL';
 
+export interface CalculatorTourOption {
+  id: string;
+  title: string;
+  price: string;
+  basePriceUSD: number;
+}
+
 interface LiveBudgetCalculatorProps {
   basePriceUSD?: number;
   tourTitle: string;
+  availableTours?: CalculatorTourOption[];
   whatsappNumber: string;
   brandName?: string;
   lang?: LanguageType;
@@ -36,6 +44,7 @@ export function convertPrice(amountInUSD: number, target: CurrencyType): string 
 export default function LiveBudgetCalculator({
   basePriceUSD = 45,
   tourTitle,
+  availableTours,
   whatsappNumber,
   brandName = 'Cusco Creativos',
   lang = 'es',
@@ -43,6 +52,20 @@ export default function LiveBudgetCalculator({
   onCurrencyChange,
   onOpenQuoteModal
 }: LiveBudgetCalculatorProps) {
+  const [selectedTourId, setSelectedTourId] = useState<string>(() => {
+    return availableTours && availableTours.length > 0 ? availableTours[0].id : 'default';
+  });
+
+  const activeTour = availableTours?.find(t => t.id === selectedTourId) || {
+    id: 'default',
+    title: tourTitle,
+    price: `$${basePriceUSD} USD`,
+    basePriceUSD: basePriceUSD
+  };
+
+  const currentTourTitle = activeTour.title;
+  const currentBasePriceUSD = activeTour.basePriceUSD || basePriceUSD;
+
   const [passengers, setPassengers] = useState<number>(2);
   const [serviceTier, setServiceTier] = useState<'standard' | 'vip' | 'panoramic'>('vip');
   const [extraHuayna, setExtraHuayna] = useState<boolean>(false);
@@ -56,7 +79,7 @@ export default function LiveBudgetCalculator({
 
   // Costo por persona
   const extraPerPersonUSD = (extraHuayna ? 25 : 0) + (extraBuffet ? 20 : 0) + (extraPoles ? 10 : 0);
-  const perPersonTotalUSD = Math.round((basePriceUSD * tierMultiplier + extraPerPersonUSD) * discountRate);
+  const perPersonTotalUSD = Math.round((currentBasePriceUSD * tierMultiplier + extraPerPersonUSD) * discountRate);
   const grandTotalUSD = perPersonTotalUSD * passengers;
 
   // Textos multi-idioma
@@ -64,13 +87,14 @@ export default function LiveBudgetCalculator({
     es: {
       badge: 'Calculadora Interactiva de Tarifas',
       title: 'Cotiza tu Presupuesto al Instante',
-      desc: 'Selecciona la cantidad de viajeros, categoría de viaje y adicionales para calcular tu tarifa oficial en vivo.',
-      labelPassengers: 'Número de Viajeros',
-      labelTier: 'Modalidad de Servicio',
+      desc: 'Selecciona el tour, la cantidad de viajeros, categoría de viaje y adicionales para calcular tu tarifa oficial en vivo.',
+      labelChooseTour: '1. Elige el Tour que Deseas Cotizar',
+      labelPassengers: '2. Número de Viajeros',
+      labelTier: '3. Modalidad de Servicio',
       tierStd: 'Estándar Compartido',
       tierVip: 'Servicio VIP Privado',
       tierPan: 'Panorámico 360°',
-      labelExtras: 'Adicionales & Privilegios Opcionales',
+      labelExtras: '4. Adicionales & Privilegios Opcionales',
       extra1: 'Ingreso Especial Huayna Picchu (+ $25 USD/pers)',
       extra2: 'Almuerzo Gourmet Buffet en Valle Sagrado (+ $20 USD/pers)',
       extra3: 'Bastones de Trekking de Fibra de Carbono (+ $10 USD/pers)',
@@ -84,13 +108,14 @@ export default function LiveBudgetCalculator({
     en: {
       badge: 'Interactive Fare Calculator',
       title: 'Calculate Your Tour Budget in Real Time',
-      desc: 'Choose the number of travelers, service category and optional perks to get your live quote.',
-      labelPassengers: 'Number of Travelers',
-      labelTier: 'Service Level',
+      desc: 'Select your tour, number of travelers, service category and optional perks to get your live quote.',
+      labelChooseTour: '1. Choose Tour to Quote',
+      labelPassengers: '2. Number of Travelers',
+      labelTier: '3. Service Level',
       tierStd: 'Standard Group',
       tierVip: 'VIP Private Service',
       tierPan: 'Scenic 360° Panoramic',
-      labelExtras: 'Optional Add-ons & Perks',
+      labelExtras: '4. Optional Add-ons & Perks',
       extra1: 'Huayna Picchu Special Access (+ $25 USD/pers)',
       extra2: 'Gourmet Buffet Lunch in Sacred Valley (+ $20 USD/pers)',
       extra3: 'Carbon Fiber Trekking Poles (+ $10 USD/pers)',
@@ -104,13 +129,14 @@ export default function LiveBudgetCalculator({
     pt: {
       badge: 'Calculadora Interativa de Tarifas',
       title: 'Calcule seu Orçamento em Tempo Real',
-      desc: 'Escolha o número de viajantes, categoria de serviço e adicionais para obter seu orçamento ao vivo.',
-      labelPassengers: 'Número de Viajantes',
-      labelTier: 'Modalidade de Serviço',
+      desc: 'Escolha o passeio, número de viajantes, categoria de serviço e adicionais para obter seu orçamento ao vivo.',
+      labelChooseTour: '1. Escolha o Passeio para Cotar',
+      labelPassengers: '2. Número de Viajantes',
+      labelTier: '3. Modalidade de Serviço',
       tierStd: 'Padrão Compartilhado',
       tierVip: 'Serviço VIP Privado',
       tierPan: 'Panorâmico 360°',
-      labelExtras: 'Opcionais & Benefícios',
+      labelExtras: '4. Opcionais & Benefícios',
       extra1: 'Ingresso Huayna Picchu (+ $25 USD/pessoa)',
       extra2: 'Almoço Buffet Gourmet (+ $20 USD/pessoa)',
       extra3: 'Bastões de Trilha de Carbono (+ $10 USD/pessoa)',
@@ -124,13 +150,14 @@ export default function LiveBudgetCalculator({
     fr: {
       badge: 'Calculateur de Tarif Interactif',
       title: 'Calculez votre Budget en Direct',
-      desc: 'Choisissez le nombre de voyageurs, la catégorie de service et les options pour obtenir votre devis en direct.',
-      labelPassengers: 'Nombre de Voyageurs',
-      labelTier: 'Catégorie de Service',
+      desc: 'Choisissez le circuit, le nombre de voyageurs, la catégorie de service et les options pour obtenir votre devis en direct.',
+      labelChooseTour: '1. Choisissez le Circuit à Deviser',
+      labelPassengers: '2. Nombre de Voyageurs',
+      labelTier: '3. Catégorie de Service',
       tierStd: 'Standard Partagé',
       tierVip: 'VIP Privé',
       tierPan: 'Panoramique 360°',
-      labelExtras: 'Options & Privilèges',
+      labelExtras: '4. Options & Privilèges',
       extra1: 'Entrée Huayna Picchu (+ $25 USD/pers)',
       extra2: 'Déjeuner Buffet Gourmet (+ $20 USD/pers)',
       extra3: 'Bâtons de Marche Carbone (+ $10 USD/pers)',
@@ -144,13 +171,14 @@ export default function LiveBudgetCalculator({
     it: {
       badge: 'Calcolatore Interattivo di Tariffe',
       title: 'Calcola il tuo Preventivo in Tempo Reale',
-      desc: 'Scegli il numero di viaggiatori, il livello di servizio e gli optional per calcolare la tua tariffa live.',
-      labelPassengers: 'Numero di Viaggiatori',
-      labelTier: 'Categoria di Servizio',
+      desc: 'Scegli il tour, il numero di viaggiatori, il livello di servizio e gli optional per calcolare la tua tariffa live.',
+      labelChooseTour: '1. Scegli il Tour da Preventivare',
+      labelPassengers: '2. Numero di Viaggiatori',
+      labelTier: '3. Categoria di Servizio',
       tierStd: 'Standard Condiviso',
       tierVip: 'Servizio VIP Privato',
       tierPan: 'Panoramico 360°',
-      labelExtras: 'Optional & Privilegi',
+      labelExtras: '4. Optional & Privilegi',
       extra1: 'Accesso Huayna Picchu (+ $25 USD/pers)',
       extra2: 'Pranzo Buffet Gourmet (+ $20 USD/pers)',
       extra3: 'Bastoncini da Trekking in Carbonio (+ $10 USD/pers)',
@@ -164,13 +192,14 @@ export default function LiveBudgetCalculator({
   }[lang] || {
     badge: 'Calculadora Interactiva de Tarifas',
     title: 'Cotiza tu Presupuesto al Instante',
-    desc: 'Selecciona la cantidad de viajeros, categoría de viaje y adicionales para calcular tu tarifa oficial en vivo.',
-    labelPassengers: 'Número de Viajeros',
-    labelTier: 'Modalidad de Servicio',
+    desc: 'Selecciona el tour, la cantidad de viajeros, categoría de viaje y adicionales para calcular tu tarifa oficial en vivo.',
+    labelChooseTour: '1. Elige el Tour que Deseas Cotizar',
+    labelPassengers: '2. Número de Viajeros',
+    labelTier: '3. Modalidad de Servicio',
     tierStd: 'Estándar Compartido',
     tierVip: 'Servicio VIP Privado',
     tierPan: 'Panorámico 360°',
-    labelExtras: 'Adicionales & Privilegios Opcionales',
+    labelExtras: '4. Adicionales & Privilegios Opcionales',
     extra1: 'Ingreso Especial Huayna Picchu (+ $25 USD/pers)',
     extra2: 'Almuerzo Gourmet Buffet en Valle Sagrado (+ $20 USD/pers)',
     extra3: 'Bastones de Trekking de Fibra de Carbono (+ $10 USD/pers)',
@@ -187,7 +216,7 @@ export default function LiveBudgetCalculator({
     const cleanPhone = whatsappNumber.replace(/[^0-9]/g, '');
     const priceFormatted = convertPrice(grandTotalUSD, currency);
 
-    const msg = `Hola ${brandName}, calculé mi presupuesto en su portal para el tour "${tourTitle}":\n` +
+    const msg = `Hola ${brandName}, calculé mi presupuesto en su portal para el tour "${currentTourTitle}":\n` +
       `• Viajeros: ${passengers} personas\n` +
       `• Modalidad: ${tierName}\n` +
       (extraHuayna ? `• Adicional: Entrada Huayna Picchu\n` : '') +
@@ -250,6 +279,52 @@ export default function LiveBudgetCalculator({
           {/* Controls Column (7 cols) */}
           <div className="lg:col-span-7 bg-stone-900/90 backdrop-blur-xl rounded-3xl p-5 sm:p-7 border border-stone-800 shadow-2xl space-y-6">
             
+            {/* 0. Selector de Tours */}
+            {availableTours && availableTours.length > 0 && (
+              <div>
+                <div className="flex items-center justify-between mb-2.5">
+                  <label className="text-xs font-extrabold uppercase tracking-wider text-stone-300 flex items-center gap-1.5">
+                    <Tag size={14} className="text-[#FF5500]" />
+                    <span>{dict.labelChooseTour}</span>
+                  </label>
+                  <span className="text-[10px] text-stone-400 font-bold bg-stone-800/80 px-2 py-0.5 rounded-full border border-stone-700">
+                    {availableTours.length} opciones
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-56 overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:#FF5500_#292524]">
+                  {availableTours.map((t) => {
+                    const isSelected = selectedTourId === t.id;
+                    return (
+                      <button
+                        key={t.id}
+                        type="button"
+                        onClick={() => setSelectedTourId(t.id)}
+                        className={`p-3 rounded-2xl text-left border transition-all cursor-pointer flex items-center justify-between gap-2.5 ${
+                          isSelected
+                            ? 'bg-[#FF5500]/15 border-[#FF5500] ring-1 ring-[#FF5500] shadow-md'
+                            : 'bg-stone-950/70 border-stone-800/90 hover:border-stone-700 text-stone-300 hover:text-white'
+                        }`}
+                      >
+                        <div className="min-w-0 flex-1">
+                          <span className={`text-xs font-bold block truncate leading-tight ${isSelected ? 'text-white' : 'text-stone-300'}`}>
+                            {t.title}
+                          </span>
+                          <span className="text-[10px] text-[#FF8844] font-black block mt-1">
+                            Desde {convertPrice(t.basePriceUSD, currency)}
+                          </span>
+                        </div>
+                        {isSelected && (
+                          <div className="w-5 h-5 rounded-full bg-[#FF5500] text-white flex items-center justify-center shrink-0 shadow-sm">
+                            <Check size={12} strokeWidth={3} />
+                          </div>
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
             {/* 1. Passengers Selector */}
             <div>
               <div className="flex items-center justify-between mb-2">
@@ -323,7 +398,7 @@ export default function LiveBudgetCalculator({
                         </span>
                       </div>
                       <span className="text-[11px] font-black text-stone-300 mt-2 block">
-                        {convertPrice(Math.round(basePriceUSD * t.mult), currency)}
+                        {convertPrice(Math.round(currentBasePriceUSD * t.mult), currency)}
                       </span>
                     </button>
                   );
@@ -379,8 +454,8 @@ export default function LiveBudgetCalculator({
               <div className="py-4 space-y-2.5 text-xs text-stone-300">
                 <div className="flex items-center justify-between">
                   <span className="text-stone-400">Tour Seleccionado:</span>
-                  <span className="font-bold text-white text-right max-w-[190px] truncate" title={tourTitle}>
-                    {tourTitle}
+                  <span className="font-bold text-white text-right max-w-[200px] truncate" title={currentTourTitle}>
+                    {currentTourTitle}
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
@@ -433,7 +508,7 @@ export default function LiveBudgetCalculator({
               {onOpenQuoteModal && (
                 <button
                   type="button"
-                  onClick={() => onOpenQuoteModal(tourTitle)}
+                  onClick={() => onOpenQuoteModal(currentTourTitle)}
                   className="w-full bg-stone-800 hover:bg-stone-700 text-white py-3 px-4 rounded-2xl font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 border border-stone-700 transition-all cursor-pointer"
                 >
                   <FileText size={15} />

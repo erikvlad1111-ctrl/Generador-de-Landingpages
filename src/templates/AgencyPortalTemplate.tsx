@@ -771,6 +771,28 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const tourLimit = isFree ? 1 : isBasic ? 3 : 6;
   const displayTours = secondaryTours.slice(0, tourLimit);
 
+  const availableCalculatorTours = React.useMemo(() => {
+    const mainPriceUSD = parseInt(data?.price?.replace(/[^0-9]/g, '') || '45');
+    const list = [
+      {
+        id: 'main-tour',
+        title: tourTitle,
+        price: convertPrice(mainPriceUSD, currency),
+        basePriceUSD: mainPriceUSD
+      },
+      ...rawSecondaryTours.slice(0, tourLimit).map((sec, idx) => {
+        const baseUSD = parseInt(sec.price?.replace(/[^0-9]/g, '') || '45');
+        return {
+          id: sec.id || `sec-tour-${idx}`,
+          title: translateText(sec.title, lang),
+          price: convertPrice(baseUSD, currency),
+          basePriceUSD: baseUSD
+        };
+      })
+    ];
+    return list;
+  }, [tourTitle, data?.price, currency, rawSecondaryTours, tourLimit, lang]);
+
 
   // -----------------------------------------------------------
   // 7. PAQUETES TURÍSTICOS MULTI-IDIOMA
@@ -1561,6 +1583,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         <LiveBudgetCalculator
           basePriceUSD={parseInt(data?.price?.replace(/[^0-9]/g, '') || '45')}
           tourTitle={tourTitle}
+          availableTours={availableCalculatorTours}
           whatsappNumber={whatsappNumber}
           brandName={brandName}
           lang={lang}
