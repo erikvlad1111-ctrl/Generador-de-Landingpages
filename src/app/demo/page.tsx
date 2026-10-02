@@ -289,62 +289,125 @@ export default function DemoDashboard() {
       </div>
 
       {/* Quick Demos Strip: 5 World-Class Tourism Templates */}
-      <div className="bg-slate-900 text-white rounded-2xl p-4 sm:p-5 border border-slate-800 shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0">
-            <LayoutTemplate size={18} />
-          </div>
-          <div>
-            <span className="text-xs font-bold text-white block">Demos en Vivo de los 5 Diseños Oficiales</span>
-            <span className="text-[11px] text-slate-400">Abre directamente las landings optimizadas para móvil y escritorio</span>
+      <div className="bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/95 text-white rounded-3xl p-5 sm:p-7 border border-slate-800 shadow-xl space-y-4">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500/30 to-purple-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center shrink-0 shadow-inner">
+              <LayoutTemplate size={22} />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-sm sm:text-base font-extrabold text-white block">Demos en Vivo de los 5 Diseños Oficiales</span>
+                <span className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs flex items-center gap-1">
+                  <Sparkles size={11} className="text-yellow-300 animate-pulse" />
+                  <span>100% Plan Avanzado</span>
+                </span>
+              </div>
+              <span className="text-xs text-slate-300 font-medium">Abre cada diseño con todas sus bondades al máximo: 5 idiomas, cotizador VIP, tours secundarios y amenidades</span>
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+        {/* 5 Prominent Design Buttons (Larger & Plan Avanzado) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5 pt-1">
+          {/* Diseño 1: Portal Agencia */}
           <a
-            href="/p/machu-picchu-full-day?template=agency-portal"
+            href="/p/machu-picchu-vip?template=agency-portal&tier=advance"
             target="_blank"
-            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 text-xs font-bold transition-all flex items-center gap-1.5"
-            title="Ver Diseño 1: Portal de Agencia"
+            className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-b from-slate-800/95 to-slate-850 hover:from-slate-750 hover:to-slate-800 text-white border border-amber-500/40 hover:border-amber-400 shadow-md hover:shadow-amber-500/15 transition-all flex items-center justify-between gap-3 group hover:scale-[1.03] active:scale-95 cursor-pointer"
+            title="Ver Diseño 1: Portal de Agencia (Plan Avanzado Completo)"
           >
-            <span>🌐 Portal Agencia</span>
-            <ExternalLink size={12} className="text-slate-400" />
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
+                🌐
+              </div>
+              <div className="text-left min-w-0">
+                <span className="text-xs sm:text-sm font-black text-amber-300 block leading-tight truncate">Diseño 1</span>
+                <span className="text-[11px] text-slate-200 font-semibold block truncate">Portal Agencia</span>
+                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance ★</span>
+              </div>
+            </div>
+            <ExternalLink size={15} className="text-slate-400 group-hover:text-amber-300 transition-colors shrink-0" />
           </a>
+
+          {/* Diseño 2: Boho & Naturaleza */}
           <a
-            href="/p/laguna-humantay-bitacora-fotografica-paisajismo?template=boho-nature"
+            href="/p/laguna-humantay-bitacora-fotografica-paisajismo?template=boho-nature&tier=advance"
             target="_blank"
-            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-orange-300 border border-slate-700 text-xs font-bold transition-all flex items-center gap-1.5"
-            title="Ver Diseño 2: Boho & Naturaleza"
+            className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-b from-slate-800/95 to-slate-850 hover:from-slate-750 hover:to-slate-800 text-white border border-orange-500/40 hover:border-orange-400 shadow-md hover:shadow-orange-500/15 transition-all flex items-center justify-between gap-3 group hover:scale-[1.03] active:scale-95 cursor-pointer"
+            title="Ver Diseño 2: Boho & Naturaleza (Plan Avanzado Completo)"
           >
-            <span>📷 Boho & Paisaje</span>
-            <ExternalLink size={12} className="text-slate-400" />
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-xl bg-orange-500/15 border border-orange-500/30 text-orange-300 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
+                📷
+              </div>
+              <div className="text-left min-w-0">
+                <span className="text-xs sm:text-sm font-black text-orange-300 block leading-tight truncate">Diseño 2</span>
+                <span className="text-[11px] text-slate-200 font-semibold block truncate">Boho & Paisaje</span>
+                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance ★</span>
+              </div>
+            </div>
+            <ExternalLink size={15} className="text-slate-400 group-hover:text-orange-300 transition-colors shrink-0" />
           </a>
+
+          {/* Diseño 3: VIP Luxury */}
           <a
-            href="/p/machu-picchu-full-day?template=premium"
+            href="/p/cusco-luxury-collection?template=premium&tier=advance"
             target="_blank"
-            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-yellow-300 border border-slate-700 text-xs font-bold transition-all flex items-center gap-1.5"
-            title="Ver Diseño 3: Machu Picchu VIP"
+            className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-b from-slate-800/95 to-slate-850 hover:from-slate-750 hover:to-slate-800 text-white border border-yellow-500/50 hover:border-yellow-400 shadow-md hover:shadow-yellow-500/20 transition-all flex items-center justify-between gap-3 group hover:scale-[1.03] active:scale-95 cursor-pointer ring-1 ring-amber-400/20"
+            title="Ver Diseño 3: Cusco Luxury Collection VIP (Plan Avanzado Completo)"
           >
-            <span>👑 VIP Lujo</span>
-            <ExternalLink size={12} className="text-slate-400" />
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-xl bg-yellow-500/20 border border-yellow-400/40 text-yellow-300 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform shadow-xs">
+                👑
+              </div>
+              <div className="text-left min-w-0">
+                <span className="text-xs sm:text-sm font-black text-yellow-300 block leading-tight truncate">Diseño 3</span>
+                <span className="text-[11px] text-slate-200 font-semibold block truncate">VIP Luxury</span>
+                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance ★</span>
+              </div>
+            </div>
+            <ExternalLink size={15} className="text-slate-400 group-hover:text-yellow-300 transition-colors shrink-0" />
           </a>
+
+          {/* Diseño 4: TrekExplorer Aventura */}
           <a
-            href="/p/salkantay-trek-5-dias?template=adventure"
+            href="/p/salkantay-trek-5-dias?template=adventure&tier=advance"
             target="_blank"
-            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-blue-300 border border-slate-700 text-xs font-bold transition-all flex items-center gap-1.5"
-            title="Ver Diseño 4: TrekExplorer Aventura"
+            className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-b from-slate-800/95 to-slate-850 hover:from-slate-750 hover:to-slate-800 text-white border border-blue-500/40 hover:border-blue-400 shadow-md hover:shadow-blue-500/15 transition-all flex items-center justify-between gap-3 group hover:scale-[1.03] active:scale-95 cursor-pointer"
+            title="Ver Diseño 4: TrekExplorer Aventura (Plan Avanzado Completo)"
           >
-            <span>🏔️ TrekExplorer</span>
-            <ExternalLink size={12} className="text-slate-400" />
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-500/30 text-blue-300 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
+                🏔️
+              </div>
+              <div className="text-left min-w-0">
+                <span className="text-xs sm:text-sm font-black text-blue-300 block leading-tight truncate">Diseño 4</span>
+                <span className="text-[11px] text-slate-200 font-semibold block truncate">Trek Aventura</span>
+                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance ★</span>
+              </div>
+            </div>
+            <ExternalLink size={15} className="text-slate-400 group-hover:text-blue-300 transition-colors shrink-0" />
           </a>
+
+          {/* Diseño 5: Cusco Cultural */}
           <a
-            href="/p/city-tour-cusco-ancestral?template=cultural"
+            href="/p/city-tour-cusco-ancestral?template=cultural&tier=advance"
             target="_blank"
-            className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-red-300 border border-slate-700 text-xs font-bold transition-all flex items-center gap-1.5"
-            title="Ver Diseño 5: Cusco Patrimonial"
+            className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-b from-slate-800/95 to-slate-850 hover:from-slate-750 hover:to-slate-800 text-white border border-rose-500/40 hover:border-rose-400 shadow-md hover:shadow-rose-500/15 transition-all flex items-center justify-between gap-3 group hover:scale-[1.03] active:scale-95 cursor-pointer"
+            title="Ver Diseño 5: Cusco Patrimonial Cultural (Plan Avanzado Completo)"
           >
-            <span>🏛️ Cultural</span>
-            <ExternalLink size={12} className="text-slate-400" />
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
+                🏛️
+              </div>
+              <div className="text-left min-w-0">
+                <span className="text-xs sm:text-sm font-black text-rose-300 block leading-tight truncate">Diseño 5</span>
+                <span className="text-[11px] text-slate-200 font-semibold block truncate">Cultural VIP</span>
+                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance ★</span>
+              </div>
+            </div>
+            <ExternalLink size={15} className="text-slate-400 group-hover:text-rose-300 transition-colors shrink-0" />
           </a>
         </div>
       </div>
@@ -513,7 +576,7 @@ export default function DemoDashboard() {
                                 </span>
                               </div>
                               <Link 
-                                href={`/demo/preview?slug=${p.slug}`}
+                                href={`/demo/preview?slug=${p.slug}&tier=advance`}
                                 className="font-extrabold text-slate-900 group-hover:text-blue-600 transition-colors text-base block truncate mt-0.5"
                                 title={p.name}
                               >
@@ -559,10 +622,10 @@ export default function DemoDashboard() {
                       <div className="pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
                         <div className="flex items-center gap-1.5 flex-1">
                           <Link
-                            href={`/demo/preview?slug=${p.slug}`}
-                            className="flex-1 inline-flex items-center justify-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white px-3 py-2 rounded-xl font-bold text-xs transition-all shadow-xs"
+                            href={`/demo/preview?slug=${p.slug}&tier=advance`}
+                            className="flex-1 inline-flex items-center justify-center gap-1.5 bg-blue-600 hover:bg-blue-500 text-white px-3.5 py-2.5 rounded-xl font-extrabold text-xs sm:text-sm transition-all shadow-xs"
                           >
-                            <Eye size={14} />
+                            <Eye size={15} />
                             <span>Ver / Editar</span>
                           </Link>
                           
@@ -759,7 +822,7 @@ export default function DemoDashboard() {
                               <div className="min-w-0 space-y-1 flex-1">
                                 <div className="flex items-center gap-1.5 flex-wrap">
                                   <Link 
-                                    href={`/demo/preview?slug=${p.slug}`} 
+                                    href={`/demo/preview?slug=${p.slug}&tier=advance`} 
                                     className="font-bold text-slate-900 group-hover:text-blue-600 transition-colors text-sm leading-snug line-clamp-1"
                                     title={p.name}
                                   >

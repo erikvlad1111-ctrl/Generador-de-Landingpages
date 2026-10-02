@@ -7,7 +7,7 @@ import { ArrowLeft, MessageCircle, Edit3, LayoutDashboard, Share2, Check, Downlo
 import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, LandingData } from '@/data/landingStore';
-import { TemplateType } from '@/types/landing';
+import { TemplateType, PlanTier } from '@/types/landing';
 
 function PublicLandingContent() {
   const params = useParams();
@@ -15,6 +15,7 @@ function PublicLandingContent() {
   const slug = (params?.slug as string) || '';
   const isEmbed = searchParams.get('embed') === 'true';
   const templateQuery = searchParams.get('template') as TemplateType | null;
+  const tierQuery = searchParams.get('tier') as PlanTier | null;
 
   const [copied, setCopied] = useState(false);
   const [isBannerVisible, setIsBannerVisible] = useState(true);
@@ -26,10 +27,15 @@ function PublicLandingContent() {
       ? landings[0] 
       : (landings.find(l => l.slug.toLowerCase() === slug.toLowerCase()) || landings[0]);
     if (!found) return null;
-    if (templateQuery) {
-      return { ...found, template: templateQuery };
-    }
-    return found;
+    const activeTier: PlanTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery))
+      ? tierQuery
+      : (found.tier || 'advance');
+
+    return {
+      ...found,
+      ...(templateQuery ? { template: templateQuery } : {}),
+      tier: activeTier,
+    };
   });
 
   if (!landing) {
