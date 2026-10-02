@@ -306,21 +306,21 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       activeStatus: '✓ Activo',
       list: [
         {
-          id: 'lucia-condori',
-          name: 'Lic. Lucía Condori',
-          title: 'Tu Mediadora del Patrimonio',
-          role: 'Arqueóloga & Cosmovisión Andina',
+          id: 'carlos-mendoza',
+          name: 'Lic. Carlos Mendoza',
+          title: 'Tu Mediador del Patrimonio',
+          role: 'Arqueólogo & Cosmovisión Andina',
           cert: 'Carnet DIRCETUR N° 04821 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-carlos.jpg',
           quote: 'Transmitir la memoria de las piedras no es recitar fechas: es una inmersión viva en la cosmogonía de nuestros ancestros. Cada templo que recorremos guarda el equilibrio sagrado entre el ser humano y la Pachamama.',
           specs: [
-            { icon: '🎓', label: 'Titulada de la UNSAAC Cusco' },
+            { icon: '🎓', label: 'Titulado de la UNSAAC Cusco' },
             { icon: '🗣️', label: 'Español, Inglés y Francés' },
             { icon: '🏛️', label: '12 años de labor arqueológica' },
             { icon: '🛡️', label: 'Primeros Auxilios & Altitud' }
           ],
-          directBtn: 'Consultar con Lucía Condori',
-          msgPrefix: 'Hola Lucía Condori, deseo información y disponibilidad para el tour cultural'
+          directBtn: 'Consultar con Carlos Mendoza',
+          msgPrefix: 'Hola Carlos Mendoza, deseo información y disponibilidad para el tour cultural'
         },
         {
           id: 'marco-quispe',
@@ -328,7 +328,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           title: 'Tu Historiador de Arquitectura',
           role: 'Ingeniería Megalítica & Sacsayhuamán',
           cert: 'Carnet DIRCETUR N° 03914 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-marco.jpg',
           quote: 'La arquitectura inca no fue únicamente monumental, sino asísmica y sagrada. Analizar el ensamblaje de los bloques ciclópeos en el terreno permite comprender el genio matemático andino.',
           specs: [
             { icon: '🎓', label: 'Titulado de la UNSAAC Cusco' },
@@ -345,7 +345,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           title: 'Tu Especialista en Arte Virreinal',
           role: 'Historia del Arte Colonial & Qorikancha',
           cert: 'Carnet DIRCETUR N° 05128 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-valdivia.jpg',
           quote: 'El encuentro entre los templos incas del Sol y las arquerías virreinales del convento de Santo Domingo refleja el diálogo, resistencia y mestizaje de nuestra capital imperial.',
           specs: [
             { icon: '🎓', label: 'Maestría Arte Andino (UNSAAC)' },
@@ -569,12 +569,12 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       activeStatus: '✓ Licensed',
       list: [
         {
-          id: 'lucia-condori',
-          name: 'Lic. Lucía Condori',
+          id: 'carlos-mendoza',
+          name: 'Lic. Carlos Mendoza',
           title: 'Your Heritage Mediator',
           role: 'Archaeologist & Andean Cosmovision',
           cert: 'DIRCETUR License N° 04821 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-carlos.jpg',
           quote: 'Passing down the memory of the stones is not reciting dates: it is a living immersion in the cosmovision of our ancestors. Every temple we tread holds the sacred balance between humanity and Pachamama.',
           specs: [
             { icon: '🎓', label: 'UNSAAC Cusco Alumna' },
@@ -582,8 +582,8 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
             { icon: '🏛️', label: '12 years in archaeological research' },
             { icon: '🛡️', label: 'High Altitude First Aid Certified' }
           ],
-          directBtn: 'Chat with Lucía Condori',
-          msgPrefix: 'Hello Lucía Condori, I would like information and availability for the cultural tour'
+          directBtn: 'Chat with Carlos Mendoza',
+          msgPrefix: 'Hello Carlos Mendoza, I would like information and availability for the cultural tour'
         },
         {
           id: 'marco-quispe',
@@ -591,7 +591,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           title: 'Your Architectural Historian',
           role: 'Megalithic Engineering & Sacsayhuamán',
           cert: 'DIRCETUR License N° 03914 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-marco.jpg',
           quote: 'Inca architecture was not only monumental, but seismic-resistant and sacred. Examining cyclopean joinery in person unveils the true mathematical genius of the Andes.',
           specs: [
             { icon: '🎓', label: 'UNSAAC Cusco Alumnus' },
@@ -608,7 +608,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           title: 'Your Colonial Art Specialist',
           role: 'Colonial Art History & Qorikancha',
           cert: 'DIRCETUR License N° 05128 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-valdivia.jpg',
           quote: 'The encounter between the Inca Sun Temples and the viceregal arcades of Santo Domingo Convent illustrates the dialogue, resilience, and artistic synthesis of our imperial city.',
           specs: [
             { icon: '🎓', label: "Master's Degree Andean Art (UNSAAC)" },
@@ -832,21 +832,21 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       activeStatus: '✓ Actif',
       list: [
         {
-          id: 'lucia-condori',
-          name: 'Lic. Lucía Condori',
-          title: 'Votre Médiatrice du Patrimoine',
+          id: 'carlos-mendoza',
+          name: 'Lic. Carlos Mendoza',
+          title: 'Votre Médiateur du Patrimoine',
           role: 'Archéologue & Cosmovision Andine',
           cert: 'Carnet DIRCETUR N° 04821 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-carlos.jpg',
           quote: 'Transmettre la mémoire des pierres n’est pas une récitation de dates : c’est une immersion vivante dans la cosmogonie de nos ancêtres. Chaque temple que nous foulons raconte l’équilibre sacré entre l’homme et la Pachamama.',
           specs: [
-            { icon: '🎓', label: 'Diplômée de l’UNSAAC Cusco' },
+            { icon: '🎓', label: 'Diplômé de l’UNSAAC Cusco' },
             { icon: '🗣️', label: 'Espagnol, Anglais et Français' },
             { icon: '🏛️', label: '12 ans d’expertise archéologique' },
             { icon: '🛡️', label: 'Secourisme & Altitude certifié' }
           ],
-          directBtn: 'Échanger avec Lucía Condori',
-          msgPrefix: 'Bonjour Lucía Condori, je souhaite des renseignements et disponibilités pour le circuit culturel'
+          directBtn: 'Échanger avec Carlos Mendoza',
+          msgPrefix: 'Bonjour Carlos Mendoza, je souhaite des renseignements et disponibilités pour le circuit culturel'
         },
         {
           id: 'marco-quispe',
@@ -854,7 +854,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           title: 'Votre Historien de l’Architecture',
           role: 'Ingénierie Mégalithique & Sacsayhuamán',
           cert: 'Carnet DIRCETUR N° 03914 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-marco.jpg',
           quote: 'L’architecture inca n’était pas seulement monumentale mais parasismique et sacrée. Analyser la taille des blocs de Sacsayhuamán sur place permet de comprendre le génie mathématique andin.',
           specs: [
             { icon: '🎓', label: 'Diplômé de l’UNSAAC Cusco' },
@@ -871,7 +871,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           title: 'Votre Spécialiste du Métissage',
           role: 'Histoire de l’Art Colonial & Qorikancha',
           cert: 'Carnet DIRCETUR N° 05128 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-valdivia.jpg',
           quote: 'La rencontre entre les temples incas du Soleil et les arcades virreinales du couvent de Santo Domingo illustre le dialogue et la résistance culturelle de notre cité impériale.',
           specs: [
             { icon: '🎓', label: 'Master Histoire de l’Art (UNSAAC)' },
@@ -1095,21 +1095,21 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       activeStatus: '✓ Ativo',
       list: [
         {
-          id: 'lucia-condori',
-          name: 'Lic. Lucía Condori',
-          title: 'Sua Mediadora do Patrimônio',
+          id: 'carlos-mendoza',
+          name: 'Lic. Carlos Mendoza',
+          title: 'Seu Mediador do Patrimônio',
           role: 'Arqueóloga & Cosmovisão Andina',
           cert: 'Credencial DIRCETUR N° 04821 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-carlos.jpg',
           quote: 'Transmitir a memória das pedras não é recitar datas: é uma imersão viva na cosmovisão dos nossos antepassados. Cada templo guarda o equilíbrio sagrado entre a humanidade e a Pachamama.',
           specs: [
-            { icon: '🎓', label: 'Formada pela UNSAAC Cusco' },
+            { icon: '🎓', label: 'Formado pela UNSAAC Cusco' },
             { icon: '🗣️', label: 'Espanhol, Inglês e Francês' },
             { icon: '🏛️', label: '12 anos de pesquisa arqueológica' },
             { icon: '🛡️', label: 'Primeiros Socorros & Altitude' }
           ],
-          directBtn: 'Falar com Lucía Condori',
-          msgPrefix: 'Olá Lucía Condori, gostaria de informações e disponibilidade para o passeio cultural'
+          directBtn: 'Falar com Carlos Mendoza',
+          msgPrefix: 'Olá Carlos Mendoza, gostaria de informações e disponibilidade para o passeio cultural'
         },
         {
           id: 'marco-quispe',
@@ -1117,7 +1117,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           title: 'Seu Historiador de Arquitetura',
           role: 'Engenharia Megalítica & Sacsayhuamán',
           cert: 'Credencial DIRCETUR N° 03914 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-marco.jpg',
           quote: 'A arquitetura incaica não foi apenas monumental, mas sismorresistente e sagrada. Analisar o encaixe das pedras ciclópeas revela a impressionante genialidade andina.',
           specs: [
             { icon: '🎓', label: 'Formado pela UNSAAC Cusco' },
@@ -1134,7 +1134,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           title: 'Seu Especialista em Arte Colonial',
           role: 'História da Arte Andina & Qorikancha',
           cert: 'Credencial DIRCETUR N° 05128 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-valdivia.jpg',
           quote: 'O encontro entre os templos incas do Sol e os claustros de Santo Domingo reflete o diálogo, resistência e mestiçagem artística da nossa capital imperial.',
           specs: [
             { icon: '🎓', label: 'Mestrado em Arte Andina (UNSAAC)' },
@@ -1358,21 +1358,21 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       activeStatus: '✓ Abilitato',
       list: [
         {
-          id: 'lucia-condori',
-          name: 'Lic. Lucía Condori',
-          title: 'La Tua Mediatrice del Patrimonio',
+          id: 'carlos-mendoza',
+          name: 'Lic. Carlos Mendoza',
+          title: 'Il Tuo Mediatore del Patrimonio',
           role: 'Archeologa & Cosmovisione Andina',
           cert: 'Patentino DIRCETUR N° 04821 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-carlos.jpg',
           quote: 'Trasmettere la memoria delle pietre non significa recitare date: è un’immersione viva nella cosmogonia dei nostri antenati. Ogni tempio che varchiamo racconta l’equilibrio sacro tra l’uomo e la Pachamama.',
           specs: [
-            { icon: '🎓', label: 'Laureata presso UNSAAC Cusco' },
+            { icon: '🎓', label: 'Laureato presso UNSAAC Cusco' },
             { icon: '🗣️', label: 'Spagnolo, Inglese e Francese' },
             { icon: '🏛️', label: '12 anni di attività archeologica' },
             { icon: '🛡️', label: 'Primo Soccorso & Altitudine' }
           ],
-          directBtn: 'Contatta Lucía Condori',
-          msgPrefix: 'Buongiorno Lucía Condori, desidero informazioni e disponibilità per il tour culturale'
+          directBtn: 'Contatta Carlos Mendoza',
+          msgPrefix: 'Buongiorno Carlos Mendoza, desidero informazioni e disponibilità per il tour culturale'
         },
         {
           id: 'marco-quispe',
@@ -1380,7 +1380,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           title: 'Il Tuo Storico dell’Architettura',
           role: 'Ingegneria Megalitica & Sacsayhuamán',
           cert: 'Patentino DIRCETUR N° 03914 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-marco.jpg',
           quote: 'L’architettura inca non fu soltanto imponente, ma antisismica e sacra. Analizzare l’incastro dei blocchi ciclopici sul posto permette di cogliere il genio matematico andino.',
           specs: [
             { icon: '🎓', label: 'Laureato presso UNSAAC Cusco' },
@@ -1397,7 +1397,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           title: 'Il Tuo Specialista in Arte Coloniale',
           role: 'Storia dell’Arte Andina & Qorikancha',
           cert: 'Patentino DIRCETUR N° 05128 • COLTUR Cusco',
-          avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600&auto=format&fit=crop',
+          avatar: '/images/tour-guide-valdivia.jpg',
           quote: 'L’incontro tra i templi inca del Sole e le arcate vicereali del convento di Santo Domingo illustra il dialogo, la resistenza e la sintesi artistica della nostra città imperiale.',
           specs: [
             { icon: '🎓', label: 'Master Storia dell’Arte (UNSAAC)' },
