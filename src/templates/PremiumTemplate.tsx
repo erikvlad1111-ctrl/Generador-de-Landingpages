@@ -46,8 +46,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
   const [isLegalOpen, setIsLegalOpen] = useState(false);
   const [legalTab, setLegalTab] = useState<'terms' | 'cancellation' | 'privacy' | 'license'>('terms');
   const [currentLang, setCurrentLang] = useState<LanguageType>(defaultLang);
-  type LuxuryFont = 'cinzel' | 'playfair' | 'cormorant' | 'syne';
-  const [luxuryFontVariant, setLuxuryFontVariant] = useState<LuxuryFont>('cormorant');
+  type LuxuryFont = 'montserrat' | 'outfit' | 'syne' | 'cormorant' | 'cinzel';
+  const [luxuryFontVariant, setLuxuryFontVariant] = useState<LuxuryFont>('montserrat');
 
   React.useEffect(() => {
     if (isFree || isBasic) {
@@ -309,6 +309,21 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
   ];
 
   const FONT_CONFIG: Record<LuxuryFont, { titleFont: string; bodyFont: string; tracking: string }> = {
+    montserrat: {
+      titleFont: "'Montserrat', sans-serif",
+      bodyFont: "'Plus Jakarta Sans', var(--font-jakarta), sans-serif",
+      tracking: '0.04em',
+    },
+    outfit: {
+      titleFont: "'Outfit', sans-serif",
+      bodyFont: "'Plus Jakarta Sans', var(--font-jakarta), sans-serif",
+      tracking: '0.02em',
+    },
+    syne: {
+      titleFont: "'Syne', sans-serif",
+      bodyFont: "'Plus Jakarta Sans', var(--font-jakarta), sans-serif",
+      tracking: '-0.02em',
+    },
     cormorant: {
       titleFont: "'Cormorant Garamond', var(--font-cormorant), Garamond, Georgia, serif",
       bodyFont: "'Plus Jakarta Sans', var(--font-jakarta), sans-serif",
@@ -319,16 +334,6 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       bodyFont: "'Plus Jakarta Sans', var(--font-jakarta), sans-serif",
       tracking: '0.04em',
     },
-    playfair: {
-      titleFont: "'Playfair Display', var(--font-playfair), Georgia, serif",
-      bodyFont: "'Plus Jakarta Sans', var(--font-jakarta), sans-serif",
-      tracking: 'normal',
-    },
-    syne: {
-      titleFont: "'Syne', sans-serif",
-      bodyFont: "'Plus Jakarta Sans', var(--font-jakarta), sans-serif",
-      tracking: '-0.02em',
-    }
   };
 
   return (
@@ -440,7 +445,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           {/* Subtle Champagne Gold Font Selector */}
           <div className="flex items-center bg-neutral-900/90 border border-amber-500/30 rounded-full p-0.5 text-[8px] sm:text-[9px] font-bold" title="Selector de Tipografía Luxury">
-            {(['cormorant', 'cinzel', 'playfair', 'syne'] as const).map((fontKey) => (
+            {(['montserrat', 'outfit', 'syne', 'cormorant', 'cinzel'] as const).map((fontKey) => (
               <button
                 key={fontKey}
                 type="button"
@@ -451,7 +456,11 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                     : 'text-neutral-400 hover:text-amber-200'
                 }`}
               >
-                {fontKey === 'cormorant' ? '✨ Cormorant' : fontKey === 'cinzel' ? 'Cinzel' : fontKey === 'playfair' ? 'Playfair' : 'Syne'}
+                {fontKey === 'montserrat' ? '🏛️ Montserrat (Sobrio)' 
+                 : fontKey === 'outfit' ? '💎 Outfit' 
+                 : fontKey === 'syne' ? 'Syne' 
+                 : fontKey === 'cormorant' ? 'Cormorant' 
+                 : 'Cinzel'}
               </button>
             ))}
           </div>
