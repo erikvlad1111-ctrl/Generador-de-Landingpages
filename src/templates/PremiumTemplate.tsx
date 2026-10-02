@@ -310,23 +310,23 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
   const FONT_CONFIG: Record<LuxuryFont, { titleFont: string; bodyFont: string; tracking: string }> = {
     cormorant: {
-      titleFont: "'Cormorant Garamond', Garamond, serif",
-      bodyFont: "'Plus Jakarta Sans', sans-serif",
+      titleFont: "'Cormorant Garamond', var(--font-cormorant), Garamond, Georgia, serif",
+      bodyFont: "'Plus Jakarta Sans', var(--font-jakarta), sans-serif",
       tracking: '0.02em',
     },
     cinzel: {
       titleFont: "'Cinzel', serif",
-      bodyFont: "'Plus Jakarta Sans', sans-serif",
+      bodyFont: "'Plus Jakarta Sans', var(--font-jakarta), sans-serif",
       tracking: '0.04em',
     },
     playfair: {
-      titleFont: "'Playfair Display', Georgia, serif",
-      bodyFont: "'Plus Jakarta Sans', sans-serif",
+      titleFont: "'Playfair Display', var(--font-playfair), Georgia, serif",
+      bodyFont: "'Plus Jakarta Sans', var(--font-jakarta), sans-serif",
       tracking: 'normal',
     },
     syne: {
       titleFont: "'Syne', sans-serif",
-      bodyFont: "'Plus Jakarta Sans', sans-serif",
+      bodyFont: "'Plus Jakarta Sans', var(--font-jakarta), sans-serif",
       tracking: '-0.02em',
     }
   };
@@ -340,10 +340,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         .luxury-dynamic-container .font-serif,
         .luxury-dynamic-container h1,
         .luxury-dynamic-container h2,
-        .luxury-dynamic-container h3 {
+        .luxury-dynamic-container h3,
+        .luxury-dynamic-container h4 {
           font-family: ${FONT_CONFIG[luxuryFontVariant].titleFont} !important;
           letter-spacing: ${FONT_CONFIG[luxuryFontVariant].tracking};
-          font-weight: 600;
         }
       `}</style>
       
@@ -388,7 +388,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             <Crown size={isMobile ? 16 : 20} className="text-amber-300 drop-shadow-[0_2px_8px_rgba(245,158,11,0.6)]" />
           </div>
           <div className="min-w-0">
-            <span className={`${isMobile ? 'text-xs' : 'text-xs sm:text-sm md:text-base'} font-serif tracking-[0.2em] uppercase font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 truncate block`}>
+            <span 
+              style={{ fontFamily: FONT_CONFIG[luxuryFontVariant].titleFont }}
+              className={`${isMobile ? 'text-xs' : 'text-xs sm:text-sm md:text-base'} tracking-[0.2em] uppercase font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 truncate block`}
+            >
               Cusco Luxury Collection
             </span>
             <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.25em] text-amber-400/80 font-semibold block font-mono truncate">
@@ -540,7 +543,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           </div>
 
           {/* Título en Oro Champagne Editorial */}
-          <h1 className={`${isMobile ? 'text-2xl sm:text-3xl leading-tight mb-4' : 'text-4xl sm:text-6xl md:text-7xl leading-[1.12] mb-6'} font-serif tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-100 to-amber-300 drop-shadow-md font-normal`}>
+          <h1 
+            style={{ fontFamily: FONT_CONFIG[luxuryFontVariant].titleFont }}
+            className={`${isMobile ? 'text-2xl sm:text-3xl leading-tight mb-4' : 'text-4xl sm:text-6xl md:text-7xl leading-[1.12] mb-6'} tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-100 to-amber-300 drop-shadow-md font-medium`}
+          >
             {data.hero?.title ? translateText(data.hero.title, currentLang) : t.hero.defaultTitle}
           </h1>
 
@@ -602,7 +608,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
               <p className="text-[10px] text-amber-400 uppercase tracking-[0.2em] font-semibold font-mono">
                 {currentLang === 'en' ? 'Starting From' : currentLang === 'pt' ? 'A Partir de' : currentLang === 'fr' ? 'À Partir de' : currentLang === 'it' ? 'A Partire da' : 'Tarifa Desde'}
               </p>
-              <p className={`${isMobile ? 'text-lg' : 'text-xl'} font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-amber-200`}>
+              <p 
+                style={{ fontFamily: FONT_CONFIG[luxuryFontVariant].titleFont }}
+                className={`${isMobile ? 'text-lg' : 'text-xl'} font-bold text-transparent bg-clip-text bg-gradient-to-r from-white to-amber-200`}
+              >
                 {data.price || '$450 USD'}
               </p>
             </div>
