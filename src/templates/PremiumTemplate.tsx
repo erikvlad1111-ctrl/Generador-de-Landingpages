@@ -46,6 +46,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
   const [isLegalOpen, setIsLegalOpen] = useState(false);
   const [legalTab, setLegalTab] = useState<'terms' | 'cancellation' | 'privacy' | 'license'>('terms');
   const [currentLang, setCurrentLang] = useState<LanguageType>(defaultLang);
+  const [luxuryFontVariant, setLuxuryFontVariant] = useState<'playfair' | 'cormorant'>('playfair');
 
   React.useEffect(() => {
     if (isFree || isBasic) {
@@ -307,7 +308,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a080e] font-sans text-neutral-100 selection:bg-amber-500 selection:text-black relative overflow-x-hidden">
+    <div className={`min-h-screen bg-[#0a080e] ${luxuryFontVariant === 'playfair' ? 'luxury-font-playfair' : 'luxury-font-cormorant'} text-neutral-100 selection:bg-amber-500 selection:text-black relative overflow-x-hidden transition-all duration-300`}>
       
       {/* Warm Golden & Amber Ambient Luxury Lighting Backgrounds */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
@@ -397,6 +398,32 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         )}
 
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+          {/* Subtle Champagne Gold Font Selector (Playfair vs Cormorant) */}
+          <div className="hidden sm:flex items-center bg-neutral-900/90 border border-amber-500/25 rounded-full p-0.5 text-[9px] font-bold" title="Selector de Tipografía Luxury">
+            <button
+              type="button"
+              onClick={() => setLuxuryFontVariant('playfair')}
+              className={`px-2 py-0.5 rounded-full transition-all duration-200 cursor-pointer ${
+                luxuryFontVariant === 'playfair' 
+                  ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-neutral-950 font-extrabold shadow-xs' 
+                  : 'text-neutral-400 hover:text-amber-200'
+              }`}
+            >
+              Playfair
+            </button>
+            <button
+              type="button"
+              onClick={() => setLuxuryFontVariant('cormorant')}
+              className={`px-2 py-0.5 rounded-full transition-all duration-200 cursor-pointer ${
+                luxuryFontVariant === 'cormorant' 
+                  ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-neutral-950 font-extrabold shadow-xs' 
+                  : 'text-neutral-400 hover:text-amber-200'
+              }`}
+            >
+              Cormorant
+            </button>
+          </div>
+
           {/* Subtle Champagne Gold Language Selector (Pro & Advance) */}
           {displayPremiumLanguages.length > 1 && (
             <div className="flex items-center bg-neutral-900/90 border border-amber-500/25 rounded-full p-0.5 text-[9px] sm:text-[10px] font-bold">

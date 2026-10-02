@@ -3,6 +3,48 @@
 @theme inline {
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-playfair), Georgia, serif;
+  --font-playfair: var(--font-playfair);
+  --font-cormorant: var(--font-cormorant);
+  --font-jakarta: var(--font-jakarta);
+}
+
+/* Luxury Editorial & Dark Mode Typography Rules */
+.luxury-font-playfair {
+  font-family: var(--font-jakarta), var(--font-sans), sans-serif;
+}
+.luxury-font-playfair .font-serif,
+.luxury-font-playfair h1,
+.luxury-font-playfair h2,
+.luxury-font-playfair h3,
+.font-playfair {
+  font-family: var(--font-playfair), Georgia, serif !important;
+}
+
+.luxury-font-cormorant {
+  font-family: var(--font-jakarta), var(--font-sans), sans-serif;
+}
+.luxury-font-cormorant .font-serif,
+.luxury-font-cormorant h1,
+.luxury-font-cormorant h2,
+.luxury-font-cormorant h3,
+.font-cormorant {
+  font-family: var(--font-cormorant), Garamond, serif !important;
+}
+
+.luxury-font-playfair p,
+.luxury-font-playfair span:not(.font-serif):not(.font-mono),
+.luxury-font-playfair div:not(.font-serif):not(.font-mono),
+.luxury-font-playfair button,
+.luxury-font-playfair input,
+.luxury-font-playfair a,
+.luxury-font-cormorant p,
+.luxury-font-cormorant span:not(.font-serif):not(.font-mono),
+.luxury-font-cormorant div:not(.font-serif):not(.font-mono),
+.luxury-font-cormorant button,
+.luxury-font-cormorant input,
+.luxury-font-cormorant a {
+  font-family: var(--font-jakarta), var(--font-sans), sans-serif;
 }
 
 body {
