@@ -47,7 +47,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
   const [legalTab, setLegalTab] = useState<'terms' | 'cancellation' | 'privacy' | 'license'>('terms');
   const [currentLang, setCurrentLang] = useState<LanguageType>(defaultLang);
   type LuxuryFont = 'cinzel' | 'playfair' | 'cormorant' | 'syne';
-  const [luxuryFontVariant, setLuxuryFontVariant] = useState<LuxuryFont>('cinzel');
+  const [luxuryFontVariant, setLuxuryFontVariant] = useState<LuxuryFont>('cormorant');
 
   React.useEffect(() => {
     if (isFree || isBasic) {
@@ -309,6 +309,11 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
   ];
 
   const FONT_CONFIG: Record<LuxuryFont, { titleFont: string; bodyFont: string; tracking: string }> = {
+    cormorant: {
+      titleFont: "'Cormorant Garamond', Garamond, serif",
+      bodyFont: "'Plus Jakarta Sans', sans-serif",
+      tracking: '0.02em',
+    },
     cinzel: {
       titleFont: "'Cinzel', serif",
       bodyFont: "'Plus Jakarta Sans', sans-serif",
@@ -316,11 +321,6 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
     },
     playfair: {
       titleFont: "'Playfair Display', Georgia, serif",
-      bodyFont: "'Plus Jakarta Sans', sans-serif",
-      tracking: 'normal',
-    },
-    cormorant: {
-      titleFont: "'Cormorant Garamond', Garamond, serif",
       bodyFont: "'Plus Jakarta Sans', sans-serif",
       tracking: 'normal',
     },
@@ -343,6 +343,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         .luxury-dynamic-container h3 {
           font-family: ${FONT_CONFIG[luxuryFontVariant].titleFont} !important;
           letter-spacing: ${FONT_CONFIG[luxuryFontVariant].tracking};
+          font-weight: 600;
         }
       `}</style>
       
@@ -436,7 +437,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           {/* Subtle Champagne Gold Font Selector */}
           <div className="flex items-center bg-neutral-900/90 border border-amber-500/30 rounded-full p-0.5 text-[8px] sm:text-[9px] font-bold" title="Selector de Tipografía Luxury">
-            {(['cinzel', 'playfair', 'cormorant', 'syne'] as const).map((fontKey) => (
+            {(['cormorant', 'cinzel', 'playfair', 'syne'] as const).map((fontKey) => (
               <button
                 key={fontKey}
                 type="button"
@@ -447,7 +448,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                     : 'text-neutral-400 hover:text-amber-200'
                 }`}
               >
-                {fontKey === 'cinzel' ? '👑 Cinzel' : fontKey === 'playfair' ? 'Playfair' : fontKey === 'cormorant' ? 'Cormorant' : 'Syne'}
+                {fontKey === 'cormorant' ? '✨ Cormorant' : fontKey === 'cinzel' ? 'Cinzel' : fontKey === 'playfair' ? 'Playfair' : 'Syne'}
               </button>
             ))}
           </div>
