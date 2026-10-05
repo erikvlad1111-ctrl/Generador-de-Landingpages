@@ -89,3 +89,35 @@ Guía para diagnosticar y solucionar problemas de traducción, mezcla de idiomas
   2. Requerir `lowerTrimmed.length > 25` y palabras clave descriptivas (`descubre`) en las heurísticas de subtítulos de `translations.ts`.
   3. Establecer `tag: 'Maravilla'` en `DEFAULT_SECONDARY_CATALOG_TOURS` para mantener homogeneidad visual con `Glaciar` y `Arqueológico`.
   4. Agregar `max-w-[130px] truncate` y atributo `title` en las 5 plantillas para blindar el tamaño de los badges.
+
+### Error: Sufijo del Hero Title aparece en Italiano en Landings en Español ("L’ESPERIENZA DEFINITIVA A CUSCO")
+
+- **Síntoma / Mensaje de Error:**
+  En la cabecera principal (Hero Section) del Diseño 1 (`AgencyPortalTemplate`) y otras plantillas, el título principal renderizaba: `DISEÑO 1 - PORTAL OFICIAL DE AGENCIA DE VIAJES PERÚ: L’ESPERIENZA DEFINITIVA A CUSCO` en lugar del texto en español `LA EXPERIENCIA DEFINITIVA EN CUSCO`.
+
+- **Causa Raíz:**
+  En `src/data/translations.ts`, el bloque de coincidencia de sufijos dinámicos evaluaba:
+  ```typescript
+  if (translated.includes(': La Experiencia Definitiva en Cusco')) {
+    const replacement = targetLang === 'en' 
+      ? ': The Ultimate Cusco Experience' 
+      : targetLang === 'pt' 
+      ? ': A Experiência Definitiva em Cusco' 
+      : targetLang === 'fr' 
+      ? ': L’Expérience Ultime à Cusco' 
+      : ': L’Esperienza Definitiva a Cusco';
+    translated = translated.replace(': La Experiencia Definitiva en Cusco', replacement);
+  }
+  ```
+  Al navegar o previsualizar en español (`targetLang === 'es'`), al no coincidir con `'en'`, `'pt'` ni `'fr'`, el ternario caía en la rama final por defecto (`else`), que era la frase en **italiano** (`: L’Esperienza Definitiva a Cusco`). Luego, la función `getLocalizedHeroTitle` en `AgencyPortalTemplate.tsx` aplicaba `.toUpperCase()`, mostrando el texto en italiano en mayúsculas.
+
+- **Comando de Diagnóstico:**
+  ```bash
+  git grep -n "L’Esperienza Definitiva a Cusco" src/data/translations.ts
+  ```
+
+- **Solución Paso a Paso:**
+  1. En `src/data/translations.ts`, agregar todas las variaciones de sufijos dinámicos en una lista (`dynamicHeroSuffixes`) incluyendo las variantes en italiano, inglés, francés y portugués.
+  2. Asegurar que la selección del sufijo objetivo contemple explícitamente `targetLang === 'it'` y retorne de manera inequívoca `: La Experiencia Definitiva en Cusco` cuando `targetLang === 'es'`.
+  3. Registrar en `PHRASE_MAP` las entradas bidireccionales completas de `'La Experiencia Definitiva en Cusco'`, `"L'Esperienza Definitiva a Cusco"`, `'L’Esperienza Definitiva a Cusco'` y `'The Ultimate Cusco Experience'` con sus traducciones oficiales a los 5 idiomas.
+

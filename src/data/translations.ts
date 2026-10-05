@@ -335,6 +335,34 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
   },
 
   // --- SUBTÍTULOS Y DESCRIPCIONES ---
+  'La Experiencia Definitiva en Cusco': {
+    es: 'La Experiencia Definitiva en Cusco',
+    en: 'The Ultimate Cusco Experience',
+    pt: 'A Experiência Definitiva em Cusco',
+    fr: "L'Expérience Ultime à Cusco",
+    it: "L'Esperienza Definitiva a Cusco"
+  },
+  "L'Esperienza Definitiva a Cusco": {
+    es: 'La Experiencia Definitiva en Cusco',
+    en: 'The Ultimate Cusco Experience',
+    pt: 'A Experiência Definitiva em Cusco',
+    fr: "L'Expérience Ultime à Cusco",
+    it: "L'Esperienza Definitiva a Cusco"
+  },
+  'L’Esperienza Definitiva a Cusco': {
+    es: 'La Experiencia Definitiva en Cusco',
+    en: 'The Ultimate Cusco Experience',
+    pt: 'A Experiência Definitiva em Cusco',
+    fr: "L’Expérience Ultime à Cusco",
+    it: 'L’Esperienza Definitiva a Cusco'
+  },
+  'The Ultimate Cusco Experience': {
+    es: 'La Experiencia Definitiva en Cusco',
+    en: 'The Ultimate Cusco Experience',
+    pt: 'A Experiência Definitiva em Cusco',
+    fr: "L'Expérience Ultime à Cusco",
+    it: "L'Esperienza Definitiva a Cusco"
+  },
   'Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia.': {
     es: 'Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia.',
     en: 'Discover the wonder of the world with private luxury transfers, 5-star comfort and an official certified historian guide dedicated exclusively to you and your family.',
@@ -1230,15 +1258,30 @@ export function translateText(text: string | undefined, targetLang: LanguageType
   let translated = text;
 
   // Patrones de títulos dinámicos
-  if (translated.includes(': La Experiencia Definitiva en Cusco')) {
-    const replacement = targetLang === 'en' 
-      ? ': The Ultimate Cusco Experience' 
-      : targetLang === 'pt' 
-      ? ': A Experiência Definitiva em Cusco' 
-      : targetLang === 'fr' 
-      ? ': L’Expérience Ultime à Cusco' 
-      : ': L’Esperienza Definitiva a Cusco';
-    translated = translated.replace(': La Experiencia Definitiva en Cusco', replacement);
+  const dynamicHeroSuffixes = [
+    ': La Experiencia Definitiva en Cusco',
+    ': The Ultimate Cusco Experience',
+    ': A Experiência Definitiva em Cusco',
+    ': L’Expérience Ultime à Cusco',
+    ": L'Expérience Ultime à Cusco",
+    ': L’Esperienza Definitiva a Cusco',
+    ": L'Esperienza Definitiva a Cusco"
+  ];
+
+  for (const suffix of dynamicHeroSuffixes) {
+    if (translated.includes(suffix)) {
+      const targetSuffix = targetLang === 'en'
+        ? ': The Ultimate Cusco Experience'
+        : targetLang === 'pt'
+        ? ': A Experiência Definitiva em Cusco'
+        : targetLang === 'fr'
+        ? ': L’Expérience Ultime à Cusco'
+        : targetLang === 'it'
+        ? ': L’Esperienza Definitiva a Cusco'
+        : ': La Experiencia Definitiva en Cusco';
+      translated = translated.replace(suffix, targetSuffix);
+      break;
+    }
   }
 
   if (translated.startsWith('¿Por qué elegir ') && translated.endsWith('?')) {
