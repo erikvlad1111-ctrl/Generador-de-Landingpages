@@ -182,112 +182,6 @@ export default function DemoDashboard() {
         </div>
       </div>
 
-      {/* 2. REAL SOFTWARE DATA & CAPABILITIES METRIC CARDS */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        
-        {/* Card 1: Landings Creadas */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-blue-300 transition-all group">
-          <div className="flex justify-between items-center mb-3">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Landings</span>
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <FileText size={20} />
-            </div>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-slate-900">{totalLandings}</span>
-            <span className="text-xs text-slate-400 font-medium">proyectos</span>
-          </div>
-          <p className="text-xs text-slate-500 mt-2 flex items-center gap-1.5 font-medium">
-            <CheckCircle2 size={13} className="text-blue-600 shrink-0" />
-            <span>{totalPublished} publicadas • {totalDrafts} borradores</span>
-          </p>
-        </div>
-
-        {/* Card 2: Plantillas Disponibles */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-purple-300 transition-all group">
-          <div className="flex justify-between items-center mb-3">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Plantillas Turísticas</span>
-            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <LayoutTemplate size={20} />
-            </div>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-slate-900">5</span>
-            <span className="text-xs text-purple-700 font-bold">diseños web</span>
-          </div>
-          <p className="text-xs text-slate-500 mt-2 truncate" title="Portal Agencia, Aventura, Lujo VIP, Cultural y Boho">
-            Portal, Aventura, VIP, Cultural, Boho
-          </p>
-        </div>
-
-        {/* Card 3: Soporte Multilingüe */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-emerald-300 transition-all group">
-          <div className="flex justify-between items-center mb-3">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Soporte Multilingüe</span>
-            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Languages size={20} />
-            </div>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-slate-900">5</span>
-            <span className="text-xs text-emerald-600 font-bold">idiomas IA</span>
-          </div>
-          <p className="text-xs text-slate-500 mt-2">Español, English, Português, FR, IT</p>
-        </div>
-
-        {/* Card 4: Formatos de Exportación */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-amber-300 transition-all group">
-          <div className="flex justify-between items-center mb-3">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Formatos de Entrega</span>
-            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <Download size={20} />
-            </div>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-slate-900">2</span>
-            <span className="text-xs text-amber-600 font-bold">modos autónomos</span>
-          </div>
-          <p className="text-xs text-slate-500 mt-2">Paquete ZIP (HTML/CSS) o Vercel</p>
-        </div>
-      </div>
-
-      {/* Quick Services & Inspiration Access Banner */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Card 1: Diseños Disponibles Landing Pages */}
-        <Link 
-          href="/demo/pinterest"
-          className="p-4 rounded-2xl bg-white border border-blue-200/90 shadow-2xs hover:border-blue-400 hover:shadow-md transition-all flex items-center justify-between group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-105 transition-transform">
-              <LayoutTemplate size={20} />
-            </div>
-            <div>
-              <span className="text-xs font-bold text-slate-800 block group-hover:text-blue-600 transition-colors">Diseños Disponibles Landing Pages</span>
-              <span className="text-[11px] text-slate-500">Beneficios, paletas de colores, tipografía y estilos visuales</span>
-            </div>
-          </div>
-          <span className="text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">Explorar →</span>
-        </Link>
-
-        {/* Card 2: Guía de Niveles */}
-        <Link 
-          href="/demo/plans"
-          className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-blue-300 hover:shadow-xs transition-all flex items-center justify-between group"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-105 transition-transform">
-              <Layers size={20} />
-            </div>
-            <div>
-              <span className="text-xs font-bold text-slate-800 block group-hover:text-blue-600 transition-colors">Guía de Estructura y Niveles</span>
-              <span className="text-[11px] text-slate-500">Manual técnico del creador: qué secciones se activan en cada versión</span>
-            </div>
-          </div>
-          <span className="text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">Ver matriz →</span>
-        </Link>
-      </div>
-
       {/* Quick Demos Strip: 5 World-Class Tourism Templates */}
       <div className="bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/95 text-white rounded-3xl p-5 sm:p-7 border border-slate-800 shadow-xl space-y-4">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
@@ -410,6 +304,112 @@ export default function DemoDashboard() {
             <ExternalLink size={15} className="text-slate-400 group-hover:text-rose-300 transition-colors shrink-0" />
           </a>
         </div>
+      </div>
+
+      {/* 2. REAL SOFTWARE DATA & CAPABILITIES METRIC CARDS */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        {/* Card 1: Landings Creadas */}
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-blue-300 transition-all group">
+          <div className="flex justify-between items-center mb-3">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Landings</span>
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <FileText size={20} />
+            </div>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <span className="text-3xl font-extrabold text-slate-900">{totalLandings}</span>
+            <span className="text-xs text-slate-400 font-medium">proyectos</span>
+          </div>
+          <p className="text-xs text-slate-500 mt-2 flex items-center gap-1.5 font-medium">
+            <CheckCircle2 size={13} className="text-blue-600 shrink-0" />
+            <span>{totalPublished} publicadas • {totalDrafts} borradores</span>
+          </p>
+        </div>
+
+        {/* Card 2: Plantillas Disponibles */}
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-purple-300 transition-all group">
+          <div className="flex justify-between items-center mb-3">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Plantillas Turísticas</span>
+            <div className="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <LayoutTemplate size={20} />
+            </div>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <span className="text-3xl font-extrabold text-slate-900">5</span>
+            <span className="text-xs text-purple-700 font-bold">diseños web</span>
+          </div>
+          <p className="text-xs text-slate-500 mt-2 truncate" title="Portal Agencia, Aventura, Lujo VIP, Cultural y Boho">
+            Portal, Aventura, VIP, Cultural, Boho
+          </p>
+        </div>
+
+        {/* Card 3: Soporte Multilingüe */}
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-emerald-300 transition-all group">
+          <div className="flex justify-between items-center mb-3">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Soporte Multilingüe</span>
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Languages size={20} />
+            </div>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <span className="text-3xl font-extrabold text-slate-900">5</span>
+            <span className="text-xs text-emerald-600 font-bold">idiomas IA</span>
+          </div>
+          <p className="text-xs text-slate-500 mt-2">Español, English, Português, FR, IT</p>
+        </div>
+
+        {/* Card 4: Formatos de Exportación */}
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/80 hover:border-amber-300 transition-all group">
+          <div className="flex justify-between items-center mb-3">
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Formatos de Entrega</span>
+            <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Download size={20} />
+            </div>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <span className="text-3xl font-extrabold text-slate-900">2</span>
+            <span className="text-xs text-amber-600 font-bold">modos autónomos</span>
+          </div>
+          <p className="text-xs text-slate-500 mt-2">Paquete ZIP (HTML/CSS) o Vercel</p>
+        </div>
+      </div>
+
+      {/* Quick Services & Inspiration Access Banner */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Card 1: Diseños Disponibles Landing Pages */}
+        <Link 
+          href="/demo/pinterest"
+          className="p-4 rounded-2xl bg-white border border-blue-200/90 shadow-2xs hover:border-blue-400 hover:shadow-md transition-all flex items-center justify-between group"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <LayoutTemplate size={20} />
+            </div>
+            <div>
+              <span className="text-xs font-bold text-slate-800 block group-hover:text-blue-600 transition-colors">Diseños Disponibles Landing Pages</span>
+              <span className="text-[11px] text-slate-500">Beneficios, paletas de colores, tipografía y estilos visuales</span>
+            </div>
+          </div>
+          <span className="text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">Explorar →</span>
+        </Link>
+
+        {/* Card 2: Guía de Niveles */}
+        <Link 
+          href="/demo/plans"
+          className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-blue-300 hover:shadow-xs transition-all flex items-center justify-between group"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center group-hover:scale-105 transition-transform">
+              <Layers size={20} />
+            </div>
+            <div>
+              <span className="text-xs font-bold text-slate-800 block group-hover:text-blue-600 transition-colors">Guía de Estructura y Niveles</span>
+              <span className="text-[11px] text-slate-500">Manual técnico del creador: qué secciones se activan en cada versión</span>
+            </div>
+          </div>
+          <span className="text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform">Ver matriz →</span>
+        </Link>
       </div>
 
       {/* 3. CONTROL BAR: SEARCH & INTERACTIVE FILTER TABS */}
