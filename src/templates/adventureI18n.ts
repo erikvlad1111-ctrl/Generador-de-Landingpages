@@ -2,10 +2,16 @@ import { LanguageType } from '@/types/landing';
 
 export interface AdventureI18nTexts {
   nav: {
+    home?: string;
     destinations: string;
     iconic: string;
+    gallery?: string;
     itinerary: string;
     included: string;
+    gear?: string;
+    reviews?: string;
+    guarantees?: string;
+    contact?: string;
     faq: string;
     whatsappBtn: string;
     quoteBtn: string;
@@ -156,10 +162,16 @@ export const ADVENTURE_LANGUAGES: Array<{ code: LanguageType; label: string; fla
 export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
   es: {
     nav: {
+      home: 'Inicio',
       destinations: 'Destinos',
       iconic: 'Tours Icónicos',
+      gallery: 'Galería',
       itinerary: 'Itinerario',
       included: 'Qué Incluye',
+      gear: 'Equipamiento',
+      reviews: 'Reseñas',
+      guarantees: 'Garantías',
+      contact: 'Contacto',
       faq: 'FAQ',
       whatsappBtn: 'Reservar por WhatsApp',
       quoteBtn: 'Cotizar',
@@ -355,10 +367,16 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
   },
   en: {
     nav: {
+      home: 'Home',
       destinations: 'Destinations',
       iconic: 'Iconic Treks',
+      gallery: 'Gallery',
       itinerary: 'Itinerary',
       included: "What's Included",
+      gear: 'Gear & Pack',
+      reviews: 'Reviews',
+      guarantees: 'Guarantees',
+      contact: 'Contact',
       faq: 'FAQ',
       whatsappBtn: 'Book via WhatsApp',
       quoteBtn: 'Get Quote',
@@ -554,10 +572,16 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
   },
   fr: {
     nav: {
+      home: 'Accueil',
       destinations: 'Destinations',
       iconic: 'Treks Iconiques',
+      gallery: 'Galerie',
       itinerary: 'Itinéraire',
       included: 'Inclus / Non Inclus',
+      gear: 'Équipement',
+      reviews: 'Avis',
+      guarantees: 'Garanties',
+      contact: 'Contact',
       faq: 'FAQ',
       whatsappBtn: 'Réserver via WhatsApp',
       quoteBtn: 'Devis',
@@ -753,10 +777,16 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
   },
   pt: {
     nav: {
+      home: 'Início',
       destinations: 'Destinos',
       iconic: 'Tours Icônicos',
+      gallery: 'Galeria',
       itinerary: 'Itinerário',
       included: 'O Que Inclui',
+      gear: 'Mochila',
+      reviews: 'Avaliações',
+      guarantees: 'Garantias',
+      contact: 'Contato',
       faq: 'FAQ',
       whatsappBtn: 'Reservar via WhatsApp',
       quoteBtn: 'Cotar',
@@ -952,10 +982,16 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
   },
   it: {
     nav: {
+      home: 'Inizio',
       destinations: 'Destinazioni',
       iconic: 'Trek Iconici',
+      gallery: 'Galleria',
       itinerary: 'Itinerario',
       included: 'Cosa Include',
+      gear: 'Attrezzatura',
+      reviews: 'Recensioni',
+      guarantees: 'Garanzie',
+      contact: 'Contatto',
       faq: 'FAQ',
       whatsappBtn: 'Prenota su WhatsApp',
       quoteBtn: 'Preventivo',

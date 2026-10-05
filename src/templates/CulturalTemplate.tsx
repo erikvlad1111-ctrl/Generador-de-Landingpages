@@ -106,7 +106,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
     <div className="min-h-screen bg-[#FFFDF9] font-sans text-stone-800 selection:bg-red-800 selection:text-white">
       
       {/* 1. TOP HEADER OVER PANORAMIC SUNSET (HERITAGE RED PALETTE WITH DYNAMIC ENTRANCE) */}
-      <header className="relative bg-stone-900 text-white overflow-hidden group">
+      <header id="inicio" className="relative bg-stone-900 text-white overflow-hidden group">
         {/* Panoramic Background Image with Ken Burns zoom effect */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
@@ -139,11 +139,19 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           </div>
 
           {/* Nav links (Desktop) */}
-          {!isFree && !isMobile && (
-            <div className="hidden xl:flex items-center gap-5 text-[11px] font-bold tracking-wider uppercase text-stone-200">
+          {!isMobile && (
+            <div className="hidden xl:flex items-center gap-4 xl:gap-5 text-[11px] font-bold tracking-wider uppercase text-stone-200">
+              <a href="#inicio" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">
+                {currentLang === 'en' ? 'Home' : currentLang === 'fr' ? 'Accueil' : currentLang === 'pt' ? 'Início' : currentLang === 'it' ? 'Inizio' : 'Inicio'}
+              </a>
               <a href="#actualites" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.cronicas}</a>
               <a href="#agenda" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.agenda}</a>
               <a href="#tours" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{currentLang === 'en' ? 'Tours' : 'Tours'}</a>
+              {!isFree && (
+                <a href="#galeria" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">
+                  {currentLang === 'en' ? 'Gallery' : currentLang === 'fr' ? 'Galerie' : currentLang === 'pt' ? 'Galeria' : currentLang === 'it' ? 'Galleria' : 'Galería'}
+                </a>
+              )}
               {(isPro || isAdvance) && <a href="#territorio" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.territorio}</a>}
               {(isPro || isAdvance) && <a href="#itinerario" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.itinerario}</a>}
               {(isPro || isAdvance) && <a href="#conseils" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.conseils}</a>}
@@ -951,15 +959,17 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
       {/* 10. PINTEREST PINBOARD (PRO & ADVANCE) */}
       {!isFree && (
-        <PinterestPinboard
-          images={data.galleryImages}
-          destination={data.destination || 'Cusco Histórico'}
-          tourName={data.name || data.hero?.title || 'Tour Cultural'}
-          tier={tier}
-          theme="cultural"
-          isMobile={isMobile}
-          lang={currentLang}
-        />
+        <div id="galeria">
+          <PinterestPinboard
+            images={data.galleryImages}
+            destination={data.destination || 'Cusco Histórico'}
+            tourName={data.name || data.hero?.title || 'Tour Cultural'}
+            tier={tier}
+            theme="cultural"
+            isMobile={isMobile}
+            lang={currentLang}
+          />
+        </div>
       )}
 
       {/* 11. LIVRE D'OR DU PATRIMOINE (RESEÑAS & TESTIMONIOS VERIFICADOS - ADVANCE ONLY) */}

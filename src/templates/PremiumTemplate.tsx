@@ -405,16 +405,28 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           </div>
         </div>
 
-        {!isFree && !isMobile && (
-          <nav className="hidden xl:flex items-center gap-6 text-[11px] uppercase tracking-[0.2em] text-neutral-300 shrink-0 font-medium">
-            <a href="#itinerario" className="hover:text-amber-300 transition-colors relative py-1 group">
-              {t.nav.experience}
+        {!isMobile && (
+          <nav className="hidden xl:flex items-center gap-5 text-[11px] uppercase tracking-[0.2em] text-neutral-300 shrink-0 font-medium">
+            <a href="#inicio" className="hover:text-amber-300 transition-colors relative py-1 group">
+              {currentLang === 'en' ? 'Home' : currentLang === 'fr' ? 'Accueil' : currentLang === 'pt' ? 'Início' : currentLang === 'it' ? 'Inizio' : 'Inicio'}
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
             </a>
+            {(isPro || isAdvance) && (
+              <a href="#itinerario" className="hover:text-amber-300 transition-colors relative py-1 group">
+                {t.nav.experience}
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+              </a>
+            )}
             <a href="#tours" className="hover:text-amber-300 transition-colors relative py-1 group">
               {t.nav.tours}
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
             </a>
+            {!isFree && (
+              <a href="#galeria" className="hover:text-amber-300 transition-colors relative py-1 group">
+                {currentLang === 'en' ? 'Gallery' : currentLang === 'fr' ? 'Galerie' : currentLang === 'pt' ? 'Galeria' : currentLang === 'it' ? 'Galleria' : 'Galería'}
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+              </a>
+            )}
             <a href="#sensorial" className="hover:text-amber-300 transition-colors relative py-1 group">
               {t.nav.sensory}
               <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
@@ -439,6 +451,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
               </a>
             )}
+            <a href="#contacto" className="hover:text-amber-300 transition-colors relative py-1 group">
+              {currentLang === 'en' ? 'Contact' : currentLang === 'pt' ? 'Contato' : currentLang === 'fr' ? 'Contact' : currentLang === 'it' ? 'Contatto' : 'Contacto'}
+              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+            </a>
           </nav>
         )}
 
@@ -528,7 +544,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       </header>
 
       {/* 3. WARM SUNLIT CINEMATIC HERO SECTION */}
-      <section className={`relative ${isMobile ? 'py-14 min-h-[540px]' : 'py-26 min-h-[90vh]'} flex items-center justify-center overflow-hidden z-10`}>
+      <section id="inicio" className={`relative ${isMobile ? 'py-14 min-h-[540px]' : 'py-26 min-h-[90vh]'} flex items-center justify-center overflow-hidden z-10`}>
         {/* Warmer Vignette Layers */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a080e] via-[#0a080e]/65 to-[#0a080e]/30 z-10" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_10%,_#0a080e_85%)] z-10 opacity-75" />
@@ -1631,15 +1647,17 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
       {/* 16. PINTEREST PINBOARD GALLERY */}
       {!isFree && (
-        <PinterestPinboard
-          images={data.galleryImages}
-          destination={translateText(data.destination || 'Cusco VIP', currentLang)}
-          tourName={translateText(data.name || data.hero?.title || 'Experiencia Premium', currentLang)}
-          tier={tier}
-          theme="premium"
-          isMobile={isMobile}
-          lang={currentLang}
-        />
+        <div id="galeria">
+          <PinterestPinboard
+            images={data.galleryImages}
+            destination={translateText(data.destination || 'Cusco VIP', currentLang)}
+            tourName={translateText(data.name || data.hero?.title || 'Experiencia Premium', currentLang)}
+            tier={tier}
+            theme="premium"
+            isMobile={isMobile}
+            lang={currentLang}
+          />
+        </div>
       )}
 
       {/* 17. TESTIMONIOS Y COMENTARIOS EXCLUSIVOS (ADVANCE ONLY) */}
@@ -1968,7 +1986,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       )}
 
       {/* 21. FOOTER VIP DE ALTA AUTORIDAD & REGULATORIO */}
-      <footer className="pt-12 pb-24 sm:pb-12 border-t border-neutral-900 relative z-10 bg-[#0a080e] px-4 sm:px-8 text-neutral-400 text-xs">
+      <footer id="contacto" className="pt-12 pb-24 sm:pb-12 border-t border-neutral-900 relative z-10 bg-[#0a080e] px-4 sm:px-8 text-neutral-400 text-xs">
         
         {/* Glow ambient effects */}
         <div className="absolute top-0 left-1/3 w-80 h-80 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />

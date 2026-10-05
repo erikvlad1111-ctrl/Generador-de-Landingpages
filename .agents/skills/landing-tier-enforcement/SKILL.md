@@ -108,4 +108,18 @@ Cada una de las 5 plantillas (`agency-portal`, `boho-nature`, `adventure`, `cult
   2. Agregar el layout condicional `activePhotos.length === 3 ? 'grid-cols-1 sm:grid-cols-3 max-w-5xl mx-auto'` para que en tablet y desktop forme una fila simétrica de 3 columnas de alta estética.
   3. En `src/app/demo/plans/page.tsx`, actualizar la descripción de la matriz comparativa de planes a `'3 Fotos (Pines)'`.
 
+### Error 9: Menús de navegación superior con menos de 5 enlaces o totalmente ocultos en planes Gratuito, Básico y Pro
+- **Síntoma / Mensaje de Error:** En los planes Gratuito (`free`), Básico (`basic`) y Pro (`pro`), las barras de navegación superior mostraban muy pocos enlaces (ej. solo 2 enlaces como "TOURS" y "GALERÍA" en Básico) o estaban completamente ocultas con `!isFree`, cuando el requerimiento de negocio exige un mínimo de 5 enlaces/textos de navegación funcionales.
+- **Causa Raíz:**
+  1. En las 5 plantillas (`AgencyPortalTemplate`, `AdventureTemplate`, `BohoTemplate`, `CulturalTemplate`, `PremiumTemplate`), los bloques de navegación de escritorio tenían la condición estricta `{!isFree && !isMobile && ...}` que ocultaba el menú completo en Gratuito.
+  2. En Básico, muchas secciones como itinerario, reseñas, sellos y faq estaban correctamente restringidas por nivel, pero no se habían provisto enlaces alternativos útiles (como "Inicio", "El Tour", "Qué Incluye", "Esencia", "Contacto").
+- **Solución Paso a Paso:**
+  1. Modificar la condición del navbar en las 5 plantillas a `{!isMobile && (...) }` para que la barra de navegación siempre se renderice en escritorio y dispositivos móviles.
+  2. Estructurar los enlaces para garantizar un mínimo de 5 enlaces en todos los niveles:
+     - **Gratuito (`free`):** Al menos 5 enlaces (`#inicio`, `#destinos`/`#actualites`/`#sobre-tour`, `#tours`, `#esencia`/`#garantias`/`#ficha-tecnica`, `#contacto`).
+     - **Básico (`basic`):** Al menos 6 enlaces (`#inicio`, `#experiencia`/`#agenda`/`#sobre-tour`, `#tours`, `#galeria`, `#incluye`/`#mochila`/`#amenidades`, `#contacto`).
+     - **Pro (`pro`):** Al menos 8-9 enlaces (`#inicio`, `#itinerario`, `#tours`, `#galeria`, `#incluye`, `#mochila`, `#guia`/`#mapa`, `#contacto`).
+     - **Advance (`advance`):** Menú completo con 10-11 enlaces (+ `#testimonios`/`#livre-dor` y `#soporte-faq`).
+  3. Asegurar las anclas `id="..."` correspondientes en cada sección de la landing (`id="inicio"`, `id="galeria"`, `id="contacto"`, etc.) para permitir navegación fluida mediante scroll suave al hacer clic.
+
 

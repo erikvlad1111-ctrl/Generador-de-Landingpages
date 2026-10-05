@@ -1057,14 +1057,19 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           </div>
 
           {/* Desktop Navigation Links (Always single line with whitespace-nowrap) */}
-          {!isFree && !isMobile && (
-            <nav className="hidden lg:flex items-center gap-3.5 xl:gap-6 text-xs xl:text-[13px] font-bold text-stone-700 tracking-wide uppercase">
+          {!isMobile && (
+            <nav className="hidden lg:flex items-center gap-3 xl:gap-5 text-xs xl:text-[13px] font-bold text-stone-700 tracking-wide uppercase">
+              <a href="#inicio" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Home' : 'Inicio'}</a>
+              <a href="#experiencia" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'The Tour' : 'El Tour'}</a>
+              {!isFree && <a href="#incluye" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Included' : 'Qué Incluye'}</a>}
+              {(isPro || isAdvance) && <a href="#itinerario" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Itinerary' : 'Itinerario'}</a>}
               <a href="#tours" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navTours}</a>
-              <a href="#galeria" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navGallery}</a>
-              {isAdvance && <a href="#paquetes" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navPackages}</a>}
+              {!isFree && <a href="#galeria" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navGallery}</a>}
+              {isFree && <a href="#destinos" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Destinations' : 'Destinos'}</a>}
               {(isPro || isAdvance) && <a href="#por-que-nosotros" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navWhyUs}</a>}
               {isAdvance && <a href="#resenas" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navReviews}</a>}
               {isAdvance && <a href="#soporte-faq" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navFaq}</a>}
+              <a href="#contacto" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Contact' : 'Contacto'}</a>
             </nav>
           )}
 
@@ -1104,27 +1109,61 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             )}
 
             {/* Mobile Hamburger Toggle Button */}
-            {!isFree && (
-              <button
-                type="button"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className={`${isMobile ? 'flex' : 'lg:hidden'} p-1.5 sm:p-2 rounded-xl text-stone-700 hover:text-[#FF5500] hover:bg-stone-100 transition-colors cursor-pointer shrink-0 ml-0.5`}
-                aria-label="Menú de navegación"
-              >
-                {mobileMenuOpen ? <X size={20} className="sm:w-[22px] sm:h-[22px]" /> : <Menu size={20} className="sm:w-[22px] sm:h-[22px]" />}
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={`${isMobile ? 'flex' : 'lg:hidden'} p-1.5 sm:p-2 rounded-xl text-stone-700 hover:text-[#FF5500] hover:bg-stone-100 transition-colors cursor-pointer shrink-0 ml-0.5`}
+              aria-label="Menú de navegación"
+            >
+              {mobileMenuOpen ? <X size={20} className="sm:w-[22px] sm:h-[22px]" /> : <Menu size={20} className="sm:w-[22px] sm:h-[22px]" />}
+            </button>
           </div>
 
         </div>
 
         {/* MOBILE NAVIGATION DRAWER (Desplegable limpio y ordenado en Móvil) */}
-        {!isFree && mobileMenuOpen && (
+        {mobileMenuOpen && (
           <div className={`${isMobile ? 'block' : 'lg:hidden'} border-t border-stone-200 bg-white/98 backdrop-blur-xl px-4 py-5 shadow-2xl transition-all`}>
             <div className="space-y-4">
               
               {/* Navigation Links Grid */}
               <div className="grid grid-cols-2 gap-2">
+                <a
+                  href="#inicio"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                >
+                  <Compass size={15} className="text-[#FF5500] shrink-0" />
+                  <span>{lang === 'en' ? 'Home' : 'Inicio'}</span>
+                </a>
+                <a
+                  href="#experiencia"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                >
+                  <Mountain size={15} className="text-[#FF5500] shrink-0" />
+                  <span>{lang === 'en' ? 'The Tour' : 'El Tour'}</span>
+                </a>
+                {!isFree && (
+                  <a
+                    href="#incluye"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                  >
+                    <CheckCircle2 size={15} className="text-[#FF5500] shrink-0" />
+                    <span>{lang === 'en' ? 'Included' : 'Qué Incluye'}</span>
+                  </a>
+                )}
+                {(isPro || isAdvance) && (
+                  <a
+                    href="#itinerario"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                  >
+                    <Calendar size={15} className="text-[#FF5500] shrink-0" />
+                    <span>{lang === 'en' ? 'Itinerary' : 'Itinerario'}</span>
+                  </a>
+                )}
                 <a
                   href="#tours"
                   onClick={() => setMobileMenuOpen(false)}
@@ -1133,14 +1172,25 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   <MapPin size={15} className="text-[#FF5500] shrink-0" />
                   <span>{t.navTours}</span>
                 </a>
-                <a
-                  href="#galeria"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
-                >
-                  <Pin size={15} className="text-[#FF5500] shrink-0" />
-                  <span>{t.navGallery}</span>
-                </a>
+                {!isFree ? (
+                  <a
+                    href="#galeria"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                  >
+                    <Pin size={15} className="text-[#FF5500] shrink-0" />
+                    <span>{t.navGallery}</span>
+                  </a>
+                ) : (
+                  <a
+                    href="#destinos"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                  >
+                    <Pin size={15} className="text-[#FF5500] shrink-0" />
+                    <span>{lang === 'en' ? 'Destinations' : 'Destinos'}</span>
+                  </a>
+                )}
                 {isAdvance && (
                   <a
                     href="#paquetes"
@@ -1181,6 +1231,14 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     <span>{t.navFaq}</span>
                   </a>
                 )}
+                <a
+                  href="#contacto"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
+                >
+                  <MessageCircle size={15} className="text-[#FF5500] shrink-0" />
+                  <span>{lang === 'en' ? 'Contact' : 'Contacto'}</span>
+                </a>
               </div>
 
               {/* Selector de Idiomas en Móvil (Solo Pro y Advance) */}
@@ -1240,7 +1298,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       </header>
 
       {/* 3. HERO SECTION (PASO 2: FOTOGRAFÍA DE PORTADA & OBJETIVO COMERCIAL) */}
-      <section className={`relative ${isMobile ? 'min-h-[380px] py-8 px-3' : 'min-h-[420px] sm:min-h-[520px] lg:min-h-[600px] py-10 sm:py-16 px-4 sm:px-6'} flex items-center justify-center overflow-hidden w-full max-w-full`}>
+      <section id="inicio" className={`relative ${isMobile ? 'min-h-[380px] py-8 px-3' : 'min-h-[420px] sm:min-h-[520px] lg:min-h-[600px] py-10 sm:py-16 px-4 sm:px-6'} flex items-center justify-center overflow-hidden w-full max-w-full`}>
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
             src={heroImage}
@@ -1417,7 +1475,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       </section>
 
       {/* 4.5 FICHA TÉCNICA DEL TOUR (PUNTO 6) & PERFIL DEL GUÍA COLEGIADO (PUNTO 7) */}
-      <section className="py-8 sm:py-14 bg-gradient-to-b from-stone-50 to-white border-b border-stone-200">
+      <section id="experiencia" className="py-8 sm:py-14 bg-gradient-to-b from-stone-50 to-white border-b border-stone-200">
         <div className="max-w-7xl mx-auto px-3 sm:px-6">
           <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-1 lg:grid-cols-12 gap-6'} items-stretch`}>
             
@@ -1554,7 +1612,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
       {/* 4.6 SERVICIOS Y PRIVILEGIOS INCLUIDOS (PUNTO 7 DEL GENERADOR - BÁSICO, PRO, ADVANCE) */}
       {!isFree && (
-        <section className="py-8 sm:py-12 bg-white border-b border-stone-200">
+        <section id="incluye" className="py-8 sm:py-12 bg-white border-b border-stone-200">
           <div className="max-w-7xl mx-auto px-3 sm:px-6">
             <div className="bg-gradient-to-br from-stone-900 via-stone-850 to-stone-950 text-white rounded-3xl p-6 sm:p-9 shadow-lg border border-stone-800">
               <div className="max-w-3xl mb-6 space-y-1.5">
@@ -2134,7 +2192,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       )}
 
       {/* 14. FOOTER REGULATORIO DE ALTA AUTORIDAD */}
-      <footer className="bg-[#1C1917] text-stone-400 pt-12 pb-24 sm:pb-12 px-4 sm:px-6 text-xs border-t border-stone-800 relative z-10">
+      <footer id="contacto" className="bg-[#1C1917] text-stone-400 pt-12 pb-24 sm:pb-12 px-4 sm:px-6 text-xs border-t border-stone-800 relative z-10">
         <div className="max-w-7xl mx-auto space-y-10">
           
           {/* Main 4-Column Directory */}

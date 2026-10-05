@@ -366,34 +366,48 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </div>
 
         {/* Desktop Navigation Links */}
-        {!isMobile && !isFree && (
-          <nav className="hidden lg:flex items-center gap-5 text-xs tracking-wider uppercase font-medium text-stone-600">
-            <a href="#sobre-tour" className="hover:text-[#C86D51] transition-colors">{t.nav.journal}</a>
-            <a href="#galeria" className="hover:text-[#C86D51] transition-colors">{isBasic ? 'Postales' : t.nav.gallery}</a>
-            
+        {!isMobile && (
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-5 text-xs tracking-wider uppercase font-medium text-stone-600">
+            <a href="#inicio" className="hover:text-[#C86D51] transition-colors">
+              {currentLang === 'en' ? 'Home' : currentLang === 'fr' ? 'Accueil' : currentLang === 'pt' ? 'Início' : currentLang === 'it' ? 'Inizio' : 'Inicio'}
+            </a>
+            {!isFree ? (
+              <a href="#sobre-tour" className="hover:text-[#C86D51] transition-colors">{t.nav.journal}</a>
+            ) : (
+              <a href="#inicio" className="hover:text-[#C86D51] transition-colors">{t.nav.journal}</a>
+            )}
+            {!isFree && (
+              <a href="#galeria" className="hover:text-[#C86D51] transition-colors">{isBasic ? 'Postales' : t.nav.gallery}</a>
+            )}
             {(isPro || isAdvance) && (
               <a href="#itinerario" className="hover:text-[#C86D51] transition-colors">{t.journal.badge || 'Bitácora'}</a>
             )}
-
             <a href="#tours" className="hover:text-[#C86D51] transition-colors">{t.nav.tours}</a>
-
+            {!isFree && (
+              <a href="#mochila" className="hover:text-[#C86D51] transition-colors">{t.nav.backpack || 'Mochila'}</a>
+            )}
             {(isPro || isAdvance) && (
               <a href="#mapa" className="hover:text-[#C86D51] transition-colors">{t.nav.map}</a>
             )}
-
-            {isAdvance && (
-              <a href="#resenas" className="hover:text-[#C86D51] transition-colors">{t.nav.reviews}</a>
-            )}
-
             {(isPro || isAdvance) && (
               <a href="#guia-campo" className="hover:text-[#C86D51] transition-colors">{t.nav.fieldGuide}</a>
             )}
-
+            {isAdvance && (
+              <a href="#resenas" className="hover:text-[#C86D51] transition-colors">{t.nav.reviews}</a>
+            )}
             {isAdvance && (
               <a href="#soporte-faq" className="hover:text-[#C86D51] transition-colors">
                 {t.nav.faq}
               </a>
             )}
+            {isFree && (
+              <a href="#esencia" className="hover:text-[#C86D51] transition-colors">
+                {currentLang === 'en' ? 'Highlights' : 'Esencia'}
+              </a>
+            )}
+            <a href="#contacto" className="hover:text-[#C86D51] transition-colors">
+              {currentLang === 'en' ? 'Contact' : currentLang === 'pt' ? 'Contato' : currentLang === 'fr' ? 'Contact' : currentLang === 'it' ? 'Contatto' : 'Contacto'}
+            </a>
           </nav>
         )}
 
@@ -462,52 +476,69 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
       </header>
 
       {/* MOBILE QUICK-JUMP CHIP BAR (Horizontal Thumb Navigation) */}
-      {!isFree && (
-        <div className="lg:hidden sticky top-[53px] z-30 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-stone-200/70 py-2 px-3 overflow-x-auto scrollbar-none flex items-center gap-2">
+      <div className="lg:hidden sticky top-[53px] z-30 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-stone-200/70 py-2 px-3 overflow-x-auto scrollbar-none flex items-center gap-2">
+        <a href="#inicio" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+          🏠 {currentLang === 'en' ? 'Home' : 'Inicio'}
+        </a>
+        {!isFree ? (
           <a href="#sobre-tour" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
             📖 {t.nav.journal}
           </a>
+        ) : (
+          <a href="#inicio" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+            📖 {t.nav.journal}
+          </a>
+        )}
+        {!isFree && (
           <a href="#galeria" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
             🖼️ {isBasic ? (currentLang === 'en' ? 'Postcards' : 'Postales') : t.nav.gallery}
           </a>
-          {(isPro || isAdvance) && (
-            <a href="#itinerario" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-              ⏱️ {t.journal.badge || 'Bitácora'}
-            </a>
-          )}
-          <a href="#tours" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            ⭐ {t.nav.tours}
+        )}
+        {(isPro || isAdvance) && (
+          <a href="#itinerario" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+            ⏱️ {t.journal.badge || 'Bitácora'}
           </a>
-          {(isPro || isAdvance) && (
-            <a href="#mapa" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-              🗺️ {t.nav.map}
-            </a>
-          )}
-          {isAdvance && (
-            <a href="#resenas" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-              💬 {t.nav.reviews}
-            </a>
-          )}
-          {(isPro || isAdvance) && (
-            <a href="#guia-campo" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-              📸 {t.nav.fieldGuide}
-            </a>
-          )}
-          {!isFree && (
-            <a href="#mochila" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-              🎒 {t.nav.backpack}
-            </a>
-          )}
-          {isAdvance && (
-            <a href="#soporte-faq" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-              ❓ {t.nav.faq}
-            </a>
-          )}
-        </div>
-      )}
+        )}
+        <a href="#tours" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+          ⭐ {t.nav.tours}
+        </a>
+        {(isPro || isAdvance) && (
+          <a href="#mapa" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+            🗺️ {t.nav.map}
+          </a>
+        )}
+        {isAdvance && (
+          <a href="#resenas" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+            💬 {t.nav.reviews}
+          </a>
+        )}
+        {(isPro || isAdvance) && (
+          <a href="#guia-campo" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+            📸 {t.nav.fieldGuide}
+          </a>
+        )}
+        {!isFree && (
+          <a href="#mochila" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+            🎒 {t.nav.backpack}
+          </a>
+        )}
+        {isAdvance && (
+          <a href="#soporte-faq" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+            ❓ {t.nav.faq}
+          </a>
+        )}
+        {isFree && (
+          <a href="#esencia" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+            ✨ {currentLang === 'en' ? 'Highlights' : 'Esencia'}
+          </a>
+        )}
+        <a href="#contacto" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+          ✉️ {currentLang === 'en' ? 'Contact' : 'Contacto'}
+        </a>
+      </div>
 
       {/* Hero Section: Editorial Cover with Pinterest Moodboard vibe */}
-      <section className="relative px-4 sm:px-8 pt-5 sm:pt-8 pb-10 sm:pb-16 max-w-6xl mx-auto overflow-hidden">
+      <section id="inicio" className="relative px-4 sm:px-8 pt-5 sm:pt-8 pb-10 sm:pb-16 max-w-6xl mx-auto overflow-hidden">
         <div className="grid md:grid-cols-12 gap-6 sm:gap-8 items-center">
           
           {/* Left Hero Content */}
@@ -533,7 +564,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             </p>
 
             {/* Quick Stats Tags */}
-            <div className="flex flex-wrap gap-2 pt-1">
+            <div id="esencia" className="flex flex-wrap gap-2 pt-1">
               <span className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl bg-white border border-stone-200 text-stone-700 text-[11px] sm:text-xs flex items-center gap-1.5 shadow-2xs">
                 <Compass size={13} className="text-[#C86D51]" />
                 {translateText(data.duration || 'Full Day', currentLang)}
@@ -729,14 +760,16 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
       {/* Section: Pinterest Pinboard Gallery - FOR BASIC, PRO, ADVANCE */}
       {!isFree && (
-        <PinterestPinboard
-          images={data.galleryImages}
-          destination={data.destination || 'Cusco, Perú'}
-          tourName={data.name || data.hero?.title || 'Tour Cusco'}
-          tier={tier}
-          theme="boho-nature"
-          isMobile={isMobile}
-        />
+        <div id="galeria">
+          <PinterestPinboard
+            images={data.galleryImages}
+            destination={data.destination || 'Cusco, Perú'}
+            tourName={data.name || data.hero?.title || 'Tour Cusco'}
+            tier={tier}
+            theme="boho-nature"
+            isMobile={isMobile}
+          />
+        </div>
       )}
 
       {/* Section: Itinerary (Visual Travel Journal by Day) - PRO & ADVANCE ONLY */}
@@ -1665,7 +1698,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
       )}
 
       {/* Bottom CTA Banner & Regulatory Footer */}
-      <footer className="bg-stone-900 text-stone-300 pt-12 pb-24 sm:pb-12 px-4 sm:px-8 space-y-12 border-t border-stone-800 relative z-10">
+      <footer id="contacto" className="bg-stone-900 text-stone-300 pt-12 pb-24 sm:pb-12 px-4 sm:px-8 space-y-12 border-t border-stone-800 relative z-10">
         
         {/* Pre-Footer Boho Experience CTA */}
         <div className="max-w-xl mx-auto space-y-4 text-center">

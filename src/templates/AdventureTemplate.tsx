@@ -271,13 +271,33 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           </div>
 
           {/* Nav Links (Desktop) */}
-          {!isFree && !isMobile && (
-            <div className="hidden lg:flex items-center gap-7 xl:gap-8 text-[13.5px] font-extrabold text-slate-700">
+          {!isMobile && (
+            <div className="hidden lg:flex items-center gap-5 xl:gap-7 text-[13px] font-extrabold text-slate-700">
+              <a href="#inicio" className="hover:text-blue-600 transition-colors py-1">{t.nav.home || 'Inicio'}</a>
               <a href="#destinos" className="hover:text-blue-600 transition-colors py-1">{t.nav.destinations}</a>
               <a href="#tours" className="hover:text-blue-600 transition-colors py-1">{t.nav.iconic}</a>
-              {(isPro || isAdvance) && <a href="#itinerario" className="hover:text-blue-600 transition-colors py-1">{t.nav.itinerary}</a>}
-              <a href="#incluye" className="hover:text-blue-600 transition-colors py-1">{t.nav.included}</a>
-              {isAdvance && <a href="#soporte-faq" className="hover:text-blue-600 transition-colors py-1">{t.nav.faq}</a>}
+              {!isFree && (
+                <a href="#galeria" className="hover:text-blue-600 transition-colors py-1">{t.nav.gallery || 'Galería'}</a>
+              )}
+              {(isPro || isAdvance) && (
+                <a href="#itinerario" className="hover:text-blue-600 transition-colors py-1">{t.nav.itinerary}</a>
+              )}
+              {!isFree && (
+                <a href="#incluye" className="hover:text-blue-600 transition-colors py-1">{t.nav.included}</a>
+              )}
+              {(isPro || isAdvance) && (
+                <a href="#mochila" className="hover:text-blue-600 transition-colors py-1">{t.nav.gear || 'Equipamiento'}</a>
+              )}
+              {isAdvance && (
+                <a href="#testimonios" className="hover:text-blue-600 transition-colors py-1">{t.nav.reviews || 'Reseñas'}</a>
+              )}
+              {isAdvance && (
+                <a href="#soporte-faq" className="hover:text-blue-600 transition-colors py-1">{t.nav.faq}</a>
+              )}
+              {isFree && (
+                <a href="#garantias" className="hover:text-blue-600 transition-colors py-1">{t.nav.guarantees || 'Garantías'}</a>
+              )}
+              <a href="#contacto" className="hover:text-blue-600 transition-colors py-1">{t.nav.contact || 'Contacto'}</a>
             </div>
           )}
 
@@ -352,7 +372,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       </nav>
 
       {/* 2. HERO SECTION CON IMAGEN DE FONDO COMPLETO */}
-      <section className="relative w-full overflow-hidden min-h-[580px] sm:min-h-[660px] lg:min-h-[720px] flex items-center">
+      <section id="inicio" className="relative w-full overflow-hidden min-h-[580px] sm:min-h-[660px] lg:min-h-[720px] flex items-center">
         {/* Full Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -987,20 +1007,22 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
       {/* 8. PINTEREST PINBOARD (PRO & ADVANCE) */}
       {!isFree && (
-        <PinterestPinboard
-          images={data.galleryImages}
-          destination={data.destination || 'Cusco, Perú'}
-          tourName={data.name || data.hero?.title || 'Expedición de Aventura'}
-          tier={tier}
-          theme="adventure"
-          isMobile={isMobile}
-          lang={currentLang}
-        />
+        <div id="galeria">
+          <PinterestPinboard
+            images={data.galleryImages}
+            destination={data.destination || 'Cusco, Perú'}
+            tourName={data.name || data.hero?.title || 'Expedición de Aventura'}
+            tier={tier}
+            theme="adventure"
+            isMobile={isMobile}
+            lang={currentLang}
+          />
+        </div>
       )}
 
       {/* 9. LOGISTICS: QUÉ LLEVAR & QUÉ NO INCLUYE (PRO & ADVANCE) */}
       {(isPro || isAdvance) && ((data.notIncluded && data.notIncluded.length > 0) || (data.whatToBring && data.whatToBring.length > 0)) && (
-        <section className="py-12 sm:py-16 px-4 sm:px-8 max-w-5xl mx-auto">
+        <section id="mochila" className="py-12 sm:py-16 px-4 sm:px-8 max-w-5xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {/* Qué NO incluye */}
             {data.notIncluded && data.notIncluded.length > 0 && (
@@ -1043,7 +1065,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
       {/* 10. TESTIMONIALS (ADVANCE ONLY) */}
       {isAdvance && (
-        <section className="py-16 sm:py-24 px-4 sm:px-8 bg-gradient-to-b from-slate-50/80 via-white to-slate-50/80 border-t border-slate-100">
+        <section id="testimonios" className="py-16 sm:py-24 px-4 sm:px-8 bg-gradient-to-b from-slate-50/80 via-white to-slate-50/80 border-t border-slate-100">
         <div className="max-w-6xl mx-auto">
           
           {/* Header with Social Proof */}
@@ -1133,7 +1155,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
       {/* 11. BASE DE OPERACIONES, OFICINA FÍSICA & SERVICIOS AL EXPEDICIONARIO (PRO & ADVANCE) */}
       {(isPro || isAdvance) && (
-        <section className="py-16 sm:py-24 px-4 sm:px-8 bg-slate-50/70 border-t border-slate-200/80">
+        <section id="base-operaciones" className="py-16 sm:py-24 px-4 sm:px-8 bg-slate-50/70 border-t border-slate-200/80">
         <div className="max-w-6xl mx-auto space-y-10 sm:space-y-12">
           
           {/* Section Header */}
@@ -1321,7 +1343,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       )}
 
       {/* 13. FOOTER COMPLETO DE ALTA AUTORIDAD & CONVERSIÓN */}
-      <footer className="bg-slate-950 text-slate-400 text-xs border-t border-slate-800/80 pt-14 pb-24 sm:pb-12 px-4 sm:px-8 relative overflow-hidden">
+      <footer id="contacto" className="bg-slate-950 text-slate-400 text-xs border-t border-slate-800/80 pt-14 pb-24 sm:pb-12 px-4 sm:px-8 relative overflow-hidden">
         
         {/* Glow ambient background effects */}
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-3xl pointer-events-none" />
@@ -1330,7 +1352,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         <div className="max-w-7xl mx-auto space-y-12 sm:space-y-14 relative z-10">
           
           {/* A. Pre-Footer High-Conversion Banner */}
-          <div className="relative rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900/95 to-blue-950/60 border border-slate-800 p-6 sm:p-10 shadow-2xl overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 text-left">
+          <div id="garantias" className="relative rounded-3xl bg-gradient-to-r from-slate-900 via-slate-900/95 to-blue-950/60 border border-slate-800 p-6 sm:p-10 shadow-2xl overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 text-left">
             <div className="space-y-3 max-w-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[11px] font-black uppercase tracking-wider">
                 <Sparkles size={12} className="text-blue-400" />
