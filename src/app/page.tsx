@@ -84,27 +84,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Demos directas sin login */}
-          <div className="pt-2">
-            <span className="text-xs text-slate-400 font-semibold block mb-2">Explorar Demos en Vivo:</span>
-            <div className="flex flex-wrap gap-2">
-              <a href="/p/machu-picchu-full-day?template=agency-portal" target="_blank" className="px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs font-bold transition-all">
-                🌐 Portal Agencia
-              </a>
-              <a href="/p/laguna-humantay-bitacora-fotografica-paisajismo?template=boho-nature" target="_blank" className="px-3 py-1.5 rounded-lg bg-orange-500/10 hover:bg-orange-500/20 text-orange-300 border border-orange-500/30 text-xs font-bold transition-all">
-                📷 Boho & Naturaleza
-              </a>
-              <a href="/p/machu-picchu-full-day?template=premium" target="_blank" className="px-3 py-1.5 rounded-lg bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 text-xs font-bold transition-all">
-                👑 VIP Lujo
-              </a>
-              <a href="/p/salkantay-trek-5-dias?template=adventure" target="_blank" className="px-3 py-1.5 rounded-lg bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/30 text-xs font-bold transition-all">
-                🏔️ TrekExplorer
-              </a>
-              <a href="/p/city-tour-cusco-ancestral?template=cultural" target="_blank" className="px-3 py-1.5 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/30 text-xs font-bold transition-all">
-                🏛️ Cultural
-              </a>
-            </div>
-          </div>
+
         </div>
 
         {/* Right Side: Login Box */}
