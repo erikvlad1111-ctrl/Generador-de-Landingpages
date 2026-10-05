@@ -15,7 +15,7 @@ Cada una de las 5 plantillas (`agency-portal`, `boho-nature`, `adventure`, `cult
 | **Ficha Rápida Técnica (Duración, Altitud, Guía)** | Píldoras en Hero | ✅ Sí | ✅ Sí | ✅ Sí |
 | **Módulo "Acerca del Tour"** | ❌ Oculto | ✅ Sí | ✅ Sí | ✅ Sí |
 | **Módulo "Qué Incluye el Servicio"** | ❌ Oculto | ✅ Sí | ✅ Sí | ✅ Sí |
-| **Galería Fotográfica (PinterestPinboard)** | ❌ (Solo 1 foto en Hero) | ✅ Sí (2 Fotos) | ✅ Sí (Hasta 6 Fotos) | ✅ Sí (HD Completa / 8+ fotos) |
+| **Galería Fotográfica (PinterestPinboard)** | ❌ (Solo 1 foto en Hero) | ✅ Sí (3 Pines / Fotos) | ✅ Sí (Hasta 6 Fotos) | ✅ Sí (HD Completa / 8+ fotos) |
 | **Itinerario Cronológico Detallado** | ❌ Oculto | ❌ Oculto | ✅ Sí (Horas / Etapas) | ✅ Sí (Día a Día) |
 | **Qué NO Incluye + Mochila** | ❌ Oculto | ❌ Oculto | ✅ Sí | ✅ Sí |
 | **Sellos de Confianza (DIRCETUR, Safe Travels, RUC 20)** | ❌ Oculto | ❌ Oculto | ✅ Sí | ✅ Sí |
@@ -99,5 +99,13 @@ Cada una de las 5 plantillas (`agency-portal`, `boho-nature`, `adventure`, `cult
   3. En `defaultCatalogTours.ts`, establecer `"Día Completo"` como valor en español y agregar los mapeos de duraciones e idiomas en `PHRASE_MAP` (`src/data/translations.ts`).
   4. Envolver todas las instancias de duración en tarjetas con `{translateText(tour.duration, currentLang)}`.
   5. En `src/app/p/[slug]/page.tsx`, forzar `language: 'es'` y `languages: ['es']` cuando `tier === 'free' || tier === 'basic'`.
+
+### Error 8: Límite de 2 pines en modo Básico en lugar de 3 en el Tablero de Inspiración (PinterestPinboard)
+- **Síntoma / Mensaje de Error:** En el modo básico (`basic`), el Tablero de Pines mostraba solo 2 fotos y la insignia indicaba "2 Pines en el Tablero", dejando espacio libre asimétrico en pantallas medianas y grandes.
+- **Causa Raíz:** En `src/components/common/PinterestPinboard.tsx`, la variable `pinCount` estaba definida como `tier === 'free' ? 1 : tier === 'basic' ? 2 : ...`, y la grilla solo contemplaba `activePhotos.length === 2 ? 'grid-cols-2 max-w-2xl mx-auto' : ...`.
+- **Solución Paso a Paso:**
+  1. Actualizar `pinCount` en `PinterestPinboard.tsx` para `tier === 'basic' ? 3`.
+  2. Agregar el layout condicional `activePhotos.length === 3 ? 'grid-cols-1 sm:grid-cols-3 max-w-5xl mx-auto'` para que en tablet y desktop forme una fila simétrica de 3 columnas de alta estética.
+  3. En `src/app/demo/plans/page.tsx`, actualizar la descripción de la matriz comparativa de planes a `'3 Fotos (Pines)'`.
 
 

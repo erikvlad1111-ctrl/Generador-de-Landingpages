@@ -211,7 +211,7 @@ const COMPARISON_MATRIX: MatrixRow[] = [
     module: 'Galería Fotográfica del Destino', 
     desc: 'Capacidad y formato de imágenes en alta resolución', 
     free: '1 Foto fija', 
-    basic: '2 Fotos', 
+    basic: '3 Fotos (Pines)', 
     pro: 'Hasta 6 Fotos', 
     advance: 'Galería HD Completa (Masonry)' 
   },

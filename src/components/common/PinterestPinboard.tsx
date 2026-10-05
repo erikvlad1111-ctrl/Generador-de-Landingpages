@@ -148,7 +148,7 @@ export default function PinterestPinboard({
   const allImages = images && images.length > 0 ? [...images, ...defaultImages] : defaultImages;
 
   // Amount of pins based on plan tier
-  const pinCount = tier === 'free' ? 1 : tier === 'basic' ? 2 : tier === 'pro' ? 6 : 8;
+  const pinCount = tier === 'free' ? 1 : tier === 'basic' ? 3 : tier === 'pro' ? 6 : 8;
   const activePhotos = allImages.slice(0, pinCount);
 
   // Initial Pin Data
@@ -242,6 +242,8 @@ export default function PinterestPinboard({
             ? 'grid-cols-1 max-w-lg mx-auto' 
             : activePhotos.length === 2 
             ? 'grid-cols-2 max-w-2xl mx-auto' 
+            : activePhotos.length === 3
+            ? 'grid-cols-1 sm:grid-cols-3 max-w-5xl mx-auto'
             : 'grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
         } gap-2.5 sm:gap-6 items-start`}>
           {visiblePins.map((pin, idx) => {
