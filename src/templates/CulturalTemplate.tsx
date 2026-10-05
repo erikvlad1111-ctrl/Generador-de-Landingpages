@@ -94,7 +94,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
     const sourceTours = (data?.catalogTours && data.catalogTours.length > 0)
       ? data.catalogTours
       : DEFAULT_SECONDARY_CATALOG_TOURS;
-    const tourLimit = isFree ? 1 : isBasic ? 3 : 6;
+    const tourLimit = (isFree || isBasic) ? 3 : 6;
     return sourceTours.slice(0, tourLimit);
   }, [data?.catalogTours, isFree, isBasic]);
 
@@ -540,9 +540,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         <div className={`grid gap-6 sm:gap-7 max-w-6xl mx-auto ${
           isMobile 
             ? 'grid-cols-1 max-w-sm' 
-            : isFree 
-            ? 'max-w-md grid-cols-1' 
-            : isBasic 
+            : (isFree || isBasic)
             ? 'grid-cols-1 md:grid-cols-3' 
             : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
         }`}>
@@ -580,7 +578,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
                     <div className="absolute bottom-3 left-3 right-3 text-white flex items-center justify-between text-xs">
                       <span className="flex items-center gap-1 bg-black/50 backdrop-blur-xs px-2.5 py-0.5 rounded-lg text-[11px]">
-                        <Clock size={12} /> {tour.duration}
+                        <Clock size={12} /> {translateText(tour.duration, currentLang)}
                       </span>
                       <span className="font-serif font-bold bg-stone-900/85 px-2.5 py-0.5 rounded-lg text-amber-300 text-[11px]">
                         {tour.price}
@@ -628,7 +626,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                       className="bg-red-700 hover:bg-red-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                     >
                       <MessageCircle size={13} />
-                      <span>{currentLang === 'en' ? 'Inquire' : 'Consultar'}</span>
+                      <span>{t.cta.whatsapp || 'Consultar'}</span>
                     </a>
                   )}
                 </div>

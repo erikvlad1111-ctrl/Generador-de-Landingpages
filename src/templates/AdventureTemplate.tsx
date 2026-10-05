@@ -111,7 +111,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
     const sourceTours = (data?.catalogTours && data.catalogTours.length > 0)
       ? data.catalogTours
       : DEFAULT_SECONDARY_CATALOG_TOURS;
-    const tourLimit = isFree ? 1 : isBasic ? 3 : 6;
+    const tourLimit = (isFree || isBasic) ? 3 : 6;
     return sourceTours.slice(0, tourLimit);
   }, [data?.catalogTours, isFree, isBasic]);
 
@@ -417,13 +417,15 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   </a>
                 )}
 
-                <a
-                  href="#itinerario"
-                  className="bg-white/10 hover:bg-white/20 text-white font-bold px-5 py-3.5 rounded-full text-sm backdrop-blur-md border border-white/25 shadow-sm hover:border-white/40 transition-all flex items-center gap-2 cursor-pointer"
-                >
-                  <Compass size={16} className="text-blue-400" />
-                  <span>{t.hero.viewItinerary}</span>
-                </a>
+                {(isPro || isAdvance) && (
+                  <a
+                    href="#itinerario"
+                    className="bg-white/10 hover:bg-white/20 text-white font-bold px-5 py-3.5 rounded-full text-sm backdrop-blur-md border border-white/25 shadow-sm hover:border-white/40 transition-all flex items-center gap-2 cursor-pointer"
+                  >
+                    <Compass size={16} className="text-blue-400" />
+                    <span>{t.hero.viewItinerary}</span>
+                  </a>
+                )}
 
                 {data.price && (
                   <div className="px-4 py-3 rounded-full bg-blue-600/90 text-white backdrop-blur-md border border-blue-400/40 font-black text-xs shadow-md">
@@ -597,9 +599,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           <div className={`grid gap-6 sm:gap-7 max-w-6xl mx-auto ${
             isMobile 
               ? 'grid-cols-1 max-w-sm' 
-              : isFree 
-              ? 'max-w-md grid-cols-1' 
-              : isBasic 
+              : (isFree || isBasic)
               ? 'grid-cols-1 md:grid-cols-3' 
               : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
           }`}>
@@ -665,7 +665,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                       </h3>
                       <div className="flex items-center gap-3 text-xs text-slate-500 pt-1">
                         <span className="flex items-center gap-1">
-                          <Clock size={12} className="text-slate-400" /> {tour.duration}
+                          <Clock size={12} className="text-slate-400" /> {translateText(tour.duration, currentLang)}
                         </span>
                       </div>
                     </div>

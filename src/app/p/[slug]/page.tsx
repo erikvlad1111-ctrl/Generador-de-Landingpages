@@ -31,10 +31,13 @@ function PublicLandingContent() {
       ? tierQuery
       : (found.tier || 'advance');
 
+    const isFreeOrBasic = activeTier === 'free' || activeTier === 'basic';
+
     return {
       ...found,
       ...(templateQuery ? { template: templateQuery } : {}),
       tier: activeTier,
+      ...(isFreeOrBasic ? { language: 'es' as const, languages: ['es' as const] } : {}),
     };
   });
 

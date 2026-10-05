@@ -92,7 +92,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
     const sourceTours = (data?.catalogTours && data.catalogTours.length > 0)
       ? data.catalogTours
       : DEFAULT_SECONDARY_CATALOG_TOURS;
-    const tourLimit = isFree ? 1 : isBasic ? 3 : 6;
+    const tourLimit = (isFree || isBasic) ? 3 : 6;
     return sourceTours.slice(0, tourLimit);
   }, [data?.catalogTours, isFree, isBasic]);
 
@@ -1184,9 +1184,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         <div className={`grid gap-6 sm:gap-8 ${
           isMobile 
             ? 'grid-cols-1 max-w-sm mx-auto' 
-            : isFree 
-            ? 'max-w-md mx-auto grid-cols-1' 
-            : isBasic 
+            : (isFree || isBasic)
             ? 'grid-cols-1 md:grid-cols-3' 
             : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
         }`}>
@@ -1224,7 +1222,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
                     <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-neutral-200">
                       <span className="flex items-center gap-1 bg-neutral-950/70 backdrop-blur-xs px-2 py-0.5 rounded-md text-[11px] font-mono">
-                        <Clock size={11} className="text-amber-400" /> {tour.duration}
+                        <Clock size={11} className="text-amber-400" /> {translateText(tour.duration, currentLang)}
                       </span>
                       <span className="bg-amber-400/20 border border-amber-400/40 text-amber-300 px-2 py-0.5 rounded-md text-[11px] font-mono font-bold">
                         {tour.price}

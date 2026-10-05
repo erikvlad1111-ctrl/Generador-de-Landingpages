@@ -768,7 +768,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
     badge: sec.badge || '4.9 ★'
   }));
 
-  const tourLimit = isFree ? 1 : isBasic ? 3 : 6;
+  const tourLimit = (isFree || isBasic) ? 3 : 6;
   const displayTours = secondaryTours.slice(0, tourLimit);
 
   const availableCalculatorTours = React.useMemo(() => {
@@ -1410,7 +1410,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50/80 sm:bg-transparent space-y-0.5 sm:space-y-1 border border-stone-100 sm:border-0">
               <span className="text-lg sm:text-4xl font-black text-[#FF5500] tracking-tight block animate-pulse-subtle">4.9 ★</span>
               <span className="text-[11px] sm:text-sm font-bold text-stone-700 block">{t.statRating}</span>
-              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">Google Reviews</span>
+              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{lang === 'en' ? 'Google Reviews' : 'Reseñas en Google'}</span>
             </div>
           </div>
         </div>
@@ -1523,7 +1523,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   <div>
                     <h4 className="text-xl font-black text-white tracking-tight drop-shadow-sm">{guideName}</h4>
                     <p className="text-xs text-stone-200 font-semibold">{translateText(data?.guideCert || 'Guía Oficial de Turismo DIRCETUR', lang)}</p>
-                    <p className="text-[11px] text-[#FF9955] font-medium mt-0.5">🗣️ {t.guideSpokenLanguages}: {translateText(data?.guideLanguages || 'Español, English, Français, Português, Italiano', lang)}</p>
+                    <p className="text-[11px] text-[#FF9955] font-medium mt-0.5">🗣️ {t.guideSpokenLanguages}: {translateText(data?.guideLanguages || 'Español, Inglés, Francés, Portugués, Italiano', lang)}</p>
                   </div>
                 </div>
 
@@ -1586,8 +1586,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         </section>
       )}
 
-      {/* 4.8 CALCULADORA INTERACTIVA DE PRESUPUESTO EN VIVO (CONVERSIÓN DIRECTA) */}
-      {!isFree && (
+      {/* 4.8 CALCULADORA INTERACTIVA DE PRESUPUESTO EN VIVO (CONVERSIÓN DIRECTA - SOLO PLAN AVANZADO) */}
+      {isAdvance && (
         <LiveBudgetCalculator
           basePriceUSD={parseInt(data?.price?.replace(/[^0-9]/g, '') || '45')}
           tourTitle={tourTitle}
@@ -1653,9 +1653,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         <div className={`grid gap-4 sm:gap-8 ${
           isMobile 
             ? 'grid-cols-1 max-w-sm mx-auto' 
-            : isFree 
-            ? 'max-w-md mx-auto grid-cols-1' 
-            : isBasic 
+            : (isFree || isBasic)
             ? 'grid-cols-1 md:grid-cols-3' 
             : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
         }`}>
@@ -1702,7 +1700,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
                     <div className="flex items-center justify-between text-xs text-stone-500 pt-0.5">
                       <span className="flex items-center gap-1">
-                        <Clock size={13} className="text-stone-400 shrink-0" /> {tour.duration}
+                        <Clock size={13} className="text-stone-400 shrink-0" /> {translateText(tour.duration, lang)}
                       </span>
                       <span className="flex items-center gap-1 shrink-0">
                         <MapPin size={13} className="text-[#FF5500] shrink-0" /> {tour.location}

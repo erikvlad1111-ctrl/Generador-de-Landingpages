@@ -90,3 +90,14 @@ Cada una de las 5 plantillas (`agency-portal`, `boho-nature`, `adventure`, `cult
   4. En `AgencyPortalTemplate`, fijar `displayTours = secondaryTours.slice(0, tourLimit)` para renderizar con consistencia los 6 tours del catálogo en el grid de 3 columnas (2 filas completas de 3).
   5. Actualizar `CatalogToursEditorModal.tsx` y `src/app/demo/new/page.tsx` para listar del #1 al #6 ("6 Tours en Vitrina").
 
+### Error 7: Límite de 1 tour en plan Gratuito y textos en inglés en catálogo secundario
+- **Síntoma / Mensaje de Error:** En el plan Gratuito (`free`) solo se mostraba 1 tour en una columna solitaria, cuando ambos modos básicos y gratuitos debían presentar 3 tours destacados en el catálogo secundario. Además, se filtraban términos en inglés (ej. "Full Day", "Google Reviews", botones en inglés) en landings básicas/gratuitas.
+- **Causa Raíz:** Las plantillas tenían `tourLimit = isFree ? 1 : isBasic ? 3 : 6;` y clases CSS condicionales `isFree ? 'max-w-md grid-cols-1' : ...`. En `defaultCatalogTours.ts` la duración por defecto estaba escrita en inglés (`"Full Day"`) y las tarjetas renderizaban `{tour.duration}` de forma directa sin pasar por `translateText`.
+- **Solución Paso a Paso:**
+  1. Actualizar `const tourLimit = (isFree || isBasic) ? 3 : 6;` en las 5 plantillas (`AdventureTemplate`, `BohoTemplate`, `CulturalTemplate`, `PremiumTemplate`, `AgencyPortalTemplate`).
+  2. Unificar la grilla para que `(isFree || isBasic)` use `grid-cols-1 md:grid-cols-3` equilibrando las 3 tarjetas en una fila completa.
+  3. En `defaultCatalogTours.ts`, establecer `"Día Completo"` como valor en español y agregar los mapeos de duraciones e idiomas en `PHRASE_MAP` (`src/data/translations.ts`).
+  4. Envolver todas las instancias de duración en tarjetas con `{translateText(tour.duration, currentLang)}`.
+  5. En `src/app/p/[slug]/page.tsx`, forzar `language: 'es'` y `languages: ['es']` cuando `tier === 'free' || tier === 'basic'`.
+
+

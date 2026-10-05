@@ -326,7 +326,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
     const sourceTours = (data?.catalogTours && data.catalogTours.length > 0)
       ? data.catalogTours
       : DEFAULT_SECONDARY_CATALOG_TOURS;
-    const tourLimit = isFree ? 1 : isBasic ? 3 : 6;
+    const tourLimit = (isFree || isBasic) ? 3 : 6;
     return sourceTours.slice(0, tourLimit);
   }, [data?.catalogTours, isFree, isBasic]);
 
@@ -483,20 +483,26 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               🗺️ {t.nav.map}
             </a>
           )}
-          <a href="#resenas" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            💬 {t.nav.reviews}
-          </a>
+          {isAdvance && (
+            <a href="#resenas" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+              💬 {t.nav.reviews}
+            </a>
+          )}
           {(isPro || isAdvance) && (
             <a href="#guia-campo" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
               📸 {t.nav.fieldGuide}
             </a>
           )}
-          <a href="#mochila" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            🎒 {t.nav.backpack}
-          </a>
-          <a href="#soporte-faq" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            ❓ {t.nav.faq}
-          </a>
+          {!isFree && (
+            <a href="#mochila" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+              🎒 {t.nav.backpack}
+            </a>
+          )}
+          {isAdvance && (
+            <a href="#soporte-faq" className="shrink-0 text-[11px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
+              ❓ {t.nav.faq}
+            </a>
+          )}
         </div>
       )}
 
@@ -1005,9 +1011,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         <div className={`grid gap-6 sm:gap-8 ${
           isMobile 
             ? 'grid-cols-1 max-w-sm mx-auto' 
-            : isFree 
-            ? 'max-w-md mx-auto grid-cols-1' 
-            : isBasic 
+            : (isFree || isBasic)
             ? 'grid-cols-1 md:grid-cols-3' 
             : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
         }`}>
@@ -1048,7 +1052,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
                     <div className="absolute bottom-2.5 left-2.5 right-2.5 text-white flex items-center justify-between text-xs">
                       <span className="flex items-center gap-1 bg-black/40 backdrop-blur-xs px-2 py-0.5 rounded-lg text-[11px]">
-                        <Clock size={12} /> {tour.duration}
+                        <Clock size={12} /> {translateText(tour.duration, currentLang)}
                       </span>
                       <span className="font-serif font-bold bg-[#588157]/90 px-2 py-0.5 rounded-lg text-white text-[11px]">
                         {tour.price}
@@ -1337,7 +1341,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                   </h3>
                   <div className="flex items-center justify-between text-xs text-stone-500 mt-2">
                     <span className="flex items-center gap-1 font-sans">
-                      <Clock size={12} className="text-stone-400" /> {tour.duration || 'Full Day'}
+                      <Clock size={12} className="text-stone-400" /> {translateText(tour.duration || 'Día Completo', currentLang)}
                     </span>
                     <span className="flex items-center gap-1 font-sans">
                       <MapPin size={12} className="text-[#C86D51]" /> {tour.location || 'Cusco'}

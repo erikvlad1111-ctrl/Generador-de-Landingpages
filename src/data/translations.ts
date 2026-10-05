@@ -81,6 +81,92 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     it: 'Oasi di Huacachina & Isole Ballestas'
   },
 
+  // --- DURACIONES DE TOURS ---
+  'Full Day': {
+    es: 'Día Completo',
+    en: 'Full Day',
+    pt: 'Dia Completo',
+    fr: 'Journée Complète',
+    it: 'Giornata Intera'
+  },
+  'Día Completo': {
+    es: 'Día Completo',
+    en: 'Full Day',
+    pt: 'Dia Completo',
+    fr: 'Journée Complète',
+    it: 'Giornata Intera'
+  },
+  'Full Day (05:00 - 18:00)': {
+    es: 'Día Completo (05:00 - 18:00)',
+    en: 'Full Day (05:00 - 18:00)',
+    pt: 'Dia Completo (05:00 - 18:00)',
+    fr: 'Journée Complète (05:00 - 18:00)',
+    it: 'Giornata Intera (05:00 - 18:00)'
+  },
+  'Día Completo (05:00 - 18:00)': {
+    es: 'Día Completo (05:00 - 18:00)',
+    en: 'Full Day (05:00 - 18:00)',
+    pt: 'Dia Completo (05:00 - 18:00)',
+    fr: 'Journée Complète (05:00 - 18:00)',
+    it: 'Giornata Intera (05:00 - 18:00)'
+  },
+  'Full Day (04:00 - 17:30)': {
+    es: 'Día Completo (04:00 - 17:30)',
+    en: 'Full Day (04:00 - 17:30)',
+    pt: 'Dia Completo (04:00 - 17:30)',
+    fr: 'Journée Complète (04:00 - 17:30)',
+    it: 'Giornata Intera (04:00 - 17:30)'
+  },
+  'Día Completo (04:00 - 17:30)': {
+    es: 'Día Completo (04:00 - 17:30)',
+    en: 'Full Day (04:00 - 17:30)',
+    pt: 'Dia Completo (04:00 - 17:30)',
+    fr: 'Journée Complète (04:00 - 17:30)',
+    it: 'Giornata Intera (04:00 - 17:30)'
+  },
+  'Full Day (8:00 - 18:00)': {
+    es: 'Día Completo (08:00 - 18:00)',
+    en: 'Full Day (08:00 - 18:00)',
+    pt: 'Dia Completo (08:00 - 18:00)',
+    fr: 'Journée Complète (08:00 - 18:00)',
+    it: 'Giornata Intera (08:00 - 18:00)'
+  },
+  'Full Day Fotográfico': {
+    es: 'Día Completo Fotográfico',
+    en: 'Full Day Photo Journal',
+    pt: 'Dia Completo Fotográfico',
+    fr: 'Journée Photo Complète',
+    it: 'Giornata Fotografica Completa'
+  },
+  '1 Día Completo': {
+    es: '1 Día Completo',
+    en: '1 Full Day',
+    pt: '1 Dia Completo',
+    fr: '1 Journée Complète',
+    it: '1 Giornata Intera'
+  },
+  '2 Días / 1 Noche': {
+    es: '2 Días / 1 Noche',
+    en: '2 Days / 1 Night',
+    pt: '2 Dias / 1 Noite',
+    fr: '2 Jours / 1 Nuit',
+    it: '2 Giorni / 1 Notte'
+  },
+  'Español, English, Français, Português, Italiano': {
+    es: 'Español, Inglés, Francés, Portugués e Italiano',
+    en: 'Spanish, English, French, Portuguese & Italian',
+    pt: 'Espanhol, Inglês, Francês, Português e Italiano',
+    fr: 'Espagnol, Anglais, Français, Portugais et Italien',
+    it: 'Spagnolo, Inglese, Francese, Portoghese e Italiano'
+  },
+  'Español, English & Français': {
+    es: 'Español, Inglés y Francés',
+    en: 'Spanish, English & French',
+    pt: 'Espanhol, Inglês e Francês',
+    fr: 'Espagnol, Anglais et Français',
+    it: 'Spagnolo, Inglese e Francese'
+  },
+
   // --- CATEGORÍAS DEL CATÁLOGO DE TOURS ---
   'Aventura & Trekking': {
     es: 'Aventura & Trekking',
@@ -478,13 +564,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     pt: 'Meio Dia (4.5 Horas)',
     fr: 'Demi-Journée (4.5 Heures)',
     it: 'Mezza Giornata (4.5 Ore)'
-  },
-  '2 Días / 1 Noche': {
-    es: '2 Días / 1 Noche',
-    en: '2 Days / 1 Night',
-    pt: '2 Dias / 1 Noite',
-    fr: '2 Jours / 1 Nuit',
-    it: '2 Giorni / 1 Notte'
   },
 
   // --- PERFIL DEL GUÍA ---
