@@ -4,6 +4,7 @@ export interface BohoI18nTexts {
   nav: {
     gallery: string;
     journal: string;
+    itinerary: string;
     tours: string;
     map: string;
     reviews: string;
@@ -139,14 +140,15 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
   // ==========================================
   es: {
     nav: {
-      gallery: 'Postales & Pines',
+      gallery: 'Postales',
       journal: 'Bitácora',
-      tours: 'Mejores Tours',
+      itinerary: 'Itinerario',
+      tours: 'Tours',
       map: 'Mapa',
       reviews: 'Reseñas',
-      fieldGuide: 'Guía de Campo',
+      fieldGuide: 'Guía',
       backpack: 'Mochila',
-      faq: 'Soporte & FAQ'
+      faq: 'FAQ'
     },
     cta: {
       whatsapp: 'WhatsApp',
@@ -279,14 +281,15 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
   // ==========================================
   en: {
     nav: {
-      gallery: 'Postcards & Pins',
-      journal: 'Travel Journal',
-      tours: 'Curated Tours',
-      map: 'Route Map',
+      gallery: 'Postcards',
+      journal: 'Journal',
+      itinerary: 'Itinerary',
+      tours: 'Tours',
+      map: 'Map',
       reviews: 'Reviews',
-      fieldGuide: 'Field Guide',
-      backpack: 'Daypack',
-      faq: 'Support & FAQ'
+      fieldGuide: 'Guide',
+      backpack: 'Pack',
+      faq: 'FAQ'
     },
     cta: {
       whatsapp: 'WhatsApp',
@@ -419,14 +422,15 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
   // ==========================================
   pt: {
     nav: {
-      gallery: 'Postais & Fotos',
-      journal: 'Diário de Bordo',
-      tours: 'Melhores Passeios',
-      map: 'Mapa da Rota',
+      gallery: 'Postais',
+      journal: 'Diário',
+      itinerary: 'Itinerário',
+      tours: 'Passeios',
+      map: 'Mapa',
       reviews: 'Depoimentos',
-      fieldGuide: 'Guia de Campo',
+      fieldGuide: 'Guia',
       backpack: 'Mochila',
-      faq: 'Suporte & FAQ'
+      faq: 'FAQ'
     },
     cta: {
       whatsapp: 'WhatsApp',
@@ -559,14 +563,15 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
   // ==========================================
   fr: {
     nav: {
-      gallery: 'Cartes Postales',
-      journal: 'Carnet de Bord',
-      tours: 'Circuits Curatés',
-      map: 'Carte du Parcours',
-      reviews: 'Témoignages',
-      fieldGuide: 'Guide de Terrain',
-      backpack: 'Sac à Dos',
-      faq: 'Support & FAQ'
+      gallery: 'Postales',
+      journal: 'Carnet',
+      itinerary: 'Itinéraire',
+      tours: 'Circuits',
+      map: 'Carte',
+      reviews: 'Avis',
+      fieldGuide: 'Guide',
+      backpack: 'Sac à dos',
+      faq: 'FAQ'
     },
     cta: {
       whatsapp: 'WhatsApp',
@@ -699,14 +704,15 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
   // ==========================================
   it: {
     nav: {
-      gallery: 'Cartoline & Foto',
-      journal: 'Diario di Bordo',
-      tours: 'Migliori Tour',
-      map: 'Mappa del Percorso',
+      gallery: 'Cartoline',
+      journal: 'Diario',
+      itinerary: 'Itinerario',
+      tours: 'Tour',
+      map: 'Mappa',
       reviews: 'Recensioni',
-      fieldGuide: 'Guida di Campo',
+      fieldGuide: 'Guida',
       backpack: 'Zaino',
-      faq: 'Supporto & FAQ'
+      faq: 'FAQ'
     },
     cta: {
       whatsapp: 'WhatsApp',
