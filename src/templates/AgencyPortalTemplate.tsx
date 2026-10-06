@@ -1052,7 +1052,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               <a href="#inicio" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Home' : 'Inicio'}</a>
               <a href="#experiencia" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'The Tour' : 'El Tour'}</a>
               {!isFree && <a href="#incluye" className="hidden xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Included' : 'Qué Incluye'}</a>}
-              {(isPro || isAdvance) && <a href="#itinerario" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Itinerary' : 'Itinerario'}</a>}
+              {(isPro || isAdvance) && <a href="#itinerario" className="hidden xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Itinerary' : 'Itinerario'}</a>}
               <a href="#tours" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navTours}</a>
               {!isFree && <a href="#galeria" className="hidden 2xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navGallery}</a>}
               {isFree && <a href="#destinos" className="hidden xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Destinations' : 'Destinos'}</a>}

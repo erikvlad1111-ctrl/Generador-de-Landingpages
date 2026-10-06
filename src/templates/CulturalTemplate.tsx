@@ -104,7 +104,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
   const featuredNewsPhoto = data.galleryImages?.[0] || 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1200&auto=format&fit=crop';
 
   return (
-    <div className="min-h-screen bg-[#FFFDF9] font-sans text-stone-800 selection:bg-red-800 selection:text-white">
+    <div className="min-h-screen bg-[#FFFDF9] font-sans text-stone-800 selection:bg-red-800 selection:text-white w-full max-w-full overflow-x-hidden">
       
       {/* 1. TOP HEADER OVER PANORAMIC SUNSET (HERITAGE RED PALETTE WITH DYNAMIC ENTRANCE) */}
       <header id="inicio" className="relative bg-stone-900 text-white overflow-hidden group">
@@ -123,17 +123,17 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
 
         {/* Municipal / Heritage Navigation Bar */}
-        <nav className="relative z-20 max-w-7xl mx-auto px-4 sm:px-8 py-4 sm:py-5 flex items-center justify-between border-b border-white/15">
+        <nav className="relative z-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-4 flex items-center justify-between border-b border-white/15 w-full min-w-0 gap-2">
           {/* Official Emblem / Coat of arms */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-red-600/30 backdrop-blur-md border border-red-400/50 flex items-center justify-center text-red-200 shadow-md shrink-0 animate-soft-float">
-              <Landmark size={22} />
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 min-w-0">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-red-600/30 backdrop-blur-md border border-red-400/50 flex items-center justify-center text-red-200 shadow-md shrink-0 animate-soft-float">
+              <Landmark size={20} className="sm:w-[22px] sm:h-[22px]" />
             </div>
-            <div className="text-left leading-tight">
-              <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-red-200">
+            <div className="text-left leading-tight min-w-0 max-w-[140px] xs:max-w-[180px] sm:max-w-[240px]">
+              <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-red-200 truncate">
                 {t.emblemTitle}
               </span>
-              <span className="text-[10px] text-stone-300 tracking-wider font-sans block">
+              <span className="text-[10px] text-stone-300 tracking-wider font-sans block truncate">
                 {t.emblemSub}
               </span>
             </div>

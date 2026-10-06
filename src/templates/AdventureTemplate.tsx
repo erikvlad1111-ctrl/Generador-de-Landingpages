@@ -419,27 +419,27 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
   }, [rawFeatures, complementaryFeatures]);
 
   return (
-    <div className="min-h-screen bg-[#FDFDFD] font-sans text-slate-800 selection:bg-slate-900 selection:text-white">
+    <div className="min-h-screen bg-[#FDFDFD] font-sans text-slate-800 selection:bg-slate-900 selection:text-white w-full max-w-full overflow-x-hidden">
       
       {/* 1. TOP NAVBAR (Espacioso, Organizado & Sin Saltos de Línea) */}
       <nav className="sticky top-0 w-full z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-xs transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex justify-between items-center gap-2 sm:gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex justify-between items-center gap-2 sm:gap-4 w-full min-w-0">
           
           {/* Brand Logo & Authority Badge */}
           <a href="#inicio" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-sm shadow-md shadow-slate-900/10 shrink-0 group-hover:scale-105 transition-transform">
               <Mountain size={20} className="text-white" />
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col min-w-0 max-w-[150px] xs:max-w-[190px] sm:max-w-[240px]">
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="text-lg sm:text-2xl font-black tracking-tight text-slate-900 leading-none">
+                <span className="text-lg sm:text-2xl font-black tracking-tight text-slate-900 leading-none truncate">
                   Trek<span className="text-blue-600">Explorer</span>
                 </span>
-                <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[9px] sm:text-[10px] font-black uppercase tracking-wider border border-blue-200/60">
+                <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[9px] sm:text-[10px] font-black uppercase tracking-wider border border-blue-200/60 shrink-0">
                   {t.brand.badge}
                 </span>
               </div>
-              <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 mt-0.5 hidden xs:block truncate max-w-[190px]">
+              <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 mt-0.5 hidden xs:block truncate">
                 {t.brand.subtitle}
               </span>
             </div>
@@ -447,7 +447,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
           {/* Desktop Nav Links (Completamente Ordenados, Sin Saltos de Línea) */}
           {!isMobile && (
-            <div className="hidden lg:flex items-center gap-1 xl:gap-2 2xl:gap-3 text-xs xl:text-[13px] font-bold text-slate-700">
+            <div className="hidden lg:flex items-center gap-1 xl:gap-2 2xl:gap-3 text-xs xl:text-[13px] font-bold text-slate-700 whitespace-nowrap min-w-0">
               <a href="#inicio" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
                 {t.nav.home || 'Inicio'}
               </a>
@@ -458,17 +458,17 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 {currentLang === 'es' ? 'Tours' : currentLang === 'en' ? 'Tours' : currentLang === 'fr' ? 'Tours' : currentLang === 'pt' ? 'Tours' : 'Tour'}
               </a>
               {(isPro || isAdvance) && (
-                <a href="#itinerario" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                <a href="#itinerario" className="hidden xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
                   {t.nav.itinerary}
                 </a>
               )}
               {!isFree && (
-                <a href="#incluye" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                <a href="#incluye" className="hidden xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
                   {t.nav.included}
                 </a>
               )}
               {!isFree && (
-                <a href="#galeria" className="hidden xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                <a href="#galeria" className="hidden 2xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
                   {t.nav.gallery || 'Galería'}
                 </a>
               )}
@@ -478,17 +478,17 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 </a>
               )}
               {isAdvance && (
-                <a href="#testimonios" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                <a href="#testimonios" className="hidden xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
                   {t.nav.reviews || 'Reseñas'}
                 </a>
               )}
               {isAdvance && (
-                <a href="#soporte-faq" className="hidden xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                <a href="#soporte-faq" className="hidden 2xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
                   {t.nav.faq}
                 </a>
               )}
               {isFree && (
-                <a href="#garantias" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                <a href="#garantias" className="hidden xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
                   {t.nav.guarantees || 'Garantías'}
                 </a>
               )}

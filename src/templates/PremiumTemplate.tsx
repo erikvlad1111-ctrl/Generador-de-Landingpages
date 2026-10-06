@@ -338,7 +338,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
   };
 
   return (
-    <div className={`min-h-screen bg-[#0a080e] luxury-dynamic-container luxury-font-${luxuryFontVariant} text-neutral-100 selection:bg-amber-500 selection:text-black relative overflow-x-hidden transition-all duration-300`}>
+    <div className={`min-h-screen bg-[#0a080e] luxury-dynamic-container luxury-font-${luxuryFontVariant} text-neutral-100 selection:bg-amber-500 selection:text-black relative w-full max-w-full overflow-x-hidden transition-all duration-300`}>
       <style>{`
         .luxury-dynamic-container {
           font-family: ${FONT_CONFIG[luxuryFontVariant].bodyFont} !important;
@@ -388,78 +388,79 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       </div>
 
       {/* 2. ULTRA LUXURY TOP HEADER */}
-      <header className="sticky top-0 w-full z-40 bg-[#0a080e]/92 backdrop-blur-xl border-b border-amber-500/20 px-3 sm:px-8 py-3.5 sm:py-4 flex justify-between items-center gap-2 sm:gap-4 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.6)]">
-        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400/30 via-amber-500/15 to-transparent border border-amber-400/50 flex items-center justify-center text-amber-300 shrink-0 shadow-[0_0_18px_rgba(245,158,11,0.3)]">
-            <Crown size={isMobile ? 16 : 20} className="text-amber-300 drop-shadow-[0_2px_8px_rgba(245,158,11,0.6)]" />
+      <header className="sticky top-0 w-full z-40 bg-[#0a080e]/95 backdrop-blur-xl border-b border-amber-500/20 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.6)]">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex justify-between items-center gap-2 sm:gap-4 w-full min-w-0">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 shrink-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400/30 via-amber-500/15 to-transparent border border-amber-400/50 flex items-center justify-center text-amber-300 shrink-0 shadow-[0_0_18px_rgba(245,158,11,0.3)]">
+              <Crown size={isMobile ? 16 : 20} className="text-amber-300 drop-shadow-[0_2px_8px_rgba(245,158,11,0.6)]" />
+            </div>
+            <div className="min-w-0 max-w-[150px] xs:max-w-[190px] sm:max-w-[260px] md:max-w-[320px]">
+              <span 
+                style={{ fontFamily: FONT_CONFIG[luxuryFontVariant].titleFont }}
+                className={`${isMobile ? 'text-xs' : 'text-xs sm:text-sm md:text-base'} tracking-wider uppercase font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 truncate block leading-tight`}
+              >
+                Cusco Luxury Collection
+              </span>
+              <span className="text-[8px] sm:text-[9px] uppercase tracking-wider text-amber-400/80 font-semibold block truncate">
+                {t.hero.privateConciergeBadge}
+              </span>
+            </div>
           </div>
-          <div className="min-w-0">
-            <span 
-              style={{ fontFamily: FONT_CONFIG[luxuryFontVariant].titleFont }}
-              className={`${isMobile ? 'text-xs' : 'text-xs sm:text-sm md:text-base'} tracking-[0.2em] uppercase font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 truncate block`}
-            >
-              Cusco Luxury Collection
-            </span>
-            <span className="text-[8px] sm:text-[9px] uppercase tracking-[0.25em] text-amber-400/80 font-semibold block font-mono truncate">
-              {t.hero.privateConciergeBadge}
-            </span>
-          </div>
-        </div>
 
-        {!isMobile && (
-          <nav className="hidden xl:flex items-center gap-5 text-[11px] uppercase tracking-[0.2em] text-neutral-300 shrink-0 font-medium">
-            <a href="#inicio" className="hover:text-amber-300 transition-colors relative py-1 group">
-              {currentLang === 'en' ? 'Home' : currentLang === 'fr' ? 'Accueil' : currentLang === 'pt' ? 'Início' : currentLang === 'it' ? 'Inizio' : 'Inicio'}
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
-            </a>
-            {(isPro || isAdvance) && (
-              <a href="#itinerario" className="hover:text-amber-300 transition-colors relative py-1 group">
-                {t.nav.experience}
+          {!isMobile && (
+            <nav className="hidden xl:flex items-center gap-3.5 2xl:gap-5 text-[11px] xl:text-xs uppercase tracking-wider text-neutral-300 font-semibold shrink-0">
+              <a href="#inicio" className="hover:text-amber-300 transition-colors relative py-1 group whitespace-nowrap">
+                {currentLang === 'en' ? 'Home' : currentLang === 'fr' ? 'Accueil' : currentLang === 'pt' ? 'Início' : currentLang === 'it' ? 'Inizio' : 'Inicio'}
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
               </a>
-            )}
-            <a href="#tours" className="hover:text-amber-300 transition-colors relative py-1 group">
-              {t.nav.tours}
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
-            </a>
-            {!isFree && (
-              <a href="#galeria" className="hover:text-amber-300 transition-colors relative py-1 group">
-                {currentLang === 'en' ? 'Gallery' : currentLang === 'fr' ? 'Galerie' : currentLang === 'pt' ? 'Galeria' : currentLang === 'it' ? 'Galleria' : 'Galería'}
+              {(isPro || isAdvance) && (
+                <a href="#itinerario" className="hover:text-amber-300 transition-colors relative py-1 group whitespace-nowrap">
+                  {t.nav.experience}
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+                </a>
+              )}
+              <a href="#tours" className="hover:text-amber-300 transition-colors relative py-1 group whitespace-nowrap">
+                {t.nav.tours}
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
               </a>
-            )}
-            <a href="#sensorial" className="hover:text-amber-300 transition-colors relative py-1 group">
-              {t.nav.sensory}
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
-            </a>
-            <a href="#ficha-tecnica" className="hover:text-amber-300 transition-colors relative py-1 group">
-              {t.nav.specs}
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
-            </a>
-            <a href="#amenidades" className="hover:text-amber-300 transition-colors relative py-1 group">
-              {t.nav.amenities}
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
-            </a>
-            {(isPro || isAdvance) && (
-              <a href="#guia-concierge" className="hover:text-amber-300 transition-colors relative py-1 group">
-                {t.nav.concierge}
+              {!isFree && (
+                <a href="#galeria" className="hidden 2xl:inline hover:text-amber-300 transition-colors relative py-1 group whitespace-nowrap">
+                  {currentLang === 'en' ? 'Gallery' : currentLang === 'fr' ? 'Galerie' : currentLang === 'pt' ? 'Galeria' : currentLang === 'it' ? 'Galleria' : 'Galería'}
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+                </a>
+              )}
+              <a href="#sensorial" className="hidden 2xl:inline hover:text-amber-300 transition-colors relative py-1 group whitespace-nowrap">
+                {t.nav.sensory}
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
               </a>
-            )}
-            {isAdvance && (
-              <a href="#lounge-vip" className="hover:text-amber-300 transition-colors relative py-1 group">
-                {t.nav.lounge}
+              <a href="#ficha-tecnica" className="hidden 2xl:inline hover:text-amber-300 transition-colors relative py-1 group whitespace-nowrap">
+                {t.nav.specs}
                 <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
               </a>
-            )}
-            <a href="#contacto" className="hover:text-amber-300 transition-colors relative py-1 group">
-              {currentLang === 'en' ? 'Contact' : currentLang === 'pt' ? 'Contato' : currentLang === 'fr' ? 'Contact' : currentLang === 'it' ? 'Contatto' : 'Contacto'}
-              <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
-            </a>
-          </nav>
-        )}
+              <a href="#amenidades" className="hidden 2xl:inline hover:text-amber-300 transition-colors relative py-1 group whitespace-nowrap">
+                {t.nav.amenities}
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+              </a>
+              {(isPro || isAdvance) && (
+                <a href="#guia-concierge" className="hidden 2xl:inline hover:text-amber-300 transition-colors relative py-1 group whitespace-nowrap">
+                  {t.nav.concierge}
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+                </a>
+              )}
+              {isAdvance && (
+                <a href="#lounge-vip" className="hidden 2xl:inline hover:text-amber-300 transition-colors relative py-1 group whitespace-nowrap">
+                  {t.nav.lounge}
+                  <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+                </a>
+              )}
+              <a href="#contacto" className="hover:text-amber-300 transition-colors relative py-1 group whitespace-nowrap">
+                {currentLang === 'en' ? 'Contact' : currentLang === 'pt' ? 'Contato' : currentLang === 'fr' ? 'Contact' : currentLang === 'it' ? 'Contatto' : 'Contacto'}
+                <span className="absolute bottom-0 left-0 w-0 h-px bg-amber-400 transition-all group-hover:w-full" />
+              </a>
+            </nav>
+          )}
 
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {/* Subtle Champagne Gold Font Selector (visible on wide screens to prevent overflow) */}
           <div className="hidden 2xl:flex items-center bg-neutral-900/90 border border-amber-500/30 rounded-full p-0.5 text-[8px] sm:text-[9px] font-bold" title="Selector de Tipografía Luxury">
             {(['montserrat', 'outfit', 'syne', 'cormorant', 'cinzel'] as const).map((fontKey) => (
@@ -531,7 +532,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             </a>
           )}
         </div>
-      </header>
+      </div>
+    </header>
 
       {/* 3. WARM SUNLIT CINEMATIC HERO SECTION */}
       <section id="inicio" className={`relative ${isMobile ? 'py-14 min-h-[540px]' : 'py-26 min-h-[90vh]'} flex items-center justify-center overflow-hidden z-10`}>

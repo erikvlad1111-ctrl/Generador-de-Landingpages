@@ -348,104 +348,106 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
   const googleMapsExternalUrl = data.mapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(destinationQuery)}`;
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] font-sans text-stone-800 selection:bg-[#C86D51] selection:text-white pb-24 md:pb-0 overflow-x-hidden">
+    <div className="min-h-screen bg-[#FAF7F2] font-sans text-stone-800 selection:bg-[#C86D51] selection:text-white pb-24 md:pb-0 w-full max-w-full overflow-x-hidden">
       
       {/* Editorial Header / Navigation */}
-      <header className="sticky top-0 w-full z-40 bg-[#FAF7F2]/95 backdrop-blur-md px-3 sm:px-8 py-3 flex justify-between items-center border-b border-stone-200/80 gap-2">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-[#C86D51]/15 text-[#C86D51] flex items-center justify-center font-serif text-sm font-bold shadow-xs shrink-0">
-            <Camera size={16} />
+      <header className="sticky top-0 w-full z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-stone-200/80 shadow-2xs">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 w-full flex justify-between items-center gap-2 sm:gap-3 min-w-0">
+          <div className="flex items-center gap-2 min-w-0 shrink-0">
+            <div className="w-8 h-8 rounded-full bg-[#C86D51]/15 text-[#C86D51] flex items-center justify-center font-serif text-sm font-bold shadow-xs shrink-0">
+              <Camera size={16} />
+            </div>
+            <div className="flex flex-col min-w-0 max-w-[150px] xs:max-w-[190px] sm:max-w-[240px]">
+              <span className="font-serif tracking-wider uppercase text-sm sm:text-base font-bold text-stone-800 truncate leading-tight">
+                Boho Travel Journal
+              </span>
+              <span className="text-[10px] sm:text-[11px] text-stone-500 font-sans tracking-tight truncate">
+                {currentLang === 'en' ? 'Pinterest Inspired • Cusco, Peru' : currentLang === 'pt' ? 'Inspirado no Pinterest • Cusco, Peru' : currentLang === 'fr' ? 'Inspiré de Pinterest • Cusco, Pérou' : currentLang === 'it' ? 'Ispirato a Pinterest • Cusco, Perù' : 'Inspirado en Pinterest • Cusco, Perú'}
+              </span>
+            </div>
           </div>
-          <div className="flex flex-col min-w-0">
-            <span className="font-serif tracking-wider uppercase text-sm sm:text-base font-bold text-stone-800 truncate">
-              Boho Travel Journal
-            </span>
-            <span className="text-[11px] sm:text-xs text-stone-500 font-sans tracking-tight truncate">
-              {currentLang === 'en' ? 'Pinterest Inspired • Cusco, Peru' : currentLang === 'pt' ? 'Inspirado no Pinterest • Cusco, Peru' : currentLang === 'fr' ? 'Inspiré de Pinterest • Cusco, Pérou' : currentLang === 'it' ? 'Ispirato a Pinterest • Cusco, Perù' : 'Inspirado en Pinterest • Cusco, Perú'}
-            </span>
-          </div>
-        </div>
 
-        {/* Desktop Navigation Links - Curated, Clean & Responsive */}
-        {!isMobile && (
-          <nav className="hidden lg:flex items-center gap-2 xl:gap-3.5 text-[11px] xl:text-xs tracking-wider uppercase font-semibold text-stone-600 whitespace-nowrap min-w-0">
-            <a href="#inicio" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">
-              {currentLang === 'en' ? 'Home' : currentLang === 'fr' ? 'Accueil' : currentLang === 'pt' ? 'Início' : currentLang === 'it' ? 'Inizio' : 'Inicio'}
-            </a>
-            {!isFree ? (
-              <a href="#sobre-tour" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.journal}</a>
-            ) : (
-              <a href="#inicio" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.journal}</a>
-            )}
-            {(isPro || isAdvance) && (
-              <a href="#itinerario" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.itinerary}</a>
-            )}
-            <a href="#tours" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.tours}</a>
-            {!isFree && (
-              <a href="#galeria" className="hidden xl:inline-block hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{isBasic ? (currentLang === 'en' ? 'Postcards' : 'Postales') : t.nav.gallery}</a>
-            )}
-            {!isFree && (
-              <a href="#mochila" className="hidden 2xl:inline-block hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.backpack}</a>
-            )}
-            {isAdvance && (
-              <a href="#resenas" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.reviews}</a>
-            )}
-            <a href="#contacto" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">
-              {currentLang === 'en' ? 'Contact' : currentLang === 'pt' ? 'Contato' : currentLang === 'fr' ? 'Contact' : currentLang === 'it' ? 'Contatto' : 'Contacto'}
-            </a>
-          </nav>
-        )}
-
-        {/* Header Action Button & Language Selector */}
-        <div className="flex items-center gap-2 shrink-0">
-          {/* Compact Header Language Selector (Pro & Advance) */}
-          {displayBohoLanguages.length > 1 && (
-            <HeaderLanguageSelector
-              currentLang={currentLang}
-              onSelectLang={setCurrentLang}
-              availableCodes={displayBohoLanguages.map(l => l.code)}
-              variant="boho"
-            />
+          {/* Desktop Navigation Links - Curated, Clean & Responsive */}
+          {!isMobile && (
+            <nav className="hidden xl:flex items-center gap-2 xl:gap-3 2xl:gap-4 text-[11px] xl:text-xs tracking-wider uppercase font-semibold text-stone-600 whitespace-nowrap min-w-0">
+              <a href="#inicio" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">
+                {currentLang === 'en' ? 'Home' : currentLang === 'fr' ? 'Accueil' : currentLang === 'pt' ? 'Início' : currentLang === 'it' ? 'Inizio' : 'Inicio'}
+              </a>
+              {!isFree ? (
+                <a href="#sobre-tour" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.journal}</a>
+              ) : (
+                <a href="#inicio" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.journal}</a>
+              )}
+              {(isPro || isAdvance) && (
+                <a href="#itinerario" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.itinerary}</a>
+              )}
+              <a href="#tours" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.tours}</a>
+              {!isFree && (
+                <a href="#galeria" className="hidden 2xl:inline-block hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{isBasic ? (currentLang === 'en' ? 'Postcards' : 'Postales') : t.nav.gallery}</a>
+              )}
+              {!isFree && (
+                <a href="#mochila" className="hidden 2xl:inline-block hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.backpack}</a>
+              )}
+              {isAdvance && (
+                <a href="#resenas" className="hidden 2xl:inline-block hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.reviews}</a>
+              )}
+              <a href="#contacto" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">
+                {currentLang === 'en' ? 'Contact' : currentLang === 'pt' ? 'Contato' : currentLang === 'fr' ? 'Contact' : currentLang === 'it' ? 'Contatto' : 'Contacto'}
+              </a>
+            </nav>
           )}
 
-          {data.objective === 'both' ? (
-            <>
+          {/* Header Action Button & Language Selector */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* Compact Header Language Selector (Pro & Advance) */}
+            {displayBohoLanguages.length > 1 && (
+              <HeaderLanguageSelector
+                currentLang={currentLang}
+                onSelectLang={setCurrentLang}
+                availableCodes={displayBohoLanguages.map(l => l.code)}
+                variant="boho"
+              />
+            )}
+
+            {data.objective === 'both' ? (
+              <>
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#588157] hover:bg-[#476846] text-white px-2.5 sm:px-4 py-2 rounded-full font-medium text-xs sm:text-sm transition-all shadow-sm flex items-center gap-1 cursor-pointer whitespace-nowrap"
+                >
+                  <MessageCircle size={14} />
+                  <span className="hidden sm:inline">{t.cta.whatsapp}</span>
+                </a>
+                <button
+                  onClick={() => setIsQuoteOpen(true)}
+                  className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-2.5 sm:px-4 py-2 rounded-full font-medium text-xs sm:text-sm transition-all shadow-sm flex items-center gap-1 cursor-pointer whitespace-nowrap"
+                >
+                  <FileText size={14} />
+                  <span className="hidden sm:inline">{t.cta.quote}</span>
+                </button>
+              </>
+            ) : isQuote ? (
+              <button
+                onClick={() => setIsQuoteOpen(true)}
+                className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-3 sm:px-4 py-2 rounded-full font-medium text-xs sm:text-sm transition-all shadow-sm flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
+              >
+                <FileText size={14} />
+                <span>{t.cta.quote}</span>
+              </button>
+            ) : (
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-[#588157] hover:bg-[#476846] text-white px-2.5 sm:px-4 py-2 rounded-full font-medium text-sm transition-all shadow-sm flex items-center gap-1 cursor-pointer"
+                className="bg-[#588157] hover:bg-[#476846] text-white px-3 sm:px-4 py-2 rounded-full font-medium text-xs sm:text-sm transition-all shadow-sm flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
               >
-                <MessageCircle size={15} />
-                <span className="hidden sm:inline">{t.cta.whatsapp}</span>
+                <MessageCircle size={14} />
+                <span>{t.cta.whatsapp}</span>
               </a>
-              <button
-                onClick={() => setIsQuoteOpen(true)}
-                className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-2.5 sm:px-4 py-2 rounded-full font-medium text-sm transition-all shadow-sm flex items-center gap-1 cursor-pointer"
-              >
-                <FileText size={15} />
-                <span className="hidden sm:inline">{t.cta.quote}</span>
-              </button>
-            </>
-          ) : isQuote ? (
-            <button
-              onClick={() => setIsQuoteOpen(true)}
-              className="bg-[#C86D51] hover:bg-[#b05d43] text-white px-3 sm:px-4 py-2 rounded-full font-medium text-sm transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
-            >
-              <FileText size={15} />
-              <span>{t.cta.quote}</span>
-            </button>
-          ) : (
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="bg-[#588157] hover:bg-[#476846] text-white px-3 sm:px-4 py-2 rounded-full font-medium text-sm transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
-            >
-              <MessageCircle size={15} />
-              <span>{t.cta.whatsapp}</span>
-            </a>
-          )}
+            )}
+          </div>
         </div>
       </header>
 
