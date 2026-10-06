@@ -48,7 +48,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
   const [legalTab, setLegalTab] = useState<'terms' | 'cancellation' | 'privacy' | 'license'>('terms');
   const [currentLang, setCurrentLang] = useState<LanguageType>(defaultLang);
   type LuxuryFont = 'montserrat' | 'outfit' | 'syne' | 'cormorant' | 'cinzel';
-  const [luxuryFontVariant, setLuxuryFontVariant] = useState<LuxuryFont>('montserrat');
+  const [luxuryFontVariant, setLuxuryFontVariant] = useState<LuxuryFont>('outfit');
 
   React.useEffect(() => {
     if (isFree || isBasic) {
@@ -316,9 +316,9 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       tracking: '0.04em',
     },
     outfit: {
-      titleFont: "'Outfit', sans-serif",
-      bodyFont: "'Plus Jakarta Sans', var(--font-jakarta), sans-serif",
-      tracking: '0.02em',
+      titleFont: "'Outfit', var(--font-outfit), sans-serif",
+      bodyFont: "'Outfit', var(--font-outfit), sans-serif",
+      tracking: '0.01em',
     },
     syne: {
       titleFont: "'Syne', sans-serif",
@@ -754,10 +754,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                     
                     {/* Top Badges */}
                     <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
-                      <span className="bg-neutral-950/80 backdrop-blur-md border border-amber-400/40 text-amber-300 text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full shadow-md font-mono">
+                      <span className="bg-neutral-950/85 backdrop-blur-md border border-amber-400/40 text-amber-300 text-[10px] uppercase font-bold tracking-wider px-2.5 py-1 rounded-full shadow-md">
                         {translateText(tour.category, currentLang)}
                       </span>
-                      <span className="bg-amber-500 text-neutral-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1 font-mono">
+                      <span className="bg-amber-500 text-neutral-950 text-[10px] font-extrabold px-2.5 py-1 rounded-full shadow-md flex items-center gap-1">
                         <Star size={11} fill="currentColor" />
                         <span>{tour.rating}</span>
                       </span>
@@ -773,7 +773,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
                   {/* Tour Details */}
                   <div className="p-5 sm:p-6 space-y-3.5">
-                    <div className="flex items-center justify-between text-xs text-amber-400/80 font-mono">
+                    <div className="flex items-center justify-between text-xs text-amber-300/90 font-medium">
                       <span className="flex items-center gap-1.5">
                         <Clock size={13} className="text-amber-400" />
                         <span>{translateText(tour.duration, currentLang)}</span>
@@ -784,7 +784,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                       </span>
                     </div>
 
-                    <h3 className="font-serif font-bold text-white text-lg leading-snug group-hover:text-amber-200 transition-colors">
+                    <h3 className="font-bold text-white text-lg leading-snug group-hover:text-amber-200 transition-colors">
                       {translateText(tour.title, currentLang)}
                     </h3>
 
@@ -803,10 +803,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 {/* Card Footer: Price & Direct Actions */}
                 <div className="p-5 sm:p-6 pt-0 border-t border-neutral-800/60 mt-2">
                   <div className="flex items-baseline justify-between py-3">
-                    <span className="text-xs text-neutral-400 uppercase tracking-wider font-mono">
+                    <span className="text-xs text-neutral-400 uppercase tracking-wider font-medium">
                       {currentLang === 'en' ? 'VIP Rate' : currentLang === 'pt' ? 'Tarifa VIP' : currentLang === 'fr' ? 'Tarif VIP' : currentLang === 'it' ? 'Tariffa VIP' : 'Tarifa VIP'}
                     </span>
-                    <span className="text-xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-400">
+                    <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-400">
                       {tour.price}
                     </span>
                   </div>
@@ -1167,11 +1167,11 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       {/* SECTION: CATÁLOGO DE TOURS & EXPEDICIONES VIP */}
       <section id="tours" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} max-w-6xl mx-auto z-10`}>
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono mb-3 shadow-[0_0_20px_rgba(245,158,11,0.2)]">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/40 text-amber-300 text-[11px] uppercase tracking-wider font-semibold mb-3 shadow-[0_0_20px_rgba(245,158,11,0.2)]">
             <Crown size={13} className="text-amber-400" />
             <span>{currentLang === 'en' ? 'Private Collection' : currentLang === 'pt' ? 'Coleção Privativa' : currentLang === 'fr' ? 'Collection Privée' : currentLang === 'it' ? 'Collezione Privata' : 'Colección Privada'}</span>
           </div>
-          <h2 className={`${isMobile ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-5xl'} font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-white to-amber-200 mb-3`}>
+          <h2 className={`${isMobile ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-5xl'} font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-white to-amber-200 mb-3`}>
             {t.nav.tours || 'Nuestros Tours VIP'}
           </h2>
           <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
@@ -1215,35 +1215,35 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-950/20 to-transparent" />
 
-                    <div className="absolute top-3 left-3 bg-neutral-950/85 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-mono font-bold text-amber-300 flex items-center gap-1 border border-amber-500/30">
+                    <div className="absolute top-3 left-3 bg-neutral-950/85 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-semibold text-amber-300 flex items-center gap-1 border border-amber-500/30 shadow-md">
                       <Star size={11} className="text-amber-400 fill-amber-400" />
                       <span>{tour.rating || 4.9}</span>
                     </div>
 
                     {tourTag && (
-                      <div className="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-extrabold uppercase tracking-wider shadow-sm max-w-[130px] truncate" title={tourTag}>
+                      <div className="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-md max-w-[130px] truncate" title={tourTag}>
                         {tourTag}
                       </div>
                     )}
 
                     <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs text-neutral-200">
-                      <span className="flex items-center gap-1 bg-neutral-950/70 backdrop-blur-xs px-2 py-0.5 rounded-md text-[11px] font-mono">
-                        <Clock size={11} className="text-amber-400" /> {translateText(tour.duration, currentLang)}
+                      <span className="flex items-center gap-1.5 bg-neutral-950/80 backdrop-blur-xs px-2.5 py-1 rounded-lg text-xs font-medium border border-neutral-800/80">
+                        <Clock size={12} className="text-amber-400" /> {translateText(tour.duration, currentLang)}
                       </span>
-                      <span className="bg-amber-400/20 border border-amber-400/40 text-amber-300 px-2 py-0.5 rounded-md text-[11px] font-mono font-bold">
+                      <span className="bg-amber-400/20 border border-amber-400/40 text-amber-300 px-2.5 py-1 rounded-lg text-xs font-bold shadow-xs">
                         {tour.price}
                       </span>
                     </div>
                   </div>
 
-                  <div className="space-y-1.5 mb-3">
-                    <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] uppercase tracking-widest text-amber-400/80 font-mono font-bold">
-                      <MapPin size={11} />
+                  <div className="space-y-2 mb-3">
+                    <div className="flex items-center gap-1.5 text-[11px] sm:text-xs uppercase tracking-wide text-amber-300 font-semibold leading-normal">
+                      <MapPin size={12} className="text-amber-400 shrink-0" />
                       <span>{tourLoc}</span>
-                      <span className="text-amber-400/30">•</span>
-                      <span>{tourCategory}</span>
+                      <span className="text-amber-400/50">•</span>
+                      <span className="text-amber-200/90 font-medium">{tourCategory}</span>
                     </div>
-                    <h3 className="font-serif text-base sm:text-lg font-bold text-neutral-100 group-hover:text-amber-200 transition-colors line-clamp-2">
+                    <h3 className="text-base sm:text-lg font-bold text-neutral-100 group-hover:text-amber-200 transition-colors line-clamp-2 leading-snug">
                       {tourTitle}
                     </h3>
                   </div>
@@ -1251,10 +1251,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
                 <div className="pt-4 border-t border-amber-500/20 flex items-center justify-between gap-2">
                   <div>
-                    <span className="text-[10px] text-neutral-400 uppercase tracking-widest font-mono block">
+                    <span className="text-[11px] text-neutral-400 uppercase tracking-wider font-medium block">
                       {currentLang === 'en' ? 'Private Rate' : currentLang === 'pt' ? 'Tarifa VIP' : currentLang === 'fr' ? 'Tarif Privé' : currentLang === 'it' ? 'Tariffa VIP' : 'Tarifa VIP'}
                     </span>
-                    <span className="font-serif text-lg font-bold text-amber-300">
+                    <span className="text-xl font-bold text-amber-300 block">
                       {tour.price}
                     </span>
                   </div>
@@ -1263,7 +1263,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                     <button
                       type="button"
                       onClick={() => setIsQuoteOpen(true)}
-                      className="bg-amber-500 hover:bg-amber-400 text-neutral-950 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer font-sans"
+                      className="bg-amber-500 hover:bg-amber-400 text-neutral-950 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
                     >
                       <FileText size={13} />
                       <span>{t.cta.quote || 'Cotizar'}</span>
@@ -1273,7 +1273,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                       href={getTourWaUrl(tour.title)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer font-sans"
+                      className="bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer hover:scale-102"
                     >
                       <MessageCircle size={13} />
                       <span>{currentLang === 'en' ? 'Inquire' : 'Consultar'}</span>
@@ -1844,20 +1844,20 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/20 to-transparent" />
                     
-                    <div className="absolute top-3 left-3 bg-neutral-950/80 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-mono font-bold text-amber-300 border border-amber-400/30 flex items-center gap-1 shadow-lg">
+                    <div className="absolute top-3 left-3 bg-neutral-950/85 backdrop-blur-md px-2.5 py-1 rounded-full text-xs font-semibold text-amber-300 border border-amber-400/30 flex items-center gap-1 shadow-lg">
                       <Star size={11} className="fill-amber-400 text-amber-400" />
                       <span>{tour.badge || '5.0 ★'}</span>
                     </div>
 
                     {tour.tag && (
-                      <div className="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider shadow-lg">
+                      <div className="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-lg max-w-[130px] truncate" title={tour.tag}>
                         {tour.tag}
                       </div>
                     )}
                   </div>
 
                   <div className="p-5 sm:p-6 space-y-3 text-left">
-                    <h3 className="font-serif font-bold text-base sm:text-lg text-white group-hover:text-amber-300 transition-colors leading-snug">
+                    <h3 className="font-bold text-base sm:text-lg text-white group-hover:text-amber-300 transition-colors leading-snug">
                       {translateText(tour.title, currentLang)}
                     </h3>
 
@@ -1871,8 +1871,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                     </div>
 
                     <div className="pt-3 border-t border-neutral-800 flex items-baseline justify-between">
-                      <span className="text-xs text-neutral-400">Tarifa VIP:</span>
-                      <span className="text-xl font-serif font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">
+                      <span className="text-xs text-neutral-400 uppercase tracking-wider font-medium">Tarifa VIP:</span>
+                      <span className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">
                         {tour.price}
                       </span>
                     </div>
