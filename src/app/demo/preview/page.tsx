@@ -19,12 +19,32 @@ import {
   Share2,
   QrCode,
   CheckCircle,
-  Download
+  Download,
+  Sparkles,
+  MapPin,
+  FileText,
+  ShieldCheck,
+  Clock,
+  User,
+  Phone,
+  ImageIcon,
+  DollarSign,
+  Mountain,
+  Tag,
+  CheckSquare,
+  AlertCircle,
+  HelpCircle,
+  Compass,
+  Award,
+  ListPlus,
+  PackageCheck,
+  Backpack,
+  Sliders
 } from 'lucide-react';
 import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, saveLandingToStorage, LandingData } from '@/data/landingStore';
-import { TemplateType, PlanTier, LanguageType } from '@/types/landing';
+import { TemplateType, PlanTier, LanguageType, ObjectiveType } from '@/types/landing';
 
 function DemoPreviewContent() {
   const searchParams = useSearchParams();
@@ -68,16 +88,47 @@ function DemoPreviewContent() {
 
   const [refreshKey, setRefreshKey] = useState(0);
 
-  // Form state for live editor
+  // Comprehensive Form State for Complete Landing Editor
+  const [activeEditorTab, setActiveEditorTab] = useState<'general' | 'hero' | 'logistics' | 'content' | 'extras' | 'office'>('general');
+
+  // 1. General & Design
+  const [editName, setEditName] = useState(() => landing?.name || '');
+  const [editTemplate, setEditTemplate] = useState<TemplateType>(() => landing?.template || 'adventure');
+  const [editTier, setEditTier] = useState<PlanTier>(() => landing?.tier || 'advance');
+  const [editObjective, setEditObjective] = useState<ObjectiveType>(() => landing?.objective || 'quote');
+  const [editLanguage, setEditLanguage] = useState<LanguageType>(() => landing?.language || 'es');
+
+  // 2. Hero & Header
+  const [editHeroBadge, setEditHeroBadge] = useState(() => landing?.hero?.badge || '');
   const [editHeroTitle, setEditHeroTitle] = useState(() => landing?.hero?.title || '');
   const [editHeroSubtitle, setEditHeroSubtitle] = useState(() => landing?.hero?.subtitle || '');
   const [editHeroCta, setEditHeroCta] = useState(() => landing?.hero?.cta || '');
+  const [editHeroImage, setEditHeroImage] = useState(() => landing?.heroImage || '');
+
+  // 3. Pricing, Logistics & Guide
+  const [editPrice, setEditPrice] = useState(() => landing?.price || '');
+  const [editDuration, setEditDuration] = useState(() => landing?.duration || '');
+  const [editDifficulty, setEditDifficulty] = useState(() => landing?.difficulty || '');
+  const [editDestination, setEditDestination] = useState(() => landing?.destination || '');
+  const [editAltitude, setEditAltitude] = useState(() => landing?.altitude || '');
+  const [editGroupType, setEditGroupType] = useState(() => landing?.groupType || '');
+  const [editWhatsapp, setEditWhatsapp] = useState(() => landing?.whatsapp || '');
+  const [editGuideName, setEditGuideName] = useState(() => landing?.guideName || '');
+  const [editGuideCert, setEditGuideCert] = useState(() => landing?.guideCert || '');
+  const [editGuideAvatar, setEditGuideAvatar] = useState(() => landing?.guideAvatar || '');
+
+  // 4. Content & Inclusions
   const [editAboutTitle, setEditAboutTitle] = useState(() => landing?.about?.title || '');
   const [editAboutContent, setEditAboutContent] = useState(() => landing?.about?.content || '');
-  const [editPrice, setEditPrice] = useState(() => landing?.price || '');
-  const [editWhatsapp, setEditWhatsapp] = useState(() => landing?.whatsapp || '');
-  const [editTemplate, setEditTemplate] = useState<TemplateType>(() => landing?.template || 'adventure');
-  const [editTier, setEditTier] = useState<PlanTier>(() => landing?.tier || 'advance');
+  const [editFeaturesTitle, setEditFeaturesTitle] = useState(() => landing?.features?.title || '');
+  const [editFeaturesItems, setEditFeaturesItems] = useState(() => landing?.features?.items?.join('\n') || '');
+
+  // 5. Exclusions, Backpack & Trust
+  const [editNotIncluded, setEditNotIncluded] = useState(() => landing?.notIncluded?.join('\n') || '');
+  const [editWhatToBring, setEditWhatToBring] = useState(() => landing?.whatToBring?.join('\n') || '');
+  const [editTrustBadges, setEditTrustBadges] = useState(() => landing?.trustBadges?.join('\n') || '');
+
+  // 6. Physical Office & Maps
   const [editOfficeAddress, setEditOfficeAddress] = useState(() => landing?.officeAddress || '');
   const [editOfficeHours, setEditOfficeHours] = useState(() => landing?.officeHours || '');
   const [editMapsUrl, setEditMapsUrl] = useState(() => landing?.mapsUrl || '');
@@ -100,18 +151,45 @@ function DemoPreviewContent() {
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(publicUrl)}`;
 
   const openEditorWithCurrentData = () => {
+    setEditName(landing.name || '');
+    setEditTemplate(landing.template || 'adventure');
+    setEditTier(landing.tier || 'advance');
+    setEditObjective(landing.objective || 'quote');
+    setEditLanguage(landing.language || 'es');
+
+    setEditHeroBadge(landing.hero?.badge || '');
     setEditHeroTitle(landing.hero?.title || '');
     setEditHeroSubtitle(landing.hero?.subtitle || '');
     setEditHeroCta(landing.hero?.cta || '');
+    setEditHeroImage(landing.heroImage || '');
+
+    setEditPrice(landing.price || '');
+    setEditDuration(landing.duration || '');
+    setEditDifficulty(landing.difficulty || '');
+    setEditDestination(landing.destination || '');
+    setEditAltitude(landing.altitude || '');
+    setEditGroupType(landing.groupType || '');
+
+    setEditWhatsapp(landing.whatsapp || '');
+    setEditGuideName(landing.guideName || '');
+    setEditGuideCert(landing.guideCert || '');
+    setEditGuideAvatar(landing.guideAvatar || '');
+
     setEditAboutTitle(landing.about?.title || '');
     setEditAboutContent(landing.about?.content || '');
-    setEditPrice(landing.price || '');
-    setEditWhatsapp(landing.whatsapp || '');
-    setEditTemplate(landing.template || 'adventure');
-    setEditTier(landing.tier || 'advance');
+
+    setEditFeaturesTitle(landing.features?.title || '');
+    setEditFeaturesItems(landing.features?.items?.join('\n') || '');
+
+    setEditNotIncluded(landing.notIncluded?.join('\n') || '');
+    setEditWhatToBring(landing.whatToBring?.join('\n') || '');
+    setEditTrustBadges(landing.trustBadges?.join('\n') || '');
+
     setEditOfficeAddress(landing.officeAddress || '');
     setEditOfficeHours(landing.officeHours || '');
     setEditMapsUrl(landing.mapsUrl || '');
+
+    setActiveEditorTab('general');
     setIsEditorOpen(true);
   };
 
@@ -120,22 +198,40 @@ function DemoPreviewContent() {
     const isFreeOrBasic = editTier === 'free' || editTier === 'basic';
     const updated: LandingData = {
       ...landing,
+      name: editName,
       template: editTemplate,
       tier: editTier,
+      objective: editObjective,
+      language: isFreeOrBasic ? 'es' : editLanguage,
+      languages: isFreeOrBasic ? ['es'] : (landing.languages && landing.languages.length > 0 ? landing.languages : ['es', 'en', 'pt', 'fr', 'it']),
       price: editPrice,
+      duration: editDuration,
+      difficulty: editDifficulty,
+      destination: editDestination,
+      altitude: editAltitude,
+      groupType: editGroupType,
       whatsapp: editWhatsapp,
-      ...(isFreeOrBasic ? { language: 'es' as LanguageType, languages: ['es' as LanguageType] } : {}),
+      guideName: editGuideName,
+      guideCert: editGuideCert,
+      guideAvatar: editGuideAvatar,
+      heroImage: editHeroImage,
       hero: {
-        ...landing.hero,
+        badge: editHeroBadge,
         title: editHeroTitle,
         subtitle: editHeroSubtitle,
         cta: editHeroCta,
       },
       about: {
-        ...landing.about,
         title: editAboutTitle,
         content: editAboutContent,
       },
+      features: {
+        title: editFeaturesTitle,
+        items: editFeaturesItems.split('\n').map(s => s.trim()).filter(Boolean),
+      },
+      notIncluded: editNotIncluded.split('\n').map(s => s.trim()).filter(Boolean),
+      whatToBring: editWhatToBring.split('\n').map(s => s.trim()).filter(Boolean),
+      trustBadges: editTrustBadges.split('\n').map(s => s.trim()).filter(Boolean),
       officeAddress: editOfficeAddress,
       officeHours: editOfficeHours,
       mapsUrl: editMapsUrl
@@ -228,14 +324,14 @@ function DemoPreviewContent() {
             {/* Right: Rich Action Controls */}
             <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
               
-              {/* Edit Texts */}
+              {/* Primary Action: Edit Landing (Highly Prominent & Vibrant) */}
               <button
                 onClick={openEditorWithCurrentData}
-                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-blue-500/40 cursor-pointer shadow-xs shrink-0"
-                title="Editar títulos, subtítulos, precio y textos de esta landing"
+                className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-600 text-white font-extrabold text-xs sm:text-sm rounded-xl transition-all shadow-lg shadow-blue-600/35 hover:shadow-blue-500/55 border border-blue-400/40 hover:scale-105 active:scale-95 cursor-pointer shrink-0"
+                title="Editar todas las opciones de la landing (textos, precios, fotos, qué incluye y logística)"
               >
-                <Edit3 size={15} className="text-blue-400 shrink-0" />
-                <span className="hidden sm:inline">Editar</span>
+                <Edit3 size={15} className="text-white shrink-0" />
+                <span>Editar Landing</span>
               </button>
 
               {/* QR Code */}
@@ -403,199 +499,552 @@ function DemoPreviewContent() {
         </div>
       </main>
 
-      {/* Editor Drawer / Modal */}
+      {/* Comprehensive Editor Drawer / Modal */}
       {isEditorOpen && (
         <div className="fixed inset-0 z-50 flex justify-end bg-black/70 backdrop-blur-xs transition-opacity animate-in fade-in">
-          <div className="w-full max-w-md bg-white text-slate-900 h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
-            <div className="p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
-              <div>
-                <h3 className="font-bold text-slate-900 text-base flex items-center gap-2">
-                  <Edit3 size={18} className="text-blue-600" />
-                  Editor de Textos y Tarifas
-                </h3>
-                <p className="text-xs text-slate-500">Ajusta los títulos y la plantilla en tiempo real</p>
+          <div className="w-full max-w-2xl bg-white text-slate-900 h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
+            
+            {/* Header */}
+            <div className="p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50 shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20 shrink-0">
+                  <Edit3 size={20} />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-slate-900 text-base sm:text-lg flex items-center gap-2">
+                    Editor Integral de Landing
+                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200">
+                      En Vivo
+                    </span>
+                  </h3>
+                  <p className="text-xs text-slate-500">Personaliza todos los textos, logística, precios, diseño y contenidos</p>
+                </div>
               </div>
               <button 
                 onClick={() => setIsEditorOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-200/60"
+                className="p-2 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-200/60 transition-colors cursor-pointer"
+                title="Cerrar editor"
               >
-                <X size={18} />
+                <X size={20} />
               </button>
             </div>
 
-            <form onSubmit={handleSaveEdits} className="flex-1 overflow-y-auto p-6 space-y-5">
-              {/* Template & Tier Selector */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1.5">
-                    <Layers size={14} className="text-blue-600" /> Plantilla Visual
-                  </label>
-                  <select
-                    value={editTemplate}
-                    onChange={(e) => setEditTemplate(e.target.value as TemplateType)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white font-medium focus:ring-2 focus:ring-blue-500 outline-none"
+            {/* Tabs Navigation Bar */}
+            <div className="flex items-center gap-1 px-4 py-2 bg-slate-100/90 border-b border-slate-200 overflow-x-auto scrollbar-none text-xs font-bold shrink-0">
+              {[
+                { id: 'general', label: '1. General & Diseño', icon: Sliders },
+                { id: 'hero', label: '2. Hero & Portada', icon: ImageIcon },
+                { id: 'logistics', label: '3. Guía & Logística', icon: Compass },
+                { id: 'content', label: '4. Detalles & Incluye', icon: PackageCheck },
+                { id: 'extras', label: '5. Mochila & Sellos', icon: Backpack },
+                { id: 'office', label: '6. Oficina & Maps', icon: MapPin },
+              ].map((tab) => {
+                const Icon = tab.icon;
+                const isActive = activeEditorTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setActiveEditorTab(tab.id as typeof activeEditorTab)}
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-lg whitespace-nowrap transition-all cursor-pointer ${
+                      isActive 
+                        ? 'bg-blue-600 text-white shadow-xs' 
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/70'
+                    }`}
                   >
-                    <option value="agency-portal">🔥 Diseño 1 (Portal Oficial de Agencia)</option>
-                    <option value="adventure">Aventura (Trekking y Naturaleza)</option>
-                    <option value="premium">Premium / Lujo (Exclusivo VIP)</option>
-                    <option value="cultural">Cultural Clásico (Historia e Incas)</option>
-                    <option value="boho-nature">Boho Journal (Pinterest & Polaroids)</option>
-                  </select>
-                </div>
+                    <Icon size={14} />
+                    <span>{tab.label}</span>
+                  </button>
+                );
+              })}
+            </div>
 
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1.5">
-                    <CheckCircle size={14} className="text-emerald-600" /> Nivel / Plan
-                  </label>
-                  <select
-                    value={editTier}
-                    onChange={(e) => setEditTier(e.target.value as PlanTier)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm bg-white font-bold text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none"
-                  >
-                    <option value="free">Gratuito (Hero + WhatsApp)</option>
-                    <option value="basic">Básico (Hero + Ficha + Incluye)</option>
-                    <option value="pro">Pro (Itinerario + Exclusiones + Sellos)</option>
-                    <option value="advance">Advance (HD + FAQs + Testimonios + Reservas)</option>
-                  </select>
-                </div>
-              </div>
+            {/* Form Content */}
+            <form onSubmit={handleSaveEdits} className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
+              
+              {/* TAB 1: GENERAL & DISEÑO */}
+              {activeEditorTab === 'general' && (
+                <div className="space-y-4 animate-in fade-in">
+                  <div className="bg-blue-50/60 border border-blue-200/60 rounded-xl p-3.5 text-xs text-blue-900 flex items-start gap-2.5">
+                    <Sparkles size={16} className="text-blue-600 shrink-0 mt-0.5" />
+                    <span>Configura la identidad base, plantilla temática, nivel de plan y objetivos de conversión.</span>
+                  </div>
 
-              {/* Pricing & WhatsApp */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                    Tarifa visible
-                  </label>
-                  <input
-                    type="text"
-                    value={editPrice}
-                    onChange={(e) => setEditPrice(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                    placeholder="Ej. $180 USD"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                    WhatsApp Guía
-                  </label>
-                  <input
-                    type="text"
-                    value={editWhatsapp}
-                    onChange={(e) => setEditWhatsapp(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-mono"
-                    placeholder="+51984..."
-                  />
-                </div>
-              </div>
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      Nombre del Tour / Landing
+                    </label>
+                    <input
+                      type="text"
+                      value={editName}
+                      onChange={(e) => setEditName(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="Ej. Machu Picchu VIP (Diseño 1)"
+                    />
+                  </div>
 
-              {/* Hero Section */}
-              <div className="border-t border-slate-100 pt-4 space-y-3">
-                <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block">Cabecera (Hero)</span>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Título Principal</label>
-                  <input
-                    type="text"
-                    value={editHeroTitle}
-                    onChange={(e) => setEditHeroTitle(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-bold"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Subtítulo persuasivo</label>
-                  <textarea
-                    rows={3}
-                    value={editHeroSubtitle}
-                    onChange={(e) => setEditHeroSubtitle(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Texto del Botón de Acción (CTA)</label>
-                  <input
-                    type="text"
-                    value={editHeroCta}
-                    onChange={(e) => setEditHeroCta(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
-                  />
-                </div>
-              </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1.5">
+                        <Layers size={14} className="text-blue-600" /> Plantilla Visual (5 Diseños)
+                      </label>
+                      <select
+                        value={editTemplate}
+                        onChange={(e) => setEditTemplate(e.target.value as TemplateType)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm bg-white font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none"
+                      >
+                        <option value="agency-portal">🔥 Diseño 1 (Portal Oficial de Agencia)</option>
+                        <option value="adventure">Trek & Aventura (Trekking y Alta Montaña)</option>
+                        <option value="premium">Premium Luxury (Colección Exclusiva VIP)</option>
+                        <option value="cultural">Patrimonio Cultural (Historia e Incas)</option>
+                        <option value="boho-nature">Boho Journal (Pinterest & Polaroids)</option>
+                      </select>
+                    </div>
 
-              {/* About Section */}
-              <div className="border-t border-slate-100 pt-4 space-y-3">
-                <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block">Detalles del Tour</span>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Título de la sección</label>
-                  <input
-                    type="text"
-                    value={editAboutTitle}
-                    onChange={(e) => setEditAboutTitle(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-semibold"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Descripción detallada</label>
-                  <textarea
-                    rows={4}
-                    value={editAboutContent}
-                    onChange={(e) => setEditAboutContent(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
-                  />
-                </div>
-              </div>
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1.5">
+                        <CheckCircle size={14} className="text-emerald-600" /> Nivel / Plan Técnico
+                      </label>
+                      <select
+                        value={editTier}
+                        onChange={(e) => setEditTier(e.target.value as PlanTier)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm bg-white font-bold text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none"
+                      >
+                        <option value="free">Gratuito (Hero + WhatsApp Directo)</option>
+                        <option value="basic">Básico (Hero + Ficha + Qué Incluye + 3 Fotos)</option>
+                        <option value="pro">Pro (Itinerario + Mochila + Sellos + 2 Idiomas)</option>
+                        <option value="advance">Advance (HD Completo + FAQs + Reseñas + 5 Idiomas)</option>
+                      </select>
+                    </div>
+                  </div>
 
-              {/* Ubicación de Oficina & Google Maps */}
-              <div className="border-t border-slate-100 pt-4 space-y-3">
-                <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block">Oficina Física en Cusco & Maps</span>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Dirección de Oficina</label>
-                  <input
-                    type="text"
-                    value={editOfficeAddress}
-                    onChange={(e) => setEditOfficeAddress(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                    placeholder="Ej. Portal de Panes N° 123, Plaza de Armas, Cusco"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">Horario de Atención</label>
-                  <input
-                    type="text"
-                    value={editOfficeHours}
-                    onChange={(e) => setEditOfficeHours(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                    placeholder="Ej. Lunes a Domingo: 08:00 AM – 08:00 PM"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1 flex items-center justify-between">
-                    <span>Enlace de Google Maps</span>
-                    <span className="text-[10px] text-slate-400 font-normal">Opcional</span>
-                  </label>
-                  <input
-                    type="url"
-                    value={editMapsUrl}
-                    onChange={(e) => setEditMapsUrl(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                    placeholder="https://maps.app.goo.gl/..."
-                  />
-                </div>
-              </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        Objetivo de Conversión
+                      </label>
+                      <select
+                        value={editObjective}
+                        onChange={(e) => setEditObjective(e.target.value as ObjectiveType)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm bg-white font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none"
+                      >
+                        <option value="quote">Solo Formulario de Cotización</option>
+                        <option value="whatsapp">Solo WhatsApp Directo</option>
+                        <option value="both">Ambos Simultáneos (Cotizar + WhatsApp)</option>
+                      </select>
+                    </div>
 
-              <div className="border-t border-slate-200 pt-4 flex gap-3">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        Idioma Base del Tour
+                      </label>
+                      <select
+                        value={editLanguage}
+                        onChange={(e) => setEditLanguage(e.target.value as LanguageType)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm bg-white font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none"
+                      >
+                        <option value="es">🇪🇸 Español (Predeterminado)</option>
+                        <option value="en">🇺🇸 English</option>
+                        <option value="pt">🇧🇷 Português</option>
+                        <option value="fr">🇫🇷 Français</option>
+                        <option value="it">🇮🇹 Italiano</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 2: HERO & PORTADA */}
+              {activeEditorTab === 'hero' && (
+                <div className="space-y-4 animate-in fade-in">
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      Insignia Superior (Badge)
+                    </label>
+                    <input
+                      type="text"
+                      value={editHeroBadge}
+                      onChange={(e) => setEditHeroBadge(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="Ej. Experiencia Exclusiva VIP • Temporada 2026"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      Título Principal H1
+                    </label>
+                    <input
+                      type="text"
+                      value={editHeroTitle}
+                      onChange={(e) => setEditHeroTitle(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="Ej. Machu Picchu de Lujo con Tren Panorámico"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      Subtítulo Persuasivo
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={editHeroSubtitle}
+                      onChange={(e) => setEditHeroSubtitle(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                      placeholder="Ej. Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo..."
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      Texto del Botón Principal (CTA)
+                    </label>
+                    <input
+                      type="text"
+                      value={editHeroCta}
+                      onChange={(e) => setEditHeroCta(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="Ej. Solicitar Cotización Privada"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center justify-between">
+                      <span>URL Foto de Portada (Hero Background)</span>
+                      <span className="text-[10px] text-slate-400 font-normal">Unsplash / Imagen propia</span>
+                    </label>
+                    <input
+                      type="url"
+                      value={editHeroImage}
+                      onChange={(e) => setEditHeroImage(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-mono text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="https://images.unsplash.com/..."
+                    />
+                    {editHeroImage && (
+                      <div className="mt-2.5 relative h-28 rounded-xl overflow-hidden border border-slate-200">
+                        <img src={editHeroImage} alt="Hero preview" className="w-full h-full object-cover" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 3: GUÍA & LOGÍSTICA */}
+              {activeEditorTab === 'logistics' && (
+                <div className="space-y-4 animate-in fade-in">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        Tarifa Visible (Precio)
+                      </label>
+                      <input
+                        type="text"
+                        value={editPrice}
+                        onChange={(e) => setEditPrice(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-black text-emerald-600 focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Ej. $180 USD o S/ 650 PEN"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        Duración
+                      </label>
+                      <input
+                        type="text"
+                        value={editDuration}
+                        onChange={(e) => setEditDuration(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Ej. Full Day (05:00 - 18:00)"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        Dificultad
+                      </label>
+                      <input
+                        type="text"
+                        value={editDifficulty}
+                        onChange={(e) => setEditDifficulty(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Ej. Fácil - Confort"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        Altitud Máxima
+                      </label>
+                      <input
+                        type="text"
+                        value={editAltitude}
+                        onChange={(e) => setEditAltitude(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Ej. 3,400 msnm"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        Tipo de Grupo
+                      </label>
+                      <input
+                        type="text"
+                        value={editGroupType}
+                        onChange={(e) => setEditGroupType(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Ej. 100% Privado VIP"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      Destino / Región
+                    </label>
+                    <input
+                      type="text"
+                      value={editDestination}
+                      onChange={(e) => setEditDestination(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="Ej. Machu Picchu, Aguas Calientes, Cusco"
+                    />
+                  </div>
+
+                  <div className="border-t border-slate-200/80 pt-4 space-y-3">
+                    <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block">Guía Oficial & WhatsApp</span>
+                    
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        WhatsApp de Reservas (con código de país)
+                      </label>
+                      <input
+                        type="text"
+                        value={editWhatsapp}
+                        onChange={(e) => setEditWhatsapp(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-mono text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="+51984123456"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Nombre del Guía
+                        </label>
+                        <input
+                          type="text"
+                          value={editGuideName}
+                          onChange={(e) => setEditGuideName(e.target.value)}
+                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                          placeholder="Ej. Carlos Mendoza"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          N° Carnet / Certificación DIRCETUR
+                        </label>
+                        <input
+                          type="text"
+                          value={editGuideCert}
+                          onChange={(e) => setEditGuideCert(e.target.value)}
+                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-mono"
+                          placeholder="DIRCETUR N° 4589-C"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        URL Foto o Avatar del Guía
+                      </label>
+                      <input
+                        type="text"
+                        value={editGuideAvatar}
+                        onChange={(e) => setEditGuideAvatar(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-mono"
+                        placeholder="/images/tour-guide-carlos.jpg"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 4: DETALLES & QUÉ INCLUYE */}
+              {activeEditorTab === 'content' && (
+                <div className="space-y-4 animate-in fade-in">
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      Título de Sección "Acerca del Tour"
+                    </label>
+                    <input
+                      type="text"
+                      value={editAboutTitle}
+                      onChange={(e) => setEditAboutTitle(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="Ej. Un viaje sagrado diseñado para los más exigentes"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      Descripción Narrativa del Tour
+                    </label>
+                    <textarea
+                      rows={4}
+                      value={editAboutContent}
+                      onChange={(e) => setEditAboutContent(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                      placeholder="Evita las largas colas y el estrés del turismo masivo. Nuestro servicio VIP te brinda acceso preferente..."
+                    />
+                  </div>
+
+                  <div className="border-t border-slate-200/80 pt-4 space-y-3">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        Título de Sección Inclusiones
+                      </label>
+                      <input
+                        type="text"
+                        value={editFeaturesTitle}
+                        onChange={(e) => setEditFeaturesTitle(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Ej. Privilegios de la Experiencia VIP"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center justify-between">
+                        <span>Servicios Incluidos (1 por línea)</span>
+                        <span className="text-[10px] text-slate-400 font-normal">Formato: Título:Descripción o frase simple</span>
+                      </label>
+                      <textarea
+                        rows={7}
+                        value={editFeaturesItems}
+                        onChange={(e) => setEditFeaturesItems(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                        placeholder="Vagón Panorámico Vistadome:Viaja con música en vivo y vistas 360°&#10;Guía Historiador Privado:Acompañamiento exclusivo&#10;Boletos de Ingreso:Acceso oficial garantizado"
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 5: EXCLUSIONES, MOCHILA & SELLOS */}
+              {activeEditorTab === 'extras' && (
+                <div className="space-y-4 animate-in fade-in">
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center justify-between">
+                      <span>Qué NO Incluye (1 por línea)</span>
+                      <span className="text-[10px] text-slate-400 font-normal">Exclusiones claras</span>
+                    </label>
+                    <textarea
+                      rows={4}
+                      value={editNotIncluded}
+                      onChange={(e) => setEditNotIncluded(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                      placeholder="Vuelos internacionales o domésticos&#10;Propinas voluntarias para guía y chofer&#10;Seguro médico de viaje"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center justify-between">
+                      <span>Qué Llevar / Mochila del Viajero (1 por línea)</span>
+                      <span className="text-[10px] text-slate-400 font-normal">Recomendaciones</span>
+                    </label>
+                    <textarea
+                      rows={4}
+                      value={editWhatToBring}
+                      onChange={(e) => setEditWhatToBring(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                      placeholder="Pasaporte original físico vigente&#10;Ropa abrigadora en capas y cortavientos&#10;Calzado de trekking con buen agarre&#10;Bloqueador solar y repelente"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center justify-between">
+                      <span>Sellos de Confianza & Certificaciones (1 por línea)</span>
+                      <span className="text-[10px] text-slate-400 font-normal">Garantías oficiales</span>
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={editTrustBadges}
+                      onChange={(e) => setEditTrustBadges(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                      placeholder="Licencia Oficial DIRCETUR Cusco&#10;Sello Safe Travels Internacional&#10;RUC 20 Formal Verificado"
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* TAB 6: OFICINA & MAPS */}
+              {activeEditorTab === 'office' && (
+                <div className="space-y-4 animate-in fade-in">
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      Dirección Física de Oficina
+                    </label>
+                    <input
+                      type="text"
+                      value={editOfficeAddress}
+                      onChange={(e) => setEditOfficeAddress(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="Ej. Portal de Panes N° 123, Plaza de Armas, Cusco"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      Horario de Atención al Turista
+                    </label>
+                    <input
+                      type="text"
+                      value={editOfficeHours}
+                      onChange={(e) => setEditOfficeHours(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="Ej. Lunes a Domingo: 08:00 AM – 08:00 PM"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center justify-between">
+                      <span>Enlace Oficial de Google Maps</span>
+                      <span className="text-[10px] text-slate-400 font-normal">Opcional</span>
+                    </label>
+                    <input
+                      type="url"
+                      value={editMapsUrl}
+                      onChange={(e) => setEditMapsUrl(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-mono focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="https://maps.app.goo.gl/..."
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Footer Controls */}
+              <div className="border-t border-slate-200 pt-5 flex items-center gap-3">
                 <button
                   type="button"
                   onClick={() => setIsEditorOpen(false)}
-                  className="flex-1 px-4 py-2.5 border border-slate-300 text-slate-700 font-semibold rounded-xl hover:bg-slate-50 text-sm cursor-pointer"
+                  className="flex-1 px-4 py-2.5 border border-slate-300 text-slate-700 font-bold rounded-xl hover:bg-slate-100 text-xs sm:text-sm cursor-pointer transition-colors"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-sm shadow-md cursor-pointer"
+                  className="flex-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 text-white font-black rounded-xl text-xs sm:text-sm shadow-lg shadow-blue-600/30 hover:shadow-blue-500/50 cursor-pointer transition-all flex items-center justify-center gap-2"
                 >
-                  Aplicar Cambios
+                  <Check size={16} />
+                  <span>Guardar Todos los Cambios</span>
                 </button>
               </div>
+
             </form>
           </div>
         </div>
