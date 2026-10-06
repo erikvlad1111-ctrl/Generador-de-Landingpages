@@ -146,4 +146,27 @@ Guía para diagnosticar y solucionar problemas de traducción, mezcla de idiomas
   3. En `PremiumTemplate.tsx`, compactar el selector de tipografías (`Mont`, `Outfit`, `Syne`, `Corm`, `Cinz`) y ocultarlo en pantallas menores a 2XL (`hidden 2xl:flex`).
   4. En los menús de navegación de las 5 plantillas, priorizar los enlaces esenciales en `lg`/`xl` y mover enlaces secundarios (como crónicas, agenda o testimonios adicionales) a `2xl:inline` o menú móvil, eliminando cualquier desborde horizontal.
 
+### Error: Menú Desplegable de Idiomas Cortado por el Encabezado Sticky y Banderas Emoji Renderizando Doble Código ("ES ES" y "US English EN") en Windows
+
+- **Síntoma / Mensaje de Error:**
+  1. Al desplegar el selector de idiomas en AgencyPortalTemplate, la mitad superior del menú desplegable quedaba tapada/cortada por la barra blanca del encabezado y el botón naranja "Solicitar Cotización".
+  2. En sistemas operativos Windows, el botón disparador mostraba "ES ES ^" en lugar de "[Bandera] ES ^", y dentro del menú las opciones aparecían como "US English EN", "BR Português PT", "FR Français FR", "IT Italiano IT".
+
+- **Causa Raíz:**
+  1. **Conflicto de Stacking Context (Z-Index):** La barra superior de anuncios (`bg-[#1C1917]`) tenía posición estática (sin `relative` ni `z-index`), mientras que el encabezado principal que le sigue tenía `sticky top-0 z-40`. Al desplegarse el menú con `top-full mt-2`, el encabezado `sticky z-40` se pintaba por encima del menú desplegable.
+  2. **Renderizado de Emojis de Banderas en Windows:** Windows (mediante la fuente Segoe UI Emoji) no incluye glifos gráficos para banderas de países, sino que renderiza los dos caracteres indicadores regionales ISO (ej. ES, US, BR). Al concatenar `currentOption.flag` con `currentOption.code`, en Windows se imprimía literalmente "ES" seguido de "ES".
+
+- **Comando de Diagnóstico:**
+  Verificar la posición y z-index del contenedor padre de la barra superior frente al encabezado sticky:
+  ```bash
+  git grep -n "TOP ANNOUNCEMENT BAR" src/templates/AgencyPortalTemplate.tsx
+  ```
+
+- **Solución Paso a Paso:**
+  1. En `AgencyPortalTemplate.tsx`, asignar `relative z-50` al contenedor de la barra superior de anuncios:
+     ```tsx
+     <div className="relative z-50 bg-[#1C1917] text-white text-[11px] py-1.5 sm:py-2 px-2.5 sm:px-6 border-b border-stone-800">
+     ```
+  2. En `HeaderLanguageSelector.tsx`, elevar el z-index del popover a `z-[100]`.
+  3. Reemplazar los emojis Unicode de banderas por un mapa de vectores SVG nítidos y ultra ligeros (`FLAG_ICONS: Record<LanguageType, React.ReactNode>`) para España (`es`), Estados Unidos/Inglés (`en`), Brasil (`pt`), Francia (`fr`) e Italia (`it`). De esta manera, en Windows, macOS, Android e iOS se muestra invariablemente la bandera vectorial a color, eliminando las duplicaciones tipográficas "ES ES" y "US English EN".
 
