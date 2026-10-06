@@ -129,36 +129,41 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-red-600/30 backdrop-blur-md border border-red-400/50 flex items-center justify-center text-red-200 shadow-md shrink-0 animate-soft-float">
               <Landmark size={20} className="sm:w-[22px] sm:h-[22px]" />
             </div>
-            <div className="text-left leading-tight min-w-0 max-w-[140px] xs:max-w-[180px] sm:max-w-[240px]">
-              <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-red-200 truncate">
+            <div className="flex flex-col min-w-0 max-w-[140px] xs:max-w-[180px] sm:max-w-[240px]">
+              <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-red-200 truncate leading-snug whitespace-nowrap">
                 {t.emblemTitle}
               </span>
-              <span className="text-[10px] text-stone-300 tracking-wider font-sans block truncate">
+              <span className="text-[10px] text-stone-300 tracking-wider font-sans block truncate leading-none mt-0.5 whitespace-nowrap">
                 {t.emblemSub}
               </span>
             </div>
           </div>
 
-          {/* Nav links (Desktop) */}
+          {/* Nav links (Desktop - Max 6 links & No overlap) */}
           {!isMobile && (
-            <div className="hidden xl:flex items-center gap-3.5 2xl:gap-5 text-[11px] font-bold tracking-wider uppercase text-stone-200">
-              <a href="#inicio" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">
+            <div className="hidden lg:flex items-center gap-2.5 xl:gap-4 2xl:gap-5 text-xs font-bold tracking-wider uppercase text-stone-200 whitespace-nowrap">
+              <a href="#inicio" className="whitespace-nowrap hover:text-red-300 transition-colors py-1 px-1.5">
                 {currentLang === 'en' ? 'Home' : currentLang === 'fr' ? 'Accueil' : currentLang === 'pt' ? 'Início' : currentLang === 'it' ? 'Inizio' : 'Inicio'}
               </a>
-              <a href="#actualites" className="hidden 2xl:inline hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.cronicas}</a>
-              <a href="#agenda" className="hidden 2xl:inline hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.agenda}</a>
-              <a href="#tours" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{currentLang === 'en' ? 'Tours' : 'Tours'}</a>
+              <a href="#agenda" className="whitespace-nowrap hover:text-red-300 transition-colors py-1 px-1.5">
+                {t.nav.agenda}
+              </a>
+              <a href="#tours" className="whitespace-nowrap hover:text-red-300 transition-colors py-1 px-1.5">
+                {currentLang === 'en' ? 'Tours' : 'Tours'}
+              </a>
               {!isFree && (
-                <a href="#galeria" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">
+                <a href="#galeria" className="whitespace-nowrap hover:text-red-300 transition-colors py-1 px-1.5">
                   {currentLang === 'en' ? 'Gallery' : currentLang === 'fr' ? 'Galerie' : currentLang === 'pt' ? 'Galeria' : currentLang === 'it' ? 'Galleria' : 'Galería'}
                 </a>
               )}
-              {(isPro || isAdvance) && <a href="#territorio" className="hidden 2xl:inline hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.territorio}</a>}
-              {(isPro || isAdvance) && <a href="#itinerario" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.itinerario}</a>}
-              {(isPro || isAdvance) && <a href="#conseils" className="hidden 2xl:inline hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.conseils}</a>}
-              {(isPro || isAdvance) && <a href="#guide" className="hidden 2xl:inline hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.guide}</a>}
-              {isAdvance && <a href="#livre-dor" className="hidden 2xl:inline hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.reviews}</a>}
-              <a href="#contacto" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.contact}</a>
+              {isAdvance && (
+                <a href="#livre-dor" className="whitespace-nowrap hover:text-red-300 transition-colors py-1 px-1.5">
+                  {t.nav.reviews}
+                </a>
+              )}
+              <a href="#contacto" className="whitespace-nowrap hover:text-red-300 transition-colors py-1 px-1.5">
+                {t.nav.contact}
+              </a>
             </div>
           )}
 

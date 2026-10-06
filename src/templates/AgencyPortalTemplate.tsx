@@ -1036,29 +1036,24 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-[#FF5500] to-[#FF8800] flex items-center justify-center text-white font-black shadow-md shadow-[#FF5500]/30 shrink-0">
               <Compass size={17} className="sm:w-6 sm:h-6" />
             </div>
-            <div className="min-w-0 max-w-[130px] xs:max-w-[170px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[260px] xl:max-w-[320px]">
-              <span className="font-extrabold text-[11px] sm:text-base md:text-lg tracking-tight text-stone-900 block leading-tight truncate">
+            <div className="flex flex-col justify-center min-w-0 max-w-[130px] xs:max-w-[170px] sm:max-w-[240px] md:max-w-[280px]">
+              <span className="font-extrabold text-[11px] sm:text-base md:text-lg tracking-tight text-stone-900 block leading-snug truncate whitespace-nowrap">
                 {brandName.toUpperCase()}
               </span>
-              <span className="text-[8px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block truncate">
+              <span className="text-[8px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block truncate leading-none mt-0.5 whitespace-nowrap">
                 {t.officialOperator}
               </span>
             </div>
           </div>
 
-          {/* Desktop Navigation Links (Responsive display to prevent overflow) */}
+          {/* Desktop Navigation Links - Max 6 clean links */}
           {!isMobile && (
-            <nav className="hidden lg:flex items-center gap-2.5 xl:gap-4 2xl:gap-5 text-xs xl:text-[13px] font-bold text-stone-700 tracking-wide uppercase">
+            <nav className="hidden lg:flex items-center gap-2.5 xl:gap-4 2xl:gap-5 text-xs xl:text-[13px] font-bold text-stone-700 tracking-wide uppercase whitespace-nowrap">
               <a href="#inicio" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Home' : 'Inicio'}</a>
               <a href="#experiencia" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'The Tour' : 'El Tour'}</a>
-              {!isFree && <a href="#incluye" className="hidden xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Included' : 'Qué Incluye'}</a>}
-              {(isPro || isAdvance) && <a href="#itinerario" className="hidden xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Itinerary' : 'Itinerario'}</a>}
+              {!isFree && <a href="#incluye" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Included' : 'Qué Incluye'}</a>}
               <a href="#tours" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navTours}</a>
-              {!isFree && <a href="#galeria" className="hidden 2xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navGallery}</a>}
-              {isFree && <a href="#destinos" className="hidden xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Destinations' : 'Destinos'}</a>}
-              {(isPro || isAdvance) && <a href="#por-que-nosotros" className="hidden 2xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navWhyUs}</a>}
-              {isAdvance && <a href="#resenas" className="hidden 2xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navReviews}</a>}
-              {isAdvance && <a href="#soporte-faq" className="hidden 2xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navFaq}</a>}
+              {isAdvance && <a href="#resenas" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navReviews}</a>}
               <a href="#contacto" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Contact' : 'Contacto'}</a>
             </nav>
           )}

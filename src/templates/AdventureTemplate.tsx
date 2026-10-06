@@ -430,69 +430,40 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-sm shadow-md shadow-slate-900/10 shrink-0 group-hover:scale-105 transition-transform">
               <Mountain size={20} className="text-white" />
             </div>
-            <div className="flex flex-col min-w-0 max-w-[150px] xs:max-w-[190px] sm:max-w-[240px]">
+            <div className="flex flex-col min-w-0">
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="text-lg sm:text-2xl font-black tracking-tight text-slate-900 leading-none truncate">
+                <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 leading-snug truncate whitespace-nowrap">
                   Trek<span className="text-blue-600">Explorer</span>
                 </span>
-                <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[9px] sm:text-[10px] font-black uppercase tracking-wider border border-blue-200/60 shrink-0">
+                <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[9px] sm:text-[10px] font-black uppercase tracking-wider border border-blue-200/60 shrink-0 whitespace-nowrap">
                   {t.brand.badge}
                 </span>
               </div>
-              <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 mt-0.5 hidden xs:block truncate">
+              <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 leading-none mt-0.5 hidden xs:block truncate whitespace-nowrap">
                 {t.brand.subtitle}
               </span>
             </div>
           </a>
 
-          {/* Desktop Nav Links (Completamente Ordenados, Sin Saltos de Línea) */}
+          {/* Desktop Nav Links (Exactamente 6 links limpios, sin overflow) */}
           {!isMobile && (
-            <div className="hidden lg:flex items-center gap-1 xl:gap-2 2xl:gap-3 text-xs xl:text-[13px] font-bold text-slate-700 whitespace-nowrap min-w-0">
-              <a href="#inicio" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+            <div className="hidden lg:flex items-center gap-2 xl:gap-4 2xl:gap-5 text-xs xl:text-[13px] font-bold text-slate-700 whitespace-nowrap min-w-0">
+              <a href="#inicio" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
                 {t.nav.home || 'Inicio'}
               </a>
-              <a href="#destinos" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
-                {t.nav.destinations}
+              <a href="#destinos" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                {t.nav.destinations || 'Destinos'}
               </a>
-              <a href="#tours" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
-                {currentLang === 'es' ? 'Tours' : currentLang === 'en' ? 'Tours' : currentLang === 'fr' ? 'Tours' : currentLang === 'pt' ? 'Tours' : 'Tour'}
+              <a href="#tours" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                {currentLang === 'es' ? 'Tours' : 'Tours'}
               </a>
-              {(isPro || isAdvance) && (
-                <a href="#itinerario" className="hidden xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
-                  {t.nav.itinerary}
-                </a>
-              )}
-              {!isFree && (
-                <a href="#incluye" className="hidden xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
-                  {t.nav.included}
-                </a>
-              )}
-              {!isFree && (
-                <a href="#galeria" className="hidden 2xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
-                  {t.nav.gallery || 'Galería'}
-                </a>
-              )}
-              {(isPro || isAdvance) && (
-                <a href="#mochila" className="hidden 2xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
-                  {t.nav.gear || 'Equipamiento'}
-                </a>
-              )}
-              {isAdvance && (
-                <a href="#testimonios" className="hidden xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
-                  {t.nav.reviews || 'Reseñas'}
-                </a>
-              )}
-              {isAdvance && (
-                <a href="#soporte-faq" className="hidden 2xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
-                  {t.nav.faq}
-                </a>
-              )}
-              {isFree && (
-                <a href="#garantias" className="hidden xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
-                  {t.nav.guarantees || 'Garantías'}
-                </a>
-              )}
-              <a href="#contacto" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+              <a href="#incluye" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                {t.nav.included || 'Qué Incluye'}
+              </a>
+              <a href="#testimonios" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                {t.nav.reviews || 'Reseñas'}
+              </a>
+              <a href="#contacto" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
                 {t.nav.contact || 'Contacto'}
               </a>
             </div>

@@ -358,38 +358,36 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               <Camera size={16} />
             </div>
             <div className="flex flex-col min-w-0 max-w-[150px] xs:max-w-[190px] sm:max-w-[240px]">
-              <span className="font-serif tracking-wider uppercase text-sm sm:text-base font-bold text-stone-800 truncate leading-tight">
+              <span className="font-serif tracking-wider uppercase text-sm sm:text-base font-bold text-stone-800 truncate leading-snug whitespace-nowrap">
                 Boho Travel Journal
               </span>
-              <span className="text-[10px] sm:text-[11px] text-stone-500 font-sans tracking-tight truncate">
+              <span className="text-[10px] sm:text-[11px] text-stone-500 font-sans tracking-tight truncate leading-none mt-0.5 whitespace-nowrap">
                 {currentLang === 'en' ? 'Pinterest Inspired • Cusco, Peru' : currentLang === 'pt' ? 'Inspirado no Pinterest • Cusco, Peru' : currentLang === 'fr' ? 'Inspiré de Pinterest • Cusco, Pérou' : currentLang === 'it' ? 'Ispirato a Pinterest • Cusco, Perù' : 'Inspirado en Pinterest • Cusco, Perú'}
               </span>
             </div>
           </div>
 
-          {/* Desktop Navigation Links - Curated, Clean & Responsive */}
+          {/* Desktop Navigation Links - Curated, Max 6 Links & No Overlap */}
           {!isMobile && (
-            <nav className="hidden xl:flex items-center gap-2 xl:gap-3 2xl:gap-4 text-[11px] xl:text-xs tracking-wider uppercase font-semibold text-stone-600 whitespace-nowrap min-w-0">
+            <nav className="hidden lg:flex items-center gap-2 xl:gap-3.5 2xl:gap-5 text-xs tracking-wider uppercase font-semibold text-stone-600 whitespace-nowrap min-w-0">
               <a href="#inicio" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">
                 {currentLang === 'en' ? 'Home' : currentLang === 'fr' ? 'Accueil' : currentLang === 'pt' ? 'Início' : currentLang === 'it' ? 'Inizio' : 'Inicio'}
               </a>
-              {!isFree ? (
-                <a href="#sobre-tour" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.journal}</a>
-              ) : (
-                <a href="#inicio" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.journal}</a>
-              )}
-              {(isPro || isAdvance) && (
-                <a href="#itinerario" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.itinerary}</a>
-              )}
-              <a href="#tours" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.tours}</a>
+              <a href={!isFree ? "#sobre-tour" : "#inicio"} className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">
+                {t.nav.journal}
+              </a>
+              <a href="#tours" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">
+                {t.nav.tours}
+              </a>
               {!isFree && (
-                <a href="#galeria" className="hidden 2xl:inline-block hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{isBasic ? (currentLang === 'en' ? 'Postcards' : 'Postales') : t.nav.gallery}</a>
-              )}
-              {!isFree && (
-                <a href="#mochila" className="hidden 2xl:inline-block hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.backpack}</a>
+                <a href="#galeria" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">
+                  {isBasic ? (currentLang === 'en' ? 'Postcards' : 'Postales') : t.nav.gallery}
+                </a>
               )}
               {isAdvance && (
-                <a href="#resenas" className="hidden 2xl:inline-block hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.reviews}</a>
+                <a href="#resenas" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">
+                  {t.nav.reviews}
+                </a>
               )}
               <a href="#contacto" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">
                 {currentLang === 'en' ? 'Contact' : currentLang === 'pt' ? 'Contato' : currentLang === 'fr' ? 'Contact' : currentLang === 'it' ? 'Contatto' : 'Contacto'}
