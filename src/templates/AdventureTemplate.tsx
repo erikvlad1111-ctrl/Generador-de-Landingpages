@@ -6,7 +6,8 @@ import {
   MapPin, Clock, Star, CheckCircle, MessageCircle, HelpCircle, FileText, 
   ShieldCheck, XCircle, Backpack, Calendar, ArrowRight, Heart, Flame, 
   Plane, Compass, Users, Sparkles, Navigation, Phone, Check, ChevronRight,
-  Send, Mountain, Building2, Mail, BookOpen, Tent, Bus, Utensils, Ticket, HeartPulse, Activity
+  Send, Mountain, Building2, Mail, BookOpen, Tent, Bus, Utensils, Ticket, HeartPulse, Activity,
+  Menu, X
 } from 'lucide-react';
 import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
@@ -47,6 +48,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
   const [legalTab, setLegalTab] = useState<'terms' | 'cancellation' | 'privacy' | 'license'>('terms');
   const [likedCards, setLikedCards] = useState<Record<string, boolean>>({});
   const [activeInclusionFilter, setActiveInclusionFilter] = useState<string>('all');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   React.useEffect(() => {
     if (isFree || isBasic) {
@@ -122,6 +124,87 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
   const getFeatureMetadata = (rawItem: string, idx: number) => {
     const lower = rawItem.toLowerCase();
     
+    // 1. Luxury Train / Panoramic Rail
+    if (lower.includes('tren') || lower.includes('train') || lower.includes('vagon') || lower.includes('vagón') || lower.includes('hiram') || lower.includes('vistadome') || lower.includes('ferrocarril')) {
+      return {
+        id: 'train',
+        image: 'https://images.unsplash.com/photo-1532105956626-9569c03602f6?q=80&w=700&auto=format&fit=crop',
+        icon: Compass,
+        badge: currentLang === 'en' ? 'First Class Train' : currentLang === 'fr' ? 'Train Première Classe' : currentLang === 'pt' ? 'Trem Primeira Classe' : currentLang === 'it' ? 'Treno Prima Classe' : 'Tren Panorámico VIP',
+        category: currentLang === 'en' ? 'Scenic Rail Experience' : currentLang === 'fr' ? 'Expérience Ferroviaire' : currentLang === 'pt' ? 'Experiência Ferroviária' : currentLang === 'it' ? 'Esperienza Ferroviaria' : 'Experiencia Ferroviaria VIP',
+        defaultDesc: currentLang === 'en'
+          ? 'Scenic luxury train journey through the Sacred Valley with observatory carriage, live folk music, and gourmet welcome cocktail.'
+          : currentLang === 'fr'
+          ? 'Voyage panoramique de luxe dans la Vallée Sacrée avec voiture observatoire, musique live et cocktail de bienvenue.'
+          : currentLang === 'pt'
+          ? 'Viagem panorâmica de luxo pelo Vale Sagrado com vagão observatório, música ao vivo e coquetel de boas-vindas.'
+          : currentLang === 'it'
+          ? 'Viaggio panoramico in treno di prima classe con carrozza osservatorio, musica andina dal vivo e cocktail di benvenuto.'
+          : 'Viaje panorámico en tren de primera clase por el Valle Sagrado con coche observatorio, música en vivo y cóctel de bienvenida.'
+      };
+    }
+
+    // 2. Accredited Guide / Historian
+    if (lower.includes('guía') || lower.includes('guia') || lower.includes('historiador') || lower.includes('arqueólogo') || lower.includes('arqueologo') || lower.includes('instructor') || lower.includes('leader')) {
+      return {
+        id: 'guide',
+        image: 'https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=700&auto=format&fit=crop',
+        icon: Users,
+        badge: currentLang === 'en' ? 'Accredited Historian' : currentLang === 'fr' ? 'Guide Historien' : currentLang === 'pt' ? 'Guia Historiador' : currentLang === 'it' ? 'Guida Ufficiale' : 'Guía Colegiado Oficial',
+        category: currentLang === 'en' ? 'Culture & Living History' : currentLang === 'fr' ? 'Histoire & Culture Vivante' : currentLang === 'pt' ? 'História & Cultura Viva' : currentLang === 'it' ? 'Storia & Cultura Viva' : 'Historia Viva & Arqueología',
+        defaultDesc: currentLang === 'en'
+          ? 'Accredited historian guide dedicated 100% to your party with in-depth cultural insights at your own relaxed pace.'
+          : currentLang === 'fr'
+          ? 'Guide officiel passionné dédié à votre groupe pour des explications historiques captivantes à votre rythme.'
+          : currentLang === 'pt'
+          ? 'Guia historiador oficial dedicado exclusivamente ao seu grupo, com explicações ricas no seu próprio ritmo.'
+          : currentLang === 'it'
+          ? 'Guida ufficiale storica dedicata esclusivamente al tuo gruppo con spiegazioni approfondite e passo rilassato.'
+          : 'Acompañamiento exclusivo y personalizado por arqueólogo o historiador colegiado a tu propio ritmo sin apuros.'
+      };
+    }
+
+    // 3. VIP Concierge / Permanent Care
+    if (lower.includes('conserj') || lower.includes('concierge') || lower.includes('asistencia') || lower.includes('soporte') || lower.includes('24/7')) {
+      return {
+        id: 'concierge',
+        image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=700&auto=format&fit=crop',
+        icon: Sparkles,
+        badge: currentLang === 'en' ? '24/7 VIP Concierge' : currentLang === 'fr' ? 'Conciergerie VIP 24/7' : currentLang === 'pt' ? 'Concierge VIP 24/7' : currentLang === 'it' ? 'Concierge VIP 24/7' : 'Conserjería VIP 24/7',
+        category: currentLang === 'en' ? 'Personalized Care' : currentLang === 'fr' ? 'Assistance Dédiée' : currentLang === 'pt' ? 'Atendimento Exclusivo' : currentLang === 'it' ? 'Assistenza Esclusiva' : 'Asistencia Permanente 24/7',
+        defaultDesc: currentLang === 'en'
+          ? 'Dedicated travel manager available round-the-clock for flight adjustments, hotel bookings, luggage care, and special requests.'
+          : currentLang === 'fr'
+          ? 'Coordinateur de voyage disponible 24h/24 pour vos transferts, bagages et demandes particulières.'
+          : currentLang === 'pt'
+          ? 'Coordenador de viagem disponível 24h para transfers, bagagens, reservas e qualquer necessidade imediata.'
+          : currentLang === 'it'
+          ? 'Coordinatore di viaggio dedicato h24 per gestione logistica, bagagli e qualsiasi richiesta speciale.'
+          : 'Coordinador de viaje disponible permanentemente para traslados, equipaje, contingencias y cualquier solicitud especial.'
+      };
+    }
+
+    // 4. Adventure Gear / Quad Bikes / Helmets
+    if (lower.includes('cuatrimoto') || lower.includes('atv') || lower.includes('casco') || lower.includes('protección') || lower.includes('proteccion') || lower.includes('equipo') || lower.includes('equipamiento') || lower.includes('bastón') || lower.includes('baston') || lower.includes('mochila')) {
+      return {
+        id: 'gear',
+        image: 'https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=700&auto=format&fit=crop',
+        icon: Backpack,
+        badge: currentLang === 'en' ? 'Pro Gear Included' : currentLang === 'fr' ? 'Équipement Pro' : currentLang === 'pt' ? 'Equipamento Pro' : currentLang === 'it' ? 'Equipaggiamento Pro' : 'Equipamiento Homologado',
+        category: currentLang === 'en' ? 'Safety & Expedition Gear' : currentLang === 'fr' ? 'Sécurité & Matériel' : currentLang === 'pt' ? 'Segurança & Equipamentos' : currentLang === 'it' ? 'Sicurezza & Attrezzatura' : 'Equipamiento & Seguridad',
+        defaultDesc: currentLang === 'en'
+          ? 'Certified helmets, windproof gloves, trail gear, and mechanical support crew ensuring absolute safety on every terrain.'
+          : currentLang === 'fr'
+          ? 'Casques homologués, gants et matériel technique de montagne avec équipe de support pour une sécurité totale.'
+          : currentLang === 'pt'
+          ? 'Capacetes homologados, luvas térmicas, equipamentos de trilha e suporte mecânico permanente.'
+          : currentLang === 'it'
+          ? 'Caschi omologati, guanti termici e attrezzatura tecnica da trekking con assistenza costante lungo il percorso.'
+          : 'Cascos homologados, guantes térmicos, equipo de seguridad certificado y vehículo de soporte técnico permanente.'
+      };
+    }
+
+    // 5. Sky Domes / Mountain Camps
     if (lower.includes('domo') || lower.includes('campamento') || lower.includes('carpa') || lower.includes('equipado') || lower.includes('dome') || lower.includes('camp') || lower.includes('tent') || lower.includes('tenda') || lower.includes('tende') || lower.includes('acampamento')) {
       return {
         id: 'camps',
@@ -141,31 +224,33 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       };
     }
     
-    if (lower.includes('alimento') || lower.includes('comida') || lower.includes('nutritiva') || lower.includes('chef') || lower.includes('desayuno') || lower.includes('almuerzo') || lower.includes('meal') || lower.includes('food') || lower.includes('dining') || lower.includes('refeição') || lower.includes('refeicao') || lower.includes('repas') || lower.includes('pasto') || lower.includes('pasti')) {
+    // 6. Gourmet Food & Chef
+    if (lower.includes('alimento') || lower.includes('comida') || lower.includes('nutritiva') || lower.includes('chef') || lower.includes('desayuno') || lower.includes('almuerzo') || lower.includes('cena') || lower.includes('gastronomía') || lower.includes('gastronomia') || lower.includes('gourmet') || lower.includes('belmond') || lower.includes('meal') || lower.includes('food') || lower.includes('dining') || lower.includes('refeição') || lower.includes('refeicao') || lower.includes('repas') || lower.includes('pasto') || lower.includes('pasti')) {
       return {
         id: 'food',
         image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=700&auto=format&fit=crop',
         icon: Utensils,
-        badge: currentLang === 'en' ? 'High Altitude Gourmet' : currentLang === 'fr' ? 'Chef de Montagne' : currentLang === 'pt' ? 'Chef de Montanha' : currentLang === 'it' ? 'Chef di Spedizione' : 'Chef de Montaña',
+        badge: currentLang === 'en' ? 'High Altitude Gourmet' : currentLang === 'fr' ? 'Chef de Montagne' : currentLang === 'pt' ? 'Chef de Montanha' : currentLang === 'it' ? 'Chef di Spedizione' : 'Gastronomía de Autor',
         category: currentLang === 'en' ? 'Nutrition & Energy' : currentLang === 'fr' ? 'Nutrition & Énergie' : currentLang === 'pt' ? 'Nutrição & Energia' : currentLang === 'it' ? 'Nutrizione & Energia' : 'Gastronomía Andina & Energía',
         defaultDesc: currentLang === 'en'
-          ? '3 hearty gourmet hot meals daily prepared fresh by your mountain chef. Vegan, vegetarian, and gluten-free diets fully accommodated.'
+          ? 'Hearty gourmet hot meals daily prepared fresh by your mountain chef or luxury buffet at Belmond Sanctuary Lodge. Vegetarian and dietary options guaranteed.'
           : currentLang === 'fr'
-          ? '3 repas chauds copieux par jour cuisinés sur place par votre chef. Options végétariennes, végétaliennes et sans gluten incluses.'
+          ? 'Repas chauds copieux cuisinés sur place ou buffet gastronomique au Belmond Sanctuary Lodge. Menus végétariens et sans gluten inclus.'
           : currentLang === 'pt'
-          ? '3 refeições quentes balanceadas por dia preparadas na hora por nosso chef. Dietas vegetarianas, veganas e sem glúten incluídas.'
+          ? 'Refeições quentes balanceadas preparadas na hora por chef de montanha ou buffet gourmet no Belmond Sanctuary Lodge.'
           : currentLang === 'it'
-          ? '3 pasti caldi abbondanti al giorno preparati freschi dal nostro chef. Menù vegetariani, vegani e senza glutine garantiti.'
-          : '3 comidas calientes nutritivas al día preparadas al momento por un chef de expedición. Dietas vegetarianas, veganas y celíacas incluidas.'
+          ? 'Pasti caldi abbondanti preparati freschi dal nostro chef o buffet gourmet al Belmond Sanctuary Lodge con opzioni dietetiche garantite.'
+          : 'Comidas calientes nutritivas preparadas al momento por un chef de expedición o buffet gourmet en Belmond Sanctuary Lodge. Dietas especiales incluidas.'
       };
     }
     
+    // 7. Medical Care & Emergency Oxygen
     if (lower.includes('oxígeno') || lower.includes('oxigeno') || lower.includes('botiquín') || lower.includes('botiquin') || lower.includes('altura') || lower.includes('médic') || lower.includes('medic') || lower.includes('oxygen') || lower.includes('medical') || lower.includes('first aid') || lower.includes('oxigênio') || lower.includes('oxigenio') || lower.includes('oxygène') || lower.includes('soccorso') || lower.includes('altitude')) {
       return {
         id: 'health',
         image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=700&auto=format&fit=crop',
         icon: HeartPulse,
-        badge: currentLang === 'en' ? 'Vital Safety' : currentLang === 'fr' ? 'Sécurité Vitale' : currentLang === 'pt' ? 'Segurança Vital' : currentLang === 'it' ? 'Sicurezza Vitale' : 'Seguridad Vital',
+        badge: currentLang === 'en' ? 'Vital Safety' : currentLang === 'fr' ? 'Sécurité Vitale' : currentLang === 'pt' ? 'Segurança Vital' : currentLang === 'it' ? 'Sicurezza Vitale' : 'Seguridad & Oxígeno',
         category: currentLang === 'en' ? 'Health & Medical' : currentLang === 'fr' ? 'Santé & Suivi Altitude' : currentLang === 'pt' ? 'Saúde & Monitoramento' : currentLang === 'it' ? 'Salute & Monitoraggio' : 'Salud & Monitoreo 4,600m',
         defaultDesc: currentLang === 'en'
           ? 'Continuous pulse oximeter saturation checks twice daily, portable medical emergency oxygen tank, and specialized wilderness first aid kit.'
@@ -179,12 +264,13 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       };
     }
     
-    if (lower.includes('entrada') || lower.includes('boleto') || lower.includes('machu') || lower.includes('ticket') || lower.includes('tickets') || lower.includes('tren') || lower.includes('train') || lower.includes('trem') || lower.includes('treno') || lower.includes('billet') || lower.includes('biglietto') || lower.includes('ingresso')) {
+    // 8. Entrance Tickets & Sanctuary Access
+    if (lower.includes('entrada') || lower.includes('boleto') || lower.includes('boletos') || lower.includes('machu') || lower.includes('ticket') || lower.includes('tickets') || lower.includes('ingreso') || lower.includes('billet') || lower.includes('biglietto') || lower.includes('ingresso')) {
       return {
         id: 'tickets',
         image: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=700&auto=format&fit=crop',
         icon: Ticket,
-        badge: currentLang === 'en' ? 'Guaranteed Circuit' : currentLang === 'fr' ? 'Circuit Garanti' : currentLang === 'pt' ? 'Circuito Garantido' : currentLang === 'it' ? 'Circuito Garantito' : 'Circuito Garantizado',
+        badge: currentLang === 'en' ? 'Guaranteed Circuit' : currentLang === 'fr' ? 'Circuit Garanti' : currentLang === 'pt' ? 'Circuito Garantido' : currentLang === 'it' ? 'Circuito Garantito' : 'Acceso Oficial Garantizado',
         category: currentLang === 'en' ? 'Sanctuary Access' : currentLang === 'fr' ? 'Accès Sanctuaire' : currentLang === 'pt' ? 'Acesso ao Santuário' : currentLang === 'it' ? 'Accesso al Santuario' : 'Acceso Oficial Machu Picchu',
         defaultDesc: currentLang === 'en'
           ? 'Official entrance ticket reserved in your name for Circuit 1 or 2, plus panoramic Expedition/Voyager train ride through the Sacred Valley.'
@@ -198,7 +284,8 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       };
     }
     
-    if (lower.includes('transporte') || lower.includes('mollepata') || lower.includes('bus') || lower.includes('ida y vuelta') || lower.includes('retorno') || lower.includes('transport') || lower.includes('van') || lower.includes('shuttle') || lower.includes('transfer') || lower.includes('traslado') || lower.includes('trasferimento')) {
+    // 9. Tourist Transport & Executive Vans
+    if (lower.includes('transporte') || lower.includes('mollepata') || lower.includes('bus') || lower.includes('ida y vuelta') || lower.includes('retorno') || lower.includes('transport') || lower.includes('van') || lower.includes('shuttle') || lower.includes('transfer') || lower.includes('traslado') || lower.includes('puerta a puerta') || lower.includes('trasferimento')) {
       const isReturn = lower.includes('vuelta') || lower.includes('retorno') || lower.includes('return') || lower.includes('retour') || lower.includes('volta');
       return {
         id: 'transport',
@@ -206,7 +293,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           ? 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=700&auto=format&fit=crop'
           : 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=700&auto=format&fit=crop',
         icon: Bus,
-        badge: currentLang === 'en' ? 'Private Van Service' : currentLang === 'fr' ? 'Transport Privé' : currentLang === 'pt' ? 'Transporte Turístico' : currentLang === 'it' ? 'Trasferimento Diretto' : 'Transporte Turístico',
+        badge: currentLang === 'en' ? 'Private Van Service' : currentLang === 'fr' ? 'Transport Privé' : currentLang === 'pt' ? 'Transporte Turístico' : currentLang === 'it' ? 'Trasferimento Diretto' : 'Transporte Puerta a Puerta',
         category: currentLang === 'en' ? 'Door-to-Door Logistics' : currentLang === 'fr' ? 'Logistique Porte-à-Porte' : currentLang === 'pt' ? 'Logística Porta a Porta' : currentLang === 'it' ? 'Logistica Porta a Porta' : 'Logística Puerta a Puerta',
         defaultDesc: currentLang === 'en'
           ? 'Pick-up from your Cusco hotel in air-conditioned modern tourist sprinters with licensed professional drivers experienced on Andean roads.'
@@ -220,10 +307,14 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       };
     }
     
+    // 10. Default / Fallback Photos (6 Distinct High-Resolution Unsplash Images)
     const defaultPhotos = [
       'https://images.unsplash.com/photo-1501555088652-021faa106b9b?q=80&w=700&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=700&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=700&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=700&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=700&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=700&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=700&auto=format&fit=crop'
     ];
     return {
       id: 'other',
@@ -243,83 +334,188 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
     };
   };
 
+  // Ensure exactly 6 inclusion cards (2x3 grid) for visual balance and fullness
+  const rawFeatures = (data.features?.items && data.features.items.length > 0) ? data.features.items : [];
+  
+  const complementaryFeatures = React.useMemo(() => [
+    currentLang === 'en'
+      ? 'Official Machu Picchu Tickets:Guaranteed classic circuit entrance tickets reserved in advance in your name without queues.'
+      : currentLang === 'fr'
+      ? 'Billets Officiels Machu Picchu:Accès nominatif réservé d’avance pour le circuit classique sans file d’attente.'
+      : currentLang === 'pt'
+      ? 'Ingressos Oficiais Machu Picchu:Entrada garantida para os circuitos clássicos sem filas e com reserva nominal antecipada.'
+      : currentLang === 'it'
+      ? 'Biglietti Ufficiali Machu Picchu:Ingresso prioritario garantito al circuito classico senza code con prenotazione nominativa.'
+      : 'Boletos Preferentes Machu Picchu:Entradas oficiales reservadas con anticipación en circuito clásico sin colas ni esperas.',
+    currentLang === 'en'
+      ? 'Private Door-to-Door Transport:Private transfers in modern tourist sprinters with professional drivers and altitude care.'
+      : currentLang === 'fr'
+      ? 'Transport Privé Porte-à-Porte:Minibus climatisé moderne avec chauffeur professionnel et assistance d’altitude.'
+      : currentLang === 'pt'
+      ? 'Transporte Turístico Porta a Porta:Vans executivas climatizadas com motoristas credenciados nas rotas andinas.'
+      : currentLang === 'it'
+      ? 'Trasferimento Privato Diretto:Minibus turistico climatizzato moderno con autisti esperti e protocollo altitudine.'
+      : 'Transporte Turístico Privado Puerta a Puerta:Traslados exclusivos en van moderna climatizada con chofer profesional y protocolo de altitud.',
+    currentLang === 'en'
+      ? 'Vital Oxygen & Wilderness Medical Kit:Portable emergency medical oxygen tank and digital pulse oximeter monitoring.'
+      : currentLang === 'fr'
+      ? 'Oxygène Médical & Trousse de Secours:Bouteille d’oxygène d’urgence et oxymètre de pouls avec suivi deux fois par jour.'
+      : currentLang === 'pt'
+      ? 'Oxigênio Medicinal & Kit de Emergência:Cilindro de oxigênio portátil e monitoramento diário com oxímetro de pulso.'
+      : currentLang === 'it'
+      ? 'Ossigeno Medicale & Primo Soccorso:Bombola portatile d’emergenza e saturimetro digitale per monitoraggio continuo.'
+      : 'Oxígeno Medicinal & Botiquín de Altura:Balón de oxígeno de emergencia y monitoreo diario de saturación con oxímetro digital.',
+    currentLang === 'en'
+      ? 'High Altitude Mountain Chef:Hot gourmet meals prepared daily with organic local ingredients and dietary options.'
+      : currentLang === 'fr'
+      ? 'Chef de Montagne & Gastronomie:Repas chauds équilibrés préparés sur place avec produits andins et régimes adaptés.'
+      : currentLang === 'pt'
+      ? 'Gastronomia Andina & Chef de Altitude:Refeições nutritivas frescas preparadas na hora com opções vegetarianas.'
+      : currentLang === 'it'
+      ? 'Chef di Spedizione & Menù Andino:Pasti caldi gourmet cucinati al momento con ingredienti freschi locali.'
+      : 'Gastronomía Andina & Chef de Altura:Comidas nutritivas preparadas al momento con insumos locales y opciones dietéticas.',
+    currentLang === 'en'
+      ? 'Accredited Historian Guide:Deep cultural explanations and personalized pacing for your private party.'
+      : currentLang === 'fr'
+      ? 'Guide Historien Agréé:Explications approfondies et rythme personnalisé dédié à votre groupe privé.'
+      : currentLang === 'pt'
+      ? 'Guia Historiador Credenciado:História viva dos Andes e acompanhamento exclusivo no ritmo do seu grupo.'
+      : currentLang === 'it'
+      ? 'Guida Ufficiale Storica:Approfondimenti culturali e spiegazioni appassionate al ritmo del tuo gruppo.'
+      : 'Guía Historiador Privado:Explicaciones profundas, historia viva y atención exclusiva al ritmo de tu grupo.',
+    currentLang === 'en'
+      ? '24/7 VIP Concierge & Care:Permanent travel coordinator dedicated to logistics, comfort, and immediate assistance.'
+      : currentLang === 'fr'
+      ? 'Conciergerie VIP 24/7:Coordinateur dédié pour vos bagages, réservations et assistance immédiate.'
+      : currentLang === 'pt'
+      ? 'Concierge VIP 24/7:Coordenador de viagem disponível em tempo integral para assistência e imprevistos.'
+      : currentLang === 'it'
+      ? 'Concierge VIP 24/7:Assistente di viaggio dedicato per gestione bagagli e supporto continuativo.'
+      : 'Asistencia 24/7 & Concierge Privado:Coordinador de viaje disponible permanentemente para cualquier solicitud o contingencia.'
+  ], [currentLang]);
+
+  const displayFeatures = React.useMemo(() => {
+    if (rawFeatures.length >= 6) {
+      return rawFeatures.slice(0, 6);
+    }
+    const result = [...rawFeatures];
+    for (const comp of complementaryFeatures) {
+      if (result.length >= 6) break;
+      const compKey = comp.split(':')[0].toLowerCase().slice(0, 6);
+      const isDuplicate = result.some(r => r.toLowerCase().includes(compKey));
+      if (!isDuplicate) {
+        result.push(comp);
+      }
+    }
+    let idx = 0;
+    while (result.length < 6 && idx < complementaryFeatures.length) {
+      if (!result.includes(complementaryFeatures[idx])) {
+        result.push(complementaryFeatures[idx]);
+      }
+      idx++;
+    }
+    return result.slice(0, 6);
+  }, [rawFeatures, complementaryFeatures]);
+
   return (
     <div className="min-h-screen bg-[#FDFDFD] font-sans text-slate-800 selection:bg-slate-900 selection:text-white">
       
-      {/* 1. TOP NAVBAR (Espacioso, Robusto & Multi-Idioma) */}
+      {/* 1. TOP NAVBAR (Espacioso, Organizado & Sin Saltos de Línea) */}
       <nav className="sticky top-0 w-full z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-xs transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 sm:py-4 flex justify-between items-center gap-3 sm:gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex justify-between items-center gap-2 sm:gap-4">
           
           {/* Brand Logo & Authority Badge */}
-          <div className="flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-sm shadow-md shadow-slate-900/10 shrink-0">
+          <a href="#inicio" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-sm shadow-md shadow-slate-900/10 shrink-0 group-hover:scale-105 transition-transform">
               <Mountain size={20} className="text-white" />
             </div>
             <div className="flex flex-col">
-              <div className="flex items-center gap-2">
-                <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 leading-none">
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <span className="text-lg sm:text-2xl font-black tracking-tight text-slate-900 leading-none">
                   Trek<span className="text-blue-600">Explorer</span>
                 </span>
-                <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[10px] font-black uppercase tracking-wider border border-blue-200/60">
+                <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[9px] sm:text-[10px] font-black uppercase tracking-wider border border-blue-200/60">
                   {t.brand.badge}
                 </span>
               </div>
-              <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 mt-1 hidden xs:block">
+              <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 mt-0.5 hidden xs:block truncate max-w-[190px]">
                 {t.brand.subtitle}
               </span>
             </div>
-          </div>
+          </a>
 
-          {/* Nav Links (Desktop) */}
+          {/* Desktop Nav Links (Completamente Ordenados, Sin Saltos de Línea) */}
           {!isMobile && (
-            <div className="hidden lg:flex items-center gap-5 xl:gap-7 text-[13px] font-extrabold text-slate-700">
-              <a href="#inicio" className="hover:text-blue-600 transition-colors py-1">{t.nav.home || 'Inicio'}</a>
-              <a href="#destinos" className="hover:text-blue-600 transition-colors py-1">{t.nav.destinations}</a>
-              <a href="#tours" className="hover:text-blue-600 transition-colors py-1">{t.nav.iconic}</a>
+            <div className="hidden lg:flex items-center gap-1 xl:gap-2 2xl:gap-3 text-xs xl:text-[13px] font-bold text-slate-700">
+              <a href="#inicio" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                {t.nav.home || 'Inicio'}
+              </a>
+              <a href="#destinos" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                {t.nav.destinations}
+              </a>
+              <a href="#tours" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                {currentLang === 'es' ? 'Tours' : currentLang === 'en' ? 'Tours' : currentLang === 'fr' ? 'Tours' : currentLang === 'pt' ? 'Tours' : 'Tour'}
+              </a>
+              {(isPro || isAdvance) && (
+                <a href="#itinerario" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                  {t.nav.itinerary}
+                </a>
+              )}
               {!isFree && (
-                <a href="#galeria" className="hover:text-blue-600 transition-colors py-1">{t.nav.gallery || 'Galería'}</a>
+                <a href="#incluye" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                  {t.nav.included}
+                </a>
+              )}
+              {!isFree && (
+                <a href="#galeria" className="hidden xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                  {t.nav.gallery || 'Galería'}
+                </a>
               )}
               {(isPro || isAdvance) && (
-                <a href="#itinerario" className="hover:text-blue-600 transition-colors py-1">{t.nav.itinerary}</a>
-              )}
-              {!isFree && (
-                <a href="#incluye" className="hover:text-blue-600 transition-colors py-1">{t.nav.included}</a>
-              )}
-              {(isPro || isAdvance) && (
-                <a href="#mochila" className="hover:text-blue-600 transition-colors py-1">{t.nav.gear || 'Equipamiento'}</a>
+                <a href="#mochila" className="hidden 2xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                  {t.nav.gear || 'Equipamiento'}
+                </a>
               )}
               {isAdvance && (
-                <a href="#testimonios" className="hover:text-blue-600 transition-colors py-1">{t.nav.reviews || 'Reseñas'}</a>
+                <a href="#testimonios" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                  {t.nav.reviews || 'Reseñas'}
+                </a>
               )}
               {isAdvance && (
-                <a href="#soporte-faq" className="hover:text-blue-600 transition-colors py-1">{t.nav.faq}</a>
+                <a href="#soporte-faq" className="hidden xl:inline-block whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                  {t.nav.faq}
+                </a>
               )}
               {isFree && (
-                <a href="#garantias" className="hover:text-blue-600 transition-colors py-1">{t.nav.guarantees || 'Garantías'}</a>
+                <a href="#garantias" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                  {t.nav.guarantees || 'Garantías'}
+                </a>
               )}
-              <a href="#contacto" className="hover:text-blue-600 transition-colors py-1">{t.nav.contact || 'Contacto'}</a>
+              <a href="#contacto" className="whitespace-nowrap px-2 xl:px-3 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                {t.nav.contact || 'Contacto'}
+              </a>
             </div>
           )}
 
-          {/* Right Controls: Language Selector Pill + CTAs */}
+          {/* Right Controls: Language Selector Pill + CTAs + Mobile Hamburger */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             {/* Language Selector Pill (Pro & Advance) */}
             {displayAdventureLanguages.length > 1 && (
-              <div className="flex items-center bg-slate-100 border border-slate-200/90 rounded-full p-0.5 text-[11px] font-bold shadow-2xs">
+              <div className="flex items-center bg-slate-100/90 border border-slate-200/90 rounded-full p-0.5 text-[11px] font-bold shadow-2xs">
                 {displayAdventureLanguages.map(({ code, label, flag }) => (
                   <button
                     key={code}
                     type="button"
                     onClick={() => setCurrentLang(code)}
                     title={label}
-                    className={`px-1.5 sm:px-2.5 py-1 rounded-full uppercase transition-all duration-200 cursor-pointer flex items-center gap-1 ${
+                    className={`px-1.5 xl:px-2.5 py-1 rounded-full uppercase transition-all duration-200 cursor-pointer flex items-center gap-1 ${
                       currentLang === code
                         ? 'bg-slate-900 text-white font-black shadow-xs'
                         : 'text-slate-500 hover:text-slate-900'
                     }`}
                   >
                     <span className="text-xs">{flag}</span>
-                    <span className="text-[10px] sm:text-[11px] font-black hidden xs:inline">{code.toUpperCase()}</span>
+                    <span className="text-[10px] xl:text-[11px] font-black hidden xl:inline">{code.toUpperCase()}</span>
                   </button>
                 ))}
               </div>
@@ -332,7 +528,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-600/20 hover:scale-102 flex items-center gap-1.5 cursor-pointer"
+                  className="bg-emerald-600 hover:bg-emerald-500 text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all shadow-md shadow-emerald-600/20 hover:scale-102 flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
                 >
                   <MessageCircle size={15} />
                   <span className="hidden md:inline">WhatsApp</span>
@@ -340,7 +536,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 <button
                   type="button"
                   onClick={() => setIsQuoteOpen(true)}
-                  className="bg-slate-900 hover:bg-slate-800 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all shadow-md hover:scale-102 flex items-center gap-1.5 cursor-pointer"
+                  className="bg-slate-900 hover:bg-slate-800 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all shadow-md hover:scale-102 flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
                 >
                   <FileText size={15} />
                   <span>{t.nav.quoteBtn}</span>
@@ -350,9 +546,9 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               <button
                 type="button"
                 onClick={() => setIsQuoteOpen(true)}
-                className="bg-slate-900 hover:bg-slate-800 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-extrabold text-xs sm:text-sm transition-all shadow-lg hover:shadow-slate-900/20 hover:scale-102 active:scale-98 flex items-center gap-2 cursor-pointer"
+                className="bg-slate-900 hover:bg-slate-800 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full font-extrabold text-xs sm:text-sm transition-all shadow-md hover:shadow-slate-900/20 hover:scale-102 active:scale-98 flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
               >
-                <FileText size={16} />
+                <FileText size={15} />
                 <span>{t.nav.quoteBtn}</span>
               </button>
             ) : (
@@ -360,15 +556,115 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-slate-900 hover:bg-slate-800 text-white px-4 sm:px-6 py-2 sm:py-2.5 rounded-full font-extrabold text-xs sm:text-sm transition-all shadow-lg hover:shadow-slate-900/20 hover:scale-102 active:scale-98 flex items-center gap-2 cursor-pointer"
+                className="bg-slate-900 hover:bg-slate-800 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full font-extrabold text-xs sm:text-sm transition-all shadow-md hover:shadow-slate-900/20 hover:scale-102 active:scale-98 flex items-center gap-1.5 cursor-pointer whitespace-nowrap"
               >
-                <MessageCircle size={16} />
+                <MessageCircle size={15} />
                 <span>{t.nav.whatsappBtn}</span>
               </a>
             )}
+
+            {/* Mobile Hamburger Toggle Button (< lg) */}
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
+              aria-label="Abrir menú de navegación"
+            >
+              {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            </button>
           </div>
 
         </div>
+
+        {/* Mobile Dropdown Menu */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden border-t border-slate-200 bg-white/98 backdrop-blur-2xl px-4 py-4 shadow-xl space-y-3 transition-all">
+            <div className="grid grid-cols-2 gap-2 text-xs font-bold text-slate-800">
+              <a
+                href="#inicio"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                {t.nav.home || 'Inicio'}
+              </a>
+              <a
+                href="#destinos"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                {t.nav.destinations}
+              </a>
+              <a
+                href="#tours"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                {currentLang === 'es' ? 'Tours' : currentLang === 'en' ? 'Tours' : currentLang === 'fr' ? 'Tours' : currentLang === 'pt' ? 'Tours' : 'Tour'}
+              </a>
+              {(isPro || isAdvance) && (
+                <a
+                  href="#itinerario"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                >
+                  {t.nav.itinerary}
+                </a>
+              )}
+              {!isFree && (
+                <a
+                  href="#incluye"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                >
+                  {t.nav.included}
+                </a>
+              )}
+              {!isFree && (
+                <a
+                  href="#galeria"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                >
+                  {t.nav.gallery || 'Galería'}
+                </a>
+              )}
+              {(isPro || isAdvance) && (
+                <a
+                  href="#mochila"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                >
+                  {t.nav.gear || 'Equipamiento'}
+                </a>
+              )}
+              {isAdvance && (
+                <a
+                  href="#testimonios"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                >
+                  {t.nav.reviews || 'Reseñas'}
+                </a>
+              )}
+              {isAdvance && (
+                <a
+                  href="#soporte-faq"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                >
+                  {t.nav.faq}
+                </a>
+              )}
+              <a
+                href="#contacto"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              >
+                {t.nav.contact || 'Contacto'}
+              </a>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* 2. HERO SECTION CON IMAGEN DE FONDO COMPLETO */}
@@ -753,7 +1049,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       )}
 
       {/* 7. FEATURES & INCLUDED SERVICES (Con imágenes suaves, filtros y estándares de alta montaña) */}
-      {data.features && data.features.items && data.features.items.length > 0 && !isFree && (
+      {displayFeatures.length > 0 && !isFree && (
         <section id="incluye" className="py-16 sm:py-24 px-4 sm:px-8 bg-slate-950 text-white relative overflow-hidden border-y border-slate-800">
           
           {/* Ambient Lighting Glow Effect */}
@@ -769,7 +1065,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 <span>{t.inclusions.title}</span>
               </div>
               <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
-                {translateText(data.features.title || t.inclusions.includedTitle, currentLang)}
+                {translateText(data.features?.title || t.inclusions.includedTitle, currentLang)}
               </h2>
               <p className="text-xs sm:text-sm text-slate-400 leading-relaxed font-normal max-w-2xl mx-auto">
                 {currentLang === 'en'
@@ -785,33 +1081,55 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
               {/* Interactive Category Filter Pills */}
               <div className="pt-4 flex flex-wrap items-center justify-center gap-2">
-                {[
-                  { id: 'all', label: currentLang === 'en' ? 'All Inclusions (6)' : currentLang === 'fr' ? 'Tous les Services (6)' : currentLang === 'pt' ? 'Todos os Serviços (6)' : currentLang === 'it' ? 'Tutti i Servizi (6)' : 'Todos los Servicios (6)' },
-                  { id: 'transport', label: currentLang === 'en' ? '🚐 Transport & Vans' : currentLang === 'fr' ? '🚐 Transport & Minibus' : currentLang === 'pt' ? '🚐 Transporte & Vans' : currentLang === 'it' ? '🚐 Trasporti & Minibus' : '🚐 Transporte & Buses' },
-                  { id: 'camps', label: currentLang === 'en' ? '⛺ Sky Domes & Camps' : currentLang === 'fr' ? '⛺ Dômes Célestes & Camps' : currentLang === 'pt' ? '⛺ Domos & Acampamento' : currentLang === 'it' ? '⛺ Domi Panoramici & Tende' : '⛺ Domos & Campamento' },
-                  { id: 'food', label: currentLang === 'en' ? '👨‍🍳 Mountain Chef & Food' : currentLang === 'fr' ? '👨‍🍳 Chef & Gastronomie' : currentLang === 'pt' ? '👨‍🍳 Chef & Refeições' : currentLang === 'it' ? '👨‍🍳 Chef & Alimentazione' : '👨‍🍳 Chef & Alimentación' },
-                  { id: 'tickets', label: currentLang === 'en' ? '🎫 Machu Picchu Tickets' : currentLang === 'fr' ? '🎫 Billets Machu Picchu' : currentLang === 'pt' ? '🎫 Ingressos Machu Picchu' : currentLang === 'it' ? '🎫 Biglietti Machu Picchu' : '🎫 Boletos Machu Picchu' },
-                  { id: 'health', label: currentLang === 'en' ? '🩺 Oxygen & Medical' : currentLang === 'fr' ? '🩺 Oxygène & Secours' : currentLang === 'pt' ? '🩺 Oxigênio & Primeiros Socorros' : currentLang === 'it' ? '🩺 Ossigeno & Pronto Soccorso' : '🩺 Oxígeno & Primeros Auxilios' }
-                ].map((filterTab) => (
-                  <button
-                    key={filterTab.id}
-                    type="button"
-                    onClick={() => setActiveInclusionFilter(filterTab.id)}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                      activeInclusionFilter === filterTab.id
-                        ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30 font-black scale-105'
-                        : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700'
-                    }`}
-                  >
-                    {filterTab.label}
-                  </button>
-                ))}
+                {(() => {
+                  const categoryLabels: Record<string, string> = {
+                    all: currentLang === 'en' ? `All Inclusions (${displayFeatures.length})` : currentLang === 'fr' ? `Tous les Services (${displayFeatures.length})` : currentLang === 'pt' ? `Todos os Serviços (${displayFeatures.length})` : currentLang === 'it' ? `Tutti i Servizi (${displayFeatures.length})` : `Todos los Servicios (${displayFeatures.length})`,
+                    train: currentLang === 'en' ? '🚂 Luxury Train' : currentLang === 'fr' ? '🚂 Train de Luxe' : currentLang === 'pt' ? '🚂 Trem Panorâmico' : currentLang === 'it' ? '🚂 Treno Panoramico' : '🚂 Tren Panorámico',
+                    guide: currentLang === 'en' ? '🧭 Historian Guide' : currentLang === 'fr' ? '🧭 Guide Historien' : currentLang === 'pt' ? '🧭 Guia Historiador' : currentLang === 'it' ? '🧭 Guida Storica' : '🧭 Guía Historiador',
+                    concierge: currentLang === 'en' ? '✨ VIP Concierge' : currentLang === 'fr' ? '✨ Conciergerie VIP' : currentLang === 'pt' ? '✨ Concierge VIP' : currentLang === 'it' ? '✨ Concierge VIP' : '✨ Conserjería VIP',
+                    tickets: currentLang === 'en' ? '🎫 Sanctuary Tickets' : currentLang === 'fr' ? '🎫 Billets Machu Picchu' : currentLang === 'pt' ? '🎫 Ingressos Machu Picchu' : currentLang === 'it' ? '🎫 Biglietti Machu Picchu' : '🎫 Boletos Machu Picchu',
+                    food: currentLang === 'en' ? '👨‍🍳 Gourmet Food' : currentLang === 'fr' ? '👨‍🍳 Gastronomie' : currentLang === 'pt' ? '👨‍🍳 Gastronomia' : currentLang === 'it' ? '👨‍🍳 Gastronomia' : '👨‍🍳 Gastronomía Gourmet',
+                    transport: currentLang === 'en' ? '🚐 Private Transport' : currentLang === 'fr' ? '🚐 Transport Privé' : currentLang === 'pt' ? '🚐 Transporte Privativo' : currentLang === 'it' ? '🚐 Trasporto Privato' : '🚐 Transporte Privado',
+                    camps: currentLang === 'en' ? '⛺ Sky Domes' : currentLang === 'fr' ? '⛺ Dômes Célestes' : currentLang === 'pt' ? '⛺ Domos Térmicos' : currentLang === 'it' ? '⛺ Domi Termici' : '⛺ Domos Térmicos',
+                    health: currentLang === 'en' ? '🩺 Oxygen & Medical' : currentLang === 'fr' ? '🩺 Oxygène & Secours' : currentLang === 'pt' ? '🩺 Oxigênio & Primeiros Socorros' : currentLang === 'it' ? '🩺 Ossigeno & Pronto Soccorso' : '🩺 Oxígeno & Primeros Auxilios',
+                    gear: currentLang === 'en' ? '🎒 Pro Gear' : currentLang === 'fr' ? '🎒 Équipement Pro' : currentLang === 'pt' ? '🎒 Equipamentos Pro' : currentLang === 'it' ? '🎒 Attrezzatura Pro' : '🎒 Equipamiento Pro',
+                    other: currentLang === 'en' ? '🛡️ Official Services' : currentLang === 'fr' ? '🛡️ Services Officiels' : currentLang === 'pt' ? '🛡️ Serviços Oficiais' : currentLang === 'it' ? '🛡️ Servizi Ufficiali' : '🛡️ Servicios Oficiales'
+                  };
+
+                  const presentCatIds = new Set<string>();
+                  displayFeatures.forEach((item, idx) => {
+                    const meta = getFeatureMetadata(item, idx);
+                    presentCatIds.add(meta.id);
+                  });
+
+                  const tabs = [{ id: 'all', label: categoryLabels.all }];
+                  Object.keys(categoryLabels).forEach(key => {
+                    if (key !== 'all' && presentCatIds.has(key)) {
+                      tabs.push({ id: key, label: categoryLabels[key] });
+                    }
+                  });
+
+                  return tabs.map((filterTab) => (
+                    <button
+                      key={filterTab.id}
+                      type="button"
+                      onClick={() => setActiveInclusionFilter(filterTab.id)}
+                      className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                        activeInclusionFilter === filterTab.id
+                          ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30 font-black scale-105'
+                          : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-700'
+                      }`}
+                    >
+                      {filterTab.label}
+                    </button>
+                  ));
+                })()}
               </div>
             </div>
 
-            {/* Grid of Compact & Refined Inclusion Cards (6 items: 2x3 grid) */}
+            {/* Grid of Compact & Refined Inclusion Cards (Exactly 6 items: 2x3 grid) */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-6xl mx-auto">
-              {data.features.items.slice(0, 6).map((item, idx) => {
+              {displayFeatures.map((item, idx) => {
                 const parts = item.split(':');
                 const title = parts[0].trim();
                 const userCustomDesc = parts[1]?.trim();

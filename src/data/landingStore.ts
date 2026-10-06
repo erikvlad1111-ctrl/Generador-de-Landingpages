@@ -37,10 +37,12 @@ export const INITIAL_LANDINGS: LandingData[] = [
     features: {
       title: 'Privilegios de la Experiencia VIP',
       items: [
-        'Vagon Hiram Bingham / Vistadome:Viaja con música en vivo, cóctel de bienvenida y ventanales panorámicos.',
-        'Guía Historiador Privado:Explicaciones profundas y personalizadas al ritmo de tu grupo.',
-        'Gastronomía de Autor:Almuerzo buffet gourmet incluido a las faldas de la ciudadela.',
-        'Asistencia 24/7 de Conserjería:Coordinador de viaje disponible permanentemente para cualquier solicitud.'
+        'Vagón Hiram Bingham / Vistadome Panorámico:Viaja con música en vivo, cóctel de bienvenida Pisco Sour y coche observatorio con vistas 360°.',
+        'Guía Historiador Privado:Acompañamiento exclusivo y personalizado por arqueólogo colegiado a tu propio ritmo.',
+        'Gastronomía de Autor en Belmond Lodge:Almuerzo buffet gourmet a los pies de la ciudadela con ingredientes andinos selectos.',
+        'Asistencia 24/7 & Concierge Privado:Coordinador de viaje permanente para traslados, equipaje y cualquier requerimiento especial.',
+        'Boletos de Ingreso Preferente Machu Picchu:Acceso oficial garantizado en Circuito Clásico 1 o 2 sin filas ni demoras.',
+        'Transporte Turístico Privado Puerta a Puerta:Traslados exclusivos en van moderna climatizada con chofer profesional y protocolo de altitud.'
       ]
     },
     faqs: [
@@ -142,10 +144,12 @@ export const INITIAL_LANDINGS: LandingData[] = [
     features: {
       title: 'Lo más destacado de este tour',
       items: [
-        'Cuatrimotos 450cc Automáticas:Fáciles de manejar, ideales para principiantes y experimentados.',
+        'Cuatrimotos 450cc Automáticas:Fáciles de manejar, ideales para principiantes y experimentados en trocha andina.',
         'Guías de Aventura Bilingües:Líderes de ruta capacitados en primeros auxilios y mecánica de campo.',
         'Fotos y Videos en HD:Capturamos tus mejores saltos y postales andinas durante todo el recorrido.',
-        'Transporte Privado ida y vuelta:Recojo directo en la puerta de tu hotel en Cusco.'
+        'Transporte Privado ida y vuelta:Recojo directo en la puerta de tu hotel en Cusco en van turística.',
+        'Equipamiento de Protección Homologado:Cascos integrales, guantes térmicos, rodilleras y gafas contra el polvo.',
+        'Asistencia Mecánica & Botiquín de Emergencia:Vehículo de soporte permanente y monitoreo con botiquín de trauma.'
       ]
     },
     faqs: [
@@ -505,9 +509,11 @@ export const INITIAL_LANDINGS: LandingData[] = [
       title: 'Privilegios de la Experiencia Presidencial',
       items: [
         'Tren Belmond Hiram Bingham:Viaja con música en vivo, cóctel de bienvenida Pisco Sour y coche observatorio al aire libre.',
-        'Guía Historiador Privado:Explicaciones profundas y personalizadas al ritmo de tu grupo.',
-        'Gastronomía de Autor:Almuerzo buffet gourmet incluido a las faldas de la ciudadela sagrada.',
-        'Asistencia 24/7 de Conserjería:Coordinador de viaje disponible permanentemente para cualquier solicitud.'
+        'Guía Historiador Privado:Explicaciones profundas, historia viva y atención exclusiva al ritmo de tu grupo.',
+        'Gastronomía de Autor en Belmond Lodge:Almuerzo buffet gourmet incluido a las faldas de la ciudadela sagrada.',
+        'Asistencia 24/7 & Concierge Privado:Coordinador de viaje disponible permanentemente para cualquier solicitud o contingencia.',
+        'Boletos Preferenciales Machu Picchu:Acceso oficial reservado con anticipación en circuito clásico sin colas ni esperas.',
+        'Transporte Turístico Privado Puerta a Puerta:Traslados exclusivos en van ejecutiva climatizada con chofer profesional y protocolo de altitud.'
       ]
     },
     includedServices: [
@@ -612,12 +618,16 @@ export function getStoredLandings(): LandingData[] {
         if (!existingIds.has(init.id)) {
           parsed.push(init);
           updated = true;
-        } else if (init.id === '6') {
-          // Always ensure Cusco Luxury Collection has latest template & content
-          const idx = parsed.findIndex(p => p.id === '6');
-          if (idx >= 0 && (parsed[idx].template !== 'premium' || !parsed[idx].slug.includes('luxury'))) {
-            parsed[idx] = init;
-            updated = true;
+        } else {
+          const idx = parsed.findIndex(p => p.id === init.id);
+          if (idx >= 0) {
+            if (init.id === '6' && (parsed[idx].template !== 'premium' || !parsed[idx].slug.includes('luxury'))) {
+              parsed[idx] = init;
+              updated = true;
+            } else if (init.features?.items && (!parsed[idx].features?.items || parsed[idx].features.items.length < init.features.items.length)) {
+              parsed[idx].features = init.features;
+              updated = true;
+            }
           }
         }
       }
