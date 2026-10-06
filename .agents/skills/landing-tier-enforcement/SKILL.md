@@ -108,18 +108,25 @@ Cada una de las 5 plantillas (`agency-portal`, `boho-nature`, `adventure`, `cult
   2. Agregar el layout condicional `activePhotos.length === 3 ? 'grid-cols-1 sm:grid-cols-3 max-w-5xl mx-auto'` para que en tablet y desktop forme una fila simétrica de 3 columnas de alta estética.
   3. En `src/app/demo/plans/page.tsx`, actualizar la descripción de la matriz comparativa de planes a `'3 Fotos (Pines)'`.
 
-### Error 9: Menús de navegación superior con menos de 5 enlaces o totalmente ocultos en planes Gratuito, Básico y Pro
-- **Síntoma / Mensaje de Error:** En los planes Gratuito (`free`), Básico (`basic`) y Pro (`pro`), las barras de navegación superior mostraban muy pocos enlaces (ej. solo 2 enlaces como "TOURS" y "GALERÍA" en Básico) o estaban completamente ocultas con `!isFree`, cuando el requerimiento de negocio exige un mínimo de 5 enlaces/textos de navegación funcionales.
+### Error 10: Menús de navegación desbordando el ancho de pantalla, enlaces excesivos (> 7 links) y colisión vertical de tipografías
+- **Síntoma / Mensaje de Error:** La barra de navegación superior sobrepasaba el ancho de la página causando scroll horizontal. Los menús tenían entre 9 y 12 enlaces en pantallas de escritorio, y en la identidad de marca (logo) las letras de títulos y subtítulos chocaban o se montaban una encima de otra (`overflowed` y letras superpuestas).
 - **Causa Raíz:**
-  1. En las 5 plantillas (`AgencyPortalTemplate`, `AdventureTemplate`, `BohoTemplate`, `CulturalTemplate`, `PremiumTemplate`), los bloques de navegación de escritorio tenían la condición estricta `{!isFree && !isMobile && ...}` que ocultaba el menú completo en Gratuito.
-  2. En Básico, muchas secciones como itinerario, reseñas, sellos y faq estaban correctamente restringidas por nivel, pero no se habían provisto enlaces alternativos útiles (como "Inicio", "El Tour", "Qué Incluye", "Esencia", "Contacto").
+  1. La acumulación excesiva de links secundarios (`Amenidades`, `Ficha Técnica`, `Sensorial`, `Mochila`, `Soporte FAQ`) superaba el ancho disponible de la cuadrícula flex.
+  2. Selectores de idioma que renderizaban botones horizontales individuales para cada uno de los 5 idiomas en lugar de un dropdown selector compacto tipo píldora (`HeaderLanguageSelector`).
+  3. Contenedores de logotipo y marca con `leading-tight` sin separación vertical o sin `whitespace-nowrap`, provocando colisión entre los trazos descendentes del título y ascendentes del subtítulo.
 - **Solución Paso a Paso:**
-  1. Modificar la condición del navbar en las 5 plantillas a `{!isMobile && (...) }` para que la barra de navegación siempre se renderice en escritorio y dispositivos móviles.
-  2. Estructurar los enlaces para garantizar un mínimo de 5 enlaces en todos los niveles:
-     - **Gratuito (`free`):** Al menos 5 enlaces (`#inicio`, `#destinos`/`#actualites`/`#sobre-tour`, `#tours`, `#esencia`/`#garantias`/`#ficha-tecnica`, `#contacto`).
-     - **Básico (`basic`):** Al menos 6 enlaces (`#inicio`, `#experiencia`/`#agenda`/`#sobre-tour`, `#tours`, `#galeria`, `#incluye`/`#mochila`/`#amenidades`, `#contacto`).
-     - **Pro (`pro`):** Al menos 8-9 enlaces (`#inicio`, `#itinerario`, `#tours`, `#galeria`, `#incluye`, `#mochila`, `#guia`/`#mapa`, `#contacto`).
-     - **Advance (`advance`):** Menú completo con 10-11 enlaces (+ `#testimonios`/`#livre-dor` y `#soporte-faq`).
-  3. Asegurar las anclas `id="..."` correspondientes en cada sección de la landing (`id="inicio"`, `id="galeria"`, `id="contacto"`, etc.) para permitir navegación fluida mediante scroll suave al hacer clic.
+  1. **Límite Estricto de Enlaces (Máximo 6 o 7 links limpios):**
+     - `PremiumTemplate`: Máximo 5 enlaces limpios (`Inicio`, `Experiencia`, `Tours`, `Lounge VIP`, `Contacto`).
+     - `AdventureTemplate`: Exactamente 6 enlaces limpios (`Inicio`, `Destinos`, `Tours`, `Qué Incluye`, `Reseñas`, `Contacto`).
+     - `BohoTemplate`: Máximo 6 enlaces limpios (`Inicio`, `Journal`, `Tours`, `Galería`, `Reseñas`, `Contacto`).
+     - `CulturalTemplate`: Máximo 6 enlaces limpios (`Inicio`, `Agenda`, `Tours`, `Galería`, `Reseñas`, `Contacto`).
+     - `AgencyPortalTemplate`: Máximo 6 enlaces limpios (`Inicio`, `El Tour`, `Qué Incluye`, `Tours`, `Reseñas`, `Contacto`).
+  2. **Corrección de Colisiones Tipográficas:**
+     - Aplicar `whitespace-nowrap` a todos los textos de marca y enlaces del menú superior.
+     - En la marca, asignar `leading-snug` al nombre/título y `leading-none mt-0.5` al subtítulo para garantizar separación nítida sin solapamiento de caracteres.
+  3. **Blindaje de Ancho sin Desborde:**
+     - Establecer `w-full max-w-full overflow-x-hidden` en el contenedor raíz de cada plantilla.
+     - Contener la barra en `max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full min-w-0 flex justify-between items-center gap-2 sm:gap-4`.
+     - Utilizar `HeaderLanguageSelector` con menú desplegable flotante que no ocupa ancho estático.
 
 
