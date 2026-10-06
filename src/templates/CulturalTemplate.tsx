@@ -123,7 +123,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
 
         {/* Municipal / Heritage Navigation Bar */}
-        <nav className="relative z-20 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-4 flex items-center justify-between border-b border-white/15 w-full min-w-0 gap-2">
+        <nav className="relative z-50 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-4 flex items-center justify-between border-b border-white/15 w-full min-w-0 gap-2">
           {/* Official Emblem / Coat of arms */}
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 min-w-0">
             <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-red-600/30 backdrop-blur-md border border-red-400/50 flex items-center justify-center text-red-200 shadow-md shrink-0 animate-soft-float">
@@ -205,7 +205,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </nav>
 
         {/* Hero Central Titles & Circular Icons (Animated Entry) */}
-        <div className="relative z-20 max-w-4xl mx-auto px-4 pt-16 sm:pt-24 pb-28 sm:pb-36 text-center space-y-4 sm:space-y-6 animate-fade-in-up">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 pt-16 sm:pt-24 pb-28 sm:pb-36 text-center space-y-4 sm:space-y-6 animate-fade-in-up">
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-black tracking-tight drop-shadow-xl text-white italic">
             {data.hero?.title ? translateText(data.hero.title, currentLang) : (currentLang === 'en' ? 'Imperial Cusco' : currentLang === 'fr' ? 'Cusco Impérial' : currentLang === 'pt' ? 'Cusco Imperial' : currentLang === 'it' ? 'Cusco Imperiale' : 'Cusco Imperial')}
           </h1>

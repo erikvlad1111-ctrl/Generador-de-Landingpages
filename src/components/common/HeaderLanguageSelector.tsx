@@ -114,31 +114,31 @@ export default function HeaderLanguageSelector({
   const styles = {
     adventure: {
       trigger: 'bg-slate-100 hover:bg-slate-200/90 text-slate-800 border-slate-200/90 shadow-2xs',
-      dropdown: 'bg-white/98 text-slate-800 border-slate-200/90 shadow-xl shadow-slate-900/10',
+      dropdown: 'bg-white text-slate-800 border-slate-200 shadow-2xl',
       activeItem: 'bg-blue-50 text-blue-600 font-black',
       hoverItem: 'hover:bg-slate-50 text-slate-600 hover:text-slate-900'
     },
     premium: {
       trigger: 'bg-neutral-900/90 hover:bg-neutral-800 text-amber-300 border-amber-500/30 shadow-2xs',
-      dropdown: 'bg-[#0d0a14]/98 text-amber-100 border-amber-500/30 shadow-[0_10px_35px_rgba(0,0,0,0.8)]',
+      dropdown: 'bg-[#0d0a14] text-amber-100 border-amber-500/40 shadow-[0_10px_35px_rgba(0,0,0,0.9)]',
       activeItem: 'bg-amber-500/20 text-amber-300 font-black',
       hoverItem: 'hover:bg-amber-500/10 text-neutral-300 hover:text-amber-200'
     },
     boho: {
       trigger: 'bg-stone-200/80 hover:bg-stone-300/80 text-stone-700 border-stone-300/80 shadow-2xs',
-      dropdown: 'bg-[#FAF7F2]/98 text-stone-800 border-stone-300 shadow-xl shadow-stone-900/10',
+      dropdown: 'bg-[#FAF7F2] text-stone-800 border-stone-300 shadow-2xl',
       activeItem: 'bg-[#C86D51]/15 text-[#C86D51] font-black',
       hoverItem: 'hover:bg-stone-100 text-stone-600 hover:text-stone-900'
     },
     cultural: {
       trigger: 'bg-black/55 hover:bg-black/75 text-stone-200 border-white/20 shadow-2xs',
-      dropdown: 'bg-stone-950/98 text-stone-100 border-red-900/40 shadow-2xl',
-      activeItem: 'bg-red-900/40 text-red-300 font-black',
+      dropdown: 'bg-[#120d0d] text-stone-100 border-red-900/60 shadow-2xl',
+      activeItem: 'bg-red-900/50 text-red-300 font-black',
       hoverItem: 'hover:bg-white/10 text-stone-300 hover:text-white'
     },
     portal: {
       trigger: 'bg-stone-800/95 hover:bg-stone-700 text-stone-100 border-stone-700 shadow-2xs',
-      dropdown: 'bg-stone-900/98 text-white border-stone-700 shadow-2xl',
+      dropdown: 'bg-[#1c1917] text-white border-stone-700 shadow-2xl',
       activeItem: 'bg-[#FF5500]/25 text-[#FF8844] font-black',
       hoverItem: 'hover:bg-stone-800 text-stone-300 hover:text-white'
     }
@@ -164,7 +164,7 @@ export default function HeaderLanguageSelector({
       {isOpen && (
         <div
           role="listbox"
-          className={`absolute right-0 top-full mt-2 w-48 rounded-2xl border p-1.5 backdrop-blur-xl transition-all animate-in fade-in zoom-in-95 z-[100] shadow-2xl ${styles.dropdown}`}
+          className={`absolute right-0 top-full mt-2 w-48 rounded-2xl border p-1.5 transition-all animate-in fade-in zoom-in-95 z-[100] shadow-2xl ${styles.dropdown}`}
         >
           <div className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider opacity-50 border-b border-current/10 mb-1">
             Seleccionar Idioma
