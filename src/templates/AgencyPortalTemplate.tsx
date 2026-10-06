@@ -956,7 +956,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
     <div className={`min-h-screen bg-[#FDFDFD] text-stone-900 font-sans selection:bg-[#FF5500] selection:text-white w-full max-w-full overflow-x-hidden pb-16 sm:pb-0 ${isMobile ? 'text-xs' : ''}`}>
       
       {/* 1. TOP ANNOUNCEMENT BAR CON SELECTOR DE IDIOMAS */}
-      <div className="bg-[#1C1917] text-white text-[11px] py-1.5 sm:py-2 px-2.5 sm:px-6 border-b border-stone-800">
+      <div className="relative z-50 bg-[#1C1917] text-white text-[11px] py-1.5 sm:py-2 px-2.5 sm:px-6 border-b border-stone-800">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           
           {/* Left: Contact Info */}

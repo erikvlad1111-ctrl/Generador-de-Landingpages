@@ -10,12 +10,50 @@ export interface LanguageOption {
   flag: string;
 }
 
+const FLAG_ICONS: Record<LanguageType, React.ReactNode> = {
+  es: (
+    <svg className="w-4 h-3 rounded-[2px] shadow-2xs shrink-0 overflow-hidden inline-block" viewBox="0 0 640 480" aria-hidden="true">
+      <path fill="#AA151B" d="M0 0h640v480H0z"/>
+      <path fill="#F1BF00" d="M0 120h640v240H0z"/>
+    </svg>
+  ),
+  en: (
+    <svg className="w-4 h-3 rounded-[2px] shadow-2xs shrink-0 overflow-hidden inline-block" viewBox="0 0 640 480" aria-hidden="true">
+      <path fill="#bd3d44" d="M0 0h640v480H0z"/>
+      <path stroke="#fff" strokeWidth="37" d="M0 55h640M0 129h640M0 203h640M0 277h640M0 351h640M0 425h640"/>
+      <path fill="#192f5d" d="M0 0h260v260H0z"/>
+      <circle cx="130" cy="130" r="45" fill="#fff" opacity="0.95"/>
+    </svg>
+  ),
+  pt: (
+    <svg className="w-4 h-3 rounded-[2px] shadow-2xs shrink-0 overflow-hidden inline-block" viewBox="0 0 640 480" aria-hidden="true">
+      <path fill="#009c3b" d="M0 0h640v480H0z"/>
+      <path fill="#ffdf00" d="m320 50 260 190-260 190L60 240z"/>
+      <circle cx="320" cy="240" r="90" fill="#002776"/>
+    </svg>
+  ),
+  fr: (
+    <svg className="w-4 h-3 rounded-[2px] shadow-2xs shrink-0 overflow-hidden inline-block" viewBox="0 0 640 480" aria-hidden="true">
+      <path fill="#002654" d="M0 0h213.3v480H0z"/>
+      <path fill="#fff" d="M213.3 0h213.4v480H213.3z"/>
+      <path fill="#ce1126" d="M426.7 0H640v480H426.7z"/>
+    </svg>
+  ),
+  it: (
+    <svg className="w-4 h-3 rounded-[2px] shadow-2xs shrink-0 overflow-hidden inline-block" viewBox="0 0 640 480" aria-hidden="true">
+      <path fill="#009246" d="M0 0h213.3v480H0z"/>
+      <path fill="#fff" d="M213.3 0h213.4v480H213.3z"/>
+      <path fill="#ce2b37" d="M426.7 0H640v480H426.7z"/>
+    </svg>
+  )
+};
+
 export const ALL_LANGUAGES: LanguageOption[] = [
-  { code: 'es', label: 'Español', flag: '🇪🇸' },
-  { code: 'en', label: 'English', flag: '🇺🇸' },
-  { code: 'pt', label: 'Português', flag: '🇧🇷' },
-  { code: 'fr', label: 'Français', flag: '🇫🇷' },
-  { code: 'it', label: 'Italiano', flag: '🇮🇹' }
+  { code: 'es', label: 'Español', flag: 'es' },
+  { code: 'en', label: 'English', flag: 'en' },
+  { code: 'pt', label: 'Português', flag: 'pt' },
+  { code: 'fr', label: 'Français', flag: 'fr' },
+  { code: 'it', label: 'Italiano', flag: 'it' }
 ];
 
 export interface AnyLanguageItem {
@@ -100,14 +138,14 @@ export default function HeaderLanguageSelector({
     },
     portal: {
       trigger: 'bg-stone-800/95 hover:bg-stone-700 text-stone-100 border-stone-700 shadow-2xs',
-      dropdown: 'bg-stone-900/98 text-white border-stone-700 shadow-xl',
+      dropdown: 'bg-stone-900/98 text-white border-stone-700 shadow-2xl',
       activeItem: 'bg-[#FF5500]/25 text-[#FF8844] font-black',
       hoverItem: 'hover:bg-stone-800 text-stone-300 hover:text-white'
     }
   }[variant];
 
   return (
-    <div ref={containerRef} className="relative shrink-0 z-40">
+    <div ref={containerRef} className="relative shrink-0 z-50">
       {/* Compact Trigger Button (Always fits, never overflows) */}
       <button
         type="button"
@@ -117,16 +155,16 @@ export default function HeaderLanguageSelector({
         title={`Idioma actual: ${currentOption.label}`}
         className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-full text-xs font-bold border transition-all duration-200 cursor-pointer select-none active:scale-95 ${styles.trigger}`}
       >
-        <span className="text-xs leading-none">{currentOption.flag}</span>
+        <span className="shrink-0 flex items-center leading-none">{FLAG_ICONS[currentOption.code]}</span>
         <span className="text-[11px] font-black tracking-wider uppercase">{currentOption.code}</span>
         <ChevronDown size={12} className={`transition-transform duration-200 opacity-70 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
-      {/* Floating Menu Popover (Aligned to right edge, never overflows viewport) */}
+      {/* Floating Menu Popover (High z-index to overlay headers cleanly) */}
       {isOpen && (
         <div
           role="listbox"
-          className={`absolute right-0 top-full mt-2 w-44 rounded-2xl border p-1.5 backdrop-blur-xl transition-all animate-in fade-in zoom-in-95 z-50 ${styles.dropdown}`}
+          className={`absolute right-0 top-full mt-2 w-48 rounded-2xl border p-1.5 backdrop-blur-xl transition-all animate-in fade-in zoom-in-95 z-[100] shadow-2xl ${styles.dropdown}`}
         >
           <div className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider opacity-50 border-b border-current/10 mb-1">
             Seleccionar Idioma
@@ -147,11 +185,11 @@ export default function HeaderLanguageSelector({
                   isSelected ? styles.activeItem : styles.hoverItem
                 }`}
               >
-                <div className="flex items-center gap-2">
-                  <span className="text-sm leading-none">{opt.flag}</span>
-                  <span className="font-semibold text-xs">{opt.label}</span>
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="shrink-0 flex items-center leading-none">{FLAG_ICONS[opt.code]}</span>
+                  <span className="font-semibold text-xs truncate">{opt.label}</span>
                 </div>
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 shrink-0">
                   <span className="text-[10px] font-mono uppercase opacity-60 font-bold">{opt.code}</span>
                   {isSelected && <Check size={13} className="shrink-0 stroke-[3]" />}
                 </div>
