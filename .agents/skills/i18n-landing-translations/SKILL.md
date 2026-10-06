@@ -170,3 +170,22 @@ Guía para diagnosticar y solucionar problemas de traducción, mezcla de idiomas
   2. En `HeaderLanguageSelector.tsx`, elevar el z-index del popover a `z-[100]`.
   3. Reemplazar los emojis Unicode de banderas por un mapa de vectores SVG nítidos y ultra ligeros (`FLAG_ICONS: Record<LanguageType, React.ReactNode>`) para España (`es`), Estados Unidos/Inglés (`en`), Brasil (`pt`), Francia (`fr`) e Italia (`it`). De esta manera, en Windows, macOS, Android e iOS se muestra invariablemente la bandera vectorial a color, eliminando las duplicaciones tipográficas "ES ES" y "US English EN".
 
+### Error: Título H1 del Hero Superponiéndose sobre el Menú Desplegable de Idiomas en CulturalTemplate
+
+- **Síntoma / Mensaje de Error:**
+  En la plantilla Cultural (`CulturalTemplate.tsx`), al abrir el menú desplegable del selector de idiomas, la palabra *"Tren"* (o parte del `<h1>` del Hero *"Machu Picchu de Lujo con Tren Panorámico"*) se pintaba por encima de las opciones del menú de idiomas, atravesando y solapando *"Français"* e *"Italiano"*.
+
+- **Causa Raíz:**
+  Tanto la barra de navegación `<nav>` como el contenedor central del Hero `<div className="relative z-20 max-w-4xl...">` compartían el mismo índice de apilamiento `z-20` dentro del mismo `<header>`. En las reglas de apilamiento de CSS, cuando dos elementos hermanos tienen el mismo `z-index`, el que aparece después en el DOM (el Hero con el `<h1>`) se dibuja **por encima** del que aparece antes (el `<nav>` y su menú desplegable). Además, la clase `backdrop-blur-xl` con transparencia `98%` permitía cierto grado de transparencia donde contrastaba el texto blanco del fondo.
+
+- **Comando de Diagnóstico:**
+  Verificar los niveles de `z-index` de hermanos dentro del `<header>` en `CulturalTemplate.tsx`:
+  ```bash
+  git grep -n "z-20" src/templates/CulturalTemplate.tsx
+  ```
+
+- **Solución Paso a Paso:**
+  1. En `CulturalTemplate.tsx`, elevar el `<nav>` a `relative z-50` para que todo su contexto de apilamiento sea superior al del Hero.
+  2. Reducir el contenedor central del Hero a `relative z-10`.
+  3. En `HeaderLanguageSelector.tsx`, configurar el fondo del menú desplegable como 100% opaco y sólido (`bg-[#120d0d]` para cultural, `bg-white` para adventure, `bg-[#0d0a14]` para premium, `bg-[#FAF7F2]` para boho, `bg-[#1c1917]` para portal) eliminando `backdrop-blur-xl` para evitar cualquier transparencia o sangrado visual de elementos traseros.
+
