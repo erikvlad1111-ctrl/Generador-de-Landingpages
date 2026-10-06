@@ -15,6 +15,7 @@ import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
 import LegalTermsModal from '@/components/common/LegalTermsModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
+import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
 import { CULTURAL_I18N } from './culturalI18n';
 import { translateText } from '@/data/translations';
 
@@ -140,48 +141,37 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
           {/* Nav links (Desktop) */}
           {!isMobile && (
-            <div className="hidden xl:flex items-center gap-4 xl:gap-5 text-[11px] font-bold tracking-wider uppercase text-stone-200">
+            <div className="hidden xl:flex items-center gap-3.5 2xl:gap-5 text-[11px] font-bold tracking-wider uppercase text-stone-200">
               <a href="#inicio" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">
                 {currentLang === 'en' ? 'Home' : currentLang === 'fr' ? 'Accueil' : currentLang === 'pt' ? 'Início' : currentLang === 'it' ? 'Inizio' : 'Inicio'}
               </a>
-              <a href="#actualites" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.cronicas}</a>
-              <a href="#agenda" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.agenda}</a>
+              <a href="#actualites" className="hidden 2xl:inline hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.cronicas}</a>
+              <a href="#agenda" className="hidden 2xl:inline hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.agenda}</a>
               <a href="#tours" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{currentLang === 'en' ? 'Tours' : 'Tours'}</a>
               {!isFree && (
                 <a href="#galeria" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">
                   {currentLang === 'en' ? 'Gallery' : currentLang === 'fr' ? 'Galerie' : currentLang === 'pt' ? 'Galeria' : currentLang === 'it' ? 'Galleria' : 'Galería'}
                 </a>
               )}
-              {(isPro || isAdvance) && <a href="#territorio" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.territorio}</a>}
+              {(isPro || isAdvance) && <a href="#territorio" className="hidden 2xl:inline hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.territorio}</a>}
               {(isPro || isAdvance) && <a href="#itinerario" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.itinerario}</a>}
-              {(isPro || isAdvance) && <a href="#conseils" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.conseils}</a>}
-              {(isPro || isAdvance) && <a href="#guide" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.guide}</a>}
-              {isAdvance && <a href="#livre-dor" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.reviews}</a>}
+              {(isPro || isAdvance) && <a href="#conseils" className="hidden 2xl:inline hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.conseils}</a>}
+              {(isPro || isAdvance) && <a href="#guide" className="hidden 2xl:inline hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.guide}</a>}
+              {isAdvance && <a href="#livre-dor" className="hidden 2xl:inline hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.reviews}</a>}
               <a href="#contacto" className="hover:text-red-300 transition-colors hover:-translate-y-0.5">{t.nav.contact}</a>
             </div>
           )}
 
           {/* Action CTAs & Language Switcher */}
-          <div className="flex items-center gap-2.5">
-            {/* Language Selector Pill (Pro & Advance) */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* Compact Dropdown Language Selector (Pro & Advance) */}
             {displayCulturalLanguages.length > 1 && (
-              <div className="flex items-center bg-black/45 backdrop-blur-md rounded-full border border-white/20 p-0.5 text-[10px] sm:text-[11px] font-bold shadow-inner">
-                {displayCulturalLanguages.map((langKey) => (
-                  <button
-                    key={langKey}
-                    type="button"
-                    onClick={() => setCurrentLang(langKey)}
-                    className={`px-2 py-1 rounded-full uppercase transition-all duration-200 cursor-pointer active:scale-90 ${
-                      currentLang === langKey
-                        ? 'bg-red-700 text-white shadow-xs font-black scale-105'
-                        : 'text-stone-300 hover:text-white hover:bg-white/10 hover:scale-105'
-                    }`}
-                    title={`Idioma: ${langKey.toUpperCase()}`}
-                  >
-                    {langKey}
-                  </button>
-                ))}
-              </div>
+              <HeaderLanguageSelector
+                currentLang={currentLang}
+                onSelectLang={setCurrentLang}
+                availableLanguages={displayCulturalLanguages}
+                variant="cultural"
+              />
             )}
 
             {/* Action CTA Button with Pulsing Shimmer Glow */}
@@ -189,7 +179,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               <button
                 type="button"
                 onClick={() => setIsQuoteOpen(true)}
-                className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-700 via-red-600 to-red-800 text-white px-4 sm:px-5 py-2.5 rounded-full font-bold text-xs shadow-lg shadow-red-900/40 hover:shadow-red-900/60 transition-all duration-300 flex items-center gap-1.5 cursor-pointer shrink-0"
+                className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-700 via-red-600 to-red-800 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full font-bold text-xs shadow-lg shadow-red-900/40 hover:shadow-red-900/60 transition-all duration-300 flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 <FileText size={14} />
                 <span>{t.cta.quote}</span>
@@ -199,7 +189,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-700 via-red-600 to-red-800 text-white px-4 sm:px-5 py-2.5 rounded-full font-bold text-xs shadow-lg shadow-red-900/40 hover:shadow-red-900/60 transition-all duration-300 flex items-center gap-1.5 cursor-pointer shrink-0"
+                className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-700 via-red-600 to-red-800 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full font-bold text-xs shadow-lg shadow-red-900/40 hover:shadow-red-900/60 transition-all duration-300 flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 <MessageCircle size={14} />
                 <span className="hidden sm:inline">{t.cta.whatsapp}</span>

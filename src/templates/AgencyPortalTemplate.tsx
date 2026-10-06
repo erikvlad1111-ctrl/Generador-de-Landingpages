@@ -44,6 +44,7 @@ import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import QuoteModal from '@/components/common/QuoteModal';
 import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
 import LegalTermsModal from '@/components/common/LegalTermsModal';
+import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
 import SustainabilityAndSocialProof from '@/components/agency-portal/SustainabilityAndSocialProof';
 import TrustGuaranteeAndOffice from '@/components/agency-portal/TrustGuaranteeAndOffice';
 import LiveBudgetCalculator, { CurrencyType, convertPrice } from '@/components/agency-portal/LiveBudgetCalculator';
@@ -1012,25 +1013,14 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               {t.officialBar}
             </span>
 
-            {/* Language Selector: Only for Pro (max 2) & Advance (5) */}
+            {/* Language Selector Dropdown: Only for Pro (max 2) & Advance (5) */}
             {showLangSelector && (
-              <div className="flex items-center bg-stone-800/90 rounded-lg p-0.5 border border-stone-700/80 shadow-xs">
-                {activeLanguages.map((l) => (
-                  <button
-                    key={l}
-                    onClick={() => setLang(l)}
-                    className={`px-1 sm:px-2 py-0.5 rounded-md text-[9px] sm:text-[10px] font-bold uppercase transition-all cursor-pointer flex items-center gap-0.5 sm:gap-1 shrink-0 ${
-                      lang === l 
-                        ? 'bg-[#FF5500] text-white shadow-xs font-black' 
-                        : 'text-stone-400 hover:text-white'
-                    }`}
-                    title={l === 'es' ? 'Español' : l === 'en' ? 'English' : l === 'pt' ? 'Português' : l === 'fr' ? 'Français' : 'Italiano'}
-                  >
-                    <span className="text-[10px] sm:text-xs leading-none">{l === 'es' ? '🇵🇪' : l === 'en' ? '🇺🇸' : l === 'pt' ? '🇧🇷' : l === 'fr' ? '🇫🇷' : '🇮🇹'}</span>
-                    <span className="hidden xs:inline sm:inline text-[8px] sm:text-[10px]">{l.toUpperCase()}</span>
-                  </button>
-                ))}
-              </div>
+              <HeaderLanguageSelector
+                currentLang={lang}
+                onSelectLang={setLang}
+                availableLanguages={activeLanguages}
+                variant="portal"
+              />
             )}
           </div>
 
@@ -1056,19 +1046,19 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             </div>
           </div>
 
-          {/* Desktop Navigation Links (Always single line with whitespace-nowrap) */}
+          {/* Desktop Navigation Links (Responsive display to prevent overflow) */}
           {!isMobile && (
-            <nav className="hidden lg:flex items-center gap-3 xl:gap-5 text-xs xl:text-[13px] font-bold text-stone-700 tracking-wide uppercase">
+            <nav className="hidden lg:flex items-center gap-2.5 xl:gap-4 2xl:gap-5 text-xs xl:text-[13px] font-bold text-stone-700 tracking-wide uppercase">
               <a href="#inicio" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Home' : 'Inicio'}</a>
               <a href="#experiencia" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'The Tour' : 'El Tour'}</a>
-              {!isFree && <a href="#incluye" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Included' : 'Qué Incluye'}</a>}
+              {!isFree && <a href="#incluye" className="hidden xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Included' : 'Qué Incluye'}</a>}
               {(isPro || isAdvance) && <a href="#itinerario" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Itinerary' : 'Itinerario'}</a>}
               <a href="#tours" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navTours}</a>
-              {!isFree && <a href="#galeria" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navGallery}</a>}
-              {isFree && <a href="#destinos" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Destinations' : 'Destinos'}</a>}
-              {(isPro || isAdvance) && <a href="#por-que-nosotros" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navWhyUs}</a>}
-              {isAdvance && <a href="#resenas" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navReviews}</a>}
-              {isAdvance && <a href="#soporte-faq" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navFaq}</a>}
+              {!isFree && <a href="#galeria" className="hidden 2xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navGallery}</a>}
+              {isFree && <a href="#destinos" className="hidden xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Destinations' : 'Destinos'}</a>}
+              {(isPro || isAdvance) && <a href="#por-que-nosotros" className="hidden 2xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navWhyUs}</a>}
+              {isAdvance && <a href="#resenas" className="hidden 2xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navReviews}</a>}
+              {isAdvance && <a href="#soporte-faq" className="hidden 2xl:inline whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navFaq}</a>}
               <a href="#contacto" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Contact' : 'Contacto'}</a>
             </nav>
           )}

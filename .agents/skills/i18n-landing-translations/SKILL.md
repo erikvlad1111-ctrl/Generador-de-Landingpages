@@ -121,3 +121,29 @@ Guía para diagnosticar y solucionar problemas de traducción, mezcla de idiomas
   2. Asegurar que la selección del sufijo objetivo contemple explícitamente `targetLang === 'it'` y retorne de manera inequívoca `: La Experiencia Definitiva en Cusco` cuando `targetLang === 'es'`.
   3. Registrar en `PHRASE_MAP` las entradas bidireccionales completas de `'La Experiencia Definitiva en Cusco'`, `"L'Esperienza Definitiva a Cusco"`, `'L’Esperienza Definitiva a Cusco'` y `'The Ultimate Cusco Experience'` con sus traducciones oficiales a los 5 idiomas.
 
+### Error: Opciones de Idiomas (ES, EN, PT, FR, IT) Desordenadas y Desbordando el Borde de la Página en el Menú Superior
+
+- **Síntoma / Mensaje de Error:**
+  En los 5 diseños de landing pages (`AdventureTemplate`, `BohoTemplate`, `PremiumTemplate`, `CulturalTemplate`, `AgencyPortalTemplate`), los botones de idiomas (`ES`, `EN`, `PT/PR`, `FR`, `IT`) se renderizaban en una fila horizontal expandida junto a listas de 9 a 11 enlaces de navegación y botones de llamado a la acción (WhatsApp y Cotizar). En pantallas de 1024px a 1440px o dispositivos móviles, el ancho total excedía el viewport, empujando los botones de idiomas y el contacto fuera del borde derecho de la página (overflow horizontal y elementos amontonados).
+
+- **Causa Raíz:**
+  1. Cada plantilla renderizaba una hilera de 5 botones independientes dentro de un contenedor `div` horizontal (~180px–220px de ancho fijo).
+  2. En `PremiumTemplate`, un selector de tipografía con 5 fuentes (`🏛️ Montserrat (Sobrio)`, `💎 Outfit`, etc.) añadía otros ~280px en el header.
+  3. Los menús de navegación (`nav`) contenían hasta 11 enlaces simultáneos con clases `hidden xl:flex` o `hidden lg:flex` sin priorización responsiva, colisionando con el logo y los CTAs.
+
+- **Comando de Diagnóstico:**
+  Verificar presencia de selectores horizontales expandidos de idiomas en las cabeceras:
+  ```bash
+  git grep -n "display.*Languages.map" src/templates/
+  ```
+
+- **Solución Paso a Paso:**
+  1. Crear un componente unificado y compacto: [HeaderLanguageSelector.tsx](file:///c:/Users/copyw/.gemini/antigravity-ide/scratch/cusco-creativos-web/src/components/common/HeaderLanguageSelector.tsx):
+     - Botón disparador compacto (`~65px`) con bandera y código actual (`🇵🇪 ES ▾`).
+     - Menú flotante desplegable (`right-0 top-full mt-2 w-44`) con backdrop-blur, selección visual con checkmark y cierre al hacer clic fuera (`mousedown`).
+     - Variantes temáticas armonizadas (`adventure`, `premium`, `boho`, `cultural`, `portal`).
+  2. Reemplazar los selectores horizontales en las 5 plantillas por `<HeaderLanguageSelector ... variant="..." />`.
+  3. En `PremiumTemplate.tsx`, compactar el selector de tipografías (`Mont`, `Outfit`, `Syne`, `Corm`, `Cinz`) y ocultarlo en pantallas menores a 2XL (`hidden 2xl:flex`).
+  4. En los menús de navegación de las 5 plantillas, priorizar los enlaces esenciales en `lg`/`xl` y mover enlaces secundarios (como crónicas, agenda o testimonios adicionales) a `2xl:inline` o menú móvil, eliminando cualquier desborde horizontal.
+
+

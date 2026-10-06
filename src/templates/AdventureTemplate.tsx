@@ -18,6 +18,7 @@ import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
 import LegalTermsModal from '@/components/common/LegalTermsModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
+import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
 
 interface TemplateProps {
   data: LandingData;
@@ -499,26 +500,14 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
           {/* Right Controls: Language Selector Pill + CTAs + Mobile Hamburger */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Language Selector Pill (Pro & Advance) */}
+            {/* Compact Header Language Selector (Pro & Advance) */}
             {displayAdventureLanguages.length > 1 && (
-              <div className="flex items-center bg-slate-100/90 border border-slate-200/90 rounded-full p-0.5 text-[11px] font-bold shadow-2xs">
-                {displayAdventureLanguages.map(({ code, label, flag }) => (
-                  <button
-                    key={code}
-                    type="button"
-                    onClick={() => setCurrentLang(code)}
-                    title={label}
-                    className={`px-1.5 xl:px-2.5 py-1 rounded-full uppercase transition-all duration-200 cursor-pointer flex items-center gap-1 ${
-                      currentLang === code
-                        ? 'bg-slate-900 text-white font-black shadow-xs'
-                        : 'text-slate-500 hover:text-slate-900'
-                    }`}
-                  >
-                    <span className="text-xs">{flag}</span>
-                    <span className="text-[10px] xl:text-[11px] font-black hidden xl:inline">{code.toUpperCase()}</span>
-                  </button>
-                ))}
-              </div>
+              <HeaderLanguageSelector
+                currentLang={currentLang}
+                onSelectLang={setCurrentLang}
+                availableCodes={displayAdventureLanguages.map(l => l.code)}
+                variant="adventure"
+              />
             )}
 
             {/* CTAs */}

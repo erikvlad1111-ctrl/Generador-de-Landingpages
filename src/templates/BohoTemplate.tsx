@@ -40,6 +40,7 @@ import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
 import LegalTermsModal from '@/components/common/LegalTermsModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
+import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
 import { BOHO_I18N, BOHO_LANGUAGES } from './bohoI18n';
 import { translateText, translateItineraryItem } from '@/data/translations';
 
@@ -365,65 +366,46 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
           </div>
         </div>
 
-        {/* Desktop Navigation Links - Curated & Clean */}
+        {/* Desktop Navigation Links - Curated, Clean & Responsive */}
         {!isMobile && (
-          <nav className="hidden lg:flex items-center gap-2.5 xl:gap-4 text-[11px] xl:text-xs tracking-wider uppercase font-semibold text-stone-600 whitespace-nowrap">
-            <a href="#inicio" className="hover:text-[#C86D51] transition-colors whitespace-nowrap">
+          <nav className="hidden lg:flex items-center gap-2 xl:gap-3.5 text-[11px] xl:text-xs tracking-wider uppercase font-semibold text-stone-600 whitespace-nowrap min-w-0">
+            <a href="#inicio" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">
               {currentLang === 'en' ? 'Home' : currentLang === 'fr' ? 'Accueil' : currentLang === 'pt' ? 'Início' : currentLang === 'it' ? 'Inizio' : 'Inicio'}
             </a>
             {!isFree ? (
-              <a href="#sobre-tour" className="hover:text-[#C86D51] transition-colors whitespace-nowrap">{t.nav.journal}</a>
+              <a href="#sobre-tour" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.journal}</a>
             ) : (
-              <a href="#inicio" className="hover:text-[#C86D51] transition-colors whitespace-nowrap">{t.nav.journal}</a>
-            )}
-            {!isFree && (
-              <a href="#galeria" className="hover:text-[#C86D51] transition-colors whitespace-nowrap">{isBasic ? (currentLang === 'en' ? 'Postcards' : 'Postales') : t.nav.gallery}</a>
+              <a href="#inicio" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.journal}</a>
             )}
             {(isPro || isAdvance) && (
-              <a href="#itinerario" className="hover:text-[#C86D51] transition-colors whitespace-nowrap">{t.nav.itinerary}</a>
+              <a href="#itinerario" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.itinerary}</a>
             )}
-            <a href="#tours" className="hover:text-[#C86D51] transition-colors whitespace-nowrap">{t.nav.tours}</a>
+            <a href="#tours" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.tours}</a>
             {!isFree && (
-              <a href="#mochila" className="hover:text-[#C86D51] transition-colors whitespace-nowrap">{t.nav.backpack}</a>
+              <a href="#galeria" className="hidden xl:inline-block hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{isBasic ? (currentLang === 'en' ? 'Postcards' : 'Postales') : t.nav.gallery}</a>
             )}
-            {(isPro || isAdvance) && (
-              <a href="#mapa" className="hover:text-[#C86D51] transition-colors whitespace-nowrap">{t.nav.map}</a>
+            {!isFree && (
+              <a href="#mochila" className="hidden 2xl:inline-block hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.backpack}</a>
             )}
             {isAdvance && (
-              <a href="#resenas" className="hover:text-[#C86D51] transition-colors whitespace-nowrap">{t.nav.reviews}</a>
+              <a href="#resenas" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">{t.nav.reviews}</a>
             )}
-            {isFree && (
-              <a href="#esencia" className="hover:text-[#C86D51] transition-colors whitespace-nowrap">
-                {currentLang === 'en' ? 'Highlights' : 'Esencia'}
-              </a>
-            )}
-            <a href="#contacto" className="hover:text-[#C86D51] transition-colors whitespace-nowrap">
+            <a href="#contacto" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">
               {currentLang === 'en' ? 'Contact' : currentLang === 'pt' ? 'Contato' : currentLang === 'fr' ? 'Contact' : currentLang === 'it' ? 'Contatto' : 'Contacto'}
             </a>
           </nav>
         )}
 
-        {/* Header Action Button & Language Pill */}
+        {/* Header Action Button & Language Selector */}
         <div className="flex items-center gap-2 shrink-0">
-          {/* Language Switcher Pill (Pro & Advance) */}
+          {/* Compact Header Language Selector (Pro & Advance) */}
           {displayBohoLanguages.length > 1 && (
-            <div className="flex items-center bg-stone-200/80 rounded-full p-0.5 border border-stone-300/80 shadow-2xs">
-              {displayBohoLanguages.map((l) => (
-                <button
-                  key={l.code}
-                  type="button"
-                  onClick={() => setCurrentLang(l.code)}
-                  className={`px-2 py-0.5 rounded-full text-[11px] sm:text-xs font-bold uppercase transition-all duration-200 cursor-pointer ${
-                    currentLang === l.code
-                      ? 'bg-[#C86D51] text-white font-black shadow-xs scale-102'
-                      : 'text-stone-600 hover:text-stone-900 hover:bg-white/50'
-                  }`}
-                  title={l.label}
-                >
-                  {l.code}
-                </button>
-              ))}
-            </div>
+            <HeaderLanguageSelector
+              currentLang={currentLang}
+              onSelectLang={setCurrentLang}
+              availableCodes={displayBohoLanguages.map(l => l.code)}
+              variant="boho"
+            />
           )}
 
           {data.objective === 'both' ? (

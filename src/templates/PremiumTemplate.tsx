@@ -14,6 +14,7 @@ import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
 import LegalTermsModal from '@/components/common/LegalTermsModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
+import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
 import { PREMIUM_I18N, PREMIUM_LANGUAGES } from './premiumI18n';
 import { translateText } from '@/data/translations';
 
@@ -459,8 +460,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         )}
 
         <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-          {/* Subtle Champagne Gold Font Selector */}
-          <div className="flex items-center bg-neutral-900/90 border border-amber-500/30 rounded-full p-0.5 text-[8px] sm:text-[9px] font-bold" title="Selector de Tipografía Luxury">
+          {/* Subtle Champagne Gold Font Selector (visible on wide screens to prevent overflow) */}
+          <div className="hidden 2xl:flex items-center bg-neutral-900/90 border border-amber-500/30 rounded-full p-0.5 text-[8px] sm:text-[9px] font-bold" title="Selector de Tipografía Luxury">
             {(['montserrat', 'outfit', 'syne', 'cormorant', 'cinzel'] as const).map((fontKey) => (
               <button
                 key={fontKey}
@@ -472,7 +473,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                     : 'text-neutral-400 hover:text-amber-200'
                 }`}
               >
-                {fontKey === 'montserrat' ? '🏛️ Montserrat (Sobrio)' 
+                {fontKey === 'montserrat' ? '🏛️ Mont' 
                  : fontKey === 'outfit' ? '💎 Outfit' 
                  : fontKey === 'syne' ? 'Syne' 
                  : fontKey === 'cormorant' ? 'Cormorant' 
@@ -481,25 +482,14 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             ))}
           </div>
 
-          {/* Subtle Champagne Gold Language Selector (Pro & Advance) */}
+          {/* Compact Dropdown Language Selector (Pro & Advance) */}
           {displayPremiumLanguages.length > 1 && (
-            <div className="flex items-center bg-neutral-900/90 border border-amber-500/25 rounded-full p-0.5 text-[9px] sm:text-[10px] font-bold">
-              {displayPremiumLanguages.map((l) => (
-                <button
-                  key={l.code}
-                  type="button"
-                  onClick={() => setCurrentLang(l.code)}
-                  className={`px-1.5 sm:px-2 py-0.5 rounded-full uppercase transition-all duration-200 cursor-pointer ${
-                    currentLang === l.code 
-                      ? 'bg-gradient-to-r from-amber-400 to-amber-500 text-neutral-950 font-extrabold shadow-xs' 
-                      : 'text-neutral-400 hover:text-amber-200'
-                  }`}
-                  title={l.label}
-                >
-                  {l.code}
-                </button>
-              ))}
-            </div>
+            <HeaderLanguageSelector
+              currentLang={currentLang}
+              onSelectLang={setCurrentLang}
+              availableLanguages={displayPremiumLanguages}
+              variant="premium"
+            />
           )}
 
           {data.objective === 'both' ? (
