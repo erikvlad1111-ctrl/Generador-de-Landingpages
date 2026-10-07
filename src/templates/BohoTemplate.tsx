@@ -31,7 +31,8 @@ import {
   Lock,
   Building2,
   Phone,
-  Mail
+  Mail,
+  Calendar
 } from 'lucide-react';
 import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
@@ -997,6 +998,45 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
             </div>
 
+          </div>
+        </section>
+      )}
+
+      {/* SECTION: ITINERARIO CRONOLÓGICO EDITORIAL (PRO Y ADVANCE) */}
+      {(isPro || isAdvance) && data?.itinerary && data.itinerary.length > 0 && (
+        <section id="itinerario" className="py-14 sm:py-20 px-4 sm:px-8 max-w-4xl mx-auto">
+          <div className="text-center space-y-2 max-w-2xl mx-auto mb-10 sm:mb-14">
+            <span className="text-[13px] sm:text-[15px] uppercase tracking-widest font-serif font-bold text-[#588157] flex items-center justify-center gap-1.5">
+              <Calendar size={15} className="text-[#588157]" /> {currentLang === 'en' ? 'Field Journal Itinerary' : 'Bitácora & Itinerario del Recorrido'}
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-serif text-stone-900 tracking-tight">
+              {currentLang === 'en' ? 'Step-by-Step Experience' : 'Paso a Paso en la Ruta Andina'}
+            </h2>
+            <p className="text-[15px] sm:text-[17px] text-stone-600 font-sans leading-relaxed">
+              {currentLang === 'en' ? 'Planned schedule for scenic viewpoints, golden hours and comfortable acclimatization.' : 'Tiempos planificados para disfrutar de los miradores, la luz dorada y una aclimatación confortable.'}
+            </p>
+          </div>
+
+          <div className="space-y-4 sm:space-y-6 relative before:absolute before:inset-0 before:left-4 sm:before:left-5 before:w-0.5 before:bg-[#C86D51]/30">
+            {data.itinerary.map((item, idx) => (
+              <div key={idx} className="relative flex items-start gap-4 sm:gap-6 pl-1 sm:pl-2">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#FAF7F2] border-2 border-[#C86D51] text-[#C86D51] font-serif font-bold flex items-center justify-center text-xs sm:text-sm shrink-0 shadow-sm ring-4 ring-white z-10">
+                  {idx + 1}
+                </div>
+                <div className="bg-white border border-stone-200/90 rounded-3xl p-5 sm:p-6 w-full shadow-xs text-left relative group hover:border-[#C86D51]/50 transition-colors">
+                  <div className="w-12 h-2.5 bg-[#E8DEC8]/80 absolute -top-1 left-6 rotate-[-1deg] shadow-2xs pointer-events-none" />
+                  <span className="text-[11px] sm:text-xs uppercase font-serif font-bold tracking-wider text-[#C86D51] bg-[#C86D51]/10 px-3 py-1 rounded-full inline-block mb-2">
+                    {item.step ? translateText(item.step, currentLang) : `Día ${idx + 1}`}
+                  </span>
+                  <h3 className="font-serif font-bold text-stone-900 text-base sm:text-lg mb-1.5">
+                    {translateText(item.title, currentLang)}
+                  </h3>
+                  <p className="text-stone-600 text-xs sm:text-sm font-sans leading-relaxed">
+                    {translateText(item.desc, currentLang)}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
       )}

@@ -586,33 +586,33 @@ function DemoPreviewContent() {
 
       {/* Modal Integral del Editor Centrado en el Medio */}
       {isEditorOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 md:p-6 bg-black/80 backdrop-blur-md transition-opacity animate-in fade-in overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/80 backdrop-blur-md transition-opacity animate-in fade-in overflow-y-auto">
           {/* Fondo interactivo para cerrar al hacer clic afuera */}
           <div 
             className="fixed inset-0"
             onClick={() => setIsEditorOpen(false)}
           />
 
-          {/* Tarjeta del Modal Centrada */}
-          <div className="relative w-full max-w-4xl max-h-[92vh] bg-white text-slate-900 rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden z-10 animate-in zoom-in-95 duration-200">
+          {/* Tarjeta del Modal Centrada y Agrandada */}
+          <div className="relative w-full max-w-6xl max-h-[95vh] h-[92vh] bg-white text-slate-900 rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden z-10 animate-in zoom-in-95 duration-200">
             
             {/* Header del Modal */}
             <div className="p-4 sm:p-5 border-b border-slate-200 flex justify-between items-center bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white shrink-0">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 shrink-0">
-                  <Edit3 size={20} />
+                <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 shrink-0">
+                  <Edit3 size={22} />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-extrabold text-white text-base sm:text-lg tracking-tight">
-                      Editor Integral de Landing
+                    <h3 className="font-extrabold text-white text-base sm:text-xl tracking-tight">
+                      Editor Integral de Landing Page
                     </h3>
-                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">
+                    <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">
                       En Vivo
                     </span>
                   </div>
                   <p className="text-xs text-slate-300 mt-0.5">
-                    Modifica textos, descripción narrativa, logística, itinerario, FAQs y diseño
+                    Modifica textos, descripción narrativa, logística, itinerario paso a paso, FAQs y catálogo multitour
                   </p>
                 </div>
               </div>
@@ -621,40 +621,48 @@ function DemoPreviewContent() {
                 className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-white/10 transition-colors cursor-pointer"
                 title="Cerrar editor"
               >
-                <X size={20} />
+                <X size={22} />
               </button>
             </div>
 
-            {/* Barra de Pestañas (Horizontal scroll) */}
-            <div className="flex items-center gap-1.5 px-4 py-2.5 bg-slate-100/95 border-b border-slate-200 overflow-x-auto scrollbar-none text-xs font-bold shrink-0">
-              {[
-                { id: 'general', label: '1. General & Diseño', icon: Sliders },
-                { id: 'hero', label: '2. Hero & Portada', icon: ImageIcon },
-                { id: 'description', label: '3. Descripción & Narrativa', icon: FileText },
-                { id: 'logistics', label: '4. Guía & Logística', icon: Compass },
-                { id: 'content', label: '5. Incluye & Mochila', icon: PackageCheck },
-                { id: 'itinerary', label: '6. Itinerario Paso a Paso', icon: Calendar },
-                { id: 'faqs', label: '7. FAQs & Reseñas', icon: HelpCircle },
-                { id: 'gallery_office', label: '8. Galería, Oficina & Catálogo', icon: MapPin },
-              ].map((tab) => {
-                const Icon = tab.icon;
-                const isActive = activeEditorTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() => setActiveEditorTab(tab.id as typeof activeEditorTab)}
-                    className={`flex items-center gap-1.5 px-3 py-2 rounded-xl whitespace-nowrap transition-all cursor-pointer ${
-                      isActive 
-                        ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20 font-black scale-[1.02]' 
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/80 font-semibold'
-                    }`}
-                  >
-                    <Icon size={14} />
-                    <span>{tab.label}</span>
-                  </button>
-                );
-              })}
+            {/* Barra de Pestañas: Todas las 8 Pestañas Visibles al 100% */}
+            <div className="p-2.5 sm:p-3.5 bg-slate-100/95 border-b border-slate-200 shrink-0">
+              <div className="grid grid-cols-2 xs:grid-cols-4 lg:grid-cols-8 gap-1.5 sm:gap-2">
+                {[
+                  { id: 'general', num: '1', label: 'General', sub: 'Diseño & Plan', icon: Sliders },
+                  { id: 'hero', num: '2', label: 'Hero', sub: 'Portada & CTA', icon: ImageIcon },
+                  { id: 'description', num: '3', label: 'Descripción', sub: 'Narrativa 100%', icon: FileText },
+                  { id: 'logistics', num: '4', label: 'Logística', sub: 'Guía & Precios', icon: Compass },
+                  { id: 'content', num: '5', label: 'Inclusiones', sub: 'Qué Incluye', icon: PackageCheck },
+                  { id: 'itinerary', num: '6', label: 'Itinerario', sub: 'Día a Día', icon: Calendar },
+                  { id: 'faqs', num: '7', label: 'FAQs', sub: '& Reseñas', icon: HelpCircle },
+                  { id: 'gallery_office', num: '8', label: 'Galería', sub: '& Oficina', icon: MapPin },
+                ].map((tab) => {
+                  const Icon = tab.icon;
+                  const isActive = activeEditorTab === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => setActiveEditorTab(tab.id as typeof activeEditorTab)}
+                      className={`flex flex-col items-center justify-center p-2 sm:py-2.5 rounded-2xl text-center transition-all cursor-pointer border ${
+                        isActive 
+                          ? 'bg-blue-600 text-white shadow-md shadow-blue-600/25 border-blue-600 font-black scale-102 ring-2 ring-blue-500/20' 
+                          : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200/90 hover:border-slate-300 font-bold'
+                      }`}
+                      title={`${tab.num}. ${tab.label} (${tab.sub})`}
+                    >
+                      <div className="flex items-center gap-1.5 mb-0.5">
+                        <Icon size={14} className={isActive ? 'text-white' : 'text-blue-600'} />
+                        <span className="text-[11px] sm:text-xs font-black">{tab.num}. {tab.label}</span>
+                      </div>
+                      <span className={`text-[9px] sm:text-[10px] leading-tight block ${isActive ? 'text-blue-100 font-medium' : 'text-slate-400 font-normal'}`}>
+                        {tab.sub}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Contenido del Formulario */}

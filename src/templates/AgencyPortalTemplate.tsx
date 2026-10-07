@@ -1680,6 +1680,47 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         />
       )}
 
+      {/* 4.9 ITINERARIO PASO A PASO (PRO Y ADVANCE) */}
+      {(isPro || isAdvance) && data?.itinerary && data.itinerary.length > 0 && (
+        <section id="itinerario" className="py-12 sm:py-20 px-3 sm:px-6 bg-stone-50 border-y border-stone-200">
+          <div className="max-w-4xl mx-auto space-y-8 sm:space-y-12">
+            <div className="text-center space-y-2.5 max-w-2xl mx-auto">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FF5500]/10 text-[#FF5500] text-[10px] sm:text-xs font-black uppercase tracking-widest">
+                <Calendar size={13} />
+                <span>{t.itineraryBadge}</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black text-stone-900 tracking-tight">
+                {t.itineraryTitle}
+              </h2>
+              <p className="text-xs sm:text-sm text-stone-500 leading-relaxed">
+                {t.itineraryDesc}
+              </p>
+            </div>
+
+            <div className="space-y-4 sm:space-y-5 relative before:absolute before:inset-0 before:left-4 sm:before:left-5 before:w-0.5 before:bg-[#FF5500]/30">
+              {data.itinerary.map((item, idx) => (
+                <div key={idx} className="relative flex items-start gap-3.5 sm:gap-5 pl-1 sm:pl-2">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-tr from-[#FF5500] to-[#FF8800] text-white font-black flex items-center justify-center text-xs sm:text-sm shrink-0 shadow-md shadow-[#FF5500]/30 ring-4 ring-white z-10">
+                    {idx + 1}
+                  </div>
+                  <div className="bg-white border border-stone-200 rounded-2xl sm:rounded-3xl p-4 sm:p-6 w-full shadow-xs text-left hover:border-[#FF5500]/40 transition-colors">
+                    <span className="text-[10px] sm:text-[11px] uppercase font-black tracking-wider text-[#FF5500] bg-[#FF5500]/10 px-2.5 py-0.5 rounded-md inline-block mb-1.5">
+                      {item.step ? translateText(item.step, lang) : `Día ${idx + 1}`}
+                    </span>
+                    <h3 className="font-black text-stone-900 text-sm sm:text-base mb-1.5">
+                      {translateText(item.title, lang)}
+                    </h3>
+                    <p className="text-stone-600 text-xs sm:text-sm leading-relaxed">
+                      {translateText(item.desc, lang)}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* 5. TOURS DESTACADOS / CATÁLOGO EXTRA (DISPONIBLE EN TODOS LOS PLANES) */}
       <section id="tours" className="py-8 sm:py-20 px-3 sm:px-6 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-10 space-y-2 sm:space-y-3 px-2">
