@@ -140,5 +140,15 @@ Cada una de las 5 plantillas (`agency-portal`, `boho-nature`, `adventure`, `cult
   2. En `CulturalTemplate.tsx`, añadir la sección "Crónica & Visión del Recorrido" con `data?.about?.title` y `data?.about?.content`.
   3. En `AdventureTemplate.tsx`, añadir la sección "Acerca de la Expedición" renderizando `data?.about?.title` y `data?.about?.content`.
   4. En `src/app/demo/preview/page.tsx`, centrar el modal con `fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-6 bg-black/80 backdrop-blur-md` y tarjeta `relative w-full max-w-4xl max-h-[92vh] bg-white rounded-3xl shadow-2xl`.
-  5. Expandir las pestañas del editor a 8 módulos integrales: General, Portada, Descripción Narrativa (con aviso de visibilidad), Guía & Logística, Inclusiones, Itinerario Paso a Paso interactivo, FAQs & Reseñas, y Galería/Oficina con acceso directo al catálogo de los 6 tours.
+### Error 12: Pestaña 6 (Itinerario) oculta por desbordamiento en el editor, modal angosto y sección de itinerario ausente en plantillas
+- **Síntoma / Mensaje de Error:** La pestaña 6 ("6. Itinerario Paso a Paso") no era visible dentro del modal de edición sin hacer scroll horizontal oculto, el modal se sentía estrecho (`max-w-4xl`), y al guardar itinerarios en plantillas como `AgencyPortalTemplate` o `BohoTemplate`, la sección `#itinerario` no se renderizaba en la landing.
+- **Causa Raíz:**
+  1. La barra de pestañas en `/demo/preview/page.tsx` usaba `overflow-x-auto` en una sola línea horizontal con botones anchos, empujando las pestañas 6, 7 y 8 fuera de la pantalla sin scrollbar visible.
+  2. El contenedor del modal estaba fijado a `max-w-4xl`, limitando la ergonomía visual del editor en monitores medianos y grandes.
+  3. `AgencyPortalTemplate` y `BohoTemplate` tenían anclas en menú a `#itinerario`, pero no incluían el bloque JSX `<section id="itinerario">` para renderizar el array `data.itinerary`.
+- **Solución Paso a Paso:**
+  1. En `src/app/demo/preview/page.tsx`, agrandar el modal a `max-w-6xl max-h-[95vh] h-[92vh]`.
+  2. Reemplazar la barra de pestañas horizontal por una cuadrícula responsive (`grid grid-cols-2 xs:grid-cols-4 lg:grid-cols-8 gap-1.5 sm:gap-2`) para que las 8 pestañas (destacando la #6 de Itinerario) estén 100% visibles simultáneamente.
+  3. En `AgencyPortalTemplate.tsx`, renderizar la sección `#itinerario` con línea de tiempo ejecutiva para planes Pro/Advance cuando `data.itinerary` contenga días o paradas.
+  4. En `BohoTemplate.tsx`, renderizar la sección `#itinerario` con estilo bitácora / polaroid aesthetic para planes Pro/Advance.
 
