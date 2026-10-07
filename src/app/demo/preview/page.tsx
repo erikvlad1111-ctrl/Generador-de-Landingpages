@@ -19,6 +19,7 @@ import {
   Share2,
   QrCode,
   CheckCircle,
+  CheckCircle2,
   Download,
   Sparkles,
   MapPin,
@@ -27,7 +28,7 @@ import {
   Clock,
   User,
   Phone,
-  ImageIcon,
+  Image as ImageIcon,
   DollarSign,
   Mountain,
   Tag,
@@ -39,12 +40,21 @@ import {
   ListPlus,
   PackageCheck,
   Backpack,
-  Sliders
+  Sliders,
+  Plus,
+  Trash2,
+  Calendar,
+  Star,
+  Quote,
+  SlidersHorizontal,
+  RotateCcw
 } from 'lucide-react';
 import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
+import CatalogToursEditorModal from '@/components/common/CatalogToursEditorModal';
+import { SAMPLE_TOUR_IMAGES } from '@/data/sampleImages';
 import { getStoredLandings, saveLandingToStorage, LandingData } from '@/data/landingStore';
-import { TemplateType, PlanTier, LanguageType, ObjectiveType } from '@/types/landing';
+import { TemplateType, PlanTier, LanguageType, ObjectiveType, ItineraryItem, FAQItem, TestimonialItem, CatalogTourItem } from '@/types/landing';
 
 function DemoPreviewContent() {
   const searchParams = useSearchParams();
@@ -89,7 +99,7 @@ function DemoPreviewContent() {
   const [refreshKey, setRefreshKey] = useState(0);
 
   // Comprehensive Form State for Complete Landing Editor
-  const [activeEditorTab, setActiveEditorTab] = useState<'general' | 'hero' | 'logistics' | 'content' | 'extras' | 'office'>('general');
+  const [activeEditorTab, setActiveEditorTab] = useState<'general' | 'hero' | 'description' | 'logistics' | 'content' | 'itinerary' | 'faqs' | 'reviews' | 'gallery_office'>('general');
 
   // 1. General & Design
   const [editName, setEditName] = useState(() => landing?.name || '');
@@ -105,33 +115,92 @@ function DemoPreviewContent() {
   const [editHeroCta, setEditHeroCta] = useState(() => landing?.hero?.cta || '');
   const [editHeroImage, setEditHeroImage] = useState(() => landing?.heroImage || '');
 
-  // 3. Pricing, Logistics & Guide
+  // 3. Descripción Narrativa & Acerca del Tour
+  const [editAboutTitle, setEditAboutTitle] = useState(() => landing?.about?.title || '');
+  const [editAboutContent, setEditAboutContent] = useState(() => landing?.about?.content || '');
+
+  // 4. Pricing, Logistics & Guide
   const [editPrice, setEditPrice] = useState(() => landing?.price || '');
   const [editDuration, setEditDuration] = useState(() => landing?.duration || '');
   const [editDifficulty, setEditDifficulty] = useState(() => landing?.difficulty || '');
   const [editDestination, setEditDestination] = useState(() => landing?.destination || '');
   const [editAltitude, setEditAltitude] = useState(() => landing?.altitude || '');
   const [editGroupType, setEditGroupType] = useState(() => landing?.groupType || '');
+  const [editTargetAudience, setEditTargetAudience] = useState(() => landing?.targetAudience || '');
   const [editWhatsapp, setEditWhatsapp] = useState(() => landing?.whatsapp || '');
   const [editGuideName, setEditGuideName] = useState(() => landing?.guideName || '');
   const [editGuideCert, setEditGuideCert] = useState(() => landing?.guideCert || '');
+  const [editGuideLanguages, setEditGuideLanguages] = useState(() => landing?.guideLanguages || '');
   const [editGuideAvatar, setEditGuideAvatar] = useState(() => landing?.guideAvatar || '');
 
-  // 4. Content & Inclusions
-  const [editAboutTitle, setEditAboutTitle] = useState(() => landing?.about?.title || '');
-  const [editAboutContent, setEditAboutContent] = useState(() => landing?.about?.content || '');
+  // 5. Inclusiones, Exclusiones, Mochila & Sellos
   const [editFeaturesTitle, setEditFeaturesTitle] = useState(() => landing?.features?.title || '');
   const [editFeaturesItems, setEditFeaturesItems] = useState(() => landing?.features?.items?.join('\n') || '');
-
-  // 5. Exclusions, Backpack & Trust
   const [editNotIncluded, setEditNotIncluded] = useState(() => landing?.notIncluded?.join('\n') || '');
   const [editWhatToBring, setEditWhatToBring] = useState(() => landing?.whatToBring?.join('\n') || '');
   const [editTrustBadges, setEditTrustBadges] = useState(() => landing?.trustBadges?.join('\n') || '');
 
-  // 6. Physical Office & Maps
+  // 6. Itinerario Paso a Paso
+  const [editItinerary, setEditItinerary] = useState<ItineraryItem[]>(() => landing?.itinerary || []);
+
+  // 7. FAQs & Testimonios
+  const [editFaqs, setEditFaqs] = useState<FAQItem[]>(() => landing?.faqs || []);
+  const [editTestimonials, setEditTestimonials] = useState<TestimonialItem[]>(() => landing?.testimonials || []);
+
+  // 8. Galería, Oficina & Catálogo
+  const [editGalleryImages, setEditGalleryImages] = useState(() => landing?.galleryImages?.join('\n') || '');
   const [editOfficeAddress, setEditOfficeAddress] = useState(() => landing?.officeAddress || '');
   const [editOfficeHours, setEditOfficeHours] = useState(() => landing?.officeHours || '');
   const [editMapsUrl, setEditMapsUrl] = useState(() => landing?.mapsUrl || '');
+
+  // Modal Secundario de Catálogo Multitour
+  const [isCatalogModalOpen, setIsCatalogModalOpen] = useState(false);
+  const [catalogTours, setCatalogTours] = useState<CatalogTourItem[]>(() => landing?.catalogTours || []);
+
+  const handleAddItineraryStep = () => {
+    setEditItinerary(prev => [
+      ...prev,
+      { step: `Día ${prev.length + 1}`, title: 'Nueva Parada o Actividad', desc: 'Descripción de la actividad programada...' }
+    ]);
+  };
+
+  const handleUpdateItinerary = (index: number, field: keyof ItineraryItem, value: string) => {
+    setEditItinerary(prev => prev.map((item, i) => i === index ? { ...item, [field]: value } : item));
+  };
+
+  const handleRemoveItinerary = (index: number) => {
+    setEditItinerary(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleAddFaq = () => {
+    setEditFaqs(prev => [
+      ...prev,
+      { q: '¿Pregunta frecuente sobre el tour?', a: 'Respuesta detallada con información clara y precisa.' }
+    ]);
+  };
+
+  const handleUpdateFaq = (index: number, field: keyof FAQItem, value: string) => {
+    setEditFaqs(prev => prev.map((item, i) => i === index ? { ...item, [field]: value } : item));
+  };
+
+  const handleRemoveFaq = (index: number) => {
+    setEditFaqs(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleAddTestimonial = () => {
+    setEditTestimonials(prev => [
+      ...prev,
+      { name: 'Viajero Feliz', origin: 'Madrid, España', comment: '¡Una experiencia inolvidable! Excelente organización y atención.', rating: 5 }
+    ]);
+  };
+
+  const handleUpdateTestimonial = (index: number, field: keyof TestimonialItem, value: any) => {
+    setEditTestimonials(prev => prev.map((item, i) => i === index ? { ...item, [field]: value } : item));
+  };
+
+  const handleRemoveTestimonial = (index: number) => {
+    setEditTestimonials(prev => prev.filter((_, i) => i !== index));
+  };
 
   if (!landing) {
     return (
@@ -163,20 +232,22 @@ function DemoPreviewContent() {
     setEditHeroCta(landing.hero?.cta || '');
     setEditHeroImage(landing.heroImage || '');
 
+    setEditAboutTitle(landing.about?.title || '');
+    setEditAboutContent(landing.about?.content || '');
+
     setEditPrice(landing.price || '');
     setEditDuration(landing.duration || '');
     setEditDifficulty(landing.difficulty || '');
     setEditDestination(landing.destination || '');
     setEditAltitude(landing.altitude || '');
     setEditGroupType(landing.groupType || '');
+    setEditTargetAudience(landing.targetAudience || '');
 
     setEditWhatsapp(landing.whatsapp || '');
     setEditGuideName(landing.guideName || '');
     setEditGuideCert(landing.guideCert || '');
+    setEditGuideLanguages(landing.guideLanguages || '');
     setEditGuideAvatar(landing.guideAvatar || '');
-
-    setEditAboutTitle(landing.about?.title || '');
-    setEditAboutContent(landing.about?.content || '');
 
     setEditFeaturesTitle(landing.features?.title || '');
     setEditFeaturesItems(landing.features?.items?.join('\n') || '');
@@ -185,9 +256,16 @@ function DemoPreviewContent() {
     setEditWhatToBring(landing.whatToBring?.join('\n') || '');
     setEditTrustBadges(landing.trustBadges?.join('\n') || '');
 
+    setEditItinerary(landing.itinerary || []);
+    setEditFaqs(landing.faqs || []);
+    setEditTestimonials(landing.testimonials || []);
+
+    setEditGalleryImages(landing.galleryImages?.join('\n') || '');
     setEditOfficeAddress(landing.officeAddress || '');
     setEditOfficeHours(landing.officeHours || '');
     setEditMapsUrl(landing.mapsUrl || '');
+
+    setCatalogTours(landing.catalogTours || []);
 
     setActiveEditorTab('general');
     setIsEditorOpen(true);
@@ -210,9 +288,11 @@ function DemoPreviewContent() {
       destination: editDestination,
       altitude: editAltitude,
       groupType: editGroupType,
+      targetAudience: editTargetAudience,
       whatsapp: editWhatsapp,
       guideName: editGuideName,
       guideCert: editGuideCert,
+      guideLanguages: editGuideLanguages,
       guideAvatar: editGuideAvatar,
       heroImage: editHeroImage,
       hero: {
@@ -232,6 +312,11 @@ function DemoPreviewContent() {
       notIncluded: editNotIncluded.split('\n').map(s => s.trim()).filter(Boolean),
       whatToBring: editWhatToBring.split('\n').map(s => s.trim()).filter(Boolean),
       trustBadges: editTrustBadges.split('\n').map(s => s.trim()).filter(Boolean),
+      itinerary: editItinerary,
+      faqs: editFaqs,
+      testimonials: editTestimonials,
+      galleryImages: editGalleryImages.split('\n').map(s => s.trim()).filter(Boolean),
+      catalogTours: catalogTours.length > 0 ? catalogTours : landing.catalogTours,
       officeAddress: editOfficeAddress,
       officeHours: editOfficeHours,
       mapsUrl: editMapsUrl
@@ -499,45 +584,58 @@ function DemoPreviewContent() {
         </div>
       </main>
 
-      {/* Comprehensive Editor Drawer / Modal */}
+      {/* Modal Integral del Editor Centrado en el Medio */}
       {isEditorOpen && (
-        <div className="fixed inset-0 z-50 flex justify-end bg-black/70 backdrop-blur-xs transition-opacity animate-in fade-in">
-          <div className="w-full max-w-2xl bg-white text-slate-900 h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2.5 sm:p-5 md:p-6 bg-black/80 backdrop-blur-md transition-opacity animate-in fade-in overflow-y-auto">
+          {/* Fondo interactivo para cerrar al hacer clic afuera */}
+          <div 
+            className="fixed inset-0"
+            onClick={() => setIsEditorOpen(false)}
+          />
+
+          {/* Tarjeta del Modal Centrada */}
+          <div className="relative w-full max-w-4xl max-h-[92vh] bg-white text-slate-900 rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden z-10 animate-in zoom-in-95 duration-200">
             
-            {/* Header */}
-            <div className="p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50 shrink-0">
+            {/* Header del Modal */}
+            <div className="p-4 sm:p-5 border-b border-slate-200 flex justify-between items-center bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white shrink-0">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20 shrink-0">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 shrink-0">
                   <Edit3 size={20} />
                 </div>
                 <div>
-                  <h3 className="font-extrabold text-slate-900 text-base sm:text-lg flex items-center gap-2">
-                    Editor Integral de Landing
-                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 border border-blue-200">
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-extrabold text-white text-base sm:text-lg tracking-tight">
+                      Editor Integral de Landing
+                    </h3>
+                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">
                       En Vivo
                     </span>
-                  </h3>
-                  <p className="text-xs text-slate-500">Personaliza todos los textos, logística, precios, diseño y contenidos</p>
+                  </div>
+                  <p className="text-xs text-slate-300 mt-0.5">
+                    Modifica textos, descripción narrativa, logística, itinerario, FAQs y diseño
+                  </p>
                 </div>
               </div>
               <button 
                 onClick={() => setIsEditorOpen(false)}
-                className="p-2 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-200/60 transition-colors cursor-pointer"
+                className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-white/10 transition-colors cursor-pointer"
                 title="Cerrar editor"
               >
                 <X size={20} />
               </button>
             </div>
 
-            {/* Tabs Navigation Bar */}
-            <div className="flex items-center gap-1 px-4 py-2 bg-slate-100/90 border-b border-slate-200 overflow-x-auto scrollbar-none text-xs font-bold shrink-0">
+            {/* Barra de Pestañas (Horizontal scroll) */}
+            <div className="flex items-center gap-1.5 px-4 py-2.5 bg-slate-100/95 border-b border-slate-200 overflow-x-auto scrollbar-none text-xs font-bold shrink-0">
               {[
                 { id: 'general', label: '1. General & Diseño', icon: Sliders },
                 { id: 'hero', label: '2. Hero & Portada', icon: ImageIcon },
-                { id: 'logistics', label: '3. Guía & Logística', icon: Compass },
-                { id: 'content', label: '4. Detalles & Incluye', icon: PackageCheck },
-                { id: 'extras', label: '5. Mochila & Sellos', icon: Backpack },
-                { id: 'office', label: '6. Oficina & Maps', icon: MapPin },
+                { id: 'description', label: '3. Descripción & Narrativa', icon: FileText },
+                { id: 'logistics', label: '4. Guía & Logística', icon: Compass },
+                { id: 'content', label: '5. Incluye & Mochila', icon: PackageCheck },
+                { id: 'itinerary', label: '6. Itinerario Paso a Paso', icon: Calendar },
+                { id: 'faqs', label: '7. FAQs & Reseñas', icon: HelpCircle },
+                { id: 'gallery_office', label: '8. Galería, Oficina & Catálogo', icon: MapPin },
               ].map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeEditorTab === tab.id;
@@ -546,10 +644,10 @@ function DemoPreviewContent() {
                     key={tab.id}
                     type="button"
                     onClick={() => setActiveEditorTab(tab.id as typeof activeEditorTab)}
-                    className={`flex items-center gap-1.5 px-3 py-2 rounded-lg whitespace-nowrap transition-all cursor-pointer ${
+                    className={`flex items-center gap-1.5 px-3 py-2 rounded-xl whitespace-nowrap transition-all cursor-pointer ${
                       isActive 
-                        ? 'bg-blue-600 text-white shadow-xs' 
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/70'
+                        ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20 font-black scale-[1.02]' 
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/80 font-semibold'
                     }`}
                   >
                     <Icon size={14} />
@@ -559,15 +657,15 @@ function DemoPreviewContent() {
               })}
             </div>
 
-            {/* Form Content */}
-            <form onSubmit={handleSaveEdits} className="flex-1 overflow-y-auto p-5 sm:p-6 space-y-6">
+            {/* Contenido del Formulario */}
+            <form onSubmit={handleSaveEdits} className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
               
-              {/* TAB 1: GENERAL & DISEÑO */}
+              {/* PESTAÑA 1: GENERAL & DISEÑO */}
               {activeEditorTab === 'general' && (
                 <div className="space-y-4 animate-in fade-in">
-                  <div className="bg-blue-50/60 border border-blue-200/60 rounded-xl p-3.5 text-xs text-blue-900 flex items-start gap-2.5">
-                    <Sparkles size={16} className="text-blue-600 shrink-0 mt-0.5" />
-                    <span>Configura la identidad base, plantilla temática, nivel de plan y objetivos de conversión.</span>
+                  <div className="bg-blue-50/70 border border-blue-200/80 rounded-2xl p-4 text-xs text-blue-900 flex items-start gap-3">
+                    <Sparkles size={17} className="text-blue-600 shrink-0 mt-0.5" />
+                    <span>Configura la identidad base del tour, la plantilla gráfica seleccionada, nivel de plan y objetivo comercial.</span>
                   </div>
 
                   <div>
@@ -579,7 +677,7 @@ function DemoPreviewContent() {
                       value={editName}
                       onChange={(e) => setEditName(e.target.value)}
                       className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
-                      placeholder="Ej. Machu Picchu VIP (Diseño 1)"
+                      placeholder="Ej. Salkantay Trek 5 Días a Machu Picchu"
                     />
                   </div>
 
@@ -603,7 +701,7 @@ function DemoPreviewContent() {
 
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1.5">
-                        <CheckCircle size={14} className="text-emerald-600" /> Nivel / Plan Técnico
+                        <CheckCircle2 size={14} className="text-emerald-600" /> Nivel / Plan Técnico
                       </label>
                       <select
                         value={editTier}
@@ -654,7 +752,7 @@ function DemoPreviewContent() {
                 </div>
               )}
 
-              {/* TAB 2: HERO & PORTADA */}
+              {/* PESTAÑA 2: HERO & PORTADA */}
               {activeEditorTab === 'hero' && (
                 <div className="space-y-4 animate-in fade-in">
                   <div>
@@ -685,7 +783,7 @@ function DemoPreviewContent() {
 
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                      Subtítulo Persuasivo
+                      Subtítulo Persuasivo de Portada
                     </label>
                     <textarea
                       rows={3}
@@ -712,7 +810,7 @@ function DemoPreviewContent() {
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center justify-between">
                       <span>URL Foto de Portada (Hero Background)</span>
-                      <span className="text-[10px] text-slate-400 font-normal">Unsplash / Imagen propia</span>
+                      <span className="text-[10px] text-slate-400 font-normal">Unsplash / Enlace directo</span>
                     </label>
                     <input
                       type="url"
@@ -721,8 +819,29 @@ function DemoPreviewContent() {
                       className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-mono text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none"
                       placeholder="https://images.unsplash.com/..."
                     />
+
+                    {/* Selector de fotos rápidas */}
+                    <div className="mt-2.5 space-y-1.5">
+                      <span className="text-[11px] font-bold text-slate-500">Seleccionar foto rápida prediseñada:</span>
+                      <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                        {SAMPLE_TOUR_IMAGES.map((img) => (
+                          <button
+                            key={img.id}
+                            type="button"
+                            onClick={() => setEditHeroImage(img.url)}
+                            className={`relative w-16 h-12 rounded-xl overflow-hidden border shrink-0 transition-transform hover:scale-105 cursor-pointer ${
+                              editHeroImage === img.url ? 'ring-2 ring-blue-600 border-blue-600' : 'border-slate-200'
+                            }`}
+                            title={img.title}
+                          >
+                            <Image src={img.url} alt={img.title} fill className="object-cover" unoptimized />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
                     {editHeroImage && (
-                      <div className="mt-2.5 relative h-28 rounded-xl overflow-hidden border border-slate-200">
+                      <div className="mt-2.5 relative h-32 rounded-xl overflow-hidden border border-slate-200 shadow-xs">
                         <img src={editHeroImage} alt="Hero preview" className="w-full h-full object-cover" />
                       </div>
                     )}
@@ -730,7 +849,58 @@ function DemoPreviewContent() {
                 </div>
               )}
 
-              {/* TAB 3: GUÍA & LOGÍSTICA */}
+              {/* PESTAÑA 3: DESCRIPCIÓN & NARRATIVA (MEJORA SOLICITADA) */}
+              {activeEditorTab === 'description' && (
+                <div className="space-y-4 animate-in fade-in">
+                  
+                  {/* Banner de confirmación visual */}
+                  <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 text-xs text-emerald-950 flex items-start gap-3 shadow-xs">
+                    <CheckCircle2 size={18} className="text-emerald-600 shrink-0 mt-0.5" />
+                    <div className="space-y-1">
+                      <p className="font-bold text-emerald-900 text-sm">Visibilidad Garantizada en las 5 Plantillas</p>
+                      <p className="text-emerald-800 leading-relaxed">
+                        Esta descripción narrativa se muestra de manera destacada en la sección del tour en los 5 diseños (Portal de Agencia, Trek & Aventura, Luxury, Cultural y Boho Journal). Escribe aquí la propuesta de valor y los detalles cautivadores de la ruta.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      Título de Sección "Acerca del Tour / Visión de la Ruta"
+                    </label>
+                    <input
+                      type="text"
+                      value={editAboutTitle}
+                      onChange={(e) => setEditAboutTitle(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="Ej. Un viaje sagrado diseñado para los más exigentes"
+                    />
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                        Descripción Narrativa Completa del Tour
+                      </label>
+                      <span className="text-[10px] text-slate-400 font-mono">
+                        {editAboutContent.length} caracteres
+                      </span>
+                    </div>
+                    <textarea
+                      rows={6}
+                      value={editAboutContent}
+                      onChange={(e) => setEditAboutContent(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl p-3.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed text-slate-800"
+                      placeholder="Evita las largas colas y el estrés del turismo masivo. Nuestro servicio VIP te brinda acceso preferente, almuerzo gourmet en Belmond Sanctuary Lodge y asesoría personalizada de puerta a puerta..."
+                    />
+                    <p className="text-[11px] text-slate-500 mt-1.5">
+                      Consejo: Describe las sensaciones, paisajes, exclusividad del servicio y la tranquilidad que experimentará el turista.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* PESTAÑA 4: GUÍA & LOGÍSTICA */}
               {activeEditorTab === 'logistics' && (
                 <div className="space-y-4 animate-in fade-in">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -802,21 +972,36 @@ function DemoPreviewContent() {
                     </div>
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                      Destino / Región
-                    </label>
-                    <input
-                      type="text"
-                      value={editDestination}
-                      onChange={(e) => setEditDestination(e.target.value)}
-                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                      placeholder="Ej. Machu Picchu, Aguas Calientes, Cusco"
-                    />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        Destino / Región
+                      </label>
+                      <input
+                        type="text"
+                        value={editDestination}
+                        onChange={(e) => setEditDestination(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Ej. Machu Picchu, Aguas Calientes, Cusco"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        Público Objetivo Recomendado
+                      </label>
+                      <input
+                        type="text"
+                        value={editTargetAudience}
+                        onChange={(e) => setEditTargetAudience(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Ej. Familias, Parejas y Aventureros"
+                      />
+                    </div>
                   </div>
 
                   <div className="border-t border-slate-200/80 pt-4 space-y-3">
-                    <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block">Guía Oficial & WhatsApp</span>
+                    <span className="text-xs font-bold text-blue-600 uppercase tracking-wider block">Guía Oficial Colegiado & WhatsApp</span>
                     
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
@@ -831,7 +1016,7 @@ function DemoPreviewContent() {
                       />
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       <div>
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
                           Nombre del Guía
@@ -847,7 +1032,7 @@ function DemoPreviewContent() {
 
                       <div>
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          N° Carnet / Certificación DIRCETUR
+                          N° Carnet DIRCETUR
                         </label>
                         <input
                           type="text"
@@ -855,6 +1040,19 @@ function DemoPreviewContent() {
                           onChange={(e) => setEditGuideCert(e.target.value)}
                           className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-mono"
                           placeholder="DIRCETUR N° 4589-C"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Idiomas del Guía
+                        </label>
+                        <input
+                          type="text"
+                          value={editGuideLanguages}
+                          onChange={(e) => setEditGuideLanguages(e.target.value)}
+                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                          placeholder="Español, English, Quechua"
                         />
                       </div>
                     </div>
@@ -875,79 +1073,46 @@ function DemoPreviewContent() {
                 </div>
               )}
 
-              {/* TAB 4: DETALLES & QUÉ INCLUYE */}
+              {/* PESTAÑA 5: INCLUYE, MOCHILA & SELLOS */}
               {activeEditorTab === 'content' && (
                 <div className="space-y-4 animate-in fade-in">
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                      Título de Sección "Acerca del Tour"
+                      Título de Sección Inclusiones
                     </label>
                     <input
                       type="text"
-                      value={editAboutTitle}
-                      onChange={(e) => setEditAboutTitle(e.target.value)}
-                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
-                      placeholder="Ej. Un viaje sagrado diseñado para los más exigentes"
+                      value={editFeaturesTitle}
+                      onChange={(e) => setEditFeaturesTitle(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                      placeholder="Ej. Privilegios de la Experiencia VIP"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                      Descripción Narrativa del Tour
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center justify-between">
+                      <span>Servicios Incluidos (1 por línea)</span>
+                      <span className="text-[10px] text-slate-400 font-normal">Formato: Título:Descripción o frase simple</span>
                     </label>
                     <textarea
-                      rows={4}
-                      value={editAboutContent}
-                      onChange={(e) => setEditAboutContent(e.target.value)}
-                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
-                      placeholder="Evita las largas colas y el estrés del turismo masivo. Nuestro servicio VIP te brinda acceso preferente..."
+                      rows={6}
+                      value={editFeaturesItems}
+                      onChange={(e) => setEditFeaturesItems(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                      placeholder="Vagón Panorámico Vistadome:Viaja con música en vivo y vistas 360°&#10;Guía Historiador Privado:Acompañamiento exclusivo&#10;Boletos de Ingreso:Acceso oficial garantizado"
                     />
                   </div>
 
-                  <div className="border-t border-slate-200/80 pt-4 space-y-3">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                        Título de Sección Inclusiones
-                      </label>
-                      <input
-                        type="text"
-                        value={editFeaturesTitle}
-                        onChange={(e) => setEditFeaturesTitle(e.target.value)}
-                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
-                        placeholder="Ej. Privilegios de la Experiencia VIP"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center justify-between">
-                        <span>Servicios Incluidos (1 por línea)</span>
-                        <span className="text-[10px] text-slate-400 font-normal">Formato: Título:Descripción o frase simple</span>
-                      </label>
-                      <textarea
-                        rows={7}
-                        value={editFeaturesItems}
-                        onChange={(e) => setEditFeaturesItems(e.target.value)}
-                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
-                        placeholder="Vagón Panorámico Vistadome:Viaja con música en vivo y vistas 360°&#10;Guía Historiador Privado:Acompañamiento exclusivo&#10;Boletos de Ingreso:Acceso oficial garantizado"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* TAB 5: EXCLUSIONES, MOCHILA & SELLOS */}
-              {activeEditorTab === 'extras' && (
-                <div className="space-y-4 animate-in fade-in">
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center justify-between">
                       <span>Qué NO Incluye (1 por línea)</span>
                       <span className="text-[10px] text-slate-400 font-normal">Exclusiones claras</span>
                     </label>
                     <textarea
-                      rows={4}
+                      rows={3}
                       value={editNotIncluded}
                       onChange={(e) => setEditNotIncluded(e.target.value)}
-                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
                       placeholder="Vuelos internacionales o domésticos&#10;Propinas voluntarias para guía y chofer&#10;Seguro médico de viaje"
                     />
                   </div>
@@ -958,10 +1123,10 @@ function DemoPreviewContent() {
                       <span className="text-[10px] text-slate-400 font-normal">Recomendaciones</span>
                     </label>
                     <textarea
-                      rows={4}
+                      rows={3}
                       value={editWhatToBring}
                       onChange={(e) => setEditWhatToBring(e.target.value)}
-                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
                       placeholder="Pasaporte original físico vigente&#10;Ropa abrigadora en capas y cortavientos&#10;Calzado de trekking con buen agarre&#10;Bloqueador solar y repelente"
                     />
                   </div>
@@ -972,7 +1137,7 @@ function DemoPreviewContent() {
                       <span className="text-[10px] text-slate-400 font-normal">Garantías oficiales</span>
                     </label>
                     <textarea
-                      rows={3}
+                      rows={2}
                       value={editTrustBadges}
                       onChange={(e) => setEditTrustBadges(e.target.value)}
                       className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
@@ -982,63 +1147,343 @@ function DemoPreviewContent() {
                 </div>
               )}
 
-              {/* TAB 6: OFICINA & MAPS */}
-              {activeEditorTab === 'office' && (
+              {/* PESTAÑA 6: ITINERARIO PASO A PASO (NUEVA MEJORA) */}
+              {activeEditorTab === 'itinerary' && (
                 <div className="space-y-4 animate-in fade-in">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                        Paradas y Días del Itinerario ({editItinerary.length})
+                      </h4>
+                      <p className="text-[11px] text-slate-500">
+                        Configura el cronograma detallado que ven los turistas en las plantillas.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleAddItineraryStep}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-all cursor-pointer shadow-xs"
+                    >
+                      <Plus size={14} />
+                      <span>Añadir Parada o Día</span>
+                    </button>
+                  </div>
+
+                  {editItinerary.length === 0 ? (
+                    <div className="text-center py-8 border-2 border-dashed border-slate-200 rounded-2xl p-6">
+                      <Calendar size={28} className="mx-auto text-slate-300 mb-2" />
+                      <p className="text-xs font-bold text-slate-700">No hay paradas en el itinerario</p>
+                      <p className="text-[11px] text-slate-400 mb-3">Añade los días o momentos clave del recorrido.</p>
+                      <button
+                        type="button"
+                        onClick={handleAddItineraryStep}
+                        className="px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800"
+                      >
+                        Crear Primer Paso
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      {editItinerary.map((item, idx) => (
+                        <div key={idx} className="p-4 rounded-2xl border border-slate-200 bg-slate-50/70 space-y-3">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md">
+                              Paso #{idx + 1}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveItinerary(idx)}
+                              className="text-slate-400 hover:text-rose-600 p-1 rounded-lg hover:bg-rose-50 transition-colors"
+                              title="Eliminar este paso"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div>
+                              <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">
+                                Etiqueta / Momento
+                              </label>
+                              <input
+                                type="text"
+                                value={item.step}
+                                onChange={(e) => handleUpdateItinerary(idx, 'step', e.target.value)}
+                                className="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
+                                placeholder="Día 1 / 05:00 AM"
+                              />
+                            </div>
+                            <div className="sm:col-span-2">
+                              <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">
+                                Título de la Parada
+                              </label>
+                              <input
+                                type="text"
+                                value={item.title}
+                                onChange={(e) => handleUpdateItinerary(idx, 'title', e.target.value)}
+                                className="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold focus:ring-2 focus:ring-blue-500 outline-none"
+                                placeholder="Salida desde Cusco y Desayuno Andino"
+                              />
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">
+                              Descripción Detallada
+                            </label>
+                            <textarea
+                              rows={2}
+                              value={item.desc}
+                              onChange={(e) => handleUpdateItinerary(idx, 'desc', e.target.value)}
+                              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                              placeholder="Recojo en hotel y traslado en transporte privado climatizado..."
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* PESTAÑA 7: FAQS & RESEÑAS (NUEVA MEJORA) */}
+              {activeEditorTab === 'faqs' && (
+                <div className="space-y-6 animate-in fade-in">
+                  
+                  {/* SECCIÓN PREGUNTAS FRECUENTES */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                          Preguntas Frecuentes (FAQs) ({editFaqs.length})
+                        </h4>
+                        <p className="text-[11px] text-slate-500">Resuelve dudas antes de reservar</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleAddFaq}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-all cursor-pointer shadow-xs"
+                      >
+                        <Plus size={14} />
+                        <span>Añadir Pregunta</span>
+                      </button>
+                    </div>
+
+                    {editFaqs.length === 0 ? (
+                      <p className="text-xs text-slate-400 italic">No hay preguntas registradas.</p>
+                    ) : (
+                      <div className="space-y-3">
+                        {editFaqs.map((faq, idx) => (
+                          <div key={idx} className="p-3.5 rounded-2xl border border-slate-200 bg-slate-50/70 space-y-2">
+                            <div className="flex items-center justify-between gap-2">
+                              <input
+                                type="text"
+                                value={faq.q}
+                                onChange={(e) => handleUpdateFaq(idx, 'q', e.target.value)}
+                                className="flex-1 bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold focus:ring-2 focus:ring-blue-500 outline-none"
+                                placeholder="¿Pregunta frecuente?"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveFaq(idx)}
+                                className="text-slate-400 hover:text-rose-600 p-1 rounded-lg"
+                                title="Eliminar pregunta"
+                              >
+                                <Trash2 size={14} />
+                              </button>
+                            </div>
+                            <textarea
+                              rows={2}
+                              value={faq.a}
+                              onChange={(e) => handleUpdateFaq(idx, 'a', e.target.value)}
+                              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                              placeholder="Respuesta detallada con información clara..."
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* SECCIÓN TESTIMONIOS & RESEÑAS */}
+                  <div className="border-t border-slate-200 pt-5 space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800">
+                          Reseñas y Testimonios de Turistas ({editTestimonials.length})
+                        </h4>
+                        <p className="text-[11px] text-slate-500">Prueba social y recomendaciones verificadas</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleAddTestimonial}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 transition-all cursor-pointer"
+                      >
+                        <Plus size={14} />
+                        <span>Añadir Reseña</span>
+                      </button>
+                    </div>
+
+                    {editTestimonials.length === 0 ? (
+                      <p className="text-xs text-slate-400 italic">No hay reseñas registradas.</p>
+                    ) : (
+                      <div className="space-y-3">
+                        {editTestimonials.map((tItem, idx) => (
+                          <div key={idx} className="p-3.5 rounded-2xl border border-slate-200 bg-slate-50/70 space-y-2">
+                            <div className="flex items-center justify-between gap-2">
+                              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 flex-1">
+                                <input
+                                  type="text"
+                                  value={tItem.name}
+                                  onChange={(e) => handleUpdateTestimonial(idx, 'name', e.target.value)}
+                                  className="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold focus:ring-2 focus:ring-blue-500 outline-none"
+                                  placeholder="Nombre del Viajero"
+                                />
+                                <input
+                                  type="text"
+                                  value={tItem.origin}
+                                  onChange={(e) => handleUpdateTestimonial(idx, 'origin', e.target.value)}
+                                  className="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none"
+                                  placeholder="Ciudad, País"
+                                />
+                                <select
+                                  value={tItem.rating}
+                                  onChange={(e) => handleUpdateTestimonial(idx, 'rating', Number(e.target.value))}
+                                  className="bg-white border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs font-bold text-amber-600 focus:ring-2 focus:ring-blue-500 outline-none"
+                                >
+                                  <option value={5}>⭐⭐⭐⭐⭐ (5 Estrellas)</option>
+                                  <option value={4}>⭐⭐⭐⭐ (4 Estrellas)</option>
+                                  <option value={3}>⭐⭐⭐ (3 Estrellas)</option>
+                                </select>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveTestimonial(idx)}
+                                className="text-slate-400 hover:text-rose-600 p-1 rounded-lg shrink-0"
+                                title="Eliminar reseña"
+                              >
+                                <Trash2 size={14} />
+                              </button>
+                            </div>
+                            <textarea
+                              rows={2}
+                              value={tItem.comment}
+                              onChange={(e) => handleUpdateTestimonial(idx, 'comment', e.target.value)}
+                              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                              placeholder="Comentario sobre la experiencia vivida..."
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                </div>
+              )}
+
+              {/* PESTAÑA 8: GALERÍA, OFICINA & CATÁLOGO */}
+              {activeEditorTab === 'gallery_office' && (
+                <div className="space-y-5 animate-in fade-in">
+                  
+                  {/* ACCESO RÁPIDO AL CATÁLOGO MULTITOUR DE 6 TOURS */}
+                  <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50 border border-blue-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20 shrink-0">
+                        <Layers size={20} />
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-bold uppercase tracking-wider text-blue-950">
+                          Catálogo Multitour (6 Tours de Vitrina)
+                        </h4>
+                        <p className="text-[11px] text-blue-700">
+                          Personaliza las 6 tarjetas de tours secundarios que acompañan a esta landing.
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setIsCatalogModalOpen(true)}
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-black text-white bg-blue-600 hover:bg-blue-700 transition-all cursor-pointer shadow-md shadow-blue-600/20 shrink-0"
+                    >
+                      <Edit3 size={13} />
+                      <span>Abrir Editor de los 6 Tours</span>
+                    </button>
+                  </div>
+
+                  {/* FOTOS DE GALERÍA */}
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                      Dirección Física de Oficina
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center justify-between">
+                      <span>URLs de Fotos de Galería (1 por línea)</span>
+                      <span className="text-[10px] text-slate-400 font-normal">Fotos secundarias</span>
                     </label>
-                    <input
-                      type="text"
-                      value={editOfficeAddress}
-                      onChange={(e) => setEditOfficeAddress(e.target.value)}
-                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                      placeholder="Ej. Portal de Panes N° 123, Plaza de Armas, Cusco"
+                    <textarea
+                      rows={4}
+                      value={editGalleryImages}
+                      onChange={(e) => setEditGalleryImages(e.target.value)}
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs font-mono focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                      placeholder="https://images.unsplash.com/...&#10;https://images.unsplash.com/..."
                     />
                   </div>
 
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                      Horario de Atención al Turista
-                    </label>
-                    <input
-                      type="text"
-                      value={editOfficeHours}
-                      onChange={(e) => setEditOfficeHours(e.target.value)}
-                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-                      placeholder="Ej. Lunes a Domingo: 08:00 AM – 08:00 PM"
-                    />
-                  </div>
+                  <div className="border-t border-slate-200 pt-4 space-y-3">
+                    <span className="text-xs font-bold text-slate-800 uppercase tracking-wider block">Oficina Física & Ubicación</span>
+                    
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                        Dirección Física de Oficina
+                      </label>
+                      <input
+                        type="text"
+                        value={editOfficeAddress}
+                        onChange={(e) => setEditOfficeAddress(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Ej. Portal de Panes N° 123, Plaza de Armas, Cusco"
+                      />
+                    </div>
 
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center justify-between">
-                      <span>Enlace Oficial de Google Maps</span>
-                      <span className="text-[10px] text-slate-400 font-normal">Opcional</span>
-                    </label>
-                    <input
-                      type="url"
-                      value={editMapsUrl}
-                      onChange={(e) => setEditMapsUrl(e.target.value)}
-                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-mono focus:ring-2 focus:ring-blue-500 outline-none"
-                      placeholder="https://maps.app.goo.gl/..."
-                    />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                          Horario de Atención
+                        </label>
+                        <input
+                          type="text"
+                          value={editOfficeHours}
+                          onChange={(e) => setEditOfficeHours(e.target.value)}
+                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                          placeholder="Ej. Lun - Dom: 08:00 AM – 08:00 PM"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1">
+                          Enlace de Google Maps
+                        </label>
+                        <input
+                          type="url"
+                          value={editMapsUrl}
+                          onChange={(e) => setEditMapsUrl(e.target.value)}
+                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm font-mono focus:ring-2 focus:ring-blue-500 outline-none"
+                          placeholder="https://maps.app.goo.gl/..."
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
 
-              {/* Footer Controls */}
-              <div className="border-t border-slate-200 pt-5 flex items-center gap-3">
+              {/* Botones de Acción al Pie del Modal */}
+              <div className="border-t border-slate-200 pt-4 flex items-center justify-between gap-3 bg-white sticky bottom-0">
                 <button
                   type="button"
                   onClick={() => setIsEditorOpen(false)}
-                  className="flex-1 px-4 py-2.5 border border-slate-300 text-slate-700 font-bold rounded-xl hover:bg-slate-100 text-xs sm:text-sm cursor-pointer transition-colors"
+                  className="px-4 py-2.5 border border-slate-300 text-slate-700 font-bold rounded-xl hover:bg-slate-100 text-xs sm:text-sm cursor-pointer transition-colors"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="flex-2 px-5 py-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 text-white font-black rounded-xl text-xs sm:text-sm shadow-lg shadow-blue-600/30 hover:shadow-blue-500/50 cursor-pointer transition-all flex items-center justify-center gap-2"
+                  className="px-6 py-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 text-white font-black rounded-xl text-xs sm:text-sm shadow-lg shadow-blue-600/30 hover:shadow-blue-500/50 cursor-pointer transition-all flex items-center justify-center gap-2"
                 >
                   <Check size={16} />
                   <span>Guardar Todos los Cambios</span>
@@ -1049,6 +1494,23 @@ function DemoPreviewContent() {
           </div>
         </div>
       )}
+
+      {/* MODAL SECUNDARIO DE EDICIÓN DEL CATÁLOGO DE TOURS */}
+      <CatalogToursEditorModal
+        isOpen={isCatalogModalOpen}
+        onClose={() => setIsCatalogModalOpen(false)}
+        currentTours={catalogTours}
+        onSave={(updated) => {
+          setCatalogTours(updated);
+          if (landing) {
+            const updatedLanding = { ...landing, catalogTours: updated };
+            setLanding(updatedLanding);
+            saveLandingToStorage(updatedLanding);
+            setRefreshKey(k => k + 1);
+          }
+        }}
+        currentSignatureTourName={editName || landing.name}
+      />
 
       {/* QR Code Modal for Real Phone Testing */}
       {isQrOpen && (

@@ -314,6 +314,23 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
       </section>
       )}
 
+      {/* 2.5 SECCIÓN DESCRIPCIÓN & CRÓNICA DEL RECORRIDO */}
+      {(data.about?.title || data.about?.content) && (
+        <section className="py-12 sm:py-16 px-4 sm:px-8 max-w-5xl mx-auto text-center space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 text-red-800 text-[11px] font-serif font-black uppercase tracking-widest border border-red-200">
+            <Compass size={13} className="text-red-700" />
+            <span>{currentLang === 'en' ? 'About The Journey' : currentLang === 'fr' ? 'À Propos du Circuit' : currentLang === 'pt' ? 'Sobre a Jornada' : currentLang === 'it' ? 'Sul Viaggio' : 'Crónica & Visión del Recorrido'}</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-serif font-black italic text-stone-900 leading-tight">
+            {data.about?.title ? translateText(data.about.title, currentLang) : (currentLang === 'en' ? 'An ancestral route created with cultural rigor' : 'Una ruta ancestral diseñada con rigor cultural')}
+          </h2>
+          <p className="text-sm sm:text-base text-stone-700 font-serif max-w-3xl mx-auto leading-relaxed italic">
+            {translateText(data.about?.content || '', currentLang)}
+          </p>
+          <div className="w-16 h-1 bg-red-700 mx-auto rounded-full mt-4" />
+        </section>
+      )}
+
       {/* 3. SECTION: ACTUALITÉS / PATRIMONIO VIVO (BÁSICO, PRO, ADVANCE) */}
       {!isFree && (
         <section id="actualites" className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto">

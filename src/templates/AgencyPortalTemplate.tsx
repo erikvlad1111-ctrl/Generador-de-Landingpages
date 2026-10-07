@@ -1462,6 +1462,39 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       {/* 4.5 FICHA TÉCNICA DEL TOUR (PUNTO 6) & PERFIL DEL GUÍA COLEGIADO (PUNTO 7) */}
       <section id="experiencia" className="py-8 sm:py-14 bg-gradient-to-b from-stone-50 to-white border-b border-stone-200">
         <div className="max-w-7xl mx-auto px-3 sm:px-6">
+
+          {/* Bloque Destacado: Descripción y Narrativa del Tour */}
+          {(data?.about?.title || data?.about?.content) && (
+            <div className="mb-6 sm:mb-8 bg-white rounded-3xl p-5 sm:p-7 border border-stone-200 shadow-xs relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-[#FF5500] to-[#FF8800]" />
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="space-y-2 max-w-3xl">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FF5500]/10 text-[#FF5500] text-[10px] font-black uppercase tracking-wider">
+                    <Sparkles size={12} />
+                    <span>{lang === 'en' ? 'Tour Overview & Description' : lang === 'pt' ? 'Visão Geral & Descrição' : lang === 'fr' ? 'Présentation du Tour' : lang === 'it' ? 'Descrizione del Tour' : 'Descripción & Visión del Tour'}</span>
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight leading-snug">
+                    {translateText(data?.about?.title || 'Experiencia Exclusiva en los Andes', lang)}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
+                    {translateText(data?.about?.content || '', lang)}
+                  </p>
+                </div>
+                <div className="shrink-0 flex items-center gap-2 self-start md:self-center">
+                  <a
+                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola, deseo reservar el tour: ' + tourTitle)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-sm cursor-pointer hover:scale-102"
+                  >
+                    <MessageCircle size={14} />
+                    <span>{lang === 'en' ? 'Inquire on WhatsApp' : 'Consultar WhatsApp'}</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-1 lg:grid-cols-12 gap-6'} items-stretch`}>
             
             {/* Left: Especificaciones Técnicas (7 cols) */}

@@ -807,6 +807,22 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </section>
       )}
 
+      {/* 3.5 ABOUT / EXPEDITION OVERVIEW */}
+      {(data.about?.title || data.about?.content) && !isFree && (
+        <section className="py-12 sm:py-16 px-4 sm:px-8 max-w-5xl mx-auto text-center space-y-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-black uppercase tracking-wider">
+            <Compass size={13} className="text-blue-600" />
+            <span>{currentLang === 'en' ? 'Expedition Overview' : currentLang === 'fr' ? 'Vue d\'Ensemble' : currentLang === 'pt' ? 'Visão da Expedição' : currentLang === 'it' ? 'Panoramica della Spedizione' : 'Acerca de la Expedición'}</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+            {data.about?.title ? translateText(data.about.title, currentLang) : (currentLang === 'en' ? 'An unforgettable high-altitude adventure' : 'Una aventura de alta montaña inolvidable')}
+          </h2>
+          <p className="text-sm sm:text-base text-slate-600 max-w-3xl mx-auto leading-relaxed font-normal">
+            {translateText(data.about?.content || '', currentLang)}
+          </p>
+        </section>
+      )}
+
       {/* 4. SECTION: EXPLORE TOP SEARCHED SPOTS (DISPONIBLE EN TODOS LOS PLANES) */}
       <section id="destinos" className="py-14 sm:py-20 px-4 sm:px-8 max-w-7xl mx-auto text-center">
         <div className="max-w-2xl mx-auto mb-10 sm:mb-14 space-y-3">

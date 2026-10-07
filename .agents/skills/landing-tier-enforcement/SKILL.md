@@ -129,4 +129,16 @@ Cada una de las 5 plantillas (`agency-portal`, `boho-nature`, `adventure`, `cult
      - Contener la barra en `max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 w-full min-w-0 flex justify-between items-center gap-2 sm:gap-4`.
      - Utilizar `HeaderLanguageSelector` con menú desplegable flotante que no ocupa ancho estático.
 
+### Error 11: Discrepancia de campos editables: Descripciones narrativas ausentes en plantillas y modal no centrado
+- **Síntoma / Mensaje de Error:** En el editor de landings (`/demo/preview`), existía el campo para editar la descripción narrativa (`about.title` y `about.content`), pero al visualizar la landing (especialmente en `agency-portal`, `cultural` y `adventure`), la descripción no se mostraba en la página. Además, el editor se abría como un panel pegado al lateral derecho en lugar de un modal en el centro.
+- **Causa Raíz:**
+  1. `AgencyPortalTemplate`, `CulturalTemplate` y `AdventureTemplate` no contaban con un bloque renderizador para `data.about.title` y `data.about.content`.
+  2. En `/demo/preview/page.tsx`, el modal utilizaba clases `justify-end` y `slide-in-from-right` convirtiéndolo en un drawer lateral.
+  3. Faltaban opciones de edición para itinerario interactivo (agregar/eliminar días), preguntas frecuentes (FAQs), testimonios, público objetivo e integración con el editor de catálogo multitour.
+- **Solución Paso a Paso:**
+  1. En `AgencyPortalTemplate.tsx`, incorporar bloque destacado para `data?.about?.title` y `data?.about?.content` dentro de la sección de experiencia (`#experiencia`).
+  2. En `CulturalTemplate.tsx`, añadir la sección "Crónica & Visión del Recorrido" con `data?.about?.title` y `data?.about?.content`.
+  3. En `AdventureTemplate.tsx`, añadir la sección "Acerca de la Expedición" renderizando `data?.about?.title` y `data?.about?.content`.
+  4. En `src/app/demo/preview/page.tsx`, centrar el modal con `fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-6 bg-black/80 backdrop-blur-md` y tarjeta `relative w-full max-w-4xl max-h-[92vh] bg-white rounded-3xl shadow-2xl`.
+  5. Expandir las pestañas del editor a 8 módulos integrales: General, Portada, Descripción Narrativa (con aviso de visibilidad), Guía & Logística, Inclusiones, Itinerario Paso a Paso interactivo, FAQs & Reseñas, y Galería/Oficina con acceso directo al catálogo de los 6 tours.
 
