@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, Suspense } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -47,7 +47,14 @@ import {
   Star,
   Quote,
   SlidersHorizontal,
-  RotateCcw
+  RotateCcw,
+  ChevronUp,
+  ChevronDown,
+  Maximize2,
+  Minimize2,
+  Zap,
+  Eye,
+  CheckCheck
 } from 'lucide-react';
 import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
@@ -156,6 +163,8 @@ function DemoPreviewContent() {
   // Modal Secundario de Catálogo Multitour
   const [isCatalogModalOpen, setIsCatalogModalOpen] = useState(false);
   const [catalogTours, setCatalogTours] = useState<CatalogTourItem[]>(() => landing?.catalogTours || []);
+  const [isEditorFullscreen, setIsEditorFullscreen] = useState(false);
+  const [liveSavedToast, setLiveSavedToast] = useState(false);
 
   const handleAddItineraryStep = () => {
     setEditItinerary(prev => [
@@ -170,6 +179,57 @@ function DemoPreviewContent() {
 
   const handleRemoveItinerary = (index: number) => {
     setEditItinerary(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleMoveItinerary = (index: number, direction: 'up' | 'down') => {
+    setEditItinerary(prev => {
+      const targetIndex = direction === 'up' ? index - 1 : index + 1;
+      if (targetIndex < 0 || targetIndex >= prev.length) return prev;
+      const copy = [...prev];
+      const temp = copy[index];
+      copy[index] = copy[targetIndex];
+      copy[targetIndex] = temp;
+      return copy;
+    });
+  };
+
+  const handleDuplicateItinerary = (index: number) => {
+    setEditItinerary(prev => {
+      const item = prev[index];
+      if (!item) return prev;
+      const copy = [...prev];
+      copy.splice(index + 1, 0, {
+        step: `${item.step} (Ext)`,
+        title: `${item.title} (Continuación)`,
+        desc: item.desc
+      });
+      return copy;
+    });
+  };
+
+  const handleLoadItineraryPreset = (presetKey: 'machupicchu' | 'humantay' | 'valle') => {
+    if (presetKey === 'machupicchu') {
+      setEditItinerary([
+        { step: '04:30 AM', title: 'Recojo en Hotel & Traslado a Estación de Ollantaytambo', desc: 'Salida en transporte turístico privado climatizado hacia el Valle Sagrado para abordar el tren panorámico.' },
+        { step: '07:45 AM', title: 'Viaje en Tren Panorámico hacia Aguas Calientes', desc: 'Recorrido escénico contemplando el cañón del río Vilcanota y la transición de los Andes a la selva alta.' },
+        { step: '10:00 AM', title: 'Ascenso en Bus & Tour Guiado en la Ciudadela Inka', desc: 'Recorrido guiado de 2.5 horas con Guía Oficial Colegiado por templos, plazas ceremoniales y miradores icónicos.' },
+        { step: '02:00 PM', title: 'Almuerzo Buffet en Aguas Calientes & Retorno a Cusco', desc: 'Tiempo libre para deleitarse con gastronomía andina local y retorno en tren al punto de partida.' }
+      ]);
+    } else if (presetKey === 'humantay') {
+      setEditItinerary([
+        { step: '04:00 AM', title: 'Recojo en Cusco & Desayuno Tradicional en Mollepata', desc: 'Encuentro temprano en tu alojamiento y traslado hacia Mollepata para degustar un desayuno andino nutritivo.' },
+        { step: '08:00 AM', title: 'Inicio del Trekking desde Soraypampa (3,900 msnm)', desc: 'Caminata escénica gradual de 1.5 a 2 horas frente a los imponentes glaciares Salkantay y Humantay.' },
+        { step: '10:30 AM', title: 'Llegada a la Laguna Humantay & Pago a la Pachamama', desc: 'Descanso ante el espejo turquesa sagrado (4,200 msnm) con tiempo para fotografías y ceremonia con hojas de coca.' },
+        { step: '01:30 PM', title: 'Descenso a Soraypampa, Almuerzo Buffet & Regreso', desc: 'Retorno al campamento para un almuerzo buffet reconfortante antes del viaje de retorno a la ciudad del Cusco.' }
+      ]);
+    } else {
+      setEditItinerary([
+        { step: '07:30 AM', title: 'Mirador de Taray & Centro Textil de Pisac', desc: 'Primera parada panorámica del Valle Sagrado de los Inkas con visita al mercado artesanal y andenería monumental.' },
+        { step: '11:00 AM', title: 'Salineras de Maras & Laboratorio Inka de Moray', desc: 'Exploración de las 3,000 pozas naturales de sal y de los andenes circulares de experimentación agrícola.' },
+        { step: '01:00 PM', title: 'Almuerzo Buffet Gourmet en Urubamba', desc: 'Degustación de lo mejor de la cocina novoandina e internacional elaborada con insumos orgánicos del valle.' },
+        { step: '03:30 PM', title: 'Fortaleza Viva de Ollantaytambo & Chinchero', desc: 'Ascenso al Templo del Sol y recorrido por las calles originales inkaicas antes de culminar en Chinchero.' }
+      ]);
+    }
   };
 
   const handleAddFaq = () => {
@@ -187,6 +247,15 @@ function DemoPreviewContent() {
     setEditFaqs(prev => prev.filter((_, i) => i !== index));
   };
 
+  const handleLoadFaqsPreset = () => {
+    setEditFaqs([
+      { q: '¿Cómo prepararme para la altitud en Cusco?', a: 'Recomendamos llegar a Cusco al menos 24 a 48 horas antes de caminatas exigentes, mantenerse bien hidratado con mate de coca o muña y descansar adecuadamente las primeras horas.' },
+      { q: '¿Qué documentos son indispensables para los ingresos?', a: 'Es obligatorio portar tu Pasaporte original o DNI físico vigente en todo momento. No se aceptan fotocopias ni fotografías en el celular para el control del boleto oficial.' },
+      { q: '¿Cuál es la política si se presentan lluvias o mal tiempo?', a: 'Las excursiones operan regularmente todo el año; suministramos ponchos impermeables. En situaciones climáticas extremas reprogramamos las salidas con total respaldo de seguridad.' },
+      { q: '¿Qué facilidades de pago ofrecen para confirmar la reserva?', a: 'Aceptamos transferencias bancarias directas, tarjetas Visa/Mastercard internacionales y pagos inmediatos a través de pasarela protegida por WhatsApp.' }
+    ]);
+  };
+
   const handleAddTestimonial = () => {
     setEditTestimonials(prev => [
       ...prev,
@@ -200,6 +269,44 @@ function DemoPreviewContent() {
 
   const handleRemoveTestimonial = (index: number) => {
     setEditTestimonials(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleLoadTestimonialsPreset = () => {
+    setEditTestimonials([
+      { name: 'Sofia & Mateo', origin: 'Buenos Aires, Argentina', comment: '¡La mejor experiencia de nuestro viaje! La puntualidad fue impecable, el guía nos explicó cada detalle histórico con pasión y el almuerzo estuvo exquisito.', rating: 5 },
+      { name: 'David Miller', origin: 'California, USA', comment: 'Outstanding service and organization! Seamless communication on WhatsApp, comfortable private transport and top-tier professionalism throughout.', rating: 5 },
+      { name: 'Julie & Thomas', origin: 'Lyon, Francia', comment: 'Voyage inoubliable ! Le paysage est tout simplement magique et l’attention portée à notre confort a été exemplaire du début à la fin. 100% recommandé !', rating: 5 }
+    ]);
+  };
+
+  const handleLoadInclusionsPreset = () => {
+    setEditFeaturesItems(
+      'Transporte turístico privado con aire acondicionado y SOAT vigente\n' +
+      'Guía Oficial de Turismo colegiado y bilingüe (Español / Inglés)\n' +
+      'Desayuno andino nutritivo y almuerzo buffet gourmet con opción vegetariana\n' +
+      'Tickets de ingreso oficiales y autorizados a todos los circuitos\n' +
+      'Botiquín de primeros auxilios y balón de oxígeno medicinal portátil\n' +
+      'Bastones de senderismo profesionales y ponchos impermeables para lluvia'
+    );
+  };
+
+  const handleLoadBackpackPreset = () => {
+    setEditWhatToBring(
+      'Pasaporte original o documento de identidad físico vigente\n' +
+      'Mochila ligera y cómoda (máximo 20 a 25 litros)\n' +
+      'Ropa abrigadora en capas (casaca polar, cortavientos y guantes ligeros)\n' +
+      'Zapatos o zapatillas de trekking con buen agarre\n' +
+      'Bloqueador solar (FPS 50+), gafas de sol UV400 y gorro o sombrero\n' +
+      'Botella de agua recargable y snacks energéticos (frutos secos, chocolates)'
+    );
+  };
+
+  const handleAppendGalleryImage = (imageUrl: string) => {
+    setEditGalleryImages(prev => {
+      const list = prev.split('\n').map(s => s.trim()).filter(Boolean);
+      if (list.includes(imageUrl)) return prev;
+      return [...list, imageUrl].join('\n');
+    });
   };
 
   if (!landing) {
@@ -271,10 +378,10 @@ function DemoPreviewContent() {
     setIsEditorOpen(true);
   };
 
-  const handleSaveEdits = (e: React.FormEvent) => {
-    e.preventDefault();
+  const buildUpdatedLandingData = (): LandingData => {
+    if (!landing) throw new Error('No landing selected');
     const isFreeOrBasic = editTier === 'free' || editTier === 'basic';
-    const updated: LandingData = {
+    return {
       ...landing,
       name: editName,
       template: editTemplate,
@@ -321,11 +428,52 @@ function DemoPreviewContent() {
       officeHours: editOfficeHours,
       mapsUrl: editMapsUrl
     };
+  };
+
+  const handleApplyLive = () => {
+    if (!landing) return;
+    const updated = buildUpdatedLandingData();
+    setLanding(updated);
+    saveLandingToStorage(updated);
+    setRefreshKey(k => k + 1);
+    setLiveSavedToast(true);
+    setTimeout(() => setLiveSavedToast(false), 2400);
+  };
+
+  const handleSaveEdits = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!landing) return;
+    const updated = buildUpdatedLandingData();
     setLanding(updated);
     saveLandingToStorage(updated);
     setIsEditorOpen(false);
     setRefreshKey(k => k + 1);
   };
+
+  // Atajos de teclado: Ctrl+S para guardar en vivo y Escape para cerrar
+  useEffect(() => {
+    if (!isEditorOpen) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
+        e.preventDefault();
+        handleApplyLive();
+      }
+      if (e.key === 'Escape') {
+        setIsEditorOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [
+    isEditorOpen, editName, editTemplate, editTier, editObjective, editLanguage,
+    editHeroBadge, editHeroTitle, editHeroSubtitle, editHeroCta, editHeroImage,
+    editAboutTitle, editAboutContent, editPrice, editDuration, editDifficulty,
+    editDestination, editAltitude, editGroupType, editTargetAudience, editWhatsapp,
+    editGuideName, editGuideCert, editGuideLanguages, editGuideAvatar,
+    editFeaturesTitle, editFeaturesItems, editNotIncluded, editWhatToBring,
+    editTrustBadges, editItinerary, editFaqs, editTestimonials, editGalleryImages,
+    catalogTours, editOfficeAddress, editOfficeHours, editMapsUrl, landing
+  ]);
 
   const handlePublishInstant = () => {
     const published: LandingData = {
@@ -593,50 +741,94 @@ function DemoPreviewContent() {
             onClick={() => setIsEditorOpen(false)}
           />
 
-          {/* Tarjeta del Modal Centrada y Agrandada */}
-          <div className="relative w-full max-w-6xl max-h-[95vh] h-[92vh] bg-white text-slate-900 rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden z-10 animate-in zoom-in-95 duration-200">
+          {/* Tarjeta del Modal Centrada y Agrandada con soporte de Pantalla Completa */}
+          <div className={`relative w-full ${isEditorFullscreen ? 'max-w-[98vw] h-[96vh] max-h-[96vh]' : 'max-w-6xl max-h-[95vh] h-[92vh]'} bg-white text-slate-900 rounded-3xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden z-10 animate-in zoom-in-95 duration-200 transition-all`}>
             
             {/* Header del Modal */}
-            <div className="p-4 sm:p-5 border-b border-slate-200 flex justify-between items-center bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white shrink-0">
+            <div className="p-3.5 sm:p-5 border-b border-slate-200 flex justify-between items-center bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 text-white shrink-0">
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 shrink-0">
-                  <Edit3 size={22} />
+                <div className="w-10 sm:w-11 h-10 sm:h-11 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 shrink-0">
+                  <Edit3 size={20} className="sm:size-[22px]" />
                 </div>
                 <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="font-extrabold text-white text-base sm:text-xl tracking-tight">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="font-extrabold text-white text-sm sm:text-lg tracking-tight">
                       Editor Integral de Landing Page
                     </h3>
-                    <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">
+                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30">
                       En Vivo
                     </span>
+                    <span className="hidden md:inline-flex items-center gap-1 text-[10px] text-slate-400 font-mono bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-700/60">
+                      <span>Ctrl + S para guardar</span>
+                    </span>
                   </div>
-                  <p className="text-xs text-slate-300 mt-0.5">
+                  <p className="text-[11px] sm:text-xs text-slate-300 mt-0.5">
                     Modifica textos, descripción narrativa, logística, itinerario paso a paso, FAQs y catálogo multitour
                   </p>
                 </div>
               </div>
-              <button 
-                onClick={() => setIsEditorOpen(false)}
-                className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-white/10 transition-colors cursor-pointer"
-                title="Cerrar editor"
-              >
-                <X size={22} />
-              </button>
+              
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <button
+                  type="button"
+                  onClick={handleApplyLive}
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-600/30 hover:bg-blue-600/50 text-blue-200 border border-blue-400/30 text-xs font-bold transition-all cursor-pointer shadow-xs active:scale-95"
+                  title="Guardar y actualizar landing sin cerrar (Ctrl + S)"
+                >
+                  <Eye size={14} className="text-blue-300" />
+                  <span>Aplicar en Vivo</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsEditorFullscreen(prev => !prev)}
+                  className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-white/10 transition-colors cursor-pointer"
+                  title={isEditorFullscreen ? "Reducir tamaño modal" : "Pantalla completa"}
+                >
+                  {isEditorFullscreen ? <Minimize2 size={19} /> : <Maximize2 size={19} />}
+                </button>
+                <button 
+                  onClick={() => setIsEditorOpen(false)}
+                  className="p-2 text-slate-400 hover:text-white rounded-xl hover:bg-white/10 transition-colors cursor-pointer"
+                  title="Cerrar editor (Escape)"
+                >
+                  <X size={21} />
+                </button>
+              </div>
             </div>
 
-            {/* Barra de Pestañas: Todas las 8 Pestañas Visibles al 100% */}
-            <div className="p-2.5 sm:p-3.5 bg-slate-100/95 border-b border-slate-200 shrink-0">
+            {/* Barra de Pestañas: Todas las 8 Pestañas Visibles al 100% con Contadores */}
+            <div className="p-2 sm:p-3 bg-slate-100/95 border-b border-slate-200 shrink-0">
               <div className="grid grid-cols-2 xs:grid-cols-4 lg:grid-cols-8 gap-1.5 sm:gap-2">
                 {[
-                  { id: 'general', num: '1', label: 'General', sub: 'Diseño & Plan', icon: Sliders },
-                  { id: 'hero', num: '2', label: 'Hero', sub: 'Portada & CTA', icon: ImageIcon },
-                  { id: 'description', num: '3', label: 'Descripción', sub: 'Narrativa 100%', icon: FileText },
-                  { id: 'logistics', num: '4', label: 'Logística', sub: 'Guía & Precios', icon: Compass },
-                  { id: 'content', num: '5', label: 'Inclusiones', sub: 'Qué Incluye', icon: PackageCheck },
-                  { id: 'itinerary', num: '6', label: 'Itinerario', sub: 'Día a Día', icon: Calendar },
-                  { id: 'faqs', num: '7', label: 'FAQs', sub: '& Reseñas', icon: HelpCircle },
-                  { id: 'gallery_office', num: '8', label: 'Galería', sub: '& Oficina', icon: MapPin },
+                  { id: 'general', num: '1', label: 'General', sub: 'Diseño & Plan', icon: Sliders, badge: null },
+                  { id: 'hero', num: '2', label: 'Hero', sub: 'Portada & CTA', icon: ImageIcon, badge: null },
+                  { id: 'description', num: '3', label: 'Descripción', sub: 'Narrativa 100%', icon: FileText, badge: null },
+                  { id: 'logistics', num: '4', label: 'Logística', sub: 'Guía & Precios', icon: Compass, badge: null },
+                  { 
+                    id: 'content', 
+                    num: '5', 
+                    label: 'Inclusiones', 
+                    sub: `${editFeaturesItems ? editFeaturesItems.split('\n').filter(Boolean).length : 0} items`, 
+                    icon: PackageCheck, 
+                    badge: editFeaturesItems ? `${editFeaturesItems.split('\n').filter(Boolean).length}` : '0' 
+                  },
+                  { 
+                    id: 'itinerary', 
+                    num: '6', 
+                    label: 'Itinerario', 
+                    sub: `${editItinerary.length} paradas`, 
+                    icon: Calendar, 
+                    badge: `${editItinerary.length}` 
+                  },
+                  { 
+                    id: 'faqs', 
+                    num: '7', 
+                    label: 'FAQs', 
+                    sub: `${editFaqs.length} FAQs`, 
+                    icon: HelpCircle, 
+                    badge: `${editFaqs.length}` 
+                  },
+                  { id: 'gallery_office', num: '8', label: 'Galería', sub: '& Oficina', icon: MapPin, badge: null },
                 ].map((tab) => {
                   const Icon = tab.icon;
                   const isActive = activeEditorTab === tab.id;
@@ -645,7 +837,7 @@ function DemoPreviewContent() {
                       key={tab.id}
                       type="button"
                       onClick={() => setActiveEditorTab(tab.id as typeof activeEditorTab)}
-                      className={`flex flex-col items-center justify-center p-2 sm:py-2.5 rounded-2xl text-center transition-all cursor-pointer border ${
+                      className={`flex flex-col items-center justify-center p-2 sm:py-2.5 rounded-2xl text-center transition-all cursor-pointer border relative ${
                         isActive 
                           ? 'bg-blue-600 text-white shadow-md shadow-blue-600/25 border-blue-600 font-black scale-102 ring-2 ring-blue-500/20' 
                           : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200/90 hover:border-slate-300 font-bold'
@@ -656,7 +848,7 @@ function DemoPreviewContent() {
                         <Icon size={14} className={isActive ? 'text-white' : 'text-blue-600'} />
                         <span className="text-[11px] sm:text-xs font-black">{tab.num}. {tab.label}</span>
                       </div>
-                      <span className={`text-[9px] sm:text-[10px] leading-tight block ${isActive ? 'text-blue-100 font-medium' : 'text-slate-400 font-normal'}`}>
+                      <span className={`text-[9px] sm:text-[10px] leading-tight block truncate max-w-full px-1 ${isActive ? 'text-blue-100 font-medium' : 'text-slate-400 font-normal'}`}>
                         {tab.sub}
                       </span>
                     </button>
@@ -1084,6 +1276,31 @@ function DemoPreviewContent() {
               {/* PESTAÑA 5: INCLUYE, MOCHILA & SELLOS */}
               {activeEditorTab === 'content' && (
                 <div className="space-y-4 animate-in fade-in">
+                  
+                  {/* Presets de Inclusiones y Mochila */}
+                  <div className="p-3 bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border border-emerald-200 rounded-2xl flex flex-wrap items-center justify-between gap-2.5">
+                    <div className="flex items-center gap-2">
+                      <Sparkles size={16} className="text-emerald-600 shrink-0" />
+                      <span className="text-xs font-bold text-slate-800">Carga Rápida de Inclusiones:</span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={handleLoadInclusionsPreset}
+                        className="px-2.5 py-1 bg-white hover:bg-emerald-600 hover:text-white border border-emerald-200 text-emerald-800 rounded-lg text-[11px] font-bold transition-all shadow-xs cursor-pointer"
+                      >
+                        ⚡ Inclusiones Todo Incluido
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleLoadBackpackPreset}
+                        className="px-2.5 py-1 bg-white hover:bg-emerald-600 hover:text-white border border-emerald-200 text-emerald-800 rounded-lg text-[11px] font-bold transition-all shadow-xs cursor-pointer"
+                      >
+                        ⚡ Mochila Sugerida
+                      </button>
+                    </div>
+                  </div>
+
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
                       Título de Sección Inclusiones
@@ -1155,22 +1372,54 @@ function DemoPreviewContent() {
                 </div>
               )}
 
-              {/* PESTAÑA 6: ITINERARIO PASO A PASO (NUEVA MEJORA) */}
+              {/* PESTAÑA 6: ITINERARIO PASO A PASO (TOTALMENTE ENRIQUECIDO) */}
               {activeEditorTab === 'itinerary' && (
                 <div className="space-y-4 animate-in fade-in">
+                  
+                  {/* Barra de Presets Rápidos de Itinerario */}
+                  <div className="p-3 bg-gradient-to-r from-blue-50/90 via-indigo-50/90 to-blue-50/90 border border-blue-200/90 rounded-2xl flex flex-wrap items-center justify-between gap-2.5">
+                    <div className="flex items-center gap-2">
+                      <Sparkles size={16} className="text-blue-600 shrink-0" />
+                      <span className="text-xs font-bold text-slate-800">Cargar Cronograma Sugerido:</span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => handleLoadItineraryPreset('machupicchu')}
+                        className="px-2.5 py-1 bg-white hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 rounded-lg text-[11px] font-bold transition-all shadow-xs cursor-pointer"
+                      >
+                        🚂 Machu Picchu 1 Día
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleLoadItineraryPreset('humantay')}
+                        className="px-2.5 py-1 bg-white hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 rounded-lg text-[11px] font-bold transition-all shadow-xs cursor-pointer"
+                      >
+                        🏔️ Laguna Humantay Trek
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleLoadItineraryPreset('valle')}
+                        className="px-2.5 py-1 bg-white hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 rounded-lg text-[11px] font-bold transition-all shadow-xs cursor-pointer"
+                      >
+                        🏺 Valle Sagrado VIP
+                      </button>
+                    </div>
+                  </div>
+
                   <div className="flex items-center justify-between">
                     <div>
                       <h4 className="text-xs font-bold uppercase tracking-wider text-slate-800">
                         Paradas y Días del Itinerario ({editItinerary.length})
                       </h4>
                       <p className="text-[11px] text-slate-500">
-                        Configura el cronograma detallado que ven los turistas en las plantillas.
+                        Reordena con las flechas ▲▼ o duplica paradas para armar el recorrido perfecto.
                       </p>
                     </div>
                     <button
                       type="button"
                       onClick={handleAddItineraryStep}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-all cursor-pointer shadow-xs"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-all cursor-pointer shadow-xs active:scale-95"
                     >
                       <Plus size={14} />
                       <span>Añadir Parada o Día</span>
@@ -1182,30 +1431,72 @@ function DemoPreviewContent() {
                       <Calendar size={28} className="mx-auto text-slate-300 mb-2" />
                       <p className="text-xs font-bold text-slate-700">No hay paradas en el itinerario</p>
                       <p className="text-[11px] text-slate-400 mb-3">Añade los días o momentos clave del recorrido.</p>
-                      <button
-                        type="button"
-                        onClick={handleAddItineraryStep}
-                        className="px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800"
-                      >
-                        Crear Primer Paso
-                      </button>
+                      <div className="flex justify-center gap-2">
+                        <button
+                          type="button"
+                          onClick={() => handleLoadItineraryPreset('machupicchu')}
+                          className="px-3.5 py-1.5 bg-blue-600 text-white rounded-xl text-xs font-bold hover:bg-blue-700 cursor-pointer"
+                        >
+                          Cargar Machu Picchu
+                        </button>
+                        <button
+                          type="button"
+                          onClick={handleAddItineraryStep}
+                          className="px-3.5 py-1.5 bg-slate-900 text-white rounded-xl text-xs font-bold hover:bg-slate-800 cursor-pointer"
+                        >
+                          Crear en Blanco
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <div className="space-y-3">
                       {editItinerary.map((item, idx) => (
-                        <div key={idx} className="p-4 rounded-2xl border border-slate-200 bg-slate-50/70 space-y-3">
+                        <div key={idx} className="p-4 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-slate-50 transition-colors space-y-3 shadow-2xs">
                           <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md">
-                              Paso #{idx + 1}
-                            </span>
-                            <button
-                              type="button"
-                              onClick={() => handleRemoveItinerary(idx)}
-                              className="text-slate-400 hover:text-rose-600 p-1 rounded-lg hover:bg-rose-50 transition-colors"
-                              title="Eliminar este paso"
-                            >
-                              <Trash2 size={14} />
-                            </button>
+                            <div className="flex items-center gap-2">
+                              <span className="text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-md border border-blue-200">
+                                Paso #{idx + 1}
+                              </span>
+                              <div className="flex items-center gap-0.5 bg-white border border-slate-200 rounded-lg p-0.5 shadow-2xs">
+                                <button
+                                  type="button"
+                                  onClick={() => handleMoveItinerary(idx, 'up')}
+                                  disabled={idx === 0}
+                                  className={`p-1 rounded text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-colors ${idx === 0 ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'}`}
+                                  title="Subir parada"
+                                >
+                                  <ChevronUp size={13} />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleMoveItinerary(idx, 'down')}
+                                  disabled={idx === editItinerary.length - 1}
+                                  className={`p-1 rounded text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-colors ${idx === editItinerary.length - 1 ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'}`}
+                                  title="Bajar parada"
+                                >
+                                  <ChevronDown size={13} />
+                                </button>
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-1">
+                              <button
+                                type="button"
+                                onClick={() => handleDuplicateItinerary(idx)}
+                                className="text-slate-400 hover:text-blue-600 p-1.5 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+                                title="Duplicar este paso"
+                              >
+                                <Copy size={13} />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleRemoveItinerary(idx)}
+                                className="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition-colors cursor-pointer"
+                                title="Eliminar este paso"
+                              >
+                                <Trash2 size={13} />
+                              </button>
+                            </div>
                           </div>
 
                           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -1258,6 +1549,30 @@ function DemoPreviewContent() {
               {activeEditorTab === 'faqs' && (
                 <div className="space-y-6 animate-in fade-in">
                   
+                  {/* Presets de FAQs y Reseñas */}
+                  <div className="p-3 bg-gradient-to-r from-purple-50/90 via-indigo-50/90 to-purple-50/90 border border-purple-200/90 rounded-2xl flex flex-wrap items-center justify-between gap-2.5">
+                    <div className="flex items-center gap-2">
+                      <Sparkles size={16} className="text-purple-600 shrink-0" />
+                      <span className="text-xs font-bold text-slate-800">Carga Rápida de FAQs & Reseñas:</span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      <button
+                        type="button"
+                        onClick={handleLoadFaqsPreset}
+                        className="px-2.5 py-1 bg-white hover:bg-purple-600 hover:text-white border border-purple-200 text-purple-800 rounded-lg text-[11px] font-bold transition-all shadow-xs cursor-pointer"
+                      >
+                        ⚡ 4 FAQs Reales de Cusco
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleLoadTestimonialsPreset}
+                        className="px-2.5 py-1 bg-white hover:bg-purple-600 hover:text-white border border-purple-200 text-purple-800 rounded-lg text-[11px] font-bold transition-all shadow-xs cursor-pointer"
+                      >
+                        ⚡ 3 Reseñas 5 Estrellas
+                      </button>
+                    </div>
+                  </div>
+
                   {/* SECCIÓN PREGUNTAS FRECUENTES */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -1270,7 +1585,7 @@ function DemoPreviewContent() {
                       <button
                         type="button"
                         onClick={handleAddFaq}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-all cursor-pointer shadow-xs"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-all cursor-pointer shadow-xs active:scale-95"
                       >
                         <Plus size={14} />
                         <span>Añadir Pregunta</span>
@@ -1294,7 +1609,7 @@ function DemoPreviewContent() {
                               <button
                                 type="button"
                                 onClick={() => handleRemoveFaq(idx)}
-                                className="text-slate-400 hover:text-rose-600 p-1 rounded-lg"
+                                className="text-slate-400 hover:text-rose-600 p-1 rounded-lg cursor-pointer transition-colors"
                                 title="Eliminar pregunta"
                               >
                                 <Trash2 size={14} />
@@ -1367,7 +1682,7 @@ function DemoPreviewContent() {
                               <button
                                 type="button"
                                 onClick={() => handleRemoveTestimonial(idx)}
-                                className="text-slate-400 hover:text-rose-600 p-1 rounded-lg shrink-0"
+                                className="text-slate-400 hover:text-rose-600 p-1 rounded-lg shrink-0 cursor-pointer transition-colors"
                                 title="Eliminar reseña"
                               >
                                 <Trash2 size={14} />
@@ -1418,7 +1733,49 @@ function DemoPreviewContent() {
                     </button>
                   </div>
 
-                  {/* FOTOS DE GALERÍA */}
+                  {/* BANCO DE FOTOS HD DE CUSCO PARA LA GALERÍA */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                        Banco de Fotos HD de Cusco (1 Clic para Agregar)
+                      </label>
+                      <span className="text-[10px] text-slate-400">Imágenes optimizadas</span>
+                    </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                      {[
+                        { title: 'Machu Picchu', url: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=1200&auto=format&fit=crop' },
+                        { title: 'Laguna Humantay', url: 'https://images.unsplash.com/photo-1589556264800-08ae9e129a8c?q=80&w=1200&auto=format&fit=crop' },
+                        { title: 'Montaña 7 Colores', url: 'https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?q=80&w=1200&auto=format&fit=crop' },
+                        { title: 'Salineras de Maras', url: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1200&auto=format&fit=crop' },
+                        { title: 'Valle Sagrado', url: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1200&auto=format&fit=crop' },
+                        { title: 'Cusco Histórico', url: 'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?q=80&w=1200&auto=format&fit=crop' },
+                      ].map((photo, pIdx) => {
+                        const isAlreadyAdded = editGalleryImages.includes(photo.url);
+                        return (
+                          <div 
+                            key={pIdx} 
+                            className="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-200 text-xs gap-2"
+                          >
+                            <span className="font-semibold text-slate-700 truncate text-[11px]">{photo.title}</span>
+                            <button
+                              type="button"
+                              onClick={() => handleAppendGalleryImage(photo.url)}
+                              disabled={isAlreadyAdded}
+                              className={`px-2 py-0.5 rounded-lg text-[10px] font-bold shrink-0 transition-all ${
+                                isAlreadyAdded 
+                                  ? 'bg-emerald-100 text-emerald-700 cursor-default' 
+                                  : 'bg-blue-600 text-white hover:bg-blue-700 cursor-pointer'
+                              }`}
+                            >
+                              {isAlreadyAdded ? '✓ Agregada' : '+ Agregar'}
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* FOTOS DE GALERÍA (TEXTAREA) */}
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1 flex items-center justify-between">
                       <span>URLs de Fotos de Galería (1 por línea)</span>
@@ -1480,22 +1837,42 @@ function DemoPreviewContent() {
                 </div>
               )}
 
-              {/* Botones de Acción al Pie del Modal */}
-              <div className="border-t border-slate-200 pt-4 flex items-center justify-between gap-3 bg-white sticky bottom-0">
-                <button
-                  type="button"
-                  onClick={() => setIsEditorOpen(false)}
-                  className="px-4 py-2.5 border border-slate-300 text-slate-700 font-bold rounded-xl hover:bg-slate-100 text-xs sm:text-sm cursor-pointer transition-colors"
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="submit"
-                  className="px-6 py-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 text-white font-black rounded-xl text-xs sm:text-sm shadow-lg shadow-blue-600/30 hover:shadow-blue-500/50 cursor-pointer transition-all flex items-center justify-center gap-2"
-                >
-                  <Check size={16} />
-                  <span>Guardar Todos los Cambios</span>
-                </button>
+              {/* Botones de Acción al Pie del Modal con Guardado en Vivo */}
+              <div className="border-t border-slate-200 pt-4 flex flex-col sm:flex-row items-center justify-between gap-3 bg-white sticky bottom-0 z-20">
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsEditorOpen(false)}
+                    className="px-4 py-2.5 border border-slate-300 text-slate-700 font-bold rounded-xl hover:bg-slate-100 text-xs sm:text-sm cursor-pointer transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                  {liveSavedToast && (
+                    <span className="inline-flex items-center gap-1.5 text-xs text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl animate-in fade-in duration-200">
+                      <CheckCheck size={14} className="text-emerald-600" />
+                      <span>¡Cambios aplicados en vivo!</span>
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2.5 w-full sm:w-auto justify-end">
+                  <button
+                    type="button"
+                    onClick={handleApplyLive}
+                    className="px-4 py-2.5 bg-slate-100 hover:bg-blue-50 text-blue-700 border border-blue-200 hover:border-blue-300 font-bold rounded-xl text-xs sm:text-sm cursor-pointer transition-all flex items-center justify-center gap-2 active:scale-95"
+                    title="Actualizar la previsualización sin cerrar el modal"
+                  >
+                    <Eye size={15} />
+                    <span>Aplicar en Vivo</span>
+                  </button>
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 text-white font-black rounded-xl text-xs sm:text-sm shadow-lg shadow-blue-600/30 hover:shadow-blue-500/50 cursor-pointer transition-all flex items-center justify-center gap-2 active:scale-95"
+                  >
+                    <CheckCheck size={16} />
+                    <span>Guardar y Cerrar</span>
+                  </button>
+                </div>
               </div>
 
             </form>
