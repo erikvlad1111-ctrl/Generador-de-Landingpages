@@ -1569,6 +1569,21 @@ export default function TourSupportAndFaqs({
                 </div>
               );
             })}
+
+            {/* CTA para hacer una pregunta si el turista tiene dudas adicionales */}
+            <div className="pt-4 text-center">
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab('forum');
+                  setShowNewQuestionModal(true);
+                }}
+                className={`inline-flex items-center gap-2 px-6 py-3 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-md hover:scale-105 active:scale-95 cursor-pointer ${themeButtonPrimary}`}
+              >
+                <Plus size={16} />
+                <span>{st.newQuestionBtn}</span>
+              </button>
+            </div>
           </div>
         )}
 

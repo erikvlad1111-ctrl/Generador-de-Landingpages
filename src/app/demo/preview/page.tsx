@@ -233,18 +233,49 @@ function DemoPreviewContent() {
   };
 
   const handleAddFaq = () => {
-    setEditFaqs(prev => [
-      ...prev,
-      { q: '¿Pregunta frecuente sobre el tour?', a: 'Respuesta detallada con información clara y precisa.' }
-    ]);
+    setEditFaqs(prev => {
+      const current = Array.isArray(prev) ? prev : [];
+      return [
+        ...current,
+        { 
+          q: `¿Pregunta Frecuente #${current.length + 1}?`, 
+          a: '' 
+        }
+      ];
+    });
   };
 
   const handleUpdateFaq = (index: number, field: keyof FAQItem, value: string) => {
-    setEditFaqs(prev => prev.map((item, i) => i === index ? { ...item, [field]: value } : item));
+    setEditFaqs(prev => (Array.isArray(prev) ? prev : []).map((item, i) => i === index ? { ...item, [field]: value } : item));
   };
 
   const handleRemoveFaq = (index: number) => {
-    setEditFaqs(prev => prev.filter((_, i) => i !== index));
+    setEditFaqs(prev => (Array.isArray(prev) ? prev : []).filter((_, i) => i !== index));
+  };
+
+  const handleMoveFaq = (index: number, direction: 'up' | 'down') => {
+    setEditFaqs(prev => {
+      const current = Array.isArray(prev) ? [...prev] : [];
+      const targetIndex = direction === 'up' ? index - 1 : index + 1;
+      if (targetIndex < 0 || targetIndex >= current.length) return prev;
+      const temp = current[index];
+      current[index] = current[targetIndex];
+      current[targetIndex] = temp;
+      return current;
+    });
+  };
+
+  const handleDuplicateFaq = (index: number) => {
+    setEditFaqs(prev => {
+      const current = Array.isArray(prev) ? [...prev] : [];
+      const item = current[index];
+      if (!item) return prev;
+      current.splice(index + 1, 0, {
+        q: `${item.q} (Copia)`,
+        a: item.a
+      });
+      return current;
+    });
   };
 
   const handleLoadFaqsPreset = () => {
@@ -257,18 +288,21 @@ function DemoPreviewContent() {
   };
 
   const handleAddTestimonial = () => {
-    setEditTestimonials(prev => [
-      ...prev,
-      { name: 'Viajero Feliz', origin: 'Madrid, España', comment: '¡Una experiencia inolvidable! Excelente organización y atención.', rating: 5 }
-    ]);
+    setEditTestimonials(prev => {
+      const current = Array.isArray(prev) ? prev : [];
+      return [
+        ...current,
+        { name: 'Nuevo Viajero', origin: 'Madrid, España', comment: '¡Excelente tour y servicio excepcional!', rating: 5 }
+      ];
+    });
   };
 
   const handleUpdateTestimonial = (index: number, field: keyof TestimonialItem, value: any) => {
-    setEditTestimonials(prev => prev.map((item, i) => i === index ? { ...item, [field]: value } : item));
+    setEditTestimonials(prev => (Array.isArray(prev) ? prev : []).map((item, i) => i === index ? { ...item, [field]: value } : item));
   };
 
   const handleRemoveTestimonial = (index: number) => {
-    setEditTestimonials(prev => prev.filter((_, i) => i !== index));
+    setEditTestimonials(prev => (Array.isArray(prev) ? prev : []).filter((_, i) => i !== index));
   };
 
   const handleLoadTestimonialsPreset = () => {
@@ -1573,6 +1607,25 @@ function DemoPreviewContent() {
                     </div>
                   </div>
 
+                  {/* Aviso de Visibilidad de Nivel */}
+                  {editTier !== 'advance' && (
+                    <div className="p-3 bg-amber-50 border border-amber-200 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs text-amber-900">
+                      <div className="flex items-center gap-2">
+                        <AlertCircle size={16} className="text-amber-600 shrink-0" />
+                        <span>
+                          Tu landing está actualmente en nivel <strong>{editTier.toUpperCase()}</strong>. Los acordeones de FAQs se muestran en la web en el nivel <strong>Advance</strong>.
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setEditTier('advance')}
+                        className="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold text-[11px] shrink-0 transition-colors cursor-pointer self-start sm:self-auto"
+                      >
+                        ⚡ Cambiar a Advance
+                      </button>
+                    </div>
+                  )}
+
                   {/* SECCIÓN PREGUNTAS FRECUENTES */}
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -1593,37 +1646,117 @@ function DemoPreviewContent() {
                     </div>
 
                     {editFaqs.length === 0 ? (
-                      <p className="text-xs text-slate-400 italic">No hay preguntas registradas.</p>
+                      <div className="text-center py-8 border-2 border-dashed border-slate-200 rounded-2xl p-6 bg-slate-50/50">
+                        <HelpCircle size={28} className="mx-auto text-slate-300 mb-2" />
+                        <p className="text-xs font-bold text-slate-700">No hay preguntas registradas</p>
+                        <p className="text-[11px] text-slate-400 mb-3">Añade preguntas frecuentes o carga los presets sugeridos.</p>
+                        <div className="flex justify-center gap-2">
+                          <button
+                            type="button"
+                            onClick={handleLoadFaqsPreset}
+                            className="px-3.5 py-1.5 bg-purple-600 text-white rounded-xl text-xs font-bold hover:bg-purple-700 cursor-pointer"
+                          >
+                            ⚡ Cargar 4 FAQs Reales
+                          </button>
+                          <button
+                            type="button"
+                            onClick={handleAddFaq}
+                            className="px-3.5 py-1.5 bg-blue-600 text-white rounded-xl text-xs font-bold hover:bg-blue-700 cursor-pointer"
+                          >
+                            + Añadir Primera Pregunta
+                          </button>
+                        </div>
+                      </div>
                     ) : (
                       <div className="space-y-3">
                         {editFaqs.map((faq, idx) => (
-                          <div key={idx} className="p-3.5 rounded-2xl border border-slate-200 bg-slate-50/70 space-y-2">
+                          <div key={idx} className="p-3.5 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-slate-50 transition-colors space-y-2.5 shadow-2xs">
                             <div className="flex items-center justify-between gap-2">
+                              <div className="flex items-center gap-2">
+                                <span className="text-[10px] font-black uppercase tracking-wider bg-purple-100 text-purple-700 px-2.5 py-0.5 rounded-md border border-purple-200">
+                                  FAQ #{idx + 1}
+                                </span>
+                                <div className="flex items-center gap-0.5 bg-white border border-slate-200 rounded-lg p-0.5 shadow-2xs">
+                                  <button
+                                    type="button"
+                                    onClick={() => handleMoveFaq(idx, 'up')}
+                                    disabled={idx === 0}
+                                    className={`p-1 rounded text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-colors ${idx === 0 ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'}`}
+                                    title="Subir pregunta"
+                                  >
+                                    <ChevronUp size={13} />
+                                  </button>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleMoveFaq(idx, 'down')}
+                                    disabled={idx === editFaqs.length - 1}
+                                    className={`p-1 rounded text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition-colors ${idx === editFaqs.length - 1 ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'}`}
+                                    title="Bajar pregunta"
+                                  >
+                                    <ChevronDown size={13} />
+                                  </button>
+                                </div>
+                              </div>
+
+                              <div className="flex items-center gap-1">
+                                <button
+                                  type="button"
+                                  onClick={() => handleDuplicateFaq(idx)}
+                                  className="text-slate-400 hover:text-blue-600 p-1.5 rounded-lg hover:bg-blue-50 transition-colors cursor-pointer"
+                                  title="Duplicar pregunta"
+                                >
+                                  <Copy size={13} />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleRemoveFaq(idx)}
+                                  className="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition-colors cursor-pointer"
+                                  title="Eliminar pregunta"
+                                >
+                                  <Trash2 size={13} />
+                                </button>
+                              </div>
+                            </div>
+
+                            <div>
+                              <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">
+                                Pregunta
+                              </label>
                               <input
                                 type="text"
                                 value={faq.q}
                                 onChange={(e) => handleUpdateFaq(idx, 'q', e.target.value)}
-                                className="flex-1 bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold focus:ring-2 focus:ring-blue-500 outline-none"
-                                placeholder="¿Pregunta frecuente?"
+                                className="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                                placeholder="Ej. ¿Qué incluye el boleto o recojo?"
                               />
-                              <button
-                                type="button"
-                                onClick={() => handleRemoveFaq(idx)}
-                                className="text-slate-400 hover:text-rose-600 p-1 rounded-lg cursor-pointer transition-colors"
-                                title="Eliminar pregunta"
-                              >
-                                <Trash2 size={14} />
-                              </button>
                             </div>
-                            <textarea
-                              rows={2}
-                              value={faq.a}
-                              onChange={(e) => handleUpdateFaq(idx, 'a', e.target.value)}
-                              className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
-                              placeholder="Respuesta detallada con información clara..."
-                            />
+
+                            <div>
+                              <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">
+                                Respuesta Detallada
+                              </label>
+                              <textarea
+                                rows={2}
+                                value={faq.a}
+                                onChange={(e) => handleUpdateFaq(idx, 'a', e.target.value)}
+                                className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                                placeholder="Escribe aquí la respuesta oficial y clara para los turistas..."
+                              />
+                            </div>
                           </div>
                         ))}
+
+                        {/* Botón al pie de la lista de preguntas para añadir con 1 clic */}
+                        <div className="pt-1 text-center">
+                          <button
+                            type="button"
+                            onClick={handleAddFaq}
+                            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold text-blue-700 bg-blue-50 hover:bg-blue-100 border border-blue-200 transition-all cursor-pointer shadow-2xs active:scale-95"
+                          >
+                            <Plus size={14} />
+                            <span>+ Añadir Otra Pregunta</span>
+                          </button>
+                        </div>
                       </div>
                     )}
                   </div>

@@ -149,6 +149,17 @@ Cada una de las 5 plantillas (`agency-portal`, `boho-nature`, `adventure`, `cult
 - **Solución Paso a Paso:**
   1. En `src/app/demo/preview/page.tsx`, agrandar el modal a `max-w-6xl max-h-[95vh] h-[92vh]`.
   2. Reemplazar la barra de pestañas horizontal por una cuadrícula responsive (`grid grid-cols-2 xs:grid-cols-4 lg:grid-cols-8 gap-1.5 sm:gap-2`) para que las 8 pestañas (destacando la #6 de Itinerario) estén 100% visibles simultáneamente.
-  3. En `AgencyPortalTemplate.tsx`, renderizar la sección `#itinerario` con línea de tiempo ejecutiva para planes Pro/Advance cuando `data.itinerary` contenga días o paradas.
-  4. En `BohoTemplate.tsx`, renderizar la sección `#itinerario` con estilo bitácora / polaroid aesthetic para planes Pro/Advance.
+### Error 13: Botón de añadir preguntas con respuesta no percibida o estado vacío sin controles directos
+- **Síntoma / Mensaje de Error:** Al hacer clic en "Añadir Pregunta" en la pestaña de FAQs del editor, el usuario percibía que el botón no funcionaba.
+- **Causa Raíz:**
+  1. La función `handleAddFaq` anexaba la pregunta al final del array con títulos idénticos (`¿Pregunta frecuente sobre el tour?`), quedando fuera del campo de visión en pantallas medianas sin hacer scroll hacia abajo.
+  2. Si el array de FAQs estaba vacío (`editFaqs.length === 0`), solo se mostraba un texto informativo sin botón de acción de creación rápida.
+  3. No existía un botón al pie de la lista de FAQs para añadir otra pregunta inmediatamente tras completar la anterior.
+  4. La visualización de FAQs en la web turística está vinculada por regla de negocio al nivel `Advance`; si la landing estaba en un nivel inferior (Basic o Pro), el usuario editaba FAQs sin verlas reflejadas en la página ni recibir feedback explicativo en la pestaña.
+- **Solución Paso a Paso:**
+  1. En `src/app/demo/preview/page.tsx`, actualizar `handleAddFaq` para generar títulos indexados correlativos (`¿Pregunta Frecuente #${N}?`) con estado seguro ante arrays nulos.
+  2. Agregar controles de reordenamiento (▲/▼), duplicación (`Copy`) y eliminación (`Trash2`) a cada tarjeta de FAQ.
+  3. Proveer botones de acción primarios tanto en el estado vacío ("+ Añadir Primera Pregunta") como al pie de la lista ("+ Añadir Otra Pregunta").
+  4. Incorporar un banner de advertencia contextual de nivel en la pestaña de FAQs con botón de un clic para cambiar instantáneamente la landing al nivel `Advance`.
+  5. En `TourSupportAndFaqs.tsx`, añadir un botón CTA al final del acordeón de preguntas frecuentes oficiales para permitir a los visitantes registrar nuevas consultas comunitarias.
 
