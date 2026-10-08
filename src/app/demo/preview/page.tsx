@@ -918,13 +918,14 @@ function DemoPreviewContent() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1.5">
-                        <Layers size={14} className="text-blue-600" /> Plantilla Visual (5 Diseños)
+                        <Layers size={14} className="text-blue-600" /> Plantilla Visual (6 Diseños)
                       </label>
                       <select
                         value={editTemplate}
                         onChange={(e) => setEditTemplate(e.target.value as TemplateType)}
                         className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm bg-white font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none"
                       >
+                        <option value="emerald-explorer">🌲 Diseño 6 — Emerald Explorer (NavikX Style)</option>
                         <option value="agency-portal">🔥 Diseño 1 (Portal Oficial de Agencia)</option>
                         <option value="adventure">Trek & Aventura (Trekking y Alta Montaña)</option>
                         <option value="premium">Premium Luxury (Colección Exclusiva VIP)</option>

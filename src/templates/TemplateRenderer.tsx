@@ -5,6 +5,7 @@ import PremiumTemplate from './PremiumTemplate';
 import CulturalTemplate from './CulturalTemplate';
 import BohoTemplate from './BohoTemplate';
 import AgencyPortalTemplate from './AgencyPortalTemplate';
+import ModernEmeraldTemplate from './ModernEmeraldTemplate';
 
 interface TemplateRendererProps {
   data: LandingData;
@@ -14,6 +15,8 @@ interface TemplateRendererProps {
 
 export default function TemplateRenderer({ data, isLive = false, viewMode = 'desktop' }: TemplateRendererProps) {
   switch (data.template) {
+    case 'emerald-explorer':
+      return <ModernEmeraldTemplate data={data} isLive={isLive} viewMode={viewMode} />;
     case 'agency-portal':
       return <AgencyPortalTemplate data={data} isLive={isLive} viewMode={viewMode} />;
     case 'premium':

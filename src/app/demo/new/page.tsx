@@ -9,7 +9,7 @@ import {
   Globe, DollarSign, Clock, User, Phone, 
   Check, Zap, Eye, CheckCircle2, MapPin,
   Shield, Award, Mountain, Users, Languages, CheckSquare, Square,
-  Plus, Trash2, XCircle, Backpack, ShieldCheck, Share2, Calendar,
+  Plus, Trash2, XCircle, Backpack, ShieldCheck, Share2, Calendar, Search,
   Star, ArrowRight, Camera, Crown, ChevronDown, Layers, Navigation, Landmark,
   HelpCircle, MessageSquare, Quote, AlertCircle, Image as ImageIcon, SlidersHorizontal, ChevronUp, Copy
 } from 'lucide-react';
@@ -138,6 +138,59 @@ const PRESET_TOURS = [
     tier: 'advance' as PlanTier,
     imageIndex: 0,
     description: 'Portal completo de agencia turística con catálogo de excursiones, métricas de satisfacción, itinerarios multidía y atención personalizada.'
+  },
+  {
+    id: 'emerald-explorer-navikx',
+    label: '🌲 Diseño 6 (Emerald Explorer)',
+    name: 'Live Your Adventure — Expediciones & Trekking en Cusco',
+    destination: 'Machu Picchu, Salkantay & Rutas Exclusivas',
+    guideName: 'Carlos Mendoza',
+    guideCert: 'Licenciado DIRCETUR & Explorador Senior',
+    guideLanguages: 'Español, Inglés y Francés',
+    whatsapp: '+51984123456',
+    price: '$350 USD',
+    duration: '4 Días / 3 Noches',
+    difficulty: 'Moderada',
+    altitude: '2,430 msnm - 4,630 msnm',
+    groupType: 'Grupos Reducidos & Privados VIP',
+    targetAudience: 'Aventureros, Creadores de Contenido y Parejas',
+    aiTone: 'aventurero',
+    includedServices: [
+      'Transporte turístico privado 4x4 climatizado',
+      'Boletos preferenciales de tren y accesos oficiales',
+      'Guía oficial bilingüe DIRCETUR en todas las rutas',
+      'Monitoreo médico 24/7 con balón de oxígeno a bordo',
+      'Alimentación gourmet andina y degustaciones de café'
+    ],
+    notIncluded: [
+      'Vuelos comerciales internacionales o domésticos',
+      'Propinas voluntarias para guías y arrieros',
+      'Seguro médico personal de viaje de alta montaña'
+    ],
+    whatToBring: [
+      'Pasaporte original físico vigente',
+      'Ropa térmica en capas y cortavientos',
+      'Calzado de trekking con tracción impermeable',
+      'Lentes con protección UV400 y bloqueador solar'
+    ],
+    trustBadges: [
+      'Licencia Oficial DIRCETUR Cusco',
+      'Sello Internacional Safe Travels',
+      'Agencia Formal RUC 20 Verificado',
+      'Guía Colegiado Bilingüe',
+      'Balón de Oxígeno & Botiquín de Altura'
+    ],
+    itinerary: [
+      { step: 'Día 1', title: 'Valle Sagrado & Aclimatación Escénica', desc: 'Recorrido por miradores andinos con almuerzo campestre orgánico y pernocte en domos.' },
+      { step: 'Día 2', title: 'Ascenso al Abra Escénica & Fotografía', desc: 'Caminata a ritmo personalizado guiada por expertos con postales panorámicas del nevado sagrado.' },
+      { step: 'Día 3', title: 'Amanecer en Machu Picchu Santuario', desc: 'Acceso preferente con historiador oficial y tiempo para capturar postales sin multitudes.' }
+    ],
+    objective: 'both' as ObjectiveType,
+    template: 'emerald-explorer' as TemplateType,
+    language: 'es' as LanguageType,
+    tier: 'advance' as PlanTier,
+    imageIndex: 0,
+    description: 'Estilo Deep Forest Teal con Bento Grid, buscador flotante píldora, métricas de viajeros y microanimaciones de ultralujo.'
   },
   {
     id: 'salkantay',
@@ -512,7 +565,7 @@ export default function NewLandingDemo() {
     if (typeof window !== 'undefined') {
       const searchParams = new URLSearchParams(window.location.search);
       const qTemplate = searchParams.get('template') as TemplateType;
-      if (qTemplate && ['agency-portal', 'adventure', 'premium', 'cultural', 'boho-nature'].includes(qTemplate)) {
+      if (qTemplate && ['agency-portal', 'adventure', 'premium', 'cultural', 'boho-nature', 'emerald-explorer'].includes(qTemplate)) {
         setTemplate(qTemplate);
         const matchingPreset = PRESET_TOURS.find(p => p.template === qTemplate);
         if (matchingPreset) {
@@ -553,6 +606,81 @@ export default function NewLandingDemo() {
   const [showAdvancedCopy, setShowAdvancedCopy] = useState(false);
   const [heroBadge, setHeroBadge] = useState('');
   const [heroCta, setHeroCta] = useState('');
+
+  // Selector de Modo: Express con IA vs Modo Completo Manual
+  const [creationMode, setCreationMode] = useState<'express' | 'full'>('full');
+  const [magicToast, setMagicToast] = useState(false);
+  const [isAutocompleting, setIsAutocompleting] = useState(false);
+
+  const handleMagicAiAutocomplete = () => {
+    setIsAutocompleting(true);
+    setTimeout(() => {
+      const tourQuery = (name || destination || '').toLowerCase();
+      let matchedDest = destination || 'Machu Picchu & Cusco';
+      let matchedDesc = 'Una experiencia exclusiva diseñada para quienes valoran la autenticidad, la gastronomía andina y el acceso preferencial sin multitudes.';
+      let matchedDuration = duration || '4 Días / 3 Noches';
+      let matchedAltitude = altitude || '3,400 msnm';
+      let matchedDifficulty = difficulty || 'Moderada';
+
+      if (tourQuery.includes('salkantay')) {
+        matchedDest = 'Machu Picchu & Cordillera Vilcabamba';
+        matchedAltitude = '4,630 msnm (Paso Salkantay)';
+        matchedDifficulty = 'Moderada - Alta';
+        matchedDuration = '5 Días / 4 Noches';
+        matchedDesc = 'Un trekking legendario de alta montaña cruzando glaciares sagrados, ceja de selva y plantaciones de café hasta la ciudadela inca.';
+      } else if (tourQuery.includes('humantay')) {
+        matchedDest = 'Laguna Humantay & Soraypampa';
+        matchedAltitude = '4,200 msnm';
+        matchedDifficulty = 'Moderada';
+        matchedDuration = 'Full Day';
+        matchedDesc = 'Caminata escénica hacia una de las lagunas turquesas más deslumbrantes de los Andes, rodeada de glaciares imponentes.';
+      } else if (tourQuery.includes('7 colores') || tourQuery.includes('vinicunca') || tourQuery.includes('rainbow')) {
+        matchedDest = 'Montaña de 7 Colores (Vinicunca)';
+        matchedAltitude = '5,036 msnm';
+        matchedDifficulty = 'Exigente / Alta Montaña';
+        matchedDuration = 'Full Day (04:30 - 17:00)';
+        matchedDesc = 'Asciende a uno de los paisajes geológicos más asombrosos del planeta con asistencia médica preventiva y paradas fotográficas exclusivas.';
+      } else if (tourQuery.includes('valle') || tourQuery.includes('maras') || tourQuery.includes('moray')) {
+        matchedDest = 'Valle Sagrado de los Incas';
+        matchedAltitude = '2,870 msnm';
+        matchedDifficulty = 'Fácil (Familiar / Sin esfuerzo)';
+        matchedDuration = 'Full Day Confort';
+        matchedDesc = 'Exploración relajada por las terrazas agrícolas de Moray, las salineras de Maras y las fortalezas megalíticas incas.';
+      } else if (tourQuery.includes('city') || tourQuery.includes('ruinas') || tourQuery.includes('sacsayhuaman')) {
+        matchedDest = 'Cusco Histórico & Sacsayhuamán';
+        matchedAltitude = '3,400 msnm';
+        matchedDifficulty = 'Fácil (Caminata urbana)';
+        matchedDuration = 'Media Jornada (4 Horas)';
+        matchedDesc = 'Inmersión histórica y arqueológica por los templos sagrados incas y calles coloniales acompañados de un historiador colegiado.';
+      }
+
+      setDestination(matchedDest);
+      setDescription(matchedDesc);
+      setDuration(matchedDuration);
+      setAltitude(matchedAltitude);
+      setDifficulty(matchedDifficulty);
+      setItinerary([
+        { step: 'Fase 1', title: 'Recojo en Hotel & Traslado Escénico', desc: `Transporte privado climatizado con amenidades a bordo hacia la ruta de ${matchedDest}.` },
+        { step: 'Fase 2', title: 'Exploración Guiada & Tiempo para Fotografías', desc: `Recorrido personalizado guiado por ${guideName || 'especialista oficial'} con datos históricos y asistencia de altitud.` },
+        { step: 'Fase 3', title: 'Almuerzo Campestre & Retorno a Cusco', desc: 'Degustación de gastronomía andina y traslado de retorno seguro hacia tu alojamiento.' }
+      ]);
+      setFaqs([
+        { q: `¿Qué incluye el tour ${name || 'programado'}?`, a: 'Incluye transporte turístico privado, guiado oficial colegiado bilingüe, entradas oficiales y asistencia permanente con oxígeno.' },
+        { q: '¿Cómo prepararme para la altitud en esta ruta?', a: `Alcanzamos ${matchedAltitude}. Recomendamos una jornada previa de aclimatación, hidratación y mate de coca.` },
+        { q: '¿Cómo aseguro mi lugar y reserva?', a: 'Puedes confirmar tu reserva de forma inmediata a través de WhatsApp o mediante el formulario de cotización.' },
+        { q: '¿Qué sucede si hay mal tiempo?', a: 'Monitoreamos reportes meteorológicos y reprogramamos sin costo adicional para garantizar tu seguridad.' }
+      ]);
+      setTestimonials([
+        { name: 'Sarah & Mark Davis', origin: 'California, USA', rating: 5, comment: `Outstanding experience with ${guideName}! Superb organization, safe driving and breathtaking views.` },
+        { name: 'Alejandro y Carmen', origin: 'Madrid, España', rating: 5, comment: 'La mejor experiencia de nuestro viaje a Perú. Todo a tiempo, con mucha amabilidad y seguridad total.' },
+        { name: 'Sophie Laurent', origin: 'París, Francia', rating: 5, comment: 'Une journée magique. Guide très professionnel, matériel au top et des souvenirs plein la tête !' }
+      ]);
+
+      setIsAutocompleting(false);
+      setMagicToast(true);
+      setTimeout(() => setMagicToast(false), 3500);
+    }, 600);
+  };
 
   // Handlers para FAQs
   const handleAddFaq = () => {
@@ -870,12 +998,74 @@ export default function NewLandingDemo() {
                 Generador Inteligente de Landings con IA
               </h1>
               <p className="text-slate-500 text-xs sm:text-sm mt-0.5">
-                Completa los datos técnicos del tour. La IA generará los copys persuasivos y estructurará la página lista para publicar.
+                Elige si deseas que la IA complete todo automáticamente o si prefieres configurar la ficha técnica manualmente.
               </p>
             </div>
           </div>
+
+          {/* Botón Mágico de Autocompletado con IA */}
+          <div className="flex items-center gap-2.5 shrink-0">
+            <button
+              type="button"
+              onClick={handleMagicAiAutocomplete}
+              disabled={isAutocompleting}
+              className="bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white px-4 sm:px-5 py-2.5 rounded-2xl font-black text-xs transition-all shadow-md shadow-purple-500/20 hover:scale-102 active:scale-98 cursor-pointer flex items-center gap-2"
+              title="Analiza el tour actual y autocompleta descripción, itinerario, FAQs y testimonios con IA"
+            >
+              <Sparkles size={15} className={isAutocompleting ? "animate-spin" : ""} />
+              <span>{isAutocompleting ? 'Autocompletando...' : '✨ Autocompletar con IA'}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* SELECTOR DE MODO DE CREACIÓN: EXPRESS VS MANUAL COMPLETO */}
+        <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-center p-1 bg-slate-100 rounded-2xl border border-slate-200/80 w-full sm:w-auto">
+            <button
+              type="button"
+              onClick={() => setCreationMode('express')}
+              className={`flex-1 sm:flex-initial px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                creationMode === 'express'
+                  ? 'bg-blue-600 text-white shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <Zap size={14} className={creationMode === 'express' ? "text-amber-300" : "text-slate-400"} />
+              <span>⚡ Modo Express IA (Rápido)</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setCreationMode('full')}
+              className={`flex-1 sm:flex-initial px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+                creationMode === 'full'
+                  ? 'bg-white text-slate-900 shadow-sm border border-slate-200/70'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <FileText size={14} className={creationMode === 'full' ? "text-blue-600" : "text-slate-400"} />
+              <span>🛠️ Modo Ficha Completa (Manual)</span>
+            </button>
+          </div>
+
+          <span className="text-xs text-slate-500">
+            {creationMode === 'express' 
+              ? '⚡ Modo Express: Solo ingresa lo esencial y la IA redactará el resto automáticamente.'
+              : '🛠️ Modo Completo: Control total sobre los 13 pasos (itinerario, FAQs, fotos y testimonios).'}
+          </span>
         </div>
       </div>
+
+      {/* Toast Flotante cuando la IA autocompleta el formulario */}
+      {magicToast && (
+        <div className="fixed top-24 right-6 z-50 bg-gradient-to-r from-purple-700 to-indigo-700 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-in slide-in-from-top-3 duration-300 border border-purple-400/40">
+          <Sparkles size={20} className="text-amber-300 shrink-0" />
+          <div>
+            <p className="font-black text-xs">✨ ¡Formulario Autocompletado con IA con Éxito!</p>
+            <p className="text-[11px] text-purple-200">Se han redactado la descripción, itinerario por etapas, FAQs y testimonios para {destination}.</p>
+          </div>
+        </div>
+      )}
 
       {/* 2. MAIN WORKSPACE: FORM COLUMN (LEFT 7 COLS) + REALTIME PHONE MOCKUP (RIGHT 5 COLS) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -940,6 +1130,14 @@ export default function NewLandingDemo() {
                   icon: '🏛️',
                   badge: 'Heritage & History',
                   badgeClass: 'bg-amber-700 text-white'
+                },
+                { 
+                  id: 'emerald-explorer', 
+                  name: 'Diseño 6 (Emerald Explorer)', 
+                  desc: 'Deep Teal oscuro con Bento Grid, buscador flotante tipo píldora, métricas y glow esmeralda.', 
+                  icon: '🌲',
+                  badge: 'NavikX Tech Style',
+                  badgeClass: 'bg-emerald-600 text-white'
                 }
               ].map((t) => {
                 const isSelected = template === t.id;
@@ -1661,8 +1859,73 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 7: PERFIL DEL GUÍA TURÍSTICO & SERVICIOS INCLUIDOS */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+          {/* BANNER INFORMATIVO: MODO EXPRESS CON IA */}
+          {creationMode === 'express' && (
+            <div className="bg-gradient-to-br from-indigo-950 via-slate-900 to-purple-950 text-white rounded-3xl p-6 sm:p-7 border border-purple-500/30 shadow-xl space-y-4">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center shrink-0 shadow-lg shadow-purple-500/30">
+                  <Sparkles size={24} className="text-amber-300 animate-pulse" />
+                </div>
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-amber-300 bg-amber-400/20 px-2.5 py-0.5 rounded-full border border-amber-400/30">
+                      ⚡ Modo Express con IA Activado
+                    </span>
+                    <span className="text-[11px] text-purple-200 font-semibold">Generación Instantánea</span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-black text-white tracking-tight">
+                    La Inteligencia Artificial redactará los módulos restantes automáticamente
+                  </h3>
+                  <p className="text-xs text-purple-200 leading-relaxed">
+                    Basándose en tu tour <strong>{name || 'seleccionado'}</strong> para <strong>{destination || 'Cusco'}</strong> ({price || 'tarifa configurada'}), nuestro motor de IA generará en segundos:
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1 text-xs">
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10">
+                  <span className="block text-xl mb-1">🗺️</span>
+                  <span className="font-bold text-white text-[11px] block">Itinerario por Etapas</span>
+                  <span className="text-[10px] text-purple-200 leading-tight block mt-0.5">Cronograma de actividades y paradas clave</span>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10">
+                  <span className="block text-xl mb-1">🎒</span>
+                  <span className="font-bold text-white text-[11px] block">Mochila & Servicios</span>
+                  <span className="text-[10px] text-purple-200 leading-tight block mt-0.5">Qué llevar y lista de exclusiones transparentes</span>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10">
+                  <span className="block text-xl mb-1">❓</span>
+                  <span className="font-bold text-white text-[11px] block">Preguntas Frecuentes</span>
+                  <span className="text-[10px] text-purple-200 leading-tight block mt-0.5">Respuestas automáticas a dudas turísticas</span>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10">
+                  <span className="block text-xl mb-1">⭐</span>
+                  <span className="font-bold text-white text-[11px] block">Reseñas de Viajeros</span>
+                  <span className="text-[10px] text-purple-200 leading-tight block mt-0.5">Testimonios realistas con alta calificación</span>
+                </div>
+              </div>
+
+              <div className="pt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/15 text-xs">
+                <span className="text-purple-300 text-[11px]">
+                  💡 ¿Prefieres escribir o afinar cada texto manualmente antes de publicar?
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setCreationMode('full')}
+                  className="bg-white/15 hover:bg-white/25 text-white font-black px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer border border-white/20 self-start sm:self-auto"
+                >
+                  <FileText size={13} className="text-amber-300" />
+                  <span>Cambiar a Modo Manual Completo</span>
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* MODO MANUAL: PASOS 7 AL 13 (VISIBLES EN FICHA COMPLETA) */}
+          {creationMode === 'full' && (
+            <>
+              {/* PASO 7: PERFIL DEL GUÍA TURÍSTICO & SERVICIOS INCLUIDOS */}
+              <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                 <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">7</span>
@@ -2375,6 +2638,8 @@ export default function NewLandingDemo() {
               </div>
             )}
           </div>
+          </>
+          )}
 
           {/* Submit Action Bar */}
           <div className="pt-2 flex items-center justify-between gap-4">
@@ -2431,8 +2696,9 @@ export default function NewLandingDemo() {
           {/* Quick Template Switcher Pills */}
           <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 text-[11px] px-0.5">
             {[
-              { id: 'boho-nature', icon: '📷', label: 'Boho' },
+              { id: 'emerald-explorer', icon: '🌲', label: 'Diseño 6' },
               { id: 'agency-portal', icon: '🔥', label: 'Diseño 1' },
+              { id: 'boho-nature', icon: '📷', label: 'Boho' },
               { id: 'premium', icon: '👑', label: 'VIP' },
               { id: 'adventure', icon: '🏔️', label: 'Aventura' },
               { id: 'cultural', icon: '🏛️', label: 'Cultural' }
@@ -2467,7 +2733,9 @@ export default function NewLandingDemo() {
             
             {/* Dynamic Screen View tailored to the chosen Template */}
             <div className={`rounded-[32px] overflow-hidden relative min-h-[580px] max-h-[620px] overflow-y-auto no-scrollbar border flex flex-col justify-between select-none ${
-              template === 'agency-portal'
+              template === 'emerald-explorer'
+                ? 'bg-[#041716] text-white border-emerald-500/30'
+                : template === 'agency-portal'
                 ? 'bg-stone-900 text-white border-orange-500/30'
                 : template === 'boho-nature'
                 ? 'bg-[#FAF7F2] text-stone-900 border-[#C86D51]/30'
@@ -2477,6 +2745,240 @@ export default function NewLandingDemo() {
                 ? 'bg-[#FFFDF9] text-stone-900 border-amber-300/60'
                 : 'bg-white text-slate-800 border-slate-200'
             }`}>
+
+              {/* 0. PLANTILLA DISEÑO 6: EMERALD EXPLORER (NAVIKX DEEP TEAL BENTO) */}
+              {template === 'emerald-explorer' && (
+                <div className="flex flex-col min-h-full bg-gradient-to-b from-[#061d1b] via-[#041716] to-[#020e0d] text-emerald-50">
+                  {/* Top Bar Navigation */}
+                  <div className="px-3.5 py-2.5 flex items-center justify-between border-b border-emerald-900/50 bg-[#041716]/80 backdrop-blur-md sticky top-0 z-20">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-5 h-5 rounded-lg bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-[10px]">
+                        🌲
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-black tracking-wider text-white block leading-tight">
+                          NavikX <span className="text-emerald-400 font-medium text-[8px]">Tours</span>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-1.5">
+                      {/* Language pills */}
+                      <div className="flex items-center bg-emerald-950/80 rounded-md p-0.5 border border-emerald-800/60">
+                        {selectedLanguages.map(l => (
+                          <button
+                            key={l}
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setLanguage(l);
+                            }}
+                            className={`px-1.5 py-0.5 rounded text-[7px] font-black uppercase transition-all ${
+                              l === language ? 'bg-emerald-500 text-slate-950 shadow-xs' : 'text-emerald-300 hover:text-white'
+                            }`}
+                          >
+                            {l.toUpperCase()}
+                          </button>
+                        ))}
+                      </div>
+
+                      <span className="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-extrabold text-[8px] px-2 py-0.5 rounded-full shadow-sm">
+                        Contact
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Hero Section */}
+                  <div className="p-3.5 space-y-3">
+                    {/* Hero Headline & Subtitle */}
+                    <div className="space-y-1">
+                      <div className="inline-flex items-center gap-1.5 bg-emerald-950/90 border border-emerald-700/60 px-2 py-0.5 rounded-full text-[8px] font-black text-emerald-300">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        Explore. Dream. Discover.
+                      </div>
+                      <h3 className="text-base font-black text-white leading-tight tracking-tight">
+                        Live Your <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-emerald-400">
+                          Adventure.
+                        </span>
+                      </h3>
+                      <p className="text-[9px] text-emerald-200/80 line-clamp-2 leading-relaxed">
+                        Explore breathtaking places and create unforgettable memories around Cusco.
+                      </p>
+                    </div>
+
+                    {/* Featured Hero Image Frame with Local Experts Chip */}
+                    <div className="relative h-44 rounded-2xl overflow-hidden border border-emerald-500/30 shadow-xl shadow-black/60 group">
+                      <Image 
+                        src={activeHeroImg} 
+                        alt="Emerald Explorer Hero" 
+                        fill 
+                        sizes="400px" 
+                        className="object-cover" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-transparent to-black/30" />
+                      
+                      {/* Floating Local Experts Chip */}
+                      <div className="absolute top-2 left-2 bg-[#061d1b]/85 backdrop-blur-md border border-emerald-400/30 px-2 py-1 rounded-xl text-[8px] space-y-0.5 shadow-md">
+                        <div className="flex items-center gap-1 text-emerald-300 font-bold">
+                          <span>📍</span> Local Experts
+                        </div>
+                        <span className="text-[7px] text-emerald-100/70 block">Authentic experiences</span>
+                      </div>
+
+                      {/* Bottom Price Tag on Hero */}
+                      <div className="absolute bottom-2 inset-x-2 flex items-center justify-between">
+                        <span className="bg-emerald-950/90 backdrop-blur-md text-emerald-200 border border-emerald-500/30 text-[9px] font-black px-2 py-0.5 rounded-lg">
+                          {name || 'Live Your Adventure'}
+                        </span>
+                        <span className="bg-emerald-400 text-slate-950 font-black text-[10px] px-2 py-0.5 rounded-lg shadow-sm">
+                          {price || '$350 USD'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Floating Pill Search Bar (Matching Reference Image) */}
+                    <div className="bg-white/10 backdrop-blur-md border border-emerald-400/30 rounded-2xl p-1.5 flex items-center justify-between text-[8px] text-emerald-100 shadow-md">
+                      <div className="flex items-center gap-1 px-1.5 py-0.5 border-r border-white/10 flex-1 truncate">
+                        <MapPin size={9} className="text-emerald-400 shrink-0" />
+                        <span className="truncate">{destination || 'Where to?'}</span>
+                      </div>
+                      <div className="flex items-center gap-1 px-1.5 py-0.5 border-r border-white/10 shrink-0">
+                        <Calendar size={9} className="text-emerald-400" />
+                        <span>{duration || 'Dates'}</span>
+                      </div>
+                      <div className="bg-gradient-to-r from-teal-500 to-emerald-500 text-slate-950 font-black px-2.5 py-1 rounded-xl shrink-0 flex items-center gap-1">
+                        <Search size={9} />
+                        <span>Search</span>
+                      </div>
+                    </div>
+
+                    {/* 3 Bento Benefit Cards (Expert Guides, Tailored, Best Price) */}
+                    <div className="grid grid-cols-3 gap-1.5 text-center text-[8px]">
+                      <div className="bg-[#061d1b]/90 border border-emerald-800/60 p-2 rounded-xl space-y-0.5">
+                        <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 mx-auto flex items-center justify-center text-[10px] mb-1">
+                          🏠
+                        </span>
+                        <span className="font-black text-white block line-clamp-1">Expert Guides</span>
+                        <span className="text-[7px] text-emerald-300/70 block line-clamp-1">Local insights</span>
+                      </div>
+                      <div className="bg-[#061d1b]/90 border border-emerald-800/60 p-2 rounded-xl space-y-0.5">
+                        <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 mx-auto flex items-center justify-center text-[10px] mb-1">
+                          📋
+                        </span>
+                        <span className="font-black text-white block line-clamp-1">Tailored Plans</span>
+                        <span className="text-[7px] text-emerald-300/70 block line-clamp-1">Custom trips</span>
+                      </div>
+                      <div className="bg-[#061d1b]/90 border border-emerald-800/60 p-2 rounded-xl space-y-0.5">
+                        <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 mx-auto flex items-center justify-center text-[10px] mb-1">
+                          🛡️
+                        </span>
+                        <span className="font-black text-white block line-clamp-1">Best Price</span>
+                        <span className="text-[7px] text-emerald-300/70 block line-clamp-1">Top deals</span>
+                      </div>
+                    </div>
+
+                    {/* Popular Destinations Slider */}
+                    <div className="space-y-2 pt-1">
+                      <div className="flex items-center justify-between text-[10px]">
+                        <span className="font-black text-white flex items-center gap-1">
+                          Popular Destinations
+                        </span>
+                        <div className="flex items-center gap-1">
+                          <span className="w-4 h-4 rounded-full bg-emerald-950 border border-emerald-700/60 flex items-center justify-center text-[8px] text-emerald-300">
+                            ‹
+                          </span>
+                          <span className="w-4 h-4 rounded-full bg-emerald-500 text-slate-950 font-bold flex items-center justify-center text-[8px]">
+                            ›
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Destination Card 1 */}
+                      <div className="bg-[#061d1b]/95 border border-emerald-700/60 rounded-2xl overflow-hidden p-2 space-y-2">
+                        <div className="relative h-28 rounded-xl overflow-hidden">
+                          <Image src={activeHeroImg} alt="Popular Destination" fill sizes="300px" className="object-cover" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                          
+                          {/* Rating chip & Heart */}
+                          <div className="absolute top-1.5 inset-x-1.5 flex items-center justify-between">
+                            <span className="bg-black/60 backdrop-blur-md text-amber-300 font-bold text-[8px] px-1.5 py-0.5 rounded-full flex items-center gap-0.5 border border-white/10">
+                              ★ 4.8
+                            </span>
+                            <span className="w-5 h-5 rounded-full bg-black/60 backdrop-blur-md text-emerald-300 flex items-center justify-center text-[9px] border border-white/10">
+                              ♥
+                            </span>
+                          </div>
+
+                          <div className="absolute bottom-1.5 inset-x-2 flex items-baseline justify-between text-white">
+                            <span className="text-[10px] font-black truncate">{destination || 'Machu Picchu & Cusco'}</span>
+                            <span className="text-[10px] font-black text-emerald-300">{price || '$350 USD'}</span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between pt-0.5">
+                          {/* Avatar Stack */}
+                          <div className="flex items-center gap-1 text-[8px] text-emerald-200/80">
+                            <div className="flex -space-x-1.5">
+                              <div className="w-4 h-4 rounded-full bg-amber-400 border border-[#061d1b]" />
+                              <div className="w-4 h-4 rounded-full bg-teal-400 border border-[#061d1b]" />
+                              <div className="w-4 h-4 rounded-full bg-emerald-400 border border-[#061d1b]" />
+                            </div>
+                            <span>236+ Travelers</span>
+                          </div>
+
+                          <div className="bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black text-[9px] px-2.5 py-1 rounded-lg transition-colors flex items-center gap-1">
+                            <span>Explore Now</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Bento Journey Stats (1,250+ / 98%) */}
+                    <div className="grid grid-cols-2 gap-2 pt-1">
+                      <div className="bg-[#061d1b] border border-emerald-800/60 p-2.5 rounded-2xl flex items-center justify-between">
+                        <div>
+                          <span className="text-xs font-black text-white block">1,250+</span>
+                          <span className="text-[8px] text-emerald-300/80 font-semibold block">Happy Travelers</span>
+                        </div>
+                        <span className="w-6 h-6 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-[10px]">
+                          👥
+                        </span>
+                      </div>
+
+                      <div className="bg-[#061d1b] border border-emerald-800/60 p-2.5 rounded-2xl flex items-center justify-between">
+                        <div>
+                          <span className="text-xs font-black text-white block">98%</span>
+                          <span className="text-[8px] text-emerald-300/80 font-semibold block">Positive Reviews</span>
+                        </div>
+                        <span className="w-6 h-6 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-[10px]">
+                          ⭐
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Sticky Bottom Navigation Bar with Coral Button */}
+                  <div className="mt-auto p-2.5 bg-[#031312] border-t border-emerald-900/60 flex items-center justify-between gap-2 text-[9px] sticky bottom-0 z-20">
+                    <div className="flex items-center gap-2 text-emerald-300/80 text-[8px]">
+                      <div>
+                        <span className="font-bold text-white block">50+</span>
+                        <span>Destinos</span>
+                      </div>
+                      <div className="h-4 w-px bg-emerald-900" />
+                      <div>
+                        <span className="font-bold text-white block">4.8 ★</span>
+                        <span>Rating</span>
+                      </div>
+                    </div>
+
+                    <div className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-black px-3.5 py-2 rounded-xl shadow-md flex items-center gap-1 text-[9px] shrink-0">
+                      <span>{objective === 'quote' ? 'Plan Your Trip' : 'Reservar por WhatsApp'}</span>
+                      <ArrowRight size={10} />
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* 1. PLANTILLA DISEÑO 1: PORTAL AGENCIA (VINICUNCA ORANGE) */}
               {template === 'agency-portal' && (
