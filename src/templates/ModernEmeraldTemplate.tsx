@@ -449,23 +449,9 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               <span>{heroBadge}</span>
             </div>
 
-            {/* Titular Masivo */}
+            {/* Titular Masivo en Blanco Puro */}
             <h1 className="text-4xl sm:text-6xl lg:text-6xl font-black text-white tracking-tight leading-[1.08]">
-              {data.name ? (
-                <>
-                  {data.name.split(' ')[0]}{' '}
-                  <span className="bg-gradient-to-r from-emerald-300 via-teal-200 to-emerald-400 bg-clip-text text-transparent">
-                    {data.name.split(' ').slice(1).join(' ') || 'Adventure.'}
-                  </span>
-                </>
-              ) : (
-                <>
-                  Live Your <br />
-                  <span className="bg-gradient-to-r from-emerald-300 via-teal-200 to-emerald-400 bg-clip-text text-transparent">
-                    Adventure.
-                  </span>
-                </>
-              )}
+              {data.name || 'Live Your Adventure — Expediciones & Trekking en Cusco'}
             </h1>
 
             {/* Subtítulo */}

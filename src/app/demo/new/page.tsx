@@ -2798,10 +2798,7 @@ export default function NewLandingDemo() {
                         Explore. Dream. Discover.
                       </div>
                       <h3 className="text-base font-black text-white leading-tight tracking-tight">
-                        Live Your <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-emerald-400">
-                          Adventure.
-                        </span>
+                        {name || 'Live Your Adventure — Expediciones & Trekking en Cusco'}
                       </h3>
                       <p className="text-[9px] text-emerald-200/80 line-clamp-2 leading-relaxed">
                         Explore breathtaking places and create unforgettable memories around Cusco.
