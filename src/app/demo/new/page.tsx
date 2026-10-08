@@ -10,13 +10,70 @@ import {
   Check, Zap, Eye, CheckCircle2, MapPin,
   Shield, Award, Mountain, Users, Languages, CheckSquare, Square,
   Plus, Trash2, XCircle, Backpack, ShieldCheck, Share2, Calendar,
-  Star, ArrowRight, Camera, Crown, ChevronDown, Layers, Navigation, Landmark
+  Star, ArrowRight, Camera, Crown, ChevronDown, Layers, Navigation, Landmark,
+  HelpCircle, MessageSquare, Quote, AlertCircle, Image as ImageIcon, SlidersHorizontal, ChevronUp, Copy
 } from 'lucide-react';
-import { ObjectiveType, TemplateType, LanguageType, ItineraryItem, PlanTier, LandingData, CatalogTourItem } from '@/types/landing';
+import { ObjectiveType, TemplateType, LanguageType, ItineraryItem, PlanTier, LandingData, CatalogTourItem, FAQItem, TestimonialItem } from '@/types/landing';
 import { simulateAiGeneration, saveLandingToStorage } from '@/data/landingStore';
 import { SAMPLE_TOUR_IMAGES } from '@/data/sampleImages';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import CatalogToursEditorModal from '@/components/common/CatalogToursEditorModal';
+
+const DEFAULT_FAQS: FAQItem[] = [
+  {
+    q: '¿Qué incluye exactamente el guiado y servicio?',
+    a: 'Incluye guiado oficial profesional bilingüe, transporte turístico autorizado, asistencia permanente con balón de oxígeno y soporte 24/7.'
+  },
+  {
+    q: '¿Cómo prepararme para la altitud en Cusco?',
+    a: 'Recomendamos descansar las primeras horas, hidratarse con mate de coca o agua, evitar comidas pesadas el primer día y llevar pastillas para la altura.'
+  },
+  {
+    q: '¿Cómo confirmo y pago mi reserva?',
+    a: 'Puedes coordinar fechas y asegurar tu lugar de inmediato mediante WhatsApp con atención directa del counter o guía con confirmación instantánea.'
+  },
+  {
+    q: '¿Qué sucede si hay mal tiempo o cancelaciones?',
+    a: 'Monitoreamos los reportes meteorológicos y reprogramamos sin costo o aplicamos políticas de reembolso flexible según normativa DIRCETUR.'
+  }
+];
+
+const DEFAULT_TESTIMONIALS: TestimonialItem[] = [
+  {
+    name: 'Martín y Claudia Flores',
+    origin: 'Lima, Perú',
+    comment: 'Superó todas nuestras expectativas. La atención del guía y las medidas de seguridad fueron impecables de principio a fin.',
+    rating: 5
+  },
+  {
+    name: 'David & Sarah Miller',
+    origin: 'Austin, Texas (USA)',
+    comment: 'Incredible experience! The landscapes were breathtaking, gear was top-notch and the team was exceptionally caring and punctual.',
+    rating: 5
+  },
+  {
+    name: 'Élodie Laurent',
+    origin: 'Lyon, Francia',
+    comment: 'Une organisation sans faille et des paysages grandioses. Excellente assistance avec l\'oxygène en altitude. Inoubliable !',
+    rating: 5
+  }
+];
+
+const HD_CUSCO_PHOTOS = [
+  { title: 'Machu Picchu Clásico', url: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=1200&auto=format&fit=crop' },
+  { title: 'Laguna Humantay', url: 'https://images.unsplash.com/photo-1589556264800-08ae9e129a8c?q=80&w=1200&auto=format&fit=crop' },
+  { title: 'Montaña 7 Colores', url: 'https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?q=80&w=1200&auto=format&fit=crop' },
+  { title: 'Salineras de Maras', url: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1200&auto=format&fit=crop' },
+  { title: 'Valle Sagrado', url: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1200&auto=format&fit=crop' },
+  { title: 'Cusco Histórico', url: 'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?q=80&w=1200&auto=format&fit=crop' }
+];
+
+const PRESET_GUIDE_AVATARS = [
+  { name: 'Carlos (Lujo/Senior)', url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop' },
+  { name: 'Raúl (Aventura/Trek)', url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop' },
+  { name: 'Lucía (Arqueología/Cultura)', url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=300&auto=format&fit=crop' },
+  { name: 'Camila (Fotografía/Boho)', url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=300&auto=format&fit=crop' }
+];
 
 const AVAILABLE_TRUST_BADGES = [
   'Licencia Oficial DIRCETUR Cusco',
@@ -484,6 +541,78 @@ export default function NewLandingDemo() {
     'Un trekking legendario de alta montaña cruzando nevados imponentes, ceja de selva y plantaciones de café hasta la ciudadela inca de Machu Picchu.'
   );
 
+  // Estados para Módulos Completos (Avatar Guía, Galería HD, FAQs, Testimonios y Copys)
+  const [guideAvatar, setGuideAvatar] = useState<string>(PRESET_GUIDE_AVATARS[1].url);
+  const [galleryImages, setGalleryImages] = useState<string[]>([
+    'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1200&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1200&auto=format&fit=crop'
+  ]);
+  const [customGalleryUrl, setCustomGalleryUrl] = useState('');
+  const [faqs, setFaqs] = useState<FAQItem[]>(DEFAULT_FAQS);
+  const [testimonials, setTestimonials] = useState<TestimonialItem[]>(DEFAULT_TESTIMONIALS);
+  const [showAdvancedCopy, setShowAdvancedCopy] = useState(false);
+  const [heroBadge, setHeroBadge] = useState('');
+  const [heroCta, setHeroCta] = useState('');
+
+  // Handlers para FAQs
+  const handleAddFaq = () => {
+    setFaqs(prev => [
+      ...prev,
+      { q: '¿Nueva pregunta del tour?', a: 'Detalle de la respuesta oficial para resolver las dudas del turista.' }
+    ]);
+  };
+
+  const handleUpdateFaq = (index: number, field: 'q' | 'a', value: string) => {
+    setFaqs(prev => prev.map((f, i) => i === index ? { ...f, [field]: value } : f));
+  };
+
+  const handleRemoveFaq = (index: number) => {
+    setFaqs(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleLoadFaqsPreset = () => {
+    setFaqs(DEFAULT_FAQS);
+  };
+
+  // Handlers para Testimonios
+  const handleAddTestimonial = () => {
+    setTestimonials(prev => [
+      ...prev,
+      { name: 'Nuevo Viajero', origin: 'País / Ciudad', rating: 5, comment: 'Excelente guiado y organización, una experiencia inolvidable.' }
+    ]);
+  };
+
+  const handleUpdateTestimonial = (index: number, field: keyof TestimonialItem, value: any) => {
+    setTestimonials(prev => prev.map((t, i) => i === index ? { ...t, [field]: value } : t));
+  };
+
+  const handleRemoveTestimonial = (index: number) => {
+    setTestimonials(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const handleLoadTestimonialsPreset = () => {
+    setTestimonials(DEFAULT_TESTIMONIALS);
+  };
+
+  // Handlers para Galería
+  const handleToggleGalleryImage = (url: string) => {
+    setGalleryImages(prev => 
+      prev.includes(url) ? prev.filter(img => img !== url) : [...prev, url]
+    );
+  };
+
+  const handleAddCustomGalleryImage = () => {
+    if (!customGalleryUrl.trim()) return;
+    if (!galleryImages.includes(customGalleryUrl.trim())) {
+      setGalleryImages(prev => [...prev, customGalleryUrl.trim()]);
+    }
+    setCustomGalleryUrl('');
+  };
+
+  const handleRemoveGalleryImage = (index: number) => {
+    setGalleryImages(prev => prev.filter((_, i) => i !== index));
+  };
+
   const handleToggleLanguage = (langId: LanguageType) => {
     // En planes Gratuito y Básico el idioma está bloqueado estrictamente a Español
     if (tier === 'free' || tier === 'basic') return;
@@ -615,7 +744,7 @@ export default function NewLandingDemo() {
     setIsGenerating(true);
 
     const otherImages = SAMPLE_TOUR_IMAGES.filter(img => img.url !== activeHeroImg).map(img => img.url);
-    const galleryImages = otherImages.slice(0, 2);
+    const effectiveGalleryImages = galleryImages.length > 0 ? galleryImages : otherImages.slice(0, 3);
 
     let step = 0;
     const interval = setInterval(() => {
@@ -634,6 +763,9 @@ export default function NewLandingDemo() {
         const generated = simulateAiGeneration({
           name,
           guideName,
+          guideCert,
+          guideLanguages,
+          guideAvatar,
           whatsapp,
           price,
           duration,
@@ -645,12 +777,10 @@ export default function NewLandingDemo() {
           languages: finalLanguages,
           tier,
           heroImage: activeHeroImg,
-          galleryImages,
+          galleryImages: effectiveGalleryImages,
           destination,
           altitude,
           groupType,
-          guideCert,
-          guideLanguages,
           includedServices,
           targetAudience,
           itinerary,
@@ -661,7 +791,11 @@ export default function NewLandingDemo() {
           officeHours,
           mapsUrl,
           aiTone,
-          catalogTours: catalogTours
+          catalogTours: catalogTours,
+          faqs: faqs.length > 0 ? faqs : undefined,
+          testimonials: testimonials.length > 0 ? testimonials : undefined,
+          heroBadge: heroBadge.trim() || undefined,
+          heroCta: heroCta.trim() || undefined
         });
         saveLandingToStorage(generated);
         router.push(`/demo/preview?slug=${generated.slug}`);
@@ -1595,6 +1729,59 @@ export default function NewLandingDemo() {
               </div>
             </div>
 
+            {/* Foto o Avatar del Guía Oficial */}
+            <div className="pt-2 border-t border-slate-100 space-y-2.5">
+              <div className="flex items-center justify-between">
+                <label className="block text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                  <User size={14} className="text-blue-500" /> Foto o Avatar del Guía (Genera Confianza Inmediata)
+                </label>
+                <span className="text-[10px] text-slate-400">Presets o URL personalizada</span>
+              </div>
+
+              {/* Presets Rápidos de Avatar */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                {PRESET_GUIDE_AVATARS.map((av, idx) => {
+                  const isAvSelected = guideAvatar === av.url;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setGuideAvatar(av.url)}
+                      className={`flex items-center gap-2 p-2 rounded-xl border text-left transition-all cursor-pointer ${
+                        isAvSelected
+                          ? 'border-blue-600 bg-blue-50/80 ring-2 ring-blue-500/20 shadow-xs'
+                          : 'border-slate-200 hover:border-slate-300 bg-white'
+                      }`}
+                    >
+                      <div className="relative w-8 h-8 rounded-full overflow-hidden shrink-0 border border-slate-200 bg-slate-100">
+                        <Image src={av.url} alt={av.name} fill sizes="32px" className="object-cover" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[10px] font-bold text-slate-800 block truncate">{av.name.split(' ')[0]}</span>
+                        <span className="text-[9px] text-slate-400 block truncate">{av.name.split(' ')[1] || 'Guía'}</span>
+                      </div>
+                      {isAvSelected && <Check size={12} className="text-blue-600 shrink-0" strokeWidth={3} />}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="flex items-center gap-2">
+                <input 
+                  type="url"
+                  value={guideAvatar}
+                  onChange={(e) => setGuideAvatar(e.target.value)}
+                  placeholder="O ingresa la URL de la foto del guía (ej. https://... o /images/...)"
+                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-mono"
+                />
+                {guideAvatar && (
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden shrink-0 border border-slate-300 bg-slate-100">
+                    <img src={guideAvatar} alt="Guía" className="w-full h-full object-cover" />
+                  </div>
+                )}
+              </div>
+            </div>
+
             {/* Included Services Checklist */}
             <div className="pt-2">
               <label className="block text-xs font-bold text-slate-700 mb-2">
@@ -1873,6 +2060,320 @@ export default function NewLandingDemo() {
                 );
               })}
             </div>
+          </div>
+
+          {/* PASO 11: GALERÍA DE FOTOS SECUNDARIAS (HD CUSCO) */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">11</span>
+                Galería de Fotos Secundarias del Tour
+              </label>
+              <span className="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
+                {galleryImages.length} fotos activas
+              </span>
+            </div>
+
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Selecciona las fotos que acompañarán la vitrina visual del tour o el carrusel de imágenes secundarias:
+            </p>
+
+            {/* Banco de Fotos HD de Cusco */}
+            <div>
+              <span className="text-xs font-bold text-slate-800 mb-2 block flex items-center gap-1.5">
+                <Sparkles size={14} className="text-amber-500" /> Banco de Fotos HD de Cusco (1 Clic para Activar / Desactivar):
+              </span>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                {HD_CUSCO_PHOTOS.map((photo, pIdx) => {
+                  const isAdded = galleryImages.includes(photo.url);
+                  return (
+                    <div 
+                      key={pIdx} 
+                      onClick={() => handleToggleGalleryImage(photo.url)}
+                      className={`relative p-2 rounded-2xl border-2 transition-all cursor-pointer flex items-center gap-2.5 ${
+                        isAdded 
+                          ? 'border-blue-600 bg-blue-50/80 ring-2 ring-blue-500/20 shadow-xs' 
+                          : 'border-slate-200 hover:border-slate-300 bg-white'
+                      }`}
+                    >
+                      <div className="relative w-11 h-11 rounded-xl overflow-hidden shrink-0 border border-slate-200 bg-slate-100">
+                        <Image src={photo.url} alt={photo.title} fill sizes="60px" className="object-cover" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <span className="text-[11px] font-black text-slate-900 block truncate">{photo.title}</span>
+                        <span className={`text-[9px] font-bold mt-0.5 inline-block px-1.5 py-0.2 rounded ${
+                          isAdded ? 'bg-blue-600 text-white' : 'text-slate-500 bg-slate-100'
+                        }`}>
+                          {isAdded ? '✓ Incluida' : '+ Añadir'}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Añadir URL Personalizada */}
+            <div className="pt-2 border-t border-slate-100 space-y-2">
+              <label className="block text-xs font-bold text-slate-700">
+                O ingresa una URL de foto personalizada (Unsplash / enlace web):
+              </label>
+              <div className="flex gap-2">
+                <input 
+                  type="url"
+                  value={customGalleryUrl}
+                  onChange={(e) => setCustomGalleryUrl(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddCustomGalleryImage(); } }}
+                  placeholder="https://images.unsplash.com/..."
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-mono"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddCustomGalleryImage}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl text-xs font-bold shrink-0 transition-colors cursor-pointer"
+                >
+                  + Agregar
+                </button>
+              </div>
+            </div>
+
+            {/* Lista actual de fotos en miniatura */}
+            {galleryImages.length > 0 && (
+              <div className="pt-2">
+                <span className="text-[11px] font-bold text-slate-600 mb-2 block">
+                  Fotos seleccionadas para la vitrina ({galleryImages.length}):
+                </span>
+                <div className="flex items-center gap-2 overflow-x-auto pb-2">
+                  {galleryImages.map((imgUrl, gIdx) => (
+                    <div key={gIdx} className="relative w-20 h-16 rounded-xl overflow-hidden border border-slate-300 shrink-0 group shadow-2xs">
+                      <img src={imgUrl} alt="Galería" className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveGalleryImage(gIdx)}
+                        className="absolute top-1 right-1 w-5 h-5 bg-rose-600 text-white rounded-full flex items-center justify-center opacity-80 hover:opacity-100 transition-opacity cursor-pointer text-[10px] font-bold shadow-xs"
+                        title="Quitar foto"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* PASO 12: PREGUNTAS FRECUENTES (FAQS) */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-slate-100 gap-2">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">12</span>
+                Preguntas Frecuentes (FAQs) del Tour
+              </label>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleLoadFaqsPreset}
+                  className="px-2.5 py-1 bg-purple-50 hover:bg-purple-100 border border-purple-200 text-purple-700 rounded-lg text-[11px] font-bold transition-all cursor-pointer shadow-2xs"
+                  title="Cargar 4 preguntas estándar de Cusco"
+                >
+                  ⚡ Cargar 4 FAQs Reales
+                </button>
+                <button
+                  type="button"
+                  onClick={handleAddFaq}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-[11px] font-bold transition-all cursor-pointer shadow-xs"
+                >
+                  <Plus size={13} />
+                  <span>Añadir Pregunta</span>
+                </button>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Resuelve objeciones frecuentes de los viajeros (inclusiones, mal de altura, métodos de pago, etc.).
+            </p>
+
+            <div className="space-y-3">
+              {faqs.map((faq, idx) => (
+                <div key={idx} className="p-3.5 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-slate-50 transition-colors space-y-2.5 shadow-2xs">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-black uppercase tracking-wider bg-purple-100 text-purple-700 px-2.5 py-0.5 rounded-md border border-purple-200">
+                      FAQ #{idx + 1}
+                    </span>
+                    {faqs.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveFaq(idx)}
+                        className="text-slate-400 hover:text-rose-600 p-1 rounded-lg hover:bg-rose-50 transition-colors cursor-pointer"
+                        title="Eliminar pregunta"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    )}
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">
+                      Pregunta del Turista:
+                    </label>
+                    <input
+                      type="text"
+                      value={faq.q}
+                      onChange={(e) => handleUpdateFaq(idx, 'q', e.target.value)}
+                      placeholder="Ej. ¿Qué sucede con el mal de altura?"
+                      className="w-full bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-bold uppercase text-slate-600 mb-1">
+                      Respuesta Oficial:
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={faq.a}
+                      onChange={(e) => handleUpdateFaq(idx, 'a', e.target.value)}
+                      placeholder="Detalla la respuesta clara y tranquilizadora..."
+                      className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* PASO 13: RESEÑAS & TESTIMONIOS DE VIAJEROS */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-slate-100 gap-2">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">13</span>
+                Reseñas & Testimonios de Turistas (Reviews)
+              </label>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleLoadTestimonialsPreset}
+                  className="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-800 rounded-lg text-[11px] font-bold transition-all cursor-pointer shadow-2xs"
+                  title="Cargar 3 reseñas 5 estrellas de muestra"
+                >
+                  ⚡ Cargar 3 Reseñas 5★
+                </button>
+                <button
+                  type="button"
+                  onClick={handleAddTestimonial}
+                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-[11px] font-bold transition-all cursor-pointer shadow-xs"
+                >
+                  <Plus size={13} />
+                  <span>Añadir Reseña</span>
+                </button>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Prueba social imprescindible para cerrar ventas rápidas. Destaca las experiencias reales de viajeros en tu ruta.
+            </p>
+
+            <div className="space-y-3">
+              {testimonials.map((tItem, idx) => (
+                <div key={idx} className="p-3.5 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-slate-50 transition-colors space-y-2 shadow-2xs">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 flex-1">
+                      <input
+                        type="text"
+                        value={tItem.name}
+                        onChange={(e) => handleUpdateTestimonial(idx, 'name', e.target.value)}
+                        placeholder="Nombre del Viajero"
+                        className="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                      />
+                      <input
+                        type="text"
+                        value={tItem.origin}
+                        onChange={(e) => handleUpdateTestimonial(idx, 'origin', e.target.value)}
+                        placeholder="Ciudad, País"
+                        className="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs text-slate-700 focus:ring-2 focus:ring-blue-500 outline-none"
+                      />
+                      <select
+                        value={tItem.rating}
+                        onChange={(e) => handleUpdateTestimonial(idx, 'rating', Number(e.target.value))}
+                        className="bg-white border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs font-bold text-amber-600 focus:ring-2 focus:ring-blue-500 outline-none"
+                      >
+                        <option value={5}>⭐⭐⭐⭐⭐ (5 Estrellas)</option>
+                        <option value={4}>⭐⭐⭐⭐ (4 Estrellas)</option>
+                        <option value={3}>⭐⭐⭐ (3 Estrellas)</option>
+                      </select>
+                    </div>
+                    {testimonials.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveTestimonial(idx)}
+                        className="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-rose-50 transition-colors cursor-pointer"
+                        title="Eliminar reseña"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    )}
+                  </div>
+                  <textarea
+                    rows={2}
+                    value={tItem.comment}
+                    onChange={(e) => handleUpdateTestimonial(idx, 'comment', e.target.value)}
+                    placeholder="Comentario sobre el tour, atención y calidad..."
+                    className="w-full bg-white border border-slate-300 rounded-xl p-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed text-slate-800"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* MÓDULO OPCIONAL: PERSONALIZACIÓN AVANZADA DE COPYS & BOTÓN CTA */}
+          <div className="bg-slate-50 rounded-3xl border border-slate-200/90 p-5 space-y-3">
+            <button
+              type="button"
+              onClick={() => setShowAdvancedCopy(!showAdvancedCopy)}
+              className="w-full flex items-center justify-between text-left text-xs font-bold text-slate-700 hover:text-slate-900 cursor-pointer"
+            >
+              <div className="flex items-center gap-2">
+                <SlidersHorizontal size={15} className="text-blue-600" />
+                <span>⚙️ Afinamiento Opcional de Copys & Botón Principal (Avanzado)</span>
+              </div>
+              <ChevronDown size={16} className={`text-slate-400 transition-transform ${showAdvancedCopy ? 'rotate-180' : ''}`} />
+            </button>
+
+            {showAdvancedCopy && (
+              <div className="pt-3 border-t border-slate-200/80 space-y-3 animate-in fade-in">
+                <p className="text-[11px] text-slate-500">
+                  Si deseas sobreescribir los textos que la IA redactará para la insignia y el botón de acción principal, indícalos aquí:
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                      Insignia Superior de Portada (Hero Badge):
+                    </label>
+                    <input
+                      type="text"
+                      value={heroBadge}
+                      onChange={(e) => setHeroBadge(e.target.value)}
+                      placeholder="Ej. ⭐ Experiencia Más Vendida 2026"
+                      className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                      Texto del Botón Principal (Hero CTA):
+                    </label>
+                    <input
+                      type="text"
+                      value={heroCta}
+                      onChange={(e) => setHeroCta(e.target.value)}
+                      placeholder="Ej. Reservar Ahora por WhatsApp"
+                      className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Submit Action Bar */}

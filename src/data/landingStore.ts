@@ -1,4 +1,4 @@
-import { LandingData, ObjectiveType, TemplateType, LanguageType, PlanTier, CatalogTourItem } from '@/types/landing';
+import { LandingData, ObjectiveType, TemplateType, LanguageType, PlanTier, CatalogTourItem, FAQItem, TestimonialItem } from '@/types/landing';
 export type { LandingData };
 
 export const INITIAL_LANDINGS: LandingData[] = [
@@ -717,6 +717,15 @@ export function simulateAiGeneration(params: {
   officeAddress?: string;
   officeHours?: string;
   mapsUrl?: string;
+  faqs?: FAQItem[];
+  testimonials?: TestimonialItem[];
+  heroBadge?: string;
+  heroTitle?: string;
+  heroSubtitle?: string;
+  heroCta?: string;
+  aboutTitle?: string;
+  aboutContent?: string;
+  featuresTitle?: string;
 }): LandingData {
   const slug = params.name
     .toLowerCase()
@@ -905,17 +914,17 @@ export function simulateAiGeneration(params: {
       'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop'
     ],
     hero: {
-      badge: heroBadge,
-      title: heroTitle,
-      subtitle: heroSubtitle,
-      cta: ctaText
+      badge: params.heroBadge || heroBadge,
+      title: params.heroTitle || heroTitle,
+      subtitle: params.heroSubtitle || heroSubtitle,
+      cta: params.heroCta || ctaText
     },
     about: {
-      title: aboutTitle,
-      content: aboutContent
+      title: params.aboutTitle || aboutTitle,
+      content: params.aboutContent || aboutContent
     },
     features: {
-      title: isEn ? 'What makes this tour exceptional?' : '¿Qué hace inolvidable esta experiencia?',
+      title: params.featuresTitle || (isEn ? 'What makes this tour exceptional?' : '¿Qué hace inolvidable esta experiencia?'),
       items: featuresItems
     },
     itinerary: params.itinerary && params.itinerary.length > 0 ? params.itinerary : (isEn ? [
@@ -957,8 +966,8 @@ export function simulateAiGeneration(params: {
       'RUC 20 Formal Verificado',
       'Balón de Oxígeno & Botiquín'
     ],
-    faqs,
-    testimonials,
+    faqs: params.faqs && params.faqs.length > 0 ? params.faqs : faqs,
+    testimonials: params.testimonials && params.testimonials.length > 0 ? params.testimonials : testimonials,
     catalogTours: params.catalogTours,
     officeAddress: params.officeAddress,
     officeHours: params.officeHours,
