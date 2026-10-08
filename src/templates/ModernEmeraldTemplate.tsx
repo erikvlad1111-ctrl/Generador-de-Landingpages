@@ -349,48 +349,48 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#F2FBF8] via-[#E8F8F3] to-[#F4FCF9] text-slate-800 font-sans selection:bg-[#10b981] selection:text-white overflow-x-hidden relative">
+    <div className="min-h-screen bg-gradient-to-b from-[#0c3531] via-[#082623] to-[#041716] text-emerald-50 font-sans selection:bg-[#10b981] selection:text-[#041716] overflow-x-hidden relative">
       
-      {/* Luces Ambientales y Orbes Suaves en Menta, Esmeralda y Dorado para Iluminar el Fondo Claro */}
+      {/* Luces Ambientales y Orbes Flotantes en Movimiento Continuo (Emerald & Teal Brillante para Resaltar Transparencias) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute -top-32 right-10 w-[600px] h-[600px] bg-emerald-400/20 rounded-full blur-[140px] animate-emerald-glow" />
-        <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-teal-300/25 rounded-full blur-[150px] animate-emerald-glow [animation-delay:2.5s]" />
-        <div className="absolute top-2/3 right-1/4 w-[650px] h-[650px] bg-emerald-300/20 rounded-full blur-[160px] animate-emerald-glow [animation-delay:5s]" />
-        <div className="absolute -bottom-32 left-1/3 w-[500px] h-[500px] bg-amber-300/25 rounded-full blur-[130px] animate-emerald-glow [animation-delay:3.5s]" />
+        <div className="absolute -top-32 right-10 w-[600px] h-[600px] bg-emerald-400/25 rounded-full blur-[140px] animate-emerald-glow" />
+        <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-teal-400/20 rounded-full blur-[160px] animate-emerald-glow [animation-delay:2.5s]" />
+        <div className="absolute top-2/3 right-1/4 w-[650px] h-[650px] bg-emerald-500/20 rounded-full blur-[150px] animate-emerald-glow [animation-delay:5s]" />
+        <div className="absolute -bottom-32 left-1/3 w-[500px] h-[500px] bg-amber-400/15 rounded-full blur-[140px] animate-emerald-glow [animation-delay:3.5s]" />
       </div>
 
-      {/* 1. TOP HEADER NAVIGATION CON GLASSMORPHISM ULTRA TRANSLÚCIDO CLARO */}
-      <header className="relative z-30 border-b border-emerald-900/10 bg-white/70 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(4,23,22,0.06)]">
+      {/* 1. TOP HEADER NAVIGATION CON TRANSPARENCIA GLASSMORPHISM SUAVE */}
+      <header className="relative z-30 border-b border-white/10 bg-[#0c3531]/60 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
           
           {/* Logo y Marca */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white shadow-lg shadow-emerald-500/30 shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-400 flex items-center justify-center text-[#041716] shadow-lg shadow-emerald-500/30 shrink-0">
               <Compass size={22} className="stroke-[2.5]" />
             </div>
             <div>
-              <span className="font-black text-lg tracking-tight text-slate-900 flex items-center gap-1.5">
-                NavikX <span className="text-emerald-700 font-semibold text-xs bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-300">Cusco</span>
+              <span className="font-black text-lg tracking-tight text-white flex items-center gap-1.5">
+                NavikX <span className="text-emerald-300 font-medium text-xs bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-400/40">Cusco</span>
               </span>
-              <p className="text-[10px] text-emerald-800/70 font-semibold tracking-wide">{t.brandTag}</p>
+              <p className="text-[10px] text-emerald-200/70 font-medium tracking-wide">{t.brandTag}</p>
             </div>
           </div>
 
           {/* Menú Desktop Translúcido Flotante */}
-          <nav className="hidden md:flex items-center gap-1 bg-white/80 backdrop-blur-xl p-1.5 rounded-full border border-emerald-900/10 shadow-[0_8px_20px_rgba(0,0,0,0.04)] text-xs font-semibold text-slate-700">
-            <a href="#inicio" className="px-3.5 py-1.5 rounded-full bg-emerald-500 text-white font-bold shadow-xs transition-all">
+          <nav className="hidden md:flex items-center gap-1 bg-white/[0.08] backdrop-blur-xl p-1.5 rounded-full border border-white/15 shadow-lg text-xs font-semibold text-emerald-100">
+            <a href="#inicio" className="px-3.5 py-1.5 rounded-full bg-emerald-500 text-[#041716] font-black shadow-xs transition-all">
               {t.navHome}
             </a>
-            <a href="#destinos" className="px-3.5 py-1.5 rounded-full hover:text-emerald-700 hover:bg-emerald-50 transition-colors">
+            <a href="#destinos" className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navDestinations}
             </a>
-            <a href="#experiencias" className="px-3.5 py-1.5 rounded-full hover:text-emerald-700 hover:bg-emerald-50 transition-colors">
+            <a href="#experiencias" className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navExperiences}
             </a>
-            <a href="#itinerario" className="px-3.5 py-1.5 rounded-full hover:text-emerald-700 hover:bg-emerald-50 transition-colors">
+            <a href="#itinerario" className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navItinerary}
             </a>
-            <a href="#nosotros" className="px-3.5 py-1.5 rounded-full hover:text-emerald-700 hover:bg-emerald-50 transition-colors">
+            <a href="#nosotros" className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navAbout}
             </a>
           </nav>
@@ -408,7 +408,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
             <button
               onClick={() => handleOpenAction(data.name)}
-              className="emerald-shimmer-btn bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-lg shadow-emerald-600/25 hover:shadow-emerald-600/40 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2"
+              className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2"
             >
               <MessageCircle size={16} />
               <span>{isWhatsapp ? t.whatsappBtn : isQuote ? t.quoteBtn : t.planYourTripBtn}</span>
@@ -417,7 +417,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl bg-white/80 border border-emerald-900/10 text-slate-800 cursor-pointer shadow-xs"
+              className="md:hidden p-2 rounded-xl bg-white/10 border border-white/20 text-emerald-300 cursor-pointer"
             >
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -426,12 +426,12 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-emerald-900/10 bg-white/95 backdrop-blur-2xl px-4 py-4 space-y-2 text-sm font-semibold animate-in slide-in-from-top-2 shadow-xl">
-            <a href="#inicio" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-700">{t.navHome}</a>
-            <a href="#destinos" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700">{t.navDestinations}</a>
-            <a href="#experiencias" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700">{t.navExperiences}</a>
-            <a href="#itinerario" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700">{t.navItinerary}</a>
-            <a href="#nosotros" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700">{t.navAbout}</a>
+          <div className="md:hidden border-t border-white/10 bg-[#0c3531]/95 backdrop-blur-2xl px-4 py-4 space-y-2 text-sm font-semibold animate-in slide-in-from-top-2 shadow-xl">
+            <a href="#inicio" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-300">{t.navHome}</a>
+            <a href="#destinos" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navDestinations}</a>
+            <a href="#experiencias" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navExperiences}</a>
+            <a href="#itinerario" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navItinerary}</a>
+            <a href="#nosotros" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navAbout}</a>
           </div>
         )}
       </header>
@@ -444,24 +444,24 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           <div className="lg:col-span-7 space-y-6 sm:space-y-8">
             
             {/* Badge de Temporada Flotante con Levitación Continua */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 backdrop-blur-xl border border-emerald-400/30 text-emerald-800 text-xs font-bold shadow-md shadow-emerald-900/5 animate-float-badge">
-              <Sparkles size={14} className="text-emerald-600" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-emerald-400/30 text-emerald-300 text-xs font-bold shadow-lg shadow-emerald-950/40 animate-float-badge">
+              <Sparkles size={14} className="text-emerald-400" />
               <span>{heroBadge}</span>
             </div>
 
             {/* Titular Masivo */}
-            <h1 className="text-4xl sm:text-6xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.08]">
+            <h1 className="text-4xl sm:text-6xl lg:text-6xl font-black text-white tracking-tight leading-[1.08]">
               {data.name ? (
                 <>
                   {data.name.split(' ')[0]}{' '}
-                  <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-emerald-300 via-teal-200 to-emerald-400 bg-clip-text text-transparent">
                     {data.name.split(' ').slice(1).join(' ') || 'Adventure.'}
                   </span>
                 </>
               ) : (
                 <>
                   Live Your <br />
-                  <span className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-emerald-300 via-teal-200 to-emerald-400 bg-clip-text text-transparent">
                     Adventure.
                   </span>
                 </>
@@ -469,32 +469,32 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </h1>
 
             {/* Subtítulo */}
-            <p className="text-base sm:text-lg text-slate-600 max-w-xl leading-relaxed">
+            <p className="text-base sm:text-lg text-emerald-100/80 max-w-xl leading-relaxed">
               {heroSubtitle}
             </p>
 
-            {/* BARRA FLOTANTE DE BÚSQUEDA TIPO PÍLDORA (GLASS TRANSLÚCIDO CLARO CON LEVITACIÓN) */}
-            <div className="p-2 sm:p-2.5 bg-white/85 backdrop-blur-2xl border border-white shadow-[0_20px_45px_rgba(4,23,22,0.08)] rounded-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 max-w-xl animate-pill-glow transition-all duration-300">
-              <div className="flex items-center gap-2.5 px-4 py-2 flex-1 border-b sm:border-b-0 sm:border-r border-slate-200/80 text-xs">
-                <MapPin size={16} className="text-emerald-600 shrink-0" />
+            {/* BARRA FLOTANTE DE BÚSQUEDA TIPO PÍLDORA (CRISTAL TRANSLÚCIDO CON LEVITACIÓN) */}
+            <div className="p-2 sm:p-2.5 bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 max-w-xl animate-pill-glow transition-all duration-300">
+              <div className="flex items-center gap-2.5 px-4 py-2 flex-1 border-b sm:border-b-0 sm:border-r border-white/10 text-xs">
+                <MapPin size={16} className="text-emerald-400 shrink-0" />
                 <div className="min-w-0">
-                  <span className="text-[10px] text-slate-400 font-semibold block">{t.searchWhere}</span>
-                  <span className="text-xs font-bold text-slate-900 truncate block">{data.destination || 'Cusco & Machu Picchu'}</span>
+                  <span className="text-[10px] text-emerald-200/70 font-semibold block">{t.searchWhere}</span>
+                  <span className="text-xs font-bold text-white truncate block">{data.destination || 'Cusco & Machu Picchu'}</span>
                 </div>
               </div>
 
               <div className="flex items-center gap-2.5 px-4 py-2 flex-1 text-xs">
-                <Calendar size={16} className="text-emerald-600 shrink-0" />
+                <Calendar size={16} className="text-emerald-400 shrink-0" />
                 <div className="min-w-0">
-                  <span className="text-[10px] text-slate-400 font-semibold block">{t.searchDates}</span>
-                  <span className="text-xs font-bold text-slate-900 truncate block">{data.duration || 'Full Day / Multidía'}</span>
+                  <span className="text-[10px] text-emerald-200/70 font-semibold block">{t.searchDates}</span>
+                  <span className="text-xs font-bold text-white truncate block">{data.duration || 'Full Day / Multidía'}</span>
                 </div>
               </div>
 
               <button
                 type="button"
                 onClick={() => handleOpenAction(data.name)}
-                className="emerald-shimmer-btn bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-black text-xs px-6 py-3 rounded-full transition-all shadow-md shadow-emerald-600/30 flex items-center justify-center gap-1.5 cursor-pointer shrink-0 hover:scale-105 active:scale-95"
+                className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs px-6 py-3 rounded-full transition-all shadow-md shadow-emerald-500/30 flex items-center justify-center gap-1.5 cursor-pointer shrink-0 hover:scale-105 active:scale-95"
               >
                 <Search size={14} />
                 <span>{t.searchBtn}</span>
@@ -504,27 +504,27 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             {/* 3 TARJETAS BENTO FLOTANTES TRANSLÚCIDAS CON LEVITACIÓN ESCALONADA */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
               <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float space-y-1.5 group">
-                <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center border border-emerald-300/60 group-hover:scale-110 transition-transform">
+                <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/30 group-hover:scale-110 transition-transform">
                   <Compass size={16} />
                 </div>
-                <h4 className="text-xs font-black text-slate-900">{t.benefit1Title}</h4>
-                <p className="text-[11px] text-slate-600 leading-snug">{t.benefit1Desc}</p>
+                <h4 className="text-xs font-black text-white">{t.benefit1Title}</h4>
+                <p className="text-[11px] text-emerald-200/70 leading-snug">{t.benefit1Desc}</p>
               </div>
 
               <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float-delayed space-y-1.5 group">
-                <div className="w-8 h-8 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center border border-teal-300/60 group-hover:scale-110 transition-transform">
+                <div className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/30 group-hover:scale-110 transition-transform">
                   <FileText size={16} />
                 </div>
-                <h4 className="text-xs font-black text-slate-900">{t.benefit2Title}</h4>
-                <p className="text-[11px] text-slate-600 leading-snug">{t.benefit2Desc}</p>
+                <h4 className="text-xs font-black text-white">{t.benefit2Title}</h4>
+                <p className="text-[11px] text-emerald-200/70 leading-snug">{t.benefit2Desc}</p>
               </div>
 
               <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float-alt space-y-1.5 group">
-                <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center border border-amber-300/60 group-hover:scale-110 transition-transform">
+                <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/30 group-hover:scale-110 transition-transform">
                   <ShieldCheck size={16} />
                 </div>
-                <h4 className="text-xs font-black text-slate-900">{t.benefit3Title}</h4>
-                <p className="text-[11px] text-slate-600 leading-snug">{t.benefit3Desc}</p>
+                <h4 className="text-xs font-black text-white">{t.benefit3Title}</h4>
+                <p className="text-[11px] text-emerald-200/70 leading-snug">{t.benefit3Desc}</p>
               </div>
             </div>
 
@@ -590,23 +590,23 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       <section id="destinos" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-2.5">
+            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
               <span>{t.popularTitle}</span>
-              <span className="text-xs font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full border border-emerald-300">
+              <span className="text-xs font-bold text-emerald-300 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-400/40">
                 {toursList.length} Tours
               </span>
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1 max-w-xl">
+            <p className="text-xs sm:text-sm text-emerald-200/70 mt-1 max-w-xl">
               {t.popularSub}
             </p>
           </div>
 
           <div className="flex items-center gap-2 shrink-0">
-            <span className="text-xs text-slate-500 font-semibold hidden sm:inline">Desliza para ver más</span>
-            <div className="w-8 h-8 rounded-full bg-white border border-slate-200 text-slate-700 flex items-center justify-center cursor-pointer hover:bg-slate-50 transition-colors shadow-xs">
+            <span className="text-xs text-emerald-300/60 font-semibold hidden sm:inline">Desliza para ver más</span>
+            <div className="w-8 h-8 rounded-full bg-white/10 border border-white/20 text-emerald-300 flex items-center justify-center cursor-pointer hover:bg-white/20 transition-colors shadow-xs">
               <ChevronLeft size={16} />
             </div>
-            <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center cursor-pointer hover:bg-emerald-500 transition-colors shadow-xs">
+            <div className="w-8 h-8 rounded-full bg-emerald-500 text-[#041716] font-bold flex items-center justify-center cursor-pointer hover:bg-emerald-400 transition-colors shadow-xs">
               <ChevronRight size={16} />
             </div>
           </div>
@@ -622,7 +622,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 className="group rounded-3xl glass-floating-card overflow-hidden flex flex-col justify-between"
               >
                 {/* Imagen del Tour con Chips y Botón Favorito */}
-                <div className="relative h-56 w-full overflow-hidden bg-slate-100">
+                <div className="relative h-56 w-full overflow-hidden bg-emerald-950">
                   <Image 
                     src={tour.image || heroImg} 
                     alt={tour.title} 
@@ -630,11 +630,11 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                     sizes="(max-width: 768px) 100vw, 33vw"
                     className="object-cover group-hover:scale-108 transition-transform duration-700" 
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-black/30" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-transparent to-black/30" />
 
                   {/* Badge de Rating */}
-                  <div className="absolute top-3 left-3 bg-white/85 backdrop-blur-md px-2.5 py-1 rounded-full text-slate-900 font-black text-xs flex items-center gap-1 border border-white shadow-md">
-                    <Star size={12} className="fill-amber-400 text-amber-500" />
+                  <div className="absolute top-3 left-3 bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-full text-amber-300 font-black text-xs flex items-center gap-1 border border-white/20 shadow-md">
+                    <Star size={12} className="fill-amber-400 text-amber-400" />
                     <span>{tour.rating || 4.8}</span>
                   </div>
 
@@ -642,13 +642,13 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                   <button
                     type="button"
                     onClick={() => toggleFavorite(tour.id || String(idx))}
-                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/85 backdrop-blur-md border border-white flex items-center justify-center text-slate-700 hover:scale-110 shadow-md transition-transform cursor-pointer"
+                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:scale-110 shadow-md transition-transform cursor-pointer"
                   >
-                    <Heart size={14} className={isFav ? "fill-rose-500 text-rose-500" : "text-slate-700"} />
+                    <Heart size={14} className={isFav ? "fill-rose-500 text-rose-500" : "text-white"} />
                   </button>
 
                   {/* Precio Flotante */}
-                  <div className="absolute bottom-3 right-3 bg-emerald-500 text-white font-black text-sm px-3.5 py-1 rounded-xl shadow-lg">
+                  <div className="absolute bottom-3 right-3 bg-emerald-400 text-[#041716] font-black text-sm px-3.5 py-1 rounded-xl shadow-lg">
                     {tour.price}
                   </div>
                 </div>
@@ -656,32 +656,32 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 {/* Contenido de la Card */}
                 <div className="p-5 space-y-3.5 flex-1 flex flex-col justify-between">
                   <div>
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 block mb-1">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-400 block mb-1">
                       {tour.location || 'Cusco Imperial'} • {tour.duration || 'Full Day'}
                     </span>
-                    <h3 className="text-base font-black text-slate-900 group-hover:text-emerald-700 transition-colors leading-snug">
+                    <h3 className="text-base font-black text-white group-hover:text-emerald-300 transition-colors leading-snug">
                       {tour.title}
                     </h3>
                   </div>
 
-                  <div className="pt-3 border-t border-slate-200/80 flex items-center justify-between gap-2">
+                  <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
                     {/* Avatares de Viajeros */}
                     <div className="flex items-center gap-1.5">
                       <div className="flex -space-x-2 overflow-hidden">
-                        <div className="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-emerald-700 relative overflow-hidden">
+                        <div className="inline-block h-6 w-6 rounded-full ring-2 ring-[#041716] bg-emerald-800 relative overflow-hidden">
                           <Image src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop" alt="User" fill className="object-cover" />
                         </div>
-                        <div className="inline-block h-6 w-6 rounded-full ring-2 ring-white bg-teal-700 relative overflow-hidden">
+                        <div className="inline-block h-6 w-6 rounded-full ring-2 ring-[#041716] bg-teal-800 relative overflow-hidden">
                           <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" alt="User" fill className="object-cover" />
                         </div>
                       </div>
-                      <span className="text-[10px] text-slate-500 font-semibold">+230 Viajeros</span>
+                      <span className="text-[10px] text-emerald-200/70 font-semibold">+230 Viajeros</span>
                     </div>
 
                     <button
                       type="button"
                       onClick={() => handleOpenAction(tour.title)}
-                      className="emerald-shimmer-btn bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-4 py-1.5 rounded-full transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-sm"
+                      className="emerald-shimmer-btn bg-emerald-500/20 hover:bg-emerald-400 hover:text-[#041716] text-emerald-300 font-bold text-xs px-4 py-1.5 rounded-full border border-emerald-400/40 transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-sm"
                     >
                       {t.exploreBtn}
                     </button>
@@ -696,10 +696,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       {/* 4. PLAN YOUR JOURNEY & BENTO STATS CON ESTILO FLOTANTE */}
       <section id="experiencias" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-          <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
             {t.planTitle}
           </h2>
-          <p className="text-xs sm:text-sm text-slate-600">
+          <p className="text-xs sm:text-sm text-emerald-200/70">
             Métricas reales de excelencia avaladas por más de 1,200 viajeros internacionales.
           </p>
         </div>
@@ -708,7 +708,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           
           {/* Bento Card 1: Foto Viajero con Mapa */}
-          <div className="relative rounded-3xl overflow-hidden min-h-[220px] border border-white shadow-[0_15px_35px_rgba(4,23,22,0.08)] group hover:-translate-y-1.5 transition-all duration-300">
+          <div className="relative rounded-3xl overflow-hidden min-h-[220px] border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 transition-all duration-300">
             <Image 
               src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=800&auto=format&fit=crop" 
               alt="Traveler with map" 
@@ -716,38 +716,38 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               sizes="(max-width: 768px) 100vw, 25vw"
               className="object-cover group-hover:scale-105 transition-transform duration-500" 
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-[#041716]/30 to-transparent" />
             <div className="absolute bottom-4 left-4 right-4">
               <span className="text-xs font-black text-white block">Rutas Planificadas</span>
-              <span className="text-[10px] text-emerald-200">Logística Integral</span>
+              <span className="text-[10px] text-emerald-300/80">Logística Integral</span>
             </div>
           </div>
 
           {/* Bento Card 2: 1,250+ Happy Travelers (Glassmorphism con Levitación) */}
           <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float-delayed">
             <div className="flex items-center justify-between">
-              <span className="text-3xl font-black text-slate-900 animate-number-glow">1,250+</span>
-              <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center border border-emerald-300 shadow-xs">
+              <span className="text-3xl font-black text-white animate-number-glow">1,250+</span>
+              <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs">
                 <Users size={20} />
               </div>
             </div>
             <div>
-              <h4 className="text-sm font-bold text-slate-900">{t.happyTravelers}</h4>
-              <p className="text-xs text-slate-500 mt-0.5">Asistidos con protocolo médico de altitud.</p>
+              <h4 className="text-sm font-bold text-white">{t.happyTravelers}</h4>
+              <p className="text-xs text-emerald-200/70 mt-0.5">Asistidos con protocolo médico de altitud.</p>
             </div>
           </div>
 
           {/* Bento Card 3: 98% Positive Reviews (Glassmorphism con Levitación) */}
           <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float">
             <div className="flex items-center justify-between">
-              <span className="text-3xl font-black text-amber-500 animate-number-glow">98%</span>
-              <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center border border-amber-300 shadow-xs">
-                <Star size={20} className="fill-amber-500 text-amber-500" />
+              <span className="text-3xl font-black text-amber-300 animate-number-glow">98%</span>
+              <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/40 shadow-xs">
+                <Star size={20} className="fill-amber-400 text-amber-400" />
               </div>
             </div>
             <div>
-              <h4 className="text-sm font-bold text-slate-900">{t.positiveReviews}</h4>
-              <p className="text-xs text-slate-500 mt-0.5">Calificaciones 5 estrellas en TripAdvisor & Google.</p>
+              <h4 className="text-sm font-bold text-white">{t.positiveReviews}</h4>
+              <p className="text-xs text-emerald-200/70 mt-0.5">Calificaciones 5 estrellas en TripAdvisor & Google.</p>
             </div>
           </div>
 
@@ -772,47 +772,47 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
       {/* 5. WHY TRAVEL WITH US? (PROPUESTA DE VALOR EN CONTENEDOR FLOTANTE TRANSLÚCIDO) */}
       <section id="nosotros" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="p-8 sm:p-12 rounded-[40px] bg-white/70 backdrop-blur-2xl border border-white shadow-[0_30px_70px_rgba(4,23,22,0.06)] space-y-8">
+        <div className="p-8 sm:p-12 rounded-[40px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_30px_70px_rgba(0,0,0,0.5)] space-y-8">
           <div>
-            <span className="text-xs font-extrabold text-emerald-700 uppercase tracking-wider block mb-1">
+            <span className="text-xs font-extrabold text-emerald-400 uppercase tracking-wider block mb-1">
               Garantía de Confianza
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
               {t.whyTitle}
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-5 rounded-2xl bg-white/80 backdrop-blur-md border border-slate-200/80 hover:border-emerald-500/40 hover:-translate-y-1 transition-all space-y-2 shadow-xs">
-              <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+            <div className="p-5 rounded-2xl bg-white/[0.04] backdrop-blur-md border border-white/10 hover:border-emerald-400/40 hover:-translate-y-1 transition-all space-y-2 shadow-xs">
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
                 <Compass size={18} />
               </div>
-              <h4 className="text-sm font-bold text-slate-900">{t.why1}</h4>
-              <p className="text-xs text-slate-600 leading-relaxed">{t.why1Desc}</p>
+              <h4 className="text-sm font-bold text-white">{t.why1}</h4>
+              <p className="text-xs text-emerald-200/70 leading-relaxed">{t.why1Desc}</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white/80 backdrop-blur-md border border-slate-200/80 hover:border-teal-500/40 hover:-translate-y-1 transition-all space-y-2 shadow-xs">
-              <div className="w-9 h-9 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center">
+            <div className="p-5 rounded-2xl bg-white/[0.04] backdrop-blur-md border border-white/10 hover:border-teal-400/40 hover:-translate-y-1 transition-all space-y-2 shadow-xs">
+              <div className="w-9 h-9 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center">
                 <FileText size={18} />
               </div>
-              <h4 className="text-sm font-bold text-slate-900">{t.why2}</h4>
-              <p className="text-xs text-slate-600 leading-relaxed">{t.why2Desc}</p>
+              <h4 className="text-sm font-bold text-white">{t.why2}</h4>
+              <p className="text-xs text-emerald-200/70 leading-relaxed">{t.why2Desc}</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white/80 backdrop-blur-md border border-slate-200/80 hover:border-emerald-500/40 hover:-translate-y-1 transition-all space-y-2 shadow-xs">
-              <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+            <div className="p-5 rounded-2xl bg-white/[0.04] backdrop-blur-md border border-white/10 hover:border-emerald-400/40 hover:-translate-y-1 transition-all space-y-2 shadow-xs">
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
                 <Award size={18} />
               </div>
-              <h4 className="text-sm font-bold text-slate-900">{t.why3}</h4>
-              <p className="text-xs text-slate-600 leading-relaxed">{t.why3Desc}</p>
+              <h4 className="text-sm font-bold text-white">{t.why3}</h4>
+              <p className="text-xs text-emerald-200/70 leading-relaxed">{t.why3Desc}</p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-white/80 backdrop-blur-md border border-slate-200/80 hover:border-amber-500/40 hover:-translate-y-1 transition-all space-y-2 shadow-xs">
-              <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+            <div className="p-5 rounded-2xl bg-white/[0.04] backdrop-blur-md border border-white/10 hover:border-amber-400/40 hover:-translate-y-1 transition-all space-y-2 shadow-xs">
+              <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
                 <ShieldCheck size={18} />
               </div>
-              <h4 className="text-sm font-bold text-slate-900">{t.why4}</h4>
-              <p className="text-xs text-slate-600 leading-relaxed">{t.why4Desc}</p>
+              <h4 className="text-sm font-bold text-white">{t.why4}</h4>
+              <p className="text-xs text-emerald-200/70 leading-relaxed">{t.why4Desc}</p>
             </div>
           </div>
         </div>
@@ -822,22 +822,22 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       {data.itinerary && data.itinerary.length > 0 && (
         <section id="itinerario" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
           <div className="text-center mb-10 space-y-2">
-            <span className="text-xs font-black text-emerald-700 uppercase tracking-wider block">Cronograma de la Expedición</span>
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">{t.itineraryTitle}</h2>
+            <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Cronograma de la Expedición</span>
+            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">{t.itineraryTitle}</h2>
           </div>
 
           <div className="space-y-4">
             {data.itinerary.map((step, sIdx) => (
               <div 
                 key={sIdx}
-                className="p-5 rounded-3xl bg-white/80 backdrop-blur-xl border border-white hover:border-emerald-500/40 hover:-translate-y-1 transition-all flex flex-col sm:flex-row sm:items-start gap-4 shadow-sm"
+                className="p-5 rounded-3xl bg-white/[0.05] backdrop-blur-xl border border-white/10 hover:border-emerald-400/40 hover:-translate-y-1 transition-all flex flex-col sm:flex-row sm:items-start gap-4 shadow-sm"
               >
-                <div className="px-3.5 py-1.5 rounded-xl bg-emerald-600 text-white font-black text-xs shrink-0 self-start shadow-xs">
+                <div className="px-3.5 py-1.5 rounded-xl bg-emerald-400 text-[#041716] font-black text-xs shrink-0 self-start shadow-xs">
                   {step.step || `Paso #${sIdx + 1}`}
                 </div>
                 <div className="flex-1 space-y-1">
-                  <h4 className="text-sm font-black text-slate-900">{step.title}</h4>
-                  <p className="text-xs text-slate-600 leading-relaxed">{step.desc}</p>
+                  <h4 className="text-sm font-black text-white">{step.title}</h4>
+                  <p className="text-xs text-emerald-200/70 leading-relaxed">{step.desc}</p>
                 </div>
               </div>
             ))}
@@ -849,17 +849,17 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       {data.faqs && data.faqs.length > 0 && tier !== 'free' && tier !== 'basic' && (
         <section className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
           <div className="text-center mb-8 space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">{t.faqsTitle}</h2>
-            <p className="text-xs text-slate-600">Todo lo que necesitas saber antes de iniciar tu recorrido.</p>
+            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">{t.faqsTitle}</h2>
+            <p className="text-xs text-emerald-200/70">Todo lo que necesitas saber antes de iniciar tu recorrido.</p>
           </div>
 
           <div className="space-y-3">
             {data.faqs.map((faq, fIdx) => (
-              <div key={fIdx} className="p-5 rounded-2xl bg-white/80 backdrop-blur-xl border border-white hover:border-emerald-500/40 space-y-1.5 transition-all shadow-sm">
-                <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                  <span className="text-emerald-600 font-black">Q:</span> {faq.q}
+              <div key={fIdx} className="p-5 rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-white/10 hover:border-emerald-400/40 space-y-1.5 transition-all shadow-sm">
+                <h4 className="text-sm font-bold text-emerald-300 flex items-center gap-2">
+                  <span className="text-emerald-400 font-black">Q:</span> {faq.q}
                 </h4>
-                <p className="text-xs text-slate-600 leading-relaxed pl-5">{faq.a}</p>
+                <p className="text-xs text-emerald-100/70 leading-relaxed pl-5">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -868,38 +868,38 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
       {/* 8. BARRA DE MÉTRICAS INFERIOR / STICKY BOTTOM BAR FLOTANTE */}
       <div className="relative z-20 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="p-4 sm:p-5 rounded-3xl bg-white/85 backdrop-blur-2xl border border-white shadow-[0_20px_50px_rgba(4,23,22,0.08)] flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="p-4 sm:p-5 rounded-3xl bg-white/[0.08] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col md:flex-row items-center justify-between gap-4">
           
           <div className="flex flex-wrap items-center justify-around gap-6 text-center sm:text-left flex-1">
             <div className="flex items-center gap-2">
-              <MapPin size={18} className="text-emerald-600 shrink-0" />
+              <MapPin size={18} className="text-emerald-400 shrink-0" />
               <div>
-                <span className="text-xs font-black text-slate-900 block">50+ Rutas</span>
-                <span className="text-[10px] text-slate-500">Destinos de Autor</span>
+                <span className="text-xs font-black text-white block">50+ Rutas</span>
+                <span className="text-[10px] text-emerald-200/70">Destinos de Autor</span>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
-              <Users size={18} className="text-emerald-600 shrink-0" />
+              <Users size={18} className="text-emerald-400 shrink-0" />
               <div>
-                <span className="text-xs font-black text-slate-900 block">100K+ Turistas</span>
-                <span className="text-[10px] text-slate-500">Experiencias Felices</span>
+                <span className="text-xs font-black text-white block">100K+ Turistas</span>
+                <span className="text-[10px] text-emerald-200/70">Experiencias Felices</span>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
-              <Star size={18} className="text-amber-500 shrink-0 fill-amber-500" />
+              <Star size={18} className="text-amber-400 shrink-0 fill-amber-400" />
               <div>
-                <span className="text-xs font-black text-slate-900 block">4.9★ Promedio</span>
-                <span className="text-[10px] text-slate-500">TripAdvisor & Google</span>
+                <span className="text-xs font-black text-white block">4.9★ Promedio</span>
+                <span className="text-[10px] text-emerald-200/70">TripAdvisor & Google</span>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
-              <Clock size={18} className="text-emerald-600 shrink-0" />
+              <Clock size={18} className="text-emerald-400 shrink-0" />
               <div>
-                <span className="text-xs font-black text-slate-900 block">24/7 Soporte</span>
-                <span className="text-[10px] text-slate-500">Oxígeno y Asistencia</span>
+                <span className="text-xs font-black text-white block">24/7 Soporte</span>
+                <span className="text-[10px] text-emerald-200/70">Oxígeno y Asistencia</span>
               </div>
             </div>
           </div>
@@ -908,7 +908,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           <button
             type="button"
             onClick={() => handleOpenAction(data.name)}
-            className="emerald-shimmer-btn w-full md:w-auto bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 hover:from-orange-400 hover:to-amber-400 text-white font-black text-xs sm:text-sm px-8 py-3.5 rounded-full shadow-[0_10px_25px_rgba(249,115,22,0.35)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 shrink-0"
+            className="emerald-shimmer-btn w-full md:w-auto bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 hover:from-orange-400 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm px-8 py-3.5 rounded-full shadow-[0_10px_25px_rgba(249,115,22,0.4)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 shrink-0"
           >
             <Compass size={16} />
             <span>{t.planYourTripBtn}</span>
@@ -917,22 +917,22 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       </div>
 
       {/* 9. FOOTER LEGAL & LIBRO DE RECLAMACIONES (INDECOPI LEY 29571) */}
-      <footer className="relative z-10 border-t border-slate-200/80 bg-white/90 py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500">
+      <footer className="relative z-10 border-t border-emerald-900/60 bg-[#020d0d] py-10 px-4 sm:px-6 lg:px-8 text-xs text-emerald-200/70">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
               <Compass size={16} />
             </div>
             <div>
-              <span className="font-bold text-slate-900 text-sm">NavikX Cusco</span>
-              <p className="text-[11px] text-slate-500">{t.footerRights}</p>
+              <span className="font-bold text-white text-sm">NavikX Cusco</span>
+              <p className="text-[11px] text-emerald-300/70">{t.footerRights}</p>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-semibold">
             <button
               onClick={() => setIsComplaintsOpen(true)}
-              className="text-amber-600 hover:text-amber-700 flex items-center gap-1.5 cursor-pointer"
+              className="text-amber-400 hover:text-amber-300 flex items-center gap-1.5 cursor-pointer"
             >
               <BookOpen size={14} />
               <span>{t.complaintsBook}</span>
@@ -940,7 +940,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             <span>•</span>
             <button
               onClick={() => setIsTermsOpen(true)}
-              className="text-emerald-700 hover:text-emerald-800 flex items-center gap-1.5 cursor-pointer"
+              className="text-emerald-300 hover:text-white flex items-center gap-1.5 cursor-pointer"
             >
               <Lock size={14} />
               <span>{t.legalTerms}</span>
