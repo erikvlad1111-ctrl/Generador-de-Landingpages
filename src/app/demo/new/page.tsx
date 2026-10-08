@@ -2746,12 +2746,11 @@ export default function NewLandingDemo() {
                 : 'bg-white text-slate-800 border-slate-200'
             }`}>
 
-              {/* 0. PLANTILLA DISEÑO 6: EMERALD EXPLORER (NAVIKX DEEP TEAL BENTO) */}
-              {/* 0. PLANTILLA DISEÑO 6: EMERALD EXPLORER (NAVIKX FOREST TEAL OSCURO-CLARO) */}
+              {/* 0. PLANTILLA DISEÑO 6: EMERALD EXPLORER (NAVIKX DEEP PETROL TEAL AZUL-VERDOSO) */}
               {template === 'emerald-explorer' && (
-                <div className="flex flex-col min-h-full bg-gradient-to-b from-[#0c3531] via-[#082623] to-[#041716] text-emerald-50">
+                <div className="flex flex-col min-h-full bg-gradient-to-b from-[#08283f] via-[#051f33] to-[#02111d] text-emerald-50">
                   {/* Top Bar Navigation */}
-                  <div className="px-3.5 py-2.5 flex items-center justify-between border-b border-white/10 bg-[#0c3531]/70 backdrop-blur-md sticky top-0 z-20 shadow-xs">
+                  <div className="px-3.5 py-2.5 flex items-center justify-between border-b border-white/10 bg-[#08283f]/70 backdrop-blur-md sticky top-0 z-20 shadow-xs">
                     <div className="flex items-center gap-1.5">
                       <div className="w-5 h-5 rounded-lg bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-[10px]">
                         🌲
@@ -2819,7 +2818,7 @@ export default function NewLandingDemo() {
                         />
 
                         {/* Fade suave únicamente abajo para el texto de precio */}
-                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#041716] via-[#041716]/60 to-transparent z-10" />
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#08283f] via-[#08283f]/60 to-transparent z-10" />
                         
                         {/* Floating Local Experts Chip con Levitación */}
                         <div className="absolute top-2 left-2 z-20 bg-black/40 backdrop-blur-md border border-white/20 px-2 py-1 rounded-xl text-[8px] space-y-0.5 shadow-lg animate-float-badge">
@@ -2963,7 +2962,7 @@ export default function NewLandingDemo() {
                   </div>
 
                   {/* Sticky Bottom Navigation Bar with Coral Button */}
-                  <div className="mt-auto p-2.5 bg-[#041716]/80 backdrop-blur-xl border-t border-white/10 flex items-center justify-between gap-2 text-[9px] sticky bottom-0 z-20">
+                  <div className="mt-auto p-2.5 bg-[#02111d]/80 backdrop-blur-xl border-t border-white/10 flex items-center justify-between gap-2 text-[9px] sticky bottom-0 z-20">
                     <div className="flex items-center gap-2 text-emerald-300/80 text-[8px]">
                       <div>
                         <span className="font-bold text-white block">50+</span>
