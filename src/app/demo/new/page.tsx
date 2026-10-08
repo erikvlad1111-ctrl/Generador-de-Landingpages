@@ -2747,24 +2747,25 @@ export default function NewLandingDemo() {
             }`}>
 
               {/* 0. PLANTILLA DISEÑO 6: EMERALD EXPLORER (NAVIKX DEEP TEAL BENTO) */}
+              {/* 0. PLANTILLA DISEÑO 6: EMERALD EXPLORER (NAVIKX FRESCO Y LUMINOSO BENTO) */}
               {template === 'emerald-explorer' && (
-                <div className="flex flex-col min-h-full bg-gradient-to-b from-[#061d1b] via-[#041716] to-[#020e0d] text-emerald-50">
+                <div className="flex flex-col min-h-full bg-gradient-to-b from-[#F2FBF8] via-[#E8F8F3] to-[#F4FCF9] text-slate-800">
                   {/* Top Bar Navigation */}
-                  <div className="px-3.5 py-2.5 flex items-center justify-between border-b border-emerald-900/50 bg-[#041716]/80 backdrop-blur-md sticky top-0 z-20">
+                  <div className="px-3.5 py-2.5 flex items-center justify-between border-b border-emerald-900/10 bg-white/80 backdrop-blur-md sticky top-0 z-20 shadow-xs">
                     <div className="flex items-center gap-1.5">
-                      <div className="w-5 h-5 rounded-lg bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-[10px]">
+                      <div className="w-5 h-5 rounded-lg bg-emerald-100 border border-emerald-300 flex items-center justify-center text-[10px]">
                         🌲
                       </div>
                       <div>
-                        <span className="text-[10px] font-black tracking-wider text-white block leading-tight">
-                          NavikX <span className="text-emerald-400 font-medium text-[8px]">Tours</span>
+                        <span className="text-[10px] font-black tracking-wider text-slate-900 block leading-tight">
+                          NavikX <span className="text-emerald-700 font-semibold text-[8px]">Tours</span>
                         </span>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-1.5">
                       {/* Language pills */}
-                      <div className="flex items-center bg-emerald-950/80 rounded-md p-0.5 border border-emerald-800/60">
+                      <div className="flex items-center bg-white rounded-md p-0.5 border border-slate-200">
                         {selectedLanguages.map(l => (
                           <button
                             key={l}
@@ -2774,7 +2775,7 @@ export default function NewLandingDemo() {
                               setLanguage(l);
                             }}
                             className={`px-1.5 py-0.5 rounded text-[7px] font-black uppercase transition-all ${
-                              l === language ? 'bg-emerald-500 text-slate-950 shadow-xs' : 'text-emerald-300 hover:text-white'
+                              l === language ? 'bg-emerald-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
                             }`}
                           >
                             {l.toUpperCase()}
@@ -2792,24 +2793,24 @@ export default function NewLandingDemo() {
                   <div className="p-3.5 space-y-3">
                     {/* Hero Headline & Subtitle */}
                     <div className="space-y-1">
-                      <div className="inline-flex items-center gap-1.5 bg-emerald-950/90 border border-emerald-700/60 px-2 py-0.5 rounded-full text-[8px] font-black text-emerald-300">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                      <div className="inline-flex items-center gap-1.5 bg-white/90 border border-emerald-300 px-2 py-0.5 rounded-full text-[8px] font-black text-emerald-800 shadow-xs">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                         Explore. Dream. Discover.
                       </div>
-                      <h3 className="text-base font-black text-white leading-tight tracking-tight">
+                      <h3 className="text-base font-black text-slate-900 leading-tight tracking-tight">
                         Live Your <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-emerald-400">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-500">
                           Adventure.
                         </span>
                       </h3>
-                      <p className="text-[9px] text-emerald-200/80 line-clamp-2 leading-relaxed">
+                      <p className="text-[9px] text-slate-600 line-clamp-2 leading-relaxed">
                         Explore breathtaking places and create unforgettable memories around Cusco.
                       </p>
                     </div>
 
                     {/* Featured Hero Image Frame con Silueta Orgánica Limpia (Fiel al diseño NavikX) */}
                     <div className="relative py-1 flex items-center justify-center">
-                      <div className="absolute inset-0 bg-emerald-500/15 rounded-full blur-xl pointer-events-none" />
+                      <div className="absolute inset-0 bg-emerald-400/20 rounded-full blur-xl pointer-events-none" />
                       
                       <div className="relative h-44 w-full rounded-[24px] rounded-tr-[55px] rounded-br-[65px] rounded-bl-[20px] overflow-hidden shadow-xl">
                         <Image 
@@ -2821,7 +2822,7 @@ export default function NewLandingDemo() {
                         />
 
                         {/* Fade suave únicamente abajo para el texto de precio */}
-                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#041716] via-[#041716]/60 to-transparent z-10" />
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-950/80 via-slate-950/40 to-transparent z-10" />
                         
                         {/* Floating Local Experts Chip con Levitación */}
                         <div className="absolute top-2 left-2 z-20 bg-black/40 backdrop-blur-md border border-white/20 px-2 py-1 rounded-xl text-[8px] space-y-0.5 shadow-lg animate-float-badge">
@@ -2836,7 +2837,7 @@ export default function NewLandingDemo() {
                           <span className="text-emerald-100 text-[8px] font-bold px-1.5 truncate">
                             {name || 'Live Your Adventure'}
                           </span>
-                          <span className="emerald-shimmer-btn bg-emerald-400 text-slate-950 font-black text-[9px] px-2 py-0.5 rounded-lg shadow-sm">
+                          <span className="emerald-shimmer-btn bg-emerald-500 text-white font-black text-[9px] px-2 py-0.5 rounded-lg shadow-sm">
                             {price || '$350 USD'}
                           </span>
                         </div>
@@ -2844,16 +2845,16 @@ export default function NewLandingDemo() {
                     </div>
 
                     {/* Floating Pill Search Bar (Glassmorphism Suave con Pulso de Brillo) */}
-                    <div className="bg-white/[0.07] backdrop-blur-xl border border-white/20 rounded-2xl p-1.5 flex items-center justify-between text-[8px] text-emerald-100 shadow-lg animate-pill-glow">
-                      <div className="flex items-center gap-1 px-1.5 py-0.5 border-r border-white/10 flex-1 truncate">
-                        <MapPin size={9} className="text-emerald-400 shrink-0" />
+                    <div className="bg-white/85 backdrop-blur-xl border border-white rounded-2xl p-1.5 flex items-center justify-between text-[8px] text-slate-800 shadow-[0_10px_25px_rgba(4,23,22,0.06)] animate-pill-glow">
+                      <div className="flex items-center gap-1 px-1.5 py-0.5 border-r border-slate-200 flex-1 truncate">
+                        <MapPin size={9} className="text-emerald-600 shrink-0" />
                         <span className="truncate">{destination || 'Where to?'}</span>
                       </div>
-                      <div className="flex items-center gap-1 px-1.5 py-0.5 border-r border-white/10 shrink-0">
-                        <Calendar size={9} className="text-emerald-400" />
+                      <div className="flex items-center gap-1 px-1.5 py-0.5 border-r border-slate-200 shrink-0">
+                        <Calendar size={9} className="text-emerald-600" />
                         <span>{duration || 'Dates'}</span>
                       </div>
-                      <div className="emerald-shimmer-btn bg-gradient-to-r from-teal-400 to-emerald-400 text-slate-950 font-black px-2.5 py-1 rounded-xl shrink-0 flex items-center gap-1 shadow-xs">
+                      <div className="emerald-shimmer-btn bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-black px-2.5 py-1 rounded-xl shrink-0 flex items-center gap-1 shadow-xs">
                         <Search size={9} />
                         <span>Search</span>
                       </div>
@@ -2861,57 +2862,57 @@ export default function NewLandingDemo() {
 
                     {/* 3 Bento Benefit Cards (Flotantes Translúcidas con Animación) */}
                     <div className="grid grid-cols-3 gap-1.5 text-center text-[8px]">
-                      <div className="glass-floating-card p-2 rounded-xl space-y-0.5 shadow-sm animate-emerald-float">
-                        <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 mx-auto flex items-center justify-center text-[10px] mb-1">
+                      <div className="glass-floating-card p-2 rounded-xl space-y-0.5 shadow-xs animate-emerald-float">
+                        <span className="w-5 h-5 rounded-lg bg-emerald-100 text-emerald-700 mx-auto flex items-center justify-center text-[10px] mb-1">
                           🏠
                         </span>
-                        <span className="font-black text-white block line-clamp-1">Expert Guides</span>
-                        <span className="text-[7px] text-emerald-300/70 block line-clamp-1">Local insights</span>
+                        <span className="font-black text-slate-900 block line-clamp-1">Expert Guides</span>
+                        <span className="text-[7px] text-slate-500 block line-clamp-1">Local insights</span>
                       </div>
-                      <div className="glass-floating-card p-2 rounded-xl space-y-0.5 shadow-sm animate-emerald-float-delayed">
-                        <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 mx-auto flex items-center justify-center text-[10px] mb-1">
+                      <div className="glass-floating-card p-2 rounded-xl space-y-0.5 shadow-xs animate-emerald-float-delayed">
+                        <span className="w-5 h-5 rounded-lg bg-teal-100 text-teal-700 mx-auto flex items-center justify-center text-[10px] mb-1">
                           📋
                         </span>
-                        <span className="font-black text-white block line-clamp-1">Tailored Plans</span>
-                        <span className="text-[7px] text-emerald-300/70 block line-clamp-1">Custom trips</span>
+                        <span className="font-black text-slate-900 block line-clamp-1">Tailored Plans</span>
+                        <span className="text-[7px] text-slate-500 block line-clamp-1">Custom trips</span>
                       </div>
-                      <div className="glass-floating-card p-2 rounded-xl space-y-0.5 shadow-sm animate-emerald-float-alt">
-                        <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 mx-auto flex items-center justify-center text-[10px] mb-1">
+                      <div className="glass-floating-card p-2 rounded-xl space-y-0.5 shadow-xs animate-emerald-float-alt">
+                        <span className="w-5 h-5 rounded-lg bg-amber-100 text-amber-700 mx-auto flex items-center justify-center text-[10px] mb-1">
                           🛡️
                         </span>
-                        <span className="font-black text-white block line-clamp-1">Best Price</span>
-                        <span className="text-[7px] text-emerald-300/70 block line-clamp-1">Top deals</span>
+                        <span className="font-black text-slate-900 block line-clamp-1">Best Price</span>
+                        <span className="text-[7px] text-slate-500 block line-clamp-1">Top deals</span>
                       </div>
                     </div>
 
                     {/* Popular Destinations Slider */}
                     <div className="space-y-2 pt-1">
                       <div className="flex items-center justify-between text-[10px]">
-                        <span className="font-black text-white flex items-center gap-1">
+                        <span className="font-black text-slate-900 flex items-center gap-1">
                           Popular Destinations
                         </span>
                         <div className="flex items-center gap-1">
-                          <span className="w-4 h-4 rounded-full bg-white/[0.08] border border-white/15 flex items-center justify-center text-[8px] text-emerald-300">
+                          <span className="w-4 h-4 rounded-full bg-white border border-slate-200 flex items-center justify-center text-[8px] text-slate-700 shadow-xs">
                             ‹
                           </span>
-                          <span className="w-4 h-4 rounded-full bg-emerald-400 text-slate-950 font-bold flex items-center justify-center text-[8px]">
+                          <span className="w-4 h-4 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-[8px] shadow-xs">
                             ›
                           </span>
                         </div>
                       </div>
 
                       {/* Destination Card 1 */}
-                      <div className="bg-white/[0.04] backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden p-2 space-y-2 shadow-md">
+                      <div className="glass-floating-card rounded-2xl overflow-hidden p-2 space-y-2 shadow-xs">
                         <div className="relative h-28 rounded-xl overflow-hidden">
                           <Image src={activeHeroImg} alt="Popular Destination" fill sizes="300px" className="object-cover" />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                           
                           {/* Rating chip & Heart */}
                           <div className="absolute top-1.5 inset-x-1.5 flex items-center justify-between">
-                            <span className="bg-white/[0.15] backdrop-blur-md text-amber-300 font-bold text-[8px] px-1.5 py-0.5 rounded-full flex items-center gap-0.5 border border-white/20">
+                            <span className="bg-white/85 backdrop-blur-md text-amber-600 font-bold text-[8px] px-1.5 py-0.5 rounded-full flex items-center gap-0.5 border border-white">
                               ★ 4.8
                             </span>
-                            <span className="w-5 h-5 rounded-full bg-white/[0.15] backdrop-blur-md text-emerald-300 flex items-center justify-center text-[9px] border border-white/20">
+                            <span className="w-5 h-5 rounded-full bg-white/85 backdrop-blur-md text-rose-500 flex items-center justify-center text-[9px] border border-white">
                               ♥
                             </span>
                           </div>
@@ -2924,11 +2925,11 @@ export default function NewLandingDemo() {
 
                         <div className="flex items-center justify-between pt-0.5">
                           {/* Avatar Stack */}
-                          <div className="flex items-center gap-1 text-[8px] text-emerald-200/80">
+                          <div className="flex items-center gap-1 text-[8px] text-slate-500">
                             <div className="flex -space-x-1.5">
-                              <div className="w-4 h-4 rounded-full bg-amber-400 border border-[#041716]" />
-                              <div className="w-4 h-4 rounded-full bg-teal-400 border border-[#041716]" />
-                              <div className="w-4 h-4 rounded-full bg-emerald-400 border border-[#041716]" />
+                              <div className="w-4 h-4 rounded-full bg-amber-400 border border-white" />
+                              <div className="w-4 h-4 rounded-full bg-teal-400 border border-white" />
+                              <div className="w-4 h-4 rounded-full bg-emerald-500 border border-white" />
                             </div>
                             <span>236+ Travelers</span>
                           </div>
