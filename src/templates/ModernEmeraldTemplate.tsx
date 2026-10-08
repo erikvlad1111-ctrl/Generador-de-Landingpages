@@ -351,12 +351,12 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   return (
     <div className="min-h-screen bg-[#041716] text-slate-100 font-sans selection:bg-[#10b981] selection:text-[#041716] overflow-x-hidden relative">
       
-      {/* Luces Ambientales y Orbes Flotantes (Deep Teal + Glow Esmeralda + Acento Cálido) */}
+      {/* Luces Ambientales y Orbes Flotantes en Movimiento Continuo (Deep Teal + Glow Esmeralda) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute -top-32 right-10 w-[550px] h-[550px] bg-emerald-500/15 rounded-full blur-[140px] opacity-70 animate-pulse" />
-        <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-teal-500/10 rounded-full blur-[160px] opacity-60" />
-        <div className="absolute top-2/3 right-1/4 w-[650px] h-[650px] bg-emerald-600/10 rounded-full blur-[150px] opacity-50" />
-        <div className="absolute -bottom-32 left-1/3 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[140px] opacity-40" />
+        <div className="absolute -top-32 right-10 w-[550px] h-[550px] bg-emerald-500/20 rounded-full blur-[140px] animate-emerald-glow" />
+        <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-teal-500/15 rounded-full blur-[160px] animate-emerald-glow [animation-delay:2.5s]" />
+        <div className="absolute top-2/3 right-1/4 w-[650px] h-[650px] bg-emerald-600/15 rounded-full blur-[150px] animate-emerald-glow [animation-delay:5s]" />
+        <div className="absolute -bottom-32 left-1/3 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[140px] animate-emerald-glow [animation-delay:3.5s]" />
       </div>
 
       {/* 1. TOP HEADER NAVIGATION CON TRANSPARENCIA GLASSMORPHISM */}
@@ -408,7 +408,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
             <button
               onClick={() => handleOpenAction(data.name)}
-              className="bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2"
+              className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2"
             >
               <MessageCircle size={16} />
               <span>{isWhatsapp ? t.whatsappBtn : isQuote ? t.quoteBtn : t.planYourTripBtn}</span>
@@ -436,15 +436,15 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         )}
       </header>
 
-      {/* 2. HERO PRINCIPAL CON FOTO SIN BORDES VISIBLES + ESTILO FLOTANTE */}
+      {/* 2. HERO PRINCIPAL CON FOTO SIN BORDES VISIBLES + ESTILOS FLOTANTES ACTIVOS */}
       <section id="inicio" className="relative z-10 pt-8 sm:pt-16 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
           
           {/* Columna Izquierda: Copys + Buscador Píldora Flotante + Beneficios */}
           <div className="lg:col-span-7 space-y-6 sm:space-y-8">
             
-            {/* Badge de Temporada Flotante */}
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] backdrop-blur-xl border border-white/15 text-emerald-300 text-xs font-bold shadow-lg shadow-emerald-950/40 hover:scale-105 transition-transform">
+            {/* Badge de Temporada Flotante con Levitación Continua */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.08] backdrop-blur-xl border border-white/20 text-emerald-300 text-xs font-bold shadow-lg shadow-emerald-950/40 animate-float-badge">
               <Sparkles size={14} className="text-emerald-400" />
               <span>{heroBadge}</span>
             </div>
@@ -473,8 +473,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               {heroSubtitle}
             </p>
 
-            {/* BARRA FLOTANTE DE BÚSQUEDA TIPO PÍLDORA (GLASSMORPHISM ULTRA SUAVE) */}
-            <div className="p-2 sm:p-2.5 bg-white/[0.05] backdrop-blur-2xl border border-white/20 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 max-w-xl hover:border-emerald-400/40 hover:bg-white/[0.08] transition-all duration-300">
+            {/* BARRA FLOTANTE DE BÚSQUEDA TIPO PÍLDORA (GLOW Y LEVITACIÓN CONSTANTE) */}
+            <div className="p-2 sm:p-2.5 bg-white/[0.06] backdrop-blur-2xl border border-white/20 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 max-w-xl animate-pill-glow transition-all duration-300">
               <div className="flex items-center gap-2.5 px-4 py-2 flex-1 border-b sm:border-b-0 sm:border-r border-white/10 text-xs">
                 <MapPin size={16} className="text-emerald-400 shrink-0" />
                 <div className="min-w-0">
@@ -494,33 +494,33 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               <button
                 type="button"
                 onClick={() => handleOpenAction(data.name)}
-                className="bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-300 hover:to-emerald-300 text-[#041716] font-black text-xs px-6 py-3 rounded-full transition-all shadow-md shadow-emerald-500/30 flex items-center justify-center gap-1.5 cursor-pointer shrink-0 hover:scale-105 active:scale-95"
+                className="emerald-shimmer-btn bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-300 hover:to-emerald-300 text-[#041716] font-black text-xs px-6 py-3 rounded-full transition-all shadow-md shadow-emerald-500/30 flex items-center justify-center gap-1.5 cursor-pointer shrink-0 hover:scale-105 active:scale-95"
               >
                 <Search size={14} />
                 <span>{t.searchBtn}</span>
               </button>
             </div>
 
-            {/* 3 TARJETAS BENTO FLOTANTES TRANSLÚCIDAS */}
+            {/* 3 TARJETAS BENTO FLOTANTES TRANSLÚCIDAS CON LEVITACIÓN ESCALONADA */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
-              <div className="p-4 rounded-3xl bg-white/[0.03] backdrop-blur-xl border border-white/10 hover:border-emerald-400/40 hover:bg-white/[0.07] hover:-translate-y-1.5 transition-all duration-300 space-y-1.5 group shadow-xl">
-                <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/30 group-hover:scale-110 transition-transform">
+              <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float space-y-1.5 group">
+                <div className="w-8 h-8 rounded-xl bg-emerald-500/25 text-emerald-300 flex items-center justify-center border border-emerald-400/30 group-hover:scale-110 transition-transform">
                   <Compass size={16} />
                 </div>
                 <h4 className="text-xs font-black text-white">{t.benefit1Title}</h4>
                 <p className="text-[11px] text-emerald-200/60 leading-snug">{t.benefit1Desc}</p>
               </div>
 
-              <div className="p-4 rounded-3xl bg-white/[0.03] backdrop-blur-xl border border-white/10 hover:border-emerald-400/40 hover:bg-white/[0.07] hover:-translate-y-1.5 transition-all duration-300 space-y-1.5 group shadow-xl">
-                <div className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/30 group-hover:scale-110 transition-transform">
+              <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float-delayed space-y-1.5 group">
+                <div className="w-8 h-8 rounded-xl bg-teal-500/25 text-teal-300 flex items-center justify-center border border-teal-400/30 group-hover:scale-110 transition-transform">
                   <FileText size={16} />
                 </div>
                 <h4 className="text-xs font-black text-white">{t.benefit2Title}</h4>
                 <p className="text-[11px] text-emerald-200/60 leading-snug">{t.benefit2Desc}</p>
               </div>
 
-              <div className="p-4 rounded-3xl bg-white/[0.03] backdrop-blur-xl border border-white/10 hover:border-emerald-400/40 hover:bg-white/[0.07] hover:-translate-y-1.5 transition-all duration-300 space-y-1.5 group shadow-xl">
-                <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/30 group-hover:scale-110 transition-transform">
+              <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float-alt space-y-1.5 group">
+                <div className="w-8 h-8 rounded-xl bg-amber-500/25 text-amber-300 flex items-center justify-center border border-amber-400/30 group-hover:scale-110 transition-transform">
                   <ShieldCheck size={16} />
                 </div>
                 <h4 className="text-xs font-black text-white">{t.benefit3Title}</h4>
@@ -533,8 +533,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           {/* Columna Derecha: FOTO DEL HERO CON ARCO ORGÁNICO FLUIDO + DIFUMINADO PERIMETRAL PROFUNDO */}
           <div className="lg:col-span-5 relative flex items-center justify-center">
             
-            {/* Halo ambiental desenfocado flotante detrás de la imagen */}
-            <div className="absolute -inset-10 bg-gradient-to-tr from-emerald-500/30 via-teal-400/20 to-amber-500/15 rounded-full blur-[90px] pointer-events-none opacity-80" />
+            {/* Halo ambiental desenfocado flotante detrás de la imagen con animación de respiración */}
+            <div className="absolute -inset-10 bg-gradient-to-tr from-emerald-500/30 via-teal-400/20 to-amber-500/15 rounded-full blur-[90px] pointer-events-none animate-emerald-glow" />
 
             {/* Contenedor con Arco Superior Orgánico y Esquinas Ultra Redondeadas */}
             <div className="relative w-full aspect-[4/4.9] max-w-md mx-auto rounded-t-[90px] sm:rounded-t-[120px] rounded-b-[40px] sm:rounded-b-[50px] overflow-hidden group shadow-[0_25px_60px_rgba(0,0,0,0.7)]">
@@ -571,8 +571,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#041716] via-[#041716]/70 to-transparent z-10" />
               <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#041716] via-[#041716]/70 to-transparent z-10" />
 
-              {/* Chip Flotante Superior: Local Experts (Glassmorphism Translúcido Flotante) */}
-              <div className="absolute top-5 left-5 z-20 bg-white/[0.1] backdrop-blur-2xl px-4 py-2 rounded-2xl border border-white/20 shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center gap-2.5 hover:scale-105 hover:-translate-y-1 transition-all duration-300">
+              {/* Chip Flotante Superior: Local Experts con Levitación Continua */}
+              <div className="absolute top-5 left-5 z-20 bg-white/[0.12] backdrop-blur-2xl px-4 py-2 rounded-2xl border border-white/20 shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center gap-2.5 animate-float-badge">
                 <div className="w-8 h-8 rounded-xl bg-emerald-500/25 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs">
                   <Award size={16} />
                 </div>
@@ -582,16 +582,16 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 </div>
               </div>
 
-              {/* Tarjeta Flotante Inferior de Tarifa (Glassmorphism Translúcido Flotante) */}
-              <div className="absolute bottom-5 inset-x-5 z-20 p-4 rounded-3xl bg-white/[0.1] backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex items-center justify-between gap-3 hover:-translate-y-1 transition-all duration-300">
+              {/* Tarjeta Flotante Inferior de Tarifa con Levitación Suave */}
+              <div className="absolute bottom-5 inset-x-5 z-20 p-4 rounded-3xl bg-white/[0.12] backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex items-center justify-between gap-3 animate-emerald-float-alt">
                 <div className="min-w-0">
-                  <span className="text-[10px] text-emerald-200/80 font-bold block">Tarifa Oficial por Persona:</span>
+                  <span className="text-[10px] text-emerald-200/90 font-bold block">Tarifa Oficial por Persona:</span>
                   <span className="text-2xl font-black text-white">{data.price || '$350 USD'}</span>
                 </div>
                 <button
                   type="button"
                   onClick={() => handleOpenAction(data.name)}
-                  className="bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 flex items-center gap-1.5 transition-all cursor-pointer hover:scale-105 active:scale-95"
+                  className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 flex items-center gap-1.5 transition-all cursor-pointer hover:scale-105 active:scale-95"
                 >
                   <span>Reservar</span>
                   <ArrowRight size={14} />
@@ -603,6 +603,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
         </div>
       </section>
+
 
       {/* 3. POPULAR DESTINATIONS (CATÁLOGO DE TOURS EN CAROUSEL DE CARDS CON CORAZONES Y PRECIOS) */}
       <section id="destinos" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
@@ -637,7 +638,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             return (
               <div 
                 key={tour.id || idx}
-                className="group rounded-3xl bg-white/[0.04] backdrop-blur-2xl border border-white/10 hover:border-emerald-400/50 hover:bg-white/[0.07] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] hover:shadow-[0_25px_60px_rgba(4,23,22,0.9)] hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between"
+                className="group rounded-3xl glass-floating-card overflow-hidden flex flex-col justify-between"
               >
                 {/* Imagen del Tour con Chips y Botón Favorito */}
                 <div className="relative h-56 w-full overflow-hidden bg-emerald-950">
@@ -699,7 +700,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                     <button
                       type="button"
                       onClick={() => handleOpenAction(tour.title)}
-                      className="bg-emerald-500/20 hover:bg-emerald-400 hover:text-[#041716] text-emerald-300 font-bold text-xs px-3.5 py-1.5 rounded-full border border-emerald-400/40 transition-all cursor-pointer hover:scale-105 active:scale-95"
+                      className="emerald-shimmer-btn bg-emerald-500/20 hover:bg-emerald-400 hover:text-[#041716] text-emerald-300 font-bold text-xs px-3.5 py-1.5 rounded-full border border-emerald-400/40 transition-all cursor-pointer hover:scale-105 active:scale-95"
                     >
                       {t.exploreBtn}
                     </button>
@@ -741,10 +742,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </div>
           </div>
 
-          {/* Bento Card 2: 1,250+ Happy Travelers (Glassmorphism) */}
-          <div className="p-6 rounded-3xl bg-white/[0.04] backdrop-blur-2xl border border-white/10 shadow-xl flex flex-col justify-between space-y-4 hover:border-emerald-400/40 hover:bg-white/[0.07] hover:-translate-y-1.5 transition-all duration-300">
+          {/* Bento Card 2: 1,250+ Happy Travelers (Glassmorphism con Levitación) */}
+          <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float-delayed">
             <div className="flex items-center justify-between">
-              <span className="text-3xl font-black text-white">1,250+</span>
+              <span className="text-3xl font-black text-white animate-number-glow">1,250+</span>
               <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs">
                 <Users size={20} />
               </div>
@@ -755,10 +756,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </div>
           </div>
 
-          {/* Bento Card 3: 98% Positive Reviews (Glassmorphism) */}
-          <div className="p-6 rounded-3xl bg-white/[0.04] backdrop-blur-2xl border border-white/10 shadow-xl flex flex-col justify-between space-y-4 hover:border-amber-400/40 hover:bg-white/[0.07] hover:-translate-y-1.5 transition-all duration-300">
+          {/* Bento Card 3: 98% Positive Reviews (Glassmorphism con Levitación) */}
+          <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float">
             <div className="flex items-center justify-between">
-              <span className="text-3xl font-black text-amber-300">98%</span>
+              <span className="text-3xl font-black text-amber-300 animate-number-glow">98%</span>
               <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/40 shadow-xs">
                 <Star size={20} className="fill-amber-400 text-amber-400" />
               </div>
@@ -922,11 +923,11 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </div>
           </div>
 
-          {/* Botón Coral / Naranja Llamativo (Matching imagen) */}
+          {/* Botón Coral / Naranja Llamativo (Matching imagen con Shimmer y Levitación) */}
           <button
             type="button"
             onClick={() => handleOpenAction(data.name)}
-            className="w-full md:w-auto bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 hover:from-orange-400 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm px-8 py-3.5 rounded-full shadow-lg shadow-orange-500/30 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 shrink-0"
+            className="emerald-shimmer-btn w-full md:w-auto bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 hover:from-orange-400 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm px-8 py-3.5 rounded-full shadow-[0_10px_25px_rgba(249,115,22,0.4)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 shrink-0"
           >
             <Compass size={16} />
             <span>{t.planYourTripBtn}</span>

@@ -375,5 +375,134 @@ body {
   pointer-events: none;
 }
 
+/* ========================================================
+   EMERALD EXPLORER & MODERN WEB FLOATING ANIMATIONS
+   ======================================================== */
+@keyframes emeraldFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-9px) rotate(0.4deg);
+  }
+}
+
+@keyframes emeraldFloatDelayed {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(8px) rotate(-0.4deg);
+  }
+}
+
+@keyframes emeraldFloatAlt {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+@keyframes emeraldGlowPulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(1) translate(0px, 0px);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.15) translate(20px, -15px);
+  }
+}
+
+@keyframes pillGlow {
+  0%, 100% {
+    box-shadow: 0 10px 40px -10px rgba(16, 185, 129, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.15);
+    transform: translateY(0px);
+  }
+  50% {
+    box-shadow: 0 18px 55px -5px rgba(16, 185, 129, 0.5), 0 0 0 1px rgba(45, 212, 191, 0.45);
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes floatBadgeContinuous {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes autoShimmerEmerald {
+  0% { left: -75%; }
+  35% { left: 160%; }
+  100% { left: 160%; }
+}
+
+.animate-emerald-float {
+  animation: emeraldFloat 5.2s ease-in-out infinite;
+}
+
+.animate-emerald-float-delayed {
+  animation: emeraldFloatDelayed 6.2s ease-in-out infinite;
+}
+
+.animate-emerald-float-alt {
+  animation: emeraldFloatAlt 4.6s ease-in-out infinite;
+}
+
+.animate-emerald-glow {
+  animation: emeraldGlowPulse 8s ease-in-out infinite;
+}
+
+.animate-pill-glow {
+  animation: pillGlow 3.5s ease-in-out infinite;
+}
+
+.animate-float-badge {
+  animation: floatBadgeContinuous 3.8s ease-in-out infinite;
+}
+
+/* Glassmorphism Floating Card Utility */
+.glass-floating-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.05);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-floating-card:hover {
+  transform: translateY(-8px) scale(1.015);
+  border-color: rgba(45, 212, 191, 0.4);
+  box-shadow: 0 30px 60px rgba(4, 23, 22, 0.85), 0 0 25px rgba(16, 185, 129, 0.2);
+}
+
+/* Shimmer Button for Emerald CTAs */
+.emerald-shimmer-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.emerald-shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -75%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: rotate(25deg);
+  animation: autoShimmerEmerald 3.8s infinite;
+  pointer-events: none;
+}
+
+
 
 

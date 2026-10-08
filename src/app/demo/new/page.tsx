@@ -2842,28 +2842,28 @@ export default function NewLandingDemo() {
                         <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-[#041716] via-[#041716]/70 to-transparent z-10" />
                         <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-[#041716] via-[#041716]/70 to-transparent z-10" />
                         
-                        {/* Floating Local Experts Chip */}
-                        <div className="absolute top-2 left-2 z-20 bg-white/[0.12] backdrop-blur-md border border-white/20 px-2 py-1 rounded-xl text-[8px] space-y-0.5 shadow-lg">
+                        {/* Floating Local Experts Chip con Levitación */}
+                        <div className="absolute top-2 left-2 z-20 bg-white/[0.12] backdrop-blur-md border border-white/20 px-2 py-1 rounded-xl text-[8px] space-y-0.5 shadow-lg animate-float-badge">
                           <div className="flex items-center gap-1 text-emerald-300 font-bold">
                             <span>📍</span> Local Experts
                           </div>
                           <span className="text-[7px] text-emerald-100/70 block">Authentic experiences</span>
                         </div>
 
-                        {/* Bottom Price Tag on Hero (Translúcido Flotante) */}
-                        <div className="absolute bottom-2 inset-x-2 z-20 flex items-center justify-between p-1 rounded-xl bg-white/[0.1] backdrop-blur-md border border-white/20 shadow-md">
+                        {/* Bottom Price Tag on Hero (Translúcido Flotante con Levitación) */}
+                        <div className="absolute bottom-2 inset-x-2 z-20 flex items-center justify-between p-1 rounded-xl bg-white/[0.1] backdrop-blur-md border border-white/20 shadow-md animate-emerald-float-alt">
                           <span className="text-emerald-100 text-[8px] font-bold px-1.5 truncate">
                             {name || 'Live Your Adventure'}
                           </span>
-                          <span className="bg-emerald-400 text-slate-950 font-black text-[9px] px-2 py-0.5 rounded-lg shadow-sm">
+                          <span className="emerald-shimmer-btn bg-emerald-400 text-slate-950 font-black text-[9px] px-2 py-0.5 rounded-lg shadow-sm">
                             {price || '$350 USD'}
                           </span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Floating Pill Search Bar (Glassmorphism Suave) */}
-                    <div className="bg-white/[0.07] backdrop-blur-xl border border-white/20 rounded-2xl p-1.5 flex items-center justify-between text-[8px] text-emerald-100 shadow-lg">
+                    {/* Floating Pill Search Bar (Glassmorphism Suave con Pulso de Brillo) */}
+                    <div className="bg-white/[0.07] backdrop-blur-xl border border-white/20 rounded-2xl p-1.5 flex items-center justify-between text-[8px] text-emerald-100 shadow-lg animate-pill-glow">
                       <div className="flex items-center gap-1 px-1.5 py-0.5 border-r border-white/10 flex-1 truncate">
                         <MapPin size={9} className="text-emerald-400 shrink-0" />
                         <span className="truncate">{destination || 'Where to?'}</span>
@@ -2872,29 +2872,29 @@ export default function NewLandingDemo() {
                         <Calendar size={9} className="text-emerald-400" />
                         <span>{duration || 'Dates'}</span>
                       </div>
-                      <div className="bg-gradient-to-r from-teal-400 to-emerald-400 text-slate-950 font-black px-2.5 py-1 rounded-xl shrink-0 flex items-center gap-1 shadow-xs">
+                      <div className="emerald-shimmer-btn bg-gradient-to-r from-teal-400 to-emerald-400 text-slate-950 font-black px-2.5 py-1 rounded-xl shrink-0 flex items-center gap-1 shadow-xs">
                         <Search size={9} />
                         <span>Search</span>
                       </div>
                     </div>
 
-                    {/* 3 Bento Benefit Cards (Flotantes Translúcidas) */}
+                    {/* 3 Bento Benefit Cards (Flotantes Translúcidas con Animación) */}
                     <div className="grid grid-cols-3 gap-1.5 text-center text-[8px]">
-                      <div className="bg-white/[0.04] backdrop-blur-md border border-white/10 p-2 rounded-xl space-y-0.5 shadow-sm">
+                      <div className="glass-floating-card p-2 rounded-xl space-y-0.5 shadow-sm animate-emerald-float">
                         <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 mx-auto flex items-center justify-center text-[10px] mb-1">
                           🏠
                         </span>
                         <span className="font-black text-white block line-clamp-1">Expert Guides</span>
                         <span className="text-[7px] text-emerald-300/70 block line-clamp-1">Local insights</span>
                       </div>
-                      <div className="bg-white/[0.04] backdrop-blur-md border border-white/10 p-2 rounded-xl space-y-0.5 shadow-sm">
+                      <div className="glass-floating-card p-2 rounded-xl space-y-0.5 shadow-sm animate-emerald-float-delayed">
                         <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 mx-auto flex items-center justify-center text-[10px] mb-1">
                           📋
                         </span>
                         <span className="font-black text-white block line-clamp-1">Tailored Plans</span>
                         <span className="text-[7px] text-emerald-300/70 block line-clamp-1">Custom trips</span>
                       </div>
-                      <div className="bg-white/[0.04] backdrop-blur-md border border-white/10 p-2 rounded-xl space-y-0.5 shadow-sm">
+                      <div className="glass-floating-card p-2 rounded-xl space-y-0.5 shadow-sm animate-emerald-float-alt">
                         <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 mx-auto flex items-center justify-center text-[10px] mb-1">
                           🛡️
                         </span>
