@@ -313,7 +313,9 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   const isQuote = data.objective === 'quote';
   const isBoth = data.objective === 'both';
 
-  const heroImg = data.heroImage || 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop';
+  const heroImg = (data.heroImage && !data.heroImage.includes('photo-1526392060635-9d6019884377'))
+    ? data.heroImage
+    : '/images/hero-tourist-cusco.jpg';
   const guideName = data.guideName || 'Carlos Mendoza';
   const guideCert = data.guideCert || 'Guía Oficial DIRCETUR & Operador Autorizado';
   const guidePhone = data.whatsapp || '+51984123456';

@@ -60,6 +60,7 @@ const DEFAULT_TESTIMONIALS: TestimonialItem[] = [
 ];
 
 const HD_CUSCO_PHOTOS = [
+  { title: 'Turista Aventura (Andes Trek)', url: '/images/hero-tourist-cusco.jpg' },
   { title: 'Machu Picchu Clásico', url: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=1200&auto=format&fit=crop' },
   { title: 'Laguna Humantay', url: 'https://images.unsplash.com/photo-1589556264800-08ae9e129a8c?q=80&w=1200&auto=format&fit=crop' },
   { title: 'Montaña 7 Colores', url: 'https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?q=80&w=1200&auto=format&fit=crop' },
@@ -189,7 +190,7 @@ const PRESET_TOURS = [
     template: 'emerald-explorer' as TemplateType,
     language: 'es' as LanguageType,
     tier: 'advance' as PlanTier,
-    imageIndex: 0,
+    imageIndex: 5,
     description: 'Estilo Deep Forest Teal con Bento Grid, buscador flotante píldora, métricas de viajeros y microanimaciones de ultralujo.'
   },
   {
@@ -2810,7 +2811,7 @@ export default function NewLandingDemo() {
                       
                       <div className="relative h-44 w-full rounded-[24px] rounded-tr-[55px] rounded-br-[65px] rounded-bl-[20px] overflow-hidden shadow-xl">
                         <Image 
-                          src={activeHeroImg} 
+                          src={(activeHeroImg && !activeHeroImg.includes('photo-1526392060635-9d6019884377')) ? activeHeroImg : '/images/hero-tourist-cusco.jpg'} 
                           alt="Emerald Explorer Hero" 
                           fill 
                           sizes="400px" 

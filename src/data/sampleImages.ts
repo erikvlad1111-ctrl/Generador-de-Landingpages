@@ -35,5 +35,11 @@ export const SAMPLE_TOUR_IMAGES: GalleryImage[] = [
     url: 'https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?q=80&w=2074&auto=format&fit=crop',
     title: 'Terrazas Circulares de Moray',
     category: 'cultural'
+  },
+  {
+    id: 'img-tourist-hiker',
+    url: '/images/hero-tourist-cusco.jpg',
+    title: 'Turista de Aventura Mirando hacia Arriba (Andes Trek)',
+    category: 'trekking'
   }
 ];
