@@ -42,6 +42,7 @@ import QuoteModal from '@/components/common/QuoteModal';
 import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
 import LegalTermsModal from '@/components/common/LegalTermsModal';
 import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
+import PinterestPinboard from '@/components/common/PinterestPinboard';
 
 interface ModernEmeraldTemplateProps {
   data?: Partial<LandingData>;
@@ -305,10 +306,15 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedTourForQuote, setSelectedTourForQuote] = useState<string>(data.name || 'Expedición Machu Picchu');
   const [favorites, setFavorites] = useState<Record<string, boolean>>({});
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const t = DICTIONARIES[currentLang] || DICTIONARIES.es;
   const tier: PlanTier = data.tier || 'advance';
-  const isFreeOrBasic = tier === 'free' || tier === 'basic';
+  const isFree = tier === 'free';
+  const isBasic = tier === 'basic';
+  const isPro = tier === 'pro';
+  const isAdvance = tier === 'advance';
+  const isFreeOrBasic = isFree || isBasic;
   const isWhatsapp = data.objective === 'whatsapp';
   const isQuote = data.objective === 'quote';
   const isBoth = data.objective === 'both';
@@ -324,6 +330,96 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   const heroTitle = data.hero?.title || data.name || 'Live Your Adventure.';
   const heroSubtitle = data.hero?.subtitle || data.about?.content || 'Explora lugares asombrosos y crea recuerdos inolvidables alrededor de los Andes.';
   const heroBadge = data.hero?.badge || 'NavikX Cusco • Operador Autorizado';
+
+  // Contenido de la Expedición (Acerca de)
+  const aboutTitle = data.about?.title || 'Expediciones Diseñadas por Expertos Andinos';
+  const aboutContent = data.about?.content || 'Nuestra filosofía combina senderismo inmersivo con seguridad biomédica y hotelería de montaña. Cada travesía por los valles y cordilleras del Cusco cuenta con monitoreo satelital, guías acreditados por DIRCETUR y experiencias gastronómicas con productos autóctonos orgánicos.';
+
+  // Fallbacks de Servicios Incluidos y Logística
+  const includedList = (data.includedServices && data.includedServices.length > 0)
+    ? data.includedServices
+    : [
+        'Transporte turístico privado 4x4 climatizado ida y retorno',
+        'Boletos oficiales preferenciales de tren y accesos a Machu Picchu',
+        'Guía oficial colegiado bilingüe DIRCETUR en todas las jornadas',
+        'Monitoreo médico continuo 24/7 con balón de oxígeno medicinal',
+        'Alimentación gourmet andina de autor y estaciones de hidratación',
+        'Bastones de trekking telescópicos de aluminio profesional'
+      ];
+
+  const notIncludedList = (data.notIncluded && data.notIncluded.length > 0)
+    ? data.notIncluded
+    : [
+        'Vuelos comerciales nacionales o internacionales hacia Cusco',
+        'Propinas voluntarias para el equipo de porteadores y choferes',
+        'Seguro personal de viaje internacional (recomendado)'
+      ];
+
+  const whatToBringList = (data.whatToBring && data.whatToBring.length > 0)
+    ? data.whatToBring
+    : [
+        'Documento de identidad / Pasaporte original vigente',
+        'Mochila ergonómica de 20L a 30L con cobertor de lluvia',
+        'Calzado de trekking con suela de buen agarre ya amoldado',
+        'Ropa térmica en capas, chaqueta cortavientos impermeable',
+        'Protector solar FPS 50+, gafas UV400 y sombrero de ala ancha',
+        'Botella o termo reutilizable para recargas de agua'
+      ];
+
+  const trustBadgesList = (data.trustBadges && data.trustBadges.length > 0)
+    ? data.trustBadges
+    : [
+        'Licencia Oficial DIRCETUR Cusco N° 2024-EXP-089',
+        'Sello Internacional Safe Travels WTTC',
+        'Operador Formal RUC 20 Verificado ante SUNAT',
+        'Balón de Oxígeno & Botiquín Médico de Altura Certificado',
+        'Guías Colegiados Bilingües con Certificación WFR',
+        'Póliza de Seguro Turístico contra Accidentes'
+      ];
+
+  const testimonialsList = (data.testimonials && data.testimonials.length > 0)
+    ? data.testimonials
+    : [
+        {
+          name: 'Martín y Claudia Flores',
+          origin: 'Santiago, Chile',
+          comment: 'La mejor experiencia que hemos vivido en Perú. La atención personalizada de Carlos y el cuidado con el oxígeno en la montaña nos permitieron disfrutar de Machu Picchu sin ninguna preocupación.',
+          rating: 5
+        },
+        {
+          name: 'Sarah & David Miller',
+          origin: 'Austin, Texas (USA)',
+          comment: 'Outstanding organization! High-end gear, wonderful trail gourmet food and breathtaking sunrise views. Truly an authentic luxury expedition.',
+          rating: 5
+        },
+        {
+          name: 'Élodie Laurent',
+          origin: 'Lyon, Francia',
+          comment: 'Une équipe extraordinaire, un respect total de la nature et un encadrement sécuritaire impeccable. Les paysages des Andes sont gravés à jamais.',
+          rating: 5
+        }
+      ];
+
+  const faqsList = (data.faqs && data.faqs.length > 0)
+    ? data.faqs
+    : [
+        {
+          q: '¿Cómo prepararse para la altitud en Cusco antes de la caminata?',
+          a: 'Recomendamos llegar a Cusco con al menos 24 a 48 horas de anticipación para aclimatación, hidratarse constantemente, consumir comidas ligeras y utilizar infusiones de coca y muña. Nuestro equipo cuenta además con oxígeno médico preventivo.'
+        },
+        {
+          q: '¿Qué sucede si hay mal tiempo o reprogramaciones climáticas?',
+          a: 'Monitoreamos reportes meteorológicos satelitales en tiempo real. En caso de alertas climáticas, coordinamos rutas alternas seguras o reprogramaciones sin penalidad conforme a las normativas de seguridad de DIRCETUR.'
+        },
+        {
+          q: '¿Se requiere experiencia previa en senderismo de alta montaña?',
+          a: 'Nuestras expediciones están clasificadas con dificultad moderada y avanzan a ritmo personalizado. Cualquier persona con condición física regular puede realizarlas cómodamente con la asistencia de nuestros guías certificados.'
+        },
+        {
+          q: '¿Qué incluye la alimentación durante la expedición?',
+          a: 'Todos los menús son elaborados por cocineros de montaña utilizando insumos andinos frescos de primera calidad. Atendemos requerimientos vegetarianos, veganos o sin gluten previa coordinación.'
+        }
+      ];
 
   const toursList: CatalogTourItem[] = (data.catalogTours && data.catalogTours.length > 0) 
     ? data.catalogTours 
@@ -380,20 +476,23 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
           {/* Menú Desktop Translúcido Flotante */}
           <nav className="hidden md:flex items-center gap-1 bg-white/[0.08] backdrop-blur-xl p-1.5 rounded-full border border-white/15 shadow-lg text-xs font-semibold text-emerald-100">
-            <a href="#inicio" className="px-3.5 py-1.5 rounded-full bg-emerald-500 text-[#041716] font-black shadow-xs transition-all">
+            <a href="#inicio" className="px-3 py-1.5 rounded-full bg-emerald-500 text-[#02111d] font-black shadow-xs transition-all">
               {t.navHome}
             </a>
-            <a href="#destinos" className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+            <a href="#destinos" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navDestinations}
             </a>
-            <a href="#experiencias" className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
-              {t.navExperiences}
-            </a>
-            <a href="#itinerario" className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+            <a href="#itinerario" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navItinerary}
             </a>
-            <a href="#nosotros" className="px-3.5 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
-              {t.navAbout}
+            <a href="#incluye" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+              Servicios
+            </a>
+            <a href="#galeria" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+              Galería
+            </a>
+            <a href="#resenas" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+              Reseñas
             </a>
           </nav>
 
@@ -410,7 +509,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
             <button
               onClick={() => handleOpenAction(data.name)}
-              className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2"
+              className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-300 text-[#02111d] font-black text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2"
             >
               <MessageCircle size={16} />
               <span>{isWhatsapp ? t.whatsappBtn : isQuote ? t.quoteBtn : t.planYourTripBtn}</span>
@@ -431,9 +530,11 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           <div className="md:hidden border-t border-white/10 bg-[#08283f]/95 backdrop-blur-2xl px-4 py-4 space-y-2 text-sm font-semibold animate-in slide-in-from-top-2 shadow-xl">
             <a href="#inicio" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-300">{t.navHome}</a>
             <a href="#destinos" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navDestinations}</a>
-            <a href="#experiencias" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navExperiences}</a>
             <a href="#itinerario" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navItinerary}</a>
-            <a href="#nosotros" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navAbout}</a>
+            <a href="#incluye" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">Servicios Incluidos</a>
+            <a href="#galeria" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">Galería de Fotos</a>
+            <a href="#resenas" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">Testimonios & Reseñas</a>
+            <a href="#faqs" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">Preguntas Frecuentes</a>
           </div>
         )}
       </header>
@@ -681,7 +782,92 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </div>
       </section>
 
-      {/* 4. PLAN YOUR JOURNEY & BENTO STATS CON ESTILO FLOTANTE */}
+      {/* 4. FICHA TÉCNICA DETALLADA & CRÓNICA DE EXPEDICIÓN (MODO ADVANCE) */}
+      <section id="acerca" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          
+          {/* Columna Izquierda: Ficha Técnica en 4 Tarjetas de Cristal */}
+          <div className="lg:col-span-5 grid grid-cols-2 gap-4">
+            <div className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40">
+                <Clock size={20} />
+              </div>
+              <span className="text-[10px] uppercase font-extrabold tracking-wider text-emerald-400 block">Duración</span>
+              <span className="text-base font-black text-white block">{data.duration || '4 Días / 3 Noches'}</span>
+            </div>
+
+            <div className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15">
+              <div className="w-10 h-10 rounded-2xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/40">
+                <Mountain size={20} />
+              </div>
+              <span className="text-[10px] uppercase font-extrabold tracking-wider text-teal-400 block">Altitud Máxima</span>
+              <span className="text-base font-black text-white block">{data.altitude || '4,630 msnm'}</span>
+            </div>
+
+            <div className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15">
+              <div className="w-10 h-10 rounded-2xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center border border-cyan-400/40">
+                <Zap size={20} />
+              </div>
+              <span className="text-[10px] uppercase font-extrabold tracking-wider text-cyan-400 block">Dificultad</span>
+              <span className="text-base font-black text-white block">{data.difficulty || 'Moderada'}</span>
+            </div>
+
+            <div className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15">
+              <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/40">
+                <Users size={20} />
+              </div>
+              <span className="text-[10px] uppercase font-extrabold tracking-wider text-amber-400 block">Modalidad</span>
+              <span className="text-base font-black text-white block">{data.groupType || 'Grupos Reducidos'}</span>
+            </div>
+          </div>
+
+          {/* Columna Derecha: Tarjeta Editorial de la Expedición (Acerca de) */}
+          <div className="lg:col-span-7 p-8 sm:p-10 rounded-[40px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_30px_70px_rgba(0,0,0,0.5)] space-y-6">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold">
+              <Award size={14} />
+              <span>Filosofía de Expedición</span>
+            </div>
+
+            <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
+              {aboutTitle}
+            </h3>
+
+            <p className="text-sm sm:text-base text-emerald-100/80 leading-relaxed font-normal">
+              {aboutContent}
+            </p>
+
+            {/* Perfil del Guía Oficial con Sello */}
+            <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="relative w-12 h-12 rounded-2xl overflow-hidden ring-2 ring-emerald-400/50 shadow-md">
+                  <Image 
+                    src={guideAvatar} 
+                    alt={guideName} 
+                    fill 
+                    sizes="48px" 
+                    className="object-cover" 
+                  />
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-white text-sm">{guideName}</h4>
+                  <p className="text-xs text-emerald-300/80 font-medium">{guideCert}</p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => handleOpenAction(data.name)}
+                className="emerald-shimmer-btn bg-emerald-500 hover:bg-emerald-400 text-[#02111d] font-black text-xs px-5 py-2.5 rounded-full transition-all cursor-pointer shadow-md self-start sm:self-auto"
+              >
+                Consultar con {guideName.split(' ')[0]}
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* 5. PLAN YOUR JOURNEY & BENTO STATS CON ESTILO FLOTANTE */}
       <section id="experiencias" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
           <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
@@ -833,26 +1019,246 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </section>
       )}
 
-      {/* 7. PREGUNTAS FRECUENTES (FAQS) TRANSLÚCIDAS */}
-      {data.faqs && data.faqs.length > 0 && tier !== 'free' && tier !== 'basic' && (
-        <section className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-          <div className="text-center mb-8 space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">{t.faqsTitle}</h2>
-            <p className="text-xs text-emerald-200/70">Todo lo que necesitas saber antes de iniciar tu recorrido.</p>
+      {/* 7. SERVICIOS INCLUIDOS & LOGÍSTICA DE MOCHILA (MODO ADVANCE) */}
+      <section id="incluye" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
+          <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Equipamiento & Confort</span>
+          <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+            Logística Integral de Expedición
+          </h2>
+          <p className="text-xs sm:text-sm text-emerald-200/70">
+            Todo lo necesario para una experiencia segura, gastronómica y de máximo confort en los Andes.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* Columna Izquierda (7 Cols): Qué Incluye con Checks Esmeralda */}
+          <div className="lg:col-span-7 p-7 sm:p-9 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6">
+            <div className="flex items-center justify-between pb-4 border-b border-white/10">
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40">
+                  <CheckCircle2 size={18} />
+                </div>
+                <div>
+                  <h3 className="text-base font-black text-white">Servicios Incluidos</h3>
+                  <p className="text-[11px] text-emerald-300/80">Cobertura garantizada de alta montaña</p>
+                </div>
+              </div>
+              <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                100% Todo Incluido
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {includedList.map((inc, iIdx) => (
+                <div 
+                  key={iIdx}
+                  className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-emerald-400/40 transition-all flex items-start gap-3 group"
+                >
+                  <div className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
+                    <Check size={14} className="stroke-[3]" />
+                  </div>
+                  <span className="text-xs text-emerald-100/90 leading-snug font-medium">
+                    {inc}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="space-y-3">
-            {data.faqs.map((faq, fIdx) => (
-              <div key={fIdx} className="p-5 rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-white/10 hover:border-emerald-400/40 space-y-1.5 transition-all shadow-sm">
-                <h4 className="text-sm font-bold text-emerald-300 flex items-center gap-2">
-                  <span className="text-emerald-400 font-black">Q:</span> {faq.q}
-                </h4>
-                <p className="text-xs text-emerald-100/70 leading-relaxed pl-5">{faq.a}</p>
+          {/* Columna Derecha (5 Cols): Qué Llevar en la Mochila + Qué NO Incluye */}
+          <div className="lg:col-span-5 space-y-6">
+            
+            {/* Tarjeta Qué Llevar (Mochila) */}
+            <div className="p-6 sm:p-7 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-4">
+              <div className="flex items-center gap-2.5 pb-3 border-b border-white/10">
+                <div className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/40">
+                  <Backpack size={16} />
+                </div>
+                <div>
+                  <h4 className="text-sm font-black text-white">Qué Llevar en tu Mochila</h4>
+                  <p className="text-[10px] text-emerald-200/70">Recomendaciones indispensables del guía</p>
+                </div>
               </div>
-            ))}
+
+              <div className="space-y-2">
+                {whatToBringList.map((item, wIdx) => (
+                  <div key={wIdx} className="flex items-center gap-2.5 text-xs text-emerald-100/80">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Tarjeta Qué NO Incluye */}
+            <div className="p-5 sm:p-6 rounded-3xl bg-white/[0.03] backdrop-blur-xl border border-white/10 space-y-3">
+              <div className="flex items-center gap-2 text-xs font-bold text-emerald-300/80">
+                <XCircle size={15} className="text-rose-400/80 shrink-0" />
+                <span>No Incluido en la Tarifa</span>
+              </div>
+              <ul className="space-y-1.5 text-[11px] text-emerald-200/70 list-disc list-inside">
+                {notIncludedList.map((nInc, nIdx) => (
+                  <li key={nIdx}>{nInc}</li>
+                ))}
+              </ul>
+            </div>
+
           </div>
-        </section>
-      )}
+
+        </div>
+      </section>
+
+      {/* 8. SELLOS DE CONFIANZA & SEGURIDAD FORMAL */}
+      <section className="relative z-10 py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="p-6 sm:p-8 rounded-[36px] bg-gradient-to-r from-emerald-950/40 via-teal-950/30 to-emerald-950/40 backdrop-blur-2xl border border-emerald-500/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="space-y-1 text-center md:text-left">
+              <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400">
+                Acreditaciones Oficiales
+              </span>
+              <h3 className="text-lg sm:text-xl font-black text-white">
+                Operador Turístico Formal y Autorizado de Cusco
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full md:w-auto">
+              {trustBadgesList.slice(0, 6).map((badge, bIdx) => (
+                <div 
+                  key={bIdx}
+                  className="px-3.5 py-2 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center gap-2 text-[11px] font-bold text-emerald-100/90 shadow-2xs hover:border-emerald-400/40 transition-colors"
+                >
+                  <ShieldCheck size={14} className="text-emerald-400 shrink-0" />
+                  <span className="truncate">{badge}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. PINTEREST PINBOARD & GALERÍA HD (MODO ADVANCE) */}
+      <section id="galeria" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
+          <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Galería Fotográfica HD</span>
+          <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+            Inspiración Visual de las Rutas
+          </h2>
+          <p className="text-xs sm:text-sm text-emerald-200/70">
+            Postales reales capturadas por nuestros guías y viajeros en los senderos más escénicos.
+          </p>
+        </div>
+
+        <PinterestPinboard
+          images={data.galleryImages}
+          destination={data.destination || 'Cusco & Machu Picchu'}
+          tourName={data.name || 'Expedición de Aventura'}
+          tier={tier}
+          theme="emerald-explorer"
+          isMobile={viewMode === 'mobile'}
+          lang={currentLang}
+        />
+      </section>
+
+      {/* 10. TESTIMONIOS & RESEÑAS VERIFICADAS (MODO ADVANCE) */}
+      <section id="resenas" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-bold">
+            <Star size={12} className="fill-amber-400" />
+            <span>4.9 / 5.0 en Reseñas Internacionales</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+            Voces de Nuestros Viajeros
+          </h2>
+          <p className="text-xs sm:text-sm text-emerald-200/70">
+            Historias auténticas de quienes ya vivieron la magia de Cusco con nuestro equipo.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {testimonialsList.map((rev, rIdx) => (
+            <div 
+              key={rIdx}
+              className="glass-floating-card p-6 sm:p-7 rounded-[32px] flex flex-col justify-between space-y-5 animate-emerald-float group hover:-translate-y-2 transition-all"
+              style={{ animationDelay: `${rIdx * 1.5}s` }}
+            >
+              <div className="space-y-4">
+                {/* 5 Estrellas Doradas */}
+                <div className="flex items-center gap-1 text-amber-400">
+                  {[...Array(5)].map((_, s) => (
+                    <Star key={s} size={15} className="fill-amber-400" />
+                  ))}
+                </div>
+
+                <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed italic">
+                  "{rev.comment}"
+                </p>
+              </div>
+
+              {/* Autor y Origen */}
+              <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-3">
+                <div>
+                  <h4 className="font-extrabold text-white text-xs sm:text-sm">{rev.name}</h4>
+                  <span className="text-[10px] text-emerald-300/70 flex items-center gap-1">
+                    <MapPin size={10} /> {rev.origin}
+                  </span>
+                </div>
+                <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                  Verificado ✓
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 11. PREGUNTAS FRECUENTES (FAQS) CON ACORDEÓN INTERACTIVO */}
+      <section id="faqs" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        <div className="text-center mb-10 space-y-2">
+          <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Respuestas Claras</span>
+          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">{t.faqsTitle}</h2>
+          <p className="text-xs text-emerald-200/70">Todo lo que necesitas saber antes de iniciar tu recorrido.</p>
+        </div>
+
+        <div className="space-y-3.5">
+          {faqsList.map((faq, fIdx) => {
+            const isOpen = openFaqIndex === fIdx;
+            return (
+              <div 
+                key={fIdx} 
+                className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                  isOpen 
+                    ? 'bg-white/[0.08] border-emerald-400/50 shadow-[0_10px_30px_rgba(16,185,129,0.15)] backdrop-blur-2xl' 
+                    : 'bg-white/[0.04] border-white/10 hover:border-white/20 backdrop-blur-xl'
+                }`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpenFaqIndex(isOpen ? null : fIdx)}
+                  className="w-full p-5 text-left flex items-center justify-between gap-4 cursor-pointer"
+                >
+                  <span className="text-sm font-bold text-white flex items-center gap-3">
+                    <span className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-black shrink-0">
+                      ?
+                    </span>
+                    {faq.q}
+                  </span>
+                  <div className={`p-1.5 rounded-full bg-white/10 text-emerald-300 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-emerald-500/30' : ''}`}>
+                    <ChevronDown size={16} />
+                  </div>
+                </button>
+
+                {isOpen && (
+                  <div className="px-5 pb-5 pt-1 text-xs text-emerald-100/80 leading-relaxed border-t border-white/10 animate-in fade-in-50 duration-200">
+                    <p className="pl-9">{faq.a}</p>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </section>
 
       {/* 8. BARRA DE MÉTRICAS INFERIOR / STICKY BOTTOM BAR FLOTANTE */}
       <div className="relative z-20 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">

@@ -189,6 +189,7 @@ export default function PinterestPinboard({
   const isPremium = theme === 'premium';
   const isCultural = theme === 'cultural';
   const isAdventure = theme === 'adventure';
+  const isEmerald = theme === 'emerald-explorer';
 
   // Responsive display limit on mobile
   const showExpander = pins.length > 4;
@@ -196,15 +197,17 @@ export default function PinterestPinboard({
 
   return (
     <section id="galeria" className={`${isMobile ? 'py-8 px-3' : 'py-10 sm:py-20 px-3 sm:px-8'} ${
-      isPremium ? 'bg-neutral-900/60' : isBoho ? 'bg-[#FAF7F2]' : isCultural ? 'bg-stone-100' : 'bg-white'
-    } border-y ${isPremium ? 'border-neutral-800' : 'border-stone-200/80'} overflow-hidden`}>
+      isEmerald ? 'bg-transparent' : isPremium ? 'bg-neutral-900/60' : isBoho ? 'bg-[#FAF7F2]' : isCultural ? 'bg-stone-100' : 'bg-white'
+    } border-y ${isEmerald ? 'border-white/10' : isPremium ? 'border-neutral-800' : 'border-stone-200/80'} overflow-hidden`}>
       <div className="max-w-6xl mx-auto space-y-6 sm:space-y-10">
         
         {/* Section Header: Pinterest Board Style */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4">
           <div className="space-y-1.5 sm:space-y-2">
             <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider ${
-              isPremium 
+              isEmerald
+                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/40'
+                : isPremium 
                 ? 'bg-amber-400/10 text-amber-300 border border-amber-400/30' 
                 : isBoho 
                 ? 'bg-[#C86D51]/10 text-[#C86D51]' 
@@ -217,19 +220,23 @@ export default function PinterestPinboard({
             </div>
 
             <h2 className={`text-xl sm:text-4xl font-black tracking-tight ${
-              isPremium ? 'text-white font-serif' : isBoho ? 'text-stone-900 font-serif' : 'text-slate-900'
+              isEmerald || isPremium ? 'text-white' : isBoho ? 'text-stone-900 font-serif' : 'text-slate-900'
             }`}>
               {t.title}
             </h2>
 
-            <p className={`text-xs sm:text-sm max-w-xl ${isPremium ? 'text-neutral-400' : 'text-stone-600'}`}>
+            <p className={`text-xs sm:text-sm max-w-xl ${isEmerald ? 'text-emerald-100/80' : isPremium ? 'text-neutral-400' : 'text-stone-600'}`}>
               {t.desc}
             </p>
           </div>
 
           <div className="flex items-center gap-2 shrink-0 self-start sm:self-auto">
             <span className={`text-[11px] sm:text-xs font-bold px-2.5 py-1 rounded-xl border ${
-              isPremium ? 'bg-neutral-800 text-neutral-300 border-neutral-700' : 'bg-stone-50 text-slate-700 border-stone-200 shadow-2xs'
+              isEmerald
+                ? 'bg-white/10 text-emerald-200 border-white/20 backdrop-blur-md'
+                : isPremium 
+                ? 'bg-neutral-800 text-neutral-300 border-neutral-700' 
+                : 'bg-stone-50 text-slate-700 border-stone-200 shadow-2xs'
             }`}>
               {activePhotos.length} {activePhotos.length === 1 ? t.pinSingle : t.pinMulti}
             </span>

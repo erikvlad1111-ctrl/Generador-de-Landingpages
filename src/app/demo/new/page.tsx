@@ -2960,6 +2960,29 @@ export default function NewLandingDemo() {
                         </span>
                       </div>
                     </div>
+
+                    {/* Logística & Servicios VIP Advance */}
+                    <div className="bg-white/[0.04] backdrop-blur-md border border-white/10 p-3 rounded-2xl space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[8px] font-black uppercase text-emerald-400 tracking-wider">
+                          Logística Integral Advance
+                        </span>
+                        <span className="text-[7px] text-emerald-300 bg-emerald-500/20 px-1.5 py-0.5 rounded-full border border-emerald-400/30">
+                          100% Incluido
+                        </span>
+                      </div>
+                      <div className="space-y-1 text-[8px] text-emerald-100/90">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-emerald-400 font-bold">✓</span> Transporte 4x4 + Boletos Oficiales
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-emerald-400 font-bold">✓</span> Balón Oxígeno & Monitoreo Médico
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-emerald-400 font-bold">✓</span> Guía Colegiado Bilingüe DIRCETUR
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   {/* Sticky Bottom Navigation Bar with Coral Button */}
