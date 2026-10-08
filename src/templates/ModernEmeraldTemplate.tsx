@@ -530,49 +530,30 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
           </div>
 
-          {/* Columna Derecha: FOTO DEL HERO CON ARCO ORGÁNICO FLUIDO + DIFUMINADO PERIMETRAL PROFUNDO */}
+          {/* Columna Derecha: FOTO DEL HERO CON SILUETA ORGÁNICA EXACTA A LA REFERENCIA (NÍTIDA, SIN BORDES RECTOS NI BLUR INTERNO) */}
           <div className="lg:col-span-5 relative flex items-center justify-center">
             
-            {/* Halo ambiental desenfocado flotante detrás de la imagen con animación de respiración */}
-            <div className="absolute -inset-10 bg-gradient-to-tr from-emerald-500/30 via-teal-400/20 to-amber-500/15 rounded-full blur-[90px] pointer-events-none animate-emerald-glow" />
+            {/* Halo ambiental suave exterior (detrás del contenedor, no sobre la foto) */}
+            <div className="absolute -inset-6 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
 
-            {/* Contenedor con Arco Superior Orgánico y Esquinas Ultra Redondeadas */}
-            <div className="relative w-full aspect-[4/4.9] max-w-md mx-auto rounded-t-[90px] sm:rounded-t-[120px] rounded-b-[40px] sm:rounded-b-[50px] overflow-hidden group shadow-[0_25px_60px_rgba(0,0,0,0.7)]">
+            {/* Contenedor Principal con Silueta Orgánica (Arco asimétrico fiel al diseño de referencia) */}
+            <div className="relative w-full aspect-[4/4.8] max-w-md mx-auto rounded-[48px] rounded-tr-[110px] rounded-br-[130px] rounded-bl-[40px] overflow-hidden group shadow-[0_30px_70px_rgba(0,0,0,0.6)]">
               
-              {/* Contenedor interno con máscara elíptica de desvanecimiento suave */}
-              <div 
-                className="relative w-full h-full transition-all duration-700 group-hover:scale-105"
-                style={{
-                  maskImage: 'radial-gradient(ellipse 78% 75% at 50% 48%, black 35%, rgba(0,0,0,0.7) 60%, transparent 90%)',
-                  WebkitMaskImage: 'radial-gradient(ellipse 78% 75% at 50% 48%, black 35%, rgba(0,0,0,0.7) 60%, transparent 90%)'
-                }}
-              >
-                <Image 
-                  src={heroImg} 
-                  alt={data.name || 'Cusco Adventure'} 
-                  fill 
-                  sizes="(max-width: 768px) 100vw, 50vw" 
-                  priority
-                  className="object-cover brightness-95 contrast-105" 
-                />
-              </div>
-
-              {/* Viñeta perimetral de sombra interior masiva que disuelve cualquier borde en el color de fondo */}
-              <div 
-                className="pointer-events-none absolute inset-0 z-10"
-                style={{
-                  boxShadow: 'inset 0 0 90px 45px #041716, inset 0 0 40px 20px #041716'
-                }}
+              {/* Fotografía NÍTIDA y 100% VISIBLE (sin blur interno) */}
+              <Image 
+                src={heroImg} 
+                alt={data.name || 'Cusco Adventure'} 
+                fill 
+                sizes="(max-width: 768px) 100vw, 50vw" 
+                priority
+                className="object-cover group-hover:scale-105 transition-transform duration-700" 
               />
 
-              {/* Capas de fundido en degradado en los 4 extremos para fusión 100% fluida */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#041716] via-[#041716]/80 to-transparent z-10" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#041716] via-[#041716]/90 to-transparent z-10" />
-              <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#041716] via-[#041716]/70 to-transparent z-10" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#041716] via-[#041716]/70 to-transparent z-10" />
+              {/* Degradado suave ÚNICAMENTE en la parte inferior para fusionar con el fondo y dar contraste al texto */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#041716] via-[#041716]/60 to-transparent z-10" />
 
               {/* Chip Flotante Superior: Local Experts con Levitación Continua */}
-              <div className="absolute top-5 left-5 z-20 bg-white/[0.12] backdrop-blur-2xl px-4 py-2 rounded-2xl border border-white/20 shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center gap-2.5 animate-float-badge">
+              <div className="absolute top-5 left-5 z-20 bg-black/40 backdrop-blur-xl px-4 py-2 rounded-2xl border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center gap-2.5 animate-float-badge">
                 <div className="w-8 h-8 rounded-xl bg-emerald-500/25 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs">
                   <Award size={16} />
                 </div>
@@ -583,7 +564,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               </div>
 
               {/* Tarjeta Flotante Inferior de Tarifa con Levitación Suave */}
-              <div className="absolute bottom-5 inset-x-5 z-20 p-4 rounded-3xl bg-white/[0.12] backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex items-center justify-between gap-3 animate-emerald-float-alt">
+              <div className="absolute bottom-5 inset-x-5 z-20 p-4 rounded-3xl bg-black/50 backdrop-blur-xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex items-center justify-between gap-3 animate-emerald-float-alt">
                 <div className="min-w-0">
                   <span className="text-[10px] text-emerald-200/90 font-bold block">Tarifa Oficial por Persona:</span>
                   <span className="text-2xl font-black text-white">{data.price || '$350 USD'}</span>
