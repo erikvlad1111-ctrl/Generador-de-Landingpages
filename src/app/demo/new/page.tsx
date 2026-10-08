@@ -2809,7 +2809,7 @@ export default function NewLandingDemo() {
                     <div className="relative py-1 flex items-center justify-center">
                       <div className="absolute inset-0 bg-emerald-400/20 rounded-full blur-xl pointer-events-none" />
                       
-                      <div className="relative h-44 w-full rounded-[24px] rounded-tr-[55px] rounded-br-[65px] rounded-bl-[20px] overflow-hidden shadow-xl">
+                      <div className="relative h-56 w-full rounded-[28px] rounded-tr-[65px] rounded-br-[75px] rounded-bl-[24px] overflow-hidden shadow-xl border border-white/10">
                         <Image 
                           src={(activeHeroImg && !activeHeroImg.includes('photo-1526392060635-9d6019884377')) ? activeHeroImg : '/images/hero-tourist-cusco.jpg'} 
                           alt="Emerald Explorer Hero" 

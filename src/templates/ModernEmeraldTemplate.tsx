@@ -440,10 +440,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
       {/* 2. HERO PRINCIPAL CON FOTO SIN BORDES VISIBLES + ESTILOS FLOTANTES ACTIVOS */}
       <section id="inicio" className="relative z-10 pt-8 sm:pt-16 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Columna Izquierda: Copys + Buscador Píldora Flotante + Beneficios */}
-          <div className="lg:col-span-7 space-y-6 sm:space-y-8">
+          <div className="lg:col-span-6 space-y-6 sm:space-y-8">
             
             {/* Badge de Temporada Flotante con Levitación Continua */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-emerald-400/30 text-emerald-300 text-xs font-bold shadow-lg shadow-emerald-950/40 animate-float-badge">
@@ -519,13 +519,13 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           </div>
 
           {/* Columna Derecha: FOTO DEL HERO CON SILUETA ORGÁNICA EXACTA A LA REFERENCIA (NÍTIDA, SIN BORDES RECTOS NI BLUR INTERNO) */}
-          <div className="lg:col-span-5 relative flex items-center justify-center">
+          <div className="lg:col-span-6 relative flex items-center justify-center">
             
             {/* Halo ambiental suave exterior (detrás del contenedor, no sobre la foto) */}
-            <div className="absolute -inset-6 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -inset-8 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none" />
 
-            {/* Contenedor Principal con Silueta Orgánica (Arco asimétrico fiel al diseño de referencia) */}
-            <div className="relative w-full aspect-[4/4.8] max-w-md mx-auto rounded-[48px] rounded-tr-[110px] rounded-br-[130px] rounded-bl-[40px] overflow-hidden group shadow-[0_30px_70px_rgba(0,0,0,0.6)]">
+            {/* Contenedor Principal con Silueta Orgánica y Mayor Tamaño Imponente */}
+            <div className="relative w-full max-w-lg lg:max-w-xl h-[520px] sm:h-[620px] lg:h-[660px] mx-auto rounded-[56px] rounded-tr-[130px] rounded-br-[150px] rounded-bl-[48px] overflow-hidden group shadow-[0_35px_80px_rgba(0,0,0,0.65)] border border-white/10">
               
               {/* Fotografía NÍTIDA y 100% VISIBLE (sin blur interno) */}
               <Image 
