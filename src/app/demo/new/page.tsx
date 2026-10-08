@@ -2807,16 +2807,16 @@ export default function NewLandingDemo() {
                       </p>
                     </div>
 
-                    {/* Featured Hero Image Frame with Blur Mask (Sin bordes visibles) */}
+                    {/* Featured Hero Image Frame con Arco Superior Orgánico y Viñeta Inset */}
                     <div className="relative py-1 flex items-center justify-center">
-                      <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/20 via-teal-400/15 to-transparent rounded-full blur-2xl pointer-events-none opacity-80" />
+                      <div className="absolute inset-0 bg-gradient-to-tr from-emerald-500/25 via-teal-400/20 to-transparent rounded-full blur-2xl pointer-events-none opacity-80" />
                       
-                      <div className="relative h-44 w-full">
+                      <div className="relative h-44 w-full rounded-t-[50px] rounded-b-[24px] overflow-hidden shadow-xl">
                         <div 
                           className="relative w-full h-full"
                           style={{
-                            maskImage: 'radial-gradient(ellipse 92% 86% at 50% 46%, black 48%, rgba(0,0,0,0.85) 68%, transparent 92%)',
-                            WebkitMaskImage: 'radial-gradient(ellipse 92% 86% at 50% 46%, black 48%, rgba(0,0,0,0.85) 68%, transparent 92%)'
+                            maskImage: 'radial-gradient(ellipse 80% 75% at 50% 48%, black 40%, rgba(0,0,0,0.7) 65%, transparent 90%)',
+                            WebkitMaskImage: 'radial-gradient(ellipse 80% 75% at 50% 48%, black 40%, rgba(0,0,0,0.7) 65%, transparent 90%)'
                           }}
                         >
                           <Image 
@@ -2826,12 +2826,24 @@ export default function NewLandingDemo() {
                             sizes="400px" 
                             className="object-cover brightness-95" 
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-transparent to-transparent opacity-90" />
-                          <div className="absolute inset-0 bg-gradient-to-b from-[#041716]/60 via-transparent to-transparent" />
                         </div>
+
+                        {/* Viñeta interior profunda para eliminar cualquier borde recto */}
+                        <div 
+                          className="pointer-events-none absolute inset-0 z-10"
+                          style={{
+                            boxShadow: 'inset 0 0 50px 25px #041716, inset 0 0 25px 12px #041716'
+                          }}
+                        />
+
+                        {/* Gradientes en los 4 bordes */}
+                        <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#041716] via-[#041716]/80 to-transparent z-10" />
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#041716] via-[#041716]/90 to-transparent z-10" />
+                        <div className="pointer-events-none absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-[#041716] via-[#041716]/70 to-transparent z-10" />
+                        <div className="pointer-events-none absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-[#041716] via-[#041716]/70 to-transparent z-10" />
                         
                         {/* Floating Local Experts Chip */}
-                        <div className="absolute top-2 left-2 bg-white/[0.1] backdrop-blur-md border border-white/20 px-2 py-1 rounded-xl text-[8px] space-y-0.5 shadow-lg">
+                        <div className="absolute top-2 left-2 z-20 bg-white/[0.12] backdrop-blur-md border border-white/20 px-2 py-1 rounded-xl text-[8px] space-y-0.5 shadow-lg">
                           <div className="flex items-center gap-1 text-emerald-300 font-bold">
                             <span>📍</span> Local Experts
                           </div>
@@ -2839,7 +2851,7 @@ export default function NewLandingDemo() {
                         </div>
 
                         {/* Bottom Price Tag on Hero (Translúcido Flotante) */}
-                        <div className="absolute bottom-2 inset-x-2 flex items-center justify-between p-1 rounded-xl bg-white/[0.08] backdrop-blur-md border border-white/15 shadow-md">
+                        <div className="absolute bottom-2 inset-x-2 z-20 flex items-center justify-between p-1 rounded-xl bg-white/[0.1] backdrop-blur-md border border-white/20 shadow-md">
                           <span className="text-emerald-100 text-[8px] font-bold px-1.5 truncate">
                             {name || 'Live Your Adventure'}
                           </span>

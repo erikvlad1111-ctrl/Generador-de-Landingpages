@@ -530,21 +530,21 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
           </div>
 
-          {/* Columna Derecha: FOTO DEL HERO CON BLUR MASK Y BORDES DIFUMINADOS (MODERNO SIN BORDES DUROS) */}
+          {/* Columna Derecha: FOTO DEL HERO CON ARCO ORGÁNICO FLUIDO + DIFUMINADO PERIMETRAL PROFUNDO */}
           <div className="lg:col-span-5 relative flex items-center justify-center">
             
-            {/* Halo de luz ambiental flotante detrás de la imagen */}
-            <div className="absolute -inset-10 bg-gradient-to-tr from-emerald-500/25 via-teal-400/20 to-amber-500/10 rounded-full blur-[100px] pointer-events-none opacity-80" />
+            {/* Halo ambiental desenfocado flotante detrás de la imagen */}
+            <div className="absolute -inset-10 bg-gradient-to-tr from-emerald-500/30 via-teal-400/20 to-amber-500/15 rounded-full blur-[90px] pointer-events-none opacity-80" />
 
-            {/* Contenedor Flotante Orgánico */}
-            <div className="relative w-full aspect-[4/4.9] max-w-md mx-auto group">
+            {/* Contenedor con Arco Superior Orgánico y Esquinas Ultra Redondeadas */}
+            <div className="relative w-full aspect-[4/4.9] max-w-md mx-auto rounded-t-[90px] sm:rounded-t-[120px] rounded-b-[40px] sm:rounded-b-[50px] overflow-hidden group shadow-[0_25px_60px_rgba(0,0,0,0.7)]">
               
-              {/* Contenedor con máscara de desvanecimiento periférico (fade out) para eliminar bordes */}
+              {/* Contenedor interno con máscara elíptica de desvanecimiento suave */}
               <div 
-                className="relative w-full h-full transition-all duration-700 group-hover:scale-[1.02]"
+                className="relative w-full h-full transition-all duration-700 group-hover:scale-105"
                 style={{
-                  maskImage: 'radial-gradient(ellipse 92% 88% at 50% 46%, black 50%, rgba(0,0,0,0.8) 68%, transparent 92%)',
-                  WebkitMaskImage: 'radial-gradient(ellipse 92% 88% at 50% 46%, black 50%, rgba(0,0,0,0.8) 68%, transparent 92%)'
+                  maskImage: 'radial-gradient(ellipse 78% 75% at 50% 48%, black 35%, rgba(0,0,0,0.7) 60%, transparent 90%)',
+                  WebkitMaskImage: 'radial-gradient(ellipse 78% 75% at 50% 48%, black 35%, rgba(0,0,0,0.7) 60%, transparent 90%)'
                 }}
               >
                 <Image 
@@ -555,15 +555,24 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                   priority
                   className="object-cover brightness-95 contrast-105" 
                 />
-
-                {/* Filtros de fundido multidireccional hacia el fondo #041716 */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-transparent to-transparent pointer-events-none opacity-90" />
-                <div className="absolute inset-0 bg-gradient-to-b from-[#041716]/60 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#041716]/60 via-transparent to-[#041716]/60 pointer-events-none" />
               </div>
 
+              {/* Viñeta perimetral de sombra interior masiva que disuelve cualquier borde en el color de fondo */}
+              <div 
+                className="pointer-events-none absolute inset-0 z-10"
+                style={{
+                  boxShadow: 'inset 0 0 90px 45px #041716, inset 0 0 40px 20px #041716'
+                }}
+              />
+
+              {/* Capas de fundido en degradado en los 4 extremos para fusión 100% fluida */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-[#041716] via-[#041716]/80 to-transparent z-10" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#041716] via-[#041716]/90 to-transparent z-10" />
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#041716] via-[#041716]/70 to-transparent z-10" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#041716] via-[#041716]/70 to-transparent z-10" />
+
               {/* Chip Flotante Superior: Local Experts (Glassmorphism Translúcido Flotante) */}
-              <div className="absolute top-4 left-4 sm:top-6 sm:left-6 bg-white/[0.08] backdrop-blur-2xl px-4 py-2.5 rounded-2xl border border-white/20 shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center gap-2.5 hover:scale-105 hover:-translate-y-1 transition-all duration-300">
+              <div className="absolute top-5 left-5 z-20 bg-white/[0.1] backdrop-blur-2xl px-4 py-2 rounded-2xl border border-white/20 shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center gap-2.5 hover:scale-105 hover:-translate-y-1 transition-all duration-300">
                 <div className="w-8 h-8 rounded-xl bg-emerald-500/25 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs">
                   <Award size={16} />
                 </div>
@@ -574,7 +583,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               </div>
 
               {/* Tarjeta Flotante Inferior de Tarifa (Glassmorphism Translúcido Flotante) */}
-              <div className="absolute bottom-4 inset-x-4 sm:bottom-6 sm:inset-x-6 p-4 rounded-3xl bg-white/[0.08] backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex items-center justify-between gap-3 hover:-translate-y-1 transition-all duration-300">
+              <div className="absolute bottom-5 inset-x-5 z-20 p-4 rounded-3xl bg-white/[0.1] backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex items-center justify-between gap-3 hover:-translate-y-1 transition-all duration-300">
                 <div className="min-w-0">
                   <span className="text-[10px] text-emerald-200/80 font-bold block">Tarifa Oficial por Persona:</span>
                   <span className="text-2xl font-black text-white">{data.price || '$350 USD'}</span>
