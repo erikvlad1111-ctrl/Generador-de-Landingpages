@@ -585,31 +585,39 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   const packedPct = Math.round((packedCount / whatToBringList.length) * 100);
 
   return (
-    <div className="min-h-screen bg-[#03131a] text-emerald-50 font-sans selection:bg-[#10b981] selection:text-[#011116] overflow-x-hidden relative">
+    <div 
+      className="min-h-screen text-emerald-50 font-sans selection:bg-[#10b981] selection:text-[#011116] overflow-x-hidden relative"
+      style={{
+        backgroundColor: '#041720',
+        backgroundImage: `
+          radial-gradient(ellipse 90% 900px at 50% 0px, rgba(14, 165, 233, 0.45) 0%, rgba(13, 148, 136, 0.30) 40%, transparent 80%),
+          radial-gradient(ellipse 80% 950px at 85% 1200px, rgba(20, 184, 166, 0.40) 0%, rgba(2, 132, 199, 0.22) 45%, transparent 75%),
+          radial-gradient(ellipse 80% 950px at 15% 2400px, rgba(2, 132, 199, 0.40) 0%, rgba(16, 185, 129, 0.22) 45%, transparent 75%),
+          radial-gradient(ellipse 85% 950px at 85% 3600px, rgba(16, 185, 129, 0.38) 0%, rgba(6, 182, 212, 0.22) 45%, transparent 75%),
+          radial-gradient(ellipse 80% 950px at 15% 4800px, rgba(6, 182, 212, 0.40) 0%, rgba(2, 132, 199, 0.22) 45%, transparent 75%),
+          radial-gradient(ellipse 85% 950px at 85% 6000px, rgba(13, 148, 136, 0.40) 0%, rgba(16, 185, 129, 0.20) 45%, transparent 75%),
+          radial-gradient(ellipse 90% 950px at 50% 7200px, rgba(2, 132, 199, 0.38) 0%, transparent 75%),
+          linear-gradient(180deg, #093847 0%, #062b37 800px, #04212a 2000px, #031c24 4000px, #02161c 6000px, #010e13 8000px)
+        `
+      }}
+    >
       
       {/* 🌌 SISTEMA DE GRADIENTE AURORA & PROFUNDIDAD MODERNA (AZUL OCEÁNICO + VERDE ESMERALDA / TEAL) */}
-      <div className="absolute top-0 inset-x-0 h-[1100px] overflow-hidden pointer-events-none z-0">
+      <div className="absolute top-0 inset-x-0 h-[1200px] overflow-hidden pointer-events-none z-0">
         {/* Capa Base Gradiente Vertical Suave */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#082a35] via-[#041a22] to-transparent opacity-90" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#093542] via-[#041e26] to-transparent opacity-95" />
         
         {/* Aurora Central Masiva: Fusión Orgánica de Azul Zafiro Profundo con Verde Esmeralda y Teal */}
-        <div className="absolute -top-[160px] left-1/2 -translate-x-1/2 w-[1300px] sm:w-[1600px] h-[750px] bg-[radial-gradient(ellipse_75%_55%_at_50%_35%,rgba(13,148,136,0.45)_0%,rgba(2,132,199,0.30)_32%,rgba(6,78,94,0.35)_58%,transparent_100%)] blur-[90px]" />
+        <div className="absolute -top-[160px] left-1/2 -translate-x-1/2 w-[1300px] sm:w-[1600px] h-[780px] bg-[radial-gradient(ellipse_75%_55%_at_50%_35%,rgba(20,184,166,0.50)_0%,rgba(2,132,199,0.38)_35%,rgba(6,78,94,0.40)_60%,transparent_100%)] blur-[80px]" />
         
         {/* Haz de Luz Superior Vertical Iluminando la Cabecera y el Hero */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-[radial-gradient(ellipse_at_top,rgba(45,212,191,0.28)_0%,rgba(14,116,144,0.15)_45%,transparent_75%)] blur-2xl" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-[radial-gradient(ellipse_at_top,rgba(45,212,191,0.35)_0%,rgba(14,116,144,0.22)_45%,transparent_75%)] blur-2xl" />
         
-        {/* Acento Lateral Izquierdo: Verde Andino Esmeralda */}
-        <div className="absolute top-28 -left-36 w-[550px] h-[550px] bg-gradient-to-tr from-emerald-500/22 to-teal-400/15 rounded-full blur-[130px] animate-emerald-glow" />
+        {/* Acento Lateral Izquierdo: Verde Andino Esmeralda Luminoso */}
+        <div className="absolute top-28 -left-28 w-[550px] h-[550px] bg-gradient-to-tr from-emerald-500/30 to-teal-400/25 rounded-full blur-[110px] animate-emerald-glow" />
         
         {/* Acento Lateral Derecho: Azul Océano Marino */}
-        <div className="absolute top-40 -right-36 w-[550px] h-[550px] bg-gradient-to-bl from-sky-500/20 to-cyan-500/15 rounded-full blur-[130px] animate-emerald-glow [animation-delay:3s]" />
-      </div>
-
-      {/* Orbes de Iluminación Ambiental Flotantes a lo largo del Scroll */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-1/3 -left-48 w-[700px] h-[700px] bg-teal-600/10 rounded-full blur-[160px]" />
-        <div className="absolute top-2/3 -right-48 w-[750px] h-[750px] bg-cyan-600/10 rounded-full blur-[160px]" />
-        <div className="absolute bottom-10 left-1/3 w-[600px] h-[600px] bg-emerald-600/10 rounded-full blur-[160px]" />
+        <div className="absolute top-40 -right-28 w-[550px] h-[550px] bg-gradient-to-bl from-sky-500/28 to-cyan-500/22 rounded-full blur-[110px] animate-emerald-glow [animation-delay:3s]" />
       </div>
 
       {/* 1. TOP HEADER NAVIGATION CON TRANSPARENCIA GLASSMORPHISM SUAVE */}
@@ -886,15 +894,20 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
 
       {/* 3. POPULAR DESTINATIONS (CATÁLOGO INTERACTIVO CON FILTROS & SLIDER FUNCIONAL) */}
-      <section id="destinos" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
-          <div>
-            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight flex items-center gap-2.5">
-              <span>{t.popularTitle}</span>
-              <span className="text-xs font-bold text-emerald-300 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-400/40">
-                {filteredTours.length} Circuitos
-              </span>
-            </h2>
+      <section id="destinos" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
+        <div className="absolute top-1/2 -right-24 -translate-y-1/2 w-[650px] sm:w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.48)_0%,rgba(6,182,212,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+        <div className="absolute top-1/2 -left-24 -translate-y-1/2 w-[600px] sm:w-[750px] h-[480px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.42)_0%,rgba(14,116,144,0.22)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+        
+        <div className="relative z-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+            <div>
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight flex items-center gap-2.5">
+                <span>{t.popularTitle}</span>
+                <span className="text-xs font-bold text-emerald-300 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-400/40">
+                  {filteredTours.length} Circuitos
+                </span>
+              </h2>
             <p className="text-xs sm:text-sm text-emerald-200/70 mt-1 max-w-xl">
               {t.popularSub}
             </p>
@@ -1045,11 +1058,17 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </button>
           </div>
         )}
+        </div>
       </section>
 
       {/* 4. FICHA TÉCNICA INTERACTIVA & CRÓNICA DE EXPEDICIÓN */}
-      <section id="acerca" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <section id="acerca" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
+        <div className="absolute top-1/2 -left-24 -translate-y-1/2 w-[650px] sm:w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.48)_0%,rgba(6,182,212,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+        <div className="absolute top-1/2 -right-24 -translate-y-1/2 w-[600px] sm:w-[750px] h-[480px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.42)_0%,rgba(20,184,166,0.22)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+        
+        <div className="relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
           {/* Columna Izquierda: Ficha Técnica en 4 Tarjetas de Cristal Interactivas */}
           <div className="lg:col-span-5 grid grid-cols-2 gap-4">
@@ -1147,6 +1166,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           </div>
 
         </div>
+        </div>
       </section>
 
       {/* MODAL CONTEXTUAL DE FICHA TÉCNICA */}
@@ -1194,113 +1214,124 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       )}
 
       {/* 5. PLAN YOUR JOURNEY & BENTO STATS */}
-      <section id="experiencias" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-          <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-            {t.planTitle}
-          </h2>
-          <p className="text-xs sm:text-sm text-emerald-200/70">
-            Métricas reales de excelencia avaladas por más de 1,200 viajeros internacionales.
-          </p>
-        </div>
-
-        {/* Bento Grid con Fotos y Métricas Flotantes */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          
-          {/* Bento Card 1: Foto Viajero con Mapa */}
-          <div className="relative rounded-3xl overflow-hidden min-h-[220px] border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 transition-all duration-300">
-            <Image 
-              src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=800&auto=format&fit=crop" 
-              alt="Traveler with map" 
-              fill 
-              sizes="(max-width: 768px) 100vw, 25vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-500" 
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-[#041716]/30 to-transparent" />
-            <div className="absolute bottom-4 left-4 right-4">
-              <span className="text-xs font-black text-white block">Rutas Planificadas</span>
-              <span className="text-[10px] text-emerald-300/80">Logística Integral</span>
-            </div>
+      <section id="experiencias" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] sm:w-[1100px] h-[550px] bg-[radial-gradient(ellipse_at_center,rgba(13,148,136,0.48)_0%,rgba(2,132,199,0.30)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+        <div className="absolute top-1/4 -right-20 w-[550px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.28)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
+        
+        <div className="relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+              {t.planTitle}
+            </h2>
+            <p className="text-xs sm:text-sm text-emerald-200/70">
+              Métricas reales de excelencia avaladas por más de 1,200 viajeros internacionales.
+            </p>
           </div>
 
-          {/* Bento Card 2: 1,250+ Happy Travelers */}
-          <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float-delayed">
-            <div className="flex items-center justify-between">
-              <span className="text-3xl font-black text-white animate-number-glow">1,250+</span>
-              <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs">
-                <Users size={20} />
+          {/* Bento Grid con Fotos y Métricas Flotantes */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            {/* Bento Card 1: Foto Viajero con Mapa */}
+            <div className="relative rounded-3xl overflow-hidden min-h-[220px] border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 transition-all duration-300">
+              <Image 
+                src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=800&auto=format&fit=crop" 
+                alt="Traveler with map" 
+                fill 
+                sizes="(max-width: 768px) 100vw, 25vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-500" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-[#041716]/30 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <span className="text-xs font-black text-white block">Rutas Planificadas</span>
+                <span className="text-[10px] text-emerald-300/80">Logística Integral</span>
               </div>
             </div>
-            <div>
-              <h4 className="text-sm font-bold text-white">{t.happyTravelers}</h4>
-              <p className="text-xs text-emerald-200/70 mt-0.5">Asistidos con protocolo médico de altitud.</p>
-            </div>
-          </div>
 
-          {/* Bento Card 3: 98% Positive Reviews */}
-          <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float">
-            <div className="flex items-center justify-between">
-              <span className="text-3xl font-black text-amber-300 animate-number-glow">98%</span>
-              <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/40 shadow-xs">
-                <Star size={20} className="fill-amber-400 text-amber-400" />
+            {/* Bento Card 2: 1,250+ Happy Travelers */}
+            <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float-delayed">
+              <div className="flex items-center justify-between">
+                <span className="text-3xl font-black text-white animate-number-glow">1,250+</span>
+                <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs">
+                  <Users size={20} />
+                </div>
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-white">{t.happyTravelers}</h4>
+                <p className="text-xs text-emerald-200/70 mt-0.5">Asistidos con protocolo médico de altitud.</p>
               </div>
             </div>
-            <div>
-              <h4 className="text-sm font-bold text-white">{t.positiveReviews}</h4>
-              <p className="text-xs text-emerald-200/70 mt-0.5">Calificaciones 5 estrellas en TripAdvisor & Google.</p>
-            </div>
-          </div>
 
-          {/* Bento Card 4: Foto Viajera Sonriente */}
-          <div className="relative rounded-3xl overflow-hidden min-h-[220px] border border-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.5)] group hover:-translate-y-1.5 transition-all duration-300">
-            <Image 
-              src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=800&auto=format&fit=crop" 
-              alt="Happy traveler in nature" 
-              fill 
-              sizes="(max-width: 768px) 100vw, 25vw"
-              className="object-cover group-hover:scale-105 transition-transform duration-500" 
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-[#041716]/30 to-transparent" />
-            <div className="absolute bottom-4 left-4 right-4">
-              <span className="text-xs font-black text-white block">Momentos Inolvidables</span>
-              <span className="text-[10px] text-emerald-300/80">Fotografía escénica</span>
+            {/* Bento Card 3: 98% Positive Reviews */}
+            <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float">
+              <div className="flex items-center justify-between">
+                <span className="text-3xl font-black text-amber-300 animate-number-glow">98%</span>
+                <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/40 shadow-xs">
+                  <Star size={20} className="fill-amber-400 text-amber-400" />
+                </div>
+              </div>
+              <div>
+                <h4 className="text-sm font-bold text-white">{t.positiveReviews}</h4>
+                <p className="text-xs text-emerald-200/70 mt-0.5">Calificaciones 5 estrellas en TripAdvisor & Google.</p>
+              </div>
             </div>
-          </div>
 
+            {/* Bento Card 4: Foto Viajera Sonriente */}
+            <div className="relative rounded-3xl overflow-hidden min-h-[220px] border border-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.5)] group hover:-translate-y-1.5 transition-all duration-300">
+              <Image 
+                src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=800&auto=format&fit=crop" 
+                alt="Happy traveler in nature" 
+                fill 
+                sizes="(max-width: 768px) 100vw, 25vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-500" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-[#041716]/30 to-transparent" />
+              <div className="absolute bottom-4 left-4 right-4">
+                <span className="text-xs font-black text-white block">Momentos Inolvidables</span>
+                <span className="text-[10px] text-emerald-300/80">Fotografía escénica</span>
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
 
       {/* 6. ITINERARIO PASO A PASO INTERACTIVO DÍA A DÍA (MODO ADVANCE) */}
-      <section id="itinerario" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-          <div>
-            <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Cronograma Oficial de Expedición</span>
-            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">{t.itineraryTitle}</h2>
-            <p className="text-xs sm:text-sm text-emerald-200/70 mt-1">Explora cada jornada con altitud, tiempo de caminata y servicios incluidos.</p>
-          </div>
+      <section id="itinerario" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto overflow-hidden">
+        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] sm:w-[1100px] h-[650px] bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.48)_0%,rgba(16,185,129,0.30)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+        <div className="absolute -top-10 -right-20 w-[600px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.38)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
+        
+        <div className="relative z-10">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+            <div>
+              <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Cronograma Oficial de Expedición</span>
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">{t.itineraryTitle}</h2>
+              <p className="text-xs sm:text-sm text-emerald-200/70 mt-1">Explora cada jornada con altitud, tiempo de caminata y servicios incluidos.</p>
+            </div>
 
-          {/* Selector de Vista: Pestañas vs Todos los Días */}
-          <div className="flex items-center gap-1 bg-white/10 p-1 rounded-2xl border border-white/15 text-xs font-bold shrink-0">
-            <button
-              type="button"
-              onClick={() => setItineraryViewMode('tabs')}
-              className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
-                itineraryViewMode === 'tabs' ? 'bg-emerald-400 text-slate-950 font-black' : 'text-emerald-200 hover:text-white'
-              }`}
-            >
-              Vista Día a Día
-            </button>
-            <button
-              type="button"
-              onClick={() => setItineraryViewMode('all')}
-              className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
-                itineraryViewMode === 'all' ? 'bg-emerald-400 text-slate-950 font-black' : 'text-emerald-200 hover:text-white'
-              }`}
-            >
-              Ver Cronograma Completo
-            </button>
+            {/* Selector de Vista: Pestañas vs Todos los Días */}
+            <div className="flex items-center gap-1 bg-white/10 p-1 rounded-2xl border border-white/15 text-xs font-bold shrink-0">
+              <button
+                type="button"
+                onClick={() => setItineraryViewMode('tabs')}
+                className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                  itineraryViewMode === 'tabs' ? 'bg-emerald-400 text-slate-950 font-black' : 'text-emerald-200 hover:text-white'
+                }`}
+              >
+                Vista Día a Día
+              </button>
+              <button
+                type="button"
+                onClick={() => setItineraryViewMode('all')}
+                className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                  itineraryViewMode === 'all' ? 'bg-emerald-400 text-slate-950 font-black' : 'text-emerald-200 hover:text-white'
+                }`}
+              >
+                Ver Cronograma Completo
+              </button>
+            </div>
           </div>
-        </div>
 
         {/* Vista Pestañas Interactivas */}
         {itineraryViewMode === 'tabs' ? (
@@ -1411,19 +1442,25 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             ))}
           </div>
         )}
+        </div>
       </section>
 
       {/* 7. SERVICIOS INCLUIDOS & CHECKLIST DE MOCHILA INTERACTIVO */}
-      <section id="incluye" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-          <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Equipamiento & Confort</span>
-          <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-            Logística Integral de Expedición
-          </h2>
-          <p className="text-xs sm:text-sm text-emerald-200/70">
-            Todo lo necesario para una experiencia segura, gastronómica y de máximo confort en los Andes.
-          </p>
-        </div>
+      <section id="incluye" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
+        <div className="absolute top-1/2 -right-24 -translate-y-1/2 w-[650px] sm:w-[850px] h-[550px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.48)_0%,rgba(13,148,136,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+        <div className="absolute top-1/2 -left-24 -translate-y-1/2 w-[600px] sm:w-[750px] h-[480px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.38)_0%,rgba(6,182,212,0.20)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+        
+        <div className="relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
+            <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Equipamiento & Confort</span>
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+              Logística Integral de Expedición
+            </h2>
+            <p className="text-xs sm:text-sm text-emerald-200/70">
+              Todo lo necesario para una experiencia segura, gastronómica y de máximo confort en los Andes.
+            </p>
+          </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
@@ -1529,11 +1566,14 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           </div>
 
         </div>
+        </div>
       </section>
 
       {/* 8. SELLOS DE CONFIANZA & SEGURIDAD FORMAL */}
-      <section className="relative z-10 py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="p-6 sm:p-8 rounded-[36px] bg-gradient-to-r from-emerald-950/40 via-teal-950/30 to-emerald-950/40 backdrop-blur-2xl border border-emerald-500/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+      <section className="relative py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+        {/* Halo Suave de Sellos */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.30)_0%,transparent_70%)] blur-2xl pointer-events-none z-0" />
+        <div className="relative z-10 p-6 sm:p-8 rounded-[36px] bg-gradient-to-r from-emerald-950/40 via-teal-950/30 to-emerald-950/40 backdrop-blur-2xl border border-emerald-500/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="space-y-1 text-center md:text-left">
               <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400">
@@ -1560,167 +1600,185 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       </section>
 
       {/* 9. PINTEREST PINBOARD & GALERÍA HD (MODO ADVANCE) */}
-      <section id="galeria" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-          <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Galería Fotográfica HD</span>
-          <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-            Inspiración Visual de las Rutas
-          </h2>
-          <p className="text-xs sm:text-sm text-emerald-200/70">
-            Postales reales capturadas por nuestros guías y viajeros en los senderos más escénicos.
-          </p>
-        </div>
+      <section id="galeria" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[950px] sm:w-[1200px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.42)_0%,rgba(13,148,136,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+        <div className="absolute top-1/3 -left-20 w-[550px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.35)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
+        
+        <div className="relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
+            <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Galería Fotográfica HD</span>
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+              Inspiración Visual de las Rutas
+            </h2>
+            <p className="text-xs sm:text-sm text-emerald-200/70">
+              Postales reales capturadas por nuestros guías y viajeros en los senderos más escénicos.
+            </p>
+          </div>
 
-        <PinterestPinboard
-          images={data.galleryImages}
-          destination={data.destination || 'Cusco & Machu Picchu'}
-          tourName={data.name || 'Expedición de Aventura'}
-          tier={tier}
-          theme="emerald-explorer"
-          isMobile={viewMode === 'mobile'}
-          lang={currentLang}
-        />
+          <PinterestPinboard
+            images={data.galleryImages}
+            destination={data.destination || 'Cusco & Machu Picchu'}
+            tourName={data.name || 'Expedición de Aventura'}
+            tier={tier}
+            theme="emerald-explorer"
+            isMobile={viewMode === 'mobile'}
+            lang={currentLang}
+          />
+        </div>
       </section>
 
       {/* 10. TESTIMONIOS & RESEÑAS VERIFICADAS */}
-      <section id="resenas" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-bold">
-            <Star size={12} className="fill-amber-400" />
-            <span>4.9 / 5.0 en Reseñas Internacionales</span>
+      <section id="resenas" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[950px] sm:w-[1200px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.42)_0%,rgba(245,158,11,0.22)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+        <div className="absolute top-1/4 -right-20 w-[550px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.35)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
+        
+        <div className="relative z-10">
+          <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-bold">
+              <Star size={12} className="fill-amber-400" />
+              <span>4.9 / 5.0 en Reseñas Internacionales</span>
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+              Voces de Nuestros Viajeros
+            </h2>
+            <p className="text-xs sm:text-sm text-emerald-200/70">
+              Historias auténticas de quienes ya vivieron la magia de Cusco con nuestro equipo.
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-            Voces de Nuestros Viajeros
-          </h2>
-          <p className="text-xs sm:text-sm text-emerald-200/70">
-            Historias auténticas de quienes ya vivieron la magia de Cusco con nuestro equipo.
-          </p>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {testimonialsList.map((rev, rIdx) => (
-            <div 
-              key={rIdx}
-              className="glass-floating-card p-6 sm:p-7 rounded-[32px] flex flex-col justify-between space-y-5 animate-emerald-float group hover:-translate-y-2 transition-all"
-              style={{ animationDelay: `${rIdx * 1.5}s` }}
-            >
-              <div className="space-y-4">
-                {/* 5 Estrellas Doradas */}
-                <div className="flex items-center gap-1 text-amber-400">
-                  {[...Array(5)].map((_, s) => (
-                    <Star key={s} size={15} className="fill-amber-400" />
-                  ))}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {testimonialsList.map((rev, rIdx) => (
+              <div 
+                key={rIdx}
+                className="glass-floating-card p-6 sm:p-7 rounded-[32px] flex flex-col justify-between space-y-5 animate-emerald-float group hover:-translate-y-2 transition-all"
+                style={{ animationDelay: `${rIdx * 1.5}s` }}
+              >
+                <div className="space-y-4">
+                  {/* 5 Estrellas Doradas */}
+                  <div className="flex items-center gap-1 text-amber-400">
+                    {[...Array(5)].map((_, s) => (
+                      <Star key={s} size={15} className="fill-amber-400" />
+                    ))}
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed italic">
+                    "{rev.comment}"
+                  </p>
                 </div>
 
-                <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed italic">
-                  "{rev.comment}"
-                </p>
-              </div>
-
-              {/* Autor y Origen */}
-              <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-3">
-                <div>
-                  <h4 className="font-extrabold text-white text-xs sm:text-sm">{rev.name}</h4>
-                  <span className="text-[10px] text-emerald-300/70 flex items-center gap-1">
-                    <MapPin size={10} /> {rev.origin}
+                {/* Autor y Origen */}
+                <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-3">
+                  <div>
+                    <h4 className="font-extrabold text-white text-xs sm:text-sm">{rev.name}</h4>
+                    <span className="text-[10px] text-emerald-300/70 flex items-center gap-1">
+                      <MapPin size={10} /> {rev.origin}
+                    </span>
+                  </div>
+                  <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                    Verificado ✓
                   </span>
                 </div>
-                <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-                  Verificado ✓
-                </span>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
 
       {/* 11. PREGUNTAS FRECUENTES (FAQS) INTERACTIVAS CON BUSCADOR & FILTROS */}
-      <section id="faqs" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <div className="text-center mb-8 space-y-2">
-          <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Respuestas Claras</span>
-          <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">{t.faqsTitle}</h2>
-          <p className="text-xs text-emerald-200/70">Todo lo que necesitas saber antes de iniciar tu recorrido.</p>
-        </div>
-
-        {/* Buscador & Filtros de FAQs */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-6">
-          <div className="relative flex-1">
-            <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-400/60" />
-            <input
-              type="text"
-              value={faqSearch}
-              onChange={e => setFaqSearch(e.target.value)}
-              placeholder="Buscar pregunta o tema..."
-              className="w-full bg-white/[0.06] border border-white/15 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-emerald-200/50 outline-none focus:border-emerald-400 transition-colors"
-            />
+      <section id="faqs" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto overflow-hidden">
+        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] sm:w-[1050px] h-[550px] bg-[radial-gradient(ellipse_at_center,rgba(13,148,136,0.45)_0%,rgba(14,165,233,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+        <div className="absolute top-1/3 -left-20 w-[500px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.30)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
+        
+        <div className="relative z-10">
+          <div className="text-center mb-8 space-y-2">
+            <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Respuestas Claras</span>
+            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">{t.faqsTitle}</h2>
+            <p className="text-xs text-emerald-200/70">Todo lo que necesitas saber antes de iniciar tu recorrido.</p>
           </div>
 
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-            {[
-              { id: 'all', label: 'Todas' },
-              { id: 'altitude', label: 'Altitud' },
-              { id: 'bookings', label: 'Reservas' },
-              { id: 'gear', label: 'Equipo' }
-            ].map(cat => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => setFaqCategory(cat.id)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
-                  faqCategory === cat.id
-                    ? 'bg-emerald-400 text-slate-950 font-black'
-                    : 'bg-white/5 text-emerald-200/70 hover:bg-white/10'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-        </div>
+          {/* Buscador & Filtros de FAQs */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-6">
+            <div className="relative flex-1">
+              <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-400/60" />
+              <input
+                type="text"
+                value={faqSearch}
+                onChange={e => setFaqSearch(e.target.value)}
+                placeholder="Buscar pregunta o tema..."
+                className="w-full bg-white/[0.06] border border-white/15 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-emerald-200/50 outline-none focus:border-emerald-400 transition-colors"
+              />
+            </div>
 
-        {/* Acordeón de FAQs */}
-        <div className="space-y-3.5">
-          {filteredFaqs.length > 0 ? (
-            filteredFaqs.map((faq, fIdx) => {
-              const isOpen = openFaqIndex === fIdx;
-              return (
-                <div 
-                  key={fIdx} 
-                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-                    isOpen 
-                      ? 'bg-white/[0.08] border-emerald-400/50 shadow-[0_10px_30px_rgba(16,185,129,0.15)] backdrop-blur-2xl' 
-                      : 'bg-white/[0.04] border-white/10 hover:border-white/20 backdrop-blur-xl'
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+              {[
+                { id: 'all', label: 'Todas' },
+                { id: 'altitude', label: 'Altitud' },
+                { id: 'bookings', label: 'Reservas' },
+                { id: 'gear', label: 'Equipo' }
+              ].map(cat => (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => setFaqCategory(cat.id)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+                    faqCategory === cat.id
+                      ? 'bg-emerald-400 text-slate-950 font-black'
+                      : 'bg-white/5 text-emerald-200/70 hover:bg-white/10'
                   }`}
                 >
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaqIndex(isOpen ? null : fIdx)}
-                    className="w-full p-5 text-left flex items-center justify-between gap-4 cursor-pointer"
-                  >
-                    <span className="text-sm font-bold text-white flex items-center gap-3">
-                      <span className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-black shrink-0">
-                        ?
-                      </span>
-                      {faq.q}
-                    </span>
-                    <div className={`p-1.5 rounded-full bg-white/10 text-emerald-300 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-emerald-500/30' : ''}`}>
-                      <ChevronDown size={16} />
-                    </div>
-                  </button>
-
-                  {isOpen && (
-                    <div className="px-5 pb-5 pt-1 text-xs text-emerald-100/80 leading-relaxed border-t border-white/10 animate-in fade-in-50 duration-200">
-                      <p className="pl-9">{faq.a}</p>
-                    </div>
-                  )}
-                </div>
-              );
-            })
-          ) : (
-            <div className="p-8 text-center text-xs text-emerald-200/60 rounded-2xl bg-white/5">
-              No se encontraron preguntas con los términos buscados.
+                  {cat.label}
+                </button>
+              ))}
             </div>
-          )}
+          </div>
+
+          {/* Acordeón de FAQs */}
+          <div className="space-y-3.5">
+            {filteredFaqs.length > 0 ? (
+              filteredFaqs.map((faq, fIdx) => {
+                const isOpen = openFaqIndex === fIdx;
+                return (
+                  <div 
+                    key={fIdx} 
+                    className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                      isOpen 
+                        ? 'bg-white/[0.08] border-emerald-400/50 shadow-[0_10px_30px_rgba(16,185,129,0.15)] backdrop-blur-2xl' 
+                        : 'bg-white/[0.04] border-white/10 hover:border-white/20 backdrop-blur-xl'
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setOpenFaqIndex(isOpen ? null : fIdx)}
+                      className="w-full p-5 text-left flex items-center justify-between gap-4 cursor-pointer"
+                    >
+                      <span className="text-sm font-bold text-white flex items-center gap-3">
+                        <span className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-black shrink-0">
+                          ?
+                        </span>
+                        {faq.q}
+                      </span>
+                      <div className={`p-1.5 rounded-full bg-white/10 text-emerald-300 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-emerald-500/30' : ''}`}>
+                        <ChevronDown size={16} />
+                      </div>
+                    </button>
+
+                    {isOpen && (
+                      <div className="px-5 pb-5 pt-1 text-xs text-emerald-100/80 leading-relaxed border-t border-white/10 animate-in fade-in-50 duration-200">
+                        <p className="pl-9">{faq.a}</p>
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+            ) : (
+              <div className="p-8 text-center text-xs text-emerald-200/60 rounded-2xl bg-white/5">
+                No se encontraron preguntas con los términos buscados.
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
