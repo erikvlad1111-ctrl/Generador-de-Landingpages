@@ -588,40 +588,37 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
     <div 
       className="min-h-screen text-emerald-50 font-sans selection:bg-[#10b981] selection:text-[#011116] overflow-x-hidden relative"
       style={{
-        backgroundColor: '#041720',
+        backgroundColor: '#021016',
         backgroundImage: `
-          radial-gradient(ellipse 90% 900px at 50% 0px, rgba(14, 165, 233, 0.45) 0%, rgba(13, 148, 136, 0.30) 40%, transparent 80%),
-          radial-gradient(ellipse 80% 950px at 85% 1200px, rgba(20, 184, 166, 0.40) 0%, rgba(2, 132, 199, 0.22) 45%, transparent 75%),
-          radial-gradient(ellipse 80% 950px at 15% 2400px, rgba(2, 132, 199, 0.40) 0%, rgba(16, 185, 129, 0.22) 45%, transparent 75%),
-          radial-gradient(ellipse 85% 950px at 85% 3600px, rgba(16, 185, 129, 0.38) 0%, rgba(6, 182, 212, 0.22) 45%, transparent 75%),
-          radial-gradient(ellipse 80% 950px at 15% 4800px, rgba(6, 182, 212, 0.40) 0%, rgba(2, 132, 199, 0.22) 45%, transparent 75%),
-          radial-gradient(ellipse 85% 950px at 85% 6000px, rgba(13, 148, 136, 0.40) 0%, rgba(16, 185, 129, 0.20) 45%, transparent 75%),
-          radial-gradient(ellipse 90% 950px at 50% 7200px, rgba(2, 132, 199, 0.38) 0%, transparent 75%),
-          linear-gradient(180deg, #093847 0%, #062b37 800px, #04212a 2000px, #031c24 4000px, #02161c 6000px, #010e13 8000px)
+          radial-gradient(ellipse 90% 800px at 50% 380px, rgba(14, 165, 233, 0.32) 0%, rgba(13, 148, 136, 0.22) 40%, transparent 75%),
+          radial-gradient(ellipse 80% 950px at 85% 1200px, rgba(20, 184, 166, 0.38) 0%, rgba(2, 132, 199, 0.20) 45%, transparent 75%),
+          radial-gradient(ellipse 80% 950px at 15% 2400px, rgba(2, 132, 199, 0.38) 0%, rgba(16, 185, 129, 0.20) 45%, transparent 75%),
+          radial-gradient(ellipse 85% 950px at 85% 3600px, rgba(16, 185, 129, 0.36) 0%, rgba(6, 182, 212, 0.20) 45%, transparent 75%),
+          radial-gradient(ellipse 80% 950px at 15% 4800px, rgba(6, 182, 212, 0.38) 0%, rgba(2, 132, 199, 0.20) 45%, transparent 75%),
+          radial-gradient(ellipse 85% 950px at 85% 6000px, rgba(13, 148, 136, 0.38) 0%, rgba(16, 185, 129, 0.18) 45%, transparent 75%),
+          radial-gradient(ellipse 90% 950px at 50% 7200px, rgba(2, 132, 199, 0.35) 0%, transparent 75%),
+          linear-gradient(180deg, #021219 0%, #031c26 250px, #062835 700px, #041f29 1800px, #031821 3800px, #021218 6000px, #010a0e 8000px)
         `
       }}
     >
       
       {/* 🌌 SISTEMA DE GRADIENTE AURORA & PROFUNDIDAD MODERNA (AZUL OCEÁNICO + VERDE ESMERALDA / TEAL) */}
-      <div className="absolute top-0 inset-x-0 h-[1200px] overflow-hidden pointer-events-none z-0">
-        {/* Capa Base Gradiente Vertical Suave */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#093542] via-[#041e26] to-transparent opacity-95" />
+      <div className="absolute top-0 inset-x-0 h-[1100px] overflow-hidden pointer-events-none z-0">
+        {/* Capa Base Gradiente Vertical Oscura Superior (elimina cualquier destello blanco arriba) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#021219] via-[#031822]/90 to-transparent" />
         
-        {/* Aurora Central Masiva: Fusión Orgánica de Azul Zafiro Profundo con Verde Esmeralda y Teal */}
-        <div className="absolute -top-[160px] left-1/2 -translate-x-1/2 w-[1300px] sm:w-[1600px] h-[780px] bg-[radial-gradient(ellipse_75%_55%_at_50%_35%,rgba(20,184,166,0.50)_0%,rgba(2,132,199,0.38)_35%,rgba(6,78,94,0.40)_60%,transparent_100%)] blur-[80px]" />
+        {/* Aurora Central en el Cuerpo del Hero (centrada en el contenido del hero, no quemada arriba) */}
+        <div className="absolute top-[120px] left-1/2 -translate-x-1/2 w-[1200px] sm:w-[1500px] h-[650px] bg-[radial-gradient(ellipse_75%_55%_at_50%_45%,rgba(13,148,136,0.38)_0%,rgba(2,132,199,0.30)_38%,rgba(4,28,36,0.35)_65%,transparent_100%)] blur-[95px]" />
         
-        {/* Haz de Luz Superior Vertical Iluminando la Cabecera y el Hero */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-[radial-gradient(ellipse_at_top,rgba(45,212,191,0.35)_0%,rgba(14,116,144,0.22)_45%,transparent_75%)] blur-2xl" />
-        
-        {/* Acento Lateral Izquierdo: Verde Andino Esmeralda Luminoso */}
-        <div className="absolute top-28 -left-28 w-[550px] h-[550px] bg-gradient-to-tr from-emerald-500/30 to-teal-400/25 rounded-full blur-[110px] animate-emerald-glow" />
+        {/* Acento Lateral Izquierdo: Verde Andino Esmeralda */}
+        <div className="absolute top-36 -left-28 w-[500px] h-[500px] bg-gradient-to-tr from-emerald-600/22 to-teal-500/18 rounded-full blur-[120px] animate-emerald-glow" />
         
         {/* Acento Lateral Derecho: Azul Océano Marino */}
-        <div className="absolute top-40 -right-28 w-[550px] h-[550px] bg-gradient-to-bl from-sky-500/28 to-cyan-500/22 rounded-full blur-[110px] animate-emerald-glow [animation-delay:3s]" />
+        <div className="absolute top-44 -right-28 w-[500px] h-[500px] bg-gradient-to-bl from-sky-600/22 to-cyan-600/18 rounded-full blur-[120px] animate-emerald-glow [animation-delay:3s]" />
       </div>
 
       {/* 1. TOP HEADER NAVIGATION CON TRANSPARENCIA GLASSMORPHISM SUAVE */}
-      <header className="relative z-30 border-b border-white/10 bg-[#061e27]/75 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+      <header className="relative z-30 border-b border-white/10 bg-[#021219]/85 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.45)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
           
           {/* Logo y Marca */}

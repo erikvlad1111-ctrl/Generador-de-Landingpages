@@ -2752,24 +2752,24 @@ export default function NewLandingDemo() {
                 <div 
                   className="flex flex-col min-h-full text-emerald-50 relative overflow-hidden"
                   style={{
-                    backgroundColor: '#041720',
+                    backgroundColor: '#021016',
                     backgroundImage: `
-                      radial-gradient(ellipse 90% 280px at 50% 0px, rgba(14, 165, 233, 0.45) 0%, rgba(13, 148, 136, 0.30) 40%, transparent 80%),
+                      radial-gradient(ellipse 90% 280px at 50% 120px, rgba(14, 165, 233, 0.30) 0%, rgba(13, 148, 136, 0.20) 40%, transparent 80%),
                       radial-gradient(ellipse 85% 320px at 90% 380px, rgba(20, 184, 166, 0.35) 0%, transparent 70%),
                       radial-gradient(ellipse 85% 320px at 10% 700px, rgba(2, 132, 199, 0.35) 0%, transparent 70%),
-                      linear-gradient(180deg, #093847 0%, #062b37 300px, #04212a 600px, #02161c 1000px)
+                      linear-gradient(180deg, #021219 0%, #031c26 120px, #062835 300px, #04212a 600px, #02161c 1000px)
                     `
                   }}
                 >
-                  {/* Aurora glow miniatura en hero */}
-                  <div className="absolute top-0 inset-x-0 h-56 bg-[radial-gradient(ellipse_at_top,rgba(20,184,166,0.55)_0%,rgba(2,132,199,0.38)_40%,transparent_80%)] blur-xl pointer-events-none z-0" />
+                  {/* Aurora glow miniatura en hero centrado en contenido */}
+                  <div className="absolute top-10 inset-x-0 h-48 bg-[radial-gradient(ellipse_at_center,rgba(13,148,136,0.38)_0%,rgba(2,132,199,0.28)_40%,transparent_80%)] blur-xl pointer-events-none z-0" />
                   {/* Halo lateral en destinos */}
-                  <div className="absolute top-[420px] -right-16 w-48 h-48 bg-gradient-to-br from-emerald-500/30 to-teal-400/20 rounded-full blur-2xl pointer-events-none z-0" />
+                  <div className="absolute top-[420px] -right-16 w-48 h-48 bg-gradient-to-br from-emerald-600/25 to-teal-500/18 rounded-full blur-2xl pointer-events-none z-0" />
                   {/* Halo lateral en stats */}
-                  <div className="absolute top-[680px] -left-16 w-48 h-48 bg-gradient-to-tr from-sky-500/30 to-cyan-400/20 rounded-full blur-2xl pointer-events-none z-0" />
+                  <div className="absolute top-[680px] -left-16 w-48 h-48 bg-gradient-to-tr from-sky-600/25 to-cyan-500/18 rounded-full blur-2xl pointer-events-none z-0" />
 
                   {/* Top Bar Navigation */}
-                  <div className="px-3.5 py-2.5 flex items-center justify-between border-b border-white/10 bg-[#061e27]/80 backdrop-blur-md sticky top-0 z-20 shadow-xs">
+                  <div className="px-3.5 py-2.5 flex items-center justify-between border-b border-white/10 bg-[#021219]/90 backdrop-blur-md sticky top-0 z-20 shadow-xs">
                     <div className="flex items-center gap-1.5">
                       <div className="w-5 h-5 rounded-lg bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-[10px]">
                         🌲
