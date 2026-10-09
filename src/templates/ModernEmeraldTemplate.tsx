@@ -447,23 +447,23 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#08283f] via-[#051f33] to-[#02111d] text-emerald-50 font-sans selection:bg-[#10b981] selection:text-[#02111d] overflow-x-hidden relative">
+    <div className="min-h-screen bg-gradient-to-b from-[#07313b] via-[#04262f] to-[#02181f] text-emerald-50 font-sans selection:bg-[#10b981] selection:text-[#02181f] overflow-x-hidden relative">
       
       {/* Luces Ambientales y Orbes Flotantes en Movimiento Continuo (Azul Verdoso & Teal Brillante para Resaltar Transparencias) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
         <div className="absolute -top-32 right-10 w-[600px] h-[600px] bg-cyan-400/20 rounded-full blur-[140px] animate-emerald-glow" />
         <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-teal-400/20 rounded-full blur-[160px] animate-emerald-glow [animation-delay:2.5s]" />
-        <div className="absolute top-2/3 right-1/4 w-[650px] h-[650px] bg-sky-500/20 rounded-full blur-[150px] animate-emerald-glow [animation-delay:5s]" />
+        <div className="absolute top-2/3 right-1/4 w-[650px] h-[650px] bg-teal-500/20 rounded-full blur-[150px] animate-emerald-glow [animation-delay:5s]" />
         <div className="absolute -bottom-32 left-1/3 w-[500px] h-[500px] bg-emerald-500/15 rounded-full blur-[140px] animate-emerald-glow [animation-delay:3.5s]" />
       </div>
 
       {/* 1. TOP HEADER NAVIGATION CON TRANSPARENCIA GLASSMORPHISM SUAVE */}
-      <header className="relative z-30 border-b border-white/10 bg-[#08283f]/60 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+      <header className="relative z-30 border-b border-white/10 bg-[#07313b]/60 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
           
           {/* Logo y Marca */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-400 flex items-center justify-center text-[#02111d] shadow-lg shadow-emerald-500/30 shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-400 flex items-center justify-center text-[#02181f] shadow-lg shadow-emerald-500/30 shrink-0">
               <Compass size={22} className="stroke-[2.5]" />
             </div>
             <div>
@@ -476,7 +476,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
           {/* Menú Desktop Translúcido Flotante */}
           <nav className="hidden md:flex items-center gap-1 bg-white/[0.08] backdrop-blur-xl p-1.5 rounded-full border border-white/15 shadow-lg text-xs font-semibold text-emerald-100">
-            <a href="#inicio" className="px-3 py-1.5 rounded-full bg-emerald-500 text-[#02111d] font-black shadow-xs transition-all">
+            <a href="#inicio" className="px-3 py-1.5 rounded-full bg-emerald-500 text-[#02181f] font-black shadow-xs transition-all">
               {t.navHome}
             </a>
             <a href="#destinos" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
@@ -509,7 +509,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
             <button
               onClick={() => handleOpenAction(data.name)}
-              className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-300 text-[#02111d] font-black text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2"
+              className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-300 text-[#02181f] font-black text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2"
             >
               <MessageCircle size={16} />
               <span>{isWhatsapp ? t.whatsappBtn : isQuote ? t.quoteBtn : t.planYourTripBtn}</span>
@@ -527,7 +527,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-white/10 bg-[#08283f]/95 backdrop-blur-2xl px-4 py-4 space-y-2 text-sm font-semibold animate-in slide-in-from-top-2 shadow-xl">
+          <div className="md:hidden border-t border-white/10 bg-[#07313b]/95 backdrop-blur-2xl px-4 py-4 space-y-2 text-sm font-semibold animate-in slide-in-from-top-2 shadow-xl">
             <a href="#inicio" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-300">{t.navHome}</a>
             <a href="#destinos" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navDestinations}</a>
             <a href="#itinerario" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navItinerary}</a>
@@ -639,7 +639,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               />
 
               {/* Degradado suave ÚNICAMENTE en la parte inferior para fusionar con el fondo y dar contraste al texto */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#08283f] via-[#08283f]/60 to-transparent z-10" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07313b] via-[#07313b]/60 to-transparent z-10" />
 
               {/* Chip Flotante Superior: Local Experts con Levitación Continua */}
               <div className="absolute top-5 left-5 z-20 bg-black/40 backdrop-blur-xl px-4 py-2 rounded-2xl border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center gap-2.5 animate-float-badge">
@@ -857,7 +857,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               <button
                 type="button"
                 onClick={() => handleOpenAction(data.name)}
-                className="emerald-shimmer-btn bg-emerald-500 hover:bg-emerald-400 text-[#02111d] font-black text-xs px-5 py-2.5 rounded-full transition-all cursor-pointer shadow-md self-start sm:self-auto"
+                className="emerald-shimmer-btn bg-emerald-500 hover:bg-emerald-400 text-[#02181f] font-black text-xs px-5 py-2.5 rounded-full transition-all cursor-pointer shadow-md self-start sm:self-auto"
               >
                 Consultar con {guideName.split(' ')[0]}
               </button>
