@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import { 
   Compass, 
@@ -34,9 +34,19 @@ import {
   ChevronLeft,
   ChevronRight,
   Search,
-  Check
+  Check,
+  Plus,
+  Minus,
+  CheckSquare,
+  Square,
+  Utensils,
+  Bed,
+  Filter,
+  HelpCircle,
+  Info,
+  DollarSign
 } from 'lucide-react';
-import { LandingData, PlanTier, ObjectiveType, LanguageType, CatalogTourItem } from '@/types/landing';
+import { LandingData, PlanTier, ObjectiveType, LanguageType, CatalogTourItem, ItineraryItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import QuoteModal from '@/components/common/QuoteModal';
 import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
@@ -63,6 +73,7 @@ const DICTIONARIES = {
     searchWhere: '¿A dónde deseas ir?',
     searchDates: 'Fechas / Temporada',
     searchBtn: 'Explorar',
+    passengers: 'Viajeros',
     benefit1Title: 'Guías Expertos',
     benefit1Desc: 'Conocimiento local y tips auténticos',
     benefit2Title: 'Rutas a Medida',
@@ -112,6 +123,7 @@ const DICTIONARIES = {
     searchWhere: 'Where to?',
     searchDates: 'Dates / Duration',
     searchBtn: 'Search',
+    passengers: 'Travelers',
     benefit1Title: 'Expert Guides',
     benefit1Desc: 'Local insights & authentic tips',
     benefit2Title: 'Tailored Itineraries',
@@ -161,6 +173,7 @@ const DICTIONARIES = {
     searchWhere: 'Para onde?',
     searchDates: 'Datas / Duração',
     searchBtn: 'Explorar',
+    passengers: 'Viajantes',
     benefit1Title: 'Guias Especialistas',
     benefit1Desc: 'Conhecimento local e dicas exclusivas',
     benefit2Title: 'Roteiros Sob Medida',
@@ -210,6 +223,7 @@ const DICTIONARIES = {
     searchWhere: 'Où aller ?',
     searchDates: 'Dates / Durée',
     searchBtn: 'Rechercher',
+    passengers: 'Voyageurs',
     benefit1Title: 'Guides Experts',
     benefit1Desc: 'Savoir local et conseils authentiques',
     benefit2Title: 'Itinéraires Sur Mesure',
@@ -259,6 +273,7 @@ const DICTIONARIES = {
     searchWhere: 'Dove andare?',
     searchDates: 'Date / Durata',
     searchBtn: 'Cerca',
+    passengers: 'Viaggiatori',
     benefit1Title: 'Guide Esperte',
     benefit1Desc: 'Esperienza locale e consigli autentici',
     benefit2Title: 'Itinerari Su Misura',
@@ -307,6 +322,18 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   const [selectedTourForQuote, setSelectedTourForQuote] = useState<string>(data.name || 'Expedición Machu Picchu');
   const [favorites, setFavorites] = useState<Record<string, boolean>>({});
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  
+  // Interactive State for Advance Tier
+  const [passengers, setPassengers] = useState<number>(2);
+  const [currency, setCurrency] = useState<'USD' | 'PEN' | 'EUR'>('USD');
+  const [tourCategory, setTourCategory] = useState<string>('all');
+  const [tourPage, setTourPage] = useState<number>(0);
+  const [selectedDayIdx, setSelectedDayIdx] = useState<number>(0);
+  const [itineraryViewMode, setItineraryViewMode] = useState<'tabs' | 'all'>('tabs');
+  const [checkedPacking, setCheckedPacking] = useState<Record<number, boolean>>({ 0: true, 1: true });
+  const [faqCategory, setFaqCategory] = useState<string>('all');
+  const [faqSearch, setFaqSearch] = useState<string>('');
+  const [activeSpecModal, setActiveSpecModal] = useState<string | null>(null);
 
   const t = DICTIONARIES[currentLang] || DICTIONARIES.es;
   const tier: PlanTier = data.tier || 'advance';
@@ -330,6 +357,24 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   const heroTitle = data.hero?.title || data.name || 'Live Your Adventure.';
   const heroSubtitle = data.hero?.subtitle || data.about?.content || 'Explora lugares asombrosos y crea recuerdos inolvidables alrededor de los Andes.';
   const heroBadge = data.hero?.badge || 'NavikX Cusco • Operador Autorizado';
+
+  // Base Price parsing & Dynamic calculation
+  const rawPriceStr = data.price || '$350 USD';
+  const basePriceUsd = useMemo(() => {
+    const num = parseInt(rawPriceStr.replace(/\D/g, ''), 10);
+    return isNaN(num) || num <= 0 ? 350 : num;
+  }, [rawPriceStr]);
+
+  const formatPrice = (usdAmount: number, qty: number = 1) => {
+    const total = usdAmount * qty;
+    if (currency === 'PEN') {
+      return `S/ ${(total * 3.75).toLocaleString('es-PE', { maximumFractionDigits: 0 })} PEN`;
+    }
+    if (currency === 'EUR') {
+      return `€${(total * 0.92).toLocaleString('es-ES', { maximumFractionDigits: 0 })} EUR`;
+    }
+    return `$${total.toLocaleString('en-US')} USD`;
+  };
 
   // Contenido de la Expedición (Acerca de)
   const aboutTitle = data.about?.title || 'Expediciones Diseñadas por Expertos Andinos';
@@ -405,25 +450,111 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
     : [
         {
           q: '¿Cómo prepararse para la altitud en Cusco antes de la caminata?',
-          a: 'Recomendamos llegar a Cusco con al menos 24 a 48 horas de anticipación para aclimatación, hidratarse constantemente, consumir comidas ligeras y utilizar infusiones de coca y muña. Nuestro equipo cuenta además con oxígeno médico preventivo.'
+          a: 'Recomendamos llegar a Cusco con al menos 24 a 48 horas de anticipación para aclimatación, hidratarse constantemente, consumir comidas ligeras y utilizar infusiones de coca y muña. Nuestro equipo cuenta además con oxígeno médico preventivo.',
+          cat: 'altitude'
         },
         {
           q: '¿Qué sucede si hay mal tiempo o reprogramaciones climáticas?',
-          a: 'Monitoreamos reportes meteorológicos satelitales en tiempo real. En caso de alertas climáticas, coordinamos rutas alternas seguras o reprogramaciones sin penalidad conforme a las normativas de seguridad de DIRCETUR.'
+          a: 'Monitoreamos reportes meteorológicos satelitales en tiempo real. En caso de alertas climáticas, coordinamos rutas alternas seguras o reprogramaciones sin penalidad conforme a las normativas de seguridad de DIRCETUR.',
+          cat: 'bookings'
         },
         {
           q: '¿Se requiere experiencia previa en senderismo de alta montaña?',
-          a: 'Nuestras expediciones están clasificadas con dificultad moderada y avanzan a ritmo personalizado. Cualquier persona con condición física regular puede realizarlas cómodamente con la asistencia de nuestros guías certificados.'
+          a: 'Nuestras expediciones están clasificadas con dificultad moderada y avanzan a ritmo personalizado. Cualquier persona con condición física regular puede realizarlas cómodamente con la asistencia de nuestros guías certificados.',
+          cat: 'altitude'
         },
         {
           q: '¿Qué incluye la alimentación durante la expedición?',
-          a: 'Todos los menús son elaborados por cocineros de montaña utilizando insumos andinos frescos de primera calidad. Atendemos requerimientos vegetarianos, veganos o sin gluten previa coordinación.'
+          a: 'Todos los menús son elaborados por cocineros de montaña utilizando insumos andinos frescos de primera calidad. Atendemos requerimientos vegetarianos, veganos o sin gluten previa coordinación.',
+          cat: 'gear'
         }
       ];
+
+  // Itinerario Interactivo Completo
+  const defaultItinerary: (ItineraryItem & { altitude?: string; hikingTime?: string; meals?: string; lodging?: string })[] = [
+    {
+      step: 'Día 1',
+      title: 'Cusco Imperial, Miradores del Valle Sagrado & Aclimatación',
+      desc: 'Recepción privada en el hotel, travesía por los miradores del Valle Sagrado, sesión de aclimatación con infusiones de muña y briefing técnico con el guía oficial colegiado.',
+      altitude: '2,800 msnm',
+      hikingTime: '3-4 hrs (Paseo ligero)',
+      meals: 'Almuerzo Campestre & Cena de Bienvenida',
+      lodging: 'Hotel Boutique Valle Sagrado'
+    },
+    {
+      step: 'Día 2',
+      title: 'Ascenso Escénico, Paso de Alta Montaña & Lagunas Glaciares',
+      desc: 'Trekking matutino atravesando bosques de queñuales hacia las lagunas turquesas a los pies del nevado. Almuerzo gourmet de montaña y campamento bajo las estrellas andinas.',
+      altitude: '4,630 msnm',
+      hikingTime: '6-7 hrs (Ascenso gradual)',
+      meals: 'Desayuno Andino, Almuerzo Gourmet & Cena',
+      lodging: 'Domo Glamping con Vista a las Estrellas'
+    },
+    {
+      step: 'Día 3',
+      title: 'Descenso a Ceja de Selva, Plantaciones de Café & Aguas Termales',
+      desc: 'Travesía por valles subtropicales con vegetación exuberante, visita a productores de café orgánico y relajación en aguas termales naturales medicinales.',
+      altitude: '2,050 msnm',
+      hikingTime: '5 hrs (Descenso escénico)',
+      meals: 'Desayuno, Almuerzo Típico & Cena',
+      lodging: 'Eco-Lodge en Ceja de Selva'
+    },
+    {
+      step: 'Día 4',
+      title: 'Amanecer en la Ciudadela Sagrada de Machu Picchu & Retorno VIP',
+      desc: 'Acceso en primer turno a Machu Picchu para capturar la clásica postal con luz dorada. Recorrido arqueológico guiado de 3 horas y retorno en tren panorámico a Cusco.',
+      altitude: '2,430 msnm',
+      hikingTime: '3 hrs (Tour guiado histórico)',
+      meals: 'Desayuno Buffet & Almuerzo en Aguas Calientes',
+      lodging: 'Retorno a Hotel en Cusco'
+    }
+  ];
+
+  const activeItinerary = (data.itinerary && data.itinerary.length > 0)
+    ? data.itinerary.map((step, idx) => ({
+        ...step,
+        altitude: (step as any).altitude || (idx === 0 ? '2,800 msnm' : idx === 1 ? '4,630 msnm' : idx === 2 ? '2,050 msnm' : '2,430 msnm'),
+        hikingTime: (step as any).hikingTime || (idx === 0 ? '3-4 hrs' : idx === 1 ? '6-7 hrs' : idx === 2 ? '5 hrs' : '3 hrs'),
+        meals: (step as any).meals || 'Alimentación Completa Incluida',
+        lodging: (step as any).lodging || 'Hospedaje de Montaña Confortable'
+      }))
+    : defaultItinerary;
 
   const toursList: CatalogTourItem[] = (data.catalogTours && data.catalogTours.length > 0) 
     ? data.catalogTours 
     : DEFAULT_SECONDARY_CATALOG_TOURS;
+
+  // Filtrado de Tours
+  const filteredTours = useMemo(() => {
+    return toursList.filter(tour => {
+      if (tourCategory === 'all') return true;
+      const titleLower = tour.title.toLowerCase();
+      if (tourCategory === 'trekking') {
+        return titleLower.includes('salkantay') || titleLower.includes('trek') || titleLower.includes('camino inca') || titleLower.includes('choquequirao') || titleLower.includes('vinicunca') || titleLower.includes('colores');
+      }
+      if (tourCategory === 'classic') {
+        return titleLower.includes('machu picchu') || titleLower.includes('valle') || titleLower.includes('ciudad') || titleLower.includes('sagrado');
+      }
+      if (tourCategory === 'fullday') {
+        return tour.duration?.toLowerCase().includes('full') || tour.duration?.toLowerCase().includes('día') || titleLower.includes('humantay') || titleLower.includes('vinicunca');
+      }
+      return true;
+    });
+  }, [toursList, tourCategory]);
+
+  const toursPerPage = 3;
+  const totalTourPages = Math.ceil(filteredTours.length / toursPerPage);
+  const currentTourPage = Math.min(tourPage, Math.max(0, totalTourPages - 1));
+  const visibleTours = filteredTours.slice(currentTourPage * toursPerPage, (currentTourPage + 1) * toursPerPage);
+
+  // Filtrado de FAQs
+  const filteredFaqs = useMemo(() => {
+    return faqsList.filter(faq => {
+      const matchesCat = faqCategory === 'all' || (faq as any).cat === faqCategory;
+      const matchesSearch = !faqSearch || faq.q.toLowerCase().includes(faqSearch.toLowerCase()) || faq.a.toLowerCase().includes(faqSearch.toLowerCase());
+      return matchesCat && matchesSearch;
+    });
+  }, [faqsList, faqCategory, faqSearch]);
 
   const toggleFavorite = (id: string) => {
     setFavorites(prev => ({ ...prev, [id]: !prev[id] }));
@@ -435,16 +566,23 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       setIsQuoteOpen(true);
     } else {
       const cleanPhone = guidePhone.replace(/\D/g, '');
-      const msg = encodeURIComponent(`Hola ${guideName}, deseo consultar disponibilidad y reservar el tour: ${tourTitle || data.name || 'Machu Picchu'}.`);
+      const msg = encodeURIComponent(`Hola ${guideName}, deseo consultar disponibilidad para ${passengers} personas en el tour: ${tourTitle || data.name || 'Machu Picchu'} (${formatPrice(basePriceUsd, passengers)} en ${currency}).`);
       window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
     }
   };
 
   const handleWhatsappDirect = (tourTitle?: string) => {
     const cleanPhone = guidePhone.replace(/\D/g, '');
-    const msg = encodeURIComponent(`Hola ${guideName}, deseo consultar sobre ${tourTitle || data.name || 'Machu Picchu'} por WhatsApp.`);
+    const msg = encodeURIComponent(`Hola ${guideName}, deseo consultar sobre ${tourTitle || data.name || 'Machu Picchu'} para ${passengers} personas por WhatsApp.`);
     window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
   };
+
+  // Checklist de Mochila
+  const toggleChecklist = (idx: number) => {
+    setCheckedPacking(prev => ({ ...prev, [idx]: !prev[idx] }));
+  };
+  const packedCount = whatToBringList.filter((_, idx) => checkedPacking[idx]).length;
+  const packedPct = Math.round((packedCount / whatToBringList.length) * 100);
 
   return (
     <div className="min-h-screen bg-[#03131a] text-emerald-50 font-sans selection:bg-[#10b981] selection:text-[#011116] overflow-x-hidden relative">
@@ -484,10 +622,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               <Compass size={22} className="stroke-[2.5]" />
             </div>
             <div>
-              <span className="font-black text-lg tracking-tight text-white flex items-center gap-1.5">
+              <span className="font-black text-lg tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap leading-snug">
                 NavikX <span className="text-emerald-300 font-medium text-xs bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-400/40">Cusco</span>
               </span>
-              <p className="text-[10px] text-emerald-200/70 font-medium tracking-wide">{t.brandTag}</p>
+              <p className="text-[10px] text-emerald-200/70 font-medium tracking-wide leading-none mt-0.5 whitespace-nowrap">{t.brandTag}</p>
             </div>
           </div>
 
@@ -513,8 +651,24 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </a>
           </nav>
 
-          {/* Controles Derecha: Idiomas + CTA */}
-          <div className="flex items-center gap-3">
+          {/* Controles Derecha: Divisas + Idiomas + CTA */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* Currency Selector Pill */}
+            <div className="hidden sm:flex items-center bg-white/10 p-1 rounded-full border border-white/15 text-[11px] font-bold">
+              {(['USD', 'PEN', 'EUR'] as const).map(curr => (
+                <button
+                  key={curr}
+                  type="button"
+                  onClick={() => setCurrency(curr)}
+                  className={`px-2 py-0.5 rounded-full transition-all cursor-pointer ${
+                    currency === curr ? 'bg-emerald-400 text-slate-950 font-black shadow-xs' : 'text-emerald-200/70 hover:text-white'
+                  }`}
+                >
+                  {curr}
+                </button>
+              ))}
+            </div>
+
             {!isFreeOrBasic && (
               <HeaderLanguageSelector
                 currentLang={currentLang}
@@ -526,10 +680,11 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
             <button
               onClick={() => handleOpenAction(data.name)}
-              className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-300 text-[#02181f] font-black text-xs sm:text-sm px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2"
+              className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-300 text-[#02181f] font-black text-xs sm:text-sm px-4 sm:px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2"
             >
               <MessageCircle size={16} />
-              <span>{isWhatsapp ? t.whatsappBtn : isQuote ? t.quoteBtn : t.planYourTripBtn}</span>
+              <span className="hidden xs:inline">{isWhatsapp ? t.whatsappBtn : isQuote ? t.quoteBtn : t.planYourTripBtn}</span>
+              <span className="xs:hidden">Reservar</span>
             </button>
 
             {/* Mobile Menu Toggle */}
@@ -544,7 +699,26 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-white/10 bg-[#083642]/95 backdrop-blur-2xl px-4 py-4 space-y-2 text-sm font-semibold animate-in slide-in-from-top-2 shadow-xl">
+          <div className="md:hidden border-t border-white/10 bg-[#061e27]/95 backdrop-blur-2xl px-4 py-4 space-y-3 text-sm font-semibold animate-in slide-in-from-top-2 shadow-xl">
+            {/* Currency selector on mobile */}
+            <div className="flex items-center justify-between pb-2 border-b border-white/10">
+              <span className="text-xs text-emerald-200/80">Moneda de Tarifa:</span>
+              <div className="flex gap-1 bg-white/10 p-1 rounded-full border border-white/15 text-xs">
+                {(['USD', 'PEN', 'EUR'] as const).map(curr => (
+                  <button
+                    key={curr}
+                    type="button"
+                    onClick={() => setCurrency(curr)}
+                    className={`px-2.5 py-1 rounded-full font-bold ${
+                      currency === curr ? 'bg-emerald-400 text-slate-950 font-black' : 'text-emerald-200'
+                    }`}
+                  >
+                    {curr}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <a href="#inicio" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-300">{t.navHome}</a>
             <a href="#destinos" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navDestinations}</a>
             <a href="#itinerario" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navItinerary}</a>
@@ -557,12 +731,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       </header>
 
       {/* 2. HERO PRINCIPAL CON FOTO SIN BORDES VISIBLES + ESTILOS FLOTANTES ACTIVOS */}
-      <section id="inicio" className="relative z-10 pt-8 sm:pt-16 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        {/* Spotlight Aurora Detrás del Hero */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[550px] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-teal-400/20 via-cyan-600/10 to-transparent blur-3xl pointer-events-none -z-10" />
+      <section id="inicio" className="relative z-10 pt-8 sm:pt-14 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Columna Izquierda: Copys + Buscador Píldora Flotante + Beneficios */}
+          {/* Columna Izquierda: Copys + Calculadora Píldora Flotante + Beneficios */}
           <div className="lg:col-span-6 space-y-6 sm:space-y-8">
             
             {/* Badge de Temporada Flotante con Levitación Continua */}
@@ -581,9 +753,11 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               {heroSubtitle}
             </p>
 
-            {/* BARRA FLOTANTE DE BÚSQUEDA TIPO PÍLDORA (CRISTAL TRANSLÚCIDO CON LEVITACIÓN) */}
-            <div className="p-2 sm:p-2.5 bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 max-w-xl animate-pill-glow transition-all duration-300">
-              <div className="flex items-center gap-2.5 px-4 py-2 flex-1 border-b sm:border-b-0 sm:border-r border-white/10 text-xs">
+            {/* BARRA FLOTANTE INTERACTIVA DE BÚSQUEDA & CALCULADORA EN VIVO (ADVANCE TIER) */}
+            <div className="p-2.5 sm:p-3 bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-3xl sm:rounded-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 max-w-xl animate-pill-glow transition-all duration-300">
+              
+              {/* Destino */}
+              <div className="flex items-center gap-2.5 px-3 py-1.5 flex-1 border-b sm:border-b-0 sm:border-r border-white/10 text-xs">
                 <MapPin size={16} className="text-emerald-400 shrink-0" />
                 <div className="min-w-0">
                   <span className="text-[10px] text-emerald-200/70 font-semibold block">{t.searchWhere}</span>
@@ -591,27 +765,45 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 </div>
               </div>
 
-              <div className="flex items-center gap-2.5 px-4 py-2 flex-1 text-xs">
-                <Calendar size={16} className="text-emerald-400 shrink-0" />
+              {/* Selector de Pasajeros Interactivo */}
+              <div className="flex items-center justify-between sm:justify-start gap-2.5 px-3 py-1.5 flex-1 border-b sm:border-b-0 sm:border-r border-white/10 text-xs">
+                <Users size={16} className="text-teal-400 shrink-0" />
                 <div className="min-w-0">
-                  <span className="text-[10px] text-emerald-200/70 font-semibold block">{t.searchDates}</span>
-                  <span className="text-xs font-bold text-white truncate block">{data.duration || 'Full Day / Multidía'}</span>
+                  <span className="text-[10px] text-emerald-200/70 font-semibold block">{t.passengers}</span>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setPassengers(Math.max(1, passengers - 1))}
+                      className="w-5 h-5 rounded-md bg-white/15 hover:bg-emerald-500 hover:text-black flex items-center justify-center text-xs font-black transition-colors cursor-pointer"
+                    >
+                      <Minus size={11} />
+                    </button>
+                    <span className="text-xs font-black text-white">{passengers} {passengers === 1 ? 'persona' : 'personas'}</span>
+                    <button
+                      type="button"
+                      onClick={() => setPassengers(Math.min(12, passengers + 1))}
+                      className="w-5 h-5 rounded-md bg-white/15 hover:bg-emerald-500 hover:text-black flex items-center justify-center text-xs font-black transition-colors cursor-pointer"
+                    >
+                      <Plus size={11} />
+                    </button>
+                  </div>
                 </div>
               </div>
 
+              {/* Botón de Acción Principal con Tarifa Calculada */}
               <button
                 type="button"
                 onClick={() => handleOpenAction(data.name)}
-                className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs px-6 py-3 rounded-full transition-all shadow-md shadow-emerald-500/30 flex items-center justify-center gap-1.5 cursor-pointer shrink-0 hover:scale-105 active:scale-95"
+                className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs px-5 py-3 rounded-2xl sm:rounded-full transition-all shadow-md shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer shrink-0 hover:scale-105 active:scale-95"
               >
-                <Search size={14} />
-                <span>{t.searchBtn}</span>
+                <span>{formatPrice(basePriceUsd, passengers)}</span>
+                <ArrowRight size={14} />
               </button>
             </div>
 
             {/* 3 TARJETAS BENTO FLOTANTES TRANSLÚCIDAS CON LEVITACIÓN ESCALONADA */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
-              <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float space-y-1.5 group">
+              <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float space-y-1.5 group cursor-default">
                 <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/30 group-hover:scale-110 transition-transform">
                   <Compass size={16} />
                 </div>
@@ -619,7 +811,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <p className="text-[11px] text-emerald-200/70 leading-snug">{t.benefit1Desc}</p>
               </div>
 
-              <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float-delayed space-y-1.5 group">
+              <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float-delayed space-y-1.5 group cursor-default">
                 <div className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/30 group-hover:scale-110 transition-transform">
                   <FileText size={16} />
                 </div>
@@ -627,7 +819,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <p className="text-[11px] text-emerald-200/70 leading-snug">{t.benefit2Desc}</p>
               </div>
 
-              <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float-alt space-y-1.5 group">
+              <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float-alt space-y-1.5 group cursor-default">
                 <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/30 group-hover:scale-110 transition-transform">
                   <ShieldCheck size={16} />
                 </div>
@@ -638,16 +830,15 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
           </div>
 
-          {/* Columna Derecha: FOTO DEL HERO CON SILUETA ORGÁNICA EXACTA A LA REFERENCIA (NÍTIDA, SIN BORDES RECTOS NI BLUR INTERNO) */}
+          {/* Columna Derecha: FOTO DEL HERO CON SILUETA ORGÁNICA */}
           <div className="lg:col-span-6 relative flex items-center justify-center">
             
-            {/* Halo ambiental suave exterior (detrás del contenedor, no sobre la foto) */}
+            {/* Halo ambiental suave exterior */}
             <div className="absolute -inset-8 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none" />
 
-            {/* Contenedor Principal con Silueta Orgánica y Mayor Tamaño Imponente */}
+            {/* Contenedor Principal con Silueta Orgánica */}
             <div className="relative w-full max-w-lg lg:max-w-xl h-[520px] sm:h-[620px] lg:h-[660px] mx-auto rounded-[56px] rounded-tr-[130px] rounded-br-[150px] rounded-bl-[48px] overflow-hidden group shadow-[0_35px_80px_rgba(0,0,0,0.65)] border border-white/10">
               
-              {/* Fotografía NÍTIDA y 100% VISIBLE (sin blur interno) */}
               <Image 
                 src={heroImg} 
                 alt={data.name || 'Cusco Adventure'} 
@@ -657,10 +848,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 className="object-cover group-hover:scale-105 transition-transform duration-700" 
               />
 
-              {/* Degradado suave ÚNICAMENTE en la parte inferior para fusionar con el fondo y dar contraste al texto */}
+              {/* Degradado suave inferior */}
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#03131a] via-[#03131a]/60 to-transparent z-10" />
 
-              {/* Chip Flotante Superior: Local Experts con Levitación Continua */}
+              {/* Chip Flotante Superior: Local Experts */}
               <div className="absolute top-5 left-5 z-20 bg-black/40 backdrop-blur-xl px-4 py-2 rounded-2xl border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center gap-2.5 animate-float-badge">
                 <div className="w-8 h-8 rounded-xl bg-emerald-500/25 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs">
                   <Award size={16} />
@@ -671,11 +862,11 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 </div>
               </div>
 
-              {/* Tarjeta Flotante Inferior de Tarifa con Levitación Suave */}
+              {/* Tarjeta Flotante Inferior de Tarifa con Tarifa Dinámica */}
               <div className="absolute bottom-5 inset-x-5 z-20 p-4 rounded-3xl bg-black/50 backdrop-blur-xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex items-center justify-between gap-3 animate-emerald-float-alt">
                 <div className="min-w-0">
                   <span className="text-[10px] text-emerald-200/90 font-bold block">Tarifa Oficial por Persona:</span>
-                  <span className="text-2xl font-black text-white">{data.price || '$350 USD'}</span>
+                  <span className="text-2xl font-black text-white">{formatPrice(basePriceUsd, 1)}</span>
                 </div>
                 <button
                   type="button"
@@ -694,14 +885,14 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       </section>
 
 
-      {/* 3. POPULAR DESTINATIONS (CATÁLOGO DE TOURS EN CAROUSEL DE CARDS CON CORAZONES Y PRECIOS) */}
-      <section id="destinos" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+      {/* 3. POPULAR DESTINATIONS (CATÁLOGO INTERACTIVO CON FILTROS & SLIDER FUNCIONAL) */}
+      <section id="destinos" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight flex items-center gap-2.5">
               <span>{t.popularTitle}</span>
               <span className="text-xs font-bold text-emerald-300 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-400/40">
-                {toursList.length} Tours
+                {filteredTours.length} Circuitos
               </span>
             </h2>
             <p className="text-xs sm:text-sm text-emerald-200/70 mt-1 max-w-xl">
@@ -709,25 +900,42 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </p>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="text-xs text-emerald-300/60 font-semibold hidden sm:inline">Desliza para ver más</span>
-            <div className="w-8 h-8 rounded-full bg-white/10 border border-white/20 text-emerald-300 flex items-center justify-center cursor-pointer hover:bg-white/20 transition-colors shadow-xs">
-              <ChevronLeft size={16} />
-            </div>
-            <div className="w-8 h-8 rounded-full bg-emerald-500 text-[#041716] font-bold flex items-center justify-center cursor-pointer hover:bg-emerald-400 transition-colors shadow-xs">
-              <ChevronRight size={16} />
-            </div>
+          {/* Filtros de Categoría Interactivos */}
+          <div className="flex flex-wrap items-center gap-1.5 bg-white/[0.06] p-1.5 rounded-2xl border border-white/10">
+            {[
+              { id: 'all', label: 'Todos' },
+              { id: 'trekking', label: 'Trekking & Montaña' },
+              { id: 'classic', label: 'Clásicos & Cultura' },
+              { id: 'fullday', label: 'Full Day' }
+            ].map(cat => (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => {
+                  setTourCategory(cat.id);
+                  setTourPage(0);
+                }}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                  tourCategory === cat.id
+                    ? 'bg-emerald-400 text-slate-950 shadow-md font-black'
+                    : 'text-emerald-200/70 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Grid / Carrusel de Cards Flotantes con Transparencia Ultra Claro */}
+        {/* Grid de Cards del Carrusel */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {toursList.map((tour, idx) => {
+          {visibleTours.map((tour, idx) => {
             const isFav = favorites[tour.id || idx];
+            const tourUsd = parseInt(tour.price.replace(/\D/g, '') || '85', 10);
             return (
               <div 
                 key={tour.id || idx}
-                className="group rounded-3xl glass-floating-card overflow-hidden flex flex-col justify-between"
+                className="group rounded-3xl glass-floating-card overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-emerald-400/40"
               >
                 {/* Imagen del Tour con Chips y Botón Favorito */}
                 <div className="relative h-56 w-full overflow-hidden bg-emerald-950">
@@ -746,18 +954,19 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                     <span>{tour.rating || 4.8}</span>
                   </div>
 
-                  {/* Botón Favorito Corazón */}
+                  {/* Botón Favorito Corazón Interactivo */}
                   <button
                     type="button"
                     onClick={() => toggleFavorite(tour.id || String(idx))}
                     className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:scale-110 shadow-md transition-transform cursor-pointer"
+                    aria-label="Guardar tour en favoritos"
                   >
                     <Heart size={14} className={isFav ? "fill-rose-500 text-rose-500" : "text-white"} />
                   </button>
 
-                  {/* Precio Flotante */}
-                  <div className="absolute bottom-3 right-3 bg-emerald-400 text-[#041716] font-black text-sm px-3.5 py-1 rounded-xl shadow-lg">
-                    {tour.price}
+                  {/* Precio Flotante Dinámico */}
+                  <div className="absolute bottom-3 right-3 bg-emerald-400 text-[#041716] font-black text-xs sm:text-sm px-3.5 py-1 rounded-xl shadow-lg">
+                    {formatPrice(tourUsd, 1)}
                   </div>
                 </div>
 
@@ -783,7 +992,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                           <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" alt="User" fill className="object-cover" />
                         </div>
                       </div>
-                      <span className="text-[10px] text-emerald-200/70 font-semibold">+230 Viajeros</span>
+                      <span className="text-[10px] text-emerald-200/70 font-semibold">+230</span>
                     </div>
 
                     <button
@@ -799,44 +1008,97 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             );
           })}
         </div>
+
+        {/* Controles de Navegación del Carrusel Funcionales */}
+        {totalTourPages > 1 && (
+          <div className="flex items-center justify-center gap-3 mt-8">
+            <button
+              type="button"
+              disabled={currentTourPage === 0}
+              onClick={() => setTourPage(Math.max(0, currentTourPage - 1))}
+              className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-30 border border-white/20 text-emerald-300 flex items-center justify-center cursor-pointer transition-all"
+            >
+              <ChevronLeft size={16} />
+            </button>
+
+            {/* Paginadores */}
+            <div className="flex items-center gap-1.5">
+              {[...Array(totalTourPages)].map((_, pIdx) => (
+                <button
+                  key={pIdx}
+                  type="button"
+                  onClick={() => setTourPage(pIdx)}
+                  className={`h-2 rounded-full transition-all cursor-pointer ${
+                    currentTourPage === pIdx ? 'w-6 bg-emerald-400' : 'w-2 bg-white/20 hover:bg-white/40'
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button
+              type="button"
+              disabled={currentTourPage >= totalTourPages - 1}
+              onClick={() => setTourPage(Math.min(totalTourPages - 1, currentTourPage + 1))}
+              className="w-9 h-9 rounded-full bg-emerald-500 hover:bg-emerald-400 disabled:opacity-30 text-[#041716] font-bold flex items-center justify-center cursor-pointer transition-all shadow-md"
+            >
+              <ChevronRight size={16} />
+            </button>
+          </div>
+        )}
       </section>
 
-      {/* 4. FICHA TÉCNICA DETALLADA & CRÓNICA DE EXPEDICIÓN (MODO ADVANCE) */}
-      <section id="acerca" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* 4. FICHA TÉCNICA INTERACTIVA & CRÓNICA DE EXPEDICIÓN */}
+      <section id="acerca" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           
-          {/* Columna Izquierda: Ficha Técnica en 4 Tarjetas de Cristal */}
+          {/* Columna Izquierda: Ficha Técnica en 4 Tarjetas de Cristal Interactivas */}
           <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-            <div className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15">
-              <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40">
+            <div 
+              onClick={() => setActiveSpecModal('duration')}
+              className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15 cursor-pointer hover:border-emerald-400/50 group"
+            >
+              <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40 group-hover:scale-110 transition-transform">
                 <Clock size={20} />
               </div>
               <span className="text-[10px] uppercase font-extrabold tracking-wider text-emerald-400 block">Duración</span>
               <span className="text-base font-black text-white block">{data.duration || '4 Días / 3 Noches'}</span>
+              <span className="text-[10px] text-emerald-200/60 block group-hover:text-emerald-300">Toca para ver detalle ➔</span>
             </div>
 
-            <div className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15">
-              <div className="w-10 h-10 rounded-2xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/40">
+            <div 
+              onClick={() => setActiveSpecModal('altitude')}
+              className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15 cursor-pointer hover:border-teal-400/50 group"
+            >
+              <div className="w-10 h-10 rounded-2xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/40 group-hover:scale-110 transition-transform">
                 <Mountain size={20} />
               </div>
               <span className="text-[10px] uppercase font-extrabold tracking-wider text-teal-400 block">Altitud Máxima</span>
               <span className="text-base font-black text-white block">{data.altitude || '4,630 msnm'}</span>
+              <span className="text-[10px] text-teal-200/60 block group-hover:text-teal-300">Oxígeno incluido ➔</span>
             </div>
 
-            <div className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15">
-              <div className="w-10 h-10 rounded-2xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center border border-cyan-400/40">
+            <div 
+              onClick={() => setActiveSpecModal('difficulty')}
+              className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15 cursor-pointer hover:border-cyan-400/50 group"
+            >
+              <div className="w-10 h-10 rounded-2xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center border border-cyan-400/40 group-hover:scale-110 transition-transform">
                 <Zap size={20} />
               </div>
               <span className="text-[10px] uppercase font-extrabold tracking-wider text-cyan-400 block">Dificultad</span>
               <span className="text-base font-black text-white block">{data.difficulty || 'Moderada'}</span>
+              <span className="text-[10px] text-cyan-200/60 block group-hover:text-cyan-300">Ritmo adaptable ➔</span>
             </div>
 
-            <div className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15">
-              <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/40">
+            <div 
+              onClick={() => setActiveSpecModal('group')}
+              className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15 cursor-pointer hover:border-amber-400/50 group"
+            >
+              <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/40 group-hover:scale-110 transition-transform">
                 <Users size={20} />
               </div>
               <span className="text-[10px] uppercase font-extrabold tracking-wider text-amber-400 block">Modalidad</span>
               <span className="text-base font-black text-white block">{data.groupType || 'Grupos Reducidos'}</span>
+              <span className="text-[10px] text-amber-200/60 block group-hover:text-amber-300">Máx 8 personas ➔</span>
             </div>
           </div>
 
@@ -875,10 +1137,11 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
               <button
                 type="button"
-                onClick={() => handleOpenAction(data.name)}
-                className="emerald-shimmer-btn bg-emerald-500 hover:bg-emerald-400 text-[#02181f] font-black text-xs px-5 py-2.5 rounded-full transition-all cursor-pointer shadow-md self-start sm:self-auto"
+                onClick={() => handleWhatsappDirect(data.name)}
+                className="emerald-shimmer-btn bg-emerald-500 hover:bg-emerald-400 text-[#02181f] font-black text-xs px-5 py-2.5 rounded-full transition-all cursor-pointer shadow-md self-start sm:self-auto flex items-center gap-2"
               >
-                Consultar con {guideName.split(' ')[0]}
+                <MessageCircle size={14} />
+                <span>Consultar con {guideName.split(' ')[0]}</span>
               </button>
             </div>
           </div>
@@ -886,8 +1149,52 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </div>
       </section>
 
-      {/* 5. PLAN YOUR JOURNEY & BENTO STATS CON ESTILO FLOTANTE */}
-      <section id="experiencias" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* MODAL CONTEXTUAL DE FICHA TÉCNICA */}
+      {activeSpecModal && (
+        <div 
+          onClick={() => setActiveSpecModal(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200"
+        >
+          <div 
+            onClick={e => e.stopPropagation()}
+            className="w-full max-w-md p-6 rounded-3xl bg-[#061e27] border border-emerald-400/30 text-white shadow-2xl space-y-4"
+          >
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <h4 className="font-black text-base flex items-center gap-2 text-emerald-300">
+                <Info size={18} />
+                {activeSpecModal === 'duration' && 'Detalles de Duración & Ritmo'}
+                {activeSpecModal === 'altitude' && 'Protocolo de Altitud & Oxígeno'}
+                {activeSpecModal === 'difficulty' && 'Evaluación de Condición Física'}
+                {activeSpecModal === 'group' && 'Modalidad & Ratio de Guías'}
+              </h4>
+              <button 
+                onClick={() => setActiveSpecModal(null)}
+                className="p-1 rounded-full hover:bg-white/10 text-emerald-200 cursor-pointer"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            <p className="text-xs sm:text-sm text-emerald-100/80 leading-relaxed">
+              {activeSpecModal === 'duration' && 'El itinerario contempla caminatas de 5 a 6 horas diarias con paradas programadas de hidratación cada 90 minutos y almuerzos gourmet calientes servidos en parajes escénicos.'}
+              {activeSpecModal === 'altitude' && 'Nuestros guías llevan oxímetro digital para medir tu saturación tres veces al día, balón de oxígeno medicinal de emergencia y botiquín de primeros auxilios avalado por Wilderness First Responder.'}
+              {activeSpecModal === 'difficulty' && 'Clasificación de esfuerzo moderado a exigente. No se requiere experiencia en escalada técnica, únicamente calzado adecuado y buena disposición física.'}
+              {activeSpecModal === 'group' && 'Grupos reducidos de máximo 8 a 10 personas para garantizar seguridad total, atención personalizada y respeto por el entorno natural de la cordillera.'}
+            </p>
+
+            <button
+              type="button"
+              onClick={() => setActiveSpecModal(null)}
+              className="w-full py-2.5 rounded-xl bg-emerald-500 text-[#02181f] font-black text-xs cursor-pointer hover:bg-emerald-400"
+            >
+              Entendido
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 5. PLAN YOUR JOURNEY & BENTO STATS */}
+      <section id="experiencias" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
           <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
             {t.planTitle}
@@ -916,7 +1223,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </div>
           </div>
 
-          {/* Bento Card 2: 1,250+ Happy Travelers (Glassmorphism con Levitación) */}
+          {/* Bento Card 2: 1,250+ Happy Travelers */}
           <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float-delayed">
             <div className="flex items-center justify-between">
               <span className="text-3xl font-black text-white animate-number-glow">1,250+</span>
@@ -930,7 +1237,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </div>
           </div>
 
-          {/* Bento Card 3: 98% Positive Reviews (Glassmorphism con Levitación) */}
+          {/* Bento Card 3: 98% Positive Reviews */}
           <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float">
             <div className="flex items-center justify-between">
               <span className="text-3xl font-black text-amber-300 animate-number-glow">98%</span>
@@ -963,83 +1270,151 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </div>
       </section>
 
-      {/* 5. WHY TRAVEL WITH US? (PROPUESTA DE VALOR EN CONTENEDOR FLOTANTE TRANSLÚCIDO) */}
-      <section id="nosotros" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="p-8 sm:p-12 rounded-[40px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_30px_70px_rgba(0,0,0,0.5)] space-y-8">
+      {/* 6. ITINERARIO PASO A PASO INTERACTIVO DÍA A DÍA (MODO ADVANCE) */}
+      <section id="itinerario" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
           <div>
-            <span className="text-xs font-extrabold text-emerald-400 uppercase tracking-wider block mb-1">
-              Garantía de Confianza
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-              {t.whyTitle}
-            </h2>
+            <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Cronograma Oficial de Expedición</span>
+            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">{t.itineraryTitle}</h2>
+            <p className="text-xs sm:text-sm text-emerald-200/70 mt-1">Explora cada jornada con altitud, tiempo de caminata y servicios incluidos.</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-5 rounded-2xl bg-white/[0.04] backdrop-blur-md border border-white/10 hover:border-emerald-400/40 hover:-translate-y-1 transition-all space-y-2 shadow-xs">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-                <Compass size={18} />
-              </div>
-              <h4 className="text-sm font-bold text-white">{t.why1}</h4>
-              <p className="text-xs text-emerald-200/70 leading-relaxed">{t.why1Desc}</p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-white/[0.04] backdrop-blur-md border border-white/10 hover:border-teal-400/40 hover:-translate-y-1 transition-all space-y-2 shadow-xs">
-              <div className="w-9 h-9 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center">
-                <FileText size={18} />
-              </div>
-              <h4 className="text-sm font-bold text-white">{t.why2}</h4>
-              <p className="text-xs text-emerald-200/70 leading-relaxed">{t.why2Desc}</p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-white/[0.04] backdrop-blur-md border border-white/10 hover:border-emerald-400/40 hover:-translate-y-1 transition-all space-y-2 shadow-xs">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-                <Award size={18} />
-              </div>
-              <h4 className="text-sm font-bold text-white">{t.why3}</h4>
-              <p className="text-xs text-emerald-200/70 leading-relaxed">{t.why3Desc}</p>
-            </div>
-
-            <div className="p-5 rounded-2xl bg-white/[0.04] backdrop-blur-md border border-white/10 hover:border-amber-400/40 hover:-translate-y-1 transition-all space-y-2 shadow-xs">
-              <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center">
-                <ShieldCheck size={18} />
-              </div>
-              <h4 className="text-sm font-bold text-white">{t.why4}</h4>
-              <p className="text-xs text-emerald-200/70 leading-relaxed">{t.why4Desc}</p>
-            </div>
+          {/* Selector de Vista: Pestañas vs Todos los Días */}
+          <div className="flex items-center gap-1 bg-white/10 p-1 rounded-2xl border border-white/15 text-xs font-bold shrink-0">
+            <button
+              type="button"
+              onClick={() => setItineraryViewMode('tabs')}
+              className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                itineraryViewMode === 'tabs' ? 'bg-emerald-400 text-slate-950 font-black' : 'text-emerald-200 hover:text-white'
+              }`}
+            >
+              Vista Día a Día
+            </button>
+            <button
+              type="button"
+              onClick={() => setItineraryViewMode('all')}
+              className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                itineraryViewMode === 'all' ? 'bg-emerald-400 text-slate-950 font-black' : 'text-emerald-200 hover:text-white'
+              }`}
+            >
+              Ver Cronograma Completo
+            </button>
           </div>
         </div>
-      </section>
 
-      {/* 6. ITINERARIO PASO A PASO TRANSLÚCIDO */}
-      {data.itinerary && data.itinerary.length > 0 && (
-        <section id="itinerario" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-          <div className="text-center mb-10 space-y-2">
-            <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Cronograma de la Expedición</span>
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">{t.itineraryTitle}</h2>
+        {/* Vista Pestañas Interactivas */}
+        {itineraryViewMode === 'tabs' ? (
+          <div className="space-y-6">
+            {/* Pestañas de Días */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+              {activeItinerary.map((step, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setSelectedDayIdx(idx)}
+                  className={`px-5 py-3 rounded-2xl font-black text-xs sm:text-sm transition-all cursor-pointer whitespace-nowrap border flex items-center gap-2 shrink-0 ${
+                    selectedDayIdx === idx
+                      ? 'bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 border-emerald-300 shadow-lg shadow-emerald-500/25 scale-102'
+                      : 'bg-white/[0.05] text-emerald-100 hover:bg-white/10 border-white/10'
+                  }`}
+                >
+                  <span>{step.step || `Día ${idx + 1}`}</span>
+                  {selectedDayIdx === idx && <CheckCircle2 size={15} />}
+                </button>
+              ))}
+            </div>
+
+            {/* Tarjeta del Día Activo con Detalles Ricos */}
+            {activeItinerary[selectedDayIdx] && (
+              <div className="p-7 sm:p-9 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-emerald-400/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6 animate-in fade-in duration-300">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
+                  <div className="flex items-center gap-3">
+                    <span className="px-3 py-1 rounded-xl bg-emerald-400 text-[#02181f] font-black text-xs sm:text-sm shadow-xs">
+                      {activeItinerary[selectedDayIdx].step || `Día ${selectedDayIdx + 1}`}
+                    </span>
+                    <h3 className="text-lg sm:text-2xl font-black text-white">
+                      {activeItinerary[selectedDayIdx].title}
+                    </h3>
+                  </div>
+                </div>
+
+                <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed font-normal">
+                  {activeItinerary[selectedDayIdx].desc}
+                </p>
+
+                {/* Métricas del Día: Altitud, Tiempo, Comidas, Hospedaje */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                  <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-teal-400 block flex items-center gap-1">
+                      <Mountain size={12} /> Altitud
+                    </span>
+                    <span className="text-xs font-black text-white block">{activeItinerary[selectedDayIdx].altitude}</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-emerald-400 block flex items-center gap-1">
+                      <Clock size={12} /> Caminata
+                    </span>
+                    <span className="text-xs font-black text-white block">{activeItinerary[selectedDayIdx].hikingTime}</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-amber-400 block flex items-center gap-1">
+                      <Utensils size={12} /> Comidas
+                    </span>
+                    <span className="text-xs font-black text-white block truncate">{activeItinerary[selectedDayIdx].meals}</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-cyan-400 block flex items-center gap-1">
+                      <Bed size={12} /> Hospedaje
+                    </span>
+                    <span className="text-xs font-black text-white block truncate">{activeItinerary[selectedDayIdx].lodging}</span>
+                  </div>
+                </div>
+
+                {/* Botón de Consulta Específica */}
+                <div className="pt-2 flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() => handleOpenAction(`${data.name || 'Tour'} — ${activeItinerary[selectedDayIdx].step}: ${activeItinerary[selectedDayIdx].title}`)}
+                    className="emerald-shimmer-btn bg-emerald-500/20 hover:bg-emerald-400 hover:text-slate-950 text-emerald-300 font-bold text-xs px-5 py-2.5 rounded-full border border-emerald-400/40 transition-all cursor-pointer flex items-center gap-2"
+                  >
+                    <MessageCircle size={14} />
+                    <span>Consultar itinerario de esta jornada</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
-
+        ) : (
+          /* Vista Cronograma Completo en Cascada */
           <div className="space-y-4">
-            {data.itinerary.map((step, sIdx) => (
+            {activeItinerary.map((step, sIdx) => (
               <div 
                 key={sIdx}
-                className="p-5 rounded-3xl bg-white/[0.05] backdrop-blur-xl border border-white/10 hover:border-emerald-400/40 hover:-translate-y-1 transition-all flex flex-col sm:flex-row sm:items-start gap-4 shadow-sm"
+                className="p-6 rounded-3xl bg-white/[0.05] backdrop-blur-xl border border-white/10 hover:border-emerald-400/40 transition-all flex flex-col sm:flex-row sm:items-start gap-4 shadow-sm"
               >
                 <div className="px-3.5 py-1.5 rounded-xl bg-emerald-400 text-[#041716] font-black text-xs shrink-0 self-start shadow-xs">
-                  {step.step || `Paso #${sIdx + 1}`}
+                  {step.step || `Día ${sIdx + 1}`}
                 </div>
-                <div className="flex-1 space-y-1">
-                  <h4 className="text-sm font-black text-white">{step.title}</h4>
-                  <p className="text-xs text-emerald-200/70 leading-relaxed">{step.desc}</p>
+                <div className="flex-1 space-y-2">
+                  <h4 className="text-base font-black text-white">{step.title}</h4>
+                  <p className="text-xs sm:text-sm text-emerald-200/80 leading-relaxed">{step.desc}</p>
+                  <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-emerald-300/80">
+                    <span className="bg-white/10 px-2 py-0.5 rounded-md">🏔️ {step.altitude}</span>
+                    <span className="bg-white/10 px-2 py-0.5 rounded-md">⏱️ {step.hikingTime}</span>
+                    <span className="bg-white/10 px-2 py-0.5 rounded-md">🍲 {step.meals}</span>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-        </section>
-      )}
+        )}
+      </section>
 
-      {/* 7. SERVICIOS INCLUIDOS & LOGÍSTICA DE MOCHILA (MODO ADVANCE) */}
-      <section id="incluye" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* 7. SERVICIOS INCLUIDOS & CHECKLIST DE MOCHILA INTERACTIVO */}
+      <section id="incluye" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
           <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Equipamiento & Confort</span>
           <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
@@ -1086,28 +1461,55 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </div>
           </div>
 
-          {/* Columna Derecha (5 Cols): Qué Llevar en la Mochila + Qué NO Incluye */}
+          {/* Columna Derecha (5 Cols): Checklist de Mochila Interactivo + Qué NO Incluye */}
           <div className="lg:col-span-5 space-y-6">
             
-            {/* Tarjeta Qué Llevar (Mochila) */}
+            {/* Tarjeta Qué Llevar (Checklist Interactivo) */}
             <div className="p-6 sm:p-7 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-4">
-              <div className="flex items-center gap-2.5 pb-3 border-b border-white/10">
-                <div className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/40">
-                  <Backpack size={16} />
+              <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/40">
+                    <Backpack size={16} />
+                  </div>
+                  <div>
+                    <h4 className="text-sm font-black text-white">Checklist de tu Mochila</h4>
+                    <p className="text-[10px] text-emerald-200/70">Toca para marcar lo que ya tienes listo</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-sm font-black text-white">Qué Llevar en tu Mochila</h4>
-                  <p className="text-[10px] text-emerald-200/70">Recomendaciones indispensables del guía</p>
-                </div>
+
+                <span className="text-xs font-black text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-400/30">
+                  {packedCount}/{whatToBringList.length}
+                </span>
+              </div>
+
+              {/* Barra de Progreso del Equipaje */}
+              <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 transition-all duration-300"
+                  style={{ width: `${packedPct}%` }}
+                />
               </div>
 
               <div className="space-y-2">
-                {whatToBringList.map((item, wIdx) => (
-                  <div key={wIdx} className="flex items-center gap-2.5 text-xs text-emerald-100/80">
-                    <span className="w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0" />
-                    <span>{item}</span>
-                  </div>
-                ))}
+                {whatToBringList.map((item, wIdx) => {
+                  const isChecked = !!checkedPacking[wIdx];
+                  return (
+                    <div 
+                      key={wIdx} 
+                      onClick={() => toggleChecklist(wIdx)}
+                      className={`flex items-center gap-2.5 p-2 rounded-xl text-xs transition-all cursor-pointer ${
+                        isChecked ? 'bg-emerald-500/10 text-white font-semibold' : 'text-emerald-100/70 hover:bg-white/5'
+                      }`}
+                    >
+                      {isChecked ? (
+                        <CheckSquare size={16} className="text-emerald-400 shrink-0" />
+                      ) : (
+                        <Square size={16} className="text-emerald-300/40 shrink-0" />
+                      )}
+                      <span className={isChecked ? 'line-through opacity-80' : ''}>{item}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
@@ -1158,7 +1560,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       </section>
 
       {/* 9. PINTEREST PINBOARD & GALERÍA HD (MODO ADVANCE) */}
-      <section id="galeria" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section id="galeria" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
           <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Galería Fotográfica HD</span>
           <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
@@ -1180,8 +1582,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         />
       </section>
 
-      {/* 10. TESTIMONIOS & RESEÑAS VERIFICADAS (MODO ADVANCE) */}
-      <section id="resenas" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      {/* 10. TESTIMONIOS & RESEÑAS VERIFICADAS */}
+      <section id="resenas" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-bold">
             <Star size={12} className="fill-amber-400" />
@@ -1232,54 +1634,97 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </div>
       </section>
 
-      {/* 11. PREGUNTAS FRECUENTES (FAQS) CON ACORDEÓN INTERACTIVO */}
-      <section id="faqs" className="relative z-10 py-14 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
-        <div className="text-center mb-10 space-y-2">
+      {/* 11. PREGUNTAS FRECUENTES (FAQS) INTERACTIVAS CON BUSCADOR & FILTROS */}
+      <section id="faqs" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+        <div className="text-center mb-8 space-y-2">
           <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Respuestas Claras</span>
           <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">{t.faqsTitle}</h2>
           <p className="text-xs text-emerald-200/70">Todo lo que necesitas saber antes de iniciar tu recorrido.</p>
         </div>
 
-        <div className="space-y-3.5">
-          {faqsList.map((faq, fIdx) => {
-            const isOpen = openFaqIndex === fIdx;
-            return (
-              <div 
-                key={fIdx} 
-                className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-                  isOpen 
-                    ? 'bg-white/[0.08] border-emerald-400/50 shadow-[0_10px_30px_rgba(16,185,129,0.15)] backdrop-blur-2xl' 
-                    : 'bg-white/[0.04] border-white/10 hover:border-white/20 backdrop-blur-xl'
+        {/* Buscador & Filtros de FAQs */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-6">
+          <div className="relative flex-1">
+            <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-400/60" />
+            <input
+              type="text"
+              value={faqSearch}
+              onChange={e => setFaqSearch(e.target.value)}
+              placeholder="Buscar pregunta o tema..."
+              className="w-full bg-white/[0.06] border border-white/15 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-emerald-200/50 outline-none focus:border-emerald-400 transition-colors"
+            />
+          </div>
+
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+            {[
+              { id: 'all', label: 'Todas' },
+              { id: 'altitude', label: 'Altitud' },
+              { id: 'bookings', label: 'Reservas' },
+              { id: 'gear', label: 'Equipo' }
+            ].map(cat => (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => setFaqCategory(cat.id)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+                  faqCategory === cat.id
+                    ? 'bg-emerald-400 text-slate-950 font-black'
+                    : 'bg-white/5 text-emerald-200/70 hover:bg-white/10'
                 }`}
               >
-                <button
-                  type="button"
-                  onClick={() => setOpenFaqIndex(isOpen ? null : fIdx)}
-                  className="w-full p-5 text-left flex items-center justify-between gap-4 cursor-pointer"
-                >
-                  <span className="text-sm font-bold text-white flex items-center gap-3">
-                    <span className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-black shrink-0">
-                      ?
-                    </span>
-                    {faq.q}
-                  </span>
-                  <div className={`p-1.5 rounded-full bg-white/10 text-emerald-300 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-emerald-500/30' : ''}`}>
-                    <ChevronDown size={16} />
-                  </div>
-                </button>
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
-                {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-xs text-emerald-100/80 leading-relaxed border-t border-white/10 animate-in fade-in-50 duration-200">
-                    <p className="pl-9">{faq.a}</p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+        {/* Acordeón de FAQs */}
+        <div className="space-y-3.5">
+          {filteredFaqs.length > 0 ? (
+            filteredFaqs.map((faq, fIdx) => {
+              const isOpen = openFaqIndex === fIdx;
+              return (
+                <div 
+                  key={fIdx} 
+                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                    isOpen 
+                      ? 'bg-white/[0.08] border-emerald-400/50 shadow-[0_10px_30px_rgba(16,185,129,0.15)] backdrop-blur-2xl' 
+                      : 'bg-white/[0.04] border-white/10 hover:border-white/20 backdrop-blur-xl'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaqIndex(isOpen ? null : fIdx)}
+                    className="w-full p-5 text-left flex items-center justify-between gap-4 cursor-pointer"
+                  >
+                    <span className="text-sm font-bold text-white flex items-center gap-3">
+                      <span className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-black shrink-0">
+                        ?
+                      </span>
+                      {faq.q}
+                    </span>
+                    <div className={`p-1.5 rounded-full bg-white/10 text-emerald-300 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-emerald-500/30' : ''}`}>
+                      <ChevronDown size={16} />
+                    </div>
+                  </button>
+
+                  {isOpen && (
+                    <div className="px-5 pb-5 pt-1 text-xs text-emerald-100/80 leading-relaxed border-t border-white/10 animate-in fade-in-50 duration-200">
+                      <p className="pl-9">{faq.a}</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })
+          ) : (
+            <div className="p-8 text-center text-xs text-emerald-200/60 rounded-2xl bg-white/5">
+              No se encontraron preguntas con los términos buscados.
+            </div>
+          )}
         </div>
       </section>
 
-      {/* 8. BARRA DE MÉTRICAS INFERIOR / STICKY BOTTOM BAR FLOTANTE */}
+      {/* 12. BARRA DE MÉTRICAS INFERIOR / STICKY BOTTOM BAR FLOTANTE */}
       <div className="relative z-20 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="p-4 sm:p-5 rounded-3xl bg-white/[0.08] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col md:flex-row items-center justify-between gap-4">
           
@@ -1317,19 +1762,19 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </div>
           </div>
 
-          {/* Botón Coral / Naranja Llamativo (Matching imagen con Shimmer y Levitación) */}
+          {/* Botón Coral / Naranja Llamativo con Tarifa en Moneda Elegida */}
           <button
             type="button"
             onClick={() => handleOpenAction(data.name)}
             className="emerald-shimmer-btn w-full md:w-auto bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 hover:from-orange-400 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm px-8 py-3.5 rounded-full shadow-[0_10px_25px_rgba(249,115,22,0.4)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 shrink-0"
           >
             <Compass size={16} />
-            <span>{t.planYourTripBtn}</span>
+            <span>{t.planYourTripBtn} ({formatPrice(basePriceUsd, passengers)})</span>
           </button>
         </div>
       </div>
 
-      {/* 9. FOOTER LEGAL & LIBRO DE RECLAMACIONES (INDECOPI LEY 29571) */}
+      {/* 13. FOOTER LEGAL & LIBRO DE RECLAMACIONES (INDECOPI LEY 29571) */}
       <footer className="relative z-10 border-t border-emerald-900/60 bg-[#020d0d] py-10 px-4 sm:px-6 lg:px-8 text-xs text-emerald-200/70">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
