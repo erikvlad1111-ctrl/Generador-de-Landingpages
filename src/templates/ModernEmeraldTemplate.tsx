@@ -313,6 +313,13 @@ const DICTIONARIES = {
   }
 };
 
+const TESTIMONIAL_AVATARS = [
+  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=240&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=240&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=240&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=240&auto=format&fit=crop'
+];
+
 export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewMode = 'desktop' }: ModernEmeraldTemplateProps) {
   const [currentLang, setCurrentLang] = useState<LanguageType>((data.language as LanguageType) || 'es');
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
@@ -510,15 +517,26 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
     }
   ];
 
+  const ITINERARY_SCENIC_IMAGES = [
+    'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=800&auto=format&fit=crop', // Valle Sagrado
+    'https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=800&auto=format&fit=crop', // Laguna Humantay
+    'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=800&auto=format&fit=crop', // Ceja de Selva
+    'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=800&auto=format&fit=crop'  // Machu Picchu
+  ];
+
   const activeItinerary = (data.itinerary && data.itinerary.length > 0)
     ? data.itinerary.map((step, idx) => ({
         ...step,
         altitude: (step as any).altitude || (idx === 0 ? '2,800 msnm' : idx === 1 ? '4,630 msnm' : idx === 2 ? '2,050 msnm' : '2,430 msnm'),
         hikingTime: (step as any).hikingTime || (idx === 0 ? '3-4 hrs' : idx === 1 ? '6-7 hrs' : idx === 2 ? '5 hrs' : '3 hrs'),
         meals: (step as any).meals || 'Alimentación Completa Incluida',
-        lodging: (step as any).lodging || 'Hospedaje de Montaña Confortable'
+        lodging: (step as any).lodging || 'Hospedaje de Montaña Confortable',
+        image: (step as any).image || ITINERARY_SCENIC_IMAGES[idx % ITINERARY_SCENIC_IMAGES.length]
       }))
-    : defaultItinerary;
+    : defaultItinerary.map((step, idx) => ({
+        ...step,
+        image: ITINERARY_SCENIC_IMAGES[idx % ITINERARY_SCENIC_IMAGES.length]
+      }));
 
   const toursList: CatalogTourItem[] = (data.catalogTours && data.catalogTours.length > 0) 
     ? data.catalogTours 
@@ -896,6 +914,18 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         <div className="absolute top-1/2 -right-24 -translate-y-1/2 w-[650px] sm:w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.48)_0%,rgba(6,182,212,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
         <div className="absolute top-1/2 -left-24 -translate-y-1/2 w-[600px] sm:w-[750px] h-[480px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.42)_0%,rgba(14,116,144,0.22)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
         
+        {/* Textura Fotográfica Andina Sutil de Fondo (Z-0) */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+          <Image 
+            src="https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=1600&auto=format&fit=crop"
+            alt="Andean Mountain Landscape Silhouette"
+            fill
+            sizes="100vw"
+            className="object-cover opacity-[0.06] mix-blend-screen scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-transparent to-[#021016]" />
+        </div>
+        
         <div className="relative z-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
@@ -1119,15 +1149,45 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           </div>
 
           {/* Columna Derecha: Tarjeta Editorial de la Expedición (Acerca de) */}
-          <div className="lg:col-span-7 p-8 sm:p-10 rounded-[40px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_30px_70px_rgba(0,0,0,0.5)] space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold">
-              <Award size={14} />
-              <span>Filosofía de Expedición</span>
+          <div className="lg:col-span-7 relative overflow-hidden p-8 sm:p-10 rounded-[40px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_30px_70px_rgba(0,0,0,0.5)] space-y-6">
+            {/* Foto de Fondo Texturizada con Mezcla Suave */}
+            <div className="absolute inset-0 pointer-events-none z-0">
+              <Image 
+                src="https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1000&auto=format&fit=crop" 
+                alt="Andean Terraces Background" 
+                fill 
+                sizes="(max-width: 768px) 100vw, 50vw" 
+                className="object-cover opacity-[0.07] mix-blend-screen" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-transparent to-[#021016]/40" />
             </div>
 
-            <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
-              {aboutTitle}
-            </h3>
+            {/* Sticker/Miniatura Fotográfica Flotante Encima */}
+            <div className="hidden sm:flex items-center gap-2.5 p-2 rounded-2xl bg-black/50 backdrop-blur-xl border border-white/20 shadow-xl absolute top-6 right-6 z-20 animate-float-badge">
+              <div className="relative w-11 h-11 rounded-xl overflow-hidden shrink-0 border border-emerald-400/30">
+                <Image 
+                  src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=200&auto=format&fit=crop" 
+                  alt="Mirador Sagrado" 
+                  fill 
+                  sizes="44px" 
+                  className="object-cover" 
+                />
+              </div>
+              <div className="pr-1 text-left">
+                <span className="text-[10px] font-black text-white block leading-tight">Mirador Andino</span>
+                <span className="text-[8px] text-emerald-300 font-semibold block">3,600 msnm • Ruta Viva</span>
+              </div>
+            </div>
+
+            <div className="relative z-10 space-y-6">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold">
+                <Award size={14} />
+                <span>Filosofía de Expedición</span>
+              </div>
+
+              <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
+                {aboutTitle}
+              </h3>
 
             <p className="text-sm sm:text-base text-emerald-100/80 leading-relaxed font-normal">
               {aboutContent}
@@ -1160,6 +1220,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <span>Consultar con {guideName.split(' ')[0]}</span>
               </button>
             </div>
+          </div>
           </div>
 
         </div>
@@ -1353,22 +1414,59 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </div>
 
             {/* Tarjeta del Día Activo con Detalles Ricos */}
+            {/* Tarjeta del Día Activo con Detalles Ricos y Postal Visual */}
             {activeItinerary[selectedDayIdx] && (
-              <div className="p-7 sm:p-9 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-emerald-400/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6 animate-in fade-in duration-300">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-white/10">
-                  <div className="flex items-center gap-3">
-                    <span className="px-3 py-1 rounded-xl bg-emerald-400 text-[#02181f] font-black text-xs sm:text-sm shadow-xs">
-                      {activeItinerary[selectedDayIdx].step || `Día ${selectedDayIdx + 1}`}
-                    </span>
-                    <h3 className="text-lg sm:text-2xl font-black text-white">
-                      {activeItinerary[selectedDayIdx].title}
-                    </h3>
-                  </div>
+              <div className="relative overflow-hidden p-6 sm:p-9 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-emerald-400/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6 animate-in fade-in duration-300">
+                {/* Textura Fotográfica Andina de Fondo en la Tarjeta */}
+                <div className="absolute inset-0 pointer-events-none z-0">
+                  <Image 
+                    src={activeItinerary[selectedDayIdx].image || ITINERARY_SCENIC_IMAGES[selectedDayIdx % ITINERARY_SCENIC_IMAGES.length]}
+                    alt={activeItinerary[selectedDayIdx].title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 800px"
+                    className="object-cover opacity-[0.06] mix-blend-screen scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-[#021016]/80 to-[#021016]/50" />
                 </div>
 
-                <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed font-normal">
-                  {activeItinerary[selectedDayIdx].desc}
-                </p>
+                <div className="relative z-10 space-y-5">
+                  {/* Banner Fotográfico Panorámico del Día (Encima) */}
+                  <div className="relative h-44 sm:h-52 w-full rounded-2xl overflow-hidden border border-white/15 shadow-xl group">
+                    <Image 
+                      src={activeItinerary[selectedDayIdx].image || ITINERARY_SCENIC_IMAGES[selectedDayIdx % ITINERARY_SCENIC_IMAGES.length]}
+                      alt={activeItinerary[selectedDayIdx].title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 800px"
+                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
+                    
+                    {/* Badge Fotográfico Flotante con Altitud */}
+                    <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-emerald-300 text-xs font-black flex items-center gap-1.5 border border-white/20 shadow-md">
+                      <Mountain size={13} className="text-emerald-400" />
+                      <span>{activeItinerary[selectedDayIdx].altitude}</span>
+                    </div>
+
+                    {/* Chip Fotográfico del Tiempo */}
+                    <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs font-bold flex items-center gap-1.5 border border-white/20 shadow-md">
+                      <Clock size={13} className="text-teal-400" />
+                      <span>{activeItinerary[selectedDayIdx].hikingTime}</span>
+                    </div>
+
+                    {/* Identificador del Día sobre la Foto */}
+                    <div className="absolute bottom-3 left-3 right-3 flex items-baseline justify-between gap-2">
+                      <span className="px-2.5 py-0.5 rounded-lg bg-emerald-400 text-slate-950 font-black text-xs shadow-xs">
+                        {activeItinerary[selectedDayIdx].step || `Día ${selectedDayIdx + 1}`}
+                      </span>
+                      <span className="text-xs sm:text-sm font-black text-white truncate drop-shadow-md">
+                        {activeItinerary[selectedDayIdx].title}
+                      </span>
+                    </div>
+                  </div>
+
+                  <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed font-normal">
+                    {activeItinerary[selectedDayIdx].desc}
+                  </p>
 
                 {/* Métricas del Día: Altitud, Tiempo, Comidas, Hospedaje */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
@@ -1411,6 +1509,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                     <MessageCircle size={14} />
                     <span>Consultar itinerario de esta jornada</span>
                   </button>
+                </div>
                 </div>
               </div>
             )}
@@ -1462,36 +1561,50 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Columna Izquierda (7 Cols): Qué Incluye con Checks Esmeralda */}
-          <div className="lg:col-span-7 p-7 sm:p-9 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6">
-            <div className="flex items-center justify-between pb-4 border-b border-white/10">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40">
-                  <CheckCircle2 size={18} />
-                </div>
-                <div>
-                  <h3 className="text-base font-black text-white">Servicios Incluidos</h3>
-                  <p className="text-[11px] text-emerald-300/80">Cobertura garantizada de alta montaña</p>
-                </div>
-              </div>
-              <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-                100% Todo Incluido
-              </span>
+          <div className="lg:col-span-7 relative overflow-hidden p-7 sm:p-9 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6">
+            {/* Foto de fondo tenue: Campamento Glamping Andino */}
+            <div className="absolute inset-0 pointer-events-none z-0">
+              <Image 
+                src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=1000&auto=format&fit=crop" 
+                alt="Glamping Camp Background" 
+                fill 
+                sizes="(max-width: 768px) 100vw, 50vw" 
+                className="object-cover opacity-[0.06] mix-blend-screen scale-105" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-[#021016]/80 to-[#021016]/40" />
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              {includedList.map((inc, iIdx) => (
-                <div 
-                  key={iIdx}
-                  className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-emerald-400/40 transition-all flex items-start gap-3 group"
-                >
-                  <div className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
-                    <Check size={14} className="stroke-[3]" />
+            <div className="relative z-10 space-y-6">
+              <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40">
+                    <CheckCircle2 size={18} />
                   </div>
-                  <span className="text-xs text-emerald-100/90 leading-snug font-medium">
-                    {inc}
-                  </span>
+                  <div>
+                    <h3 className="text-base font-black text-white">Servicios Incluidos</h3>
+                    <p className="text-[11px] text-emerald-300/80">Cobertura garantizada de alta montaña</p>
+                  </div>
                 </div>
-              ))}
+                <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                  100% Todo Incluido
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                {includedList.map((inc, iIdx) => (
+                  <div 
+                    key={iIdx}
+                    className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-emerald-400/40 transition-all flex items-start gap-3 group"
+                  >
+                    <div className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
+                      <Check size={14} className="stroke-[3]" />
+                    </div>
+                    <span className="text-xs text-emerald-100/90 leading-snug font-medium">
+                      {inc}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -1499,7 +1612,21 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           <div className="lg:col-span-5 space-y-6">
             
             {/* Tarjeta Qué Llevar (Checklist Interactivo) */}
-            <div className="p-6 sm:p-7 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-4">
+            <div className="relative overflow-hidden p-6 sm:p-7 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-4">
+              {/* Mini badge flotante encima */}
+              <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/50 backdrop-blur-md border border-white/15 shadow-md absolute top-4 right-20 z-10">
+                <div className="relative w-6 h-6 rounded-md overflow-hidden shrink-0 border border-emerald-400/40">
+                  <Image 
+                    src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=150&auto=format&fit=crop" 
+                    alt="Gear sticker" 
+                    fill 
+                    sizes="24px" 
+                    className="object-cover" 
+                  />
+                </div>
+                <span className="text-[9px] font-bold text-emerald-300">Equipo Pro</span>
+              </div>
+
               <div className="flex items-center justify-between pb-3 border-b border-white/10">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/40">
@@ -1570,15 +1697,41 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       <section className="relative py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
         {/* Halo Suave de Sellos */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.30)_0%,transparent_70%)] blur-2xl pointer-events-none z-0" />
-        <div className="relative z-10 p-6 sm:p-8 rounded-[36px] bg-gradient-to-r from-emerald-950/40 via-teal-950/30 to-emerald-950/40 backdrop-blur-2xl border border-emerald-500/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-1 text-center md:text-left">
-              <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400">
-                Acreditaciones Oficiales
-              </span>
-              <h3 className="text-lg sm:text-xl font-black text-white">
-                Operador Turístico Formal y Autorizado de Cusco
-              </h3>
+        <div className="relative z-10 p-6 sm:p-8 rounded-[36px] bg-gradient-to-r from-emerald-950/40 via-teal-950/30 to-emerald-950/40 backdrop-blur-2xl border border-emerald-500/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
+          {/* Foto de fondo sutil: Paisaje Andino Tradicional */}
+          <div className="absolute inset-0 pointer-events-none z-0">
+            <Image 
+              src="https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1200&auto=format&fit=crop" 
+              alt="Cusco Landscape Background" 
+              fill 
+              sizes="(max-width: 1024px) 100vw, 1200px" 
+              className="object-cover opacity-[0.06] mix-blend-screen scale-105" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#021016]/95 via-transparent to-[#021016]/95" />
+          </div>
+
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-4 text-center md:text-left">
+              {/* Sello Emblemático Oficial con Imagen y Relieve */}
+              <div className="relative w-12 h-12 rounded-2xl overflow-hidden border border-emerald-400/40 shadow-lg shrink-0 hidden sm:flex items-center justify-center bg-emerald-950/60">
+                <Image 
+                  src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=200&auto=format&fit=crop" 
+                  alt="Sello Oficial DIRCETUR" 
+                  fill 
+                  sizes="48px"
+                  className="object-cover opacity-60"
+                />
+                <div className="absolute inset-0 bg-emerald-950/50 backdrop-blur-[1px]" />
+                <Award size={22} className="relative z-10 text-emerald-300 drop-shadow-md" />
+              </div>
+              <div className="space-y-1">
+                <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 flex items-center justify-center md:justify-start gap-1.5">
+                  <ShieldCheck size={12} className="text-emerald-400" /> Acreditaciones Oficiales
+                </span>
+                <h3 className="text-lg sm:text-xl font-black text-white">
+                  Operador Turístico Formal y Autorizado de Cusco
+                </h3>
+              </div>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full md:w-auto">
@@ -1631,6 +1784,18 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[950px] sm:w-[1200px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.42)_0%,rgba(245,158,11,0.22)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
         <div className="absolute top-1/4 -right-20 w-[550px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.35)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
         
+        {/* Foto de fondo tenue: Nevados Andinos al atardecer */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <Image 
+            src="https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1400&auto=format&fit=crop" 
+            alt="Andean Sunset Background" 
+            fill 
+            sizes="100vw" 
+            className="object-cover opacity-[0.05] mix-blend-screen scale-105" 
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-[#021016]/85 to-[#021016]" />
+        </div>
+
         <div className="relative z-10">
           <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-bold">
@@ -1649,10 +1814,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             {testimonialsList.map((rev, rIdx) => (
               <div 
                 key={rIdx}
-                className="glass-floating-card p-6 sm:p-7 rounded-[32px] flex flex-col justify-between space-y-5 animate-emerald-float group hover:-translate-y-2 transition-all"
+                className="glass-floating-card p-6 sm:p-7 rounded-[32px] flex flex-col justify-between space-y-5 animate-emerald-float group hover:-translate-y-2 transition-all relative overflow-hidden"
                 style={{ animationDelay: `${rIdx * 1.5}s` }}
               >
-                <div className="space-y-4">
+                <div className="space-y-4 relative z-10">
                   {/* 5 Estrellas Doradas */}
                   <div className="flex items-center gap-1 text-amber-400">
                     {[...Array(5)].map((_, s) => (
@@ -1665,15 +1830,26 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                   </p>
                 </div>
 
-                {/* Autor y Origen */}
-                <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-3">
-                  <div>
-                    <h4 className="font-extrabold text-white text-xs sm:text-sm">{rev.name}</h4>
-                    <span className="text-[10px] text-emerald-300/70 flex items-center gap-1">
-                      <MapPin size={10} /> {rev.origin}
-                    </span>
+                {/* Autor y Origen con Avatar Fotográfico Real */}
+                <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-3 relative z-10">
+                  <div className="flex items-center gap-2.5">
+                    <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-emerald-400/40 shadow-sm shrink-0">
+                      <Image 
+                        src={TESTIMONIAL_AVATARS[rIdx % TESTIMONIAL_AVATARS.length]} 
+                        alt={rev.name}
+                        fill 
+                        sizes="36px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-extrabold text-white text-xs sm:text-sm">{rev.name}</h4>
+                      <span className="text-[10px] text-emerald-300/70 flex items-center gap-1">
+                        <MapPin size={10} /> {rev.origin}
+                      </span>
+                    </div>
                   </div>
-                  <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                  <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 shrink-0">
                     Verificado ✓
                   </span>
                 </div>
@@ -1689,9 +1865,36 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] sm:w-[1050px] h-[550px] bg-[radial-gradient(ellipse_at_center,rgba(13,148,136,0.45)_0%,rgba(14,165,233,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
         <div className="absolute top-1/3 -left-20 w-[500px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.30)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
         
+        {/* Foto de fondo tenue: Senderos Andinos */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          <Image 
+            src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=1200&auto=format&fit=crop" 
+            alt="Inca Trail Background" 
+            fill 
+            sizes="(max-width: 1024px) 100vw, 900px" 
+            className="object-cover opacity-[0.05] mix-blend-screen scale-105" 
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-[#021016]/90 to-[#021016]" />
+        </div>
+
         <div className="relative z-10">
-          <div className="text-center mb-8 space-y-2">
-            <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Respuestas Claras</span>
+          <div className="text-center mb-8 space-y-3">
+            {/* Chip Flotante con Foto de Guía Certificado */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/15 backdrop-blur-xl shadow-lg">
+              <div className="relative w-6 h-6 rounded-full overflow-hidden border border-emerald-400/50 shrink-0">
+                <Image 
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" 
+                  alt="Guía Experto" 
+                  fill 
+                  sizes="24px" 
+                  className="object-cover" 
+                />
+                <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 ring-1 ring-[#021016]" />
+              </div>
+              <span className="text-xs font-bold text-emerald-200">
+                Guías Locales Certificados • Soporte en Ruta
+              </span>
+            </div>
             <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">{t.faqsTitle}</h2>
             <p className="text-xs text-emerald-200/70">Todo lo que necesitas saber antes de iniciar tu recorrido.</p>
           </div>
@@ -1781,9 +1984,20 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
       {/* 12. BARRA DE MÉTRICAS INFERIOR / STICKY BOTTOM BAR FLOTANTE */}
       <div className="relative z-20 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="p-4 sm:p-5 rounded-3xl bg-white/[0.08] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="relative p-4 sm:p-5 rounded-3xl bg-white/[0.08] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col md:flex-row items-center justify-between gap-4">
+          {/* Foto de fondo tenue: Nevados Andinos */}
+          <div className="absolute inset-0 pointer-events-none z-0">
+            <Image 
+              src="https://images.unsplash.com/photo-1589556264800-08ae9e129a8c?q=80&w=1200&auto=format&fit=crop" 
+              alt="Andes Landscape Background" 
+              fill 
+              sizes="(max-width: 1024px) 100vw, 1200px" 
+              className="object-cover opacity-[0.05] mix-blend-screen scale-105" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#021016]/95 via-transparent to-[#021016]/95" />
+          </div>
           
-          <div className="flex flex-wrap items-center justify-around gap-6 text-center sm:text-left flex-1">
+          <div className="relative z-10 flex flex-wrap items-center justify-around gap-6 text-center sm:text-left flex-1">
             <div className="flex items-center gap-2">
               <MapPin size={18} className="text-emerald-400 shrink-0" />
               <div>
