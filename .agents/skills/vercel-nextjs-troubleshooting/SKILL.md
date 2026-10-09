@@ -278,6 +278,30 @@ grep -n "const st =" src/components/common/TourSupportAndFaqs.tsx
 
 ---
 
+## 9. Gradientes y Halos Luminosos (Blur) Invisibles en Secciones (Stacking Context & Negative Z-Index)
+
+### Síntoma
+Los orbes de color, halos de fondo con degradados radiales o efectos de desenfoque (`blur-3xl`, `radial-gradient`) en secciones intermedias o secundarias de una página parecen no existir o verse totalmente oscuros/planos, a pesar de estar presentes en el código JSX.
+
+### Causa Raíz
+1. **Stacking Context con Z-Index Negativo:** Al asignar `className="... pointer-events-none -z-10"` a un halo dentro de una sección con `position: relative`, el navegador renderiza el elemento con z-index negativo **detrás** del fondo opaco (`background-color: #041720`) del elemento padre o raíz, volviéndolo matemáticamente invisible.
+2. **Fondos de Altura Fija:** Cuando los gradientes decorativos de cabecera tienen una altura fija (ej. `h-[1100px]`), cualquier sección posterior que sobrepase esa altura queda sin iluminación y recae sobre un fondo plano sin gradientes.
+
+### Comando de Diagnóstico
+```bash
+grep -n "\-z-10" src/templates/<Template>.tsx
+```
+
+### Solución Paso a Paso
+1. **Corregir Z-Index de los Halos:**
+   Cambiar los elementos decorativos de fondo a `z-0` (en lugar de `-z-10`).
+2. **Asegurar Stacking Context del Contenido:**
+   Envolver el contenido interactivo y tarjetas de la sección en `<div className="relative z-10">`, permitiendo que los halos se sitúen en la capa intermedia: visibles sobre el lienzo de fondo, pero detrás de textos, botones y tarjetas.
+3. **Canvas Continuo de Página:**
+   Configurar el `style` del contenedor raíz con un `backgroundImage` multi-stop a lo largo de toda la extensión del scroll (8,000+ px) con orbes radiales complementarios cada 800-1,200 px.
+
+---
+
 ## Lista de Verificación Antes de Desplegar
 - [ ] Ejecutar `npm run lint` y verificar que salga con código 0.
 - [ ] Ejecutar `npm run build` localmente y comprobar que todas las rutas se generen sin errores.
@@ -285,5 +309,6 @@ grep -n "const st =" src/components/common/TourSupportAndFaqs.tsx
 - [ ] Verificar que el Framework Preset en Vercel sea `Next.js`.
 - [ ] Validar que en celular (375px) `document.documentElement.scrollWidth === document.documentElement.clientWidth`.
 - [ ] Validar que el botón "Móvil" en `/demo/preview` muestre la réplica exacta de 390px sin desbordes de escritorio.
+- [ ] Validar que los halos luminosos y gradientes decorativos se ubiquen en `z-0` y el contenido en `z-10` para garantizar su visibilidad en todo el scroll.
 
 
