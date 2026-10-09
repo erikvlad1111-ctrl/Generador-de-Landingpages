@@ -447,18 +447,21 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#07313b] via-[#04262f] to-[#02181f] text-emerald-50 font-sans selection:bg-[#10b981] selection:text-[#02181f] overflow-x-hidden relative">
+    <div className="min-h-screen bg-[radial-gradient(ellipse_120%_80%_at_50%_-15%,#135d6e_0%,#083642_35%,#04242d_65%,#011116_100%)] text-emerald-50 font-sans selection:bg-[#10b981] selection:text-[#011116] overflow-x-hidden relative">
       
       {/* Luces Ambientales y Orbes Flotantes en Movimiento Continuo (Azul Verdoso & Teal Brillante para Resaltar Transparencias) */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute -top-32 right-10 w-[600px] h-[600px] bg-cyan-400/20 rounded-full blur-[140px] animate-emerald-glow" />
-        <div className="absolute top-1/4 -left-32 w-[600px] h-[600px] bg-teal-400/20 rounded-full blur-[160px] animate-emerald-glow [animation-delay:2.5s]" />
-        <div className="absolute top-2/3 right-1/4 w-[650px] h-[650px] bg-teal-500/20 rounded-full blur-[150px] animate-emerald-glow [animation-delay:5s]" />
-        <div className="absolute -bottom-32 left-1/3 w-[500px] h-[500px] bg-emerald-500/15 rounded-full blur-[140px] animate-emerald-glow [animation-delay:3.5s]" />
+        <div className="absolute -top-32 right-10 w-[650px] h-[650px] bg-gradient-to-br from-cyan-400/25 to-teal-500/15 rounded-full blur-[140px] animate-emerald-glow" />
+        <div className="absolute top-1/4 -left-32 w-[650px] h-[650px] bg-gradient-to-tr from-teal-500/25 to-emerald-500/15 rounded-full blur-[160px] animate-emerald-glow [animation-delay:2.5s]" />
+        <div className="absolute top-2/3 right-1/4 w-[700px] h-[700px] bg-gradient-to-bl from-cyan-500/20 to-teal-600/15 rounded-full blur-[150px] animate-emerald-glow [animation-delay:5s]" />
+        <div className="absolute -bottom-32 left-1/3 w-[550px] h-[550px] bg-gradient-to-t from-emerald-500/20 to-teal-400/15 rounded-full blur-[140px] animate-emerald-glow [animation-delay:3.5s]" />
       </div>
 
+      {/* Grid Tecnológico Moderno y Sutil con Difuminado Radial (Efecto Landing Moderna) */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_15%,#000_40%,transparent_100%)] pointer-events-none z-0" />
+
       {/* 1. TOP HEADER NAVIGATION CON TRANSPARENCIA GLASSMORPHISM SUAVE */}
-      <header className="relative z-30 border-b border-white/10 bg-[#07313b]/60 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+      <header className="relative z-30 border-b border-white/10 bg-[#083642]/70 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
           
           {/* Logo y Marca */}
@@ -527,7 +530,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-white/10 bg-[#07313b]/95 backdrop-blur-2xl px-4 py-4 space-y-2 text-sm font-semibold animate-in slide-in-from-top-2 shadow-xl">
+          <div className="md:hidden border-t border-white/10 bg-[#083642]/95 backdrop-blur-2xl px-4 py-4 space-y-2 text-sm font-semibold animate-in slide-in-from-top-2 shadow-xl">
             <a href="#inicio" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-300">{t.navHome}</a>
             <a href="#destinos" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navDestinations}</a>
             <a href="#itinerario" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navItinerary}</a>
@@ -541,6 +544,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
       {/* 2. HERO PRINCIPAL CON FOTO SIN BORDES VISIBLES + ESTILOS FLOTANTES ACTIVOS */}
       <section id="inicio" className="relative z-10 pt-8 sm:pt-16 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        {/* Spotlight Aurora Detrás del Hero */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[550px] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-teal-400/20 via-cyan-600/10 to-transparent blur-3xl pointer-events-none -z-10" />
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Columna Izquierda: Copys + Buscador Píldora Flotante + Beneficios */}
@@ -639,7 +644,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               />
 
               {/* Degradado suave ÚNICAMENTE en la parte inferior para fusionar con el fondo y dar contraste al texto */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#07313b] via-[#07313b]/60 to-transparent z-10" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#083642] via-[#083642]/60 to-transparent z-10" />
 
               {/* Chip Flotante Superior: Local Experts con Levitación Continua */}
               <div className="absolute top-5 left-5 z-20 bg-black/40 backdrop-blur-xl px-4 py-2 rounded-2xl border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center gap-2.5 animate-float-badge">
