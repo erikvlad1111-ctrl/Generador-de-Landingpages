@@ -447,21 +447,35 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(ellipse_120%_80%_at_50%_-15%,#135d6e_0%,#083642_35%,#04242d_65%,#011116_100%)] text-emerald-50 font-sans selection:bg-[#10b981] selection:text-[#011116] overflow-x-hidden relative">
+    <div className="min-h-screen bg-[#03131a] text-emerald-50 font-sans selection:bg-[#10b981] selection:text-[#011116] overflow-x-hidden relative">
       
-      {/* Luces Ambientales y Orbes Flotantes en Movimiento Continuo (Azul Verdoso & Teal Brillante para Resaltar Transparencias) */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute -top-32 right-10 w-[650px] h-[650px] bg-gradient-to-br from-cyan-400/25 to-teal-500/15 rounded-full blur-[140px] animate-emerald-glow" />
-        <div className="absolute top-1/4 -left-32 w-[650px] h-[650px] bg-gradient-to-tr from-teal-500/25 to-emerald-500/15 rounded-full blur-[160px] animate-emerald-glow [animation-delay:2.5s]" />
-        <div className="absolute top-2/3 right-1/4 w-[700px] h-[700px] bg-gradient-to-bl from-cyan-500/20 to-teal-600/15 rounded-full blur-[150px] animate-emerald-glow [animation-delay:5s]" />
-        <div className="absolute -bottom-32 left-1/3 w-[550px] h-[550px] bg-gradient-to-t from-emerald-500/20 to-teal-400/15 rounded-full blur-[140px] animate-emerald-glow [animation-delay:3.5s]" />
+      {/* 🌌 SISTEMA DE GRADIENTE AURORA & PROFUNDIDAD MODERNA (AZUL OCEÁNICO + VERDE ESMERALDA / TEAL) */}
+      <div className="absolute top-0 inset-x-0 h-[1100px] overflow-hidden pointer-events-none z-0">
+        {/* Capa Base Gradiente Vertical Suave */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#082a35] via-[#041a22] to-transparent opacity-90" />
+        
+        {/* Aurora Central Masiva: Fusión Orgánica de Azul Zafiro Profundo con Verde Esmeralda y Teal */}
+        <div className="absolute -top-[160px] left-1/2 -translate-x-1/2 w-[1300px] sm:w-[1600px] h-[750px] bg-[radial-gradient(ellipse_75%_55%_at_50%_35%,rgba(13,148,136,0.45)_0%,rgba(2,132,199,0.30)_32%,rgba(6,78,94,0.35)_58%,transparent_100%)] blur-[90px]" />
+        
+        {/* Haz de Luz Superior Vertical Iluminando la Cabecera y el Hero */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[400px] bg-[radial-gradient(ellipse_at_top,rgba(45,212,191,0.28)_0%,rgba(14,116,144,0.15)_45%,transparent_75%)] blur-2xl" />
+        
+        {/* Acento Lateral Izquierdo: Verde Andino Esmeralda */}
+        <div className="absolute top-28 -left-36 w-[550px] h-[550px] bg-gradient-to-tr from-emerald-500/22 to-teal-400/15 rounded-full blur-[130px] animate-emerald-glow" />
+        
+        {/* Acento Lateral Derecho: Azul Océano Marino */}
+        <div className="absolute top-40 -right-36 w-[550px] h-[550px] bg-gradient-to-bl from-sky-500/20 to-cyan-500/15 rounded-full blur-[130px] animate-emerald-glow [animation-delay:3s]" />
       </div>
 
-      {/* Grid Tecnológico Moderno y Sutil con Difuminado Radial (Efecto Landing Moderna) */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.025)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.025)_1px,transparent_1px)] bg-[size:56px_56px] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_15%,#000_40%,transparent_100%)] pointer-events-none z-0" />
+      {/* Orbes de Iluminación Ambiental Flotantes a lo largo del Scroll */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute top-1/3 -left-48 w-[700px] h-[700px] bg-teal-600/10 rounded-full blur-[160px]" />
+        <div className="absolute top-2/3 -right-48 w-[750px] h-[750px] bg-cyan-600/10 rounded-full blur-[160px]" />
+        <div className="absolute bottom-10 left-1/3 w-[600px] h-[600px] bg-emerald-600/10 rounded-full blur-[160px]" />
+      </div>
 
       {/* 1. TOP HEADER NAVIGATION CON TRANSPARENCIA GLASSMORPHISM SUAVE */}
-      <header className="relative z-30 border-b border-white/10 bg-[#083642]/70 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
+      <header className="relative z-30 border-b border-white/10 bg-[#061e27]/75 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
           
           {/* Logo y Marca */}
@@ -644,7 +658,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               />
 
               {/* Degradado suave ÚNICAMENTE en la parte inferior para fusionar con el fondo y dar contraste al texto */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#083642] via-[#083642]/60 to-transparent z-10" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#03131a] via-[#03131a]/60 to-transparent z-10" />
 
               {/* Chip Flotante Superior: Local Experts con Levitación Continua */}
               <div className="absolute top-5 left-5 z-20 bg-black/40 backdrop-blur-xl px-4 py-2 rounded-2xl border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center gap-2.5 animate-float-badge">

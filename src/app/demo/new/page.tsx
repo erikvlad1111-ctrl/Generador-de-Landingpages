@@ -2749,9 +2749,12 @@ export default function NewLandingDemo() {
 
               {/* 0. PLANTILLA DISEÑO 6: EMERALD EXPLORER (NAVIKX DEEP PETROL TEAL AZUL-VERDOSO) */}
               {template === 'emerald-explorer' && (
-                <div className="flex flex-col min-h-full bg-[radial-gradient(ellipse_120%_80%_at_50%_-15%,#135d6e_0%,#083642_35%,#04242d_65%,#011116_100%)] text-emerald-50 relative overflow-hidden">
+                <div className="flex flex-col min-h-full bg-[#03131a] text-emerald-50 relative overflow-hidden">
+                  {/* Aurora glow miniatura */}
+                  <div className="absolute top-0 inset-x-0 h-44 bg-[radial-gradient(ellipse_at_top,rgba(13,148,136,0.5)_0%,rgba(2,132,199,0.35)_40%,transparent_80%)] blur-lg pointer-events-none" />
+
                   {/* Top Bar Navigation */}
-                  <div className="px-3.5 py-2.5 flex items-center justify-between border-b border-white/10 bg-[#083642]/70 backdrop-blur-md sticky top-0 z-20 shadow-xs">
+                  <div className="px-3.5 py-2.5 flex items-center justify-between border-b border-white/10 bg-[#061e27]/80 backdrop-blur-md sticky top-0 z-20 shadow-xs">
                     <div className="flex items-center gap-1.5">
                       <div className="w-5 h-5 rounded-lg bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-[10px]">
                         🌲
@@ -2819,7 +2822,7 @@ export default function NewLandingDemo() {
                         />
 
                         {/* Fade suave únicamente abajo para el texto de precio */}
-                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#083642] via-[#083642]/60 to-transparent z-10" />
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#03131a] via-[#03131a]/60 to-transparent z-10" />
                         
                         {/* Floating Local Experts Chip con Levitación */}
                         <div className="absolute top-2 left-2 z-20 bg-black/40 backdrop-blur-md border border-white/20 px-2 py-1 rounded-xl text-[8px] space-y-0.5 shadow-lg animate-float-badge">
