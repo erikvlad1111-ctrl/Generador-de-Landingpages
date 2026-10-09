@@ -53,6 +53,7 @@ import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
 import LegalTermsModal from '@/components/common/LegalTermsModal';
 import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
+import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 
 interface ModernEmeraldTemplateProps {
   data?: Partial<LandingData>;
@@ -1859,8 +1860,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </div>
       </section>
 
-      {/* 11. PREGUNTAS FRECUENTES (FAQS) INTERACTIVAS CON BUSCADOR & FILTROS */}
-      <section id="faqs" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto overflow-hidden">
+      {/* 11. TOUR SUPPORT & FAQS (MODALIDAD COMPLETA: COMUNIDAD, FAQS & MESA DE AYUDA) */}
+      <section id="faqs" className="relative py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto overflow-hidden">
         {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] sm:w-[1050px] h-[550px] bg-[radial-gradient(ellipse_at_center,rgba(13,148,136,0.45)_0%,rgba(14,165,233,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
         <div className="absolute top-1/3 -left-20 w-[500px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.30)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
@@ -1878,107 +1879,17 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </div>
 
         <div className="relative z-10">
-          <div className="text-center mb-8 space-y-3">
-            {/* Chip Flotante con Foto de Guía Certificado */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/15 backdrop-blur-xl shadow-lg">
-              <div className="relative w-6 h-6 rounded-full overflow-hidden border border-emerald-400/50 shrink-0">
-                <Image 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&auto=format&fit=crop" 
-                  alt="Guía Experto" 
-                  fill 
-                  sizes="24px" 
-                  className="object-cover" 
-                />
-                <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 ring-1 ring-[#021016]" />
-              </div>
-              <span className="text-xs font-bold text-emerald-200">
-                Guías Locales Certificados • Soporte en Ruta
-              </span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-white tracking-tight">{t.faqsTitle}</h2>
-            <p className="text-xs text-emerald-200/70">Todo lo que necesitas saber antes de iniciar tu recorrido.</p>
-          </div>
-
-          {/* Buscador & Filtros de FAQs */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-6">
-            <div className="relative flex-1">
-              <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-emerald-400/60" />
-              <input
-                type="text"
-                value={faqSearch}
-                onChange={e => setFaqSearch(e.target.value)}
-                placeholder="Buscar pregunta o tema..."
-                className="w-full bg-white/[0.06] border border-white/15 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-emerald-200/50 outline-none focus:border-emerald-400 transition-colors"
-              />
-            </div>
-
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
-              {[
-                { id: 'all', label: 'Todas' },
-                { id: 'altitude', label: 'Altitud' },
-                { id: 'bookings', label: 'Reservas' },
-                { id: 'gear', label: 'Equipo' }
-              ].map(cat => (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => setFaqCategory(cat.id)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
-                    faqCategory === cat.id
-                      ? 'bg-emerald-400 text-slate-950 font-black'
-                      : 'bg-white/5 text-emerald-200/70 hover:bg-white/10'
-                  }`}
-                >
-                  {cat.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Acordeón de FAQs */}
-          <div className="space-y-3.5">
-            {filteredFaqs.length > 0 ? (
-              filteredFaqs.map((faq, fIdx) => {
-                const isOpen = openFaqIndex === fIdx;
-                return (
-                  <div 
-                    key={fIdx} 
-                    className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-                      isOpen 
-                        ? 'bg-white/[0.08] border-emerald-400/50 shadow-[0_10px_30px_rgba(16,185,129,0.15)] backdrop-blur-2xl' 
-                        : 'bg-white/[0.04] border-white/10 hover:border-white/20 backdrop-blur-xl'
-                    }`}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setOpenFaqIndex(isOpen ? null : fIdx)}
-                      className="w-full p-5 text-left flex items-center justify-between gap-4 cursor-pointer"
-                    >
-                      <span className="text-sm font-bold text-white flex items-center gap-3">
-                        <span className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xs font-black shrink-0">
-                          ?
-                        </span>
-                        {faq.q}
-                      </span>
-                      <div className={`p-1.5 rounded-full bg-white/10 text-emerald-300 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-emerald-500/30' : ''}`}>
-                        <ChevronDown size={16} />
-                      </div>
-                    </button>
-
-                    {isOpen && (
-                      <div className="px-5 pb-5 pt-1 text-xs text-emerald-100/80 leading-relaxed border-t border-white/10 animate-in fade-in-50 duration-200">
-                        <p className="pl-9">{faq.a}</p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })
-            ) : (
-              <div className="p-8 text-center text-xs text-emerald-200/60 rounded-2xl bg-white/5">
-                No se encontraron preguntas con los términos buscados.
-              </div>
-            )}
-          </div>
+          <TourSupportAndFaqs
+            faqs={data.faqs}
+            tourName={data.name || 'Expedición de Aventura en Cusco'}
+            whatsapp={data.whatsapp || '+51984123456'}
+            guideName={guideName}
+            destination={data.destination || 'Cusco & Machu Picchu'}
+            tier={tier}
+            theme="emerald-explorer"
+            isMobile={viewMode === 'mobile'}
+            lang={currentLang}
+          />
         </div>
       </section>
 

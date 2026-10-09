@@ -597,6 +597,7 @@ export default function TourSupportAndFaqs({
   const isPremium = theme === 'premium';
   const isCultural = theme === 'cultural';
   const isAdventure = theme === 'adventure';
+  const isEmerald = theme === 'emerald-explorer';
   const isBasic = tier === 'basic';
   const isPro = tier === 'pro';
 
@@ -607,14 +608,14 @@ export default function TourSupportAndFaqs({
   );
 
   // Theme-aware visual tokens
-  const themeTitleClass = isBoho ? 'font-serif font-medium text-stone-900' : isCultural ? 'font-serif font-black text-stone-900' : 'font-black tracking-tight text-stone-900';
-  const themeAccentText = isBoho ? 'text-[#C86D51]' : isPremium ? 'text-amber-400' : isAdventure ? 'text-emerald-500' : isCultural ? 'text-red-700' : 'text-[#FF5500]';
-  const themeBadge = isBoho ? 'bg-[#C86D51]/10 text-[#C86D51] border border-[#C86D51]/20 font-serif font-bold' : isPremium ? 'bg-amber-400/10 text-amber-300 border border-amber-400/30 font-serif' : isAdventure ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : isCultural ? 'bg-red-700/10 text-red-700 border border-red-700/20 font-serif font-bold' : 'bg-[#FF5500]/10 text-[#FF5500] border border-[#FF5500]/20 font-black';
-  const themeButtonPrimary = isBoho ? 'bg-[#C86D51] hover:bg-[#b05d43] text-white shadow-md shadow-[#C86D51]/25' : isPremium ? 'bg-amber-500 hover:bg-amber-600 text-stone-900 shadow-md shadow-amber-500/30' : isAdventure ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-600/30' : isCultural ? 'bg-red-700 hover:bg-red-800 text-white shadow-md shadow-red-700/30' : 'shimmer-btn bg-gradient-to-r from-[#FF5500] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white shadow-md shadow-[#FF5500]/30';
-  const themeTabBadge = isBoho ? 'bg-[#C86D51]/15 text-[#C86D51]' : isPremium ? 'bg-amber-400/20 text-amber-400' : isAdventure ? 'bg-emerald-500/15 text-emerald-600' : isCultural ? 'bg-red-700/15 text-red-700' : 'bg-[#FF5500]/15 text-[#FF5500]';
-  const themeFocusRing = isBoho ? 'focus:ring-[#C86D51]/30 focus:border-[#C86D51]' : isPremium ? 'focus:ring-amber-500/30 focus:border-amber-500' : isAdventure ? 'focus:ring-emerald-500/30 focus:border-emerald-500' : isCultural ? 'focus:ring-red-600/30 focus:border-red-600' : 'focus:ring-[#FF5500]/30 focus:border-[#FF5500]';
-  const themeCardBorderHover = isBoho ? 'hover:border-[#C86D51]/50' : isCultural ? 'hover:border-red-600/50' : 'hover:border-[#FF5500]/40';
-  const themeAdminAvatar = isBoho ? 'bg-[#C86D51]' : isPremium ? 'bg-amber-600' : isAdventure ? 'bg-emerald-600' : isCultural ? 'bg-red-700' : 'bg-[#FF5500]';
+  const themeTitleClass = isEmerald ? 'font-black tracking-tight text-white' : isBoho ? 'font-serif font-medium text-stone-900' : isCultural ? 'font-serif font-black text-stone-900' : 'font-black tracking-tight text-stone-900';
+  const themeAccentText = isEmerald ? 'text-emerald-400' : isBoho ? 'text-[#C86D51]' : isPremium ? 'text-amber-400' : isAdventure ? 'text-emerald-500' : isCultural ? 'text-red-700' : 'text-[#FF5500]';
+  const themeBadge = isEmerald ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-bold' : isBoho ? 'bg-[#C86D51]/10 text-[#C86D51] border border-[#C86D51]/20 font-serif font-bold' : isPremium ? 'bg-amber-400/10 text-amber-300 border border-amber-400/30 font-serif' : isAdventure ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : isCultural ? 'bg-red-700/10 text-red-700 border border-red-700/20 font-serif font-bold' : 'bg-[#FF5500]/10 text-[#FF5500] border border-[#FF5500]/20 font-black';
+  const themeButtonPrimary = isEmerald ? 'emerald-shimmer-btn bg-gradient-to-r from-emerald-500 via-teal-400 to-emerald-500 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black shadow-md shadow-emerald-500/20' : isBoho ? 'bg-[#C86D51] hover:bg-[#b05d43] text-white shadow-md shadow-[#C86D51]/25' : isPremium ? 'bg-amber-500 hover:bg-amber-600 text-stone-900 shadow-md shadow-amber-500/30' : isAdventure ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-600/30' : isCultural ? 'bg-red-700 hover:bg-red-800 text-white shadow-md shadow-red-700/30' : 'shimmer-btn bg-gradient-to-r from-[#FF5500] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white shadow-md shadow-[#FF5500]/30';
+  const themeTabBadge = isEmerald ? 'bg-emerald-500/20 text-emerald-300' : isBoho ? 'bg-[#C86D51]/15 text-[#C86D51]' : isPremium ? 'bg-amber-400/20 text-amber-400' : isAdventure ? 'bg-emerald-500/15 text-emerald-600' : isCultural ? 'bg-red-700/15 text-red-700' : 'bg-[#FF5500]/15 text-[#FF5500]';
+  const themeFocusRing = isEmerald ? 'focus:ring-emerald-400/40 focus:border-emerald-400' : isBoho ? 'focus:ring-[#C86D51]/30 focus:border-[#C86D51]' : isPremium ? 'focus:ring-amber-500/30 focus:border-amber-500' : isAdventure ? 'focus:ring-emerald-500/30 focus:border-emerald-500' : isCultural ? 'focus:ring-red-600/30 focus:border-red-600' : 'focus:ring-[#FF5500]/30 focus:border-[#FF5500]';
+  const themeCardBorderHover = isEmerald ? 'hover:border-emerald-400/50' : isBoho ? 'hover:border-[#C86D51]/50' : isCultural ? 'hover:border-red-600/50' : 'hover:border-[#FF5500]/40';
+  const themeAdminAvatar = isEmerald ? 'bg-emerald-600' : isBoho ? 'bg-[#C86D51]' : isPremium ? 'bg-amber-600' : isAdventure ? 'bg-emerald-600' : isCultural ? 'bg-red-700' : 'bg-[#FF5500]';
 
   // Forum Threads State with contextual travel consultations
   const defaultQuestions = getInitialForumQuestions(
@@ -1074,7 +1075,7 @@ export default function TourSupportAndFaqs({
     : 'Respondido por Guía Oficial';
 
   return (
-    <section id="soporte-faq" className={`${isMobile ? 'py-8 px-3' : 'py-20 px-6 sm:px-8'} ${isBoho ? 'bg-[#FAF7F2]' : isCultural ? 'bg-[#FFFDF9]' : 'bg-[#F9F7F4]'} border-t border-stone-200 transition-colors duration-300`}>
+    <section id="soporte-faq" className={`${isMobile ? 'py-8 px-3' : 'py-20 px-6 sm:px-8'} ${isEmerald ? 'bg-transparent text-white' : isBoho ? 'bg-[#FAF7F2]' : isCultural ? 'bg-[#FFFDF9]' : 'bg-[#F9F7F4]'} ${isEmerald ? 'border-t border-white/10' : 'border-t border-stone-200'} transition-colors duration-300`}>
       <div className="max-w-5xl mx-auto space-y-6 sm:space-y-10">
         
         {/* Section Header */}
@@ -1088,23 +1089,23 @@ export default function TourSupportAndFaqs({
             {st.titlePrefix} <span className={themeAccentText}>{st.titleSuffix}</span>
           </h2>
 
-          <p className="text-xs sm:text-sm text-stone-600 leading-relaxed max-w-xl mx-auto">
+          <p className={`text-xs sm:text-sm ${isEmerald ? 'text-emerald-100/70' : 'text-stone-600'} leading-relaxed max-w-xl mx-auto`}>
             {st.desc}
           </p>
         </div>
 
         {/* Navigation Tabs Bar: Mobile first 3 balanced columns */}
-        <div className="bg-stone-200/70 rounded-2xl max-w-2xl mx-auto p-1 sm:p-1.5 grid grid-cols-3 gap-1 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-3">
+        <div className={`${isEmerald ? 'bg-white/[0.08] border border-white/10 backdrop-blur-xl' : 'bg-stone-200/70'} rounded-2xl max-w-2xl mx-auto p-1 sm:p-1.5 grid grid-cols-3 gap-1 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-3`}>
           <button
             type="button"
             onClick={() => { setActiveTab('forum'); setActiveQuestionId(null); }}
             className={`flex items-center justify-center gap-1 sm:gap-2 px-1.5 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs flex-col sm:flex-row text-center rounded-xl font-bold transition-all cursor-pointer min-h-[44px] ${
               activeTab === 'forum'
-                ? 'bg-white text-stone-900 shadow-md scale-102'
-                : 'text-stone-600 hover:text-stone-900'
+                ? (isEmerald ? 'bg-emerald-400 text-slate-950 font-black shadow-lg scale-102' : 'bg-white text-stone-900 shadow-md scale-102')
+                : (isEmerald ? 'text-emerald-200/70 hover:text-white' : 'text-stone-600 hover:text-stone-900')
             }`}
           >
-            <MessageSquare size={14} className={activeTab === 'forum' ? themeAccentText : ''} />
+            <MessageSquare size={14} className={activeTab === 'forum' ? (isEmerald ? 'text-slate-950' : themeAccentText) : ''} />
             <span className="truncate max-w-full">{st.tabForum}</span>
             <span className={`hidden sm:inline ${themeTabBadge} text-[9px] px-1.5 py-0.2 rounded-full font-bold`}>
               {forumQuestions.length}
@@ -1116,11 +1117,11 @@ export default function TourSupportAndFaqs({
             onClick={() => setActiveTab('faq')}
             className={`flex items-center justify-center gap-1 sm:gap-2 px-1.5 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs flex-col sm:flex-row text-center rounded-xl font-bold transition-all cursor-pointer min-h-[44px] ${
               activeTab === 'faq'
-                ? 'bg-white text-stone-900 shadow-md scale-102'
-                : 'text-stone-600 hover:text-stone-900'
+                ? (isEmerald ? 'bg-emerald-400 text-slate-950 font-black shadow-lg scale-102' : 'bg-white text-stone-900 shadow-md scale-102')
+                : (isEmerald ? 'text-emerald-200/70 hover:text-white' : 'text-stone-600 hover:text-stone-900')
             }`}
           >
-            <HelpCircle size={14} className={activeTab === 'faq' ? themeAccentText : ''} />
+            <HelpCircle size={14} className={activeTab === 'faq' ? (isEmerald ? 'text-slate-950' : themeAccentText) : ''} />
             <span className="truncate max-w-full">{st.tabFaq}</span>
           </button>
 
@@ -1129,11 +1130,11 @@ export default function TourSupportAndFaqs({
             onClick={() => setActiveTab('ticket')}
             className={`flex items-center justify-center gap-1 sm:gap-2 px-1.5 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs flex-col sm:flex-row text-center rounded-xl font-bold transition-all cursor-pointer min-h-[44px] ${
               activeTab === 'ticket'
-                ? 'bg-white text-stone-900 shadow-md scale-102'
-                : 'text-stone-600 hover:text-stone-900'
+                ? (isEmerald ? 'bg-emerald-400 text-slate-950 font-black shadow-lg scale-102' : 'bg-white text-stone-900 shadow-md scale-102')
+                : (isEmerald ? 'text-emerald-200/70 hover:text-white' : 'text-stone-600 hover:text-stone-900')
             }`}
           >
-            <ShieldCheck size={14} className={activeTab === 'ticket' ? themeAccentText : ''} />
+            <ShieldCheck size={14} className={activeTab === 'ticket' ? (isEmerald ? 'text-slate-950' : themeAccentText) : ''} />
             <span className="truncate max-w-full">{st.tabTicket}</span>
           </button>
         </div>
@@ -1145,7 +1146,7 @@ export default function TourSupportAndFaqs({
           <div className="space-y-4 sm:space-y-6">
             
             {/* Foro Top Action Card */}
-            <div className={`bg-white ${isMobile ? 'p-4 rounded-2xl space-y-3' : 'p-6 sm:p-8 rounded-3xl space-y-6'} border border-stone-200 shadow-xs`}>
+            <div className={`${isEmerald ? 'bg-white/[0.05] border-white/15 backdrop-blur-2xl text-white shadow-xl' : 'bg-white border-stone-200 shadow-xs'} ${isMobile ? 'p-4 rounded-2xl space-y-3' : 'p-6 sm:p-8 rounded-3xl space-y-6'} border`}>
               <div className={`flex ${isMobile ? 'flex-col items-stretch gap-3' : 'flex-col sm:flex-row items-start sm:items-center justify-between gap-4'}`}>
                 <div className="space-y-1">
                   <div className={`inline-flex items-center gap-1.5 text-[10px] sm:text-xs font-bold uppercase tracking-wider ${themeAccentText}`}>
@@ -1154,7 +1155,7 @@ export default function TourSupportAndFaqs({
                   <h3 className={`${isMobile ? 'text-lg' : 'text-lg sm:text-2xl'} ${themeTitleClass}`}>
                     {st.forumTitle}
                   </h3>
-                  <p className="text-xs sm:text-sm text-stone-500 leading-relaxed">
+                  <p className={`text-xs sm:text-sm ${isEmerald ? 'text-emerald-100/70' : 'text-stone-500'} leading-relaxed`}>
                     {st.forumDesc}
                   </p>
                 </div>
@@ -1172,20 +1173,20 @@ export default function TourSupportAndFaqs({
               </div>
 
               {/* Search & Category Filter */}
-              <div className={`pt-2 border-t border-stone-100 flex ${isMobile ? 'flex-col gap-2.5' : 'flex-col md:flex-row items-stretch md:items-center gap-3'}`}>
+              <div className={`pt-2 border-t ${isEmerald ? 'border-white/10' : 'border-stone-100'} flex ${isMobile ? 'flex-col gap-2.5' : 'flex-col md:flex-row items-stretch md:items-center gap-3'}`}>
                 <div className="relative flex-1">
-                  <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400" />
+                  <Search size={16} className={`absolute left-3.5 top-1/2 -translate-y-1/2 ${isEmerald ? 'text-emerald-400/60' : 'text-stone-400'}`} />
                   <input
                     type="text"
                     placeholder={st.searchPlaceholder}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className={`w-full bg-stone-50 border border-stone-200 rounded-xl pl-10 pr-4 py-2.5 text-xs text-stone-900 placeholder:text-stone-400 outline-none focus:ring-2 ${themeFocusRing}`}
+                    className={`w-full ${isEmerald ? 'bg-white/[0.08] border-white/15 text-white placeholder-emerald-200/50' : 'bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-400'} border rounded-xl pl-10 pr-4 py-2.5 text-xs outline-none focus:ring-2 ${themeFocusRing}`}
                   />
                   {searchQuery && (
                     <button
                       onClick={() => setSearchQuery('')}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-stone-400 hover:text-stone-700 cursor-pointer"
+                      className={`absolute right-3 top-1/2 -translate-y-1/2 text-xs ${isEmerald ? 'text-emerald-300 hover:text-white' : 'text-stone-400 hover:text-stone-700'} cursor-pointer`}
                     >
                       ✕
                     </button>
@@ -1200,8 +1201,8 @@ export default function TourSupportAndFaqs({
                       onClick={() => setSelectedCategory(cat)}
                       className={`px-3 py-1.5 sm:py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
                         selectedCategory === cat
-                          ? (isBoho ? 'bg-[#C86D51] text-white shadow-xs' : isCultural ? 'bg-red-700 text-white shadow-xs' : isPremium ? 'bg-amber-500 text-stone-900 shadow-xs' : isAdventure ? 'bg-emerald-600 text-white shadow-xs' : 'bg-stone-900 text-white')
-                          : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                          ? (isEmerald ? 'bg-emerald-400 text-slate-950 font-black shadow-xs' : isBoho ? 'bg-[#C86D51] text-white shadow-xs' : isCultural ? 'bg-red-700 text-white shadow-xs' : isPremium ? 'bg-amber-500 text-stone-900 shadow-xs' : isAdventure ? 'bg-emerald-600 text-white shadow-xs' : 'bg-stone-900 text-white')
+                          : (isEmerald ? 'bg-white/10 text-emerald-200 hover:bg-white/20' : 'bg-stone-100 text-stone-600 hover:bg-stone-200')
                       }`}
                     >
                       {cat}
@@ -1473,40 +1474,40 @@ export default function TourSupportAndFaqs({
                     <div
                       key={q.id}
                       onClick={() => setActiveQuestionId(q.id)}
-                      className={`bg-white ${isMobile ? 'p-4 rounded-2xl' : 'p-5 sm:p-6 rounded-3xl'} border border-stone-200/80 shadow-xs hover:shadow-lg ${themeCardBorderHover} transition-all duration-200 cursor-pointer group space-y-2.5`}
+                      className={`${isEmerald ? 'bg-white/[0.05] border-white/10 text-white hover:border-emerald-400/50 hover:bg-white/[0.08]' : 'bg-white border-stone-200/80 shadow-xs hover:shadow-lg'} ${isMobile ? 'p-4 rounded-2xl' : 'p-5 sm:p-6 rounded-3xl'} border ${themeCardBorderHover} transition-all duration-200 cursor-pointer group space-y-2.5`}
                     >
-                      <div className={`flex ${isMobile ? 'flex-col gap-1 items-start' : 'items-center justify-between'} text-xs text-stone-500`}>
+                      <div className={`flex ${isMobile ? 'flex-col gap-1 items-start' : 'items-center justify-between'} text-xs ${isEmerald ? 'text-emerald-200/70' : 'text-stone-500'}`}>
                         <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
                           <span className={`${themeBadge} text-[10px] font-bold px-2 py-0.5 rounded-full`}>
                             {q.category}
                           </span>
                           <span>•</span>
-                          <span className="font-medium flex items-center gap-1 text-stone-700">
-                            <User size={12} className="text-stone-400" /> {q.author}
+                          <span className={`font-medium flex items-center gap-1 ${isEmerald ? 'text-emerald-100' : 'text-stone-700'}`}>
+                            <User size={12} className={isEmerald ? 'text-emerald-300/60' : 'text-stone-400'} /> {q.author}
                           </span>
                           <span>•</span>
                           <span>{q.timeAgo}</span>
                         </div>
 
-                        <span className="text-[10px] text-stone-400 flex items-center gap-1">
+                        <span className={`text-[10px] ${isEmerald ? 'text-emerald-300/60' : 'text-stone-400'} flex items-center gap-1`}>
                           <Eye size={12} /> {q.views} {st.views}
                         </span>
                       </div>
 
-                      <h4 className={`font-bold text-sm sm:text-base text-stone-900 group-hover:${themeAccentText} transition-colors leading-snug ${isBoho ? 'font-serif' : ''}`}>
+                      <h4 className={`font-bold text-sm sm:text-base ${isEmerald ? 'text-white group-hover:text-emerald-300' : 'text-stone-900 group-hover:' + themeAccentText} transition-colors leading-snug ${isBoho ? 'font-serif' : ''}`}>
                         {q.title}
                       </h4>
 
-                      <p className="text-xs text-stone-600 line-clamp-2 leading-relaxed">
+                      <p className={`text-xs ${isEmerald ? 'text-emerald-100/70' : 'text-stone-600'} line-clamp-2 leading-relaxed`}>
                         {q.description}
                       </p>
 
-                      <div className={`pt-2 flex ${isMobile ? 'flex-col gap-1.5 items-start' : 'items-center justify-between'} text-xs border-t border-stone-100`}>
-                        <span className="text-[11px] font-bold text-stone-700 flex flex-wrap items-center gap-1.5">
+                      <div className={`pt-2 flex ${isMobile ? 'flex-col gap-1.5 items-start' : 'items-center justify-between'} text-xs border-t ${isEmerald ? 'border-white/10' : 'border-stone-100'}`}>
+                        <span className={`text-[11px] font-bold ${isEmerald ? 'text-emerald-200' : 'text-stone-700'} flex flex-wrap items-center gap-1.5`}>
                           <MessageCircle size={14} className={themeAccentText} />
                           <span>{q.replies.length} {replyText(q.replies.length)}</span>
                           {q.replies.some(r => r.role === 'admin' || r.role === 'guide') && (
-                            <span className="bg-emerald-500/10 text-emerald-700 text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-bold">
+                            <span className="bg-emerald-500/10 text-emerald-300 border border-emerald-400/30 text-[9px] sm:text-[10px] px-2 py-0.5 rounded-full font-bold">
                               ✓ {answeredByGuide}
                             </span>
                           )}
@@ -1537,8 +1538,8 @@ export default function TourSupportAndFaqs({
                   key={idx}
                   className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
                     isOpen 
-                      ? (isBoho ? 'border-[#C86D51]/40 bg-[#FDFBF7]' : isCultural ? 'border-red-600/40 bg-red-50/40' : 'border-[#FF5500]/40 bg-[#FFF6F0]') 
-                      : 'bg-white border-stone-200'
+                      ? (isEmerald ? 'border-emerald-400/50 bg-white/[0.08] shadow-[0_10px_30px_rgba(16,185,129,0.15)] text-white' : isBoho ? 'border-[#C86D51]/40 bg-[#FDFBF7]' : isCultural ? 'border-red-600/40 bg-red-50/40' : 'border-[#FF5500]/40 bg-[#FFF6F0]') 
+                      : (isEmerald ? 'bg-white/[0.04] border-white/10 text-white hover:border-white/20' : 'bg-white border-stone-200')
                   }`}
                 >
                   <button
@@ -1546,23 +1547,23 @@ export default function TourSupportAndFaqs({
                     onClick={() => setOpenIndex(isOpen ? null : idx)}
                     className="w-full text-left p-3.5 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 cursor-pointer"
                   >
-                    <span className={`text-xs sm:text-sm font-bold text-stone-900 flex items-center gap-2 sm:gap-2.5 ${isBoho || isCultural ? 'font-serif' : ''}`}>
+                    <span className={`text-xs sm:text-sm font-bold ${isEmerald ? 'text-white' : 'text-stone-900'} flex items-center gap-2 sm:gap-2.5 ${isBoho || isCultural ? 'font-serif' : ''}`}>
                       <span className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-[10px] sm:text-[11px] font-mono shrink-0 ${
                         isOpen 
-                          ? (isBoho ? 'bg-[#C86D51] text-white' : isCultural ? 'bg-red-700 text-white' : 'bg-[#FF5500] text-white') 
-                          : 'bg-stone-100 text-stone-500'
+                          ? (isEmerald ? 'bg-emerald-400 text-slate-950 font-black' : isBoho ? 'bg-[#C86D51] text-white' : isCultural ? 'bg-red-700 text-white' : 'bg-[#FF5500] text-white') 
+                          : (isEmerald ? 'bg-white/10 text-emerald-300' : 'bg-stone-100 text-stone-500')
                       }`}>
                         {idx + 1}
                       </span>
                       <span className="leading-snug">{faq.q}</span>
                     </span>
-                    <div className={`shrink-0 ${isOpen ? themeAccentText : 'text-stone-400'}`}>
+                    <div className={`shrink-0 ${isOpen ? themeAccentText : (isEmerald ? 'text-emerald-300/60' : 'text-stone-400')}`}>
                       {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                     </div>
                   </button>
 
                   {isOpen && (
-                    <div className="px-3.5 pb-3.5 sm:px-5 sm:pb-5 pt-0 text-xs sm:text-sm text-stone-600 leading-relaxed pl-10 sm:pl-12">
+                    <div className={`px-3.5 pb-3.5 sm:px-5 sm:pb-5 pt-0 text-xs sm:text-sm ${isEmerald ? 'text-emerald-100/80 border-t border-white/10 pt-3' : 'text-stone-600'} leading-relaxed pl-10 sm:pl-12`}>
                       {faq.a}
                     </div>
                   )}
@@ -1591,8 +1592,8 @@ export default function TourSupportAndFaqs({
         {/* TAB 3: MESA DE ATENCIÓN PRIVADA CON ANTI-SPAM MULTICAPA */}
         {/* ======================================================== */}
         {activeTab === 'ticket' && (
-          <div className={`rounded-2xl sm:rounded-3xl ${isMobile ? 'p-4' : 'p-6 sm:p-10'} shadow-xl bg-stone-900 text-white relative overflow-hidden`}>
-            <div className={`absolute top-0 right-0 w-64 h-64 ${isBoho ? 'bg-[#C86D51]/15' : isCultural ? 'bg-red-700/15' : 'bg-[#FF5500]/10'} rounded-full blur-3xl pointer-events-none`} />
+          <div className={`rounded-2xl sm:rounded-3xl ${isMobile ? 'p-4' : 'p-6 sm:p-10'} shadow-xl ${isEmerald ? 'bg-gradient-to-br from-[#02181f] via-[#03222a] to-[#02181f] border border-emerald-500/30' : 'bg-stone-900'} text-white relative overflow-hidden`}>
+            <div className={`absolute top-0 right-0 w-64 h-64 ${isEmerald ? 'bg-emerald-500/20' : isBoho ? 'bg-[#C86D51]/15' : isCultural ? 'bg-red-700/15' : 'bg-[#FF5500]/10'} rounded-full blur-3xl pointer-events-none`} />
 
             <div className={`flex flex-col ${isMobile ? 'space-y-6' : 'lg:grid lg:grid-cols-12 gap-8'} items-start relative z-10 w-full`}>
               
@@ -1700,7 +1701,7 @@ export default function TourSupportAndFaqs({
                       <select
                         value={ticketCategory}
                         onChange={(e) => setTicketCategory(e.target.value)}
-                        className={`w-full bg-stone-900 border border-white/20 rounded-xl px-3 py-2 text-xs text-white outline-none focus:ring-2 ${isBoho ? 'focus:ring-[#C86D51]' : 'focus:ring-[#FF5500]'}`}
+                        className={`w-full ${isEmerald ? 'bg-[#021318]' : 'bg-stone-900'} border border-white/20 rounded-xl px-3 py-2 text-xs text-white outline-none focus:ring-2 ${isEmerald ? 'focus:ring-emerald-400' : isBoho ? 'focus:ring-[#C86D51]' : 'focus:ring-[#FF5500]'}`}
                       >
                         {st.categories.slice(1).map((catName) => (
                           <option key={catName} value={catName}>
@@ -1721,7 +1722,7 @@ export default function TourSupportAndFaqs({
                           placeholder="Ej. Mateo Rojas"
                           value={senderName}
                           onChange={(e) => setSenderName(e.target.value)}
-                          className={`w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-stone-400 outline-none focus:ring-2 ${isBoho ? 'focus:ring-[#C86D51]' : 'focus:ring-[#FF5500]'}`}
+                          className={`w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-stone-400 outline-none focus:ring-2 ${isEmerald ? 'focus:ring-emerald-400' : isBoho ? 'focus:ring-[#C86D51]' : 'focus:ring-[#FF5500]'}`}
                         />
                       </div>
 
@@ -1735,7 +1736,7 @@ export default function TourSupportAndFaqs({
                           placeholder="+51 984..."
                           value={senderContact}
                           onChange={(e) => setSenderContact(e.target.value)}
-                          className={`w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-stone-400 outline-none focus:ring-2 ${isBoho ? 'focus:ring-[#C86D51]' : 'focus:ring-[#FF5500]'}`}
+                          className={`w-full bg-white/15 border border-white/20 rounded-xl px-3 py-2 text-xs text-white placeholder:text-stone-400 outline-none focus:ring-2 ${isEmerald ? 'focus:ring-emerald-400' : isBoho ? 'focus:ring-[#C86D51]' : 'focus:ring-[#FF5500]'}`}
                         />
                       </div>
                     </div>
