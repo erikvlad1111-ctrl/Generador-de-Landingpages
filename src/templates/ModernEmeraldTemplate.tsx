@@ -66,6 +66,7 @@ const DICTIONARIES = {
     brandTag: 'Explore. Dream. Discover.',
     navHome: 'Inicio',
     navDestinations: 'Destinos',
+    navTours: 'Tours',
     navExperiences: 'Experiencias',
     navItinerary: 'Itinerario',
     navAbout: 'Nosotros',
@@ -82,8 +83,13 @@ const DICTIONARIES = {
     benefit3Title: 'Mejor Precio Garantizado',
     benefit3Desc: 'Tarifas directas sin intermediarios',
     popularTitle: 'Destinos Populares',
-    popularSub: 'Explora lugares asombrosos y crea recuerdos inolvidables en los Andes.',
-    exploreBtn: 'Explorar Tour',
+    popularSub: 'Descubre los santuarios geográficos, lagunas turquesas y maravillas arqueológicas más deseadas de los Andes.',
+    destinationsBadge: '6 Destinos Emblemáticos',
+    seeToursForDestination: 'Ver tours disponibles',
+    viewAllToursBtn: 'Explorar Catálogo de Tours ↓',
+    toursTitle: 'Tours & Expediciones de Autor',
+    toursSub: 'Paquetes guiados con salidas garantizadas todo el año, grupos reducidos, tarifas directas y equipamiento de alta montaña.',
+    exploreBtn: 'Reservar Tour',
     planTitle: 'Planifica Tu Viaje',
     happyTravelers: 'Viajeros Felices',
     positiveReviews: 'Reseñas Positivas',
@@ -116,6 +122,7 @@ const DICTIONARIES = {
     brandTag: 'Explore. Dream. Discover.',
     navHome: 'Home',
     navDestinations: 'Destinations',
+    navTours: 'Tours',
     navExperiences: 'Experiences',
     navItinerary: 'Itinerary',
     navAbout: 'About Us',
@@ -132,8 +139,13 @@ const DICTIONARIES = {
     benefit3Title: 'Best Price Guarantee',
     benefit3Desc: 'Direct deals for your next adventure',
     popularTitle: 'Popular Destinations',
-    popularSub: 'Explore breathtaking places and create unforgettable memories in the Andes.',
-    exploreBtn: 'Explore Now',
+    popularSub: 'Discover the geographical sanctuaries, turquoise glacial lakes, and archaeological wonders of the Andes.',
+    destinationsBadge: '6 Iconic Sanctuaries',
+    seeToursForDestination: 'View available tours',
+    viewAllToursBtn: 'Explore Tours Catalog ↓',
+    toursTitle: 'Signature Tours & Expeditions',
+    toursSub: 'Guided packages with guaranteed year-round departures, small groups, direct rates, and high-mountain equipment.',
+    exploreBtn: 'Book Tour',
     planTitle: 'Plan Your Journey',
     happyTravelers: 'Happy Travelers',
     positiveReviews: 'Positive Reviews',
@@ -166,6 +178,7 @@ const DICTIONARIES = {
     brandTag: 'Explore. Sonhe. Descubra.',
     navHome: 'Início',
     navDestinations: 'Destinos',
+    navTours: 'Tours',
     navExperiences: 'Experiências',
     navItinerary: 'Itinerário',
     navAbout: 'Sobre Nós',
@@ -182,8 +195,13 @@ const DICTIONARIES = {
     benefit3Title: 'Melhor Preço Garantido',
     benefit3Desc: 'Tarifas diretas sem intermediários',
     popularTitle: 'Destinos Populares',
-    popularSub: 'Explore lugares deslumbrantes e crie memórias inesquecíveis nos Andes.',
-    exploreBtn: 'Explorar Tour',
+    popularSub: 'Descubra os santuários geográficos, lagoas turquesas e maravilhas arqueológicas dos Andes.',
+    destinationsBadge: '6 Destinos Emblemáticos',
+    seeToursForDestination: 'Ver passeios disponíveis',
+    viewAllToursBtn: 'Explorar Catálogo de Tours ↓',
+    toursTitle: 'Tours & Expedições Exclusivas',
+    toursSub: 'Pacotes guiados com saídas garantidas o ano todo, pequenos grupos, tarifas diretas e equipamentos de montanha.',
+    exploreBtn: 'Reservar Tour',
     planTitle: 'Planeje Sua Viagem',
     happyTravelers: 'Viajantes Felizes',
     positiveReviews: 'Avaliações Positivas',
@@ -216,6 +234,7 @@ const DICTIONARIES = {
     brandTag: 'Explorez. Rêvez. Découvrez.',
     navHome: 'Accueil',
     navDestinations: 'Destinations',
+    navTours: 'Tours',
     navExperiences: 'Expériences',
     navItinerary: 'Itinéraire',
     navAbout: 'À Propos',
@@ -232,8 +251,13 @@ const DICTIONARIES = {
     benefit3Title: 'Meilleur Prix Garanti',
     benefit3Desc: 'Tarifs directs sans intermédiaires',
     popularTitle: 'Destinations Populaires',
-    popularSub: 'Explorez des paysages époustouflants et créez des souvenirs inoubliables.',
-    exploreBtn: 'Explorer',
+    popularSub: 'Explorez des sanctuaires géographiques, lagunes turquoise et merveilles archéologiques des Andes.',
+    destinationsBadge: '6 Destinations Remarquables',
+    seeToursForDestination: 'Voir les excursions',
+    viewAllToursBtn: 'Explorer le Catalogue des Tours ↓',
+    toursTitle: 'Tours & Expéditions Signatures',
+    toursSub: 'Circuits guidés avec départs garantis toute l’année, petits groupes, tarifs directs et équipement de montagne.',
+    exploreBtn: 'Réserver le Tour',
     planTitle: 'Planifiez Votre Voyage',
     happyTravelers: 'Voyageurs Comblés',
     positiveReviews: 'Avis Positifs',
@@ -266,6 +290,7 @@ const DICTIONARIES = {
     brandTag: 'Esplora. Sogna. Scopri.',
     navHome: 'Home',
     navDestinations: 'Destinazioni',
+    navTours: 'Tour',
     navExperiences: 'Esperienze',
     navItinerary: 'Itinerario',
     navAbout: 'Chi Siamo',
@@ -282,8 +307,13 @@ const DICTIONARIES = {
     benefit3Title: 'Miglior Prezzo Garantito',
     benefit3Desc: 'Offerte dirette senza intermediari',
     popularTitle: 'Destinazioni Popolari',
-    popularSub: 'Esplora luoghi mozzafiato e crea ricordi indimenticabili sulle Ande.',
-    exploreBtn: 'Esplora Ora',
+    popularSub: 'Scopri i santuari geografici, lagune turchesi e meraviglie archeologiche delle Ande.',
+    destinationsBadge: '6 Destinazioni Iconiche',
+    seeToursForDestination: 'Vedi i tour disponibili',
+    viewAllToursBtn: 'Esplora il Catalogo Tour ↓',
+    toursTitle: 'Tour & Spedizioni Esclusive',
+    toursSub: 'Pacchetti guidati con partenze garantite tutto l’anno, piccoli gruppi, tariffe dirette e attrezzature da montagna.',
+    exploreBtn: 'Prenota il Tour',
     planTitle: 'Pianifica Il Tuo Viaggio',
     happyTravelers: 'Viaggiatori Soddisfatti',
     positiveReviews: 'Recensioni Positive',
@@ -319,6 +349,81 @@ const TESTIMONIAL_AVATARS = [
   'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=240&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=240&auto=format&fit=crop',
   'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=240&auto=format&fit=crop'
+];
+
+const POPULAR_DESTINATIONS = [
+  {
+    id: 'machu-picchu',
+    title: 'Machu Picchu Santuario',
+    tag: 'Maravilla del Mundo',
+    altitude: '2,430 msnm',
+    highlight: 'Ciudadela sagrada, Templo del Sol y terrazas agrícolas',
+    climate: 'Subtropical templado (12°C - 24°C)',
+    image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=1200&auto=format&fit=crop',
+    rating: 5.0,
+    categoryFilter: 'classic',
+    accentColor: 'from-emerald-500/30 to-teal-600/30 border-emerald-400/40 text-emerald-300'
+  },
+  {
+    id: 'humantay',
+    title: 'Laguna Humantay',
+    tag: 'Turquesa Glaciar',
+    altitude: '4,200 msnm',
+    highlight: 'Espejo de agua glaciar a los pies del Nevado Salkantay',
+    climate: 'Frío alpino / Viento de altura (4°C - 14°C)',
+    image: 'https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=1200&auto=format&fit=crop',
+    rating: 4.95,
+    categoryFilter: 'trekking',
+    accentColor: 'from-cyan-500/30 to-teal-600/30 border-cyan-400/40 text-cyan-300'
+  },
+  {
+    id: 'vinicunca',
+    title: 'Montaña de 7 Colores',
+    tag: 'Formación Geológica',
+    altitude: '5,036 msnm',
+    highlight: 'Cordillera arcoíris milenaria con vista al Ausangate',
+    climate: 'Alta montaña frígida (0°C - 12°C)',
+    image: 'https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?q=80&w=1200&auto=format&fit=crop',
+    rating: 4.92,
+    categoryFilter: 'trekking',
+    accentColor: 'from-amber-500/30 to-rose-600/30 border-amber-400/40 text-amber-300'
+  },
+  {
+    id: 'valle-sagrado',
+    title: 'Valle Sagrado de los Incas',
+    tag: 'Historia Viva & Cultura',
+    altitude: '2,870 msnm',
+    highlight: 'Ollantaytambo, terrazas de Pisac y ferias artesanales',
+    climate: 'Templado andino acogedor (10°C - 22°C)',
+    image: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1200&auto=format&fit=crop',
+    rating: 4.97,
+    categoryFilter: 'classic',
+    accentColor: 'from-teal-500/30 to-emerald-600/30 border-teal-400/40 text-teal-300'
+  },
+  {
+    id: 'maras-moray',
+    title: 'Salineras de Maras & Moray',
+    tag: 'Ingeniería Ancestral',
+    altitude: '3,380 msnm',
+    highlight: 'Más de 3,000 pozas de sal rosada y andenes circulares',
+    climate: 'Soleado y seco de valle (8°C - 20°C)',
+    image: 'https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=1200&auto=format&fit=crop',
+    rating: 4.88,
+    categoryFilter: 'fullday',
+    accentColor: 'from-emerald-500/30 to-cyan-600/30 border-emerald-400/40 text-emerald-300'
+  },
+  {
+    id: 'choquequirao',
+    title: 'Choquequirao & Cañón Apurímac',
+    tag: 'Aventura Mística Pura',
+    altitude: '3,050 msnm',
+    highlight: 'La hermana sagrada de Machu Picchu sin multitudes',
+    climate: 'Templado de cañón andino (12°C - 25°C)',
+    image: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=1200&auto=format&fit=crop',
+    rating: 4.96,
+    categoryFilter: 'trekking',
+    accentColor: 'from-sky-500/30 to-blue-600/30 border-sky-400/40 text-sky-300'
+  }
 ];
 
 export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewMode = 'desktop' }: ModernEmeraldTemplateProps) {
@@ -661,6 +766,9 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             <a href="#destinos" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navDestinations}
             </a>
+            <a href="#tours" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+              {t.navTours}
+            </a>
             <a href="#itinerario" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navItinerary}
             </a>
@@ -745,6 +853,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
             <a href="#inicio" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-300">{t.navHome}</a>
             <a href="#destinos" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navDestinations}</a>
+            <a href="#tours" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navTours}</a>
             <a href="#itinerario" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navItinerary}</a>
             <a href="#incluye" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">Servicios Incluidos</a>
             <a href="#galeria" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">Galería de Fotos</a>
@@ -909,7 +1018,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       </section>
 
 
-      {/* 3. POPULAR DESTINATIONS (CATÁLOGO INTERACTIVO CON FILTROS & SLIDER FUNCIONAL) */}
+      {/* 3. DESTINOS POPULARES (BENTO GRID ICÓNICO DE SANTUARIOS & PAISAJES ANDINOS) */}
       <section id="destinos" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
         {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
         <div className="absolute top-1/2 -right-24 -translate-y-1/2 w-[650px] sm:w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.48)_0%,rgba(6,182,212,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
@@ -928,164 +1037,115 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </div>
         
         <div className="relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+          {/* Cabecera de la Sección Destinos */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-black mb-3">
+                <Sparkles size={13} className="text-emerald-400" />
+                <span>{t.destinationsBadge}</span>
+              </div>
               <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight flex items-center gap-2.5">
                 <span>{t.popularTitle}</span>
-                <span className="text-xs font-bold text-emerald-300 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-400/40">
-                  {filteredTours.length} Circuitos
-                </span>
               </h2>
-            <p className="text-xs sm:text-sm text-emerald-200/70 mt-1 max-w-xl">
-              {t.popularSub}
-            </p>
-          </div>
-
-          {/* Filtros de Categoría Interactivos */}
-          <div className="flex flex-wrap items-center gap-1.5 bg-white/[0.06] p-1.5 rounded-2xl border border-white/10">
-            {[
-              { id: 'all', label: 'Todos' },
-              { id: 'trekking', label: 'Trekking & Montaña' },
-              { id: 'classic', label: 'Clásicos & Cultura' },
-              { id: 'fullday', label: 'Full Day' }
-            ].map(cat => (
-              <button
-                key={cat.id}
-                type="button"
-                onClick={() => {
-                  setTourCategory(cat.id);
-                  setTourPage(0);
-                }}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                  tourCategory === cat.id
-                    ? 'bg-emerald-400 text-slate-950 shadow-md font-black'
-                    : 'text-emerald-200/70 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {/* Grid de Cards del Carrusel */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {visibleTours.map((tour, idx) => {
-            const isFav = favorites[tour.id || idx];
-            const tourUsd = parseInt(tour.price.replace(/\D/g, '') || '85', 10);
-            return (
-              <div 
-                key={tour.id || idx}
-                className="group rounded-3xl glass-floating-card overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-emerald-400/40"
-              >
-                {/* Imagen del Tour con Chips y Botón Favorito */}
-                <div className="relative h-56 w-full overflow-hidden bg-emerald-950">
-                  <Image 
-                    src={tour.image || heroImg} 
-                    alt={tour.title} 
-                    fill 
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover group-hover:scale-108 transition-transform duration-700" 
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-transparent to-black/30" />
-
-                  {/* Badge de Rating */}
-                  <div className="absolute top-3 left-3 bg-black/40 backdrop-blur-md px-2.5 py-1 rounded-full text-amber-300 font-black text-xs flex items-center gap-1 border border-white/20 shadow-md">
-                    <Star size={12} className="fill-amber-400 text-amber-400" />
-                    <span>{tour.rating || 4.8}</span>
-                  </div>
-
-                  {/* Botón Favorito Corazón Interactivo */}
-                  <button
-                    type="button"
-                    onClick={() => toggleFavorite(tour.id || String(idx))}
-                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:scale-110 shadow-md transition-transform cursor-pointer"
-                    aria-label="Guardar tour en favoritos"
-                  >
-                    <Heart size={14} className={isFav ? "fill-rose-500 text-rose-500" : "text-white"} />
-                  </button>
-
-                  {/* Precio Flotante Dinámico */}
-                  <div className="absolute bottom-3 right-3 bg-emerald-400 text-[#041716] font-black text-xs sm:text-sm px-3.5 py-1 rounded-xl shadow-lg">
-                    {formatPrice(tourUsd, 1)}
-                  </div>
-                </div>
-
-                {/* Contenido de la Card */}
-                <div className="p-5 space-y-3.5 flex-1 flex flex-col justify-between">
-                  <div>
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-400 block mb-1">
-                      {tour.location || 'Cusco Imperial'} • {tour.duration || 'Full Day'}
-                    </span>
-                    <h3 className="text-base font-black text-white group-hover:text-emerald-300 transition-colors leading-snug">
-                      {tour.title}
-                    </h3>
-                  </div>
-
-                  <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
-                    {/* Avatares de Viajeros */}
-                    <div className="flex items-center gap-1.5">
-                      <div className="flex -space-x-2 overflow-hidden">
-                        <div className="inline-block h-6 w-6 rounded-full ring-2 ring-[#041716] bg-emerald-800 relative overflow-hidden">
-                          <Image src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop" alt="User" fill className="object-cover" />
-                        </div>
-                        <div className="inline-block h-6 w-6 rounded-full ring-2 ring-[#041716] bg-teal-800 relative overflow-hidden">
-                          <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" alt="User" fill className="object-cover" />
-                        </div>
-                      </div>
-                      <span className="text-[10px] text-emerald-200/70 font-semibold">+230</span>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => handleOpenAction(tour.title)}
-                      className="emerald-shimmer-btn bg-emerald-500/20 hover:bg-emerald-400 hover:text-[#041716] text-emerald-300 font-bold text-xs px-4 py-1.5 rounded-full border border-emerald-400/40 transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-sm"
-                    >
-                      {t.exploreBtn}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Controles de Navegación del Carrusel Funcionales */}
-        {totalTourPages > 1 && (
-          <div className="flex items-center justify-center gap-3 mt-8">
-            <button
-              type="button"
-              disabled={currentTourPage === 0}
-              onClick={() => setTourPage(Math.max(0, currentTourPage - 1))}
-              className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-30 border border-white/20 text-emerald-300 flex items-center justify-center cursor-pointer transition-all"
-            >
-              <ChevronLeft size={16} />
-            </button>
-
-            {/* Paginadores */}
-            <div className="flex items-center gap-1.5">
-              {[...Array(totalTourPages)].map((_, pIdx) => (
-                <button
-                  key={pIdx}
-                  type="button"
-                  onClick={() => setTourPage(pIdx)}
-                  className={`h-2 rounded-full transition-all cursor-pointer ${
-                    currentTourPage === pIdx ? 'w-6 bg-emerald-400' : 'w-2 bg-white/20 hover:bg-white/40'
-                  }`}
-                />
-              ))}
+              <p className="text-xs sm:text-sm text-emerald-200/70 mt-1.5 max-w-2xl leading-relaxed">
+                {t.popularSub}
+              </p>
             </div>
 
-            <button
-              type="button"
-              disabled={currentTourPage >= totalTourPages - 1}
-              onClick={() => setTourPage(Math.min(totalTourPages - 1, currentTourPage + 1))}
-              className="w-9 h-9 rounded-full bg-emerald-500 hover:bg-emerald-400 disabled:opacity-30 text-[#041716] font-bold flex items-center justify-center cursor-pointer transition-all shadow-md"
+            {/* Botón de Anclaje Rápido hacia la Sección de Tours */}
+            <a
+              href="#tours"
+              className="emerald-shimmer-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white/[0.08] hover:bg-emerald-400 hover:text-[#02181f] text-emerald-200 font-bold text-xs border border-white/15 hover:border-emerald-400/50 transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
             >
-              <ChevronRight size={16} />
-            </button>
+              <span>{t.viewAllToursBtn}</span>
+              <ArrowRight size={14} />
+            </a>
           </div>
-        )}
+
+          {/* Bento Grid de Destinos Populares */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {POPULAR_DESTINATIONS.map((dest, idx) => {
+              const isLarge = idx === 0; // Machu Picchu como card heroica
+              return (
+                <div 
+                  key={dest.id}
+                  className={`group rounded-3xl glass-floating-card overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-emerald-400/50 hover:shadow-2xl hover:shadow-emerald-950/50 ${
+                    isLarge ? 'md:col-span-2 lg:col-span-2' : 'col-span-1'
+                  }`}
+                >
+                  {/* Contenedor Fotográfico con Badges Superpuestos */}
+                  <div className={`relative w-full overflow-hidden bg-emerald-950 ${isLarge ? 'h-72 sm:h-80' : 'h-56'}`}>
+                    <Image 
+                      src={dest.image} 
+                      alt={dest.title} 
+                      fill 
+                      sizes={isLarge ? '(max-width: 1024px) 100vw, 66vw' : '(max-width: 768px) 100vw, 33vw'}
+                      className="object-cover group-hover:scale-108 transition-transform duration-700" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-[#021016]/40 to-black/30" />
+
+                    {/* Badge de Altitud msnm */}
+                    <div className="absolute top-3.5 left-3.5 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-emerald-300 font-black text-xs flex items-center gap-1.5 border border-white/20 shadow-md">
+                      <Mountain size={13} className="text-emerald-400" />
+                      <span>{dest.altitude}</span>
+                    </div>
+
+                    {/* Badge de Tag Temático */}
+                    <div className="absolute top-3.5 right-3.5 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-white font-bold text-xs flex items-center gap-1.5 border border-white/20 shadow-md">
+                      <MapPin size={12} className="text-teal-300" />
+                      <span>{dest.tag}</span>
+                    </div>
+
+                    {/* Rating Flotante Inferior Izquierdo */}
+                    <div className="absolute bottom-3.5 left-3.5 bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full text-amber-300 font-black text-xs flex items-center gap-1 border border-white/15 shadow-md">
+                      <Star size={12} className="fill-amber-400 text-amber-400" />
+                      <span>{dest.rating}</span>
+                      <span className="text-[10px] text-white/70 font-normal">/ 5.0</span>
+                    </div>
+                  </div>
+
+                  {/* Cuerpo Descriptivo y CTA de Navegación a Tours */}
+                  <div className="p-5 sm:p-6 space-y-4 flex-1 flex flex-col justify-between">
+                    <div className="space-y-2">
+                      <h3 className="text-lg sm:text-xl font-black text-white group-hover:text-emerald-300 transition-colors tracking-tight">
+                        {dest.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-emerald-100/75 leading-relaxed">
+                        {dest.highlight}
+                      </p>
+                      <div className="flex items-center gap-2 pt-1 text-[11px] text-emerald-300/80 font-medium">
+                        <Compass size={13} className="text-teal-400 shrink-0" />
+                        <span>Clima: {dest.climate}</span>
+                      </div>
+                    </div>
+
+                    {/* Footer con Botón Interactivo para Filtrar y Ver Tours */}
+                    <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-3">
+                      <span className="text-[11px] font-bold text-emerald-300/70">
+                        Rutas disponibles
+                      </span>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setTourCategory(dest.categoryFilter);
+                          setTourPage(0);
+                          const el = document.getElementById('tours');
+                          if (el) {
+                            el.scrollIntoView({ behavior: 'smooth' });
+                          }
+                        }}
+                        className="emerald-shimmer-btn bg-emerald-500/20 hover:bg-emerald-400 hover:text-[#02181f] text-emerald-300 font-bold text-xs px-4 py-2 rounded-full border border-emerald-400/40 transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-sm flex items-center gap-1.5"
+                      >
+                        <span>{t.seeToursForDestination}</span>
+                        <ArrowRight size={13} />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
@@ -1776,6 +1836,194 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             isMobile={viewMode === 'mobile'}
             lang={currentLang}
           />
+        </div>
+      </section>
+
+      {/* 9.5 CATÁLOGO DE TOURS & EXPEDICIONES DE AUTOR (SECCIÓN INDEPENDIENTE) */}
+      <section id="tours" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
+        <div className="absolute top-1/2 -left-24 -translate-y-1/2 w-[650px] sm:w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.45)_0%,rgba(6,182,212,0.22)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+        <div className="absolute top-1/2 -right-24 -translate-y-1/2 w-[600px] sm:w-[750px] h-[480px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.40)_0%,rgba(13,148,136,0.20)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+
+        {/* Textura Fotográfica Andina Sutil de Fondo (Z-0) */}
+        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+          <Image 
+            src="https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=1600&auto=format&fit=crop"
+            alt="Andean Trails Landscape Background"
+            fill
+            sizes="100vw"
+            className="object-cover opacity-[0.05] mix-blend-screen scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-transparent to-[#021016]" />
+        </div>
+
+        <div className="relative z-10">
+          {/* Header de Sección con Título, Contador y Filtros de Categoría */}
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-black mb-3">
+                <Compass size={13} className="text-emerald-400" />
+                <span>Salidas Garantizadas 2025 - 2026</span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight flex flex-wrap items-center gap-2.5">
+                <span>{t.toursTitle}</span>
+                <span className="text-xs font-bold text-emerald-300 bg-emerald-500/20 px-3 py-1 rounded-full border border-emerald-400/40">
+                  {filteredTours.length} Circuitos
+                </span>
+              </h2>
+              <p className="text-xs sm:text-sm text-emerald-200/70 mt-1.5 max-w-2xl leading-relaxed">
+                {t.toursSub}
+              </p>
+            </div>
+
+            {/* Filtros de Categoría Interactivos */}
+            <div className="flex flex-wrap items-center gap-1.5 bg-white/[0.06] p-1.5 rounded-2xl border border-white/10 shrink-0">
+              {[
+                { id: 'all', label: 'Todos' },
+                { id: 'trekking', label: 'Trekking & Montaña' },
+                { id: 'classic', label: 'Clásicos & Cultura' },
+                { id: 'fullday', label: 'Full Day' }
+              ].map(cat => (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => {
+                    setTourCategory(cat.id);
+                    setTourPage(0);
+                  }}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                    tourCategory === cat.id
+                      ? 'bg-emerald-400 text-slate-950 shadow-md font-black'
+                      : 'text-emerald-200/70 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Grid de Cards de Tours Disponibles */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {visibleTours.map((tour, idx) => {
+              const isFav = favorites[tour.id || idx];
+              const tourUsd = parseInt(tour.price.replace(/\D/g, '') || '85', 10);
+              return (
+                <div 
+                  key={tour.id || idx}
+                  className="group rounded-3xl glass-floating-card overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-emerald-400/40 hover:shadow-2xl hover:shadow-emerald-950/40"
+                >
+                  {/* Imagen del Tour con Chips y Botón Favorito */}
+                  <div className="relative h-56 w-full overflow-hidden bg-emerald-950">
+                    <Image 
+                      src={tour.image || heroImg} 
+                      alt={tour.title} 
+                      fill 
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      className="object-cover group-hover:scale-108 transition-transform duration-700" 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-transparent to-black/30" />
+
+                    {/* Badge de Rating */}
+                    <div className="absolute top-3.5 left-3.5 bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full text-amber-300 font-black text-xs flex items-center gap-1 border border-white/20 shadow-md">
+                      <Star size={12} className="fill-amber-400 text-amber-400" />
+                      <span>{tour.rating || 4.8}</span>
+                    </div>
+
+                    {/* Botón Favorito Corazón Interactivo */}
+                    <button
+                      type="button"
+                      onClick={() => toggleFavorite(tour.id || String(idx))}
+                      className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:scale-110 shadow-md transition-transform cursor-pointer"
+                      aria-label="Guardar tour en favoritos"
+                    >
+                      <Heart size={14} className={isFav ? "fill-rose-500 text-rose-500" : "text-white"} />
+                    </button>
+
+                    {/* Precio Flotante Dinámico */}
+                    <div className="absolute bottom-3.5 right-3.5 bg-emerald-400 text-[#041716] font-black text-xs sm:text-sm px-3.5 py-1 rounded-xl shadow-lg">
+                      {formatPrice(tourUsd, passengers)}
+                    </div>
+                  </div>
+
+                  {/* Contenido de la Card */}
+                  <div className="p-5 space-y-3.5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-400 block mb-1">
+                        {tour.location || 'Cusco Imperial'} • {tour.duration || 'Full Day'}
+                      </span>
+                      <h3 className="text-base font-black text-white group-hover:text-emerald-300 transition-colors leading-snug">
+                        {tour.title}
+                      </h3>
+                    </div>
+
+                    <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
+                      {/* Avatares de Viajeros */}
+                      <div className="flex items-center gap-1.5">
+                        <div className="flex -space-x-2 overflow-hidden">
+                          <div className="inline-block h-6 w-6 rounded-full ring-2 ring-[#041716] bg-emerald-800 relative overflow-hidden">
+                            <Image src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop" alt="User" fill className="object-cover" />
+                          </div>
+                          <div className="inline-block h-6 w-6 rounded-full ring-2 ring-[#041716] bg-teal-800 relative overflow-hidden">
+                            <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" alt="User" fill className="object-cover" />
+                          </div>
+                        </div>
+                        <span className="text-[10px] text-emerald-200/70 font-semibold">+230</span>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => handleOpenAction(tour.title)}
+                        className="emerald-shimmer-btn bg-emerald-500/20 hover:bg-emerald-400 hover:text-[#041716] text-emerald-300 font-bold text-xs px-4 py-1.5 rounded-full border border-emerald-400/40 transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-sm"
+                      >
+                        {t.exploreBtn}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Controles de Navegación del Carrusel Funcionales */}
+          {totalTourPages > 1 && (
+            <div className="flex items-center justify-center gap-3 mt-10">
+              <button
+                type="button"
+                disabled={currentTourPage === 0}
+                onClick={() => setTourPage(Math.max(0, currentTourPage - 1))}
+                className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-30 border border-white/20 text-emerald-300 flex items-center justify-center cursor-pointer transition-all shadow-md"
+                aria-label="Página anterior de tours"
+              >
+                <ChevronLeft size={18} />
+              </button>
+
+              {/* Paginadores */}
+              <div className="flex items-center gap-2">
+                {[...Array(totalTourPages)].map((_, pIdx) => (
+                  <button
+                    key={pIdx}
+                    type="button"
+                    onClick={() => setTourPage(pIdx)}
+                    className={`h-2.5 rounded-full transition-all cursor-pointer ${
+                      currentTourPage === pIdx ? 'w-7 bg-emerald-400' : 'w-2.5 bg-white/25 hover:bg-white/45'
+                    }`}
+                    aria-label={`Ir a página ${pIdx + 1} de tours`}
+                  />
+                ))}
+              </div>
+
+              <button
+                type="button"
+                disabled={currentTourPage >= totalTourPages - 1}
+                onClick={() => setTourPage(Math.min(totalTourPages - 1, currentTourPage + 1))}
+                className="w-10 h-10 rounded-full bg-emerald-500 hover:bg-emerald-400 disabled:opacity-30 text-[#041716] font-bold flex items-center justify-center cursor-pointer transition-all shadow-md"
+                aria-label="Página siguiente de tours"
+              >
+                <ChevronRight size={18} />
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
