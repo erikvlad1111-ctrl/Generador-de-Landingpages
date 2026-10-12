@@ -1478,10 +1478,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               </p>
             </div>
 
-            {/* Bento Grid de 4 Pasos Clave */}
+            {/* Bento Grid de 4 Pasos Clave (Las 4 tarjetas con Imagen de Fondo Andina) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               
-              {/* PASO 01: Elección de Ruta & Época (Tarjeta Visual) */}
+              {/* PASO 01: Elección de Ruta & Época */}
               <div className="relative rounded-3xl overflow-hidden min-h-[300px] border border-emerald-500/25 bg-[#041a18] shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 hover:border-emerald-400/50 transition-all duration-300 flex flex-col justify-between p-5">
                 <Image 
                   src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=800&auto=format&fit=crop" 
@@ -1515,61 +1515,75 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 </div>
               </div>
 
-              {/* PASO 02: Entradas & Tren Garantizados (Glassmorphism Card) */}
-              <div className="glass-floating-card p-6 rounded-3xl min-h-[300px] border border-emerald-400/25 bg-[#031d1b]/70 backdrop-blur-xl flex flex-col justify-between group hover:-translate-y-1.5 hover:border-emerald-400/50 transition-all duration-300 animate-emerald-float-delayed shadow-[0_15px_35px_rgba(0,0,0,0.35)]">
-                <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-                      {translateText('02 • Accesos Oficiales', currentLang)}
-                    </span>
-                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs group-hover:scale-110 transition-transform">
-                      <Calendar size={20} />
-                    </div>
+              {/* PASO 02: Entradas & Tren Garantizados */}
+              <div className="relative rounded-3xl overflow-hidden min-h-[300px] border border-emerald-500/25 bg-[#041a18] shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 hover:border-emerald-400/50 transition-all duration-300 flex flex-col justify-between p-5">
+                <Image 
+                  src="https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=800&auto=format&fit=crop" 
+                  alt="Valle Sagrado y tren panorámico a Machu Picchu" 
+                  fill 
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#021413] via-[#021413]/75 to-black/30" />
+                
+                <div className="relative z-10 flex items-center justify-between">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/80 text-black shadow-xs">
+                    {translateText('02 • Accesos Oficiales', currentLang)}
+                  </span>
+                  <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-emerald-300">
+                    <Calendar size={16} />
                   </div>
-                  <h3 className="text-base font-black text-white leading-snug mb-2">
+                </div>
+
+                <div className="relative z-10 space-y-2 mt-auto pt-6">
+                  <h3 className="text-base font-black text-white leading-snug drop-shadow-sm">
                     {translateText('Entradas & Tren Garantizados', currentLang)}
                   </h3>
-                  <p className="text-xs text-emerald-200/75 leading-relaxed">
+                  <p className="text-xs text-emerald-100/80 leading-relaxed">
                     {translateText('Reservamos con antelación tus boletos oficiales a la ciudadela y asientos en tren panorámico sin filas ni incertidumbre.', currentLang)}
                   </p>
-                </div>
-                
-                <div className="pt-4 border-t border-emerald-500/20 flex items-center justify-between">
-                  <span className="text-[11px] font-black text-emerald-300">
-                    {translateText('100% Reserva Anticipada', currentLang)}
-                  </span>
-                  <CheckCircle2 size={15} className="text-emerald-400" />
+                  <div className="pt-2 flex items-center text-[11px] font-bold text-emerald-300">
+                    <span>{translateText('100% Reserva Anticipada', currentLang)}</span>
+                    <CheckCircle2 size={13} className="ml-1 text-emerald-400" />
+                  </div>
                 </div>
               </div>
 
-              {/* PASO 03: Protocolo Médico de Aclimatación (Glassmorphism Card con acento ámbar/turquesa) */}
-              <div className="glass-floating-card p-6 rounded-3xl min-h-[300px] border border-amber-400/25 bg-[#031d1b]/70 backdrop-blur-xl flex flex-col justify-between group hover:-translate-y-1.5 hover:border-amber-400/50 transition-all duration-300 animate-emerald-float shadow-[0_15px_35px_rgba(0,0,0,0.35)]">
-                <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/30">
-                      {translateText('03 • Salud & Altitud', currentLang)}
-                    </span>
-                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500/20 to-emerald-500/10 text-amber-300 flex items-center justify-center border border-amber-400/40 shadow-xs group-hover:scale-110 transition-transform">
-                      <ShieldCheck size={20} />
-                    </div>
+              {/* PASO 03: Protocolo Médico de Aclimatación */}
+              <div className="relative rounded-3xl overflow-hidden min-h-[300px] border border-amber-500/25 bg-[#041a18] shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 hover:border-amber-400/50 transition-all duration-300 flex flex-col justify-between p-5">
+                <Image 
+                  src="https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=800&auto=format&fit=crop" 
+                  alt="Laguna Humantay alta montaña y aclimatación" 
+                  fill 
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-700" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#021413] via-[#021413]/75 to-black/30" />
+                
+                <div className="relative z-10 flex items-center justify-between">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-400 text-black shadow-xs">
+                    {translateText('03 • Salud & Altitud', currentLang)}
+                  </span>
+                  <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-amber-300">
+                    <ShieldCheck size={16} />
                   </div>
-                  <h3 className="text-base font-black text-white leading-snug mb-2">
+                </div>
+
+                <div className="relative z-10 space-y-2 mt-auto pt-6">
+                  <h3 className="text-base font-black text-white leading-snug drop-shadow-sm">
                     {translateText('Aclimatación y Soporte 24/7', currentLang)}
                   </h3>
-                  <p className="text-xs text-emerald-200/75 leading-relaxed">
+                  <p className="text-xs text-emerald-100/80 leading-relaxed">
                     {translateText('Monitoreo con oxímetro digital, oxígeno medicinal portátil en cada ruta y aclimatación gradual en el Valle Sagrado.', currentLang)}
                   </p>
-                </div>
-                
-                <div className="pt-4 border-t border-amber-500/20 flex items-center justify-between">
-                  <span className="text-[11px] font-black text-amber-300">
-                    {translateText('Protocolo Médico Incluido', currentLang)}
-                  </span>
-                  <CheckCircle2 size={15} className="text-amber-400" />
+                  <div className="pt-2 flex items-center text-[11px] font-bold text-amber-300">
+                    <span>{translateText('Protocolo Médico Incluido', currentLang)}</span>
+                    <CheckCircle2 size={13} className="ml-1 text-amber-400" />
+                  </div>
                 </div>
               </div>
 
-              {/* PASO 04: Logística Integral Llave en Mano (Tarjeta Visual) */}
+              {/* PASO 04: Logística Integral Llave en Mano */}
               <div className="relative rounded-3xl overflow-hidden min-h-[300px] border border-teal-500/25 bg-[#041a18] shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 hover:border-teal-400/50 transition-all duration-300 flex flex-col justify-between p-5">
                 <Image 
                   src="https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=800&auto=format&fit=crop" 
