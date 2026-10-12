@@ -106,8 +106,8 @@ const DICTIONARIES = {
     toursSub: 'Paquetes guiados con salidas garantizadas todo el año, grupos reducidos, tarifas directas y equipamiento de alta montaña.',
     allToursBadge: 'Circuitos en Vitrina',
     exploreBtn: 'Reservar Tour',
-    planTitle: 'Planifica Tu Viaje',
-    planSub: 'Métricas reales de excelencia avaladas por más de 1,200 viajeros internacionales.',
+    planTitle: 'Planifica Tu Viaje a Cusco',
+    planSub: 'Cuatro etapas clave para diseñar una expedición segura, personalizada y sin contratiempos en los Andes.',
     happyTravelers: 'Viajeros Felices',
     positiveReviews: 'Reseñas Positivas',
     curatedRoutes: 'Destinos y Rutas',
@@ -175,8 +175,8 @@ const DICTIONARIES = {
     toursSub: 'Guided packages with guaranteed year-round departures, small groups, direct rates, and high-mountain equipment.',
     allToursBadge: 'Featured Circuits',
     exploreBtn: 'Book Tour',
-    planTitle: 'Plan Your Journey',
-    planSub: 'Real excellence metrics endorsed by over 1,200 international travelers.',
+    planTitle: 'Plan Your Trip to Cusco',
+    planSub: 'Four essential steps to design a safe, tailored, and seamless expedition in the Peruvian Andes.',
     happyTravelers: 'Happy Travelers',
     positiveReviews: 'Positive Reviews',
     curatedRoutes: 'Curated Destinations',
@@ -244,8 +244,8 @@ const DICTIONARIES = {
     toursSub: 'Pacotes guiados com saídas garantidas o ano todo, pequenos grupos, tarifas diretas e equipamentos de montanha.',
     allToursBadge: 'Circuitos em Vitrine',
     exploreBtn: 'Reservar Tour',
-    planTitle: 'Planeje Sua Viagem',
-    planSub: 'Métricas reais de excelência avaliadas por mais de 1.200 viajantes internacionais.',
+    planTitle: 'Planeje Sua Viagem a Cusco',
+    planSub: 'Quatro etapas essenciais para planejar uma expedição segura, sob medida e sem imprevistos nos Andes.',
     happyTravelers: 'Viajantes Felizes',
     positiveReviews: 'Avaliações Positivas',
     curatedRoutes: 'Destinos e Rotas',
@@ -313,8 +313,8 @@ const DICTIONARIES = {
     toursSub: 'Circuits guidés avec départs garantis toute l’année, petits groupes, tarifs directs et équipement de montagne.',
     allToursBadge: 'Circuits en Vitrine',
     exploreBtn: 'Réserver le Tour',
-    planTitle: 'Planifiez Votre Voyage',
-    planSub: 'Métrique d’excellence validée par plus de 1 200 voyageurs internationaux.',
+    planTitle: 'Planifiez Votre Voyage à Cusco',
+    planSub: 'Quatre étapes clés pour concevoir une expédition sûre, sur mesure et sans tracas dans les Andes péruviennes.',
     happyTravelers: 'Voyageurs Comblés',
     positiveReviews: 'Avis Positifs',
     curatedRoutes: 'Destinations Remarquables',
@@ -382,8 +382,8 @@ const DICTIONARIES = {
     toursSub: 'Pacchetti guidati con partenze garantite tutto l’anno, piccoli gruppi, tariffe dirette e attrezzature da montagna.',
     allToursBadge: 'Circuiti Selezionati',
     exploreBtn: 'Prenota il Tour',
-    planTitle: 'Pianifica Il Tuo Viaggio',
-    planSub: 'Metriche reali di eccellenza certificate da oltre 1.200 viaggiatori internazionali.',
+    planTitle: 'Pianifica Il Tuo Viaggio a Cusco',
+    planSub: 'Quattro passaggi fondamentali per organizzare una spedizione sicura, su misura e senza imprevisti sulle Ande peruviane.',
     happyTravelers: 'Viaggiatori Soddisfatti',
     positiveReviews: 'Recensioni Positive',
     curatedRoutes: 'Destinazioni Selezionate',
@@ -1457,78 +1457,165 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </div>
       )}
 
-      {/* 5. PLAN YOUR JOURNEY & BENTO STATS (OCULTO EN FREE) */}
+      {/* 5. PLAN YOUR JOURNEY & BENTO GRID 4 PASOS (OCULTO EN FREE) */}
       {!isFree && (
         <section id="experiencias" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] sm:w-[1100px] h-[550px] bg-[radial-gradient(ellipse_at_center,rgba(13,148,136,0.48)_0%,rgba(2,132,199,0.30)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
           <div className="absolute top-1/4 -right-20 w-[550px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.28)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
           
           <div className="relative z-10">
-            <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
+            {/* Encabezado con Badge */}
+            <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-bold tracking-wide uppercase shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                <Compass size={14} className="text-emerald-400" />
+                <span>{translateText('Expedición Paso a Paso', currentLang)}</span>
+              </div>
               <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
                 {t.planTitle}
               </h2>
-              <p className="text-xs sm:text-sm text-emerald-200/70">
+              <p className="text-xs sm:text-sm text-emerald-200/80 leading-relaxed max-w-2xl mx-auto">
                 {t.planSub}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="relative rounded-3xl overflow-hidden min-h-[220px] border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 transition-all duration-300">
+            {/* Bento Grid de 4 Pasos Clave */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              
+              {/* PASO 01: Elección de Ruta & Época (Tarjeta Visual) */}
+              <div className="relative rounded-3xl overflow-hidden min-h-[300px] border border-emerald-500/25 bg-[#041a18] shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 hover:border-emerald-400/50 transition-all duration-300 flex flex-col justify-between p-5">
                 <Image 
-                  src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=800&auto=format&fit=crop" 
-                  alt="Traveler with map" 
+                  src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=800&auto=format&fit=crop" 
+                  alt="Trekking en Cusco Machu Picchu" 
                   fill 
                   sizes="(max-width: 768px) 100vw, 25vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500" 
+                  className="object-cover group-hover:scale-105 transition-transform duration-700" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-[#041716]/30 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4">
-                  <span className="text-xs font-black text-white block">{translateText('Rutas Planificadas', currentLang)}</span>
-                  <span className="text-[10px] text-emerald-300/80">{translateText('Logística Integral', currentLang)}</span>
-                </div>
-              </div>
-
-              <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float-delayed">
-                <div className="flex items-center justify-between">
-                  <span className="text-3xl font-black text-white animate-number-glow">1,250+</span>
-                  <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs">
-                    <Users size={20} />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#021413] via-[#021413]/75 to-black/30" />
+                
+                <div className="relative z-10 flex items-center justify-between">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/80 text-black shadow-xs">
+                    {translateText('01 • Ruta Ideal', currentLang)}
+                  </span>
+                  <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-emerald-300">
+                    <Compass size={16} />
                   </div>
                 </div>
-                <div>
-                  <h4 className="text-sm font-bold text-white">{t.happyTravelers}</h4>
-                  <p className="text-xs text-emerald-200/70 mt-0.5">{translateText('Asistidos con protocolo médico de altitud.', currentLang)}</p>
-                </div>
-              </div>
 
-              <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float">
-                <div className="flex items-center justify-between">
-                  <span className="text-3xl font-black text-amber-300 animate-number-glow">98%</span>
-                  <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/40 shadow-xs">
-                    <Star size={20} className="fill-amber-400 text-amber-400" />
+                <div className="relative z-10 space-y-2 mt-auto pt-6">
+                  <h3 className="text-base font-black text-white leading-snug drop-shadow-sm">
+                    {translateText('Elección del Circuito & Época', currentLang)}
+                  </h3>
+                  <p className="text-xs text-emerald-100/80 leading-relaxed">
+                    {translateText('Te asesoramos entre rutas clásicas o trekking de altura según el clima andino y tu ritmo de viaje.', currentLang)}
+                  </p>
+                  <div className="pt-2 flex items-center text-[11px] font-bold text-emerald-300">
+                    <span>{translateText('Asesoría Experta', currentLang)}</span>
+                    <ArrowRight size={12} className="ml-1 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </div>
+              </div>
+
+              {/* PASO 02: Entradas & Tren Garantizados (Glassmorphism Card) */}
+              <div className="glass-floating-card p-6 rounded-3xl min-h-[300px] border border-emerald-400/25 bg-[#031d1b]/70 backdrop-blur-xl flex flex-col justify-between group hover:-translate-y-1.5 hover:border-emerald-400/50 transition-all duration-300 animate-emerald-float-delayed shadow-[0_15px_35px_rgba(0,0,0,0.35)]">
                 <div>
-                  <h4 className="text-sm font-bold text-white">{t.positiveReviews}</h4>
-                  <p className="text-xs text-emerald-200/70 mt-0.5">{translateText('Calificaciones 5 estrellas en TripAdvisor & Google.', currentLang)}</p>
+                  <div className="flex items-center justify-between mb-5">
+                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                      {translateText('02 • Accesos Oficiales', currentLang)}
+                    </span>
+                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/10 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs group-hover:scale-110 transition-transform">
+                      <Calendar size={20} />
+                    </div>
+                  </div>
+                  <h3 className="text-base font-black text-white leading-snug mb-2">
+                    {translateText('Entradas & Tren Garantizados', currentLang)}
+                  </h3>
+                  <p className="text-xs text-emerald-200/75 leading-relaxed">
+                    {translateText('Reservamos con antelación tus boletos oficiales a la ciudadela y asientos en tren panorámico sin filas ni incertidumbre.', currentLang)}
+                  </p>
+                </div>
+                
+                <div className="pt-4 border-t border-emerald-500/20 flex items-center justify-between">
+                  <span className="text-[11px] font-black text-emerald-300">
+                    {translateText('100% Reserva Anticipada', currentLang)}
+                  </span>
+                  <CheckCircle2 size={15} className="text-emerald-400" />
                 </div>
               </div>
 
-              <div className="relative rounded-3xl overflow-hidden min-h-[220px] border border-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.5)] group hover:-translate-y-1.5 transition-all duration-300">
+              {/* PASO 03: Protocolo Médico de Aclimatación (Glassmorphism Card con acento ámbar/turquesa) */}
+              <div className="glass-floating-card p-6 rounded-3xl min-h-[300px] border border-amber-400/25 bg-[#031d1b]/70 backdrop-blur-xl flex flex-col justify-between group hover:-translate-y-1.5 hover:border-amber-400/50 transition-all duration-300 animate-emerald-float shadow-[0_15px_35px_rgba(0,0,0,0.35)]">
+                <div>
+                  <div className="flex items-center justify-between mb-5">
+                    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                      {translateText('03 • Salud & Altitud', currentLang)}
+                    </span>
+                    <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500/20 to-emerald-500/10 text-amber-300 flex items-center justify-center border border-amber-400/40 shadow-xs group-hover:scale-110 transition-transform">
+                      <ShieldCheck size={20} />
+                    </div>
+                  </div>
+                  <h3 className="text-base font-black text-white leading-snug mb-2">
+                    {translateText('Aclimatación y Soporte 24/7', currentLang)}
+                  </h3>
+                  <p className="text-xs text-emerald-200/75 leading-relaxed">
+                    {translateText('Monitoreo con oxímetro digital, oxígeno medicinal portátil en cada ruta y aclimatación gradual en el Valle Sagrado.', currentLang)}
+                  </p>
+                </div>
+                
+                <div className="pt-4 border-t border-amber-500/20 flex items-center justify-between">
+                  <span className="text-[11px] font-black text-amber-300">
+                    {translateText('Protocolo Médico Incluido', currentLang)}
+                  </span>
+                  <CheckCircle2 size={15} className="text-amber-400" />
+                </div>
+              </div>
+
+              {/* PASO 04: Logística Integral Llave en Mano (Tarjeta Visual) */}
+              <div className="relative rounded-3xl overflow-hidden min-h-[300px] border border-teal-500/25 bg-[#041a18] shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 hover:border-teal-400/50 transition-all duration-300 flex flex-col justify-between p-5">
                 <Image 
-                  src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=800&auto=format&fit=crop" 
-                  alt="Happy traveler in nature" 
+                  src="https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=800&auto=format&fit=crop" 
+                  alt="Expedición en los Andes Cusco" 
                   fill 
                   sizes="(max-width: 768px) 100vw, 25vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500" 
+                  className="object-cover group-hover:scale-105 transition-transform duration-700" 
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-[#041716]/30 to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4">
-                  <span className="text-xs font-black text-white block">{translateText('Momentos Inolvidables', currentLang)}</span>
-                  <span className="text-[10px] text-emerald-300/80">{translateText('Fotografía escénica', currentLang)}</span>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#021413] via-[#021413]/75 to-black/30" />
+                
+                <div className="relative z-10 flex items-center justify-between">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-teal-400 text-black shadow-xs">
+                    {translateText('04 • Salida VIP', currentLang)}
+                  </span>
+                  <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-teal-300">
+                    <Sparkles size={16} />
+                  </div>
+                </div>
+
+                <div className="relative z-10 space-y-2 mt-auto pt-6">
+                  <h3 className="text-base font-black text-white leading-snug drop-shadow-sm">
+                    {translateText('Logística Integral de Expedición', currentLang)}
+                  </h3>
+                  <p className="text-xs text-emerald-100/80 leading-relaxed">
+                    {translateText('Transporte privado 4x4 puerta a puerta, guías bilingües colegiados DIRCETUR y gastronomía andina gourmet.', currentLang)}
+                  </p>
+                  <div className="pt-2 flex items-center text-[11px] font-bold text-teal-300">
+                    <span>{translateText('Todo Incluido de Principio a Fin', currentLang)}</span>
+                    <ArrowRight size={12} className="ml-1 group-hover:translate-x-1 transition-transform" />
+                  </div>
                 </div>
               </div>
+
+            </div>
+
+            {/* Llamado a la Acción al pie de la sección */}
+            <div className="mt-12 text-center">
+              <button
+                type="button"
+                onClick={() => handleOpenAction(data.name)}
+                className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-400 text-[#021614] font-black text-xs sm:text-sm shadow-[0_12px_32px_rgba(16,185,129,0.35)] hover:shadow-[0_16px_40px_rgba(16,185,129,0.55)] hover:scale-105 active:scale-95 transition-all duration-300"
+              >
+                <Sparkles size={16} />
+                <span>{translateText('Planificar Mi Expedición a Medida', currentLang)}</span>
+                <ArrowRight size={16} />
+              </button>
             </div>
           </div>
         </section>

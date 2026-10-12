@@ -2266,6 +2266,153 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     pt: 'Vale Sagrado & Ollantaytambo',
     fr: 'Vallée Sacrée & Ollantaytambo',
     it: 'Valle Sacra & Ollantaytambo'
+  },
+  'Expedición Paso a Paso': {
+    es: 'Expedición Paso a Paso',
+    en: 'Step-by-Step Expedition',
+    pt: 'Expedição Passo a Passo',
+    fr: 'Expédition Étape par Étape',
+    it: 'Spedizione Passo dopo Passo'
+  },
+  'Planifica Tu Expedición a Cusco': {
+    es: 'Planifica Tu Expedición a Cusco',
+    en: 'Plan Your Cusco Expedition',
+    pt: 'Planeje Sua Expedição a Cusco',
+    fr: 'Planifiez Votre Expédition à Cusco',
+    it: 'Pianifica La Tua Spedizione a Cusco'
+  },
+  'Planifica Tu Viaje a Cusco': {
+    es: 'Planifica Tu Viaje a Cusco',
+    en: 'Plan Your Trip to Cusco',
+    pt: 'Planeje Sua Viagem a Cusco',
+    fr: 'Planifiez Votre Voyage à Cusco',
+    it: 'Pianifica Il Tuo Viaggio a Cusco'
+  },
+  'Planifica Tu Viaje': {
+    es: 'Planifica Tu Viaje',
+    en: 'Plan Your Journey',
+    pt: 'Planeje Sua Viagem',
+    fr: 'Planifiez Votre Voyage',
+    it: 'Pianifica Il Tuo Viaggio'
+  },
+  '01 • Ruta Ideal': {
+    es: '01 • Ruta Ideal',
+    en: '01 • Ideal Route',
+    pt: '01 • Rota Ideal',
+    fr: '01 • Circuit Idéal',
+    it: '01 • Percorso Ideale'
+  },
+  'Elección del Circuito & Época': {
+    es: 'Elección del Circuito & Época',
+    en: 'Circuit Selection & Season',
+    pt: 'Escolha do Circuito & Época',
+    fr: 'Choix du Circuit & Période',
+    it: 'Scelta del Circuito & Stagione'
+  },
+  'Te asesoramos entre rutas clásicas o trekking de altura según el clima andino y tu ritmo de viaje.': {
+    es: 'Te asesoramos entre rutas clásicas o trekking de altura según el clima andino y tu ritmo de viaje.',
+    en: 'We guide you between classic circuits and high-altitude trekking based on Andean weather and your personal pace.',
+    pt: 'Orientamos você entre rotas clássicas ou trekking de altitude de acordo com o clima andino e seu ritmo.',
+    fr: 'Nous vous conseillons entre circuits classiques ou trekking d’altitude selon le climat andin et votre rythme.',
+    it: 'Ti guidiamo tra percorsi classici o trekking d’alta quota in base al clima andino e al tuo ritmo di viaggio.'
+  },
+  'Asesoría Experta': {
+    es: 'Asesoría Experta',
+    en: 'Expert Advice',
+    pt: 'Assessoria Especializada',
+    fr: 'Conseil Expert',
+    it: 'Consulenza Esperta'
+  },
+  '02 • Accesos Oficiales': {
+    es: '02 • Accesos Oficiales',
+    en: '02 • Official Permits',
+    pt: '02 • Acessos Oficiais',
+    fr: '02 • Accès Officiels',
+    it: '02 • Accessi Ufficiali'
+  },
+  'Entradas & Tren Garantizados': {
+    es: 'Entradas & Tren Garantizados',
+    en: 'Guaranteed Tickets & Train',
+    pt: 'Ingressos & Trem Garantidos',
+    fr: 'Billets & Train Garantis',
+    it: 'Biglietti & Treno Garantiti'
+  },
+  'Reservamos con antelación tus boletos oficiales a la ciudadela y asientos en tren panorámico sin filas ni incertidumbre.': {
+    es: 'Reservamos con antelación tus boletos oficiales a la ciudadela y asientos en tren panorámico sin filas ni incertidumbre.',
+    en: 'We secure your official Machu Picchu citadel tickets and scenic train seats in advance with zero queues or uncertainty.',
+    pt: 'Garantimos com antecedência seus ingressos oficiais para a cidadela e assentos em trem panorâmico sem filas ou incertezas.',
+    fr: 'Nous réservons à l’avance vos billets officiels pour la citadelle et vos places en train panoramique, sans file d’attente ni incertitude.',
+    it: 'Prenotiamo in anticipo i tuoi biglietti ufficiali per la cittadella e i posti in treno panoramico senza code né incertezze.'
+  },
+  '100% Reserva Anticipada': {
+    es: '100% Reserva Anticipada',
+    en: '100% Advance Booking',
+    pt: '100% Reserva Antecipada',
+    fr: '100% Réservation Anticipée',
+    it: '100% Prenotazione Anticipata'
+  },
+  '03 • Salud & Altitud': {
+    es: '03 • Salud & Altitud',
+    en: '03 • Health & Altitude',
+    pt: '03 • Saúde & Altitude',
+    fr: '03 • Santé & Altitude',
+    it: '03 • Salute & Quota'
+  },
+  'Aclimatación y Soporte 24/7': {
+    es: 'Aclimatación y Soporte 24/7',
+    en: 'Acclimatization & 24/7 Support',
+    pt: 'Aclimatação & Suporte 24/7',
+    fr: 'Acclimatation & Support 24/7',
+    it: 'Acclimatazione & Supporto 24/7'
+  },
+  'Monitoreo con oxímetro digital, oxígeno medicinal portátil en cada ruta y aclimatación gradual en el Valle Sagrado.': {
+    es: 'Monitoreo con oxímetro digital, oxígeno medicinal portátil en cada ruta y aclimatación gradual en el Valle Sagrado.',
+    en: 'Pulse oximeter checkups, portable medical oxygen on every trail, and gradual acclimatization through the Sacred Valley.',
+    pt: 'Monitoramento com oxímetro digital, oxigênio medicinal portátil em todas as rotas e aclimatação gradual no Vale Sagrado.',
+    fr: 'Surveillance par oxymètre numérique, oxygène médical portable sur chaque sentier et acclimatation progressive dans la Vallée Sacrée.',
+    it: 'Monitoraggio con pulsossimetro, ossigeno medico portatile su ogni percorso e acclimatazione graduale nella Valle Sacra.'
+  },
+  'Protocolo Médico Incluido': {
+    es: 'Protocolo Médico Incluido',
+    en: 'Medical Protocol Included',
+    pt: 'Protocolo Médico Incluso',
+    fr: 'Protocole Médical Inclus',
+    it: 'Protocollo Medico Incluso'
+  },
+  '04 • Salida VIP': {
+    es: '04 • Salida VIP',
+    en: '04 • VIP Departure',
+    pt: '04 • Saída VIP',
+    fr: '04 • Départ VIP',
+    it: '04 • Partenza VIP'
+  },
+  'Logística Integral de Expedición': {
+    es: 'Logística Integral de Expedición',
+    en: 'Comprehensive Expedition Logistics',
+    pt: 'Logística Integral de Expedição',
+    fr: 'Logistique Complète d’Expédition',
+    it: 'Logistica Completa di Spedizione'
+  },
+  'Transporte privado 4x4 puerta a puerta, guías bilingües colegiados DIRCETUR y gastronomía andina gourmet.': {
+    es: 'Transporte privado 4x4 puerta a puerta, guías bilingües colegiados DIRCETUR y gastronomía andina gourmet.',
+    en: 'Door-to-door private 4x4 transfers, licensed DIRCETUR bilingual guides, and gourmet Andean trail dining.',
+    pt: 'Transporte privativo 4x4 porta a porta, guias bilíngues certificados pela DIRCETUR e gastronomia andina gourmet.',
+    fr: 'Transferts privés 4x4 porte-à-porte, guides bilingues certifiés DIRCETUR et gastronomie andine de montagne.',
+    it: 'Trasferimenti privati 4x4 porta a porta, guide bilingui abilitate DIRCETUR e cucina gourmet andina.'
+  },
+  'Todo Incluido de Principio a Fin': {
+    es: 'Todo Incluido de Principio a Fin',
+    en: 'All-Inclusive From Start to Finish',
+    pt: 'Tudo Incluso do Início ao Fim',
+    fr: 'Tout Inclus du Début à la Fin',
+    it: 'Tutto Incluso dall’Inizio alla Fine'
+  },
+  'Planificar Mi Expedición a Medida': {
+    es: 'Planificar Mi Expedición a Medida',
+    en: 'Plan My Tailored Expedition',
+    pt: 'Planejar Minha Expedição Sob Medida',
+    fr: 'Planifier Mon Expédition Sur Mesure',
+    it: 'Pianifica La Mia Spedizione Su Misura'
   }
 };
 
