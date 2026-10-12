@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import { 
   Compass, 
@@ -44,16 +44,25 @@ import {
   Filter,
   HelpCircle,
   Info,
-  DollarSign
+  DollarSign,
+  Download,
+  Printer,
+  Maximize2
 } from 'lucide-react';
 import { LandingData, PlanTier, ObjectiveType, LanguageType, CatalogTourItem, ItineraryItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
+import { translateText, translateItineraryItem } from '@/data/translations';
 import QuoteModal from '@/components/common/QuoteModal';
 import ComplaintsBookModal from '@/components/common/ComplaintsBookModal';
 import LegalTermsModal from '@/components/common/LegalTermsModal';
 import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
+import SustainabilityAndSocialProof from '@/components/agency-portal/SustainabilityAndSocialProof';
+import TrustGuaranteeAndOffice from '@/components/agency-portal/TrustGuaranteeAndOffice';
+import RecentBookingsToast from '@/components/agency-portal/RecentBookingsToast';
+import BrochurePrintModal from '@/components/agency-portal/BrochurePrintModal';
+import LightboxModal from '@/components/agency-portal/LightboxModal';
 
 interface ModernEmeraldTemplateProps {
   data?: Partial<LandingData>;
@@ -66,16 +75,22 @@ const DICTIONARIES = {
     brandTag: 'Explore. Dream. Discover.',
     navHome: 'Inicio',
     navDestinations: 'Destinos',
-    navTours: 'Tours',
-    navExperiences: 'Experiencias',
-    navItinerary: 'Itinerario',
     navAbout: 'Nosotros',
+    navTours: 'Tours',
+    navItinerary: 'Itinerario',
+    navServices: 'Servicios',
+    navGallery: 'Galería',
+    navReviews: 'Reseñas',
+    navFaqs: 'FAQ & Soporte',
     navContact: 'Contacto',
+    downloadBrochureBtn: 'Descargar Ficha en PDF',
     liveAdventure: 'Vive Tu Aventura.',
     searchWhere: '¿A dónde deseas ir?',
     searchDates: 'Fechas / Temporada',
     searchBtn: 'Explorar',
     passengers: 'Viajeros',
+    passengerSingular: 'viajero',
+    passengerPlural: 'viajeros',
     benefit1Title: 'Guías Expertos',
     benefit1Desc: 'Conocimiento local y tips auténticos',
     benefit2Title: 'Rutas a Medida',
@@ -89,49 +104,62 @@ const DICTIONARIES = {
     viewAllToursBtn: 'Explorar Catálogo de Tours ↓',
     toursTitle: 'Tours & Expediciones de Autor',
     toursSub: 'Paquetes guiados con salidas garantizadas todo el año, grupos reducidos, tarifas directas y equipamiento de alta montaña.',
+    allToursBadge: 'Circuitos en Vitrina',
     exploreBtn: 'Reservar Tour',
     planTitle: 'Planifica Tu Viaje',
+    planSub: 'Métricas reales de excelencia avaladas por más de 1,200 viajeros internacionales.',
     happyTravelers: 'Viajeros Felices',
     positiveReviews: 'Reseñas Positivas',
     curatedRoutes: 'Destinos y Rutas',
     whyTitle: '¿Por Qué Viajar Con Nosotros?',
-    why1: 'Experiencia Local',
-    why1Desc: 'Operadores nativos con licencia oficial DIRCETUR.',
-    why2: 'Itinerarios Personalizados',
-    why2Desc: 'Adaptados a tu ritmo físico y preferencias.',
-    why3: 'Turismo Sostenible',
-    why3Desc: 'Impacto positivo en comunidades altoandinas.',
-    why4: 'Viaje Seguro',
-    why4Desc: 'Monitoreo 24/7, botiquín y oxígeno medicinal.',
     itineraryTitle: 'Itinerario Detallado de la Expedición',
-    techSheetTitle: 'Ficha Técnica de la Ruta',
-    includedTitle: 'Lo Que Incluye Tu Experiencia',
-    notIncludedTitle: 'Qué No Incluye',
-    backpackTitle: 'Qué Llevar en Tu Mochila',
-    trustTitle: 'Garantías y Certificaciones Oficiales',
-    faqsTitle: 'Preguntas Frecuentes',
-    reviewsTitle: 'Lo Que Dicen Nuestros Viajeros',
+    itinerarySub: 'Explora cada jornada con altitud, tiempo de caminata y servicios incluidos.',
+    viewDayByDay: 'Vista Día a Día',
+    viewFullSchedule: 'Ver Cronograma Completo',
+    inclusionsTitle: 'Logística Integral de Expedición',
+    inclusionsSub: 'Todo lo necesario para una experiencia segura, gastronómica y de máximo confort en los Andes.',
+    includedServices: 'Servicios Incluidos',
+    includedBadge: '100% Todo Incluido',
+    whatToBring: 'Checklist de tu Mochila',
+    whatToBringSub: 'Toca para marcar lo que ya tienes listo',
+    notIncludedTitle: 'No Incluido en la Tarifa',
+    officialAccreditation: 'Acreditaciones Oficiales',
+    officialOperatorTitle: 'Operador Turístico Formal y Autorizado de Cusco',
+    galleryTitle: 'Inspiración Visual de las Rutas',
+    gallerySub: 'Postales reales capturadas por nuestros guías y viajeros en los senderos más escénicos.',
+    reviewsBadge: 'Voces de Nuestros Viajeros',
+    reviewsTitle: 'Voces de Nuestros Viajeros',
+    reviewsSub: 'Historias auténticas de quienes ya vivieron la magia de Cusco con nuestro equipo.',
+    verifiedReview: 'Verificado ✓',
     planYourTripBtn: 'Planificar Mi Viaje',
     quoteBtn: 'Solicitar Cotización',
     whatsappBtn: 'Reservar por WhatsApp',
     footerRights: 'Todos los derechos reservados. Agencia de Viajes y Turismo Autorizada.',
     complaintsBook: 'Libro de Reclamaciones Virtual',
-    legalTerms: 'Términos, Condiciones & Normativa Legal'
+    legalTerms: 'Términos, Condiciones & Normativa Legal',
+    officialOperator: 'Operador Turístico Autorizado',
+    freeBanner: '⚡ Landing Page creada con el Plan Gratuito de Cusco Creativos. Actualiza a Pro o Advance para habilitar multilingüe, itinerario completo y reservas interactivas.'
   },
   en: {
     brandTag: 'Explore. Dream. Discover.',
     navHome: 'Home',
     navDestinations: 'Destinations',
-    navTours: 'Tours',
-    navExperiences: 'Experiences',
-    navItinerary: 'Itinerary',
     navAbout: 'About Us',
+    navTours: 'Tours',
+    navItinerary: 'Itinerary',
+    navServices: 'Services',
+    navGallery: 'Gallery',
+    navReviews: 'Reviews',
+    navFaqs: 'FAQ & Support',
     navContact: 'Contact',
+    downloadBrochureBtn: 'Download Tour PDF',
     liveAdventure: 'Live Your Adventure.',
     searchWhere: 'Where to?',
     searchDates: 'Dates / Duration',
     searchBtn: 'Search',
     passengers: 'Travelers',
+    passengerSingular: 'traveler',
+    passengerPlural: 'travelers',
     benefit1Title: 'Expert Guides',
     benefit1Desc: 'Local insights & authentic tips',
     benefit2Title: 'Tailored Itineraries',
@@ -145,49 +173,62 @@ const DICTIONARIES = {
     viewAllToursBtn: 'Explore Tours Catalog ↓',
     toursTitle: 'Signature Tours & Expeditions',
     toursSub: 'Guided packages with guaranteed year-round departures, small groups, direct rates, and high-mountain equipment.',
+    allToursBadge: 'Featured Circuits',
     exploreBtn: 'Book Tour',
     planTitle: 'Plan Your Journey',
+    planSub: 'Real excellence metrics endorsed by over 1,200 international travelers.',
     happyTravelers: 'Happy Travelers',
     positiveReviews: 'Positive Reviews',
     curatedRoutes: 'Curated Destinations',
     whyTitle: 'Why Travel With Us?',
-    why1: 'Local Expertise',
-    why1Desc: 'Native certified operators with DIRCETUR license.',
-    why2: 'Custom Itineraries',
-    why2Desc: 'Designed around your pace and preferences.',
-    why3: 'Sustainable Travel',
-    why3Desc: 'Positive impact on local Andean communities.',
-    why4: 'Worry-Free Travel',
-    why4Desc: '24/7 monitoring, medical first-aid and oxygen.',
     itineraryTitle: 'Detailed Expedition Itinerary',
-    techSheetTitle: 'Technical Route Overview',
-    includedTitle: 'What Your Experience Includes',
+    itinerarySub: 'Explore each day with altitude, hiking time, and included services.',
+    viewDayByDay: 'Day by Day View',
+    viewFullSchedule: 'View Full Schedule',
+    inclusionsTitle: 'Comprehensive Expedition Logistics',
+    inclusionsSub: 'Everything needed for a safe, gourmet, and comfortable experience in the Andes.',
+    includedServices: 'Included Services',
+    includedBadge: '100% All Inclusive',
+    whatToBring: 'Daypack Checklist',
+    whatToBringSub: 'Tap to mark what you have ready',
     notIncludedTitle: 'What Is Not Included',
-    backpackTitle: 'What to Pack in Your Daypack',
-    trustTitle: 'Official Guarantees & Credentials',
-    faqsTitle: 'Frequently Asked Questions',
+    officialAccreditation: 'Official Accreditations',
+    officialOperatorTitle: 'Certified & Licensed Cusco Tour Operator',
+    galleryTitle: 'Visual Trail Inspiration',
+    gallerySub: 'Authentic postcards captured by our guides and travelers on scenic trails.',
+    reviewsBadge: 'Traveler Testimonials',
     reviewsTitle: 'What Our Travelers Say',
+    reviewsSub: 'Authentic stories of travelers who experienced the magic of Cusco with our team.',
+    verifiedReview: 'Verified ✓',
     planYourTripBtn: 'Plan Your Trip',
     quoteBtn: 'Request Instant Quote',
     whatsappBtn: 'Book via WhatsApp',
     footerRights: 'All rights reserved. Certified Tour Operator.',
     complaintsBook: 'Virtual Complaints Book',
-    legalTerms: 'Terms, Conditions & Legal Policies'
+    legalTerms: 'Terms, Conditions & Legal Policies',
+    officialOperator: 'Authorized Tour Operator',
+    freeBanner: '⚡ Landing Page created with Cusco Creativos Free Tier. Upgrade to Pro or Advance for multi-language, full itinerary & interactive bookings.'
   },
   pt: {
     brandTag: 'Explore. Sonhe. Descubra.',
     navHome: 'Início',
     navDestinations: 'Destinos',
-    navTours: 'Tours',
-    navExperiences: 'Experiências',
-    navItinerary: 'Itinerário',
     navAbout: 'Sobre Nós',
+    navTours: 'Tours',
+    navItinerary: 'Itinerário',
+    navServices: 'Serviços',
+    navGallery: 'Galeria',
+    navReviews: 'Avaliações',
+    navFaqs: 'FAQ & Suporte',
     navContact: 'Contato',
+    downloadBrochureBtn: 'Baixar Roteiro em PDF',
     liveAdventure: 'Viva Sua Aventura.',
     searchWhere: 'Para onde?',
     searchDates: 'Datas / Duração',
     searchBtn: 'Explorar',
     passengers: 'Viajantes',
+    passengerSingular: 'viajante',
+    passengerPlural: 'viajantes',
     benefit1Title: 'Guias Especialistas',
     benefit1Desc: 'Conhecimento local e dicas exclusivas',
     benefit2Title: 'Roteiros Sob Medida',
@@ -201,49 +242,62 @@ const DICTIONARIES = {
     viewAllToursBtn: 'Explorar Catálogo de Tours ↓',
     toursTitle: 'Tours & Expedições Exclusivas',
     toursSub: 'Pacotes guiados com saídas garantidas o ano todo, pequenos grupos, tarifas diretas e equipamentos de montanha.',
+    allToursBadge: 'Circuitos em Vitrine',
     exploreBtn: 'Reservar Tour',
     planTitle: 'Planeje Sua Viagem',
+    planSub: 'Métricas reais de excelência avaliadas por mais de 1.200 viajantes internacionais.',
     happyTravelers: 'Viajantes Felizes',
     positiveReviews: 'Avaliações Positivas',
     curatedRoutes: 'Destinos e Rotas',
     whyTitle: 'Por Que Viajar Conosco?',
-    why1: 'Experiência Local',
-    why1Desc: 'Operadores nativos certificados pela DIRCETUR.',
-    why2: 'Roteiros Personalizados',
-    why2Desc: 'Adaptados ao seu ritmo e preferências.',
-    why3: 'Turismo Sustentável',
-    why3Desc: 'Impacto positivo nas comunidades locais.',
-    why4: 'Viagem Tranquila',
-    why4Desc: 'Suporte 24/7, primeiros socorros e oxigênio.',
     itineraryTitle: 'Itinerário Detalhado da Expedição',
-    techSheetTitle: 'Ficha Técnica do Roteiro',
-    includedTitle: 'O Que Inclui a Sua Experiência',
-    notIncludedTitle: 'O Que Não Inclui',
-    backpackTitle: 'O Que Levar na Mochila',
-    trustTitle: 'Garantias e Certificações Oficiais',
-    faqsTitle: 'Perguntas Frequentes',
+    itinerarySub: 'Explore cada dia com altitude, tempo de caminhada e serviços inclusos.',
+    viewDayByDay: 'Visualização Dia a Dia',
+    viewFullSchedule: 'Ver Cronograma Completo',
+    inclusionsTitle: 'Logística Integral da Expedição',
+    inclusionsSub: 'Tudo o que é necessário para uma experiência segura, gastronômica e de máximo conforto nos Andes.',
+    includedServices: 'Serviços Incluídos',
+    includedBadge: '100% Tudo Incluído',
+    whatToBring: 'Checklist da sua Mochila',
+    whatToBringSub: 'Toque para marcar o que você já preparou',
+    notIncludedTitle: 'O Que Não Está Incluído',
+    officialAccreditation: 'Acreditações Oficiais',
+    officialOperatorTitle: 'Operador Turístico Formal e Autorizado de Cusco',
+    galleryTitle: 'Inspiração Visual das Rotas',
+    gallerySub: 'Fotos autênticas registradas por nossos guias e viajantes nas trilhas mais cênicas.',
+    reviewsBadge: 'Vozes dos Nossos Viajantes',
     reviewsTitle: 'O Que Dizem os Nossos Viajantes',
+    reviewsSub: 'Histórias reais de quem já viveu a magia de Cusco com nossa equipe.',
+    verifiedReview: 'Verificado ✓',
     planYourTripBtn: 'Planejar Viagem',
     quoteBtn: 'Solicitar Orçamento',
     whatsappBtn: 'Reservar pelo WhatsApp',
     footerRights: 'Todos os direitos reservados. Agência de Turismo Autorizada.',
     complaintsBook: 'Livro de Reclamações Virtual',
-    legalTerms: 'Termos, Condições & Políticas Legais'
+    legalTerms: 'Termos, Condições & Políticas Legais',
+    officialOperator: 'Operador Turístico Autorizado',
+    freeBanner: '⚡ Landing Page criada com o Plano Gratuito Cusco Creativos. Atualize para Pro ou Advance para multilíngue, itinerário completo e reservas interativas.'
   },
   fr: {
     brandTag: 'Explorez. Rêvez. Découvrez.',
     navHome: 'Accueil',
     navDestinations: 'Destinations',
-    navTours: 'Tours',
-    navExperiences: 'Expériences',
-    navItinerary: 'Itinéraire',
     navAbout: 'À Propos',
+    navTours: 'Tours',
+    navItinerary: 'Itinéraire',
+    navServices: 'Services',
+    navGallery: 'Galerie',
+    navReviews: 'Avis',
+    navFaqs: 'FAQ & Support',
     navContact: 'Contact',
+    downloadBrochureBtn: 'Télécharger la Fiche PDF',
     liveAdventure: 'Vivez Votre Aventure.',
     searchWhere: 'Où aller ?',
     searchDates: 'Dates / Durée',
     searchBtn: 'Rechercher',
     passengers: 'Voyageurs',
+    passengerSingular: 'voyageur',
+    passengerPlural: 'voyageurs',
     benefit1Title: 'Guides Experts',
     benefit1Desc: 'Savoir local et conseils authentiques',
     benefit2Title: 'Itinéraires Sur Mesure',
@@ -257,49 +311,62 @@ const DICTIONARIES = {
     viewAllToursBtn: 'Explorer le Catalogue des Tours ↓',
     toursTitle: 'Tours & Expéditions Signatures',
     toursSub: 'Circuits guidés avec départs garantis toute l’année, petits groupes, tarifs directs et équipement de montagne.',
+    allToursBadge: 'Circuits en Vitrine',
     exploreBtn: 'Réserver le Tour',
     planTitle: 'Planifiez Votre Voyage',
+    planSub: 'Métrique d’excellence validée par plus de 1 200 voyageurs internationaux.',
     happyTravelers: 'Voyageurs Comblés',
     positiveReviews: 'Avis Positifs',
     curatedRoutes: 'Destinations Remarquables',
     whyTitle: 'Pourquoi Voyager Avec Nous ?',
-    why1: 'Expertise Locale',
-    why1Desc: 'Opérateurs locaux certifiés DIRCETUR.',
-    why2: 'Itinéraires Personnalisés',
-    why2Desc: 'Adaptés à votre rythme et vos envies.',
-    why3: 'Tourisme Durable',
-    why3Desc: 'Impact solidaire dans les Andes.',
-    why4: 'Voyage Sans Souci',
-    why4Desc: 'Assistance 24/7, trousse médicale et oxygène.',
     itineraryTitle: 'Itinéraire Détaillé',
-    techSheetTitle: 'Fiche Technique du Tour',
-    includedTitle: 'Ce Qui Est Inclus',
+    itinerarySub: 'Découvrez chaque étape avec altitude, temps de marche et prestations incluses.',
+    viewDayByDay: 'Vue Jour par Jour',
+    viewFullSchedule: 'Voir le Programme Complet',
+    inclusionsTitle: 'Logistique Complète d’Expédition',
+    inclusionsSub: 'Tout le nécessaire pour une expérience sûre, gastronomique et confortable dans les Andes.',
+    includedServices: 'Services Inclus',
+    includedBadge: '100% Tout Compris',
+    whatToBring: 'Dans Votre Sac à Dos',
+    whatToBringSub: 'Cochez les éléments déjà prêts',
     notIncludedTitle: 'Ce Qui N’est Pas Inclus',
-    backpackTitle: 'Dans Votre Sac à Dos',
-    trustTitle: 'Garanties et Agréments Officiels',
-    faqsTitle: 'Questions Fréquentes',
+    officialAccreditation: 'Agréments Officiels',
+    officialOperatorTitle: 'Opérateur Touristique Officiel et Agréé de Cusco',
+    galleryTitle: 'Inspiration Visuelle des Sentiers',
+    gallerySub: 'Clichés authentiques capturés par nos guides et voyageurs sur les sentiers andins.',
+    reviewsBadge: 'Témoignages de Voyageurs',
     reviewsTitle: 'Avis de Nos Voyageurs',
+    reviewsSub: 'Récits authentiques de voyageurs ayant exploré Cusco avec notre équipe.',
+    verifiedReview: 'Vérifié ✓',
     planYourTripBtn: 'Planifier Mon Séjour',
     quoteBtn: 'Demander un Devis',
     whatsappBtn: 'Réserver par WhatsApp',
     footerRights: 'Tous droits réservés. Agence Touristique Agréée.',
     complaintsBook: 'Livre de Réclamations Virtuel',
-    legalTerms: 'Conditions Générales & Mentions Légales'
+    legalTerms: 'Conditions Générales & Mentions Légales',
+    officialOperator: 'Opérateur Touristique Agréé',
+    freeBanner: '⚡ Landing Page créée avec l’Offre Gratuite Cusco Creativos. Passez à Pro ou Advance pour le multilingue, l’itinéraire complet et les réservations.'
   },
   it: {
     brandTag: 'Esplora. Sogna. Scopri.',
     navHome: 'Home',
     navDestinations: 'Destinazioni',
-    navTours: 'Tour',
-    navExperiences: 'Esperienze',
-    navItinerary: 'Itinerario',
     navAbout: 'Chi Siamo',
+    navTours: 'Tour',
+    navItinerary: 'Itinerario',
+    navServices: 'Servizi',
+    navGallery: 'Galleria',
+    navReviews: 'Recensioni',
+    navFaqs: 'FAQ & Supporto',
     navContact: 'Contatti',
+    downloadBrochureBtn: 'Scarica Scheda in PDF',
     liveAdventure: 'Vivi La Tua Avventura.',
     searchWhere: 'Dove andare?',
     searchDates: 'Date / Durata',
     searchBtn: 'Cerca',
     passengers: 'Viaggiatori',
+    passengerSingular: 'viaggiatore',
+    passengerPlural: 'viaggiatori',
     benefit1Title: 'Guide Esperte',
     benefit1Desc: 'Esperienza locale e consigli autentici',
     benefit2Title: 'Itinerari Su Misura',
@@ -313,34 +380,41 @@ const DICTIONARIES = {
     viewAllToursBtn: 'Esplora il Catalogo Tour ↓',
     toursTitle: 'Tour & Spedizioni Esclusive',
     toursSub: 'Pacchetti guidati con partenze garantite tutto l’anno, piccoli gruppi, tariffe dirette e attrezzature da montagna.',
+    allToursBadge: 'Circuiti Selezionati',
     exploreBtn: 'Prenota il Tour',
     planTitle: 'Pianifica Il Tuo Viaggio',
+    planSub: 'Metriche reali di eccellenza certificate da oltre 1.200 viaggiatori internazionali.',
     happyTravelers: 'Viaggiatori Soddisfatti',
     positiveReviews: 'Recensioni Positive',
     curatedRoutes: 'Destinazioni Selezionate',
     whyTitle: 'Perché Viaggiare Con Noi?',
-    why1: 'Competenza Locale',
-    why1Desc: 'Operatori certificati con licenza DIRCETUR.',
-    why2: 'Itinerari Personalizzati',
-    why2Desc: 'Studiati sul tuo ritmo e desideri.',
-    why3: 'Turismo Sostenibile',
-    why3Desc: 'Sostegno concreto alle comunità andine.',
-    why4: 'Viaggio Senza Pensieri',
-    why4Desc: 'Assistenza 24/7, kit medico e ossigeno.',
     itineraryTitle: 'Itinerario Dettagliato',
-    techSheetTitle: 'Scheda Tecnica del Percorso',
-    includedTitle: 'Cosa Include la Tua Esperienza',
+    itinerarySub: 'Esplora ogni tappa con quota, tempo di cammino e servizi inclusi.',
+    viewDayByDay: 'Vista Giorno per Giorno',
+    viewFullSchedule: 'Vedi Programma Completo',
+    inclusionsTitle: 'Logistica Completa della Spedizione',
+    inclusionsSub: 'Tutto il necessario per un’esperienza sicura, gastronomica e di massimo comfort sulle Ande.',
+    includedServices: 'Servizi Inclusi',
+    includedBadge: '100% Tutto Incluso',
+    whatToBring: 'Cosa Mettere nello Zaino',
+    whatToBringSub: 'Tocca per spuntare cosa è già pronto',
     notIncludedTitle: 'Cosa Non È Incluso',
-    backpackTitle: 'Cosa Mettere nello Zaino',
-    trustTitle: 'Garanzie e Certificazioni Ufficiali',
-    faqsTitle: 'Domande Frequenti',
+    officialAccreditation: 'Accreditamenti Ufficiali',
+    officialOperatorTitle: 'Tour Operator Autorizzato e Ufficiale di Cusco',
+    galleryTitle: 'Ispirazione Visiva dei Percorsi',
+    gallerySub: 'Scatti autentici dei nostri viaggiatori e delle guide lungo i sentieri più suggestivi.',
+    reviewsBadge: 'Voci dei Nostri Viaggiatori',
     reviewsTitle: 'Cosa Dicono i Nostri Viaggiatori',
+    reviewsSub: 'Storie autentiche di chi ha vissuto la magia di Cusco insieme al nostro team.',
+    verifiedReview: 'Verificato ✓',
     planYourTripBtn: 'Pianifica il Viaggio',
     quoteBtn: 'Richiedi Preventivo',
     whatsappBtn: 'Prenota su WhatsApp',
     footerRights: 'Tutti i diritti riservati. Tour Operator Autorizzato.',
     complaintsBook: 'Registro Reclami Virtuale',
-    legalTerms: 'Termini, Condizioni & Normativa Legale'
+    legalTerms: 'Termini, Condizioni & Normativa Legale',
+    officialOperator: 'Tour Operator Autorizzato',
+    freeBanner: '⚡ Landing Page creata con il Piano Gratuito Cusco Creativos. Passa a Pro o Advance per multilingua, itinerario completo e prenotazioni interattive.'
   }
 };
 
@@ -427,14 +501,48 @@ const POPULAR_DESTINATIONS = [
 ];
 
 export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewMode = 'desktop' }: ModernEmeraldTemplateProps) {
-  const [currentLang, setCurrentLang] = useState<LanguageType>((data.language as LanguageType) || 'es');
+  // 1. Jerarquía de Niveles (Tier Enforcement)
+  const tier: PlanTier = data.tier || 'advance';
+  const isFree = tier === 'free';
+  const isBasic = tier === 'basic';
+  const isPro = tier === 'pro';
+  const isAdvance = tier === 'advance';
+  const isFreeOrBasic = isFree || isBasic;
+  const isMobile = viewMode === 'mobile';
+
+  // 2. Idioma por Defecto y Sincronización Estricta
+  const defaultLang: LanguageType = (isFree || isBasic)
+    ? 'es'
+    : (isPro && !['es', 'en'].includes((data.language as LanguageType) || 'es'))
+      ? 'es'
+      : ((data.language as LanguageType) || 'es');
+
+  const [currentLang, setCurrentLang] = useState<LanguageType>(defaultLang);
+
+  useEffect(() => {
+    if (isFree || isBasic) {
+      if (currentLang !== 'es') setCurrentLang('es');
+    } else if (isPro) {
+      if (data.language && ['es', 'en'].includes(data.language) && data.language !== currentLang) {
+        setCurrentLang(data.language as LanguageType);
+      } else if (!['es', 'en'].includes(currentLang)) {
+        setCurrentLang('es');
+      }
+    } else if (data.language && data.language !== currentLang) {
+      setCurrentLang(data.language as LanguageType);
+    }
+  }, [data.language, isFree, isBasic, isPro]);
+
+  // Modales
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [isComplaintsOpen, setIsComplaintsOpen] = useState(false);
   const [isTermsOpen, setIsTermsOpen] = useState(false);
+  const [isBrochureOpen, setIsBrochureOpen] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedTourForQuote, setSelectedTourForQuote] = useState<string>(data.name || 'Expedición Machu Picchu');
   const [favorites, setFavorites] = useState<Record<string, boolean>>({});
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   
   // Interactive State for Advance Tier
   const [passengers, setPassengers] = useState<number>(2);
@@ -444,17 +552,25 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   const [selectedDayIdx, setSelectedDayIdx] = useState<number>(0);
   const [itineraryViewMode, setItineraryViewMode] = useState<'tabs' | 'all'>('tabs');
   const [checkedPacking, setCheckedPacking] = useState<Record<number, boolean>>({ 0: true, 1: true });
-  const [faqCategory, setFaqCategory] = useState<string>('all');
-  const [faqSearch, setFaqSearch] = useState<string>('');
   const [activeSpecModal, setActiveSpecModal] = useState<string | null>(null);
 
   const t = DICTIONARIES[currentLang] || DICTIONARIES.es;
-  const tier: PlanTier = data.tier || 'advance';
-  const isFree = tier === 'free';
-  const isBasic = tier === 'basic';
-  const isPro = tier === 'pro';
-  const isAdvance = tier === 'advance';
-  const isFreeOrBasic = isFree || isBasic;
+
+  // Language Filtering Matrix (Free/Basic: 0 selectors | Pro: ES/EN | Advance: 5 languages)
+  const baseLanguages: LanguageType[] = (data?.languages && data.languages.length > 0)
+    ? (data.languages as LanguageType[])
+    : (['es', 'en', 'pt', 'fr', 'it'] as LanguageType[]);
+
+  const activeLanguages: LanguageType[] = isFree || isBasic
+    ? ['es']
+    : isPro
+    ? baseLanguages.filter(l => l === 'es' || l === 'en').length > 0
+      ? baseLanguages.filter(l => l === 'es' || l === 'en')
+      : ['es', 'en']
+    : (['es', 'en', 'pt', 'fr', 'it'] as LanguageType[]);
+
+  const showLangSelector = (isPro || isAdvance) && activeLanguages.length > 1;
+
   const isWhatsapp = data.objective === 'whatsapp';
   const isQuote = data.objective === 'quote';
   const isBoth = data.objective === 'both';
@@ -463,13 +579,14 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
     ? data.heroImage
     : '/images/hero-tourist-cusco.jpg';
   const guideName = data.guideName || 'Carlos Mendoza';
-  const guideCert = data.guideCert || 'Guía Oficial DIRCETUR & Operador Autorizado';
+  const guideCert = translateText(data.guideCert || 'Guía Oficial DIRCETUR & Operador Autorizado', currentLang);
   const guidePhone = data.whatsapp || '+51984123456';
   const guideAvatar = data.guideAvatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop';
 
-  const heroTitle = data.hero?.title || data.name || 'Live Your Adventure.';
-  const heroSubtitle = data.hero?.subtitle || data.about?.content || 'Explora lugares asombrosos y crea recuerdos inolvidables alrededor de los Andes.';
-  const heroBadge = data.hero?.badge || 'NavikX Cusco • Operador Autorizado';
+  const heroTitle = translateText(data.hero?.title || data.name || 'Live Your Adventure — Expediciones & Trekking en Cusco', currentLang);
+  const heroSubtitle = translateText(data.hero?.subtitle || data.about?.content || 'Explora lugares asombrosos y crea recuerdos inolvidables alrededor de los Andes.', currentLang);
+  const heroBadge = translateText(data.hero?.badge || 'NavikX Cusco • Operador Autorizado', currentLang);
+  const destinationName = translateText(data.destination || 'Cusco & Machu Picchu', currentLang);
 
   // Base Price parsing & Dynamic calculation
   const rawPriceStr = data.price || '$350 USD';
@@ -490,11 +607,11 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   };
 
   // Contenido de la Expedición (Acerca de)
-  const aboutTitle = data.about?.title || 'Expediciones Diseñadas por Expertos Andinos';
-  const aboutContent = data.about?.content || 'Nuestra filosofía combina senderismo inmersivo con seguridad biomédica y hotelería de montaña. Cada travesía por los valles y cordilleras del Cusco cuenta con monitoreo satelital, guías acreditados por DIRCETUR y experiencias gastronómicas con productos autóctonos orgánicos.';
+  const aboutTitle = translateText(data.about?.title || 'Expediciones Diseñadas por Expertos Andinos', currentLang);
+  const aboutContent = translateText(data.about?.content || 'Nuestra filosofía combina senderismo inmersivo con seguridad biomédica y hotelería de montaña. Cada travesía por los valles y cordilleras del Cusco cuenta con monitoreo satelital, guías acreditados por DIRCETUR y experiencias gastronómicas con productos autóctonos orgánicos.', currentLang);
 
-  // Fallbacks de Servicios Incluidos y Logística
-  const includedList = (data.includedServices && data.includedServices.length > 0)
+  // Inclusiones y Exclusiones Traducidas
+  const rawIncluded = (data.includedServices && data.includedServices.length > 0)
     ? data.includedServices
     : [
         'Transporte turístico privado 4x4 climatizado ida y retorno',
@@ -504,16 +621,18 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         'Alimentación gourmet andina de autor y estaciones de hidratación',
         'Bastones de trekking telescópicos de aluminio profesional'
       ];
+  const includedList = useMemo(() => rawIncluded.map(item => translateText(item, currentLang)), [rawIncluded, currentLang]);
 
-  const notIncludedList = (data.notIncluded && data.notIncluded.length > 0)
+  const rawNotIncluded = (data.notIncluded && data.notIncluded.length > 0)
     ? data.notIncluded
     : [
         'Vuelos comerciales nacionales o internacionales hacia Cusco',
         'Propinas voluntarias para el equipo de porteadores y choferes',
         'Seguro personal de viaje internacional (recomendado)'
       ];
+  const notIncludedList = useMemo(() => rawNotIncluded.map(item => translateText(item, currentLang)), [rawNotIncluded, currentLang]);
 
-  const whatToBringList = (data.whatToBring && data.whatToBring.length > 0)
+  const rawWhatToBring = (data.whatToBring && data.whatToBring.length > 0)
     ? data.whatToBring
     : [
         'Documento de identidad / Pasaporte original vigente',
@@ -523,8 +642,9 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         'Protector solar FPS 50+, gafas UV400 y sombrero de ala ancha',
         'Botella o termo reutilizable para recargas de agua'
       ];
+  const whatToBringList = useMemo(() => rawWhatToBring.map(item => translateText(item, currentLang)), [rawWhatToBring, currentLang]);
 
-  const trustBadgesList = (data.trustBadges && data.trustBadges.length > 0)
+  const rawTrustBadges = (data.trustBadges && data.trustBadges.length > 0)
     ? data.trustBadges
     : [
         'Licencia Oficial DIRCETUR Cusco N° 2024-EXP-089',
@@ -534,8 +654,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         'Guías Colegiados Bilingües con Certificación WFR',
         'Póliza de Seguro Turístico contra Accidentes'
       ];
+  const trustBadgesList = useMemo(() => rawTrustBadges.map(item => translateText(item, currentLang)), [rawTrustBadges, currentLang]);
 
-  const testimonialsList = (data.testimonials && data.testimonials.length > 0)
+  // Testimonios Localizados
+  const rawTestimonials = (data.testimonials && data.testimonials.length > 0)
     ? data.testimonials
     : [
         {
@@ -558,30 +680,13 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         }
       ];
 
-  const faqsList = (data.faqs && data.faqs.length > 0)
-    ? data.faqs
-    : [
-        {
-          q: '¿Cómo prepararse para la altitud en Cusco antes de la caminata?',
-          a: 'Recomendamos llegar a Cusco con al menos 24 a 48 horas de anticipación para aclimatación, hidratarse constantemente, consumir comidas ligeras y utilizar infusiones de coca y muña. Nuestro equipo cuenta además con oxígeno médico preventivo.',
-          cat: 'altitude'
-        },
-        {
-          q: '¿Qué sucede si hay mal tiempo o reprogramaciones climáticas?',
-          a: 'Monitoreamos reportes meteorológicos satelitales en tiempo real. En caso de alertas climáticas, coordinamos rutas alternas seguras o reprogramaciones sin penalidad conforme a las normativas de seguridad de DIRCETUR.',
-          cat: 'bookings'
-        },
-        {
-          q: '¿Se requiere experiencia previa en senderismo de alta montaña?',
-          a: 'Nuestras expediciones están clasificadas con dificultad moderada y avanzan a ritmo personalizado. Cualquier persona con condición física regular puede realizarlas cómodamente con la asistencia de nuestros guías certificados.',
-          cat: 'altitude'
-        },
-        {
-          q: '¿Qué incluye la alimentación durante la expedición?',
-          a: 'Todos los menús son elaborados por cocineros de montaña utilizando insumos andinos frescos de primera calidad. Atendemos requerimientos vegetarianos, veganos o sin gluten previa coordinación.',
-          cat: 'gear'
-        }
-      ];
+  const testimonialsList = useMemo(() => {
+    return rawTestimonials.map(rev => ({
+      ...rev,
+      comment: translateText(rev.comment, currentLang),
+      origin: translateText(rev.origin, currentLang)
+    }));
+  }, [rawTestimonials, currentLang]);
 
   // Itinerario Interactivo Completo
   const defaultItinerary: (ItineraryItem & { altitude?: string; hikingTime?: string; meals?: string; lodging?: string })[] = [
@@ -624,33 +729,81 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   ];
 
   const ITINERARY_SCENIC_IMAGES = [
-    'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=800&auto=format&fit=crop', // Valle Sagrado
-    'https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=800&auto=format&fit=crop', // Laguna Humantay
-    'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=800&auto=format&fit=crop', // Ceja de Selva
-    'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=800&auto=format&fit=crop'  // Machu Picchu
+    'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=800&auto=format&fit=crop',
+    'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=800&auto=format&fit=crop'
   ];
 
-  const activeItinerary = (data.itinerary && data.itinerary.length > 0)
-    ? data.itinerary.map((step, idx) => ({
+  const activeItinerary = useMemo(() => {
+    const source = (data.itinerary && data.itinerary.length > 0) ? data.itinerary : defaultItinerary;
+    return source.map((step, idx) => {
+      const translated = translateItineraryItem(step, currentLang, idx);
+      return {
         ...step,
-        altitude: (step as any).altitude || (idx === 0 ? '2,800 msnm' : idx === 1 ? '4,630 msnm' : idx === 2 ? '2,050 msnm' : '2,430 msnm'),
-        hikingTime: (step as any).hikingTime || (idx === 0 ? '3-4 hrs' : idx === 1 ? '6-7 hrs' : idx === 2 ? '5 hrs' : '3 hrs'),
-        meals: (step as any).meals || 'Alimentación Completa Incluida',
-        lodging: (step as any).lodging || 'Hospedaje de Montaña Confortable',
+        step: translated.step || step.step || `Día ${idx + 1}`,
+        title: translated.title || step.title,
+        desc: translated.desc || step.desc,
+        altitude: translateText((step as any).altitude || (idx === 0 ? '2,800 msnm' : idx === 1 ? '4,630 msnm' : idx === 2 ? '2,050 msnm' : '2,430 msnm'), currentLang),
+        hikingTime: translateText((step as any).hikingTime || (idx === 0 ? '3-4 hrs (Paseo ligero)' : idx === 1 ? '6-7 hrs (Ascenso gradual)' : idx === 2 ? '5 hrs' : '3 hrs'), currentLang),
+        meals: translateText((step as any).meals || (idx === 0 ? 'Almuerzo Campestre & Cena de Bienvenida' : idx === 1 ? 'Alimentación Completa de Montaña' : idx === 2 ? 'Alimentación Completa' : 'Desayuno Buffet & Almuerzo'), currentLang),
+        lodging: translateText((step as any).lodging || (idx === 0 ? 'Hotel Boutique Valle Sagrado' : idx === 1 ? 'Domo Glamping con Vista a las Estrellas' : idx === 2 ? 'Eco-Lodge en Ceja de Selva' : 'Retorno a Hotel en Cusco'), currentLang),
         image: (step as any).image || ITINERARY_SCENIC_IMAGES[idx % ITINERARY_SCENIC_IMAGES.length]
-      }))
-    : defaultItinerary.map((step, idx) => ({
-        ...step,
-        image: ITINERARY_SCENIC_IMAGES[idx % ITINERARY_SCENIC_IMAGES.length]
-      }));
+      };
+    });
+  }, [data.itinerary, currentLang]);
 
-  const toursList: CatalogTourItem[] = (data.catalogTours && data.catalogTours.length > 0) 
-    ? data.catalogTours 
+  // Galería Completa de Fotos para Lightbox
+  const allGalleryPhotos = useMemo(() => {
+    const list: string[] = [];
+    if (data.heroImage) list.push(data.heroImage);
+    if (data.galleryImages && data.galleryImages.length > 0) {
+      list.push(...data.galleryImages);
+    } else {
+      list.push(
+        'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=1200&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=1200&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?q=80&w=1200&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1200&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1596401057633-54a8fe8ef647?q=80&w=1200&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=1200&auto=format&fit=crop'
+      );
+    }
+    return Array.from(new Set(list));
+  }, [data.heroImage, data.galleryImages]);
+
+  // Destinos Traducidos
+  const localizedDestinations = useMemo(() => {
+    return POPULAR_DESTINATIONS.map(dest => ({
+      ...dest,
+      title: translateText(dest.title, currentLang),
+      tag: translateText(dest.tag, currentLang),
+      highlight: translateText(dest.highlight, currentLang),
+      climate: translateText(dest.climate, currentLang)
+    }));
+  }, [currentLang]);
+
+  // Catálogo de Tours Secundarios (Tier Gating: 3 en Free/Basic, 6 en Pro/Advance)
+  const tourLimit = (isFree || isBasic) ? 3 : 6;
+  const rawCatalogTours: CatalogTourItem[] = (data.catalogTours && data.catalogTours.length > 0)
+    ? data.catalogTours
     : DEFAULT_SECONDARY_CATALOG_TOURS;
+
+  const localizedCatalogTours = useMemo(() => {
+    return rawCatalogTours.map((tour, idx) => ({
+      ...tour,
+      id: tour.id || `tour-${idx}`,
+      title: translateText(tour.title, currentLang),
+      duration: translateText(tour.duration || 'Día Completo', currentLang),
+      category: translateText(tour.category || 'Aventura & Trekking', currentLang),
+      location: translateText(tour.location || 'Cusco Imperial', currentLang),
+      tag: translateText(tour.tag || 'Destacado', currentLang)
+    }));
+  }, [rawCatalogTours, currentLang]);
 
   // Filtrado de Tours
   const filteredTours = useMemo(() => {
-    return toursList.filter(tour => {
+    return localizedCatalogTours.filter(tour => {
       if (tourCategory === 'all') return true;
       const titleLower = tour.title.toLowerCase();
       if (tourCategory === 'trekking') {
@@ -664,21 +817,13 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       }
       return true;
     });
-  }, [toursList, tourCategory]);
+  }, [localizedCatalogTours, tourCategory]);
 
+  const displayTours = filteredTours.slice(0, tourLimit);
   const toursPerPage = 3;
-  const totalTourPages = Math.ceil(filteredTours.length / toursPerPage);
+  const totalTourPages = Math.ceil(displayTours.length / toursPerPage);
   const currentTourPage = Math.min(tourPage, Math.max(0, totalTourPages - 1));
-  const visibleTours = filteredTours.slice(currentTourPage * toursPerPage, (currentTourPage + 1) * toursPerPage);
-
-  // Filtrado de FAQs
-  const filteredFaqs = useMemo(() => {
-    return faqsList.filter(faq => {
-      const matchesCat = faqCategory === 'all' || (faq as any).cat === faqCategory;
-      const matchesSearch = !faqSearch || faq.q.toLowerCase().includes(faqSearch.toLowerCase()) || faq.a.toLowerCase().includes(faqSearch.toLowerCase());
-      return matchesCat && matchesSearch;
-    });
-  }, [faqsList, faqCategory, faqSearch]);
+  const visibleTours = displayTours.slice(currentTourPage * toursPerPage, (currentTourPage + 1) * toursPerPage);
 
   const toggleFavorite = (id: string) => {
     setFavorites(prev => ({ ...prev, [id]: !prev[id] }));
@@ -701,12 +846,18 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
     window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
   };
 
+  const openLightbox = (imgUrl: string) => {
+    const idx = allGalleryPhotos.indexOf(imgUrl);
+    setLightboxIndex(idx >= 0 ? idx : 0);
+    setLightboxOpen(true);
+  };
+
   // Checklist de Mochila
   const toggleChecklist = (idx: number) => {
     setCheckedPacking(prev => ({ ...prev, [idx]: !prev[idx] }));
   };
   const packedCount = whatToBringList.filter((_, idx) => checkedPacking[idx]).length;
-  const packedPct = Math.round((packedCount / whatToBringList.length) * 100);
+  const packedPct = Math.round((packedCount / (whatToBringList.length || 1)) * 100);
 
   return (
     <div 
@@ -726,23 +877,16 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       }}
     >
       
-      {/* 🌌 SISTEMA DE GRADIENTE AURORA & PROFUNDIDAD MODERNA (AZUL OCEÁNICO + VERDE ESMERALDA / TEAL) */}
+      {/* 🌌 SISTEMA DE GRADIENTE AURORA & PROFUNDIDAD */}
       <div className="absolute top-0 inset-x-0 h-[1100px] overflow-hidden pointer-events-none z-0">
-        {/* Capa Base Gradiente Vertical Oscura Superior (elimina cualquier destello blanco arriba) */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#021219] via-[#031822]/90 to-transparent" />
-        
-        {/* Aurora Central en el Cuerpo del Hero (centrada en el contenido del hero, no quemada arriba) */}
         <div className="absolute top-[120px] left-1/2 -translate-x-1/2 w-[1200px] sm:w-[1500px] h-[650px] bg-[radial-gradient(ellipse_75%_55%_at_50%_45%,rgba(13,148,136,0.38)_0%,rgba(2,132,199,0.30)_38%,rgba(4,28,36,0.35)_65%,transparent_100%)] blur-[95px]" />
-        
-        {/* Acento Lateral Izquierdo: Verde Andino Esmeralda */}
         <div className="absolute top-36 -left-28 w-[500px] h-[500px] bg-gradient-to-tr from-emerald-600/22 to-teal-500/18 rounded-full blur-[120px] animate-emerald-glow" />
-        
-        {/* Acento Lateral Derecho: Azul Océano Marino */}
         <div className="absolute top-44 -right-28 w-[500px] h-[500px] bg-gradient-to-bl from-sky-600/22 to-cyan-600/18 rounded-full blur-[120px] animate-emerald-glow [animation-delay:3s]" />
       </div>
 
-      {/* 1. TOP HEADER NAVIGATION CON TRANSPARENCIA GLASSMORPHISM SUAVE */}
-      <header className="relative z-30 border-b border-white/10 bg-[#021219]/85 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.45)]">
+      {/* 1. TOP HEADER NAVIGATION */}
+      <header className="relative z-30 border-b border-white/10 bg-[#021219]/90 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.45)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
           
           {/* Logo y Marca */}
@@ -759,28 +903,46 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           </div>
 
           {/* Menú Desktop Translúcido Flotante */}
-          <nav className="hidden md:flex items-center gap-1 bg-white/[0.08] backdrop-blur-xl p-1.5 rounded-full border border-white/15 shadow-lg text-xs font-semibold text-emerald-100">
+          <nav className="hidden lg:flex items-center gap-1 bg-white/[0.08] backdrop-blur-xl p-1.5 rounded-full border border-white/15 shadow-lg text-xs font-semibold text-emerald-100">
             <a href="#inicio" className="px-3 py-1.5 rounded-full bg-emerald-500 text-[#02181f] font-black shadow-xs transition-all">
               {t.navHome}
             </a>
             <a href="#destinos" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navDestinations}
             </a>
+            {!isFree && (
+              <a href="#acerca" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+                {t.navAbout}
+              </a>
+            )}
             <a href="#tours" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navTours}
             </a>
-            <a href="#itinerario" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
-              {t.navItinerary}
-            </a>
-            <a href="#incluye" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
-              Servicios
-            </a>
-            <a href="#galeria" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
-              Galería
-            </a>
-            <a href="#resenas" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
-              Reseñas
-            </a>
+            {(isPro || isAdvance) && (
+              <a href="#itinerario" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+                {t.navItinerary}
+              </a>
+            )}
+            {!isFree && (
+              <a href="#incluye" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+                {t.navServices}
+              </a>
+            )}
+            {!isFree && (
+              <a href="#galeria" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+                {t.navGallery}
+              </a>
+            )}
+            {isAdvance && (
+              <a href="#resenas" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+                {t.navReviews}
+              </a>
+            )}
+            {isAdvance && (
+              <a href="#faqs" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+                {t.navFaqs}
+              </a>
+            )}
           </nav>
 
           {/* Controles Derecha: Divisas + Idiomas + CTA */}
@@ -801,12 +963,13 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               ))}
             </div>
 
-            {!isFreeOrBasic && (
+            {/* Language Selector Dropdown (Gated to Pro / Advance) */}
+            {showLangSelector && (
               <HeaderLanguageSelector
                 currentLang={currentLang}
-                availableCodes={data.languages || [currentLang]}
+                availableCodes={activeLanguages}
                 onSelectLang={(lang: LanguageType) => setCurrentLang(lang)}
-                variant="portal"
+                variant="emerald"
               />
             )}
 
@@ -822,7 +985,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-xl bg-white/10 border border-white/20 text-emerald-300 cursor-pointer"
+              className="lg:hidden p-2 rounded-xl bg-white/10 border border-white/20 text-emerald-300 cursor-pointer"
+              aria-label="Abrir menú de navegación móvil"
             >
               {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -831,10 +995,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-white/10 bg-[#061e27]/95 backdrop-blur-2xl px-4 py-4 space-y-3 text-sm font-semibold animate-in slide-in-from-top-2 shadow-xl">
+          <div className="lg:hidden border-t border-white/10 bg-[#061e27]/95 backdrop-blur-2xl px-4 py-4 space-y-3 text-sm font-semibold animate-in slide-in-from-top-2 shadow-xl">
             {/* Currency selector on mobile */}
             <div className="flex items-center justify-between pb-2 border-b border-white/10">
-              <span className="text-xs text-emerald-200/80">Moneda de Tarifa:</span>
+              <span className="text-xs text-emerald-200/80">Moneda:</span>
               <div className="flex gap-1 bg-white/10 p-1 rounded-full border border-white/15 text-xs">
                 {(['USD', 'PEN', 'EUR'] as const).map(curr => (
                   <button
@@ -851,54 +1015,70 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               </div>
             </div>
 
+            {/* Mobile Language Selector */}
+            {showLangSelector && (
+              <div className="flex items-center justify-between pb-2 border-b border-white/10">
+                <span className="text-xs text-emerald-200/80">Idioma:</span>
+                <div className="flex gap-1 bg-white/10 p-1 rounded-xl border border-white/15 text-xs">
+                  {activeLanguages.map(lCode => (
+                    <button
+                      key={lCode}
+                      type="button"
+                      onClick={() => setCurrentLang(lCode)}
+                      className={`px-2 py-1 rounded-lg uppercase font-bold text-[11px] ${
+                        currentLang === lCode ? 'bg-emerald-400 text-slate-950 font-black' : 'text-emerald-200 hover:text-white'
+                      }`}
+                    >
+                      {lCode}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <a href="#inicio" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-300">{t.navHome}</a>
             <a href="#destinos" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navDestinations}</a>
+            {!isFree && <a href="#acerca" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navAbout}</a>}
             <a href="#tours" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navTours}</a>
-            <a href="#itinerario" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navItinerary}</a>
-            <a href="#incluye" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">Servicios Incluidos</a>
-            <a href="#galeria" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">Galería de Fotos</a>
-            <a href="#resenas" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">Testimonios & Reseñas</a>
-            <a href="#faqs" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">Preguntas Frecuentes</a>
+            {(isPro || isAdvance) && <a href="#itinerario" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navItinerary}</a>}
+            {!isFree && <a href="#incluye" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navServices}</a>}
+            {!isFree && <a href="#galeria" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navGallery}</a>}
+            {isAdvance && <a href="#resenas" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navReviews}</a>}
+            {isAdvance && <a href="#faqs" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navFaqs}</a>}
           </div>
         )}
       </header>
 
-      {/* 2. HERO PRINCIPAL CON FOTO SIN BORDES VISIBLES + ESTILOS FLOTANTES ACTIVOS */}
+      {/* 2. HERO PRINCIPAL */}
       <section id="inicio" className="relative z-10 pt-8 sm:pt-14 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Columna Izquierda: Copys + Calculadora Píldora Flotante + Beneficios */}
+          {/* Columna Izquierda */}
           <div className="lg:col-span-6 space-y-6 sm:space-y-8">
-            
-            {/* Badge de Temporada Flotante con Levitación Continua */}
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-emerald-400/30 text-emerald-300 text-xs font-bold shadow-lg shadow-emerald-950/40 animate-float-badge">
               <Sparkles size={14} className="text-emerald-400" />
               <span>{heroBadge}</span>
             </div>
 
-            {/* Titular Masivo en Blanco Puro */}
             <h1 className="text-4xl sm:text-6xl lg:text-6xl font-black text-white tracking-tight leading-[1.08]">
-              {data.name || 'Live Your Adventure — Expediciones & Trekking en Cusco'}
+              {heroTitle}
             </h1>
 
-            {/* Subtítulo */}
             <p className="text-base sm:text-lg text-emerald-100/80 max-w-xl leading-relaxed">
               {heroSubtitle}
             </p>
 
-            {/* BARRA FLOTANTE INTERACTIVA DE BÚSQUEDA & CALCULADORA EN VIVO (ADVANCE TIER) */}
+            {/* BARRA FLOTANTE INTERACTIVA DE BÚSQUEDA & CALCULADORA EN VIVO */}
             <div className="p-2.5 sm:p-3 bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-3xl sm:rounded-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 max-w-xl animate-pill-glow transition-all duration-300">
-              
-              {/* Destino */}
               <div className="flex items-center gap-2.5 px-3 py-1.5 flex-1 border-b sm:border-b-0 sm:border-r border-white/10 text-xs">
                 <MapPin size={16} className="text-emerald-400 shrink-0" />
                 <div className="min-w-0">
                   <span className="text-[10px] text-emerald-200/70 font-semibold block">{t.searchWhere}</span>
-                  <span className="text-xs font-bold text-white truncate block">{data.destination || 'Cusco & Machu Picchu'}</span>
+                  <span className="text-xs font-bold text-white truncate block">{destinationName}</span>
                 </div>
               </div>
 
-              {/* Selector de Pasajeros Interactivo */}
+              {/* Selector de Pasajeros */}
               <div className="flex items-center justify-between sm:justify-start gap-2.5 px-3 py-1.5 flex-1 border-b sm:border-b-0 sm:border-r border-white/10 text-xs">
                 <Users size={16} className="text-teal-400 shrink-0" />
                 <div className="min-w-0">
@@ -911,7 +1091,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                     >
                       <Minus size={11} />
                     </button>
-                    <span className="text-xs font-black text-white">{passengers} {passengers === 1 ? 'persona' : 'personas'}</span>
+                    <span className="text-xs font-black text-white">{passengers} {passengers === 1 ? t.passengerSingular : t.passengerPlural}</span>
                     <button
                       type="button"
                       onClick={() => setPassengers(Math.min(12, passengers + 1))}
@@ -934,7 +1114,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               </button>
             </div>
 
-            {/* 3 TARJETAS BENTO FLOTANTES TRANSLÚCIDAS CON LEVITACIÓN ESCALONADA */}
+            {/* 3 TARJETAS BENTO FLOTANTES */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
               <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float space-y-1.5 group cursor-default">
                 <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/30 group-hover:scale-110 transition-transform">
@@ -963,15 +1143,14 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
           </div>
 
-          {/* Columna Derecha: FOTO DEL HERO CON SILUETA ORGÁNICA */}
+          {/* Columna Derecha: Foto del Hero con Silueta Orgánica */}
           <div className="lg:col-span-6 relative flex items-center justify-center">
-            
-            {/* Halo ambiental suave exterior */}
             <div className="absolute -inset-8 bg-cyan-500/20 rounded-full blur-3xl pointer-events-none" />
 
-            {/* Contenedor Principal con Silueta Orgánica */}
-            <div className="relative w-full max-w-lg lg:max-w-xl h-[520px] sm:h-[620px] lg:h-[660px] mx-auto rounded-[56px] rounded-tr-[130px] rounded-br-[150px] rounded-bl-[48px] overflow-hidden group shadow-[0_35px_80px_rgba(0,0,0,0.65)] border border-white/10">
-              
+            <div 
+              onClick={() => openLightbox(heroImg)}
+              className="relative w-full max-w-lg lg:max-w-xl h-[520px] sm:h-[620px] lg:h-[660px] mx-auto rounded-[56px] rounded-tr-[130px] rounded-br-[150px] rounded-bl-[48px] overflow-hidden group shadow-[0_35px_80px_rgba(0,0,0,0.65)] border border-white/10 cursor-pointer"
+            >
               <Image 
                 src={heroImg} 
                 alt={data.name || 'Cusco Adventure'} 
@@ -980,8 +1159,6 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 priority
                 className="object-cover group-hover:scale-105 transition-transform duration-700" 
               />
-
-              {/* Degradado suave inferior */}
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#03131a] via-[#03131a]/60 to-transparent z-10" />
 
               {/* Chip Flotante Superior: Local Experts */}
@@ -991,11 +1168,11 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 </div>
                 <div>
                   <span className="text-[11px] font-black text-white block leading-tight">Local Experts</span>
-                  <span className="text-[9px] text-emerald-300 font-semibold block">DIRCETUR Licenciado</span>
+                  <span className="text-[9px] text-emerald-300 font-semibold block">{guideCert}</span>
                 </div>
               </div>
 
-              {/* Tarjeta Flotante Inferior de Tarifa con Tarifa Dinámica */}
+              {/* Tarjeta Flotante Inferior de Tarifa Dinámica */}
               <div className="absolute bottom-5 inset-x-5 z-20 p-4 rounded-3xl bg-black/50 backdrop-blur-xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex items-center justify-between gap-3 animate-emerald-float-alt">
                 <div className="min-w-0">
                   <span className="text-[10px] text-emerald-200/90 font-bold block">Tarifa Oficial por Persona:</span>
@@ -1003,41 +1180,25 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 </div>
                 <button
                   type="button"
-                  onClick={() => handleOpenAction(data.name)}
+                  onClick={(e) => { e.stopPropagation(); handleOpenAction(data.name); }}
                   className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 flex items-center gap-1.5 transition-all cursor-pointer hover:scale-105 active:scale-95"
                 >
                   <span>Reservar</span>
                   <ArrowRight size={14} />
                 </button>
               </div>
-
             </div>
           </div>
 
         </div>
       </section>
 
-
-      {/* 3. DESTINOS POPULARES (BENTO GRID ICÓNICO DE SANTUARIOS & PAISAJES ANDINOS) */}
+      {/* 3. DESTINOS POPULARES */}
       <section id="destinos" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
-        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
         <div className="absolute top-1/2 -right-24 -translate-y-1/2 w-[650px] sm:w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.48)_0%,rgba(6,182,212,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
         <div className="absolute top-1/2 -left-24 -translate-y-1/2 w-[600px] sm:w-[750px] h-[480px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.42)_0%,rgba(14,116,144,0.22)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
         
-        {/* Textura Fotográfica Andina Sutil de Fondo (Z-0) */}
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          <Image 
-            src="https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=1600&auto=format&fit=crop"
-            alt="Andean Mountain Landscape Silhouette"
-            fill
-            sizes="100vw"
-            className="object-cover opacity-[0.06] mix-blend-screen scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-transparent to-[#021016]" />
-        </div>
-        
         <div className="relative z-10">
-          {/* Cabecera de la Sección Destinos */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-black mb-3">
@@ -1052,7 +1213,6 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               </p>
             </div>
 
-            {/* Botón de Anclaje Rápido hacia la Sección de Tours */}
             <a
               href="#tours"
               className="emerald-shimmer-btn inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white/[0.08] hover:bg-emerald-400 hover:text-[#02181f] text-emerald-200 font-bold text-xs border border-white/15 hover:border-emerald-400/50 transition-all cursor-pointer shadow-md hover:scale-105 active:scale-95 shrink-0"
@@ -1062,10 +1222,9 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </a>
           </div>
 
-          {/* Bento Grid de Destinos Populares */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {POPULAR_DESTINATIONS.map((dest, idx) => {
-              const isLarge = idx === 0; // Machu Picchu como card heroica
+            {localizedDestinations.map((dest, idx) => {
+              const isLarge = idx === 0;
               return (
                 <div 
                   key={dest.id}
@@ -1073,8 +1232,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                     isLarge ? 'md:col-span-2 lg:col-span-2' : 'col-span-1'
                   }`}
                 >
-                  {/* Contenedor Fotográfico con Badges Superpuestos */}
-                  <div className={`relative w-full overflow-hidden bg-emerald-950 ${isLarge ? 'h-72 sm:h-80' : 'h-56'}`}>
+                  <div 
+                    onClick={() => openLightbox(dest.image)}
+                    className={`relative w-full overflow-hidden bg-emerald-950 cursor-pointer ${isLarge ? 'h-72 sm:h-80' : 'h-56'}`}
+                  >
                     <Image 
                       src={dest.image} 
                       alt={dest.title} 
@@ -1084,19 +1245,16 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-[#021016]/40 to-black/30" />
 
-                    {/* Badge de Altitud msnm */}
                     <div className="absolute top-3.5 left-3.5 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-emerald-300 font-black text-xs flex items-center gap-1.5 border border-white/20 shadow-md">
                       <Mountain size={13} className="text-emerald-400" />
                       <span>{dest.altitude}</span>
                     </div>
 
-                    {/* Badge de Tag Temático */}
                     <div className="absolute top-3.5 right-3.5 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-white font-bold text-xs flex items-center gap-1.5 border border-white/20 shadow-md">
                       <MapPin size={12} className="text-teal-300" />
                       <span>{dest.tag}</span>
                     </div>
 
-                    {/* Rating Flotante Inferior Izquierdo */}
                     <div className="absolute bottom-3.5 left-3.5 bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full text-amber-300 font-black text-xs flex items-center gap-1 border border-white/15 shadow-md">
                       <Star size={12} className="fill-amber-400 text-amber-400" />
                       <span>{dest.rating}</span>
@@ -1104,7 +1262,6 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                     </div>
                   </div>
 
-                  {/* Cuerpo Descriptivo y CTA de Navegación a Tours */}
                   <div className="p-5 sm:p-6 space-y-4 flex-1 flex flex-col justify-between">
                     <div className="space-y-2">
                       <h3 className="text-lg sm:text-xl font-black text-white group-hover:text-emerald-300 transition-colors tracking-tight">
@@ -1119,10 +1276,9 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                       </div>
                     </div>
 
-                    {/* Footer con Botón Interactivo para Filtrar y Ver Tours */}
                     <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-3">
                       <span className="text-[11px] font-bold text-emerald-300/70">
-                        Rutas disponibles
+                        {t.seeToursForDestination}
                       </span>
 
                       <button
@@ -1131,9 +1287,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                           setTourCategory(dest.categoryFilter);
                           setTourPage(0);
                           const el = document.getElementById('tours');
-                          if (el) {
-                            el.scrollIntoView({ behavior: 'smooth' });
-                          }
+                          if (el) el.scrollIntoView({ behavior: 'smooth' });
                         }}
                         className="emerald-shimmer-btn bg-emerald-500/20 hover:bg-emerald-400 hover:text-[#02181f] text-emerald-300 font-bold text-xs px-4 py-2 rounded-full border border-emerald-400/40 transition-all cursor-pointer hover:scale-105 active:scale-95 shadow-sm flex items-center gap-1.5"
                       >
@@ -1149,144 +1303,130 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </div>
       </section>
 
-      {/* 4. FICHA TÉCNICA INTERACTIVA & CRÓNICA DE EXPEDICIÓN */}
-      <section id="acerca" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
-        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
-        <div className="absolute top-1/2 -left-24 -translate-y-1/2 w-[650px] sm:w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.48)_0%,rgba(6,182,212,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
-        <div className="absolute top-1/2 -right-24 -translate-y-1/2 w-[600px] sm:w-[750px] h-[480px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.42)_0%,rgba(20,184,166,0.22)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
-        
-        <div className="relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      {/* 4. FICHA TÉCNICA INTERACTIVA & CRÓNICA DE EXPEDICIÓN (OCULTO EN FREE) */}
+      {!isFree && (
+        <section id="acerca" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+          <div className="absolute top-1/2 -left-24 -translate-y-1/2 w-[650px] sm:w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.48)_0%,rgba(6,182,212,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+          <div className="absolute top-1/2 -right-24 -translate-y-1/2 w-[600px] sm:w-[750px] h-[480px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.42)_0%,rgba(20,184,166,0.22)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
           
-          {/* Columna Izquierda: Ficha Técnica en 4 Tarjetas de Cristal Interactivas */}
-          <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-            <div 
-              onClick={() => setActiveSpecModal('duration')}
-              className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15 cursor-pointer hover:border-emerald-400/50 group"
-            >
-              <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40 group-hover:scale-110 transition-transform">
-                <Clock size={20} />
-              </div>
-              <span className="text-[10px] uppercase font-extrabold tracking-wider text-emerald-400 block">Duración</span>
-              <span className="text-base font-black text-white block">{data.duration || '4 Días / 3 Noches'}</span>
-              <span className="text-[10px] text-emerald-200/60 block group-hover:text-emerald-300">Toca para ver detalle ➔</span>
-            </div>
-
-            <div 
-              onClick={() => setActiveSpecModal('altitude')}
-              className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15 cursor-pointer hover:border-teal-400/50 group"
-            >
-              <div className="w-10 h-10 rounded-2xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/40 group-hover:scale-110 transition-transform">
-                <Mountain size={20} />
-              </div>
-              <span className="text-[10px] uppercase font-extrabold tracking-wider text-teal-400 block">Altitud Máxima</span>
-              <span className="text-base font-black text-white block">{data.altitude || '4,630 msnm'}</span>
-              <span className="text-[10px] text-teal-200/60 block group-hover:text-teal-300">Oxígeno incluido ➔</span>
-            </div>
-
-            <div 
-              onClick={() => setActiveSpecModal('difficulty')}
-              className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15 cursor-pointer hover:border-cyan-400/50 group"
-            >
-              <div className="w-10 h-10 rounded-2xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center border border-cyan-400/40 group-hover:scale-110 transition-transform">
-                <Zap size={20} />
-              </div>
-              <span className="text-[10px] uppercase font-extrabold tracking-wider text-cyan-400 block">Dificultad</span>
-              <span className="text-base font-black text-white block">{data.difficulty || 'Moderada'}</span>
-              <span className="text-[10px] text-cyan-200/60 block group-hover:text-cyan-300">Ritmo adaptable ➔</span>
-            </div>
-
-            <div 
-              onClick={() => setActiveSpecModal('group')}
-              className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15 cursor-pointer hover:border-amber-400/50 group"
-            >
-              <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/40 group-hover:scale-110 transition-transform">
-                <Users size={20} />
-              </div>
-              <span className="text-[10px] uppercase font-extrabold tracking-wider text-amber-400 block">Modalidad</span>
-              <span className="text-base font-black text-white block">{data.groupType || 'Grupos Reducidos'}</span>
-              <span className="text-[10px] text-amber-200/60 block group-hover:text-amber-300">Máx 8 personas ➔</span>
-            </div>
-          </div>
-
-          {/* Columna Derecha: Tarjeta Editorial de la Expedición (Acerca de) */}
-          <div className="lg:col-span-7 relative overflow-hidden p-8 sm:p-10 rounded-[40px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_30px_70px_rgba(0,0,0,0.5)] space-y-6">
-            {/* Foto de Fondo Texturizada con Mezcla Suave */}
-            <div className="absolute inset-0 pointer-events-none z-0">
-              <Image 
-                src="https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1000&auto=format&fit=crop" 
-                alt="Andean Terraces Background" 
-                fill 
-                sizes="(max-width: 768px) 100vw, 50vw" 
-                className="object-cover opacity-[0.07] mix-blend-screen" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-transparent to-[#021016]/40" />
-            </div>
-
-            {/* Sticker/Miniatura Fotográfica Flotante Encima */}
-            <div className="hidden sm:flex items-center gap-2.5 p-2 rounded-2xl bg-black/50 backdrop-blur-xl border border-white/20 shadow-xl absolute top-6 right-6 z-20 animate-float-badge">
-              <div className="relative w-11 h-11 rounded-xl overflow-hidden shrink-0 border border-emerald-400/30">
-                <Image 
-                  src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=200&auto=format&fit=crop" 
-                  alt="Mirador Sagrado" 
-                  fill 
-                  sizes="44px" 
-                  className="object-cover" 
-                />
-              </div>
-              <div className="pr-1 text-left">
-                <span className="text-[10px] font-black text-white block leading-tight">Mirador Andino</span>
-                <span className="text-[8px] text-emerald-300 font-semibold block">3,600 msnm • Ruta Viva</span>
-              </div>
-            </div>
-
-            <div className="relative z-10 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold">
-                <Award size={14} />
-                <span>Filosofía de Expedición</span>
-              </div>
-
-              <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
-                {aboutTitle}
-              </h3>
-
-            <p className="text-sm sm:text-base text-emerald-100/80 leading-relaxed font-normal">
-              {aboutContent}
-            </p>
-
-            {/* Perfil del Guía Oficial con Sello */}
-            <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="relative w-12 h-12 rounded-2xl overflow-hidden ring-2 ring-emerald-400/50 shadow-md">
-                  <Image 
-                    src={guideAvatar} 
-                    alt={guideName} 
-                    fill 
-                    sizes="48px" 
-                    className="object-cover" 
-                  />
-                </div>
-                <div>
-                  <h4 className="font-extrabold text-white text-sm">{guideName}</h4>
-                  <p className="text-xs text-emerald-300/80 font-medium">{guideCert}</p>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => handleWhatsappDirect(data.name)}
-                className="emerald-shimmer-btn bg-emerald-500 hover:bg-emerald-400 text-[#02181f] font-black text-xs px-5 py-2.5 rounded-full transition-all cursor-pointer shadow-md self-start sm:self-auto flex items-center gap-2"
+          <div className="relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            {/* Columna Izquierda: Ficha Técnica */}
+            <div className="lg:col-span-5 grid grid-cols-2 gap-4">
+              <div 
+                onClick={() => setActiveSpecModal('duration')}
+                className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15 cursor-pointer hover:border-emerald-400/50 group"
               >
-                <MessageCircle size={14} />
-                <span>Consultar con {guideName.split(' ')[0]}</span>
-              </button>
-            </div>
-          </div>
-          </div>
+                <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40 group-hover:scale-110 transition-transform">
+                  <Clock size={20} />
+                </div>
+                <span className="text-[10px] uppercase font-extrabold tracking-wider text-emerald-400 block">Duración</span>
+                <span className="text-base font-black text-white block">{translateText(data.duration || '4 Días / 3 Noches', currentLang)}</span>
+                <span className="text-[10px] text-emerald-200/60 block group-hover:text-emerald-300">Toca para ver detalle ➔</span>
+              </div>
 
-        </div>
-        </div>
-      </section>
+              <div 
+                onClick={() => setActiveSpecModal('altitude')}
+                className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15 cursor-pointer hover:border-teal-400/50 group"
+              >
+                <div className="w-10 h-10 rounded-2xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/40 group-hover:scale-110 transition-transform">
+                  <Mountain size={20} />
+                </div>
+                <span className="text-[10px] uppercase font-extrabold tracking-wider text-teal-400 block">Altitud Máxima</span>
+                <span className="text-base font-black text-white block">{translateText(data.altitude || '4,630 msnm', currentLang)}</span>
+                <span className="text-[10px] text-teal-200/60 block group-hover:text-teal-300">Oxígeno incluido ➔</span>
+              </div>
+
+              <div 
+                onClick={() => setActiveSpecModal('difficulty')}
+                className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15 cursor-pointer hover:border-cyan-400/50 group"
+              >
+                <div className="w-10 h-10 rounded-2xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center border border-cyan-400/40 group-hover:scale-110 transition-transform">
+                  <Zap size={20} />
+                </div>
+                <span className="text-[10px] uppercase font-extrabold tracking-wider text-cyan-400 block">Dificultad</span>
+                <span className="text-base font-black text-white block">{translateText(data.difficulty || 'Moderada', currentLang)}</span>
+                <span className="text-[10px] text-cyan-200/60 block group-hover:text-cyan-300">Ritmo adaptable ➔</span>
+              </div>
+
+              <div 
+                onClick={() => setActiveSpecModal('group')}
+                className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15 cursor-pointer hover:border-amber-400/50 group"
+              >
+                <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/40 group-hover:scale-110 transition-transform">
+                  <Users size={20} />
+                </div>
+                <span className="text-[10px] uppercase font-extrabold tracking-wider text-amber-400 block">Modalidad</span>
+                <span className="text-base font-black text-white block">{translateText(data.groupType || 'Grupos Reducidos', currentLang)}</span>
+                <span className="text-[10px] text-amber-200/60 block group-hover:text-amber-300">Máx 8 personas ➔</span>
+              </div>
+            </div>
+
+            {/* Columna Derecha: Tarjeta Editorial */}
+            <div className="lg:col-span-7 relative overflow-hidden p-8 sm:p-10 rounded-[40px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_30px_70px_rgba(0,0,0,0.5)] space-y-6">
+              <div className="relative z-10 space-y-6">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold">
+                  <Award size={14} />
+                  <span>Filosofía de Expedición</span>
+                </div>
+
+                <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
+                  {aboutTitle}
+                </h3>
+
+                <p className="text-sm sm:text-base text-emerald-100/80 leading-relaxed font-normal">
+                  {aboutContent}
+                </p>
+
+                {/* Perfil del Guía Oficial con Sello & Botón de Brochure en Advance */}
+                <div className="pt-6 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="relative w-12 h-12 rounded-2xl overflow-hidden ring-2 ring-emerald-400/50 shadow-md">
+                      <Image 
+                        src={guideAvatar} 
+                        alt={guideName} 
+                        fill 
+                        sizes="48px" 
+                        className="object-cover" 
+                      />
+                    </div>
+                    <div>
+                      <h4 className="font-extrabold text-white text-sm">{guideName}</h4>
+                      <p className="text-xs text-emerald-300/80 font-medium">{guideCert}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    {/* Botón Descargar Brochure PDF en Advance */}
+                    {isAdvance && (
+                      <button
+                        type="button"
+                        onClick={() => setIsBrochureOpen(true)}
+                        className="px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-emerald-200 text-xs font-bold border border-white/20 transition-all cursor-pointer flex items-center gap-1.5"
+                      >
+                        <FileText size={14} />
+                        <span>{t.downloadBrochureBtn}</span>
+                      </button>
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => handleWhatsappDirect(data.name)}
+                      className="emerald-shimmer-btn bg-emerald-500 hover:bg-emerald-400 text-[#02181f] font-black text-xs px-5 py-2.5 rounded-full transition-all cursor-pointer shadow-md flex items-center gap-2"
+                    >
+                      <MessageCircle size={14} />
+                      <span>Consultar con {guideName.split(' ')[0]}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          </div>
+        </section>
+      )}
 
       {/* MODAL CONTEXTUAL DE FICHA TÉCNICA */}
       {activeSpecModal && (
@@ -1332,533 +1472,462 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </div>
       )}
 
-      {/* 5. PLAN YOUR JOURNEY & BENTO STATS */}
-      <section id="experiencias" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
-        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] sm:w-[1100px] h-[550px] bg-[radial-gradient(ellipse_at_center,rgba(13,148,136,0.48)_0%,rgba(2,132,199,0.30)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
-        <div className="absolute top-1/4 -right-20 w-[550px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.28)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
-        
-        <div className="relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-              {t.planTitle}
-            </h2>
-            <p className="text-xs sm:text-sm text-emerald-200/70">
-              Métricas reales de excelencia avaladas por más de 1,200 viajeros internacionales.
-            </p>
-          </div>
-
-          {/* Bento Grid con Fotos y Métricas Flotantes */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            
-            {/* Bento Card 1: Foto Viajero con Mapa */}
-            <div className="relative rounded-3xl overflow-hidden min-h-[220px] border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 transition-all duration-300">
-              <Image 
-                src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=800&auto=format&fit=crop" 
-                alt="Traveler with map" 
-                fill 
-                sizes="(max-width: 768px) 100vw, 25vw"
-                className="object-cover group-hover:scale-105 transition-transform duration-500" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-[#041716]/30 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
-                <span className="text-xs font-black text-white block">Rutas Planificadas</span>
-                <span className="text-[10px] text-emerald-300/80">Logística Integral</span>
-              </div>
+      {/* 5. PLAN YOUR JOURNEY & BENTO STATS (OCULTO EN FREE) */}
+      {!isFree && (
+        <section id="experiencias" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] sm:w-[1100px] h-[550px] bg-[radial-gradient(ellipse_at_center,rgba(13,148,136,0.48)_0%,rgba(2,132,199,0.30)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+          <div className="absolute top-1/4 -right-20 w-[550px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.28)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
+          
+          <div className="relative z-10">
+            <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                {t.planTitle}
+              </h2>
+              <p className="text-xs sm:text-sm text-emerald-200/70">
+                {t.planSub}
+              </p>
             </div>
 
-            {/* Bento Card 2: 1,250+ Happy Travelers */}
-            <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float-delayed">
-              <div className="flex items-center justify-between">
-                <span className="text-3xl font-black text-white animate-number-glow">1,250+</span>
-                <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs">
-                  <Users size={20} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="relative rounded-3xl overflow-hidden min-h-[220px] border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 transition-all duration-300">
+                <Image 
+                  src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=800&auto=format&fit=crop" 
+                  alt="Traveler with map" 
+                  fill 
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-[#041716]/30 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <span className="text-xs font-black text-white block">Rutas Planificadas</span>
+                  <span className="text-[10px] text-emerald-300/80">Logística Integral</span>
                 </div>
               </div>
-              <div>
-                <h4 className="text-sm font-bold text-white">{t.happyTravelers}</h4>
-                <p className="text-xs text-emerald-200/70 mt-0.5">Asistidos con protocolo médico de altitud.</p>
-              </div>
-            </div>
 
-            {/* Bento Card 3: 98% Positive Reviews */}
-            <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float">
-              <div className="flex items-center justify-between">
-                <span className="text-3xl font-black text-amber-300 animate-number-glow">98%</span>
-                <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/40 shadow-xs">
-                  <Star size={20} className="fill-amber-400 text-amber-400" />
+              <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float-delayed">
+                <div className="flex items-center justify-between">
+                  <span className="text-3xl font-black text-white animate-number-glow">1,250+</span>
+                  <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs">
+                    <Users size={20} />
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-white">{t.happyTravelers}</h4>
+                  <p className="text-xs text-emerald-200/70 mt-0.5">Asistidos con protocolo médico de altitud.</p>
                 </div>
               </div>
+
+              <div className="glass-floating-card p-6 rounded-3xl flex flex-col justify-between space-y-4 animate-emerald-float">
+                <div className="flex items-center justify-between">
+                  <span className="text-3xl font-black text-amber-300 animate-number-glow">98%</span>
+                  <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/40 shadow-xs">
+                    <Star size={20} className="fill-amber-400 text-amber-400" />
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-white">{t.positiveReviews}</h4>
+                  <p className="text-xs text-emerald-200/70 mt-0.5">Calificaciones 5 estrellas en TripAdvisor & Google.</p>
+                </div>
+              </div>
+
+              <div className="relative rounded-3xl overflow-hidden min-h-[220px] border border-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.5)] group hover:-translate-y-1.5 transition-all duration-300">
+                <Image 
+                  src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=800&auto=format&fit=crop" 
+                  alt="Happy traveler in nature" 
+                  fill 
+                  sizes="(max-width: 768px) 100vw, 25vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500" 
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-[#041716]/30 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <span className="text-xs font-black text-white block">Momentos Inolvidables</span>
+                  <span className="text-[10px] text-emerald-300/80">Fotografía escénica</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 6. ITINERARIO PASO A PASO (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
+        <section id="itinerario" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] sm:w-[1100px] h-[650px] bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.48)_0%,rgba(16,185,129,0.30)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+          <div className="absolute -top-10 -right-20 w-[600px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.38)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
+          
+          <div className="relative z-10">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
               <div>
-                <h4 className="text-sm font-bold text-white">{t.positiveReviews}</h4>
-                <p className="text-xs text-emerald-200/70 mt-0.5">Calificaciones 5 estrellas en TripAdvisor & Google.</p>
+                <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Cronograma Oficial</span>
+                <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">{t.itineraryTitle}</h2>
+                <p className="text-xs sm:text-sm text-emerald-200/70 mt-1">{t.itinerarySub}</p>
               </div>
-            </div>
 
-            {/* Bento Card 4: Foto Viajera Sonriente */}
-            <div className="relative rounded-3xl overflow-hidden min-h-[220px] border border-white/10 shadow-[0_15px_35px_rgba(0,0,0,0.5)] group hover:-translate-y-1.5 transition-all duration-300">
-              <Image 
-                src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=800&auto=format&fit=crop" 
-                alt="Happy traveler in nature" 
-                fill 
-                sizes="(max-width: 768px) 100vw, 25vw"
-                className="object-cover group-hover:scale-105 transition-transform duration-500" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-[#041716]/30 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4">
-                <span className="text-xs font-black text-white block">Momentos Inolvidables</span>
-                <span className="text-[10px] text-emerald-300/80">Fotografía escénica</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* 6. ITINERARIO PASO A PASO INTERACTIVO DÍA A DÍA (MODO ADVANCE) */}
-      <section id="itinerario" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto overflow-hidden">
-        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] sm:w-[1100px] h-[650px] bg-[radial-gradient(ellipse_at_center,rgba(14,165,233,0.48)_0%,rgba(16,185,129,0.30)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
-        <div className="absolute -top-10 -right-20 w-[600px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.38)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
-        
-        <div className="relative z-10">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-            <div>
-              <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Cronograma Oficial de Expedición</span>
-              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">{t.itineraryTitle}</h2>
-              <p className="text-xs sm:text-sm text-emerald-200/70 mt-1">Explora cada jornada con altitud, tiempo de caminata y servicios incluidos.</p>
-            </div>
-
-            {/* Selector de Vista: Pestañas vs Todos los Días */}
-            <div className="flex items-center gap-1 bg-white/10 p-1 rounded-2xl border border-white/15 text-xs font-bold shrink-0">
-              <button
-                type="button"
-                onClick={() => setItineraryViewMode('tabs')}
-                className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
-                  itineraryViewMode === 'tabs' ? 'bg-emerald-400 text-slate-950 font-black' : 'text-emerald-200 hover:text-white'
-                }`}
-              >
-                Vista Día a Día
-              </button>
-              <button
-                type="button"
-                onClick={() => setItineraryViewMode('all')}
-                className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
-                  itineraryViewMode === 'all' ? 'bg-emerald-400 text-slate-950 font-black' : 'text-emerald-200 hover:text-white'
-                }`}
-              >
-                Ver Cronograma Completo
-              </button>
-            </div>
-          </div>
-
-        {/* Vista Pestañas Interactivas */}
-        {itineraryViewMode === 'tabs' ? (
-          <div className="space-y-6">
-            {/* Pestañas de Días */}
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-              {activeItinerary.map((step, idx) => (
+              {/* Selector de Vista: Pestañas vs Todos los Días */}
+              <div className="flex items-center gap-1 bg-white/10 p-1 rounded-2xl border border-white/15 text-xs font-bold shrink-0">
                 <button
-                  key={idx}
                   type="button"
-                  onClick={() => setSelectedDayIdx(idx)}
-                  className={`px-5 py-3 rounded-2xl font-black text-xs sm:text-sm transition-all cursor-pointer whitespace-nowrap border flex items-center gap-2 shrink-0 ${
-                    selectedDayIdx === idx
-                      ? 'bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 border-emerald-300 shadow-lg shadow-emerald-500/25 scale-102'
-                      : 'bg-white/[0.05] text-emerald-100 hover:bg-white/10 border-white/10'
+                  onClick={() => setItineraryViewMode('tabs')}
+                  className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                    itineraryViewMode === 'tabs' ? 'bg-emerald-400 text-slate-950 font-black' : 'text-emerald-200 hover:text-white'
                   }`}
                 >
-                  <span>{step.step || `Día ${idx + 1}`}</span>
-                  {selectedDayIdx === idx && <CheckCircle2 size={15} />}
+                  {t.viewDayByDay}
                 </button>
-              ))}
+                <button
+                  type="button"
+                  onClick={() => setItineraryViewMode('all')}
+                  className={`px-3 py-1.5 rounded-xl transition-all cursor-pointer ${
+                    itineraryViewMode === 'all' ? 'bg-emerald-400 text-slate-950 font-black' : 'text-emerald-200 hover:text-white'
+                  }`}
+                >
+                  {t.viewFullSchedule}
+                </button>
+              </div>
             </div>
 
-            {/* Tarjeta del Día Activo con Detalles Ricos */}
-            {/* Tarjeta del Día Activo con Detalles Ricos y Postal Visual */}
-            {activeItinerary[selectedDayIdx] && (
-              <div className="relative overflow-hidden p-6 sm:p-9 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-emerald-400/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6 animate-in fade-in duration-300">
-                {/* Textura Fotográfica Andina de Fondo en la Tarjeta */}
-                <div className="absolute inset-0 pointer-events-none z-0">
-                  <Image 
-                    src={activeItinerary[selectedDayIdx].image || ITINERARY_SCENIC_IMAGES[selectedDayIdx % ITINERARY_SCENIC_IMAGES.length]}
-                    alt={activeItinerary[selectedDayIdx].title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 800px"
-                    className="object-cover opacity-[0.06] mix-blend-screen scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-[#021016]/80 to-[#021016]/50" />
+            {/* Vista Pestañas Interactivas */}
+            {itineraryViewMode === 'tabs' ? (
+              <div className="space-y-6">
+                <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
+                  {activeItinerary.map((step, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setSelectedDayIdx(idx)}
+                      className={`px-5 py-3 rounded-2xl font-black text-xs sm:text-sm transition-all cursor-pointer whitespace-nowrap border flex items-center gap-2 shrink-0 ${
+                        selectedDayIdx === idx
+                          ? 'bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 border-emerald-300 shadow-lg shadow-emerald-500/25 scale-102'
+                          : 'bg-white/[0.05] text-emerald-100 hover:bg-white/10 border-white/10'
+                      }`}
+                    >
+                      <span>{step.step || `Día ${idx + 1}`}</span>
+                      {selectedDayIdx === idx && <CheckCircle2 size={15} />}
+                    </button>
+                  ))}
                 </div>
 
-                <div className="relative z-10 space-y-5">
-                  {/* Banner Fotográfico Panorámico del Día (Encima) */}
-                  <div className="relative h-44 sm:h-52 w-full rounded-2xl overflow-hidden border border-white/15 shadow-xl group">
-                    <Image 
-                      src={activeItinerary[selectedDayIdx].image || ITINERARY_SCENIC_IMAGES[selectedDayIdx % ITINERARY_SCENIC_IMAGES.length]}
-                      alt={activeItinerary[selectedDayIdx].title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 800px"
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
-                    
-                    {/* Badge Fotográfico Flotante con Altitud */}
-                    <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-emerald-300 text-xs font-black flex items-center gap-1.5 border border-white/20 shadow-md">
-                      <Mountain size={13} className="text-emerald-400" />
-                      <span>{activeItinerary[selectedDayIdx].altitude}</span>
+                {activeItinerary[selectedDayIdx] && (
+                  <div className="relative overflow-hidden p-6 sm:p-9 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-emerald-400/30 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6 animate-in fade-in duration-300">
+                    <div className="relative z-10 space-y-5">
+                      <div 
+                        onClick={() => openLightbox(activeItinerary[selectedDayIdx].image || ITINERARY_SCENIC_IMAGES[selectedDayIdx % ITINERARY_SCENIC_IMAGES.length])}
+                        className="relative h-44 sm:h-52 w-full rounded-2xl overflow-hidden border border-white/15 shadow-xl group cursor-pointer"
+                      >
+                        <Image 
+                          src={activeItinerary[selectedDayIdx].image || ITINERARY_SCENIC_IMAGES[selectedDayIdx % ITINERARY_SCENIC_IMAGES.length]}
+                          alt={activeItinerary[selectedDayIdx].title}
+                          fill 
+                          sizes="(max-width: 768px) 100vw, 800px"
+                          className="object-cover group-hover:scale-105 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
+                        
+                        <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-emerald-300 text-xs font-black flex items-center gap-1.5 border border-white/20 shadow-md">
+                          <Mountain size={13} className="text-emerald-400" />
+                          <span>{activeItinerary[selectedDayIdx].altitude}</span>
+                        </div>
+
+                        <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs font-bold flex items-center gap-1.5 border border-white/20 shadow-md">
+                          <Clock size={13} className="text-teal-400" />
+                          <span>{activeItinerary[selectedDayIdx].hikingTime}</span>
+                        </div>
+
+                        <div className="absolute bottom-3 left-3 right-3 flex items-baseline justify-between gap-2">
+                          <span className="px-2.5 py-0.5 rounded-lg bg-emerald-400 text-slate-950 font-black text-xs shadow-xs">
+                            {activeItinerary[selectedDayIdx].step || `Día ${selectedDayIdx + 1}`}
+                          </span>
+                          <span className="text-xs sm:text-sm font-black text-white truncate drop-shadow-md">
+                            {activeItinerary[selectedDayIdx].title}
+                          </span>
+                        </div>
+                      </div>
+
+                      <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed font-normal">
+                        {activeItinerary[selectedDayIdx].desc}
+                      </p>
+
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                        <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
+                          <span className="text-[10px] uppercase font-bold text-teal-400 block flex items-center gap-1">
+                            <Mountain size={12} /> Altitud
+                          </span>
+                          <span className="text-xs font-black text-white block">{activeItinerary[selectedDayIdx].altitude}</span>
+                        </div>
+
+                        <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
+                          <span className="text-[10px] uppercase font-bold text-emerald-400 block flex items-center gap-1">
+                            <Clock size={12} /> Caminata
+                          </span>
+                          <span className="text-xs font-black text-white block">{activeItinerary[selectedDayIdx].hikingTime}</span>
+                        </div>
+
+                        <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
+                          <span className="text-[10px] uppercase font-bold text-amber-400 block flex items-center gap-1">
+                            <Utensils size={12} /> Comidas
+                          </span>
+                          <span className="text-xs font-black text-white block truncate">{activeItinerary[selectedDayIdx].meals}</span>
+                        </div>
+
+                        <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
+                          <span className="text-[10px] uppercase font-bold text-cyan-400 block flex items-center gap-1">
+                            <Bed size={12} /> Hospedaje
+                          </span>
+                          <span className="text-xs font-black text-white block truncate">{activeItinerary[selectedDayIdx].lodging}</span>
+                        </div>
+                      </div>
+
+                      <div className="pt-2 flex flex-wrap items-center justify-between gap-3">
+                        {isAdvance && (
+                          <button
+                            type="button"
+                            onClick={() => setIsBrochureOpen(true)}
+                            className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-emerald-200 text-xs font-bold border border-white/20 transition-all cursor-pointer flex items-center gap-1.5"
+                          >
+                            <Printer size={13} />
+                            <span>{t.downloadBrochureBtn}</span>
+                          </button>
+                        )}
+
+                        <button
+                          type="button"
+                          onClick={() => handleOpenAction(`${data.name || 'Tour'} — ${activeItinerary[selectedDayIdx].step}: ${activeItinerary[selectedDayIdx].title}`)}
+                          className="emerald-shimmer-btn bg-emerald-500/20 hover:bg-emerald-400 hover:text-slate-950 text-emerald-300 font-bold text-xs px-5 py-2.5 rounded-full border border-emerald-400/40 transition-all cursor-pointer flex items-center gap-2"
+                        >
+                          <MessageCircle size={14} />
+                          <span>Consultar itinerario de esta jornada</span>
+                        </button>
+                      </div>
                     </div>
-
-                    {/* Chip Fotográfico del Tiempo */}
-                    <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs font-bold flex items-center gap-1.5 border border-white/20 shadow-md">
-                      <Clock size={13} className="text-teal-400" />
-                      <span>{activeItinerary[selectedDayIdx].hikingTime}</span>
-                    </div>
-
-                    {/* Identificador del Día sobre la Foto */}
-                    <div className="absolute bottom-3 left-3 right-3 flex items-baseline justify-between gap-2">
-                      <span className="px-2.5 py-0.5 rounded-lg bg-emerald-400 text-slate-950 font-black text-xs shadow-xs">
-                        {activeItinerary[selectedDayIdx].step || `Día ${selectedDayIdx + 1}`}
-                      </span>
-                      <span className="text-xs sm:text-sm font-black text-white truncate drop-shadow-md">
-                        {activeItinerary[selectedDayIdx].title}
-                      </span>
-                    </div>
                   </div>
-
-                  <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed font-normal">
-                    {activeItinerary[selectedDayIdx].desc}
-                  </p>
-
-                {/* Métricas del Día: Altitud, Tiempo, Comidas, Hospedaje */}
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-                  <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
-                    <span className="text-[10px] uppercase font-bold text-teal-400 block flex items-center gap-1">
-                      <Mountain size={12} /> Altitud
-                    </span>
-                    <span className="text-xs font-black text-white block">{activeItinerary[selectedDayIdx].altitude}</span>
-                  </div>
-
-                  <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
-                    <span className="text-[10px] uppercase font-bold text-emerald-400 block flex items-center gap-1">
-                      <Clock size={12} /> Caminata
-                    </span>
-                    <span className="text-xs font-black text-white block">{activeItinerary[selectedDayIdx].hikingTime}</span>
-                  </div>
-
-                  <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
-                    <span className="text-[10px] uppercase font-bold text-amber-400 block flex items-center gap-1">
-                      <Utensils size={12} /> Comidas
-                    </span>
-                    <span className="text-xs font-black text-white block truncate">{activeItinerary[selectedDayIdx].meals}</span>
-                  </div>
-
-                  <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
-                    <span className="text-[10px] uppercase font-bold text-cyan-400 block flex items-center gap-1">
-                      <Bed size={12} /> Hospedaje
-                    </span>
-                    <span className="text-xs font-black text-white block truncate">{activeItinerary[selectedDayIdx].lodging}</span>
-                  </div>
-                </div>
-
-                {/* Botón de Consulta Específica */}
-                <div className="pt-2 flex justify-end">
-                  <button
-                    type="button"
-                    onClick={() => handleOpenAction(`${data.name || 'Tour'} — ${activeItinerary[selectedDayIdx].step}: ${activeItinerary[selectedDayIdx].title}`)}
-                    className="emerald-shimmer-btn bg-emerald-500/20 hover:bg-emerald-400 hover:text-slate-950 text-emerald-300 font-bold text-xs px-5 py-2.5 rounded-full border border-emerald-400/40 transition-all cursor-pointer flex items-center gap-2"
+                )}
+              </div>
+            ) : (
+              /* Vista Cronograma Completo en Cascada */
+              <div className="space-y-4">
+                {activeItinerary.map((step, sIdx) => (
+                  <div 
+                    key={sIdx}
+                    className="p-6 rounded-3xl bg-white/[0.05] backdrop-blur-xl border border-white/10 hover:border-emerald-400/40 transition-all flex flex-col sm:flex-row sm:items-start gap-4 shadow-sm"
                   >
-                    <MessageCircle size={14} />
-                    <span>Consultar itinerario de esta jornada</span>
-                  </button>
-                </div>
-                </div>
+                    <div className="px-3.5 py-1.5 rounded-xl bg-emerald-400 text-[#041716] font-black text-xs shrink-0 self-start shadow-xs">
+                      {step.step || `Día ${sIdx + 1}`}
+                    </div>
+                    <div className="flex-1 space-y-2">
+                      <h4 className="text-base font-black text-white">{step.title}</h4>
+                      <p className="text-xs sm:text-sm text-emerald-200/80 leading-relaxed">{step.desc}</p>
+                      <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-emerald-300/80">
+                        <span className="bg-white/10 px-2 py-0.5 rounded-md">🏔️ {step.altitude}</span>
+                        <span className="bg-white/10 px-2 py-0.5 rounded-md">⏱️ {step.hikingTime}</span>
+                        <span className="bg-white/10 px-2 py-0.5 rounded-md">🍲 {step.meals}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </div>
-        ) : (
-          /* Vista Cronograma Completo en Cascada */
-          <div className="space-y-4">
-            {activeItinerary.map((step, sIdx) => (
-              <div 
-                key={sIdx}
-                className="p-6 rounded-3xl bg-white/[0.05] backdrop-blur-xl border border-white/10 hover:border-emerald-400/40 transition-all flex flex-col sm:flex-row sm:items-start gap-4 shadow-sm"
-              >
-                <div className="px-3.5 py-1.5 rounded-xl bg-emerald-400 text-[#041716] font-black text-xs shrink-0 self-start shadow-xs">
-                  {step.step || `Día ${sIdx + 1}`}
-                </div>
-                <div className="flex-1 space-y-2">
-                  <h4 className="text-base font-black text-white">{step.title}</h4>
-                  <p className="text-xs sm:text-sm text-emerald-200/80 leading-relaxed">{step.desc}</p>
-                  <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-emerald-300/80">
-                    <span className="bg-white/10 px-2 py-0.5 rounded-md">🏔️ {step.altitude}</span>
-                    <span className="bg-white/10 px-2 py-0.5 rounded-md">⏱️ {step.hikingTime}</span>
-                    <span className="bg-white/10 px-2 py-0.5 rounded-md">🍲 {step.meals}</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* 7. SERVICIOS INCLUIDOS & CHECKLIST DE MOCHILA INTERACTIVO */}
-      <section id="incluye" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
-        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
-        <div className="absolute top-1/2 -right-24 -translate-y-1/2 w-[650px] sm:w-[850px] h-[550px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.48)_0%,rgba(13,148,136,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
-        <div className="absolute top-1/2 -left-24 -translate-y-1/2 w-[600px] sm:w-[750px] h-[480px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.38)_0%,rgba(6,182,212,0.20)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
-        
-        <div className="relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-            <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Equipamiento & Confort</span>
-            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-              Logística Integral de Expedición
-            </h2>
-            <p className="text-xs sm:text-sm text-emerald-200/70">
-              Todo lo necesario para una experiencia segura, gastronómica y de máximo confort en los Andes.
-            </p>
-          </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      {/* 7. SERVICIOS INCLUIDOS & CHECKLIST DE MOCHILA (OCULTO EN FREE) */}
+      {!isFree && (
+        <section id="incluye" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+          <div className="absolute top-1/2 -right-24 -translate-y-1/2 w-[650px] sm:w-[850px] h-[550px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.48)_0%,rgba(13,148,136,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+          <div className="absolute top-1/2 -left-24 -translate-y-1/2 w-[600px] sm:w-[750px] h-[480px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.38)_0%,rgba(6,182,212,0.20)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
           
-          {/* Columna Izquierda (7 Cols): Qué Incluye con Checks Esmeralda */}
-          <div className="lg:col-span-7 relative overflow-hidden p-7 sm:p-9 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6">
-            {/* Foto de fondo tenue: Campamento Glamping Andino */}
-            <div className="absolute inset-0 pointer-events-none z-0">
-              <Image 
-                src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=1000&auto=format&fit=crop" 
-                alt="Glamping Camp Background" 
-                fill 
-                sizes="(max-width: 768px) 100vw, 50vw" 
-                className="object-cover opacity-[0.06] mix-blend-screen scale-105" 
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-[#021016]/80 to-[#021016]/40" />
+          <div className="relative z-10">
+            <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
+              <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Equipamiento & Confort</span>
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                {t.inclusionsTitle}
+              </h2>
+              <p className="text-xs sm:text-sm text-emerald-200/70">
+                {t.inclusionsSub}
+              </p>
             </div>
 
-            <div className="relative z-10 space-y-6">
-              <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40">
-                    <CheckCircle2 size={18} />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-black text-white">Servicios Incluidos</h3>
-                    <p className="text-[11px] text-emerald-300/80">Cobertura garantizada de alta montaña</p>
-                  </div>
-                </div>
-                <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-                  100% Todo Incluido
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-                {includedList.map((inc, iIdx) => (
-                  <div 
-                    key={iIdx}
-                    className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-emerald-400/40 transition-all flex items-start gap-3 group"
-                  >
-                    <div className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
-                      <Check size={14} className="stroke-[3]" />
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              
+              {/* Columna Izquierda: Qué Incluye */}
+              <div className={`${(isPro || isAdvance) ? 'lg:col-span-7' : 'lg:col-span-12 max-w-4xl mx-auto'} relative overflow-hidden p-7 sm:p-9 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-6 w-full`}>
+                <div className="relative z-10 space-y-6">
+                  <div className="flex items-center justify-between pb-4 border-b border-white/10">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40">
+                        <CheckCircle2 size={18} />
+                      </div>
+                      <div>
+                        <h3 className="text-base font-black text-white">{t.includedServices}</h3>
+                        <p className="text-[11px] text-emerald-300/80">Cobertura garantizada de alta montaña</p>
+                      </div>
                     </div>
-                    <span className="text-xs text-emerald-100/90 leading-snug font-medium">
-                      {inc}
+                    <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                      {t.includedBadge}
                     </span>
                   </div>
-                ))}
-              </div>
-            </div>
-          </div>
 
-          {/* Columna Derecha (5 Cols): Checklist de Mochila Interactivo + Qué NO Incluye */}
-          <div className="lg:col-span-5 space-y-6">
-            
-            {/* Tarjeta Qué Llevar (Checklist Interactivo) */}
-            <div className="relative overflow-hidden p-6 sm:p-7 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-4">
-              {/* Mini badge flotante encima */}
-              <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-black/50 backdrop-blur-md border border-white/15 shadow-md absolute top-4 right-20 z-10">
-                <div className="relative w-6 h-6 rounded-md overflow-hidden shrink-0 border border-emerald-400/40">
-                  <Image 
-                    src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=150&auto=format&fit=crop" 
-                    alt="Gear sticker" 
-                    fill 
-                    sizes="24px" 
-                    className="object-cover" 
-                  />
-                </div>
-                <span className="text-[9px] font-bold text-emerald-300">Equipo Pro</span>
-              </div>
-
-              <div className="flex items-center justify-between pb-3 border-b border-white/10">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/40">
-                    <Backpack size={16} />
-                  </div>
-                  <div>
-                    <h4 className="text-sm font-black text-white">Checklist de tu Mochila</h4>
-                    <p className="text-[10px] text-emerald-200/70">Toca para marcar lo que ya tienes listo</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    {includedList.map((inc, iIdx) => (
+                      <div 
+                        key={iIdx}
+                        className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-emerald-400/40 transition-all flex items-start gap-3 group"
+                      >
+                        <div className="w-6 h-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
+                          <Check size={14} className="stroke-[3]" />
+                        </div>
+                        <span className="text-xs text-emerald-100/90 leading-snug font-medium">
+                          {inc}
+                        </span>
+                      </div>
+                    ))}
                   </div>
                 </div>
-
-                <span className="text-xs font-black text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-400/30">
-                  {packedCount}/{whatToBringList.length}
-                </span>
               </div>
 
-              {/* Barra de Progreso del Equipaje */}
-              <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
-                <div 
-                  className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 transition-all duration-300"
-                  style={{ width: `${packedPct}%` }}
-                />
-              </div>
+              {/* Columna Derecha: Mochila & Qué NO Incluye (PRO & ADVANCE) */}
+              {(isPro || isAdvance) && (
+                <div className="lg:col-span-5 space-y-6">
+                  {/* Tarjeta Qué Llevar (Checklist Interactivo) */}
+                  <div className="relative overflow-hidden p-6 sm:p-7 rounded-[36px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] space-y-4">
+                    <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                      <div className="flex items-center gap-2.5">
+                        <div className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/40">
+                          <Backpack size={16} />
+                        </div>
+                        <div>
+                          <h4 className="text-sm font-black text-white">{t.whatToBring}</h4>
+                          <p className="text-[10px] text-emerald-200/70">{t.whatToBringSub}</p>
+                        </div>
+                      </div>
 
-              <div className="space-y-2">
-                {whatToBringList.map((item, wIdx) => {
-                  const isChecked = !!checkedPacking[wIdx];
-                  return (
-                    <div 
-                      key={wIdx} 
-                      onClick={() => toggleChecklist(wIdx)}
-                      className={`flex items-center gap-2.5 p-2 rounded-xl text-xs transition-all cursor-pointer ${
-                        isChecked ? 'bg-emerald-500/10 text-white font-semibold' : 'text-emerald-100/70 hover:bg-white/5'
-                      }`}
-                    >
-                      {isChecked ? (
-                        <CheckSquare size={16} className="text-emerald-400 shrink-0" />
-                      ) : (
-                        <Square size={16} className="text-emerald-300/40 shrink-0" />
-                      )}
-                      <span className={isChecked ? 'line-through opacity-80' : ''}>{item}</span>
+                      <span className="text-xs font-black text-emerald-300 bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-400/30">
+                        {packedCount}/{whatToBringList.length}
+                      </span>
                     </div>
-                  );
-                })}
-              </div>
-            </div>
 
-            {/* Tarjeta Qué NO Incluye */}
-            <div className="p-5 sm:p-6 rounded-3xl bg-white/[0.03] backdrop-blur-xl border border-white/10 space-y-3">
-              <div className="flex items-center gap-2 text-xs font-bold text-emerald-300/80">
-                <XCircle size={15} className="text-rose-400/80 shrink-0" />
-                <span>No Incluido en la Tarifa</span>
-              </div>
-              <ul className="space-y-1.5 text-[11px] text-emerald-200/70 list-disc list-inside">
-                {notIncludedList.map((nInc, nIdx) => (
-                  <li key={nIdx}>{nInc}</li>
-                ))}
-              </ul>
-            </div>
+                    <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
+                      <div 
+                        className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 transition-all duration-300"
+                        style={{ width: `${packedPct}%` }}
+                      />
+                    </div>
 
-          </div>
+                    <div className="space-y-2">
+                      {whatToBringList.map((item, wIdx) => {
+                        const isChecked = !!checkedPacking[wIdx];
+                        return (
+                          <div 
+                            key={wIdx} 
+                            onClick={() => toggleChecklist(wIdx)}
+                            className={`flex items-center gap-2.5 p-2 rounded-xl text-xs transition-all cursor-pointer ${
+                              isChecked ? 'bg-emerald-500/10 text-white font-semibold' : 'text-emerald-100/70 hover:bg-white/5'
+                            }`}
+                          >
+                            {isChecked ? (
+                              <CheckSquare size={16} className="text-emerald-400 shrink-0" />
+                            ) : (
+                              <Square size={16} className="text-emerald-300/40 shrink-0" />
+                            )}
+                            <span className={isChecked ? 'line-through opacity-80' : ''}>{item}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
 
-        </div>
-        </div>
-      </section>
-
-      {/* 8. SELLOS DE CONFIANZA & SEGURIDAD FORMAL */}
-      <section className="relative py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
-        {/* Halo Suave de Sellos */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.30)_0%,transparent_70%)] blur-2xl pointer-events-none z-0" />
-        <div className="relative z-10 p-6 sm:p-8 rounded-[36px] bg-gradient-to-r from-emerald-950/40 via-teal-950/30 to-emerald-950/40 backdrop-blur-2xl border border-emerald-500/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
-          {/* Foto de fondo sutil: Paisaje Andino Tradicional */}
-          <div className="absolute inset-0 pointer-events-none z-0">
-            <Image 
-              src="https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1200&auto=format&fit=crop" 
-              alt="Cusco Landscape Background" 
-              fill 
-              sizes="(max-width: 1024px) 100vw, 1200px" 
-              className="object-cover opacity-[0.06] mix-blend-screen scale-105" 
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#021016]/95 via-transparent to-[#021016]/95" />
-          </div>
-
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4 text-center md:text-left">
-              {/* Sello Emblemático Oficial con Imagen y Relieve */}
-              <div className="relative w-12 h-12 rounded-2xl overflow-hidden border border-emerald-400/40 shadow-lg shrink-0 hidden sm:flex items-center justify-center bg-emerald-950/60">
-                <Image 
-                  src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=200&auto=format&fit=crop" 
-                  alt="Sello Oficial DIRCETUR" 
-                  fill 
-                  sizes="48px"
-                  className="object-cover opacity-60"
-                />
-                <div className="absolute inset-0 bg-emerald-950/50 backdrop-blur-[1px]" />
-                <Award size={22} className="relative z-10 text-emerald-300 drop-shadow-md" />
-              </div>
-              <div className="space-y-1">
-                <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 flex items-center justify-center md:justify-start gap-1.5">
-                  <ShieldCheck size={12} className="text-emerald-400" /> Acreditaciones Oficiales
-                </span>
-                <h3 className="text-lg sm:text-xl font-black text-white">
-                  Operador Turístico Formal y Autorizado de Cusco
-                </h3>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full md:w-auto">
-              {trustBadgesList.slice(0, 6).map((badge, bIdx) => (
-                <div 
-                  key={bIdx}
-                  className="px-3.5 py-2 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center gap-2 text-[11px] font-bold text-emerald-100/90 shadow-2xs hover:border-emerald-400/40 transition-colors"
-                >
-                  <ShieldCheck size={14} className="text-emerald-400 shrink-0" />
-                  <span className="truncate">{badge}</span>
+                  {/* Tarjeta Qué NO Incluye */}
+                  <div className="p-5 sm:p-6 rounded-3xl bg-white/[0.03] backdrop-blur-xl border border-white/10 space-y-3">
+                    <div className="flex items-center gap-2 text-xs font-bold text-emerald-300/80">
+                      <XCircle size={15} className="text-rose-400/80 shrink-0" />
+                      <span>{t.notIncludedTitle}</span>
+                    </div>
+                    <ul className="space-y-1.5 text-[11px] text-emerald-200/70 list-disc list-inside">
+                      {notIncludedList.map((nInc, nIdx) => (
+                        <li key={nIdx}>{nInc}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-              ))}
+              )}
+
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* 9. PINTEREST PINBOARD & GALERÍA HD (MODO ADVANCE) */}
-      <section id="galeria" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
-        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[950px] sm:w-[1200px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.42)_0%,rgba(13,148,136,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
-        <div className="absolute top-1/3 -left-20 w-[550px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.35)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
-        
-        <div className="relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-            <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Galería Fotográfica HD</span>
-            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-              Inspiración Visual de las Rutas
-            </h2>
-            <p className="text-xs sm:text-sm text-emerald-200/70">
-              Postales reales capturadas por nuestros guías y viajeros en los senderos más escénicos.
-            </p>
+      {/* 8. SELLOS DE CONFIANZA & SEGURIDAD FORMAL (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
+        <section className="relative py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.30)_0%,transparent_70%)] blur-2xl pointer-events-none z-0" />
+          <div className="relative z-10 p-6 sm:p-8 rounded-[36px] bg-gradient-to-r from-emerald-950/40 via-teal-950/30 to-emerald-950/40 backdrop-blur-2xl border border-emerald-500/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+              <div className="flex items-center gap-4 text-center md:text-left">
+                <div className="relative w-12 h-12 rounded-2xl overflow-hidden border border-emerald-400/40 shadow-lg shrink-0 hidden sm:flex items-center justify-center bg-emerald-950/60">
+                  <Award size={22} className="relative z-10 text-emerald-300 drop-shadow-md" />
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 flex items-center justify-center md:justify-start gap-1.5">
+                    <ShieldCheck size={12} className="text-emerald-400" /> {t.officialAccreditation}
+                  </span>
+                  <h3 className="text-lg sm:text-xl font-black text-white">
+                    {t.officialOperatorTitle}
+                  </h3>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 w-full md:w-auto">
+                {trustBadgesList.slice(0, 6).map((badge, bIdx) => (
+                  <div 
+                    key={bIdx}
+                    className="px-3.5 py-2 rounded-2xl bg-white/[0.05] border border-white/10 flex items-center gap-2 text-[11px] font-bold text-emerald-100/90 shadow-2xs hover:border-emerald-400/40 transition-colors"
+                  >
+                    <ShieldCheck size={14} className="text-emerald-400 shrink-0" />
+                    <span className="truncate">{badge}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
+        </section>
+      )}
 
-          <PinterestPinboard
-            images={data.galleryImages}
-            destination={data.destination || 'Cusco & Machu Picchu'}
-            tourName={data.name || 'Expedición de Aventura'}
-            tier={tier}
-            theme="emerald-explorer"
-            isMobile={viewMode === 'mobile'}
-            lang={currentLang}
-          />
-        </div>
-      </section>
+      {/* 9. PINTEREST PINBOARD & GALERÍA HD (OCULTO EN FREE) */}
+      {!isFree && (
+        <section id="galeria" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[950px] sm:w-[1200px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.42)_0%,rgba(13,148,136,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+          <div className="absolute top-1/3 -left-20 w-[550px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.35)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
+          
+          <div className="relative z-10">
+            <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
+              <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Galería Fotográfica HD</span>
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                {t.galleryTitle}
+              </h2>
+              <p className="text-xs sm:text-sm text-emerald-200/70">
+                {t.gallerySub}
+              </p>
+            </div>
 
-      {/* 9.5 CATÁLOGO DE TOURS & EXPEDICIONES DE AUTOR (SECCIÓN INDEPENDIENTE) */}
+            <PinterestPinboard
+              images={data.galleryImages}
+              destination={destinationName}
+              tourName={data.name || 'Expedición de Aventura'}
+              tier={tier}
+              theme="emerald-explorer"
+              isMobile={isMobile}
+              lang={currentLang}
+            />
+          </div>
+        </section>
+      )}
+
+      {/* 10. CATÁLOGO DE TOURS (VISIBLE EN TODOS LOS PLANES) */}
       <section id="tours" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
-        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
         <div className="absolute top-1/2 -left-24 -translate-y-1/2 w-[650px] sm:w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.45)_0%,rgba(6,182,212,0.22)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
         <div className="absolute top-1/2 -right-24 -translate-y-1/2 w-[600px] sm:w-[750px] h-[480px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.40)_0%,rgba(13,148,136,0.20)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
 
-        {/* Textura Fotográfica Andina Sutil de Fondo (Z-0) */}
-        <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-          <Image 
-            src="https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=1600&auto=format&fit=crop"
-            alt="Andean Trails Landscape Background"
-            fill
-            sizes="100vw"
-            className="object-cover opacity-[0.05] mix-blend-screen scale-105"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-transparent to-[#021016]" />
-        </div>
-
         <div className="relative z-10">
-          {/* Header de Sección con Título, Contador y Filtros de Categoría */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-10">
             <div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-black mb-3">
@@ -1868,7 +1937,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight flex flex-wrap items-center gap-2.5">
                 <span>{t.toursTitle}</span>
                 <span className="text-xs font-bold text-emerald-300 bg-emerald-500/20 px-3 py-1 rounded-full border border-emerald-400/40">
-                  {filteredTours.length} Circuitos
+                  {displayTours.length} {t.allToursBadge}
                 </span>
               </h2>
               <p className="text-xs sm:text-sm text-emerald-200/70 mt-1.5 max-w-2xl leading-relaxed">
@@ -1876,7 +1945,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               </p>
             </div>
 
-            {/* Filtros de Categoría Interactivos */}
+            {/* Filtros de Categoría */}
             <div className="flex flex-wrap items-center gap-1.5 bg-white/[0.06] p-1.5 rounded-2xl border border-white/10 shrink-0">
               {[
                 { id: 'all', label: 'Todos' },
@@ -1903,8 +1972,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </div>
           </div>
 
-          {/* Grid de Cards de Tours Disponibles */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Grid de Cards de Tours (Balanceado: 3 en Free/Basic, 6 en Pro/Advance) */}
+          <div className={`grid gap-6 ${isFreeOrBasic ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
             {visibleTours.map((tour, idx) => {
               const isFav = favorites[tour.id || idx];
               const tourUsd = parseInt(tour.price.replace(/\D/g, '') || '85', 10);
@@ -1913,8 +1982,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                   key={tour.id || idx}
                   className="group rounded-3xl glass-floating-card overflow-hidden flex flex-col justify-between transition-all duration-300 hover:border-emerald-400/40 hover:shadow-2xl hover:shadow-emerald-950/40"
                 >
-                  {/* Imagen del Tour con Chips y Botón Favorito */}
-                  <div className="relative h-56 w-full overflow-hidden bg-emerald-950">
+                  <div 
+                    onClick={() => openLightbox(tour.image || heroImg)}
+                    className="relative h-56 w-full overflow-hidden bg-emerald-950 cursor-pointer"
+                  >
                     <Image 
                       src={tour.image || heroImg} 
                       alt={tour.title} 
@@ -1924,29 +1995,25 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-transparent to-black/30" />
 
-                    {/* Badge de Rating */}
                     <div className="absolute top-3.5 left-3.5 bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full text-amber-300 font-black text-xs flex items-center gap-1 border border-white/20 shadow-md">
                       <Star size={12} className="fill-amber-400 text-amber-400" />
                       <span>{tour.rating || 4.8}</span>
                     </div>
 
-                    {/* Botón Favorito Corazón Interactivo */}
                     <button
                       type="button"
-                      onClick={() => toggleFavorite(tour.id || String(idx))}
+                      onClick={(e) => { e.stopPropagation(); toggleFavorite(tour.id || String(idx)); }}
                       className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-black/50 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:scale-110 shadow-md transition-transform cursor-pointer"
                       aria-label="Guardar tour en favoritos"
                     >
                       <Heart size={14} className={isFav ? "fill-rose-500 text-rose-500" : "text-white"} />
                     </button>
 
-                    {/* Precio Flotante Dinámico */}
                     <div className="absolute bottom-3.5 right-3.5 bg-emerald-400 text-[#041716] font-black text-xs sm:text-sm px-3.5 py-1 rounded-xl shadow-lg">
                       {formatPrice(tourUsd, passengers)}
                     </div>
                   </div>
 
-                  {/* Contenido de la Card */}
                   <div className="p-5 space-y-3.5 flex-1 flex flex-col justify-between">
                     <div>
                       <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-400 block mb-1">
@@ -1958,7 +2025,6 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                     </div>
 
                     <div className="pt-3 border-t border-white/10 flex items-center justify-between gap-2">
-                      {/* Avatares de Viajeros */}
                       <div className="flex items-center gap-1.5">
                         <div className="flex -space-x-2 overflow-hidden">
                           <div className="inline-block h-6 w-6 rounded-full ring-2 ring-[#041716] bg-emerald-800 relative overflow-hidden">
@@ -1985,7 +2051,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             })}
           </div>
 
-          {/* Controles de Navegación del Carrusel Funcionales */}
+          {/* Paginación de Tours */}
           {totalTourPages > 1 && (
             <div className="flex items-center justify-center gap-3 mt-10">
               <button
@@ -1993,12 +2059,11 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 disabled={currentTourPage === 0}
                 onClick={() => setTourPage(Math.max(0, currentTourPage - 1))}
                 className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 disabled:opacity-30 border border-white/20 text-emerald-300 flex items-center justify-center cursor-pointer transition-all shadow-md"
-                aria-label="Página anterior de tours"
+                aria-label="Página anterior"
               >
                 <ChevronLeft size={18} />
               </button>
 
-              {/* Paginadores */}
               <div className="flex items-center gap-2">
                 {[...Array(totalTourPages)].map((_, pIdx) => (
                   <button
@@ -2008,7 +2073,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                     className={`h-2.5 rounded-full transition-all cursor-pointer ${
                       currentTourPage === pIdx ? 'w-7 bg-emerald-400' : 'w-2.5 bg-white/25 hover:bg-white/45'
                     }`}
-                    aria-label={`Ir a página ${pIdx + 1} de tours`}
+                    aria-label={`Ir a página ${pIdx + 1}`}
                   />
                 ))}
               </div>
@@ -2018,7 +2083,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 disabled={currentTourPage >= totalTourPages - 1}
                 onClick={() => setTourPage(Math.min(totalTourPages - 1, currentTourPage + 1))}
                 className="w-10 h-10 rounded-full bg-emerald-500 hover:bg-emerald-400 disabled:opacity-30 text-[#041716] font-bold flex items-center justify-center cursor-pointer transition-all shadow-md"
-                aria-label="Página siguiente de tours"
+                aria-label="Página siguiente"
               >
                 <ChevronRight size={18} />
               </button>
@@ -2027,135 +2092,123 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </div>
       </section>
 
-      {/* 10. TESTIMONIOS & RESEÑAS VERIFICADAS */}
-      <section id="resenas" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
-        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[950px] sm:w-[1200px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.42)_0%,rgba(245,158,11,0.22)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
-        <div className="absolute top-1/4 -right-20 w-[550px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.35)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
-        
-        {/* Foto de fondo tenue: Nevados Andinos al atardecer */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <Image 
-            src="https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1400&auto=format&fit=crop" 
-            alt="Andean Sunset Background" 
-            fill 
-            sizes="100vw" 
-            className="object-cover opacity-[0.05] mix-blend-screen scale-105" 
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-[#021016]/85 to-[#021016]" />
-        </div>
+      {/* 11. MÓDULOS EXCLUSIVOS ADVANCE TIER */}
 
-        <div className="relative z-10">
-          <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-bold">
-              <Star size={12} className="fill-amber-400" />
-              <span>4.9 / 5.0 en Reseñas Internacionales</span>
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
-              Voces de Nuestros Viajeros
-            </h2>
-            <p className="text-xs sm:text-sm text-emerald-200/70">
-              Historias auténticas de quienes ya vivieron la magia de Cusco con nuestro equipo.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {testimonialsList.map((rev, rIdx) => (
-              <div 
-                key={rIdx}
-                className="glass-floating-card p-6 sm:p-7 rounded-[32px] flex flex-col justify-between space-y-5 animate-emerald-float group hover:-translate-y-2 transition-all relative overflow-hidden"
-                style={{ animationDelay: `${rIdx * 1.5}s` }}
-              >
-                <div className="space-y-4 relative z-10">
-                  {/* 5 Estrellas Doradas */}
-                  <div className="flex items-center gap-1 text-amber-400">
-                    {[...Array(5)].map((_, s) => (
-                      <Star key={s} size={15} className="fill-amber-400" />
-                    ))}
-                  </div>
-
-                  <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed italic">
-                    "{rev.comment}"
-                  </p>
-                </div>
-
-                {/* Autor y Origen con Avatar Fotográfico Real */}
-                <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-3 relative z-10">
-                  <div className="flex items-center gap-2.5">
-                    <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-emerald-400/40 shadow-sm shrink-0">
-                      <Image 
-                        src={TESTIMONIAL_AVATARS[rIdx % TESTIMONIAL_AVATARS.length]} 
-                        alt={rev.name}
-                        fill 
-                        sizes="36px"
-                        className="object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h4 className="font-extrabold text-white text-xs sm:text-sm">{rev.name}</h4>
-                      <span className="text-[10px] text-emerald-300/70 flex items-center gap-1">
-                        <MapPin size={10} /> {rev.origin}
-                      </span>
-                    </div>
-                  </div>
-                  <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 shrink-0">
-                    Verificado ✓
-                  </span>
-                </div>
+      {/* 11.1 TESTIMONIOS & RESEÑAS VERIFICADAS (SOLO ADVANCE) */}
+      {isAdvance && (
+        <section id="resenas" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[950px] sm:w-[1200px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.42)_0%,rgba(245,158,11,0.22)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+          <div className="absolute top-1/4 -right-20 w-[550px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.35)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
+          
+          <div className="relative z-10">
+            <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-bold">
+                <Star size={12} className="fill-amber-400" />
+                <span>4.9 / 5.0 en Reseñas Internacionales</span>
               </div>
-            ))}
+              <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
+                {t.reviewsTitle}
+              </h2>
+              <p className="text-xs sm:text-sm text-emerald-200/70">
+                {t.reviewsSub}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {testimonialsList.map((rev, rIdx) => (
+                <div 
+                  key={rIdx}
+                  className="glass-floating-card p-6 sm:p-7 rounded-[32px] flex flex-col justify-between space-y-5 animate-emerald-float group hover:-translate-y-2 transition-all relative overflow-hidden"
+                  style={{ animationDelay: `${rIdx * 1.5}s` }}
+                >
+                  <div className="space-y-4 relative z-10">
+                    <div className="flex items-center gap-1 text-amber-400">
+                      {[...Array(5)].map((_, s) => (
+                        <Star key={s} size={15} className="fill-amber-400" />
+                      ))}
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-emerald-100/90 leading-relaxed italic">
+                      &quot;{rev.comment}&quot;
+                    </p>
+                  </div>
+
+                  <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-3 relative z-10">
+                    <div className="flex items-center gap-2.5">
+                      <div className="relative w-9 h-9 rounded-full overflow-hidden border-2 border-emerald-400/40 shadow-sm shrink-0">
+                        <Image 
+                          src={TESTIMONIAL_AVATARS[rIdx % TESTIMONIAL_AVATARS.length]} 
+                          alt={rev.name}
+                          fill 
+                          sizes="36px"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h4 className="font-extrabold text-white text-xs sm:text-sm">{rev.name}</h4>
+                        <span className="text-[10px] text-emerald-300/70 flex items-center gap-1">
+                          <MapPin size={10} /> {rev.origin}
+                        </span>
+                      </div>
+                    </div>
+                    <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 shrink-0">
+                      {t.verifiedReview}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* 11. TOUR SUPPORT & FAQS (MODALIDAD COMPLETA: COMUNIDAD, FAQS & MESA DE AYUDA) */}
-      <section id="faqs" className="relative py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto overflow-hidden">
-        {/* Halos Luminosos Bicromáticos Visibles de Sección (Z-0) */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] sm:w-[1050px] h-[550px] bg-[radial-gradient(ellipse_at_center,rgba(13,148,136,0.45)_0%,rgba(14,165,233,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
-        <div className="absolute top-1/3 -left-20 w-[500px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.30)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
-        
-        {/* Foto de fondo tenue: Senderos Andinos */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <Image 
-            src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=1200&auto=format&fit=crop" 
-            alt="Inca Trail Background" 
-            fill 
-            sizes="(max-width: 1024px) 100vw, 900px" 
-            className="object-cover opacity-[0.05] mix-blend-screen scale-105" 
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#021016] via-[#021016]/90 to-[#021016]" />
-        </div>
+      {/* 11.2 TURISMO SOSTENIBLE & HUELLA CERO (SOLO ADVANCE) */}
+      {isAdvance && (
+        <SustainabilityAndSocialProof 
+          lang={currentLang} 
+          brandName="NavikX Cusco Expeditions" 
+          isMobile={isMobile} 
+        />
+      )}
 
-        <div className="relative z-10">
-          <TourSupportAndFaqs
-            faqs={data.faqs}
-            tourName={data.name || 'Expedición de Aventura en Cusco'}
-            whatsapp={data.whatsapp || '+51984123456'}
-            guideName={guideName}
-            destination={data.destination || 'Cusco & Machu Picchu'}
-            tier={tier}
-            theme="emerald-explorer"
-            isMobile={viewMode === 'mobile'}
-            lang={currentLang}
-          />
-        </div>
-      </section>
+      {/* 11.3 TOUR SUPPORT & FORO DE FAQS (SOLO ADVANCE) */}
+      {isAdvance && (
+        <section id="faqs" className="relative py-12 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto overflow-hidden">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] sm:w-[1050px] h-[550px] bg-[radial-gradient(ellipse_at_center,rgba(13,148,136,0.45)_0%,rgba(14,165,233,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
+          <div className="absolute top-1/3 -left-20 w-[500px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(20,184,166,0.30)_0%,transparent_70%)] blur-3xl pointer-events-none z-0" />
+          
+          <div className="relative z-10">
+            <TourSupportAndFaqs
+              faqs={data.faqs}
+              tourName={heroTitle}
+              whatsapp={guidePhone}
+              guideName={guideName}
+              destination={destinationName}
+              tier={tier}
+              theme="emerald-explorer"
+              isMobile={isMobile}
+              lang={currentLang}
+            />
+          </div>
+        </section>
+      )}
 
-      {/* 12. BARRA DE MÉTRICAS INFERIOR / STICKY BOTTOM BAR FLOTANTE */}
+      {/* 11.4 GARANTÍA DE FLEXIBILIDAD Y OFICINA FÍSICA (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
+        <TrustGuaranteeAndOffice
+          lang={currentLang}
+          whatsapp={guidePhone}
+          brandName="NavikX Cusco Expeditions"
+          isMobile={isMobile}
+          officeAddress={data.officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
+          officeHours={data.officeHours || 'Lunes a Domingo: 07:00 - 21:00'}
+          mapsUrl={data.mapsUrl}
+        />
+      )}
+
+      {/* 12. BARRA DE MÉTRICAS INFERIOR */}
       <div className="relative z-20 py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="relative p-4 sm:p-5 rounded-3xl bg-white/[0.08] backdrop-blur-2xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col md:flex-row items-center justify-between gap-4">
-          {/* Foto de fondo tenue: Nevados Andinos */}
-          <div className="absolute inset-0 pointer-events-none z-0">
-            <Image 
-              src="https://images.unsplash.com/photo-1589556264800-08ae9e129a8c?q=80&w=1200&auto=format&fit=crop" 
-              alt="Andes Landscape Background" 
-              fill 
-              sizes="(max-width: 1024px) 100vw, 1200px" 
-              className="object-cover opacity-[0.05] mix-blend-screen scale-105" 
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#021016]/95 via-transparent to-[#021016]/95" />
-          </div>
-          
           <div className="relative z-10 flex flex-wrap items-center justify-around gap-6 text-center sm:text-left flex-1">
             <div className="flex items-center gap-2">
               <MapPin size={18} className="text-emerald-400 shrink-0" />
@@ -2190,7 +2243,6 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </div>
           </div>
 
-          {/* Botón Coral / Naranja Llamativo con Tarifa en Moneda Elegida */}
           <button
             type="button"
             onClick={() => handleOpenAction(data.name)}
@@ -2202,7 +2254,14 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </div>
       </div>
 
-      {/* 13. FOOTER LEGAL & LIBRO DE RECLAMACIONES (INDECOPI LEY 29571) */}
+      {/* 13. BANNER DEL PLAN GRATUITO (SOLO FREE) */}
+      {isFree && (
+        <div className="bg-[#031822] text-emerald-300/80 py-3 px-4 text-center text-xs border-t border-emerald-900/50">
+          <p>{t.freeBanner}</p>
+        </div>
+      )}
+
+      {/* 14. FOOTER LEGAL & LIBRO DE RECLAMACIONES */}
       <footer className="relative z-10 border-t border-emerald-900/60 bg-[#020d0d] py-10 px-4 sm:px-6 lg:px-8 text-xs text-emerald-200/70">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
@@ -2235,7 +2294,12 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </div>
       </footer>
 
-      {/* MODALES REUTILIZABLES */}
+      {/* SOCIAL PROOF NOTIFICACIONES FLOTANTES EN VIVO (!isFree) */}
+      {!isFree && (
+        <RecentBookingsToast lang={currentLang} />
+      )}
+
+      {/* MODALES */}
       <QuoteModal
         isOpen={isQuoteOpen}
         onClose={() => setIsQuoteOpen(false)}
@@ -2246,7 +2310,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       <ComplaintsBookModal
         isOpen={isComplaintsOpen}
         onClose={() => setIsComplaintsOpen(false)}
-        agencyName={data.name || 'NavikX Cusco Expeditions'}
+        agencyName={data.name || 'NavikX Cusco Expeditions • Cusco Creativos S.A.C.'}
         agencyRuc="20601234567"
         agencyAddress={data.officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
       />
@@ -2254,7 +2318,29 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       <LegalTermsModal
         isOpen={isTermsOpen}
         onClose={() => setIsTermsOpen(false)}
-        agencyName={data.name || 'NavikX Cusco Expeditions'}
+        agencyName={data.name || 'NavikX Cusco Expeditions • Cusco Creativos S.A.C.'}
+        lang={currentLang}
+      />
+
+      {/* MODAL BROCHURE ITINERARIO EN PDF (SOLO ADVANCE) */}
+      <BrochurePrintModal
+        isOpen={isBrochureOpen}
+        onClose={() => setIsBrochureOpen(false)}
+        data={data || {}}
+        brandName="NavikX Cusco"
+        fullAgencyName="NavikX Cusco Expeditions • Cusco Creativos S.A.C."
+        whatsappNumber={guidePhone}
+        lang={currentLang}
+      />
+
+      {/* MODAL VISOR LIGHTBOX FOTOS EN PANTALLA COMPLETA */}
+      <LightboxModal
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        images={allGalleryPhotos}
+        currentIndex={lightboxIndex}
+        onNavigate={setLightboxIndex}
+        title={heroTitle}
       />
 
     </div>

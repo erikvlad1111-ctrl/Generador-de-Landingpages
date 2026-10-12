@@ -33,4 +33,5 @@ Cada vez que se realicen cambios solicitados por el usuario:
 - **PremiumTemplate:** `src/templates/PremiumTemplate.tsx`
 - **CulturalTemplate:** `src/templates/CulturalTemplate.tsx`
 - **BohoTemplate:** `src/templates/BohoTemplate.tsx`
+- **ModernEmeraldTemplate:** `src/templates/ModernEmeraldTemplate.tsx` (Diseño 6 Esmeralda Explorer con gradientes aurora, 5 idiomas y módulos Advance).
 - **TemplateRenderer:** `src/templates/TemplateRenderer.tsx` (Renderizador universal con selector dinámico).

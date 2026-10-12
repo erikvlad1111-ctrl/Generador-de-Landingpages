@@ -161,5 +161,13 @@ Cada una de las 5 plantillas (`agency-portal`, `boho-nature`, `adventure`, `cult
   2. Agregar controles de reordenamiento (▲/▼), duplicación (`Copy`) y eliminación (`Trash2`) a cada tarjeta de FAQ.
   3. Proveer botones de acción primarios tanto en el estado vacío ("+ Añadir Primera Pregunta") como al pie de la lista ("+ Añadir Otra Pregunta").
   4. Incorporar un banner de advertencia contextual de nivel en la pestaña de FAQs con botón de un clic para cambiar instantáneamente la landing al nivel `Advance`.
-  5. En `TourSupportAndFaqs.tsx`, añadir un botón CTA al final del acordeón de preguntas frecuentes oficiales para permitir a los visitantes registrar nuevas consultas comunitarias.
+### Error 14: Plantilla 6 (ModernEmeraldTemplate / Emerald Explorer) sin gating de niveles y módulos Advance ausentes
+- **Síntoma / Mensaje de Error:** Al seleccionar planes Gratuito o Básico en el Diseño 6 (`emerald-explorer`), se mostraban secciones que debían estar ocultas (itinerario, testimonios, FAQs, mochilas, ficha técnica completa). Además, en la versión Avanzado faltaban los módulos de Turismo Sostenible (`SustainabilityAndSocialProof`), Garantías y Oficina Física (`TrustGuaranteeAndOffice`), notificaciones en vivo (`RecentBookingsToast`), visor Lightbox HD y descarga de Brochure PDF (`BrochurePrintModal`).
+- **Causa Raíz:** `ModernEmeraldTemplate.tsx` renderizaba todos los bloques JSX de forma incondicional sin verificar las banderas `isFree`, `isBasic`, `isPro`, `isAdvance`, y no incorporaba los componentes modulares de nivel `Advance`.
+- **Solución Paso a Paso:**
+  1. Envolver testimonios (`#resenas`), FAQs (`#faqs`), Turismo Sostenible (`SustainabilityAndSocialProof`) y descarga de brochure (`BrochurePrintModal`) con `{isAdvance && (...) }`.
+  2. Envolver `#itinerario`, checklist de mochila / qué no incluye, sellos de acreditación oficial y garantías de oficina física con `{(isPro || isAdvance) && (...) }`.
+  3. Envolver ficha técnica / crónica (`#acerca`), qué incluye (`#incluye`), galería fotográfica (`#galeria`) y social proof toast con `{!isFree && (...) }`.
+  4. Agregar el banner de plan gratuito al pie del documento bajo `{isFree && (...) }`.
+  5. Ajustar el catálogo de tours a `const tourLimit = (isFree || isBasic) ? 3 : 6;` con cuadrícula de 3 columnas balanceada.
 

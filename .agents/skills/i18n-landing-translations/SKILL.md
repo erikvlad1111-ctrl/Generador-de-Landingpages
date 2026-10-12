@@ -189,3 +189,20 @@ Guía para diagnosticar y solucionar problemas de traducción, mezcla de idiomas
   2. Reducir el contenedor central del Hero a `relative z-10`.
   3. En `HeaderLanguageSelector.tsx`, configurar el fondo del menú desplegable como 100% opaco y sólido (`bg-[#120d0d]` para cultural, `bg-white` para adventure, `bg-[#0d0a14]` para premium, `bg-[#FAF7F2]` para boho, `bg-[#1c1917]` para portal) eliminando `backdrop-blur-xl` para evitar cualquier transparencia o sangrado visual de elementos traseros.
 
+### Error: Falta de Traducción y Selector Multilingüe Incompleto en el Diseño 6 (ModernEmeraldTemplate)
+
+- **Síntoma / Mensaje de Error:**
+  En el Diseño 6 (`emerald-explorer`), el selector de idiomas solo mostraba 1 idioma o fallaba al cambiar a los otros 4 idiomas (`en`, `pt`, `fr`, `it`). Los copys de destinos, títulos del hero, especificaciones técnicas, itinerario, inclusiones, exclusiones, catálogo de tours secundarios y testimonios se mantenían fijamente en español. Además, en el menú móvil no existía selector de idiomas y no existía la variante de estilo `emerald` para `HeaderLanguageSelector`.
+
+- **Causa Raíz:**
+  1. `ModernEmeraldTemplate.tsx` no importaba `translateText` ni `translateItineraryItem` desde `@/data/translations`.
+  2. El selector superior pasaba `availableCodes={data.languages || [currentLang]}` limitando los idiomas a 1 cuando `data.languages` no contenía los 5 idiomas.
+  3. No se implementaba la lógica de niveles: en `Free`/`Basic` debe forzarse español sin selector; en `Pro` debe ofrecerse `es` y `en`; y en `Advance` debe habilitar los 5 idiomas (`es`, `en`, `pt`, `fr`, `it`).
+  4. Faltaba la variante temática `'emerald'` en `HeaderLanguageSelector.tsx`.
+
+- **Solución Paso a Paso:**
+  1. Añadir la variante `'emerald'` con fondo `#02141c` y acentos verde esmeralda en `HeaderLanguageSelector.tsx`.
+  2. En `ModernEmeraldTemplate.tsx`, conectar `translateText` y `translateItineraryItem` en todas las secciones: Hero, Destinos Populares, Ficha Técnica, Itinerario día a día, Inclusiones, Mochila, Catálogo de Tours, Testimonios y Modales.
+  3. Implementar el array dinámico `activeLanguages` condicionado por nivel (`isFree || isBasic ? ['es'] : isPro ? ['es', 'en'] : ['es', 'en', 'pt', 'fr', 'it']`).
+  4. Añadir controles de idioma en el menú desplegable móvil.
+

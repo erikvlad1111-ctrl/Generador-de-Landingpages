@@ -66,7 +66,7 @@ interface HeaderLanguageSelectorProps {
   onSelectLang: (lang: LanguageType) => void;
   availableCodes?: LanguageType[];
   availableLanguages?: (LanguageType | AnyLanguageItem)[];
-  variant?: 'adventure' | 'premium' | 'boho' | 'cultural' | 'portal';
+  variant?: 'adventure' | 'premium' | 'boho' | 'cultural' | 'portal' | 'emerald';
 }
 
 export default function HeaderLanguageSelector({
@@ -141,6 +141,12 @@ export default function HeaderLanguageSelector({
       dropdown: 'bg-[#1c1917] text-white border-stone-700 shadow-2xl',
       activeItem: 'bg-[#FF5500]/25 text-[#FF8844] font-black',
       hoverItem: 'hover:bg-stone-800 text-stone-300 hover:text-white'
+    },
+    emerald: {
+      trigger: 'bg-[#031c26]/90 hover:bg-[#062835] text-emerald-100 border-emerald-400/40 shadow-md',
+      dropdown: 'bg-[#02141c] text-emerald-100 border-emerald-500/50 shadow-2xl',
+      activeItem: 'bg-emerald-500/25 text-emerald-300 font-black',
+      hoverItem: 'hover:bg-emerald-950/80 text-emerald-200 hover:text-white'
     }
   }[variant];
 
