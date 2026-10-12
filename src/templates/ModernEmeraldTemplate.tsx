@@ -1550,7 +1550,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               </div>
 
               {/* PASO 03: Protocolo Médico de Aclimatación */}
-              <div className="relative rounded-3xl overflow-hidden min-h-[300px] border border-amber-500/25 bg-[#041a18] shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 hover:border-amber-400/50 transition-all duration-300 flex flex-col justify-between p-5">
+              <div className="relative rounded-3xl overflow-hidden min-h-[300px] border border-emerald-500/25 bg-[#041a18] shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 hover:border-emerald-400/50 transition-all duration-300 flex flex-col justify-between p-5">
                 <Image 
                   src="https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=800&auto=format&fit=crop" 
                   alt="Laguna Humantay alta montaña y aclimatación" 
@@ -1561,10 +1561,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <div className="absolute inset-0 bg-gradient-to-t from-[#021413] via-[#021413]/75 to-black/30" />
                 
                 <div className="relative z-10 flex items-center justify-between">
-                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-amber-400 text-black shadow-xs">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/80 text-black shadow-xs">
                     {translateText('03 • Salud & Altitud', currentLang)}
                   </span>
-                  <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-amber-300">
+                  <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-emerald-300">
                     <ShieldCheck size={16} />
                   </div>
                 </div>
@@ -1576,15 +1576,15 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                   <p className="text-xs text-emerald-100/80 leading-relaxed">
                     {translateText('Monitoreo con oxímetro digital, oxígeno medicinal portátil en cada ruta y aclimatación gradual en el Valle Sagrado.', currentLang)}
                   </p>
-                  <div className="pt-2 flex items-center text-[11px] font-bold text-amber-300">
+                  <div className="pt-2 flex items-center text-[11px] font-bold text-emerald-300">
                     <span>{translateText('Protocolo Médico Incluido', currentLang)}</span>
-                    <CheckCircle2 size={13} className="ml-1 text-amber-400" />
+                    <CheckCircle2 size={13} className="ml-1 text-emerald-400" />
                   </div>
                 </div>
               </div>
 
               {/* PASO 04: Logística Integral Llave en Mano */}
-              <div className="relative rounded-3xl overflow-hidden min-h-[300px] border border-teal-500/25 bg-[#041a18] shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 hover:border-teal-400/50 transition-all duration-300 flex flex-col justify-between p-5">
+              <div className="relative rounded-3xl overflow-hidden min-h-[300px] border border-emerald-500/25 bg-[#041a18] shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 hover:border-emerald-400/50 transition-all duration-300 flex flex-col justify-between p-5">
                 <Image 
                   src="https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=800&auto=format&fit=crop" 
                   alt="Expedición en los Andes Cusco" 
@@ -1595,10 +1595,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <div className="absolute inset-0 bg-gradient-to-t from-[#021413] via-[#021413]/75 to-black/30" />
                 
                 <div className="relative z-10 flex items-center justify-between">
-                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-teal-400 text-black shadow-xs">
+                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/80 text-black shadow-xs">
                     {translateText('04 • Salida VIP', currentLang)}
                   </span>
-                  <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-teal-300">
+                  <div className="w-8 h-8 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-emerald-300">
                     <Sparkles size={16} />
                   </div>
                 </div>
@@ -1610,7 +1610,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                   <p className="text-xs text-emerald-100/80 leading-relaxed">
                     {translateText('Transporte privado 4x4 puerta a puerta, guías bilingües colegiados DIRCETUR y gastronomía andina gourmet.', currentLang)}
                   </p>
-                  <div className="pt-2 flex items-center text-[11px] font-bold text-teal-300">
+                  <div className="pt-2 flex items-center text-[11px] font-bold text-emerald-300">
                     <span>{translateText('Todo Incluido de Principio a Fin', currentLang)}</span>
                     <ArrowRight size={12} className="ml-1 group-hover:translate-x-1 transition-transform" />
                   </div>
