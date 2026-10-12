@@ -584,10 +584,136 @@ export const INITIAL_LANDINGS: LandingData[] = [
     officeAddress: 'Portal de Carnicerías 236, Plaza de Armas, Centro Histórico, Cusco - Perú',
     officeHours: 'Lunes a Domingo: 07:00 AM – 09:00 PM (Horario Corrido)',
     mapsUrl: 'https://maps.google.com/?q=Plaza+de+Armas+Cusco+Peru'
+  },
+  {
+    id: '7',
+    name: 'Vive Tu Aventura (Diseño 6 Esmeralda)',
+    slug: 'vive-tu-aventura-expediciones-trekking-cusco',
+    tier: 'advance',
+    guideName: 'Carlos Mendoza',
+    guideCert: 'Licenciado DIRCETUR & Explorador Senior',
+    guideLanguages: 'Español, Inglés y Francés',
+    guideAvatar: '/images/tour-guide-carlos.jpg',
+    whatsapp: '+51984123456',
+    price: '$350 USD',
+    duration: '4 Días / 3 Noches',
+    difficulty: 'Moderada',
+    groupType: 'Grupos Reducidos & Privados VIP',
+    targetAudience: 'Aventureros, Creadores de Contenido y Parejas',
+    destination: 'Machu Picchu, Salkantay & Rutas Exclusivas',
+    altitude: '2,430 msnm - 4,630 msnm',
+    objective: 'both',
+    template: 'emerald-explorer',
+    language: 'es',
+    status: 'published',
+    date: '2026-10-12',
+    views: '1,890',
+    heroImage: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop'
+    ],
+    hero: {
+      badge: 'Expediciones & Trekking en Cusco',
+      title: 'Vive Tu Aventura: Machu Picchu & Salkantay',
+      subtitle: 'La experiencia definitiva en Cusco con estilo Deep Forest Teal, buscador interactivo, métricas de viajeros y microanimaciones de ultralujo.',
+      cta: 'Planificar Mi Expedición'
+    },
+    about: {
+      title: 'Filosofía de Expedición y Exploración Andina',
+      content: 'Diseñamos vivencias transformadoras en los Andes combinando la adrenalina del trekking con la comodidad de un servicio boutique de alta gama.'
+    },
+    features: {
+      title: 'Pilares de la Expedición Esmeralda',
+      items: [
+        'Transporte Turístico Privado 4x4:Vehículos modernos climatizados con chofer profesional y protocolo de altitud.',
+        'Guía Oficial Bilingüe DIRCETUR:Acompañamiento especializado en flora, fauna e historia viva incaica.',
+        'Monitoreo Médico 24/7:Balón de oxígeno medicinal portátil y control preventivo con oxímetro digital.',
+        'Gastronomía Gourmet Andina:Alimentación energética balanceada preparada por cocineros de montaña.',
+        'Accesos y Boletos Oficiales Garantizados:Gestión anticipada de circuitos a Machu Picchu y tren panorámico.',
+        'Grupos Reducidos & Atención Personalizada:Máximo confort y flexibilidad adaptada a tu propio ritmo.'
+      ]
+    },
+    includedServices: [
+      'Transporte turístico privado 4x4 climatizado de puerta a puerta',
+      'Boletos preferenciales de tren panorámico y accesos oficiales a Machu Picchu',
+      'Guía oficial bilingüe DIRCETUR en todas las rutas y santuarios',
+      'Monitoreo médico 24/7 con balón de oxígeno a bordo y botiquín de altitud',
+      'Alimentación gourmet andina completa y degustaciones de café orgánico'
+    ],
+    notIncluded: [
+      'Vuelos comerciales internacionales o domésticos',
+      'Propinas voluntarias para guías y arrieros',
+      'Seguro médico personal de viaje de alta montaña'
+    ],
+    whatToBring: [
+      'Pasaporte original físico vigente (indispensable)',
+      'Ropa térmica en capas y cortavientos impermeable',
+      'Calzado de trekking con tracción impermeable',
+      'Lentes con protección UV400 y bloqueador solar'
+    ],
+    trustBadges: [
+      'Licencia Oficial DIRCETUR Cusco',
+      'Sello Internacional Safe Travels',
+      'Agencia Formal RUC 20 Verificado',
+      'Guía Colegiado Bilingüe',
+      'Balón de Oxígeno & Botiquín de Altura'
+    ],
+    itinerary: [
+      {
+        step: 'Día 1',
+        title: 'Valle Sagrado & Aclimatación Escénica',
+        desc: 'Recorrido por miradores andinos con almuerzo campestre orgánico y pernocte en domos de montaña.'
+      },
+      {
+        step: 'Día 2',
+        title: 'Ascenso al Abra Escénica & Fotografía',
+        desc: 'Caminata a ritmo personalizado guiada por expertos con postales panorámicas del nevado sagrado.'
+      },
+      {
+        step: 'Día 3',
+        title: 'Amanecer en Machu Picchu Santuario',
+        desc: 'Acceso preferente con historiador oficial y tiempo para capturar postales sin multitudes.'
+      },
+      {
+        step: 'Día 4',
+        title: 'Retorno Escénico en Tren Panorámico & Cusco',
+        desc: 'Viaje en tren panorámico a través del cañón del Urubamba y transfer privado a tu hotel en Cusco.'
+      }
+    ],
+    faqs: [
+      {
+        q: '¿Cómo funciona el protocolo de altura?',
+        a: 'Llevamos oxígeno medicinal portátil y oxímetro digital en todos los tramos, con ritmo adaptativo para garantizar tu bienestar.'
+      },
+      {
+        q: '¿Los boletos de tren y Machu Picchu están incluidos?',
+        a: 'Sí, 100% garantizados y reservados con antelación en asientos preferenciales sin que tengas que hacer filas.'
+      }
+    ],
+    testimonials: [
+      {
+        name: 'Camila & Laurent Fournier',
+        origin: 'Lyon, Francia',
+        comment: 'Organización impecable de principio a fin. El equipo siempre atento con el oxígeno y los boletos puntuales. ¡Superó todas nuestras expectativas!',
+        rating: 5
+      },
+      {
+        name: 'David Miller',
+        origin: 'California, USA',
+        comment: 'Zero stress, stunning scenery and top-notch equipment. The Deep Forest Teal style looks incredible!',
+        rating: 5
+      }
+    ],
+    officeAddress: 'Portal de Harinas 180, Plaza de Armas, Centro Histórico, Cusco - Perú',
+    officeHours: 'Lunes a Domingo: 07:30 AM – 08:30 PM (Horario Corrido)',
+    mapsUrl: 'https://maps.google.com/?q=Plaza+de+Armas+Cusco+Peru'
   }
 ];
 
-const STORAGE_KEY = 'cusco_creativos_landings_v5';
+const STORAGE_KEY = 'cusco_creativos_landings_v6';
 
 export function getStoredLandings(): LandingData[] {
   if (typeof window === 'undefined') return INITIAL_LANDINGS;
@@ -597,7 +723,7 @@ export function getStoredLandings(): LandingData[] {
       // Check if previous versions had custom landings
       let migrated: LandingData[] = [...INITIAL_LANDINGS];
       try {
-        const oldData = localStorage.getItem('cusco_creativos_landings_v4') || localStorage.getItem('cusco_creativos_landings_v3');
+        const oldData = localStorage.getItem('cusco_creativos_landings_v5') || localStorage.getItem('cusco_creativos_landings_v4') || localStorage.getItem('cusco_creativos_landings_v3');
         if (oldData) {
           const oldList: LandingData[] = JSON.parse(oldData);
           if (Array.isArray(oldList)) {
@@ -747,7 +873,7 @@ export function simulateAiGeneration(params: {
 
   let heroTitle = `${params.name}: La Experiencia Definitiva en Cusco`;
   let heroSubtitle = params.description || 'Vive una aventura inolvidable con guías expertos locales y atención de primer nivel.';
-  let heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : (params.template === 'agency-portal' ? 'Diseño 1 • Portal Oficial' : params.template === 'premium' ? 'Experiencia Exclusiva VIP' : params.template === 'cultural' ? 'Historia y Cultura Andina' : 'Aventura y Naturaleza');
+  let heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : (params.template === 'agency-portal' ? 'Diseño 1 • Portal Oficial' : params.template === 'emerald-explorer' ? 'Diseño 6 • Emerald Explorer' : params.template === 'premium' ? 'Experiencia Exclusiva VIP' : params.template === 'cultural' ? 'Historia y Cultura Andina' : 'Aventura y Naturaleza');
   let ctaText = isBoth 
     ? 'WhatsApp & Cotizar Online' 
     : (isWhatsapp ? 'Reservar Directo por WhatsApp' : 'Solicitar Cotización y Disponibilidad');

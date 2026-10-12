@@ -182,7 +182,7 @@ export default function DemoDashboard() {
         </div>
       </div>
 
-      {/* Quick Demos Strip: 5 World-Class Tourism Templates */}
+      {/* Quick Demos Strip: 6 World-Class Tourism Templates */}
       <div className="bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950/95 text-white rounded-3xl p-5 sm:p-7 border border-slate-800 shadow-xl space-y-4">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
@@ -191,7 +191,7 @@ export default function DemoDashboard() {
             </div>
             <div>
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm sm:text-base font-extrabold text-white block">Demos en Vivo de los 5 Diseños Oficiales</span>
+                <span className="text-sm sm:text-base font-extrabold text-white block">Demos en Vivo de los 6 Diseños Oficiales</span>
                 <span className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs flex items-center gap-1">
                   <Sparkles size={11} className="text-yellow-300 animate-pulse" />
                   <span>100% Plan Avanzado</span>
@@ -202,8 +202,8 @@ export default function DemoDashboard() {
           </div>
         </div>
 
-        {/* 5 Prominent Design Buttons (Larger & Plan Avanzado) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3.5 pt-1">
+        {/* 6 Prominent Design Buttons (Larger & Plan Avanzado) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3.5 pt-1">
           {/* Diseño 1: Portal Agencia */}
           <a
             href="/p/machu-picchu-vip?template=agency-portal&tier=advance"
@@ -303,6 +303,26 @@ export default function DemoDashboard() {
             </div>
             <ExternalLink size={15} className="text-slate-400 group-hover:text-rose-300 transition-colors shrink-0" />
           </a>
+
+          {/* Diseño 6: Emerald Explorer */}
+          <a
+            href="/p/vive-tu-aventura-expediciones-trekking-cusco?template=emerald-explorer&tier=advance"
+            target="_blank"
+            className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-b from-slate-800/95 to-slate-850 hover:from-slate-750 hover:to-slate-800 text-white border border-emerald-500/40 hover:border-emerald-400 shadow-md hover:shadow-emerald-500/15 transition-all flex items-center justify-between gap-3 group hover:scale-[1.03] active:scale-95 cursor-pointer ring-1 ring-emerald-500/20"
+            title="Ver Diseño 6: Emerald Explorer & Deep Forest Teal (Plan Avanzado Completo)"
+          >
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
+                🌲
+              </div>
+              <div className="text-left min-w-0">
+                <span className="text-xs sm:text-sm font-black text-emerald-300 block leading-tight truncate">Diseño 6</span>
+                <span className="text-[11px] text-slate-200 font-semibold block truncate">Esmeralda VIP</span>
+                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance ★</span>
+              </div>
+            </div>
+            <ExternalLink size={15} className="text-slate-400 group-hover:text-emerald-300 transition-colors shrink-0" />
+          </a>
         </div>
       </div>
 
@@ -336,11 +356,11 @@ export default function DemoDashboard() {
             </div>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-extrabold text-slate-900">5</span>
+            <span className="text-3xl font-extrabold text-slate-900">6</span>
             <span className="text-xs text-purple-700 font-bold">diseños web</span>
           </div>
-          <p className="text-xs text-slate-500 mt-2 truncate" title="Portal Agencia, Aventura, Lujo VIP, Cultural y Boho">
-            Portal, Aventura, VIP, Cultural, Boho
+          <p className="text-xs text-slate-500 mt-2 truncate" title="Portal Agencia, Aventura, Lujo VIP, Cultural, Boho y Esmeralda">
+            Portal, Aventura, VIP, Cultural, Boho, Esmeralda
           </p>
         </div>
 

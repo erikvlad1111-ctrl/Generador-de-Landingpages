@@ -704,6 +704,124 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
         }
       ]
     }
+  },
+  {
+    id: 'emerald-explorer',
+    name: '6. Emerald Explorer & Deep Forest Teal',
+    subtitle: 'Estilo Deep Teal oscuro con Bento Grid, buscador flotante píldora, planificador en 4 pasos, métricas de viajeros y microanimaciones de ultralujo.',
+    category: 'Trekking & Expedición',
+    template: 'emerald-explorer',
+    recommendedTier: 'advance',
+    targetTour: 'Vive Tu Aventura: Machu Picchu, Salkantay & Rutas Exclusivas',
+    demoSlug: 'vive-tu-aventura-expediciones-trekking-cusco',
+    isFeatured: true,
+    likesCount: 3120,
+    previewImage: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
+    gridSampleImages: [
+      'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=2070&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1578922746465-3a80a228f223?q=80&w=2070&auto=format&fit=crop'
+    ],
+    tags: ['Diseño 6', 'Deep Forest Teal', 'Bento Grid', 'Buscador Píldora', 'Planificación 4 Pasos', 'NavikX Tech'],
+    targetAudience: 'Expediciones premium, agencias de aventura de alta montaña, amantes del trekking moderno y viajeros internacionales.',
+    conversionImpact: '+55% en engagement y reservas directas por buscador interactivo flotante',
+    differenceHighlight: 'Arquetipo Deep Forest Teal inmersivo con Bento Grid interactivo, buscador flotante píldora en el hero, planificador de expedición en 4 pasos y efectos glassmorphism esmeralda.',
+    benefits: [
+      {
+        title: 'Buscador Flotante Tipo Píldora',
+        description: 'Buscador interactivo en el hero para elegir destino, fechas y pasajeros con actualización inmediata de inversión estimada.',
+        badge: 'Interactividad'
+      },
+      {
+        title: 'Planificador de Expedición en 4 Pasos',
+        description: 'Bento Grid fotográfico andino estructurado que explica ruta, boletos, aclimatación y logística integral.',
+        badge: 'Claridad Total'
+      },
+      {
+        title: 'Estética Deep Forest Teal de Ultralujo',
+        description: 'Atmósfera nocturna esmeralda con fondos radiales teal, microanimaciones de levitación y tipografía Plus Jakarta Sans.',
+        badge: 'Diseño Exclusivo'
+      },
+      {
+        title: 'Soporte Multilingüe Nativo en 5 Idiomas',
+        description: 'Traducción fluida en ES, EN, PT, FR e IT sin fugas de idioma ni inconsistencias.',
+        badge: 'Internacional'
+      }
+    ],
+    colorPalette: [
+      { name: 'Deep Forest Teal Nocturno', hex: '#021413', role: 'Fondo lienzo oscuro profundo con gradientes radiales teal' },
+      { name: 'Verde Esmeralda Eléctrico', hex: '#10B981', role: 'Acento principal en badges de pasos, botones CTA y glow ambiental' },
+      { name: 'Teal Glaciar Andino', hex: '#0D9488', role: 'Gradientes de fondo y orbes difusos de profundidad' },
+      { name: 'Oro Champán Místico', hex: '#FCD34D', role: 'Acentos cálidos para estrellas de calificación y destellos' },
+      { name: 'Superficie Vidrio Ahumado', hex: 'rgba(3,29,27,0.7)', role: 'Tarjetas Bento con efecto glassmorphism y desenfoque backdrop' },
+      { name: 'Blanco Nieve Andina', hex: '#FFFFFF', role: 'Titulares en negrita y contrastes de máxima legibilidad' }
+    ],
+    typography: {
+      headingFont: 'Plus Jakarta Sans (Black 900)',
+      bodyFont: 'Inter (Regular 400 / Medium 500)',
+      category: 'Sans-Serif Moderna Tecnológica',
+      sampleTitle: 'VIVE TU AVENTURA: EXPEDICIONES & TREKKING EN CUSCO',
+      hierarchyNotes: 'Títulos ultranegros con espaciado ajustado (tracking-tight) y jerarquía visual limpia de alta legibilidad sobre fondos oscuros.'
+    },
+    style: {
+      aestheticName: 'Deep Forest Teal & Tech Bento Grid',
+      description: 'Inspirado en interfaces de ultralujo y aplicaciones de exploración de alta tecnología. Fondos oscuros teal con iluminación esmeralda.',
+      layoutPattern: 'Navbar flotante 7 links + Hero con buscador píldora + Planificador 4 pasos Bento + Itinerario + Logística + Galería + FAQs + Cierre',
+      spacingAndBorders: 'Tarjetas con radio de 24px/32px (rounded-3xl), bordes sutiles esmeralda border-emerald-500/25 y sombras profundas.',
+      visualElements: ['Buscador flotante tipo píldora', 'Bento Grid de 4 pasos con fotos andinas', 'Glow radial teal difuso', 'Insignia flotante de guía DIRCETUR'],
+      microInteractions: 'Microanimaciones de flotación suave (emerald-float), hover con elevación en tarjetas y botones con escala táctil.'
+    },
+    includedComponents: [
+      'Navbar flotante con 7 enlaces esenciales y selector de idiomas',
+      'Hero inmersivo con buscador flotante interactivo tipo píldora',
+      'Bento Grid de Planificación en 4 pasos con fotografía andina',
+      'Ficha técnica con altitud, duración y dificultad',
+      'Itinerario día a día con perfil de elevación y mapa conceptual',
+      'Checklist de mochila interactivo y servicios incluidos',
+      'Feed de viajeros en tiempo real y prueba social',
+      'Botón de contacto directo y modal de cotización VIP'
+    ],
+    replication: {
+      coreDifference: 'Combina el encanto de la expedición andina con una interfaz gráfica tecnológica de última generación (inspirada en NavikX / Deep Forest Teal). Sustituye los formularios aburridos por un buscador flotante píldora interactivo y un planificador Bento Grid de 4 pasos con fotos 100% andinas.',
+      layoutArchetype: 'Tech Explorer Bento: Navbar Flotante + Hero con Buscador Píldora + Bento Grid 4 Pasos de Planificación + Especificaciones Técnicas + Itinerario con Fotos + Checklist Mochila + Social Proof + CTA.',
+      containerWidth: 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8',
+      baseBackground: 'bg-[#021413] oscuro profundo con orbes de luz radial teal/emerald',
+      colorTokens: [
+        { token: 'deep-teal-bg', hex: '#021413', role: 'Fondo principal oscuro de expedición', tailwindClass: 'bg-[#021413] text-white' },
+        { token: 'emerald-accent', hex: '#10B981', role: 'Badges de pasos, botones primarios y glow', tailwindClass: 'bg-emerald-500 hover:bg-emerald-400 text-black' },
+        { token: 'card-glass', hex: 'rgba(3,29,27,0.7)', role: 'Tarjetas Bento glassmorphism', tailwindClass: 'bg-[#031d1b]/70 backdrop-blur-xl border-emerald-500/25' },
+        { token: 'text-highlight', hex: '#6EE7B7', role: 'Subtítulos y etiquetas secundarias', tailwindClass: 'text-emerald-300' },
+        { token: 'star-gold', hex: '#FCD34D', role: 'Calificaciones 5 estrellas', tailwindClass: 'text-amber-300' }
+      ],
+      typographyRecipe: {
+        headingFont: 'Plus Jakarta Sans (Font-Black 900)',
+        bodyFont: 'Inter (Regular 400 / Medium 500)',
+        rules: 'Titulares en mayúsculas o altas/bajas con tracking ajustado. Subtítulos esmeralda sutiles con opacidad del 70-80% para contraste armónico.',
+        sampleCode: 'font-black tracking-tight text-white text-3xl sm:text-5xl'
+      },
+      signatureEffects: [
+        'Orbes radiales teal difusos en el fondo ("bg-[radial-gradient(ellipse_at_center,rgba(13,148,136,0.48)_0%,transparent_75%)] blur-3xl")',
+        'Buscador flotante tipo píldora con selector de destino y pasajeros en el hero',
+        'Bento Grid de 4 pasos con fotos andinas y badges esmeralda uniformes',
+        'Microanimación de levitación suave (animate-emerald-float y animate-emerald-float-delayed)',
+        'Efectos glassmorphism de cristal oscuro ahumado con bordes esmeralda finos'
+      ],
+      heroStructure: 'Hero inmersivo con badge superior, título monumental, buscador flotante interactivo píldora con selector de viajeros y botón de cotización con precio dinámico.',
+      conversionDriver: 'El buscador flotante genera un compromiso lúdico inmediato del viajero al interactuar con el precio y los pasajeros, mientras que el planificador en 4 pasos elimina todas las objeciones sobre altitud, boletos y transporte.',
+      keyTailwindSnippets: [
+        {
+          title: 'Tarjeta Bento con Imagen y Gradiente Andino',
+          code: 'relative rounded-3xl overflow-hidden min-h-[300px] border border-emerald-500/25 bg-[#041a18] shadow-[0_15px_35px_rgba(0,0,0,0.4)] group hover:-translate-y-1.5 hover:border-emerald-400/50 transition-all duration-300 flex flex-col justify-between p-5'
+        },
+        {
+          title: 'Badge Esmeralda Uniforme',
+          code: 'inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-emerald-500/80 text-black shadow-xs'
+        },
+        {
+          title: 'Botón CTA Gradiente Esmeralda Shimmer',
+          code: 'inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-400 text-[#021614] font-black text-xs sm:text-sm shadow-[0_12px_32px_rgba(16,185,129,0.35)] hover:scale-105 transition-all'
+        }
+      ]
+    }
   }
 ];
 
@@ -833,14 +951,14 @@ ${design.replication.keyTailwindSnippets.map(s => `### ${s.title}\n\`\`\`html\n$
             </h1>
 
             <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
-              Explora nuestros <strong>5 arquetipos visuales y de conversión</strong> actualizados con sus <strong>paletas de colores reales en código</strong>, <strong>diferencias clave</strong> y <strong>especificaciones técnicas completas</strong> para que puedas entenderlos y replicarlos con total fidelidad.
+              Explora nuestros <strong>6 arquetipos visuales y de conversión</strong> actualizados con sus <strong>paletas de colores reales en código</strong>, <strong>diferencias clave</strong> y <strong>especificaciones técnicas completas</strong> para que puedas entenderlos y replicarlos con total fidelidad.
             </p>
           </div>
 
           {/* Quick Metrics Badge Row */}
           <div className="grid grid-cols-2 gap-3 shrink-0">
             <div className="bg-white/5 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 text-center">
-              <span className="text-xl font-black text-white block leading-none">5</span>
+              <span className="text-xl font-black text-white block leading-none">6</span>
               <span className="text-[11px] text-slate-400 font-semibold mt-1 block">Diseños Listos</span>
             </div>
             <div className="bg-white/5 backdrop-blur-md p-3.5 rounded-2xl border border-white/10 text-center">
