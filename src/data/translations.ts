@@ -1225,6 +1225,835 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     pt: 'Seguro Obrigatório SOAT Turístico',
     fr: 'Assurance Transport Touristique SOAT',
     it: 'Assicurazione Trasporto Turistico SOAT'
+  },
+  // --- TÍTULOS SIN EM-DASH (—) ---
+  'Live Your Adventure: Expediciones & Trekking en Cusco: La Experiencia Definitiva en Cusco': {
+    es: 'Vive Tu Aventura: Expediciones & Trekking en Cusco: La Experiencia Definitiva en Cusco',
+    en: 'Live Your Adventure: Expeditions & Trekking in Cusco: The Ultimate Cusco Experience',
+    pt: 'Viva Sua Aventura: Expedições & Trekking em Cusco: A Experiência Definitiva em Cusco',
+    fr: 'Vivez Votre Aventure: Expéditions & Trekking à Cusco : L’Expérience Ultime à Cusco',
+    it: 'Vivi La Tua Avventura: Spedizioni & Trekking a Cusco: L’Esperienza Definitiva a Cusco'
+  },
+  'Vive Tu Aventura: Expediciones & Trekking en Cusco: La Experiencia Definitiva en Cusco': {
+    es: 'Vive Tu Aventura: Expediciones & Trekking en Cusco: La Experiencia Definitiva en Cusco',
+    en: 'Live Your Adventure: Expeditions & Trekking in Cusco: The Ultimate Cusco Experience',
+    pt: 'Viva Sua Aventura: Expedições & Trekking em Cusco: A Experiência Definitiva em Cusco',
+    fr: 'Vivez Votre Aventure: Expéditions & Trekking à Cusco : L’Expérience Ultime à Cusco',
+    it: 'Vivi La Tua Avventura: Spedizioni & Trekking a Cusco: L’Esperienza Definitiva a Cusco'
+  },
+  'Live Your Adventure: Expeditions & Trekking in Cusco: The Ultimate Cusco Experience': {
+    es: 'Vive Tu Aventura: Expediciones & Trekking en Cusco: La Experiencia Definitiva en Cusco',
+    en: 'Live Your Adventure: Expeditions & Trekking in Cusco: The Ultimate Cusco Experience',
+    pt: 'Viva Sua Aventura: Expedições & Trekking em Cusco: A Experiência Definitiva em Cusco',
+    fr: 'Vivez Votre Aventure: Expéditions & Trekking à Cusco : L’Expérience Ultime à Cusco',
+    it: 'Vivi La Tua Avventura: Spedizioni & Trekking a Cusco: L’Esperienza Definitiva a Cusco'
+  },
+  'Live Your Adventure: Expediciones & Trekking en Cusco': {
+    es: 'Vive Tu Aventura: Expediciones & Trekking en Cusco',
+    en: 'Live Your Adventure: Expeditions & Trekking in Cusco',
+    pt: 'Viva Sua Aventura: Expedições & Trekking em Cusco',
+    fr: 'Vivez Votre Aventure: Expéditions & Trekking à Cusco',
+    it: 'Vivi La Tua Avventura: Spedizioni & Trekking a Cusco'
+  },
+  'Vive Tu Aventura: Expediciones & Trekking en Cusco': {
+    es: 'Vive Tu Aventura: Expediciones & Trekking en Cusco',
+    en: 'Live Your Adventure: Expeditions & Trekking in Cusco',
+    pt: 'Viva Sua Aventura: Expedições & Trekking em Cusco',
+    fr: 'Vivez Votre Aventure: Expéditions & Trekking à Cusco',
+    it: 'Vivi La Tua Avventura: Spedizioni & Trekking a Cusco'
+  },
+  'Live Your Adventure: Expeditions & Trekking in Cusco': {
+    es: 'Vive Tu Aventura: Expediciones & Trekking en Cusco',
+    en: 'Live Your Adventure: Expeditions & Trekking in Cusco',
+    pt: 'Viva Sua Aventura: Expedições & Trekking em Cusco',
+    fr: 'Vivez Votre Aventure: Expéditions & Trekking à Cusco',
+    it: 'Vivi La Tua Avventura: Spedizioni & Trekking a Cusco'
+  },
+
+  // --- CATEGORÍAS ADICIONALES Y FILTROS ---
+  'Trekking & Montaña': {
+    es: 'Trekking & Montaña',
+    en: 'Trekking & Mountain',
+    pt: 'Trekking & Montanha',
+    fr: 'Trekking & Montagne',
+    it: 'Trekking & Montagna'
+  },
+  'Clásicos & Cultura': {
+    es: 'Clásicos & Cultura',
+    en: 'Classics & Culture',
+    pt: 'Clássicos & Cultura',
+    fr: 'Classiques & Culture',
+    it: 'Classici & Cultura'
+  },
+  'Salidas Garantizadas 2025 - 2026': {
+    es: 'Salidas Garantizadas 2025 - 2026',
+    en: 'Guaranteed Departures 2025 - 2026',
+    pt: 'Saídas Garantidas 2025 - 2026',
+    fr: 'Départs Garantis 2025 - 2026',
+    it: 'Partenze Garantite 2025 - 2026'
+  },
+
+  // --- DESTINOS POPULARES ---
+  'Machu Picchu Santuario': {
+    es: 'Machu Picchu Santuario',
+    en: 'Machu Picchu Sanctuary',
+    pt: 'Santuário de Machu Picchu',
+    fr: 'Sanctuaire de Machu Picchu',
+    it: 'Santuario di Machu Picchu'
+  },
+  'Ciudadela sagrada, Templo del Sol y terrazas agrícolas': {
+    es: 'Ciudadela sagrada, Templo del Sol y terrazas agrícolas',
+    en: 'Sacred citadel, Sun Temple, and agricultural terraces',
+    pt: 'Cidadela sagrada, Templo do Sol e terraços agrícolas',
+    fr: 'Citadelle sacrée, Temple du Soleil et terrasses agricoles',
+    it: 'Cittadella sacra, Tempio del Sole e terrazze agricole'
+  },
+  'Subtropical templado (12°C - 24°C)': {
+    es: 'Subtropical templado (12°C - 24°C)',
+    en: 'Mild subtropical (12°C - 24°C)',
+    pt: 'Subtropical temperado (12°C - 24°C)',
+    fr: 'Subtropical doux (12°C - 24°C)',
+    it: 'Subtropicale temperato (12°C - 24°C)'
+  },
+  'Laguna Humantay': {
+    es: 'Laguna Humantay',
+    en: 'Humantay Lake',
+    pt: 'Lagoa Humantay',
+    fr: 'Lagune Humantay',
+    it: 'Laguna Humantay'
+  },
+  'Turquesa Glaciar': {
+    es: 'Turquesa Glaciar',
+    en: 'Glacial Turquoise',
+    pt: 'Turquesa Glaciar',
+    fr: 'Turquoise Glaciaire',
+    it: 'Turchese Glaciale'
+  },
+  'Espejo de agua glaciar a los pies del Nevado Salkantay': {
+    es: 'Espejo de agua glaciar a los pies del Nevado Salkantay',
+    en: 'Glacial mirror lake at the foot of Mount Salkantay',
+    pt: 'Espelho d’água glaciar aos pés do Nevado Salkantay',
+    fr: 'Miroir d’eau glaciaire au pied du mont Salkantay',
+    it: 'Specchio d’acqua glaciale ai piedi del Monte Salkantay'
+  },
+  'Frío alpino / Viento de altura (4°C - 14°C)': {
+    es: 'Frío alpino / Viento de altura (4°C - 14°C)',
+    en: 'Alpine cold / High-altitude wind (4°C - 14°C)',
+    pt: 'Frio alpino / Vento de altitude (4°C - 14°C)',
+    fr: 'Froid alpin / Vent d’altitude (4°C - 14°C)',
+    it: 'Freddo alpino / Vento d’alta quota (4°C - 14°C)'
+  },
+  'Montaña de 7 Colores': {
+    es: 'Montaña de 7 Colores',
+    en: 'Rainbow Mountain',
+    pt: 'Montanha de 7 Cores',
+    fr: 'Montagne aux 7 Couleurs',
+    it: 'Montagna dei 7 Colori'
+  },
+  'Formación Geológica': {
+    es: 'Formación Geológica',
+    en: 'Geological Wonder',
+    pt: 'Formação Geológica',
+    fr: 'Formation Géologique',
+    it: 'Formazione Geologica'
+  },
+  'Cordillera arcoíris milenaria con vista al Ausangate': {
+    es: 'Cordillera arcoíris milenaria con vista al Ausangate',
+    en: 'Millenary rainbow ridge with scenic views of Mount Ausangate',
+    pt: 'Cordilheira arco-íris milenar com vista para o Ausangate',
+    fr: 'Chaîne arc-en-ciel millénaire avec vue sur l’Ausangate',
+    it: 'Catena arcobaleno millenaria con vista sull’Ausangate'
+  },
+  'Alta montaña frígida (0°C - 12°C)': {
+    es: 'Alta montaña frígida (0°C - 12°C)',
+    en: 'Frigid high mountain (0°C - 12°C)',
+    pt: 'Alta montanha frígida (0°C - 12°C)',
+    fr: 'Haute montagne froide (0°C - 12°C)',
+    it: 'Alta montagna rigida (0°C - 12°C)'
+  },
+  'Valle Sagrado de los Incas': {
+    es: 'Valle Sagrado de los Incas',
+    en: 'Sacred Valley of the Incas',
+    pt: 'Vale Sagrado dos Incas',
+    fr: 'Vallée Sacrée des Incas',
+    it: 'Valle Sacra degli Inca'
+  },
+  'Historia Viva & Cultura': {
+    es: 'Historia Viva & Cultura',
+    en: 'Living History & Heritage',
+    pt: 'História Viva & Cultura',
+    fr: 'Histoire Vivante & Culture',
+    it: 'Storia Vivente & Cultura'
+  },
+  'Ollantaytambo, terrazas de Pisac y ferias artesanales': {
+    es: 'Ollantaytambo, terrazas de Pisac y ferias artesanales',
+    en: 'Ollantaytambo fortress, Pisac terraces, and craft markets',
+    pt: 'Ollantaytambo, terraços de Pisac e feiras de artesanato',
+    fr: 'Ollantaytambo, terrasses de Pisac et marchés artisanaux',
+    it: 'Ollantaytambo, terrazze di Pisac e mercati artigianali'
+  },
+  'Templado andino acogedor (10°C - 22°C)': {
+    es: 'Templado andino acogedor (10°C - 22°C)',
+    en: 'Cozy mild Andean climate (10°C - 22°C)',
+    pt: 'Temperado andino acolhedor (10°C - 22°C)',
+    fr: 'Climat andin doux et tempéré (10°C - 22°C)',
+    it: 'Clima andino mite e accogliente (10°C - 22°C)'
+  },
+  'Salineras de Maras & Moray': {
+    es: 'Salineras de Maras & Moray',
+    en: 'Maras Salt Mines & Moray',
+    pt: 'Salinas de Maras & Moray',
+    fr: 'Salines de Maras & Moray',
+    it: 'Saline di Maras & Moray'
+  },
+  'Ingeniería Ancestral': {
+    es: 'Ingeniería Ancestral',
+    en: 'Ancestral Engineering',
+    pt: 'Engenharia Ancestral',
+    fr: 'Ingénierie Ancestrale',
+    it: 'Ingegneria Ancestrale'
+  },
+  'Más de 3,000 pozas de sal rosada y andenes circulares': {
+    es: 'Más de 3,000 pozas de sal rosada y andenes circulares',
+    en: 'Over 3,000 pink salt pools and concentric agricultural rings',
+    pt: 'Mais de 3.000 poços de sal rosa e terraços circulares',
+    fr: 'Plus de 3 000 bassins de sel rose et terrasses circulaires',
+    it: 'Oltre 3.000 vasche di sale rosa e terrazze concentriche'
+  },
+  'Soleado y seco de valle (8°C - 20°C)': {
+    es: 'Soleado y seco de valle (8°C - 20°C)',
+    en: 'Sunny and dry valley climate (8°C - 20°C)',
+    pt: 'Ensolarado e seco de vale (8°C - 20°C)',
+    fr: 'Ensoleillé et sec de vallée (8°C - 20°C)',
+    it: 'Soleggiato e asciutto di valle (8°C - 20°C)'
+  },
+  'Choquequirao & Cañón Apurímac': {
+    es: 'Choquequirao & Cañón Apurímac',
+    en: 'Choquequirao & Apurimac Canyon',
+    pt: 'Choquequirao & Cânion Apurímac',
+    fr: 'Choquequirao & Canyon d’Apurímac',
+    it: 'Choquequirao & Canyon Apurímac'
+  },
+  'Aventura Mística Pura': {
+    es: 'Aventura Mística Pura',
+    en: 'Pure Mystical Adventure',
+    pt: 'Aventura Mística Pura',
+    fr: 'Aventure Mystique Pure',
+    it: 'Avventura Mistica Pura'
+  },
+  'La hermana sagrada de Machu Picchu sin multitudes': {
+    es: 'La hermana sagrada de Machu Picchu sin multitudes',
+    en: 'The sacred sister citadel of Machu Picchu without crowds',
+    pt: 'A irmã sagrada de Machu Picchu sem multidões',
+    fr: 'La sœur sacrée de Machu Picchu sans les foules',
+    it: 'La sorella sacra di Machu Picchu senza folla'
+  },
+  'Templado de cañón andino (12°C - 25°C)': {
+    es: 'Templado de cañón andino (12°C - 25°C)',
+    en: 'Mild Andean canyon weather (12°C - 25°C)',
+    pt: 'Temperado de cânion andino (12°C - 25°C)',
+    fr: 'Climat doux de canyon andin (12°C - 25°C)',
+    it: 'Clima mite di canyon andino (12°C - 25°C)'
+  },
+
+  // --- ESPECIFICACIONES TÉCNICAS, CRÓNICA & MODALES ---
+  'Duración': {
+    es: 'Duración',
+    en: 'Duration',
+    pt: 'Duração',
+    fr: 'Durée',
+    it: 'Durata'
+  },
+  'Altitud Máxima': {
+    es: 'Altitud Máxima',
+    en: 'Maximum Altitude',
+    pt: 'Altitude Máxima',
+    fr: 'Altitude Maximale',
+    it: 'Altitudine Massima'
+  },
+  'Dificultad': {
+    es: 'Dificultad',
+    en: 'Difficulty Level',
+    pt: 'Dificuldade',
+    fr: 'Difficulté',
+    it: 'Difficoltà'
+  },
+  'Modalidad': {
+    es: 'Modalidad',
+    en: 'Modality',
+    pt: 'Modalidade',
+    fr: 'Modalité',
+    it: 'Modalità'
+  },
+  'Toca para ver detalle ➔': {
+    es: 'Toca para ver detalle ➔',
+    en: 'Tap for details ➔',
+    pt: 'Toque para detalhes ➔',
+    fr: 'Touchez pour voir les détails ➔',
+    it: 'Tocca per dettagli ➔'
+  },
+  'Oxígeno incluido ➔': {
+    es: 'Oxígeno incluido ➔',
+    en: 'Oxygen included ➔',
+    pt: 'Oxigênio incluso ➔',
+    fr: 'Oxygène inclus ➔',
+    it: 'Ossigeno incluso ➔'
+  },
+  'Ritmo adaptable ➔': {
+    es: 'Ritmo adaptable ➔',
+    en: 'Adaptive pace ➔',
+    pt: 'Ritmo adaptável ➔',
+    fr: 'Rythme adaptable ➔',
+    it: 'Ritmo adattabile ➔'
+  },
+  'Máx 8 personas ➔': {
+    es: 'Máx 8 personas ➔',
+    en: 'Max 8 travelers ➔',
+    pt: 'Máx 8 pessoas ➔',
+    fr: 'Max 8 personnes ➔',
+    it: 'Max 8 persone ➔'
+  },
+  'Filosofía de Expedición': {
+    es: 'Filosofía de Expedición',
+    en: 'Expedition Philosophy',
+    pt: 'Filosofia da Expedição',
+    fr: 'Philosophie d’Expédition',
+    it: 'Filosofia di Spedizione'
+  },
+  'Expediciones Diseñadas por Expertos Andinos': {
+    es: 'Expediciones Diseñadas por Expertos Andinos',
+    en: 'Expeditions Designed by Andean Experts',
+    pt: 'Expedições Projetadas por Especialistas Andinos',
+    fr: 'Expéditions Conçues par des Experts Andins',
+    it: 'Spedizioni Disegnate da Esperti Andini'
+  },
+  'Nuestra filosofía combina senderismo inmersivo con seguridad biomédica y hotelería de montaña. Cada travesía por los valles y cordilleras del Cusco cuenta con monitoreo satelital, guías acreditados por DIRCETUR y experiencias gastronómicas con productos autóctonos orgánicos.': {
+    es: 'Nuestra filosofía combina senderismo inmersivo con seguridad biomédica y hotelería de montaña. Cada travesía por los valles y cordilleras del Cusco cuenta con monitoreo satelital, guías acreditados por DIRCETUR y experiencias gastronómicas con productos autóctonos orgánicos.',
+    en: 'Our philosophy combines immersive hiking with biomedical safety and mountain hospitality. Every journey through the valleys and ranges of Cusco features satellite tracking, DIRCETUR-licensed guides, and gourmet dining with indigenous organic ingredients.',
+    pt: 'Nossa filosofia combina caminhadas imersivas com segurança biomédica e hotelaria de montanha. Cada travessia pelos vales e cordilheiras de Cusco conta com rastreamento por satélite, guias credenciados pela DIRCETUR e experiências gastronômicas com produtos orgânicos nativos.',
+    fr: 'Notre philosophie allie randonnée immersive, sécurité biomédicale et hôtellerie de montagne. Chaque traversée des vallées et cordillères de Cusco bénéficie d’un suivi par satellite, de guides certifiés DIRCETUR et d’expériences gastronomiques aux produits biologiques locaux.',
+    it: 'La nostra filosofia combina trekking immersivo con sicurezza biomedica e ospitalità di montagna. Ogni traversata nelle valli e cordigliere di Cusco vanta tracciamento satellitare, guide abilitate DIRCETUR ed esperienze gastronomiche con prodotti biologici indigeni.'
+  },
+  'Tarifa Oficial por Persona:': {
+    es: 'Tarifa Oficial por Persona:',
+    en: 'Official Rate per Person:',
+    pt: 'Tarifa Oficial por Pessoa:',
+    fr: 'Tarif Officiel par Personne :',
+    it: 'Tariffa Ufficiale a Persona:'
+  },
+  'Rutas Planificadas': {
+    es: 'Rutas Planificadas',
+    en: 'Planned Routes',
+    pt: 'Rotas Planejadas',
+    fr: 'Itinéraires Planifiés',
+    it: 'Percorsi Pianificati'
+  },
+  'Logística Integral': {
+    es: 'Logística Integral',
+    en: 'Comprehensive Logistics',
+    pt: 'Logística Integral',
+    fr: 'Logistique Complète',
+    it: 'Logistica Integrale'
+  },
+  'Asistidos con protocolo médico de altitud.': {
+    es: 'Asistidos con protocolo médico de altitud.',
+    en: 'Assisted with certified altitude medical protocol.',
+    pt: 'Assistidos com protocolo médico de altitude.',
+    fr: 'Assistés avec protocole médical d’altitude.',
+    it: 'Assistiti con protocollo medico per l’altitudine.'
+  },
+  'Calificaciones 5 estrellas en TripAdvisor & Google.': {
+    es: 'Calificaciones 5 estrellas en TripAdvisor & Google.',
+    en: '5-star reviews on TripAdvisor & Google.',
+    pt: 'Avaliações 5 estrelas no TripAdvisor & Google.',
+    fr: 'Notes 5 étoiles sur TripAdvisor & Google.',
+    it: 'Recensioni a 5 stelle su TripAdvisor & Google.'
+  },
+  'Momentos Inolvidables': {
+    es: 'Momentos Inolvidables',
+    en: 'Unforgettable Moments',
+    pt: 'Momentos Inesquecíveis',
+    fr: 'Moments Inoubliables',
+    it: 'Momenti Indimenticabili'
+  },
+  'Fotografía escénica': {
+    es: 'Fotografía escénica',
+    en: 'Scenic photography',
+    pt: 'Fotografia cênica',
+    fr: 'Photographie panoramique',
+    it: 'Fotografia panoramica'
+  },
+  'Cronograma Oficial': {
+    es: 'Cronograma Oficial',
+    en: 'Official Schedule',
+    pt: 'Cronograma Oficial',
+    fr: 'Programme Officiel',
+    it: 'Programma Ufficiale'
+  },
+  'Equipamiento & Confort': {
+    es: 'Equipamiento & Confort',
+    en: 'Equipment & Comfort',
+    pt: 'Equipamento & Conforto',
+    fr: 'Équipement & Confort',
+    it: 'Attrezzatura & Comfort'
+  },
+  'Cobertura garantizada de alta montaña': {
+    es: 'Cobertura garantizada de alta montaña',
+    en: 'Guaranteed high-mountain coverage',
+    pt: 'Cobertura garantida de alta montanha',
+    fr: 'Couverture garantie de haute montagne',
+    it: 'Copertura garantita di alta montagna'
+  },
+  'Consultar itinerario de esta jornada': {
+    es: 'Consultar itinerario de esta jornada',
+    en: 'Inquire about this day’s schedule',
+    pt: 'Consultar roteiro deste dia',
+    fr: 'Consulter l’itinéraire de cette journée',
+    it: 'Richiedi programma di questa giornata'
+  },
+  '4.9 / 5.0 en Reseñas Internacionales': {
+    es: '4.9 / 5.0 en Reseñas Internacionales',
+    en: '4.9 / 5.0 in Global Reviews',
+    pt: '4.9 / 5.0 em Avaliações Internacionais',
+    fr: '4.9 / 5.0 en Avis Internationaux',
+    it: '4.9 / 5.0 nelle Recensioni Internazionali'
+  },
+  '50+ Rutas': {
+    es: '50+ Rutas',
+    en: '50+ Routes',
+    pt: '50+ Rotas',
+    fr: '50+ Itinéraires',
+    it: '50+ Percorsi'
+  },
+  'Destinos de Autor': {
+    es: 'Destinos de Autor',
+    en: 'Curated Destinations',
+    pt: 'Destinos Exclusivos',
+    fr: 'Destinations Signatures',
+    it: 'Destinazioni Esclusive'
+  },
+  '100K+ Turistas': {
+    es: '100K+ Turistas',
+    en: '100K+ Travelers',
+    pt: '100K+ Turistas',
+    fr: '100K+ Voyageurs',
+    it: '100K+ Turisti'
+  },
+  'Experiencias Felices': {
+    es: 'Experiencias Felices',
+    en: 'Happy Experiences',
+    pt: 'Experiências Felizes',
+    fr: 'Expériences Mémorables',
+    it: 'Esperienze Felici'
+  },
+  '4.9★ Promedio': {
+    es: '4.9★ Promedio',
+    en: '4.9★ Average',
+    pt: '4.9★ Média',
+    fr: '4.9★ Moyenne',
+    it: '4.9★ Media'
+  },
+  'TripAdvisor & Google': {
+    es: 'TripAdvisor & Google',
+    en: 'TripAdvisor & Google',
+    pt: 'TripAdvisor & Google',
+    fr: 'TripAdvisor & Google',
+    it: 'TripAdvisor & Google'
+  },
+  '24/7 Soporte': {
+    es: '24/7 Soporte',
+    en: '24/7 Support',
+    pt: '24/7 Suporte',
+    fr: 'Support 24/7',
+    it: 'Supporto 24/7'
+  },
+  'Oxígeno y Asistencia': {
+    es: 'Oxígeno y Asistencia',
+    en: 'Oxygen & Assistance',
+    pt: 'Oxigênio e Assistência',
+    fr: 'Oxygène et Assistance',
+    it: 'Ossigeno e Assistenza'
+  },
+  'Entendido': {
+    es: 'Entendido',
+    en: 'Understood',
+    pt: 'Entendido',
+    fr: 'Compris',
+    it: 'Ho capito'
+  },
+
+  // --- CLIMA, ESPECIFICACIONES & ITINERARIO EMERALD ---
+  'Clima': {
+    es: 'Clima',
+    en: 'Climate',
+    pt: 'Clima',
+    fr: 'Climat',
+    it: 'Clima'
+  },
+  'Altitud': {
+    es: 'Altitud',
+    en: 'Altitude',
+    pt: 'Altitude',
+    fr: 'Altitude',
+    it: 'Altitudine'
+  },
+  'Caminata': {
+    es: 'Caminata',
+    en: 'Hiking',
+    pt: 'Caminhada',
+    fr: 'Randonnée',
+    it: 'Camminata'
+  },
+  'Comidas': {
+    es: 'Comidas',
+    en: 'Meals',
+    pt: 'Refeições',
+    fr: 'Repas',
+    it: 'Pasti'
+  },
+  'Hospedaje': {
+    es: 'Hospedaje',
+    en: 'Lodging',
+    pt: 'Hospedagem',
+    fr: 'Hébergement',
+    it: 'Alloggio'
+  },
+  'Lunes a Domingo: 07:00 - 21:00': {
+    es: 'Lunes a Domingo: 07:00 - 21:00',
+    en: 'Monday to Sunday: 07:00 - 21:00',
+    pt: 'Segunda a Domingo: 07:00 - 21:00',
+    fr: 'Du Lundi au Dimanche : 07h00 - 21h00',
+    it: 'Da Lunedì a Domenica: 07:00 - 21:00'
+  },
+
+  // --- DÍAS DE ITINERARIO POR DEFECTO EMERALD ---
+  'Cusco Imperial, Miradores del Valle Sagrado & Aclimatación': {
+    es: 'Cusco Imperial, Miradores del Valle Sagrado & Aclimatación',
+    en: 'Imperial Cusco, Sacred Valley Viewpoints & Acclimatization',
+    pt: 'Cusco Imperial, Mirantes do Vale Sagrado & Aclimatação',
+    fr: 'Cusco Impérial, Points de Vue de la Vallée Sacrée & Acclimatation',
+    it: 'Cusco Imperiale, Belvedere della Valle Sacra & Acclimatazione'
+  },
+  'Recepción privada en el hotel, travesía por los miradores del Valle Sagrado, sesión de aclimatación con infusiones de muña y briefing técnico con el guía oficial colegiado.': {
+    es: 'Recepción privada en el hotel, travesía por los miradores del Valle Sagrado, sesión de aclimatación con infusiones de muña y briefing técnico con el guía oficial colegiado.',
+    en: 'Private hotel reception, journey through Sacred Valley viewpoints, acclimatization session with native muña herbal tea, and technical briefing with the licensed guide.',
+    pt: 'Recepção privativa no hotel, travessia pelos mirantes do Vale Sagrado, sessão de aclimatação com infusões de muña e briefing técnico com o guia credenciado.',
+    fr: 'Accueil privé à l’hôtel, traversée des belvédères de la Vallée Sacrée, séance d’acclimatation aux infusions de muña et briefing technique avec le guide certifié.',
+    it: 'Accoglienza privata in hotel, traversata dei belvedere della Valle Sacra, sessione di acclimatazione con tisane di muña e briefing tecnico con la guida certificata.'
+  },
+  '3-4 hrs (Paseo ligero)': {
+    es: '3-4 hrs (Paseo ligero)',
+    en: '3-4 hrs (Gentle walk)',
+    pt: '3-4 hrs (Caminhada leve)',
+    fr: '3-4 h (Marche douce)',
+    it: '3-4 ore (Passeggiata leggera)'
+  },
+  'Almuerzo Campestre & Cena de Bienvenida': {
+    es: 'Almuerzo Campestre & Cena de Bienvenida',
+    en: 'Country Lunch & Welcome Dinner',
+    pt: 'Almoço Campestre & Jantar de Boas-Vindas',
+    fr: 'Déjeuner Champêtre & Dîner de Bienvenue',
+    it: 'Pranzo Campestre & Cena di Benvenuto'
+  },
+  'Hotel Boutique Valle Sagrado': {
+    es: 'Hotel Boutique Valle Sagrado',
+    en: 'Sacred Valley Boutique Hotel',
+    pt: 'Hotel Boutique Vale Sagrado',
+    fr: 'Hôtel Boutique Vallée Sacrée',
+    it: 'Hotel Boutique Valle Sacra'
+  },
+
+  'Ascenso Escénico, Paso de Alta Montaña & Lagunas Glaciares': {
+    es: 'Ascenso Escénico, Paso de Alta Montaña & Lagunas Glaciares',
+    en: 'Scenic Ascent, High Mountain Pass & Glacier Lagoons',
+    pt: 'Subida Cênica, Passo de Alta Montanha & Lagoas Glaciais',
+    fr: 'Ascension Panoramique, Col de Haute Montagne & Lagunes Glaciaires',
+    it: 'Salita Panoramica, Valico di Alta Montagna & Lagune Glaciali'
+  },
+  'Trekking matutino atravesando bosques de queñuales hacia las lagunas turquesas a los pies del nevado. Almuerzo gourmet de montaña y campamento bajo las estrellas andinas.': {
+    es: 'Trekking matutino atravesando bosques de queñuales hacia las lagunas turquesas a los pies del nevado. Almuerzo gourmet de montaña y campamento bajo las estrellas andinas.',
+    en: 'Morning trek through native Polylepis forests towards turquoise lagoons beneath the snow-capped peak. Mountain gourmet lunch and glamping under Andean stars.',
+    pt: 'Trekking matinal atravessando florestas de queñuales rumo às lagoas turquesas ao pé da montanha nevada. Almoço gourmet de montanha e acampamento sob as estrelas andinas.',
+    fr: 'Trek matinal à travers les forêts de quéñuales vers les lagunes turquoise au pied du mont enneigé. Déjeuner gastronomique de montagne et campement sous les étoiles andines.',
+    it: 'Trekking mattutino attraverso boschi di queñuales verso lagune turchesi ai piedi della vetta innevata. Pranzo gourmet di montagna e campeggio sotto le stelle andine.'
+  },
+  '6-7 hrs (Ascenso gradual)': {
+    es: '6-7 hrs (Ascenso gradual)',
+    en: '6-7 hrs (Gradual ascent)',
+    pt: '6-7 hrs (Subida gradual)',
+    fr: '6-7 h (Montée progressive)',
+    it: '6-7 ore (Salita graduale)'
+  },
+  'Desayuno Andino, Almuerzo Gourmet & Cena': {
+    es: 'Desayuno Andino, Almuerzo Gourmet & Cena',
+    en: 'Andean Breakfast, Gourmet Lunch & Dinner',
+    pt: 'Café da Manhã Andino, Almoço Gourmet & Jantar',
+    fr: 'Petit-déjeuner Andin, Déjeuner Gastronomique & Dîner',
+    it: 'Colazione Andina, Pranzo Gourmet & Cena'
+  },
+  'Alimentación Completa de Montaña': {
+    es: 'Alimentación Completa de Montaña',
+    en: 'Full Mountain Dining Service',
+    pt: 'Alimentação Completa de Montanha',
+    fr: 'Pension Complète de Montagne',
+    it: 'Pensione Completa di Montagna'
+  },
+  'Domo Glamping con Vista a las Estrellas': {
+    es: 'Domo Glamping con Vista a las Estrellas',
+    en: 'Stargazing Glamping Dome',
+    pt: 'Domo Glamping com Vista para as Estrelas',
+    fr: 'Dôme Glamping Vue sur les Étoiles',
+    it: 'Cupola Glamping con Vista sulle Stelle'
+  },
+
+  'Descenso a Ceja de Selva, Plantaciones de Café & Aguas Termales': {
+    es: 'Descenso a Ceja de Selva, Plantaciones de Café & Aguas Termales',
+    en: 'Descent into Cloud Forest, Coffee Plantations & Thermal Springs',
+    pt: 'Descida para a Selva Alta, Plantações de Café & Termas',
+    fr: 'Descente vers la Forêt Nuageuse, Plantations de Café & Eaux Thermales',
+    it: 'Discesa nella Foresta Pluviale, Piantagioni di Caffè & Terme'
+  },
+  'Travesía por valles subtropicales con vegetación exuberante, visita a productores de café orgánico y relajación en aguas termales naturales medicinales.': {
+    es: 'Travesía por valles subtropicales con vegetación exuberante, visita a productores de café orgánico y relajación en aguas termales naturales medicinales.',
+    en: 'Journey across lush subtropical valleys, visit to organic coffee farmers, and relaxing soak in medicinal natural hot springs.',
+    pt: 'Travessia por vales subtropicais com vegetação exuberante, visita a cafeicultores orgânicos e relaxamento em águas termais medicinais naturais.',
+    fr: 'Traversée de vallées subtropicales à la végétation luxuriante, visite de caféiculteurs biologiques et baignade délassante dans les thermes naturels.',
+    it: 'Traversata di vallate subtropicali lussureggianti, visita ai produttori di caffè biologico e relax nelle acque termali medicinali.'
+  },
+  '5 hrs (Descenso escénico)': {
+    es: '5 hrs (Descenso escénico)',
+    en: '5 hrs (Scenic descent)',
+    pt: '5 hrs (Descida cênica)',
+    fr: '5 h (Descente panoramique)',
+    it: '5 ore (Discesa panoramica)'
+  },
+  'Desayuno, Almuerzo Típico & Cena': {
+    es: 'Desayuno, Almuerzo Típico & Cena',
+    en: 'Breakfast, Traditional Lunch & Dinner',
+    pt: 'Café da Manhã, Almoço Típico & Jantar',
+    fr: 'Petit-déjeuner, Déjeuner Typique & Dîner',
+    it: 'Colazione, Pranzo Tipico & Cena'
+  },
+  'Alimentación Completa': {
+    es: 'Alimentación Completa',
+    en: 'All Meals Included',
+    pt: 'Alimentação Completa',
+    fr: 'Pension Complète',
+    it: 'Pasti Completi'
+  },
+  'Eco-Lodge en Ceja de Selva': {
+    es: 'Eco-Lodge en Ceja de Selva',
+    en: 'Cloud Forest Eco-Lodge',
+    pt: 'Eco-Lodge na Selva Alta',
+    fr: 'Écolodge en Lisière de Forêt',
+    it: 'Eco-Lodge nella Foresta Pluviale'
+  },
+
+  'Amanecer en la Ciudadela Sagrada de Machu Picchu & Retorno VIP': {
+    es: 'Amanecer en la Ciudadela Sagrada de Machu Picchu & Retorno VIP',
+    en: 'Sunrise at Sacred Citadel of Machu Picchu & VIP Return',
+    pt: 'Amanhecer na Cidadela Sagrada de Machu Picchu & Retorno VIP',
+    fr: 'Lever de Soleil sur la Citadelle Sacrée de Machu Picchu & Retour VIP',
+    it: 'Alba nella Cittadella Sacra di Machu Picchu & Rientro VIP'
+  },
+  'Acceso en primer turno a Machu Picchu para capturar la clásica postal con luz dorada. Recorrido arqueológico guiado de 3 horas y retorno en tren panorámico a Cusco.': {
+    es: 'Acceso en primer turno a Machu Picchu para capturar la clásica postal con luz dorada. Recorrido arqueológico guiado de 3 horas y retorno en tren panorámico a Cusco.',
+    en: 'First-shift entry to Machu Picchu to capture the classic golden-hour postcard shot. 3-hour guided archaeological tour and panoramic train return to Cusco.',
+    pt: 'Acesso no primeiro horário a Machu Picchu para a foto clássica com luz dourada. Circuito arqueológico guiado de 3 horas e retorno em trem panorâmico para Cusco.',
+    fr: 'Accès au premier créneau à Machu Picchu pour la photo classique dans la lumière dorée. Visite guidée de 3 heures du site archéologique et retour en train panoramique à Cusco.',
+    it: 'Accesso al primo turno a Machu Picchu per la classica cartolina con luce dorata. Tour guidato archeologico di 3 ore e rientro panoramico in treno a Cusco.'
+  },
+  '3 hrs (Tour guiado histórico)': {
+    es: '3 hrs (Tour guiado histórico)',
+    en: '3 hrs (Historical guided tour)',
+    pt: '3 hrs (Tour guiado histórico)',
+    fr: '3 h (Visite guidée historique)',
+    it: '3 ore (Tour guidato storico)'
+  },
+  'Desayuno Buffet & Almuerzo en Aguas Calientes': {
+    es: 'Desayuno Buffet & Almuerzo en Aguas Calientes',
+    en: 'Buffet Breakfast & Lunch in Aguas Calientes',
+    pt: 'Café da Manhã Buffet & Almoço em Aguas Calientes',
+    fr: 'Petit-déjeuner Buffet & Déjeuner à Aguas Calientes',
+    it: 'Colazione a Buffet & Pranzo ad Aguas Calientes'
+  },
+  'Desayuno Buffet & Almuerzo': {
+    es: 'Desayuno Buffet & Almuerzo',
+    en: 'Buffet Breakfast & Lunch',
+    pt: 'Café da Manhã Buffet & Almoço',
+    fr: 'Petit-déjeuner Buffet & Déjeuner',
+    it: 'Colazione a Buffet & Pranzo'
+  },
+  'Retorno a Hotel en Cusco': {
+    es: 'Retorno a Hotel en Cusco',
+    en: 'Return to Cusco Hotel',
+    pt: 'Retorno ao Hotel em Cusco',
+    fr: 'Retour à l’Hôtel à Cusco',
+    it: 'Rientro in Hotel a Cusco'
+  },
+
+  // --- SERVICIOS INCLUIDOS EMERALD ---
+  'Transporte turístico privado 4x4 climatizado ida y retorno': {
+    es: 'Transporte turístico privado 4x4 climatizado ida y retorno',
+    en: 'Round-trip private air-conditioned 4x4 tourist transport',
+    pt: 'Transporte turístico privativo 4x4 climatizado ida e volta',
+    fr: 'Transport touristique privé 4x4 climatisé aller-retour',
+    it: 'Trasporto turistico privato 4x4 climatizzato andata e ritorno'
+  },
+  'Boletos oficiales preferenciales de tren y accesos a Machu Picchu': {
+    es: 'Boletos oficiales preferenciales de tren y accesos a Machu Picchu',
+    en: 'Official preferential train tickets and Machu Picchu entrance fees',
+    pt: 'Bilhetes oficiais preferenciais de trem e ingressos para Machu Picchu',
+    fr: 'Billets de train officiels prioritaires et entrées à Machu Picchu',
+    it: 'Biglietti ferroviari ufficiali preferenziali e ingressi a Machu Picchu'
+  },
+  'Guía oficial colegiado bilingüe DIRCETUR en todas las jornadas': {
+    es: 'Guía oficial colegiado bilingüe DIRCETUR en todas las jornadas',
+    en: 'Licensed bilingual DIRCETUR certified guide for all excursions',
+    pt: 'Guia oficial credenciado bilíngue DIRCETUR em todas as jornadas',
+    fr: 'Guide officiel bilingue agréé DIRCETUR sur toutes les journées',
+    it: 'Guida ufficiale abilitata bilingue DIRCETUR per tutte le tappe'
+  },
+  'Monitoreo médico continuo 24/7 con balón de oxígeno medicinal': {
+    es: 'Monitoreo médico continuo 24/7 con balón de oxígeno medicinal',
+    en: 'Continuous 24/7 medical monitoring with certified medical oxygen tank',
+    pt: 'Monitoramento médico contínuo 24/7 com oxigênio medicinal',
+    fr: 'Surveillance médicale continue 24/7 avec bouteille d’oxygène médical',
+    it: 'Monitoraggio medico continuo 24/7 con bombola di ossigeno medicale'
+  },
+  'Alimentación gourmet andina de autor y estaciones de hidratación': {
+    es: 'Alimentación gourmet andina de autor y estaciones de hidratación',
+    en: 'Signature Andean gourmet dining and trail hydration stations',
+    pt: 'Gastronomia andina de autor e estações de hidratação na trilha',
+    fr: 'Restauration gastronomique andine signature et points d’hydratation',
+    it: 'Cucina gourmet andina d’autore e stazioni di idratazione sul sentiero'
+  },
+  'Bastones de trekking telescópicos de aluminio profesional': {
+    es: 'Bastones de trekking telescópicos de aluminio profesional',
+    en: 'Professional telescoping aluminum trekking poles',
+    pt: 'Bastões de caminhada telescópicos em alumínio profissional',
+    fr: 'Bâtons de trekking télescopiques en aluminium professionnel',
+    it: 'Bastoncini da trekking telescopici in alluminio professionale'
+  },
+
+  // --- SERVICIOS NO INCLUIDOS EMERALD ---
+  'Vuelos comerciales nacionales o internacionales hacia Cusco': {
+    es: 'Vuelos comerciales nacionales o internacionales hacia Cusco',
+    en: 'Domestic or international commercial flights to Cusco',
+    pt: 'Voos comerciais nacionais ou internacionais para Cusco',
+    fr: 'Vols commerciaux nationaux ou internationaux vers Cusco',
+    it: 'Voli commerciali nazionali o internazionali per Cusco'
+  },
+  'Propinas voluntarias para el equipo de porteadores y choferes': {
+    es: 'Propinas voluntarias para el equipo de porteadores y choferes',
+    en: 'Voluntary gratuities for porters and drivers',
+    pt: 'Gorjetas voluntárias para carregadores e motoristas',
+    fr: 'Pourboires volontaires pour porteurs et chauffeurs',
+    it: 'Mance facoltative per portatori e autisti'
+  },
+  'Seguro personal de viaje internacional (recomendado)': {
+    es: 'Seguro personal de viaje internacional (recomendado)',
+    en: 'Personal international travel insurance (recommended)',
+    pt: 'Seguro viagem internacional individual (recomendado)',
+    fr: 'Assurance voyage internationale personnelle (recommandée)',
+    it: 'Assicurazione di viaggio internazionale personale (consigliata)'
+  },
+
+  // --- CHECKLIST DE MOCHILA (QUÉ LLEVAR) ---
+  'Documento de identidad / Pasaporte original vigente': {
+    es: 'Documento de identidad / Pasaporte original vigente',
+    en: 'Valid original ID / Passport',
+    pt: 'Documento de identidade / Passaporte original válido',
+    fr: 'Pièce d’identité / Passeport original en cours de validité',
+    it: 'Documento d’identità / Passaporto originale in corso di validità'
+  },
+  'Mochila ergonómica de 20L a 30L con cobertor de lluvia': {
+    es: 'Mochila ergonómica de 20L a 30L con cobertor de lluvia',
+    en: '20L to 30L ergonomic daypack with rain cover',
+    pt: 'Mochila ergonômica de 20L a 30L com capa de chuva',
+    fr: 'Sac à dos ergonomique 20L à 30L avec housse anti-pluie',
+    it: 'Zaino ergonomico da 20L a 30L con parapioggia'
+  },
+  'Calzado de trekking con suela de buen agarre ya amoldado': {
+    es: 'Calzado de trekking con suela de buen agarre ya amoldado',
+    en: 'Broken-in trekking shoes with high-traction grip soles',
+    pt: 'Calçado de trekking com boa aderência já amaciado',
+    fr: 'Chaussures de trek bien adhérentes et déjà faites',
+    it: 'Scarpe da trekking con suola ad alta aderenza già rodate'
+  },
+  'Ropa térmica en capas, chaqueta cortavientos impermeable': {
+    es: 'Ropa térmica en capas, chaqueta cortavientos impermeable',
+    en: 'Layered thermal clothing, waterproof windbreaker jacket',
+    pt: 'Roupas térmicas em camadas, jaqueta corta-vento impermeável',
+    fr: 'Vêtements thermiques multicouches, veste coupe-vent imperméable',
+    it: 'Abbigliamento termico a strati, giacca a vento impermeabile'
+  },
+  'Protector solar FPS 50+, gafas UV400 y sombrero de ala ancha': {
+    es: 'Protector solar FPS 50+, gafas UV400 y sombrero de ala ancha',
+    en: 'SPF 50+ sunscreen, UV400 sunglasses, and wide-brim hat',
+    pt: 'Protetor solar FPS 50+, óculos UV400 e chapéu de aba larga',
+    fr: 'Crème solaire SPF 50+, lunettes UV400 et chapeau à larges bords',
+    it: 'Crema solare SPF 50+, occhiali UV400 e cappello a tesa larga'
+  },
+  'Botella o termo reutilizable para recargas de agua': {
+    es: 'Botella o termo reutilizable para recargas de agua',
+    en: 'Reusable bottle or thermos for water refills',
+    pt: 'Garrafa ou garrafa térmica reutilizável para recargas',
+    fr: 'Gourde ou thermos réutilisable pour recharge d’eau',
+    it: 'Borraccia o thermos riutilizzabile per ricariche'
+  },
+
+  // --- TRUST BADGES (ACREDITACIONES) ---
+  'Licencia Oficial DIRCETUR Cusco N° 2024-EXP-089': {
+    es: 'Licencia Oficial DIRCETUR Cusco N° 2024-EXP-089',
+    en: 'DIRCETUR Cusco Official License No. 2024-EXP-089',
+    pt: 'Licença Oficial DIRCETUR Cusco Nº 2024-EXP-089',
+    fr: 'Licence Officielle DIRCETUR Cusco N° 2024-EXP-089',
+    it: 'Licenza Ufficiale DIRCETUR Cusco N. 2024-EXP-089'
+  },
+  'Sello Internacional Safe Travels WTTC': {
+    es: 'Sello Internacional Safe Travels WTTC',
+    en: 'WTTC Safe Travels Global Seal',
+    pt: 'Selo Global Safe Travels WTTC',
+    fr: 'Label International Safe Travels WTTC',
+    it: 'Sigillo Internazionale Safe Travels WTTC'
+  },
+  'Operador Formal RUC 20 Verificado ante SUNAT': {
+    es: 'Operador Formal RUC 20 Verificado ante SUNAT',
+    en: 'Registered Legal Operator RUC 20 Verified with SUNAT',
+    pt: 'Operador Formal RUC 20 Verificado perante SUNAT',
+    fr: 'Opérateur Déclaré RUC 20 Enregistré auprès de la SUNAT',
+    it: 'Operatore Formale RUC 20 Verificato presso SUNAT'
+  },
+  'Balón de Oxígeno & Botiquín Médico de Altura Certificado': {
+    es: 'Balón de Oxígeno & Botiquín Médico de Altura Certificado',
+    en: 'Medical Oxygen Tank & Certified High-Altitude First Aid Kit',
+    pt: 'Cilindro de Oxigênio & Kit Médico de Altitude Certificado',
+    fr: 'Bouteille d’Oxygène & Trousse de Secours de Haute Altitude',
+    it: 'Bombola di Ossigeno & Kit Medico di Altitudine Certificato'
+  },
+  'Guías Colegiados Bilingües con Certificación WFR': {
+    es: 'Guías Colegiados Bilingües con Certificación WFR',
+    en: 'Licensed Bilingual Guides with WFR Certification',
+    pt: 'Guias Credenciados Bilíngues com Certificação WFR',
+    fr: 'Guides Certifiés Bilingues avec Brevet WFR',
+    it: 'Guide Abilitate Bilingui con Certificazione WFR'
+  },
+  'Póliza de Seguro Turístico contra Accidentes': {
+    es: 'Póliza de Seguro Turístico contra Accidentes',
+    en: 'Tourist Accident Insurance Policy',
+    pt: 'Apólice de Seguro Turístico Contra Acidentes',
+    fr: 'Police d’Assurance Touristique Accidents',
+    it: 'Polizza Assicurativa Turistica Infortuni'
+  },
+
+  // --- TESTIMONIOS EMERALD ---
+  'La mejor experiencia que hemos vivido en Perú. La atención personalizada de Carlos y el cuidado con el oxígeno en la montaña nos permitieron disfrutar de Machu Picchu sin ninguna preocupación.': {
+    es: 'La mejor experiencia que hemos vivido en Perú. La atención personalizada de Carlos y el cuidado con el oxígeno en la montaña nos permitieron disfrutar de Machu Picchu sin ninguna preocupación.',
+    en: 'The greatest travel experience we have ever had in Peru. Carlos’s personal care and constant oxygen safety in the mountains let us fully enjoy Machu Picchu with peace of mind.',
+    pt: 'A melhor experiência que já vivemos no Peru. A atenção personalizada de Carlos e o cuidado com o oxigênio na montanha nos permitiram desfrutar de Machu Picchu com total tranquilidade.',
+    fr: 'La plus belle expérience vécue au Pérou. L’attention personnalisée de Carlos et la surveillance à l’oxygène en montagne nous ont permis de vivre Machu Picchu en toute sérénité.',
+    it: 'La migliore esperienza vissuta in Perù. Le attenzioni di Carlos e la cura con l’ossigeno in montagna ci hanno permesso di vivere Machu Picchu senza pensieri.'
   }
 };
 

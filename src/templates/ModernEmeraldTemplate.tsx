@@ -586,7 +586,9 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   const guidePhone = data.whatsapp || '+51984123456';
   const guideAvatar = data.guideAvatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop';
 
-  const heroTitle = translateText(data.hero?.title || data.name || 'Vive Tu Aventura — Expediciones & Trekking en Cusco', currentLang);
+  const rawHeroTitle = data.hero?.title || data.name || 'Vive Tu Aventura: Expediciones & Trekking en Cusco';
+  const cleanTitleInput = rawHeroTitle.replace(/\s*—\s*/g, ': ').trim();
+  const heroTitle = translateText(cleanTitleInput, currentLang).replace(/\s*—\s*/g, ': ').trim();
   const heroSubtitle = translateText(data.hero?.subtitle || data.about?.content || 'Explora lugares asombrosos y crea recuerdos inolvidables alrededor de los Andes.', currentLang);
   const heroBadge = translateText(data.hero?.badge || 'NavikX Cusco • Operador Autorizado', currentLang);
   const destinationName = translateText(data.destination || 'Cusco & Machu Picchu', currentLang);
@@ -905,7 +907,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </div>
           </div>
 
-          {/* Menú Desktop Translúcido Flotante */}
+          {/* Menú Desktop Translúcido Flotante (Exactamente 7 links) */}
           <nav className="hidden lg:flex items-center gap-1 bg-white/[0.08] backdrop-blur-xl p-1.5 rounded-full border border-white/15 shadow-lg text-xs font-semibold text-emerald-100">
             <a href="#inicio" className="px-3 py-1.5 rounded-full bg-emerald-500 text-[#02181f] font-black shadow-xs transition-all">
               {t.navHome}
@@ -913,39 +915,21 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             <a href="#destinos" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navDestinations}
             </a>
-            {!isFree && (
-              <a href="#acerca" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
-                {t.navAbout}
-              </a>
-            )}
             <a href="#tours" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navTours}
             </a>
-            {(isPro || isAdvance) && (
-              <a href="#itinerario" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
-                {t.navItinerary}
-              </a>
-            )}
-            {!isFree && (
-              <a href="#incluye" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
-                {t.navServices}
-              </a>
-            )}
-            {!isFree && (
-              <a href="#galeria" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
-                {t.navGallery}
-              </a>
-            )}
-            {isAdvance && (
-              <a href="#resenas" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
-                {t.navReviews}
-              </a>
-            )}
-            {isAdvance && (
-              <a href="#faqs" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
-                {t.navFaqs}
-              </a>
-            )}
+            <a href="#itinerario" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+              {t.navItinerary}
+            </a>
+            <a href="#incluye" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+              {t.navServices}
+            </a>
+            <a href="#galeria" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+              {t.navGallery}
+            </a>
+            <a href="#faqs" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+              {t.navFaqs}
+            </a>
           </nav>
 
           {/* Controles Derecha: Divisas + Idiomas + CTA */}
@@ -1041,13 +1025,11 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
             <a href="#inicio" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-300">{t.navHome}</a>
             <a href="#destinos" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navDestinations}</a>
-            {!isFree && <a href="#acerca" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navAbout}</a>}
             <a href="#tours" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navTours}</a>
-            {(isPro || isAdvance) && <a href="#itinerario" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navItinerary}</a>}
-            {!isFree && <a href="#incluye" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navServices}</a>}
-            {!isFree && <a href="#galeria" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navGallery}</a>}
-            {isAdvance && <a href="#resenas" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navReviews}</a>}
-            {isAdvance && <a href="#faqs" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navFaqs}</a>}
+            <a href="#itinerario" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navItinerary}</a>
+            <a href="#incluye" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navServices}</a>
+            <a href="#galeria" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navGallery}</a>
+            <a href="#faqs" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navFaqs}</a>
           </div>
         )}
       </header>
@@ -1178,7 +1160,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               {/* Tarjeta Flotante Inferior de Tarifa Dinámica */}
               <div className="absolute bottom-5 inset-x-5 z-20 p-4 rounded-3xl bg-black/50 backdrop-blur-xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex items-center justify-between gap-3 animate-emerald-float-alt">
                 <div className="min-w-0">
-                  <span className="text-[10px] text-emerald-200/90 font-bold block">Tarifa Oficial por Persona:</span>
+                  <span className="text-[10px] text-emerald-200/90 font-bold block">{translateText('Tarifa Oficial por Persona:', currentLang)}</span>
                   <span className="text-2xl font-black text-white">{formatPrice(basePriceUsd, 1)}</span>
                 </div>
                 <button
@@ -1186,7 +1168,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                   onClick={(e) => { e.stopPropagation(); handleOpenAction(data.name); }}
                   className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 flex items-center gap-1.5 transition-all cursor-pointer hover:scale-105 active:scale-95"
                 >
-                  <span>Reservar</span>
+                  <span>{translateText('Reservar Tour', currentLang)}</span>
                   <ArrowRight size={14} />
                 </button>
               </div>
@@ -1275,7 +1257,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                       </p>
                       <div className="flex items-center gap-2 pt-1 text-[11px] text-emerald-300/80 font-medium">
                         <Compass size={13} className="text-teal-400 shrink-0" />
-                        <span>Clima: {dest.climate}</span>
+                        <span>{translateText('Clima', currentLang)}: {dest.climate}</span>
                       </div>
                     </div>
 
@@ -1324,9 +1306,9 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40 group-hover:scale-110 transition-transform">
                   <Clock size={20} />
                 </div>
-                <span className="text-[10px] uppercase font-extrabold tracking-wider text-emerald-400 block">Duración</span>
+                <span className="text-[10px] uppercase font-extrabold tracking-wider text-emerald-400 block">{translateText('Duración', currentLang)}</span>
                 <span className="text-base font-black text-white block">{translateText(data.duration || '4 Días / 3 Noches', currentLang)}</span>
-                <span className="text-[10px] text-emerald-200/60 block group-hover:text-emerald-300">Toca para ver detalle ➔</span>
+                <span className="text-[10px] text-emerald-200/60 block group-hover:text-emerald-300">{translateText('Toca para ver detalle ➔', currentLang)}</span>
               </div>
 
               <div 
@@ -1336,9 +1318,9 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <div className="w-10 h-10 rounded-2xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/40 group-hover:scale-110 transition-transform">
                   <Mountain size={20} />
                 </div>
-                <span className="text-[10px] uppercase font-extrabold tracking-wider text-teal-400 block">Altitud Máxima</span>
+                <span className="text-[10px] uppercase font-extrabold tracking-wider text-teal-400 block">{translateText('Altitud Máxima', currentLang)}</span>
                 <span className="text-base font-black text-white block">{translateText(data.altitude || '4,630 msnm', currentLang)}</span>
-                <span className="text-[10px] text-teal-200/60 block group-hover:text-teal-300">Oxígeno incluido ➔</span>
+                <span className="text-[10px] text-teal-200/60 block group-hover:text-teal-300">{translateText('Oxígeno incluido ➔', currentLang)}</span>
               </div>
 
               <div 
@@ -1348,9 +1330,9 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <div className="w-10 h-10 rounded-2xl bg-cyan-500/20 text-cyan-300 flex items-center justify-center border border-cyan-400/40 group-hover:scale-110 transition-transform">
                   <Zap size={20} />
                 </div>
-                <span className="text-[10px] uppercase font-extrabold tracking-wider text-cyan-400 block">Dificultad</span>
+                <span className="text-[10px] uppercase font-extrabold tracking-wider text-cyan-400 block">{translateText('Dificultad', currentLang)}</span>
                 <span className="text-base font-black text-white block">{translateText(data.difficulty || 'Moderada', currentLang)}</span>
-                <span className="text-[10px] text-cyan-200/60 block group-hover:text-cyan-300">Ritmo adaptable ➔</span>
+                <span className="text-[10px] text-cyan-200/60 block group-hover:text-cyan-300">{translateText('Ritmo adaptable ➔', currentLang)}</span>
               </div>
 
               <div 
@@ -1360,9 +1342,9 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <div className="w-10 h-10 rounded-2xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/40 group-hover:scale-110 transition-transform">
                   <Users size={20} />
                 </div>
-                <span className="text-[10px] uppercase font-extrabold tracking-wider text-amber-400 block">Modalidad</span>
+                <span className="text-[10px] uppercase font-extrabold tracking-wider text-amber-400 block">{translateText('Modalidad', currentLang)}</span>
                 <span className="text-base font-black text-white block">{translateText(data.groupType || 'Grupos Reducidos', currentLang)}</span>
-                <span className="text-[10px] text-amber-200/60 block group-hover:text-amber-300">Máx 8 personas ➔</span>
+                <span className="text-[10px] text-amber-200/60 block group-hover:text-amber-300">{translateText('Máx 8 personas ➔', currentLang)}</span>
               </div>
             </div>
 
@@ -1371,7 +1353,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               <div className="relative z-10 space-y-6">
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold">
                   <Award size={14} />
-                  <span>Filosofía de Expedición</span>
+                  <span>{translateText('Filosofía de Expedición', currentLang)}</span>
                 </div>
 
                 <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
@@ -1419,7 +1401,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                       className="emerald-shimmer-btn bg-emerald-500 hover:bg-emerald-400 text-[#02181f] font-black text-xs px-5 py-2.5 rounded-full transition-all cursor-pointer shadow-md flex items-center gap-2"
                     >
                       <MessageCircle size={14} />
-                      <span>Consultar con {guideName.split(' ')[0]}</span>
+                      <span>{translateText('Consultar con', currentLang)} {guideName.split(' ')[0]}</span>
                     </button>
                   </div>
                 </div>
@@ -1444,10 +1426,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <h4 className="font-black text-base flex items-center gap-2 text-emerald-300">
                 <Info size={18} />
-                {activeSpecModal === 'duration' && 'Detalles de Duración & Ritmo'}
-                {activeSpecModal === 'altitude' && 'Protocolo de Altitud & Oxígeno'}
-                {activeSpecModal === 'difficulty' && 'Evaluación de Condición Física'}
-                {activeSpecModal === 'group' && 'Modalidad & Ratio de Guías'}
+                {activeSpecModal === 'duration' && translateText('Detalles de Duración & Ritmo', currentLang)}
+                {activeSpecModal === 'altitude' && translateText('Protocolo de Altitud & Oxígeno', currentLang)}
+                {activeSpecModal === 'difficulty' && translateText('Evaluación de Condición Física', currentLang)}
+                {activeSpecModal === 'group' && translateText('Modalidad & Ratio de Guías', currentLang)}
               </h4>
               <button 
                 onClick={() => setActiveSpecModal(null)}
@@ -1458,10 +1440,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </div>
 
             <p className="text-xs sm:text-sm text-emerald-100/80 leading-relaxed">
-              {activeSpecModal === 'duration' && 'El itinerario contempla caminatas de 5 a 6 horas diarias con paradas programadas de hidratación cada 90 minutos y almuerzos gourmet calientes servidos en parajes escénicos.'}
-              {activeSpecModal === 'altitude' && 'Nuestros guías llevan oxímetro digital para medir tu saturación tres veces al día, balón de oxígeno medicinal de emergencia y botiquín de primeros auxilios avalado por Wilderness First Responder.'}
-              {activeSpecModal === 'difficulty' && 'Clasificación de esfuerzo moderado a exigente. No se requiere experiencia en escalada técnica, únicamente calzado adecuado y buena disposición física.'}
-              {activeSpecModal === 'group' && 'Grupos reducidos de máximo 8 a 10 personas para garantizar seguridad total, atención personalizada y respeto por el entorno natural de la cordillera.'}
+              {activeSpecModal === 'duration' && translateText('El itinerario contempla caminatas de 5 a 6 horas diarias con paradas programadas de hidratación cada 90 minutos y almuerzos gourmet calientes servidos en parajes escénicos.', currentLang)}
+              {activeSpecModal === 'altitude' && translateText('Nuestros guías llevan oxímetro digital para medir tu saturación tres veces al día, balón de oxígeno medicinal de emergencia y botiquín de primeros auxilios avalado por Wilderness First Responder.', currentLang)}
+              {activeSpecModal === 'difficulty' && translateText('Clasificación de esfuerzo moderado a exigente. No se requiere experiencia en escalada técnica, únicamente calzado adecuado y buena disposición física.', currentLang)}
+              {activeSpecModal === 'group' && translateText('Grupos reducidos de máximo 8 a 10 personas para garantizar seguridad total, atención personalizada y respeto por el entorno natural de la cordillera.', currentLang)}
             </p>
 
             <button
@@ -1469,7 +1451,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               onClick={() => setActiveSpecModal(null)}
               className="w-full py-2.5 rounded-xl bg-emerald-500 text-[#02181f] font-black text-xs cursor-pointer hover:bg-emerald-400"
             >
-              Entendido
+              {translateText('Entendido', currentLang)}
             </button>
           </div>
         </div>
@@ -1502,8 +1484,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-[#041716]/30 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
-                  <span className="text-xs font-black text-white block">Rutas Planificadas</span>
-                  <span className="text-[10px] text-emerald-300/80">Logística Integral</span>
+                  <span className="text-xs font-black text-white block">{translateText('Rutas Planificadas', currentLang)}</span>
+                  <span className="text-[10px] text-emerald-300/80">{translateText('Logística Integral', currentLang)}</span>
                 </div>
               </div>
 
@@ -1516,7 +1498,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-white">{t.happyTravelers}</h4>
-                  <p className="text-xs text-emerald-200/70 mt-0.5">Asistidos con protocolo médico de altitud.</p>
+                  <p className="text-xs text-emerald-200/70 mt-0.5">{translateText('Asistidos con protocolo médico de altitud.', currentLang)}</p>
                 </div>
               </div>
 
@@ -1529,7 +1511,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-white">{t.positiveReviews}</h4>
-                  <p className="text-xs text-emerald-200/70 mt-0.5">Calificaciones 5 estrellas en TripAdvisor & Google.</p>
+                  <p className="text-xs text-emerald-200/70 mt-0.5">{translateText('Calificaciones 5 estrellas en TripAdvisor & Google.', currentLang)}</p>
                 </div>
               </div>
 
@@ -1543,8 +1525,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#041716] via-[#041716]/30 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4">
-                  <span className="text-xs font-black text-white block">Momentos Inolvidables</span>
-                  <span className="text-[10px] text-emerald-300/80">Fotografía escénica</span>
+                  <span className="text-xs font-black text-white block">{translateText('Momentos Inolvidables', currentLang)}</span>
+                  <span className="text-[10px] text-emerald-300/80">{translateText('Fotografía escénica', currentLang)}</span>
                 </div>
               </div>
             </div>
@@ -1561,7 +1543,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           <div className="relative z-10">
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
               <div>
-                <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Cronograma Oficial</span>
+                <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">{translateText('Cronograma Oficial', currentLang)}</span>
                 <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">{t.itineraryTitle}</h2>
                 <p className="text-xs sm:text-sm text-emerald-200/70 mt-1">{t.itinerarySub}</p>
               </div>
@@ -1653,28 +1635,28 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
                         <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
                           <span className="text-[10px] uppercase font-bold text-teal-400 block flex items-center gap-1">
-                            <Mountain size={12} /> Altitud
+                            <Mountain size={12} /> {translateText('Altitud', currentLang)}
                           </span>
                           <span className="text-xs font-black text-white block">{activeItinerary[selectedDayIdx].altitude}</span>
                         </div>
 
                         <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
                           <span className="text-[10px] uppercase font-bold text-emerald-400 block flex items-center gap-1">
-                            <Clock size={12} /> Caminata
+                            <Clock size={12} /> {translateText('Caminata', currentLang)}
                           </span>
                           <span className="text-xs font-black text-white block">{activeItinerary[selectedDayIdx].hikingTime}</span>
                         </div>
 
                         <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
                           <span className="text-[10px] uppercase font-bold text-amber-400 block flex items-center gap-1">
-                            <Utensils size={12} /> Comidas
+                            <Utensils size={12} /> {translateText('Comidas', currentLang)}
                           </span>
                           <span className="text-xs font-black text-white block truncate">{activeItinerary[selectedDayIdx].meals}</span>
                         </div>
 
                         <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-1">
                           <span className="text-[10px] uppercase font-bold text-cyan-400 block flex items-center gap-1">
-                            <Bed size={12} /> Hospedaje
+                            <Bed size={12} /> {translateText('Hospedaje', currentLang)}
                           </span>
                           <span className="text-xs font-black text-white block truncate">{activeItinerary[selectedDayIdx].lodging}</span>
                         </div>
@@ -1694,11 +1676,11 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
                         <button
                           type="button"
-                          onClick={() => handleOpenAction(`${data.name || 'Tour'} — ${activeItinerary[selectedDayIdx].step}: ${activeItinerary[selectedDayIdx].title}`)}
+                          onClick={() => handleOpenAction(`${cleanTitleInput}: ${activeItinerary[selectedDayIdx].step}: ${activeItinerary[selectedDayIdx].title}`)}
                           className="emerald-shimmer-btn bg-emerald-500/20 hover:bg-emerald-400 hover:text-slate-950 text-emerald-300 font-bold text-xs px-5 py-2.5 rounded-full border border-emerald-400/40 transition-all cursor-pointer flex items-center gap-2"
                         >
                           <MessageCircle size={14} />
-                          <span>Consultar itinerario de esta jornada</span>
+                          <span>{translateText('Consultar itinerario de esta jornada', currentLang)}</span>
                         </button>
                       </div>
                     </div>
@@ -1741,7 +1723,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           
           <div className="relative z-10">
             <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-              <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">Equipamiento & Confort</span>
+              <span className="text-xs font-black text-emerald-400 uppercase tracking-wider block">{translateText('Equipamiento & Confort', currentLang)}</span>
               <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
                 {t.inclusionsTitle}
               </h2>
@@ -1762,7 +1744,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                       </div>
                       <div>
                         <h3 className="text-base font-black text-white">{t.includedServices}</h3>
-                        <p className="text-[11px] text-emerald-300/80">Cobertura garantizada de alta montaña</p>
+                        <p className="text-[11px] text-emerald-300/80">{translateText('Cobertura garantizada de alta montaña', currentLang)}</p>
                       </div>
                     </div>
                     <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
@@ -1935,7 +1917,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             <div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-black mb-3">
                 <Compass size={13} className="text-emerald-400" />
-                <span>Salidas Garantizadas 2025 - 2026</span>
+                <span>{translateText('Salidas Garantizadas 2025 - 2026', currentLang)}</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight flex flex-wrap items-center gap-2.5">
                 <span>{t.toursTitle}</span>
@@ -1969,7 +1951,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                       : 'text-emerald-200/70 hover:text-white hover:bg-white/10'
                   }`}
                 >
-                  {cat.label}
+                  {translateText(cat.label, currentLang)}
                 </button>
               ))}
             </div>
@@ -2107,7 +2089,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-bold">
                 <Star size={12} className="fill-amber-400" />
-                <span>4.9 / 5.0 en Reseñas Internacionales</span>
+                <span>{translateText('4.9 / 5.0 en Reseñas Internacionales', currentLang)}</span>
               </div>
               <h2 className="text-2xl sm:text-4xl font-black text-white tracking-tight">
                 {t.reviewsTitle}
@@ -2204,7 +2186,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           brandName="NavikX Cusco Expeditions"
           isMobile={isMobile}
           officeAddress={data.officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
-          officeHours={data.officeHours || 'Lunes a Domingo: 07:00 - 21:00'}
+          officeHours={translateText(data.officeHours || 'Lunes a Domingo: 07:00 - 21:00', currentLang)}
           mapsUrl={data.mapsUrl}
         />
       )}
@@ -2216,32 +2198,32 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             <div className="flex items-center gap-2">
               <MapPin size={18} className="text-emerald-400 shrink-0" />
               <div>
-                <span className="text-xs font-black text-white block">50+ Rutas</span>
-                <span className="text-[10px] text-emerald-200/70">Destinos de Autor</span>
+                <span className="text-xs font-black text-white block">{translateText('50+ Rutas', currentLang)}</span>
+                <span className="text-[10px] text-emerald-200/70">{translateText('Destinos de Autor', currentLang)}</span>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <Users size={18} className="text-emerald-400 shrink-0" />
               <div>
-                <span className="text-xs font-black text-white block">100K+ Turistas</span>
-                <span className="text-[10px] text-emerald-200/70">Experiencias Felices</span>
+                <span className="text-xs font-black text-white block">{translateText('100K+ Turistas', currentLang)}</span>
+                <span className="text-[10px] text-emerald-200/70">{translateText('Experiencias Felices', currentLang)}</span>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <Star size={18} className="text-amber-400 shrink-0 fill-amber-400" />
               <div>
-                <span className="text-xs font-black text-white block">4.9★ Promedio</span>
-                <span className="text-[10px] text-emerald-200/70">TripAdvisor & Google</span>
+                <span className="text-xs font-black text-white block">{translateText('4.9★ Promedio', currentLang)}</span>
+                <span className="text-[10px] text-emerald-200/70">{translateText('TripAdvisor & Google', currentLang)}</span>
               </div>
             </div>
 
             <div className="flex items-center gap-2">
               <Clock size={18} className="text-emerald-400 shrink-0" />
               <div>
-                <span className="text-xs font-black text-white block">24/7 Soporte</span>
-                <span className="text-[10px] text-emerald-200/70">Oxígeno y Asistencia</span>
+                <span className="text-xs font-black text-white block">{translateText('24/7 Soporte', currentLang)}</span>
+                <span className="text-[10px] text-emerald-200/70">{translateText('Oxígeno y Asistencia', currentLang)}</span>
               </div>
             </div>
           </div>

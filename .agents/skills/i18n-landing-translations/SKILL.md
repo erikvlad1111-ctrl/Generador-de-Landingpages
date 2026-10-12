@@ -245,4 +245,40 @@ Guía para diagnosticar y solucionar problemas de traducción, mezcla de idiomas
   2. En `src/data/translations.ts`, agregar todas las permutaciones y variantes de `Live Your Adventure` / `Vive Tu Aventura`, `Expediciones & Trekking en Cusco`, `Machu Picchu, Salkantay & Rutas Exclusivas` y la descripción del preset en `PHRASE_MAP` para los 5 idiomas (`es`, `en`, `pt`, `fr`, `it`), con soporte dinámico de prefijos y sufijos en `translateText`.
   3. En `src/app/demo/new/page.tsx`, envolver todos los textos de la maqueta de previsualización del Diseño 6 con llamadas reactivas a `translateText(..., language)`.
 
+### Error: Presencia de Em-Dash (`—`), Exceso de Enlaces en el Menú de Navegación y Secciones/Tours No Traducidos al Cambiar de Idioma
+
+- **Síntoma / Mensaje de Error:**
+  1. El título del Hero y títulos en presets o botones incluían el guión largo em-dash `—` (`Vive Tu Aventura — Expediciones & Trekking en Cusco`).
+  2. El menú de navegación (`nav`) contenía más de 7 enlaces (8 a 9 items) saturando el header en resoluciones medianas y compactas.
+  3. Al cambiar de idioma (`en`, `pt`, `fr`, `it`), el catálogo de tours secundarios, destinos populares, ficha técnica, itinerario por defecto, inclusiones, qué llevar en la mochila, acreditaciones de confianza y barra de métricas inferior permanecían en español.
+
+- **Causa Raíz:**
+  1. El título por defecto y preset utilizaban `—` en lugar de dos puntos (`:`), y no existía sanitización activa con `.replace(/\s*—\s*/g, ': ')`.
+  2. La barra de navegación incluía enlaces redundantes (`#acerca` y `#resenas`), superando el límite estricto de 7 enlaces esenciales.
+  3. Varios textos de componentes JSX estaban escritos en español plano sin `translateText(..., currentLang)`, y las listas por defecto de `ModernEmeraldTemplate` (itinerario día a día, comidas, hospedaje, tiempos de caminata, inclusiones, exclusiones, checklist de mochila, trust badges y testimonios) carecían de mapeo en `PHRASE_MAP` de `translations.ts`.
+
+- **Comando de Diagnóstico:**
+  ```bash
+  git grep -n "—" src/templates/ModernEmeraldTemplate.tsx src/app/demo/new/page.tsx
+  ```
+
+- **Solución Paso a Paso:**
+  1. En `ModernEmeraldTemplate.tsx`, aplicar sanitización activa tanto antes como después de la traducción:
+     ```tsx
+     const cleanTitleInput = rawHeroTitle.replace(/\s*—\s*/g, ': ').trim();
+     const heroTitle = translateText(cleanTitleInput, currentLang).replace(/\s*—\s*/g, ': ').trim();
+     ```
+     Actualizar el preset en `demo/new/page.tsx` para usar dos puntos (`:`) en vez de `—`.
+  2. Limitar el `<nav>` de desktop y el menú desplegable móvil a exactamente 7 enlaces esenciales:
+     1. `#inicio` (`navHome`)
+     2. `#destinos` (`navDestinations`)
+     3. `#tours` (`navTours`)
+     4. `#itinerario` (`navItinerary`)
+     5. `#incluye` (`navServices`)
+     6. `#galeria` (`navGallery`)
+     7. `#faqs` (`navFaqs`)
+  3. Conectar todos los textos y badges de las secciones con `translateText(..., currentLang)`: Clima, Altitud, Caminata, Comidas, Hospedaje, Equipamiento & Confort, insignias de reseñas y las 4 tarjetas de la barra inferior de métricas.
+  4. Expandir exhaustivamente `PHRASE_MAP` en `src/data/translations.ts` con todos los textos por defecto del itinerario, servicios incluidos y excluidos, checklist de mochila, licencias oficiales y testimonios en los 5 idiomas oficiales (`es`, `en`, `pt`, `fr`, `it`).
+
+
 

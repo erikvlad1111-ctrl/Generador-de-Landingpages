@@ -144,7 +144,7 @@ const PRESET_TOURS = [
   {
     id: 'emerald-explorer-navikx',
     label: '🌲 Diseño 6 (Emerald Explorer)',
-    name: 'Vive Tu Aventura — Expediciones & Trekking en Cusco',
+    name: 'Vive Tu Aventura: Expediciones & Trekking en Cusco',
     destination: 'Machu Picchu, Salkantay & Rutas Exclusivas',
     guideName: 'Carlos Mendoza',
     guideCert: 'Licenciado DIRCETUR & Explorador Senior',
@@ -2817,7 +2817,7 @@ export default function NewLandingDemo() {
                         {translateText('Explore. Dream. Discover.', language)}
                       </div>
                       <h3 className="text-base font-black text-white leading-tight tracking-tight">
-                        {translateText(name || 'Vive Tu Aventura — Expediciones & Trekking en Cusco', language)}
+                        {translateText(name || 'Vive Tu Aventura: Expediciones & Trekking en Cusco', language)}
                       </h3>
                       <p className="text-[9px] text-emerald-200/80 line-clamp-2 leading-relaxed">
                         {translateText(description || 'Explora lugares asombrosos y crea recuerdos inolvidables alrededor del Cusco.', language)}
