@@ -1020,41 +1020,114 @@ export default function NewLandingDemo() {
           </div>
         </div>
 
-        {/* SELECTOR DE MODO DE CREACIÓN: EXPRESS VS MANUAL COMPLETO */}
-        <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center p-1 bg-slate-100 rounded-2xl border border-slate-200/80 w-full sm:w-auto">
+        {/* SELECTOR DE MODO DE CREACIÓN: MODO IA VS MODO MANUAL */}
+        <div className="pt-4 border-t border-slate-100 space-y-3">
+          <div className="flex items-center justify-between">
+            <label className="text-[11px] font-black uppercase tracking-wider text-slate-500">
+              Método de Creación:
+            </label>
+            <span className="text-[11px] font-semibold text-slate-400">
+              {creationMode === 'express' 
+                ? '⚡ Modo IA — Ahorra más del 80% de tiempo' 
+                : '✍️ Modo Manual — Edición campo por campo'}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            {/* Opción 1: Generar con IA */}
             <button
               type="button"
               onClick={() => setCreationMode('express')}
-              className={`flex-1 sm:flex-initial px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+              className={`relative p-4 rounded-2xl text-left transition-all cursor-pointer border-2 flex items-start gap-3.5 ${
                 creationMode === 'express'
-                  ? 'bg-blue-600 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'border-purple-600 bg-gradient-to-br from-purple-50 via-indigo-50/60 to-white shadow-md ring-4 ring-purple-500/10'
+                  : 'border-slate-200 bg-white hover:border-purple-300 hover:bg-purple-50/20 text-slate-700'
               }`}
             >
-              <Zap size={14} className={creationMode === 'express' ? "text-amber-300" : "text-slate-400"} />
-              <span>⚡ Modo Express IA (Rápido)</span>
+              <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-transform ${
+                creationMode === 'express'
+                  ? 'bg-gradient-to-tr from-purple-600 to-indigo-600 text-white shadow-md shadow-purple-500/30 scale-105'
+                  : 'bg-slate-100 text-slate-500'
+              }`}>
+                <Sparkles size={20} className={creationMode === 'express' ? "text-amber-300 animate-pulse" : ""} />
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className={`text-sm font-black tracking-tight ${creationMode === 'express' ? 'text-purple-950' : 'text-slate-800'}`}>
+                    Generar con IA
+                  </span>
+                  <span className={`text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full tracking-wide ${
+                    creationMode === 'express'
+                      ? 'bg-purple-600 text-white'
+                      : 'bg-slate-100 text-slate-500'
+                  }`}>
+                    Automático
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 mt-1 leading-snug">
+                  La IA redacta descripción, itinerario, preguntas frecuentes y testimonios en un clic.
+                </p>
+              </div>
+
+              <div className="shrink-0 self-center">
+                {creationMode === 'express' ? (
+                  <div className="w-6 h-6 rounded-full bg-purple-600 text-white flex items-center justify-center shadow-xs">
+                    <Check size={13} strokeWidth={3} />
+                  </div>
+                ) : (
+                  <div className="w-6 h-6 rounded-full border-2 border-slate-300" />
+                )}
+              </div>
             </button>
 
+            {/* Opción 2: Modo Manual */}
             <button
               type="button"
               onClick={() => setCreationMode('full')}
-              className={`flex-1 sm:flex-initial px-4 py-2 rounded-xl text-xs font-black transition-all flex items-center justify-center gap-2 cursor-pointer ${
+              className={`relative p-4 rounded-2xl text-left transition-all cursor-pointer border-2 flex items-start gap-3.5 ${
                 creationMode === 'full'
-                  ? 'bg-white text-slate-900 shadow-sm border border-slate-200/70'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'border-blue-600 bg-gradient-to-br from-blue-50 via-slate-50/80 to-white shadow-md ring-4 ring-blue-500/10'
+                  : 'border-slate-200 bg-white hover:border-blue-300 hover:bg-blue-50/20 text-slate-700'
               }`}
             >
-              <FileText size={14} className={creationMode === 'full' ? "text-blue-600" : "text-slate-400"} />
-              <span>🛠️ Modo Ficha Completa (Manual)</span>
+              <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 transition-transform ${
+                creationMode === 'full'
+                  ? 'bg-gradient-to-tr from-blue-600 to-slate-800 text-white shadow-md shadow-blue-500/30 scale-105'
+                  : 'bg-slate-100 text-slate-500'
+              }`}>
+                <SlidersHorizontal size={20} />
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span className={`text-sm font-black tracking-tight ${creationMode === 'full' ? 'text-slate-950' : 'text-slate-800'}`}>
+                    Modo Manual
+                  </span>
+                  <span className={`text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full tracking-wide ${
+                    creationMode === 'full'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-slate-100 text-slate-500'
+                  }`}>
+                    Control Total
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 mt-1 leading-snug">
+                  Configura tú mismo cada detalle, fotos, itinerario y ficha técnica paso a paso.
+                </p>
+              </div>
+
+              <div className="shrink-0 self-center">
+                {creationMode === 'full' ? (
+                  <div className="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xs">
+                    <Check size={13} strokeWidth={3} />
+                  </div>
+                ) : (
+                  <div className="w-6 h-6 rounded-full border-2 border-slate-300" />
+                )}
+              </div>
             </button>
           </div>
-
-          <span className="text-xs text-slate-500">
-            {creationMode === 'express' 
-              ? '⚡ Modo Express: Solo ingresa lo esencial y la IA redactará el resto automáticamente.'
-              : '🛠️ Modo Completo: Control total sobre los 13 pasos (itinerario, FAQs, fotos y testimonios).'}
-          </span>
         </div>
       </div>
 
@@ -1871,7 +1944,7 @@ export default function NewLandingDemo() {
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-black uppercase tracking-wider text-amber-300 bg-amber-400/20 px-2.5 py-0.5 rounded-full border border-amber-400/30">
-                      ⚡ Modo Express con IA Activado
+                      ⚡ Modo IA Activado
                     </span>
                     <span className="text-[11px] text-purple-200 font-semibold">Generación Instantánea</span>
                   </div>
@@ -1909,15 +1982,15 @@ export default function NewLandingDemo() {
 
               <div className="pt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/15 text-xs">
                 <span className="text-purple-300 text-[11px]">
-                  💡 ¿Prefieres escribir o afinar cada texto manualmente antes de publicar?
+                  💡 ¿Prefieres personalizar cada campo antes de publicar?
                 </span>
                 <button
                   type="button"
                   onClick={() => setCreationMode('full')}
                   className="bg-white/15 hover:bg-white/25 text-white font-black px-4 py-2 rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer border border-white/20 self-start sm:self-auto"
                 >
-                  <FileText size={13} className="text-amber-300" />
-                  <span>Cambiar a Modo Manual Completo</span>
+                  <SlidersHorizontal size={13} className="text-amber-300" />
+                  <span>Cambiar a Modo Manual</span>
                 </button>
               </div>
             </div>
