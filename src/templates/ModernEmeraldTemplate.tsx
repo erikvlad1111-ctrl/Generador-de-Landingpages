@@ -892,18 +892,18 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
       {/* 1. TOP HEADER NAVIGATION */}
       <header className="relative z-30 border-b border-white/10 bg-[#021219]/90 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.45)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-4">
           
           {/* Logo y Marca */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-400 flex items-center justify-center text-[#02181f] shadow-lg shadow-emerald-500/30 shrink-0">
-              <Compass size={22} className="stroke-[2.5]" />
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-400 flex items-center justify-center text-[#02181f] shadow-lg shadow-emerald-500/30 shrink-0">
+              <Compass size={20} className="stroke-[2.5]" />
             </div>
-            <div>
-              <span className="font-black text-lg tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap leading-snug">
-                NavikX <span className="text-emerald-300 font-medium text-xs bg-emerald-500/20 px-2 py-0.5 rounded-full border border-emerald-400/40">Cusco</span>
+            <div className="min-w-0">
+              <span className="font-black text-base sm:text-lg tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap leading-snug">
+                NavikX <span className="text-emerald-300 font-medium text-[10px] sm:text-xs bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-full border border-emerald-400/40">Cusco</span>
               </span>
-              <p className="text-[10px] text-emerald-200/70 font-medium tracking-wide leading-none mt-0.5 whitespace-nowrap">{t.brandTag}</p>
+              <p className="text-[10px] text-emerald-200/70 font-medium tracking-wide leading-none mt-0.5 truncate hidden sm:block">{t.brandTag}</p>
             </div>
           </div>
 
@@ -932,10 +932,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </a>
           </nav>
 
-          {/* Controles Derecha: Divisas + Idiomas + CTA */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Currency Selector Pill */}
-            <div className="hidden sm:flex items-center bg-white/10 p-1 rounded-full border border-white/15 text-[11px] font-bold">
+          {/* Controles Derecha: Divisas (Desktop) + Idiomas (Desktop/Tablet) + CTA + Hamburguesa */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* Currency Selector Pill (Desktop) */}
+            <div className="hidden md:flex items-center bg-white/10 p-1 rounded-full border border-white/15 text-[11px] font-bold">
               {(['USD', 'PEN', 'EUR'] as const).map(curr => (
                 <button
                   key={curr}
@@ -950,111 +950,172 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               ))}
             </div>
 
-            {/* Language Selector Dropdown (Gated to Pro / Advance) */}
+            {/* Language Selector Dropdown (Desktop / Tablet) */}
             {showLangSelector && (
-              <HeaderLanguageSelector
-                currentLang={currentLang}
-                availableCodes={activeLanguages}
-                onSelectLang={(lang: LanguageType) => setCurrentLang(lang)}
-                variant="emerald"
-              />
+              <div className="hidden sm:block">
+                <HeaderLanguageSelector
+                  currentLang={currentLang}
+                  availableCodes={activeLanguages}
+                  onSelectLang={(lang: LanguageType) => setCurrentLang(lang)}
+                  variant="emerald"
+                />
+              </div>
             )}
 
+            {/* Botón CTA Header */}
             <button
               onClick={() => handleOpenAction(data.name)}
-              className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-300 text-[#02181f] font-black text-xs sm:text-sm px-4 sm:px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-2"
+              className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-300 text-[#02181f] font-black text-xs sm:text-sm px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-1.5 sm:gap-2 shrink-0"
             >
-              <MessageCircle size={16} />
-              <span className="hidden xs:inline">{isWhatsapp ? t.whatsappBtn : isQuote ? t.quoteBtn : t.planYourTripBtn}</span>
-              <span className="xs:hidden">Reservar</span>
+              <MessageCircle size={15} />
+              <span className="hidden sm:inline">{isWhatsapp ? t.whatsappBtn : isQuote ? t.quoteBtn : t.planYourTripBtn}</span>
+              <span className="sm:hidden text-[11px] font-black">{isWhatsapp ? 'WhatsApp' : 'Reservar'}</span>
             </button>
 
-            {/* Mobile Menu Toggle */}
+            {/* Mobile Menu Toggle con estilo premium */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl bg-white/10 border border-white/20 text-emerald-300 cursor-pointer"
+              className={`lg:hidden w-10 h-10 rounded-2xl flex items-center justify-center transition-all cursor-pointer ${
+                mobileMenuOpen 
+                  ? 'bg-emerald-500 text-black border border-emerald-400 shadow-md shadow-emerald-500/30' 
+                  : 'bg-white/10 border border-white/20 text-emerald-300 hover:bg-white/15'
+              }`}
               aria-label="Abrir menú de navegación móvil"
             >
-              {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+              {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Dropdown */}
+        {/* Mobile Drawer / Dropdown de Ultralujo */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-white/10 bg-[#061e27]/95 backdrop-blur-2xl px-4 py-4 space-y-3 text-sm font-semibold animate-in slide-in-from-top-2 shadow-xl">
-            {/* Currency selector on mobile */}
-            <div className="flex items-center justify-between pb-2 border-b border-white/10">
-              <span className="text-xs text-emerald-200/80">Moneda:</span>
-              <div className="flex gap-1 bg-white/10 p-1 rounded-full border border-white/15 text-xs">
-                {(['USD', 'PEN', 'EUR'] as const).map(curr => (
-                  <button
-                    key={curr}
-                    type="button"
-                    onClick={() => setCurrency(curr)}
-                    className={`px-2.5 py-1 rounded-full font-bold ${
-                      currency === curr ? 'bg-emerald-400 text-slate-950 font-black' : 'text-emerald-200'
-                    }`}
-                  >
-                    {curr}
-                  </button>
-                ))}
-              </div>
-            </div>
+          <div className="lg:hidden border-t border-emerald-500/20 bg-[#021419]/98 backdrop-blur-2xl px-4 py-5 space-y-4 shadow-[0_25px_50px_rgba(0,0,0,0.8)] animate-in slide-in-from-top-3 duration-200">
+            
+            {/* Controles de Idioma y Moneda en Móvil */}
+            <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 space-y-3">
+              {/* Selector de Idiomas */}
+              {showLangSelector && (
+                <div className="space-y-1.5">
+                  <span className="text-[11px] font-bold text-emerald-300/80 uppercase tracking-wider block">
+                    {translateText('Idioma del Tour:', currentLang)}
+                  </span>
+                  <div className="grid grid-cols-5 gap-1.5">
+                    {activeLanguages.map(lCode => {
+                      const flag = lCode === 'es' ? '🇵🇪' : lCode === 'en' ? '🇺🇸' : lCode === 'pt' ? '🇧🇷' : lCode === 'fr' ? '🇫🇷' : '🇮🇹';
+                      const isSel = currentLang === lCode;
+                      return (
+                        <button
+                          key={lCode}
+                          type="button"
+                          onClick={() => setCurrentLang(lCode)}
+                          className={`py-2 px-1 rounded-xl text-center transition-all cursor-pointer flex flex-col items-center justify-center gap-0.5 border ${
+                            isSel 
+                              ? 'bg-emerald-500 text-black font-black border-emerald-400 shadow-md shadow-emerald-500/30 scale-[1.02]' 
+                              : 'bg-white/5 text-emerald-200/80 border-white/10 hover:bg-white/10'
+                          }`}
+                        >
+                          <span className="text-base leading-none">{flag}</span>
+                          <span className="text-[10px] font-extrabold uppercase">{lCode}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
 
-            {/* Mobile Language Selector */}
-            {showLangSelector && (
-              <div className="flex items-center justify-between pb-2 border-b border-white/10">
-                <span className="text-xs text-emerald-200/80">Idioma:</span>
-                <div className="flex gap-1 bg-white/10 p-1 rounded-xl border border-white/15 text-xs">
-                  {activeLanguages.map(lCode => (
+              {/* Selector de Moneda */}
+              <div className="flex items-center justify-between pt-1 border-t border-white/10">
+                <span className="text-[11px] font-bold text-emerald-300/80 uppercase tracking-wider">
+                  {translateText('Moneda:', currentLang)}
+                </span>
+                <div className="flex items-center gap-1 bg-black/40 p-1 rounded-xl border border-white/10">
+                  {(['USD', 'PEN', 'EUR'] as const).map(curr => (
                     <button
-                      key={lCode}
+                      key={curr}
                       type="button"
-                      onClick={() => setCurrentLang(lCode)}
-                      className={`px-2 py-1 rounded-lg uppercase font-bold text-[11px] ${
-                        currentLang === lCode ? 'bg-emerald-400 text-slate-950 font-black' : 'text-emerald-200 hover:text-white'
+                      onClick={() => setCurrency(curr)}
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        currency === curr 
+                          ? 'bg-emerald-400 text-black font-black shadow-xs' 
+                          : 'text-emerald-200/70 hover:text-white'
                       }`}
                     >
-                      {lCode}
+                      {curr}
                     </button>
                   ))}
                 </div>
               </div>
-            )}
+            </div>
 
-            <a href="#inicio" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-300">{t.navHome}</a>
-            <a href="#destinos" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navDestinations}</a>
-            <a href="#tours" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navTours}</a>
-            <a href="#itinerario" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navItinerary}</a>
-            <a href="#incluye" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navServices}</a>
-            <a href="#galeria" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navGallery}</a>
-            <a href="#faqs" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-emerald-100">{t.navFaqs}</a>
+            {/* Lista de Navegación Móvil de Ultralujo (Exactamente 7 enlaces) */}
+            <div className="space-y-1.5">
+              {[
+                { href: '#inicio', label: t.navHome, icon: Compass },
+                { href: '#destinos', label: t.navDestinations, icon: MapPin },
+                { href: '#tours', label: t.navTours, icon: Mountain },
+                { href: '#itinerario', label: t.navItinerary, icon: Calendar },
+                { href: '#incluye', label: t.navServices, icon: ShieldCheck },
+                { href: '#galeria', label: t.navGallery, icon: Sparkles },
+                { href: '#faqs', label: t.navFaqs, icon: HelpCircle }
+              ].map(item => {
+                const IconComponent = item.icon;
+                return (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-4 py-3 rounded-2xl bg-white/[0.04] hover:bg-emerald-500/15 border border-white/5 hover:border-emerald-400/30 text-emerald-100 hover:text-white transition-all group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-7 h-7 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20 group-hover:scale-110 transition-transform">
+                        <IconComponent size={14} />
+                      </div>
+                      <span className="text-xs font-bold tracking-wide">{item.label}</span>
+                    </div>
+                    <ChevronRight size={14} className="text-emerald-400/60 group-hover:text-emerald-300 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                );
+              })}
+            </div>
+
+            {/* Botón de Acción Completo al pie del Menú Móvil */}
+            <div className="pt-2">
+              <button
+                type="button"
+                onClick={() => { setMobileMenuOpen(false); handleOpenAction(data.name); }}
+                className="w-full emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 text-[#02181f] font-black text-xs py-3.5 px-5 rounded-2xl shadow-xl shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-98 transition-all"
+              >
+                <MessageCircle size={16} />
+                <span>{isWhatsapp ? t.whatsappBtn : isQuote ? t.quoteBtn : t.planYourTripBtn}</span>
+                <ArrowRight size={14} />
+              </button>
+            </div>
+
           </div>
         )}
       </header>
 
       {/* 2. HERO PRINCIPAL */}
-      <section id="inicio" className="relative z-10 pt-8 sm:pt-14 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <section id="inicio" className="relative z-10 pt-6 sm:pt-14 pb-14 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Columna Izquierda */}
-          <div className="lg:col-span-6 space-y-6 sm:space-y-8">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-emerald-400/30 text-emerald-300 text-xs font-bold shadow-lg shadow-emerald-950/40 animate-float-badge">
-              <Sparkles size={14} className="text-emerald-400" />
-              <span>{heroBadge}</span>
+          <div className="lg:col-span-6 space-y-5 sm:space-y-8">
+            <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-emerald-400/30 text-emerald-300 text-xs font-bold shadow-lg shadow-emerald-950/40 animate-float-badge">
+              <Sparkles size={14} className="text-emerald-400 shrink-0" />
+              <span className="truncate">{heroBadge}</span>
             </div>
 
-            <h1 className="text-4xl sm:text-6xl lg:text-6xl font-black text-white tracking-tight leading-[1.08]">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] sm:leading-[1.08]">
               {heroTitle}
             </h1>
 
-            <p className="text-base sm:text-lg text-emerald-100/80 max-w-xl leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-emerald-100/80 max-w-xl leading-relaxed">
               {heroSubtitle}
             </p>
 
             {/* BARRA FLOTANTE INTERACTIVA DE BÚSQUEDA & CALCULADORA EN VIVO */}
-            <div className="p-2.5 sm:p-3 bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-3xl sm:rounded-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 max-w-xl animate-pill-glow transition-all duration-300">
+            <div className="p-2.5 sm:p-3 bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-2xl sm:rounded-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 max-w-xl animate-pill-glow transition-all duration-300">
               <div className="flex items-center gap-2.5 px-3 py-1.5 flex-1 border-b sm:border-b-0 sm:border-r border-white/10 text-xs">
                 <MapPin size={16} className="text-emerald-400 shrink-0" />
                 <div className="min-w-0">
@@ -1092,7 +1153,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               <button
                 type="button"
                 onClick={() => handleOpenAction(data.name)}
-                className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs px-5 py-3 rounded-2xl sm:rounded-full transition-all shadow-md shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer shrink-0 hover:scale-105 active:scale-95"
+                className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs sm:text-xs px-5 py-3 rounded-xl sm:rounded-full transition-all shadow-md shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer shrink-0 hover:scale-105 active:scale-95"
               >
                 <span>{formatPrice(basePriceUsd, passengers)}</span>
                 <ArrowRight size={14} />
@@ -1100,8 +1161,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             </div>
 
             {/* 3 TARJETAS BENTO FLOTANTES */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-2">
-              <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float space-y-1.5 group cursor-default">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+              <div className="glass-floating-card p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl animate-emerald-float space-y-1 group cursor-default">
                 <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/30 group-hover:scale-110 transition-transform">
                   <Compass size={16} />
                 </div>
@@ -1109,7 +1170,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <p className="text-[11px] text-emerald-200/70 leading-snug">{t.benefit1Desc}</p>
               </div>
 
-              <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float-delayed space-y-1.5 group cursor-default">
+              <div className="glass-floating-card p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl animate-emerald-float-delayed space-y-1 group cursor-default">
                 <div className="w-8 h-8 rounded-xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/30 group-hover:scale-110 transition-transform">
                   <FileText size={16} />
                 </div>
@@ -1117,7 +1178,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <p className="text-[11px] text-emerald-200/70 leading-snug">{t.benefit2Desc}</p>
               </div>
 
-              <div className="glass-floating-card p-4 rounded-3xl animate-emerald-float-alt space-y-1.5 group cursor-default">
+              <div className="glass-floating-card p-3.5 sm:p-4 rounded-2xl sm:rounded-3xl animate-emerald-float-alt space-y-1 group cursor-default">
                 <div className="w-8 h-8 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-400/30 group-hover:scale-110 transition-transform">
                   <ShieldCheck size={16} />
                 </div>
@@ -1134,7 +1195,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
             <div 
               onClick={() => openLightbox(heroImg)}
-              className="relative w-full max-w-lg lg:max-w-xl h-[520px] sm:h-[620px] lg:h-[660px] mx-auto rounded-[56px] rounded-tr-[130px] rounded-br-[150px] rounded-bl-[48px] overflow-hidden group shadow-[0_35px_80px_rgba(0,0,0,0.65)] border border-white/10 cursor-pointer"
+              className="relative w-full max-w-lg lg:max-w-xl h-[380px] sm:h-[540px] lg:h-[660px] mx-auto rounded-[36px] sm:rounded-[56px] rounded-tr-[90px] sm:rounded-tr-[130px] rounded-br-[100px] sm:rounded-br-[150px] rounded-bl-[32px] sm:rounded-bl-[48px] overflow-hidden group shadow-[0_35px_80px_rgba(0,0,0,0.65)] border border-white/10 cursor-pointer"
             >
               <Image 
                 src={heroImg} 
@@ -1147,26 +1208,26 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#03131a] via-[#03131a]/60 to-transparent z-10" />
 
               {/* Chip Flotante Superior: Local Experts */}
-              <div className="absolute top-5 left-5 z-20 bg-black/40 backdrop-blur-xl px-4 py-2 rounded-2xl border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center gap-2.5 animate-float-badge">
-                <div className="w-8 h-8 rounded-xl bg-emerald-500/25 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs">
-                  <Award size={16} />
+              <div className="absolute top-4 left-4 sm:top-5 sm:left-5 z-20 bg-black/40 backdrop-blur-xl px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-2xl border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.5)] flex items-center gap-2 animate-float-badge">
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-emerald-500/25 text-emerald-300 flex items-center justify-center border border-emerald-400/40 shadow-xs">
+                  <Award size={15} />
                 </div>
                 <div>
-                  <span className="text-[11px] font-black text-white block leading-tight">Local Experts</span>
+                  <span className="text-[10px] sm:text-[11px] font-black text-white block leading-tight">Local Experts</span>
                   <span className="text-[9px] text-emerald-300 font-semibold block">{guideCert}</span>
                 </div>
               </div>
 
               {/* Tarjeta Flotante Inferior de Tarifa Dinámica */}
-              <div className="absolute bottom-5 inset-x-5 z-20 p-4 rounded-3xl bg-black/50 backdrop-blur-xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex items-center justify-between gap-3 animate-emerald-float-alt">
+              <div className="absolute bottom-3 inset-x-3 sm:bottom-5 sm:inset-x-5 z-20 p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-black/60 backdrop-blur-xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex items-center justify-between gap-2.5 sm:gap-3 animate-emerald-float-alt">
                 <div className="min-w-0">
-                  <span className="text-[10px] text-emerald-200/90 font-bold block">{translateText('Tarifa Oficial por Persona:', currentLang)}</span>
-                  <span className="text-2xl font-black text-white">{formatPrice(basePriceUsd, 1)}</span>
+                  <span className="text-[9px] sm:text-[10px] text-emerald-200/90 font-bold block">{translateText('Tarifa Oficial por Persona:', currentLang)}</span>
+                  <span className="text-xl sm:text-2xl font-black text-white">{formatPrice(basePriceUsd, 1)}</span>
                 </div>
                 <button
                   type="button"
                   onClick={(e) => { e.stopPropagation(); handleOpenAction(data.name); }}
-                  className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs px-5 py-2.5 rounded-full shadow-lg shadow-emerald-500/30 flex items-center gap-1.5 transition-all cursor-pointer hover:scale-105 active:scale-95"
+                  className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs px-4 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-lg shadow-emerald-500/30 flex items-center gap-1.5 transition-all cursor-pointer hover:scale-105 active:scale-95 shrink-0"
                 >
                   <span>{translateText('Reservar Tour', currentLang)}</span>
                   <ArrowRight size={14} />
