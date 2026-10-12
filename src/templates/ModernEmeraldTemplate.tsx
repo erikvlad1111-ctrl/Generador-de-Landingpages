@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { 
   Compass, 
@@ -519,18 +519,21 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
 
   const [currentLang, setCurrentLang] = useState<LanguageType>(defaultLang);
 
+  const prevLangPropRef = useRef(data.language);
+
   useEffect(() => {
     if (isFree || isBasic) {
       if (currentLang !== 'es') setCurrentLang('es');
     } else if (isPro) {
-      if (data.language && ['es', 'en'].includes(data.language) && data.language !== currentLang) {
+      if (prevLangPropRef.current !== data.language && data.language && ['es', 'en'].includes(data.language)) {
         setCurrentLang(data.language as LanguageType);
       } else if (!['es', 'en'].includes(currentLang)) {
         setCurrentLang('es');
       }
-    } else if (data.language && data.language !== currentLang) {
+    } else if (prevLangPropRef.current !== data.language && data.language) {
       setCurrentLang(data.language as LanguageType);
     }
+    prevLangPropRef.current = data.language;
   }, [data.language, isFree, isBasic, isPro]);
 
   // Modales
@@ -583,7 +586,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   const guidePhone = data.whatsapp || '+51984123456';
   const guideAvatar = data.guideAvatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop';
 
-  const heroTitle = translateText(data.hero?.title || data.name || 'Live Your Adventure — Expediciones & Trekking en Cusco', currentLang);
+  const heroTitle = translateText(data.hero?.title || data.name || 'Vive Tu Aventura — Expediciones & Trekking en Cusco', currentLang);
   const heroSubtitle = translateText(data.hero?.subtitle || data.about?.content || 'Explora lugares asombrosos y crea recuerdos inolvidables alrededor de los Andes.', currentLang);
   const heroBadge = translateText(data.hero?.badge || 'NavikX Cusco • Operador Autorizado', currentLang);
   const destinationName = translateText(data.destination || 'Cusco & Machu Picchu', currentLang);

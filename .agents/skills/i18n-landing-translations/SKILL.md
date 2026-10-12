@@ -206,3 +206,43 @@ Guía para diagnosticar y solucionar problemas de traducción, mezcla de idiomas
   3. Implementar el array dinámico `activeLanguages` condicionado por nivel (`isFree || isBasic ? ['es'] : isPro ? ['es', 'en'] : ['es', 'en', 'pt', 'fr', 'it']`).
   4. Añadir controles de idioma en el menú desplegable móvil.
 
+### Error: Hero en Inglés o Reversión de Idioma al Cambiar Lenguaje en ModernEmeraldTemplate y Preview Mockup ("Live Your Adventure")
+
+- **Síntoma / Mensaje de Error:**
+  El Hero del Diseño 6 Esmeralda (`ModernEmeraldTemplate`) y la previsualización interactiva en `/demo/new` continuaban mostrando partes en inglés aun cambiando el idioma en el selector:
+  `Live Your Adventure — Expediciones & Trekking en Cusco: La Experiencia Definitiva en Cusco`,
+  `Estilo Deep Forest Teal con Bento Grid, buscador flotante píldora, métricas de viajeros y microanimaciones de ultralujo.`,
+  `¿A dónde deseas ir? Machu Picchu, Salkantay & Rutas Exclusivas`, `Viajeros 2 viajeros`, `$700 USD`. Al hacer clic en un idioma en el selector, el Hero no traducía al español o revertía inmediatamente a inglés.
+
+- **Causa Raíz:**
+  1. **Reversión de estado en `useEffect`:** En `ModernEmeraldTemplate.tsx`, el hook `useEffect` evaluaba `else if (data.language && data.language !== currentLang) { setCurrentLang(data.language); }`. Cuando el usuario cambiaba el idioma mediante el botón del header (`setCurrentLang('en')`), cualquier re-renderizado disparaba el `useEffect`, detectando que `data.language` ('es') era diferente de `currentLang` ('en'), forzándolo de vuelta a español de forma involuntaria.
+  2. **Fallback hardcodeado en inglés en el Hero:** `data.name` o el fallback en `ModernEmeraldTemplate.tsx` y el preset `emerald-explorer-navikx` tenían `'Live Your Adventure — Expediciones & Trekking en Cusco'`, mezclando inglés y español sin pasar por traducciones bidireccionales en `PHRASE_MAP`.
+  3. **Maqueta de previsualización estática en `/demo/new/page.tsx`:** La maqueta visual del Diseño Esmeralda tenía textos fijos en inglés (`Explore. Dream. Discover.`, `Local Experts`, `Where to?`, `Popular Destinations`, etc.) sin envolverlos con `translateText(..., language)`.
+
+- **Comando de Diagnóstico:**
+  ```bash
+  git grep -n "Live Your Adventure" src/
+  git grep -n "setCurrentLang(data.language" src/templates/ModernEmeraldTemplate.tsx
+  ```
+
+- **Solución Paso a Paso:**
+  1. En `ModernEmeraldTemplate.tsx`, implementar `prevLangPropRef = useRef(data.language)` en el `useEffect` de sincronización. Solo actualizar `setCurrentLang` si la prop externa `data.language` cambia genuinamente, evitando revertir las elecciones del usuario en el selector de idiomas:
+     ```tsx
+     const prevLangPropRef = useRef(data.language);
+     useEffect(() => {
+       if (isFree || isBasic) {
+         if (currentLang !== 'es') setCurrentLang('es');
+       } else if (isPro) {
+         if (prevLangPropRef.current !== data.language && data.language && ['es', 'en'].includes(data.language)) {
+           setCurrentLang(data.language as LanguageType);
+         }
+       } else if (prevLangPropRef.current !== data.language && data.language) {
+         setCurrentLang(data.language as LanguageType);
+       }
+       prevLangPropRef.current = data.language;
+     }, [data.language, isFree, isBasic, isPro]);
+     ```
+  2. En `src/data/translations.ts`, agregar todas las permutaciones y variantes de `Live Your Adventure` / `Vive Tu Aventura`, `Expediciones & Trekking en Cusco`, `Machu Picchu, Salkantay & Rutas Exclusivas` y la descripción del preset en `PHRASE_MAP` para los 5 idiomas (`es`, `en`, `pt`, `fr`, `it`), con soporte dinámico de prefijos y sufijos en `translateText`.
+  3. En `src/app/demo/new/page.tsx`, envolver todos los textos de la maqueta de previsualización del Diseño 6 con llamadas reactivas a `translateText(..., language)`.
+
+

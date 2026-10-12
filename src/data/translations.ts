@@ -17,6 +17,97 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Machu Picchu VIP Exclusif',
     it: 'Machu Picchu VIP Esclusivo'
   },
+  'Live Your Adventure — Expediciones & Trekking en Cusco: La Experiencia Definitiva en Cusco': {
+    es: 'Vive Tu Aventura — Expediciones & Trekking en Cusco: La Experiencia Definitiva en Cusco',
+    en: 'Live Your Adventure — Expeditions & Trekking in Cusco: The Ultimate Cusco Experience',
+    pt: 'Viva Sua Aventura — Expedições & Trekking em Cusco: A Experiência Definitiva em Cusco',
+    fr: 'Vivez Votre Aventure — Expéditions & Trekking à Cusco : L’Expérience Ultime à Cusco',
+    it: 'Vivi La Tua Avventura — Spedizioni & Trekking a Cusco: L’Esperienza Definitiva a Cusco'
+  },
+  'Vive Tu Aventura — Expediciones & Trekking en Cusco: La Experiencia Definitiva en Cusco': {
+    es: 'Vive Tu Aventura — Expediciones & Trekking en Cusco: La Experiencia Definitiva en Cusco',
+    en: 'Live Your Adventure — Expeditions & Trekking in Cusco: The Ultimate Cusco Experience',
+    pt: 'Viva Sua Aventura — Expedições & Trekking em Cusco: A Experiência Definitiva em Cusco',
+    fr: 'Vivez Votre Aventure — Expéditions & Trekking à Cusco : L’Expérience Ultime à Cusco',
+    it: 'Vivi La Tua Avventura — Spedizioni & Trekking a Cusco: L’Esperienza Definitiva a Cusco'
+  },
+  'Live Your Adventure — Expeditions & Trekking in Cusco: The Ultimate Cusco Experience': {
+    es: 'Vive Tu Aventura — Expediciones & Trekking en Cusco: La Experiencia Definitiva en Cusco',
+    en: 'Live Your Adventure — Expeditions & Trekking in Cusco: The Ultimate Cusco Experience',
+    pt: 'Viva Sua Aventura — Expedições & Trekking em Cusco: A Experiência Definitiva em Cusco',
+    fr: 'Vivez Votre Aventure — Expéditions & Trekking à Cusco : L’Expérience Ultime à Cusco',
+    it: 'Vivi La Tua Avventura — Spedizioni & Trekking a Cusco: L’Esperienza Definitiva a Cusco'
+  },
+  'Live Your Adventure — Expediciones & Trekking en Cusco': {
+    es: 'Vive Tu Aventura — Expediciones & Trekking en Cusco',
+    en: 'Live Your Adventure — Expeditions & Trekking in Cusco',
+    pt: 'Viva Sua Aventura — Expedições & Trekking em Cusco',
+    fr: 'Vivez Votre Aventure — Expéditions & Trekking à Cusco',
+    it: 'Vivi La Tua Avventura — Spedizioni & Trekking a Cusco'
+  },
+  'Vive Tu Aventura — Expediciones & Trekking en Cusco': {
+    es: 'Vive Tu Aventura — Expediciones & Trekking en Cusco',
+    en: 'Live Your Adventure — Expeditions & Trekking in Cusco',
+    pt: 'Viva Sua Aventura — Expedições & Trekking em Cusco',
+    fr: 'Vivez Votre Aventure — Expéditions & Trekking à Cusco',
+    it: 'Vivi La Tua Avventura — Spedizioni & Trekking a Cusco'
+  },
+  'Live Your Adventure — Expeditions & Trekking in Cusco': {
+    es: 'Vive Tu Aventura — Expediciones & Trekking en Cusco',
+    en: 'Live Your Adventure — Expeditions & Trekking in Cusco',
+    pt: 'Viva Sua Aventura — Expedições & Trekking em Cusco',
+    fr: 'Vivez Votre Aventure — Expéditions & Trekking à Cusco',
+    it: 'Vivi La Tua Avventura — Spedizioni & Trekking a Cusco'
+  },
+  'Live Your Adventure': {
+    es: 'Vive Tu Aventura',
+    en: 'Live Your Adventure',
+    pt: 'Viva Sua Aventura',
+    fr: 'Vivez Votre Aventure',
+    it: 'Vivi La Tua Avventura'
+  },
+  'Vive Tu Aventura': {
+    es: 'Vive Tu Aventura',
+    en: 'Live Your Adventure',
+    pt: 'Viva Sua Aventura',
+    fr: 'Vivez Votre Aventure',
+    it: 'Vivi La Tua Avventura'
+  },
+  'Live Your Adventure.': {
+    es: 'Vive Tu Aventura.',
+    en: 'Live Your Adventure.',
+    pt: 'Viva Sua Aventura.',
+    fr: 'Vivez Votre Aventure.',
+    it: 'Vivi La Tua Avventura.'
+  },
+  'Vive Tu Aventura.': {
+    es: 'Vive Tu Aventura.',
+    en: 'Live Your Adventure.',
+    pt: 'Viva Sua Aventura.',
+    fr: 'Vivez Votre Aventure.',
+    it: 'Vivi La Tua Avventura.'
+  },
+  'Estilo Deep Forest Teal con Bento Grid, buscador flotante píldora, métricas de viajeros y microanimaciones de ultralujo.': {
+    es: 'Estilo Deep Forest Teal con Bento Grid, buscador flotante píldora, métricas de viajeros y microanimaciones de ultralujo.',
+    en: 'Deep Forest Teal style featuring Bento Grid, floating pill search engine, traveler metrics, and ultra-luxury micro-animations.',
+    pt: 'Estilo Deep Forest Teal com Bento Grid, buscador flutuante em pílula, métricas de viajantes e microanimações de ultraluxo.',
+    fr: 'Style Deep Forest Teal avec Bento Grid, moteur de recherche flottant, métriques de voyageurs et micro-animations de grand luxe.',
+    it: 'Stile Deep Forest Teal con Bento Grid, motore di ricerca fluttuante, metriche dei viaggiatori e micro-animazioni ultra-lusso.'
+  },
+  'Machu Picchu, Salkantay & Rutas Exclusivas': {
+    es: 'Machu Picchu, Salkantay & Rutas Exclusivas',
+    en: 'Machu Picchu, Salkantay & Exclusive Routes',
+    pt: 'Machu Picchu, Salkantay & Rotas Exclusivas',
+    fr: 'Machu Picchu, Salkantay & Itinéraires Exclusifs',
+    it: 'Machu Picchu, Salkantay & Percorsi Esclusivi'
+  },
+  'Expediciones & Trekking en Cusco': {
+    es: 'Expediciones & Trekking en Cusco',
+    en: 'Expeditions & Trekking in Cusco',
+    pt: 'Expedições & Trekking em Cusco',
+    fr: 'Expéditions & Trekking à Cusco',
+    it: 'Spedizioni & Trekking a Cusco'
+  },
   'Portal Oficial de Agencia de Viajes Perú': {
     es: 'Portal Oficial de Agencia de Viajes Perú',
     en: 'Official Peru Travel Agency Portal & Tours',
@@ -1282,6 +1373,31 @@ export function translateText(text: string | undefined, targetLang: LanguageType
       translated = translated.replace(suffix, targetSuffix);
       break;
     }
+  }
+
+  // Prefijos dinámicos de aventura
+  if (translated.includes('Live Your Adventure')) {
+    const rep = targetLang === 'es' ? 'Vive Tu Aventura' : targetLang === 'pt' ? 'Viva Sua Aventura' : targetLang === 'fr' ? 'Vivez Votre Aventure' : targetLang === 'it' ? 'Vivi La Tua Avventura' : 'Live Your Adventure';
+    translated = translated.split('Live Your Adventure').join(rep);
+  } else if (translated.includes('Vive Tu Aventura')) {
+    const rep = targetLang === 'en' ? 'Live Your Adventure' : targetLang === 'pt' ? 'Viva Sua Aventura' : targetLang === 'fr' ? 'Vivez Votre Aventure' : targetLang === 'it' ? 'Vivi La Tua Avventura' : 'Vive Tu Aventura';
+    translated = translated.split('Vive Tu Aventura').join(rep);
+  }
+
+  if (translated.includes('Expediciones & Trekking en Cusco')) {
+    const rep = targetLang === 'en' ? 'Expeditions & Trekking in Cusco' : targetLang === 'pt' ? 'Expedições & Trekking em Cusco' : targetLang === 'fr' ? 'Expéditions & Trekking à Cusco' : targetLang === 'it' ? 'Spedizioni & Trekking a Cusco' : 'Expediciones & Trekking en Cusco';
+    translated = translated.split('Expediciones & Trekking en Cusco').join(rep);
+  } else if (translated.includes('Expeditions & Trekking in Cusco')) {
+    const rep = targetLang === 'es' ? 'Expediciones & Trekking en Cusco' : targetLang === 'pt' ? 'Expedições & Trekking em Cusco' : targetLang === 'fr' ? 'Expéditions & Trekking à Cusco' : targetLang === 'it' ? 'Spedizioni & Trekking a Cusco' : 'Expeditions & Trekking in Cusco';
+    translated = translated.split('Expeditions & Trekking in Cusco').join(rep);
+  }
+
+  if (translated.includes('Rutas Exclusivas')) {
+    const rep = targetLang === 'en' ? 'Exclusive Routes' : targetLang === 'pt' ? 'Rotas Exclusivas' : targetLang === 'fr' ? 'Itinéraires Exclusifs' : targetLang === 'it' ? 'Percorsi Esclusivi' : 'Rutas Exclusivas';
+    translated = translated.split('Rutas Exclusivas').join(rep);
+  } else if (translated.includes('Exclusive Routes')) {
+    const rep = targetLang === 'es' ? 'Rutas Exclusivas' : targetLang === 'pt' ? 'Rotas Exclusivas' : targetLang === 'fr' ? 'Itinéraires Exclusifs' : targetLang === 'it' ? 'Percorsi Esclusivi' : 'Exclusive Routes';
+    translated = translated.split('Exclusive Routes').join(rep);
   }
 
   if (translated.startsWith('¿Por qué elegir ') && translated.endsWith('?')) {

@@ -18,6 +18,7 @@ import { simulateAiGeneration, saveLandingToStorage } from '@/data/landingStore'
 import { SAMPLE_TOUR_IMAGES } from '@/data/sampleImages';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import CatalogToursEditorModal from '@/components/common/CatalogToursEditorModal';
+import { translateText } from '@/data/translations';
 
 const DEFAULT_FAQS: FAQItem[] = [
   {
@@ -143,7 +144,7 @@ const PRESET_TOURS = [
   {
     id: 'emerald-explorer-navikx',
     label: '🌲 Diseño 6 (Emerald Explorer)',
-    name: 'Live Your Adventure — Expediciones & Trekking en Cusco',
+    name: 'Vive Tu Aventura — Expediciones & Trekking en Cusco',
     destination: 'Machu Picchu, Salkantay & Rutas Exclusivas',
     guideName: 'Carlos Mendoza',
     guideCert: 'Licenciado DIRCETUR & Explorador Senior',
@@ -2802,7 +2803,7 @@ export default function NewLandingDemo() {
                       </div>
 
                       <span className="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-extrabold text-[8px] px-2 py-0.5 rounded-full shadow-sm">
-                        Contact
+                        {language === 'en' ? 'Contact' : language === 'pt' ? 'Contato' : language === 'fr' ? 'Contact' : language === 'it' ? 'Contatto' : 'Contacto'}
                       </span>
                     </div>
                   </div>
@@ -2813,13 +2814,13 @@ export default function NewLandingDemo() {
                     <div className="space-y-1">
                       <div className="inline-flex items-center gap-1.5 bg-white/10 border border-emerald-400/30 px-2 py-0.5 rounded-full text-[8px] font-black text-emerald-300 shadow-xs">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                        Explore. Dream. Discover.
+                        {translateText('Explore. Dream. Discover.', language)}
                       </div>
                       <h3 className="text-base font-black text-white leading-tight tracking-tight">
-                        {name || 'Live Your Adventure — Expediciones & Trekking en Cusco'}
+                        {translateText(name || 'Vive Tu Aventura — Expediciones & Trekking en Cusco', language)}
                       </h3>
                       <p className="text-[9px] text-emerald-200/80 line-clamp-2 leading-relaxed">
-                        Explore breathtaking places and create unforgettable memories around Cusco.
+                        {translateText(description || 'Explora lugares asombrosos y crea recuerdos inolvidables alrededor del Cusco.', language)}
                       </p>
                     </div>
 
@@ -2842,15 +2843,15 @@ export default function NewLandingDemo() {
                         {/* Floating Local Experts Chip con Levitación */}
                         <div className="absolute top-2 left-2 z-20 bg-black/40 backdrop-blur-md border border-white/20 px-2 py-1 rounded-xl text-[8px] space-y-0.5 shadow-lg animate-float-badge">
                           <div className="flex items-center gap-1 text-emerald-300 font-bold">
-                            <span>📍</span> Local Experts
+                            <span>📍</span> {translateText('Local Experts', language)}
                           </div>
-                          <span className="text-[7px] text-emerald-100/70 block">Authentic experiences</span>
+                          <span className="text-[7px] text-emerald-100/70 block">{translateText('Authentic experiences', language)}</span>
                         </div>
 
                         {/* Bottom Price Tag on Hero (Translúcido Flotante con Levitación) */}
                         <div className="absolute bottom-2 inset-x-2 z-20 flex items-center justify-between p-1 rounded-xl bg-black/50 backdrop-blur-md border border-white/20 shadow-md animate-emerald-float-alt">
                           <span className="text-emerald-100 text-[8px] font-bold px-1.5 truncate">
-                            {name || 'Live Your Adventure'}
+                            {translateText(name || 'Vive Tu Aventura', language)}
                           </span>
                           <span className="emerald-shimmer-btn bg-emerald-400 text-slate-950 font-black text-[9px] px-2 py-0.5 rounded-lg shadow-sm">
                             {price || '$350 USD'}
@@ -2863,15 +2864,15 @@ export default function NewLandingDemo() {
                     <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-1.5 flex items-center justify-between text-[8px] text-emerald-100 shadow-[0_10px_25px_rgba(0,0,0,0.3)] animate-pill-glow">
                       <div className="flex items-center gap-1 px-1.5 py-0.5 border-r border-white/10 flex-1 truncate">
                         <MapPin size={9} className="text-emerald-400 shrink-0" />
-                        <span className="truncate">{destination || 'Where to?'}</span>
+                        <span className="truncate">{destination ? translateText(destination, language) : (language === 'en' ? 'Where to?' : language === 'pt' ? 'Onde ir?' : language === 'fr' ? 'Où aller ?' : language === 'it' ? 'Dove andare?' : '¿A dónde deseas ir?')}</span>
                       </div>
                       <div className="flex items-center gap-1 px-1.5 py-0.5 border-r border-white/10 shrink-0">
                         <Calendar size={9} className="text-emerald-400" />
-                        <span>{duration || 'Dates'}</span>
+                        <span>{duration ? translateText(duration, language) : (language === 'en' ? 'Dates' : language === 'pt' ? 'Datas' : language === 'fr' ? 'Dates' : language === 'it' ? 'Date' : 'Fechas')}</span>
                       </div>
                       <div className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 font-black px-2.5 py-1 rounded-xl shrink-0 flex items-center gap-1 shadow-xs">
                         <Search size={9} />
-                        <span>Search</span>
+                        <span>{language === 'en' ? 'Search' : language === 'pt' ? 'Explorar' : language === 'fr' ? 'Explorer' : language === 'it' ? 'Esplora' : 'Buscar'}</span>
                       </div>
                     </div>
 
@@ -2881,22 +2882,22 @@ export default function NewLandingDemo() {
                         <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 mx-auto flex items-center justify-center text-[10px] mb-1">
                           🏠
                         </span>
-                        <span className="font-black text-white block line-clamp-1">Expert Guides</span>
-                        <span className="text-[7px] text-emerald-200/70 block line-clamp-1">Local insights</span>
+                        <span className="font-black text-white block line-clamp-1">{translateText('Guías Expertos', language)}</span>
+                        <span className="text-[7px] text-emerald-200/70 block line-clamp-1">{translateText('Conocimiento local y tips auténticos', language)}</span>
                       </div>
                       <div className="glass-floating-card p-2 rounded-xl space-y-0.5 shadow-xs animate-emerald-float-delayed">
                         <span className="w-5 h-5 rounded-lg bg-teal-500/20 text-teal-300 mx-auto flex items-center justify-center text-[10px] mb-1">
                           📋
                         </span>
-                        <span className="font-black text-white block line-clamp-1">Tailored Plans</span>
-                        <span className="text-[7px] text-emerald-200/70 block line-clamp-1">Custom trips</span>
+                        <span className="font-black text-white block line-clamp-1">{translateText('Rutas a Medida', language)}</span>
+                        <span className="text-[7px] text-emerald-200/70 block line-clamp-1">{translateText('Planes flexibles para cada viajero', language)}</span>
                       </div>
                       <div className="glass-floating-card p-2 rounded-xl space-y-0.5 shadow-xs animate-emerald-float-alt">
                         <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-300 mx-auto flex items-center justify-center text-[10px] mb-1">
                           🛡️
                         </span>
-                        <span className="font-black text-white block line-clamp-1">Best Price</span>
-                        <span className="text-[7px] text-emerald-200/70 block line-clamp-1">Top deals</span>
+                        <span className="font-black text-white block line-clamp-1">{translateText('Mejor Precio Garantizado', language)}</span>
+                        <span className="text-[7px] text-emerald-200/70 block line-clamp-1">{translateText('Tarifas directas sin intermediarios', language)}</span>
                       </div>
                     </div>
 
@@ -2904,7 +2905,7 @@ export default function NewLandingDemo() {
                     <div className="space-y-2 pt-1">
                       <div className="flex items-center justify-between text-[10px]">
                         <span className="font-black text-white flex items-center gap-1">
-                          Popular Destinations
+                          {translateText('Destinos Populares', language)}
                         </span>
                         <div className="flex items-center gap-1">
                           <span className="w-4 h-4 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-[8px] text-emerald-300 shadow-xs">
@@ -2933,7 +2934,7 @@ export default function NewLandingDemo() {
                           </div>
 
                           <div className="absolute bottom-1.5 inset-x-2 flex items-baseline justify-between text-white">
-                            <span className="text-[10px] font-black truncate">{destination || 'Machu Picchu & Cusco'}</span>
+                            <span className="text-[10px] font-black truncate">{destination ? translateText(destination, language) : 'Machu Picchu & Cusco'}</span>
                             <span className="text-[10px] font-black text-emerald-300">{price || '$350 USD'}</span>
                           </div>
                         </div>
@@ -2946,11 +2947,11 @@ export default function NewLandingDemo() {
                               <div className="w-4 h-4 rounded-full bg-teal-400 border border-white" />
                               <div className="w-4 h-4 rounded-full bg-emerald-500 border border-white" />
                             </div>
-                            <span>236+ Travelers</span>
+                            <span>{language === 'en' ? '236+ Travelers' : language === 'pt' ? '236+ Viajantes' : language === 'fr' ? '236+ Voyageurs' : language === 'it' ? '236+ Viaggiatori' : '236+ Viajeros'}</span>
                           </div>
 
                           <div className="bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-black text-[9px] px-2.5 py-1 rounded-lg transition-colors flex items-center gap-1">
-                            <span>Explore Now</span>
+                            <span>{translateText('Reservar Tour', language)}</span>
                           </div>
                         </div>
                       </div>
@@ -2961,7 +2962,7 @@ export default function NewLandingDemo() {
                       <div className="bg-white/[0.04] backdrop-blur-md border border-white/10 p-2.5 rounded-2xl flex items-center justify-between shadow-sm">
                         <div>
                           <span className="text-xs font-black text-white block">1,250+</span>
-                          <span className="text-[8px] text-emerald-300/80 font-semibold block">Happy Travelers</span>
+                          <span className="text-[8px] text-emerald-300/80 font-semibold block">{translateText('Viajeros Felices', language)}</span>
                         </div>
                         <span className="w-6 h-6 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-[10px]">
                           👥
@@ -2971,7 +2972,7 @@ export default function NewLandingDemo() {
                       <div className="bg-white/[0.04] backdrop-blur-md border border-white/10 p-2.5 rounded-2xl flex items-center justify-between shadow-sm">
                         <div>
                           <span className="text-xs font-black text-white block">98%</span>
-                          <span className="text-[8px] text-emerald-300/80 font-semibold block">Positive Reviews</span>
+                          <span className="text-[8px] text-emerald-300/80 font-semibold block">{translateText('Reseñas Positivas', language)}</span>
                         </div>
                         <span className="w-6 h-6 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-[10px]">
                           ⭐
