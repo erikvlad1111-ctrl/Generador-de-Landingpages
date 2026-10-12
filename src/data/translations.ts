@@ -2054,6 +2054,218 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     pt: 'A melhor experiência que já vivemos no Peru. A atenção personalizada de Carlos e o cuidado com o oxigênio na montanha nos permitiram desfrutar de Machu Picchu com total tranquilidade.',
     fr: 'La plus belle expérience vécue au Pérou. L’attention personnalisée de Carlos et la surveillance à l’oxygène en montagne nous ont permis de vivre Machu Picchu en toute sérénité.',
     it: 'La migliore esperienza vissuta in Perù. Le attenzioni di Carlos e la cura con l’ossigeno in montagna ci hanno permesso di vivere Machu Picchu senza pensieri.'
+  },
+
+  // --- PRESET EMERALD & ESPECIFICACIONES ADICIONALES ---
+  '4 Días / 3 Noches': {
+    es: '4 Días / 3 Noches',
+    en: '4 Days / 3 Nights',
+    pt: '4 Dias / 3 Noites',
+    fr: '4 Jours / 3 Nuits',
+    it: '4 Giorni / 3 Notti'
+  },
+  'Moderada': {
+    es: 'Moderada',
+    en: 'Moderate',
+    pt: 'Moderada',
+    fr: 'Modérée',
+    it: 'Moderata'
+  },
+  'Grupos Reducidos & Privados VIP': {
+    es: 'Grupos Reducidos & Privados VIP',
+    en: 'Small Groups & Private VIP',
+    pt: 'Grupos Reduzidos & Privativos VIP',
+    fr: 'Petits Groupes & Privé VIP',
+    it: 'Piccoli Gruppi & Privati VIP'
+  },
+  'Licenciado DIRCETUR & Explorador Senior': {
+    es: 'Licenciado DIRCETUR & Explorador Senior',
+    en: 'Licensed DIRCETUR & Senior Explorer',
+    pt: 'Credenciado DIRCETUR & Explorador Sênior',
+    fr: 'Diplômé DIRCETUR & Explorateur Senior',
+    it: 'Abilitato DIRCETUR & Esploratore Senior'
+  },
+  'Consultar con': {
+    es: 'Consultar con',
+    en: 'Chat with',
+    pt: 'Falar com',
+    fr: 'Contacter',
+    it: 'Contatta'
+  },
+  'Transporte turístico privado 4x4 climatizado': {
+    es: 'Transporte turístico privado 4x4 climatizado',
+    en: 'Private air-conditioned 4x4 tourist transport',
+    pt: 'Transporte turístico privativo 4x4 com ar-condicionado',
+    fr: 'Transport touristique privé 4x4 climatisé',
+    it: 'Trasporto turistico privato 4x4 climatizzato'
+  },
+  'Boletos preferenciales de tren y accesos oficiales': {
+    es: 'Boletos preferenciales de tren y accesos oficiales',
+    en: 'Priority train tickets and official sanctuary entry passes',
+    pt: 'Bilhetes de trem prioritários e acessos oficiais',
+    fr: 'Billets de train prioritaires et entrées officielles',
+    it: 'Biglietti ferroviari prioritari e ingressi ufficiali'
+  },
+  'Guía oficial bilingüe DIRCETUR en todas las rutas': {
+    es: 'Guía oficial bilingüe DIRCETUR en todas las rutas',
+    en: 'Bilingual certified DIRCETUR guide on all trails',
+    pt: 'Guia oficial credenciado bilíngue DIRCETUR em todas as rotas',
+    fr: 'Guide officiel bilingue DIRCETUR sur tous les itinéraires',
+    it: 'Guida ufficiale bilingue DIRCETUR su tutti i percorsi'
+  },
+  'Monitoreo médico 24/7 con balón de oxígeno a bordo': {
+    es: 'Monitoreo médico 24/7 con balón de oxígeno a bordo',
+    en: '24/7 medical monitoring with onboard oxygen tank',
+    pt: 'Monitoramento médico 24/7 com oxigênio a bordo',
+    fr: 'Surveillance médicale 24/7 avec oxygène à bord',
+    it: 'Monitoraggio medico 24/7 con ossigeno a bordo'
+  },
+  'Alimentación gourmet andina y degustaciones de café': {
+    es: 'Alimentación gourmet andina y degustaciones de café',
+    en: 'Gourmet Andean dining and organic coffee tastings',
+    pt: 'Alimentação gourmet andina e degustação de café',
+    fr: 'Restauration gastronomique andine et dégustations de café',
+    it: 'Cucina gourmet andina e degustazioni di caffè'
+  },
+  'Ropa térmica en capas y cortavientos': {
+    es: 'Ropa térmica en capas y cortavientos',
+    en: 'Layered thermal clothing and windbreaker',
+    pt: 'Roupas térmicas em camadas e corta-vento',
+    fr: 'Vêtements thermiques en couches et coupe-vent',
+    it: 'Abbigliamento termico a strati e giacca a vento'
+  },
+  'Calzado de trekking con tracción impermeable': {
+    es: 'Calzado de trekking con tracción impermeable',
+    en: 'Waterproof trekking shoes with high-traction grip',
+    pt: 'Calçado de trilha com tração impermeável',
+    fr: 'Chaussures de trek imperméables à bonne adhérence',
+    it: 'Scarpe da trekking con aderenza impermeabile'
+  },
+  'Lentes con protección UV400 y bloqueador solar': {
+    es: 'Lentes con protección UV400 y bloqueador solar',
+    en: 'UV400 sunglasses and high SPF sunscreen',
+    pt: 'Óculos com proteção UV400 e protetor solar',
+    fr: 'Lunettes de soleil UV400 et crème solaire',
+    it: 'Occhiali con protezione UV400 e crema solare'
+  },
+  'Propinas voluntarias para guías y arrieros': {
+    es: 'Propinas voluntarias para guías y arrieros',
+    en: 'Voluntary tips for guides and horsemen',
+    pt: 'Gorjetas voluntárias para guias e tropeiros',
+    fr: 'Pourboires volontaires pour guides et muletiers',
+    it: 'Mance facoltative per guide e mulattieri'
+  },
+  'Seguro médico personal de viaje de alta montaña': {
+    es: 'Seguro médico personal de viaje de alta montaña',
+    en: 'High-altitude personal travel medical insurance',
+    pt: 'Seguro viagem médico pessoal de alta montanha',
+    fr: 'Assurance voyage médicale personnelle de haute montagne',
+    it: 'Assicurazione medica personale di viaggio per alta quota'
+  },
+  'Personal international travel medical insurance de alta montaña': {
+    es: 'Seguro médico personal de viaje de alta montaña',
+    en: 'High-altitude personal international travel medical insurance',
+    pt: 'Seguro viagem médico internacional de alta montanha',
+    fr: 'Assurance voyage médicale internationale de haute montagne',
+    it: 'Assicurazione medica internazionale di viaggio per alta quota'
+  },
+  'Valle Sagrado & Aclimatación Escénica': {
+    es: 'Valle Sagrado & Aclimatación Escénica',
+    en: 'Sacred Valley & Scenic Acclimatization',
+    pt: 'Vale Sagrado & Aclimatação Cênica',
+    fr: 'Vallée Sacrée & Acclimatation Panoramique',
+    it: 'Valle Sacra & Acclimatazione Panoramica'
+  },
+  'Recorrido por miradores andinos con almuerzo campestre orgánico y pernocte en domos.': {
+    es: 'Recorrido por miradores andinos con almuerzo campestre orgánico y pernocte en domos.',
+    en: 'Tour of Andean viewpoints with organic country lunch and dome overnight.',
+    pt: 'Passeio pelos mirantes andinos com almoço campestre orgânico e pernoite em domos.',
+    fr: 'Circuit des belvédères andins avec déjeuner champêtre bio et nuitée sous dômes.',
+    it: 'Tour dei belvedere andini con pranzo campestre biologico e pernottamento in domi.'
+  },
+  'Ascenso al Abra Escénica & Fotografía': {
+    es: 'Ascenso al Abra Escénica & Fotografía',
+    en: 'Ascent to the Scenic Mountain Pass & Photography',
+    pt: 'Subida ao Passo Cênico & Fotografia',
+    fr: 'Montée au Col Panoramique & Photographie',
+    it: 'Salita al Valico Panoramico & Fotografia'
+  },
+  'Caminata a ritmo personalizado guiada por expertos con postales panorámicas del nevado sagrado.': {
+    es: 'Caminata a ritmo personalizado guiada por expertos con postales panorámicas del nevado sagrado.',
+    en: 'Custom-paced trek guided by mountain experts with scenic postcards of the sacred glacier.',
+    pt: 'Caminhada com ritmo personalizado guiada por especialistas com vistas do pico sagrado.',
+    fr: 'Randonnée à rythme personnalisé guidée par des experts avec vues splendides sur le mont sacré.',
+    it: 'Camminata a ritmo personalizzato guidata da esperti con cartoline panoramiche della vetta sacra.'
+  },
+  'Amanecer en Machu Picchu Santuario': {
+    es: 'Amanecer en Machu Picchu Santuario',
+    en: 'Sunrise at Machu Picchu Sanctuary',
+    pt: 'Amanhecer no Santuário de Machu Picchu',
+    fr: 'Lever de soleil au Sanctuaire du Machu Picchu',
+    it: 'Alba al Santuario di Machu Picchu'
+  },
+  'Acceso preferente con historiador oficial y tiempo para capturar postales sin multitudes.': {
+    es: 'Acceso preferente con historiador oficial y tiempo para capturar postales sin multitudes.',
+    en: 'Preferred access with certified historian and time to capture crowd-free postcards.',
+    pt: 'Acesso preferencial com historiador oficial e tempo para fotos sem multidões.',
+    fr: 'Accès prioritaire avec historien officiel et temps pour photos sans la foule.',
+    it: 'Accesso prioritario con storico ufficiale e tempo per foto senza folla.'
+  },
+  'Superó todas nuestras expectativas. La atención del guía y las medidas de seguridad fueron impecables de principio a fin.': {
+    es: 'Superó todas nuestras expectativas. La atención del guía y las medidas de seguridad fueron impecables de principio a fin.',
+    en: 'It exceeded all our expectations. The guide’s dedication and safety protocols were flawless from start to finish.',
+    pt: 'Superou todas as nossas expectativas. A atenção do guia e os protocolos de segurança foram impecáveis do início ao fim.',
+    fr: 'Au-delà de toutes nos espérances. L’attention du guide et la sécurité étaient irréprochables du début à la fin.',
+    it: 'Ha superato tutte le nostre aspettative. L’attenzione della guida e le misure di sicurezza sono state impeccabili dall’inizio alla fine.'
+  },
+  'Incredible experience! The landscapes were breathtaking, gear was top-notch and the team was exceptionally caring and punctual.': {
+    es: '¡Una experiencia increíble! Los paisajes fueron deslumbrantes, el equipo de primera categoría y el personal excepcionalmente atento y puntual.',
+    en: 'Incredible experience! The landscapes were breathtaking, gear was top-notch and the team was exceptionally caring and punctual.',
+    pt: 'Experiência incrível! As paisagens eram deslumbrantes, os equipamentos de primeira linha e a equipe muito pontual e atenciosa.',
+    fr: 'Expérience incroyable ! Des paysages à couper le souffle, du matériel haut de gamme et une équipe attentionnée et ponctuelle.',
+    it: 'Esperienza incredibile! Paesaggi mozzafiato, attrezzatura di prima qualità e team eccezionalmente premuroso e puntuale.'
+  },
+  'Une organisation sans faille et des paysages grandioses. Excellente assistance avec l’oxygène en altitude. Inoubliable !': {
+    es: 'Una organización impecable y paisajes grandiosos. Excelente asistencia con el oxígeno en altura. ¡Inolvidable!',
+    en: 'Flawless organization and magnificent landscapes. Excellent altitude oxygen assistance. Unforgettable!',
+    pt: 'Uma organização impecável e paisagens grandiosas. Excelente assistência com oxigênio na altitude. Inesquecível!',
+    fr: 'Une organisation sans faille et des paysages grandioses. Excellente assistance avec l’oxygène en altitude. Inoubliable !',
+    it: 'Un’organizzazione impeccabile e paesaggi grandiosi. Eccellente assistenza con l’ossigeno in quota. Indimenticabile!'
+  },
+  'Lima, Perú': {
+    es: 'Lima, Perú',
+    en: 'Lima, Peru',
+    pt: 'Lima, Peru',
+    fr: 'Lima, Pérou',
+    it: 'Lima, Perù'
+  },
+  'Austin, Texas (USA)': {
+    es: 'Austin, Texas (EE.UU.)',
+    en: 'Austin, Texas (USA)',
+    pt: 'Austin, Texas (EUA)',
+    fr: 'Austin, Texas (États-Unis)',
+    it: 'Austin, Texas (USA)'
+  },
+  'Lyon, Francia': {
+    es: 'Lyon, Francia',
+    en: 'Lyon, France',
+    pt: 'Lyon, França',
+    fr: 'Lyon, France',
+    it: 'Lione, Francia'
+  },
+  'Montaña 7 Colores Vinicunca': {
+    es: 'Montaña 7 Colores Vinicunca',
+    en: 'Rainbow Mountain Vinicunca',
+    pt: 'Montanha 7 Cores Vinicunca',
+    fr: 'Montagne aux 7 Couleurs Vinicunca',
+    it: 'Montagna 7 Colori Vinicunca'
+  },
+  'Valle Sagrado & Ollantaytambo': {
+    es: 'Valle Sagrado & Ollantaytambo',
+    en: 'Sacred Valley & Ollantaytambo',
+    pt: 'Vale Sagrado & Ollantaytambo',
+    fr: 'Vallée Sacrée & Ollantaytambo',
+    it: 'Valle Sacra & Ollantaytambo'
   }
 };
 
@@ -2164,14 +2376,18 @@ export function translateText(text: string | undefined, targetLang: LanguageType
     if (targetLang === 'it') return 'Servizio coordinato e garantito al 100% con standard ufficiali di sicurezza turistica.';
   }
 
-  // Heurísticas para Especificaciones Técnicas
+  // Heurísticas para Especificaciones Técnicas (Soporte de rangos y valores simples)
   if (lowerTrimmed.includes('msnm') || lowerTrimmed.includes('m.a.s.l.') || lowerTrimmed.includes('metros') || lowerTrimmed.includes('mslm')) {
+    const unit = targetLang === 'en' ? 'm.a.s.l.' : targetLang === 'fr' ? 'm d’altitude' : targetLang === 'pt' ? 'm de altitude' : targetLang === 'it' ? 'mslm' : 'msnm';
+    if (text.includes('-') || text.includes(' a ')) {
+      const separator = text.includes('-') ? '-' : ' a ';
+      const parts = text.split(separator).map(p => p.replace(/[^0-9,.]/g, '').trim()).filter(Boolean);
+      if (parts.length >= 2) {
+        return `${parts[0]} - ${parts[1]} ${unit}`;
+      }
+    }
     const num = text.replace(/[^0-9,.]/g, '');
-    if (targetLang === 'es') return `${num} msnm`;
-    if (targetLang === 'en') return `${num} m.a.s.l.`;
-    if (targetLang === 'fr') return `${num} m d’altitude`;
-    if (targetLang === 'pt') return `${num} m de altitude`;
-    if (targetLang === 'it') return `${num} mslm`;
+    return `${num} ${unit}`;
   }
 
   // Traducción por fragmentos y patrones comunes

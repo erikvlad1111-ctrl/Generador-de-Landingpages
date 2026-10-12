@@ -66,6 +66,7 @@ export default function SustainabilityAndSocialProof({
       feedBadge: 'Momentos Reales Esta Semana',
       feedTitle: '#CuscoTravelers: Fotos en Vivo de Nuestros Pasajeros',
       feedSubtitle: 'Imágenes capturadas por viajeros que recorrieron Machu Picchu, Humantay y Vinicunca con nuestro equipo en los últimos días.',
+      feedRealTime: 'Historias actualizadas en tiempo real',
       verifiedTraveler: 'Viajero Verificado'
     },
     en: {
@@ -104,6 +105,7 @@ export default function SustainabilityAndSocialProof({
       feedBadge: 'Live Moments This Week',
       feedTitle: '#CuscoTravelers: Real Photos from Our Guests',
       feedSubtitle: 'Unfiltered pictures captured by travelers exploring Machu Picchu, Humantay, and Rainbow Mountain with our guides.',
+      feedRealTime: 'Real-time live stories',
       verifiedTraveler: 'Verified Traveler'
     },
     pt: {
@@ -142,6 +144,7 @@ export default function SustainabilityAndSocialProof({
       feedBadge: 'Momentos Reais Esta Semana',
       feedTitle: '#CuscoTravelers: Fotos Reais de Viajantes',
       feedSubtitle: 'Imagens tiradas pelos nossos passageiros durante a última semana no Peru.',
+      feedRealTime: 'Histórias atualizadas em tempo real',
       verifiedTraveler: 'Viajante Verificado'
     },
     fr: {
@@ -180,6 +183,7 @@ export default function SustainabilityAndSocialProof({
       feedBadge: 'En Direct cette Semaine',
       feedTitle: '#CuscoTravelers: Les Photos de Nos Voyageurs',
       feedSubtitle: 'Photos authentiques partagées par nos clients découvrant les merveilles incas.',
+      feedRealTime: 'Histoires en direct',
       verifiedTraveler: 'Voyageur Vérifié'
     },
     it: {
@@ -218,6 +222,7 @@ export default function SustainabilityAndSocialProof({
       feedBadge: 'Momenti Reali Questa Settimana',
       feedTitle: '#CuscoTravelers: Gli Scatti dei Nostri Ospiti',
       feedSubtitle: 'Foto autentiche scattate dai viaggiatori con le nostre guide in questi giorni.',
+      feedRealTime: 'Storie in tempo reale',
       verifiedTraveler: 'Viaggiatore Verificato'
     }
   };
@@ -228,35 +233,67 @@ export default function SustainabilityAndSocialProof({
   const travelerFeed = [
     {
       user: '@sarah.anderson_travel',
-      country: '🇺🇸 EE.UU.',
+      country: lang === 'en' || lang === 'it' ? '🇺🇸 USA' : lang === 'fr' ? '🇺🇸 États-Unis' : lang === 'pt' ? '🇺🇸 EUA' : '🇺🇸 EE.UU.',
       tour: 'Machu Picchu VIP & Huayna Picchu',
-      timeAgo: 'Hace 2 días',
+      timeAgo: lang === 'en' ? '2 days ago' : lang === 'pt' ? 'Há 2 dias' : lang === 'fr' ? 'Il y a 2 jours' : lang === 'it' ? '2 giorni fa' : 'Hace 2 días',
       image: '/images/travelers/traveler-machu-picchu.jpg',
-      comment: '¡Un amanecer mágico sin multitudes! Carlos fue el mejor guía que pudimos tener.'
+      comment: lang === 'en'
+        ? 'A magical sunrise without crowds! Carlos was the absolute best guide we could have asked for.'
+        : lang === 'pt'
+        ? 'Um amanhecer mágico sem multidões! Carlos foi o melhor guia que poderíamos ter.'
+        : lang === 'fr'
+        ? 'Un lever de soleil magique sans foule ! Carlos a été le meilleur guide que nous pouvions espérer.'
+        : lang === 'it'
+        ? 'Un’alba magica senza folla! Carlos è stato la migliore guida che potessimo desiderare.'
+        : '¡Un amanecer mágico sin multitudes! Carlos fue el mejor guía que pudimos tener.'
     },
     {
       user: '@matteo_rossi_explorer',
-      country: '🇮🇹 Italia',
-      tour: 'Laguna Humantay Turquesa',
-      timeAgo: 'Hace 3 días',
+      country: lang === 'en' || lang === 'it' ? '🇮🇹 Italy' : lang === 'fr' ? '🇮🇹 Italie' : lang === 'pt' ? '🇮🇹 Itália' : '🇮🇹 Italia',
+      tour: lang === 'en' ? 'Humantay Turquoise Lagoon' : lang === 'pt' ? 'Lagoa Humantay Turquesa' : lang === 'fr' ? 'Lagune Humantay Turquoise' : lang === 'it' ? 'Laguna Humantay Turchese' : 'Laguna Humantay Turquesa',
+      timeAgo: lang === 'en' ? '3 days ago' : lang === 'pt' ? 'Há 3 dias' : lang === 'fr' ? 'Il y a 3 jours' : lang === 'it' ? '3 giorni fa' : 'Hace 3 días',
       image: '/images/travelers/traveler-humantay.jpg',
-      comment: 'El color del agua es irreal. Nos dieron bastones de trekking y té de coca calientito.'
+      comment: lang === 'en'
+        ? 'The water color is unreal. We were provided with trekking poles and steaming hot coca tea.'
+        : lang === 'pt'
+        ? 'A cor da água é surreal. Nos deram bastões de caminhada e chá de coca quentinho.'
+        : lang === 'fr'
+        ? 'La couleur de l’eau est irréelle. Bâtons de marche et thé de coca bien chaud fournis.'
+        : lang === 'it'
+        ? 'Il colore dell’acqua è surreale. Ci hanno fornito bastoncini da trekking e tè di coca caldo.'
+        : 'El color del agua es irreal. Nos dieron bastones de trekking y té de coca calientito.'
     },
     {
       user: '@camila.viajes.br',
-      country: '🇧🇷 Brasil',
-      tour: 'Montaña 7 Colores Vinicunca',
-      timeAgo: 'Esta semana',
+      country: lang === 'en' ? '🇧🇷 Brazil' : lang === 'fr' ? '🇧🇷 Brésil' : lang === 'it' ? '🇧🇷 Brasile' : '🇧🇷 Brasil',
+      tour: lang === 'en' ? 'Rainbow Mountain Vinicunca' : lang === 'pt' ? 'Montanha 7 Cores Vinicunca' : lang === 'fr' ? 'Montagne aux 7 Couleurs Vinicunca' : lang === 'it' ? 'Montagna 7 Colori Vinicunca' : 'Montaña 7 Colores Vinicunca',
+      timeAgo: lang === 'en' ? 'This week' : lang === 'fr' ? 'Cette semaine' : lang === 'it' ? 'Questa settimana' : 'Esta semana',
       image: '/images/travelers/traveler-vinicunca.jpg',
-      comment: 'Subimos a 5,036 metros y el oxígeno que llevaban en la van nos dio total tranquilidad.'
+      comment: lang === 'en'
+        ? 'We hiked up to 5,036 meters and the oxygen they had onboard the van gave us complete peace of mind.'
+        : lang === 'pt'
+        ? 'Subimos a 5.036 metros e o oxigênio a bordo da van nos deu total tranquilidade.'
+        : lang === 'fr'
+        ? 'Montée à 5 036 mètres en toute sérénité grâce à l’oxygène médical disponible dans le van.'
+        : lang === 'it'
+        ? 'Siamo saliti a 5.036 metri e l’ossigeno a bordo del van ci ha dato totale tranquillità.'
+        : 'Subimos a 5,036 metros y el oxígeno que llevaban en la van nos dio total tranquilidad.'
     },
     {
       user: '@julien_voyage_paris',
-      country: '🇫🇷 Francia',
-      tour: 'Valle Sagrado & Ollantaytambo',
-      timeAgo: 'Esta semana',
+      country: lang === 'en' ? '🇫🇷 France' : lang === 'pt' ? '🇫🇷 França' : lang === 'fr' ? '🇫🇷 France' : '🇫🇷 Francia',
+      tour: lang === 'en' ? 'Sacred Valley & Ollantaytambo' : lang === 'pt' ? 'Vale Sagrado & Ollantaytambo' : lang === 'fr' ? 'Vallée Sacrée & Ollantaytambo' : lang === 'it' ? 'Valle Sacra & Ollantaytambo' : 'Valle Sagrado & Ollantaytambo',
+      timeAgo: lang === 'en' ? 'This week' : lang === 'fr' ? 'Cette semaine' : lang === 'it' ? 'Questa settimana' : 'Esta semana',
       image: '/images/travelers/traveler-sacred-valley.jpg',
-      comment: 'Excelente organización y transporte privado de primera clase con aire acondicionado.'
+      comment: lang === 'en'
+        ? 'Outstanding organization and first-class private transportation with climate control.'
+        : lang === 'pt'
+        ? 'Excelente organização e transporte privativo de primeira classe com ar-condicionado.'
+        : lang === 'fr'
+        ? 'Organisation remarquable et transport privé de première classe avec climatisation.'
+        : lang === 'it'
+        ? 'Organizzazione eccellente e trasporto privato di prima classe con aria condizionata.'
+        : 'Excelente organización y transporte privado de primera clase con aire acondicionado.'
     }
   ];
 
@@ -402,7 +439,7 @@ export default function SustainabilityAndSocialProof({
             </div>
             <div className="flex items-center gap-2 text-xs text-stone-400 font-mono bg-stone-900 px-3 py-1.5 rounded-xl border border-stone-800 shrink-0">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              Historias actualizadas en tiempo real
+              {t.feedRealTime}
             </div>
           </div>
 

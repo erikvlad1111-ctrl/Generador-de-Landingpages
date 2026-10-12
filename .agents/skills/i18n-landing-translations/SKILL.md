@@ -280,5 +280,29 @@ Guía para diagnosticar y solucionar problemas de traducción, mezcla de idiomas
   3. Conectar todos los textos y badges de las secciones con `translateText(..., currentLang)`: Clima, Altitud, Caminata, Comidas, Hospedaje, Equipamiento & Confort, insignias de reseñas y las 4 tarjetas de la barra inferior de métricas.
   4. Expandir exhaustivamente `PHRASE_MAP` en `src/data/translations.ts` con todos los textos por defecto del itinerario, servicios incluidos y excluidos, checklist de mochila, licencias oficiales y testimonios en los 5 idiomas oficiales (`es`, `en`, `pt`, `fr`, `it`).
 
+### Error: Fusión de Números en Rangos de Altitud ("2,4304,630 m.a.s.l.") y Feed Social con Textos Estáticos en Español
+
+- **Síntoma / Mensaje de Error:**
+  1. La tarjeta de altitud máxima renderizaba `2,4304,630 m.a.s.l.` en inglés o variantes en otros idiomas en lugar de `2,430 - 4,630 m.a.s.l.`.
+  2. En la sección de prueba social (`SustainabilityAndSocialProof`), la insignia `Historias actualizadas en tiempo real`, los países (`🇺🇸 EE.UU.`), el tiempo transcurrido (`Hace 2 días`) y los comentarios de los posts permanecían en español sin importar el idioma activo.
+  3. Cadenas del preset de demostración como `'Moderada'`, `'4 Días / 3 Noches'`, `'Grupos Reducidos & Privados VIP'`, `'Licenciado DIRCETUR & Explorador Senior'`, `'Consultar con'`, así como los servicios incluidos y checklist de mochila del preset, no se traducían.
+
+- **Causa Raíz:**
+  1. En `src/data/translations.ts`, la heurística de altitud aplicaba `text.replace(/[^0-9,.]/g, '')`, eliminando el separador `-` y los espacios en rangos como `'2,430 msnm - 4,630 msnm'`, pegando ambos números en `2,4304,630`.
+  2. En `SustainabilityAndSocialProof.tsx`, el array `travelerFeed` y el texto de estado en vivo estaban codificados con cadenas literales en español sin vincularse con `lang` ni con el diccionario `t`.
+  3. Los valores particulares del preset `emerald-explorer-navikx` y los testimonios de demostración no estaban registrados en `PHRASE_MAP`.
+
+- **Comando de Diagnóstico:**
+  ```bash
+  git grep -n "replace(/\[^0-9,.\]/g" src/data/translations.ts
+  git grep -n "Historias actualizadas en tiempo real" src/
+  ```
+
+- **Solución Paso a Paso:**
+  1. Modificar la heurística de altitud en `translations.ts` para detectar rangos con `-` o ` a `, extraer y limpiar cada número independientemente, y devolver `${parts[0]} - ${parts[1]} ${unit}`.
+  2. En `SustainabilityAndSocialProof.tsx`, agregar la clave `feedRealTime` a los diccionarios de los 5 idiomas y dinamizar `travelerFeed` para traducir país, tiempo, tour y comentarios según `lang`.
+  3. Agregar a `PHRASE_MAP` todas las cadenas del preset (dificultad, duración, modalidad, certificaciones, servicios incluidos, exclusiones, mochila y testimonios de demostración).
+
+
 
 
