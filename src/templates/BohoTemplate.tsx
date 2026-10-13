@@ -390,7 +390,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               <span className="font-serif tracking-wider uppercase text-sm sm:text-base font-bold text-stone-800 truncate leading-snug whitespace-nowrap">
                 Boho Travel Journal
               </span>
-              <span className="text-[10px] sm:text-[11px] text-stone-500 font-sans tracking-tight truncate leading-none mt-0.5 whitespace-nowrap">
+              <span className="text-[12px] sm:text-[13px] text-stone-500 font-sans tracking-tight truncate leading-none mt-0.5 whitespace-nowrap">
                 {currentLang === 'en' ? 'Pinterest Inspired • Cusco, Peru' : currentLang === 'pt' ? 'Inspirado no Pinterest • Cusco, Peru' : currentLang === 'fr' ? 'Inspiré de Pinterest • Cusco, Pérou' : currentLang === 'it' ? 'Ispirato a Pinterest • Cusco, Perù' : 'Inspirado en Pinterest • Cusco, Perú'}
               </span>
             </div>
@@ -398,7 +398,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
           {/* Desktop Navigation Links - Curated, Max 6 Links & No Overlap */}
           {!isMobile && (
-            <nav className="hidden lg:flex items-center gap-2 xl:gap-3.5 2xl:gap-5 text-xs tracking-wider uppercase font-semibold text-stone-600 whitespace-nowrap min-w-0">
+            <nav className="hidden lg:flex items-center gap-2 xl:gap-3.5 2xl:gap-5 text-[13px] tracking-wider uppercase font-semibold text-stone-600 whitespace-nowrap min-w-0">
               <a href="#inicio" className="hover:text-[#C86D51] transition-colors whitespace-nowrap px-1.5 py-1">
                 {currentLang === 'en' ? 'Home' : currentLang === 'fr' ? 'Accueil' : currentLang === 'pt' ? 'Início' : currentLang === 'it' ? 'Inizio' : 'Inicio'}
               </a>
@@ -588,7 +588,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               {/* Encabezado: Tarifa Oficial & Detalle de qué incluye */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-stone-200/70">
                 <div>
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#588157]/10 text-[#588157] text-[11px] font-bold uppercase tracking-wider mb-1">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#588157]/10 text-[#588157] text-[13px] font-bold uppercase tracking-wider mb-1">
                     <Sparkles size={12} />
                     <span>{t.hero.officialFare}</span>
                   </div>
@@ -603,7 +603,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 </div>
 
                 <div className="text-left sm:text-right bg-stone-50 sm:bg-transparent p-2 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-stone-200/60">
-                  <span className="text-[11px] text-stone-500 font-medium block">
+                  <span className="text-[13px] text-stone-500 font-medium block">
                     {t.hero.estimatedTotal} ({bohoPassengers} {bohoPassengers === 1 ? 'pers.' : 'pers.'}):
                   </span>
                   <span className="text-lg sm:text-xl font-serif font-black text-[#C86D51] block">
@@ -613,7 +613,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </div>
 
               {/* Subtítulo explicativo de inclusiones */}
-              <p className="text-[12px] sm:text-[13px] text-stone-600 font-sans leading-relaxed">
+              <p className="text-[14px] sm:text-[15px] text-stone-600 font-sans leading-relaxed">
                 {t.hero.allIncludedNotice}
               </p>
 
@@ -625,10 +625,10 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                   <div className="flex items-center gap-2">
                     <Users size={16} className="text-[#C86D51] shrink-0" />
                     <div>
-                      <span className="text-[10px] text-stone-500 font-semibold uppercase tracking-wider block">
+                      <span className="text-[12px] text-stone-500 font-semibold uppercase tracking-wider block">
                         {t.hero.travelers}
                       </span>
-                      <span className="text-xs font-serif font-bold text-stone-900 block">
+                      <span className="text-sm font-serif font-bold text-stone-900 block">
                         {bohoPassengers} {bohoPassengers === 1 ? 'viajero' : 'viajeros'}
                       </span>
                     </div>
@@ -643,7 +643,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                     >
                       <Minus size={13} />
                     </button>
-                    <span className="w-5 text-center font-serif font-black text-xs text-stone-900">
+                    <span className="w-5 text-center font-serif font-black text-sm text-stone-900">
                       {bohoPassengers}
                     </span>
                     <button
@@ -661,7 +661,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 <div className="bg-white sm:bg-[#FAF7F2] p-2.5 sm:p-3 rounded-2xl border border-stone-200/80 flex items-center gap-2">
                   <Calendar size={16} className="text-[#588157] shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <label htmlFor="boho-travel-date" className="text-[10px] text-stone-500 font-semibold uppercase tracking-wider block">
+                    <label htmlFor="boho-travel-date" className="text-[12px] text-stone-500 font-semibold uppercase tracking-wider block">
                       {t.hero.travelDate}
                     </label>
                     <input
@@ -669,7 +669,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                       type="date"
                       value={bohoTravelDate}
                       onChange={(e) => setBohoTravelDate(e.target.value)}
-                      className="w-full bg-transparent text-xs font-serif font-bold text-stone-900 outline-none cursor-pointer p-0"
+                      className="w-full bg-transparent text-sm font-serif font-bold text-stone-900 outline-none cursor-pointer p-0"
                     />
                   </div>
                 </div>
@@ -721,7 +721,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </div>
 
               {/* Micro Reassurance Banner */}
-              <div className="flex items-center gap-1.5 pt-1 text-[12px] sm:text-[13px] text-stone-500 font-serif italic border-t border-stone-200/60">
+              <div className="flex items-center gap-1.5 pt-1 text-[14px] sm:text-[15px] text-stone-500 font-serif italic border-t border-stone-200/60">
                 <CheckCircle2 size={14} className="text-[#588157] shrink-0" />
                 <span>{t.hero.quickResponse}</span>
               </div>
@@ -1145,7 +1145,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 </div>
                 <div className="bg-white border border-stone-200/90 rounded-3xl p-5 sm:p-6 w-full shadow-xs text-left relative group hover:border-[#C86D51]/50 transition-colors">
                   <div className="w-12 h-2.5 bg-[#E8DEC8]/80 absolute -top-1 left-6 rotate-[-1deg] shadow-2xs pointer-events-none" />
-                  <span className="text-[11px] sm:text-xs uppercase font-serif font-bold tracking-wider text-[#C86D51] bg-[#C86D51]/10 px-3 py-1 rounded-full inline-block mb-2">
+                  <span className="text-[13px] sm:text-[14px] uppercase font-serif font-bold tracking-wider text-[#C86D51] bg-[#C86D51]/10 px-3 py-1 rounded-full inline-block mb-2">
                     {item.step ? translateText(item.step, currentLang) : `Día ${idx + 1}`}
                   </span>
                   <h3 className="font-serif font-bold text-stone-900 text-base sm:text-lg mb-1.5">
@@ -1415,7 +1415,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                           <Star key={i} size={14} fill="currentColor" />
                         ))}
                       </div>
-                      <span className="text-xs sm:text-[13px] font-mono text-[#C86D51] bg-[#C86D51]/10 px-2 py-0.5 rounded-full font-bold">
+                      <span className="text-[14px] sm:text-[15px] font-mono text-[#C86D51] bg-[#C86D51]/10 px-2 py-0.5 rounded-full font-bold">
                         {r.categoryLabel}
                       </span>
                     </div>
@@ -1434,10 +1434,10 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                       </div>
                       <div className="truncate">
                         <h4 className="font-serif font-bold text-[15px] text-stone-900 truncate">{r.name}</h4>
-                        <p className="text-xs sm:text-[13px] text-stone-400 truncate">{r.origin} • {r.date}</p>
+                        <p className="text-[14px] sm:text-[15px] text-stone-400 truncate">{r.origin} • {r.date}</p>
                       </div>
                     </div>
-                    <span className="text-xs sm:text-[13px] text-[#588157] font-semibold flex items-center gap-0.5 shrink-0">
+                    <span className="text-[14px] sm:text-[15px] text-[#588157] font-semibold flex items-center gap-0.5 shrink-0">
                       <CheckCircle2 size={12} />
                       <span className="hidden sm:inline">Verificado</span>
                     </span>
@@ -1909,7 +1909,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </div>
               <div className="flex items-center gap-2 text-stone-400">
                 <Building2 size={15} className="text-stone-500 shrink-0" />
-                <span className="text-xs font-mono">RUC: 20608945123 • Cusco Creativos S.A.C.</span>
+                <span className="text-[14px] font-mono">RUC: 20608945123 • Cusco Creativos S.A.C.</span>
               </div>
             </div>
           </div>
@@ -1968,7 +1968,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                   <BookOpen size={15} className="shrink-0 mt-0.5" />
                   <div>
                     <span>{t.footer.complaintsBook}</span>
-                    <span className="text-xs block text-stone-400 font-sans font-normal">Ley N° 29571 INDECOPI</span>
+                    <span className="text-[14px] block text-stone-400 font-sans font-normal">Ley N° 29571 INDECOPI</span>
                   </div>
                 </button>
               </li>
@@ -2035,7 +2035,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         <div className="max-w-7xl mx-auto pt-6 border-t border-stone-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-[13px] sm:text-sm text-stone-500">
           <p className="text-center md:text-left">{t.footer.rights}</p>
 
-          <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-bold tracking-wider text-stone-400 bg-stone-950/80 px-3.5 py-1.5 rounded-full border border-stone-800">
+          <div className="flex flex-wrap items-center justify-center gap-2 text-[14px] font-bold tracking-wider text-stone-400 bg-stone-950/80 px-3.5 py-1.5 rounded-full border border-stone-800">
             <span className="text-stone-500">💳 {t.footer.paymentsTitle}:</span>
             <span>VISA</span>
             <span>•</span>
@@ -2046,7 +2046,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             <span>PAYPAL</span>
           </div>
 
-          <div className="flex items-center gap-2 text-stone-400 text-xs">
+          <div className="flex items-center gap-2 text-stone-400 text-[14px]">
             <Lock size={13} className="text-emerald-500" />
             <span>{t.footer.madeWithLove}</span>
           </div>

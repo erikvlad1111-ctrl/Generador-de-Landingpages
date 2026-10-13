@@ -133,7 +133,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-red-200 truncate leading-snug whitespace-nowrap">
                 {t.emblemTitle}
               </span>
-              <span className="text-[10px] text-stone-300 tracking-wider font-sans block truncate leading-none mt-0.5 whitespace-nowrap">
+              <span className="text-[11px] text-stone-300 tracking-wider font-sans block truncate leading-none mt-0.5 whitespace-nowrap">
                 {t.emblemSub}
               </span>
             </div>
@@ -309,12 +309,12 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 <h3 className="font-serif font-black text-xs sm:text-sm text-stone-900 leading-tight group-hover:text-red-700 transition-colors">
                   {item.label}
                 </h3>
-                <p className="text-[10px] sm:text-[11px] text-stone-500 font-medium mt-1">
+                <p className="text-[11px] sm:text-[12px] text-stone-500 font-medium mt-1">
                   {item.sub}
                 </p>
 
                 {/* Micro CTA indicator visible on hover */}
-                <div className="mt-2 text-red-700 text-[10px] font-black uppercase tracking-wider opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all flex items-center gap-1">
+                <div className="mt-2 text-red-700 text-[11px] font-black uppercase tracking-wider opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all flex items-center gap-1">
                   <span>{currentLang === 'en' ? 'Inquire' : currentLang === 'fr' ? 'Consulter' : currentLang === 'pt' ? 'Consultar' : currentLang === 'it' ? 'Richiedi' : 'Consultar'}</span>
                   <ArrowRight size={11} className="animate-bounce-x" />
                 </div>
@@ -407,7 +407,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 key={item.id}
                 className="cultural-card-hover bg-white rounded-2xl p-5 sm:p-6 border border-stone-200/80 shadow-xs hover:shadow-xl hover:border-red-400 transition-all duration-300 text-left space-y-2 group"
               >
-                <div className="inline-block bg-red-700 text-white text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                <div className="inline-block bg-red-700 text-white text-[11px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                   {item.badge} • {item.date}
                 </div>
                 <h4 className="font-serif font-black text-base sm:text-lg text-stone-900 group-hover:text-red-700 transition-colors leading-snug">
@@ -507,7 +507,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                         
                         {/* Red Event Date Badge */}
-                        <div className="absolute bottom-3 left-3 bg-red-700 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-sm backdrop-blur-xs">
+                        <div className="absolute bottom-3 left-3 bg-red-700 text-white text-[11px] font-black px-3 py-1 rounded-full shadow-sm backdrop-blur-xs">
                           {event.date}
                         </div>
                       </div>
@@ -529,7 +529,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                         rel="noopener noreferrer"
                         className="cultural-btn-primary bg-red-50 hover:bg-red-700 text-red-800 hover:text-white border border-red-300 hover:border-red-700 px-3.5 py-1.5 rounded-full font-bold text-xs transition-all duration-300 inline-flex items-center gap-1.5 cursor-pointer group-hover:scale-105 active:scale-95"
                       >
-                        <span className="w-4 h-4 rounded-full bg-red-200 text-red-800 flex items-center justify-center text-[10px]">➤</span>
+                        <span className="w-4 h-4 rounded-full bg-red-200 text-red-800 flex items-center justify-center text-[11px]">➤</span>
                         <span>{t.agenda.readMore}</span>
                       </a>
                     </div>
@@ -547,7 +547,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
       {/* SECTION: CATÁLOGO DE TOURS & RUTAS HISTÓRICAS */}
       <section id="tours" className="py-14 sm:py-20 px-4 sm:px-8 max-w-7xl mx-auto border-t border-stone-200/80">
         <div className="max-w-2xl mx-auto text-center mb-10 sm:mb-14 space-y-3">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-800 text-[10px] sm:text-xs font-black uppercase tracking-widest border border-red-200">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100 text-red-800 text-[11px] sm:text-xs font-black uppercase tracking-widest border border-red-200">
             <Landmark size={13} />
             <span>{currentLang === 'en' ? 'Historical Routes' : currentLang === 'pt' ? 'Rotas Históricas' : currentLang === 'fr' ? 'Circuits Historiques' : currentLang === 'it' ? 'Rotte Storiche' : 'Rutas Históricas & Arqueología'}</span>
           </span>
@@ -602,7 +602,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                     </div>
 
                     {tourTag && (
-                      <div className="absolute top-3 right-3 bg-red-700 text-white px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider shadow-xs max-w-[130px] truncate" title={tourTag}>
+                      <div className="absolute top-3 right-3 bg-red-700 text-white px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider shadow-xs max-w-[130px] truncate" title={tourTag}>
                         {tourTag}
                       </div>
                     )}
@@ -632,7 +632,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
                 <div className="p-5 pt-0 flex items-center justify-between gap-2 border-t border-stone-100 mt-2">
                   <div>
-                    <span className="text-[10px] text-stone-500 uppercase tracking-wider block font-sans">
+                    <span className="text-[11px] text-stone-500 uppercase tracking-wider block font-sans">
                       {currentLang === 'en' ? 'From' : currentLang === 'pt' ? 'A partir de' : currentLang === 'fr' ? 'À partir de' : currentLang === 'it' ? 'A partire da' : 'Tarifa'}
                     </span>
                     <span className="font-serif text-base font-bold text-stone-900">
@@ -717,7 +717,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                   <MapPin size={14} className="text-red-500 animate-bounce" />
                   {t.territory.cardTitle}
                 </span>
-                <span className="text-[10px] bg-red-600/30 text-red-200 px-2 py-0.5 rounded-full border border-red-500/30 animate-pulse-subtle">
+                <span className="text-[11px] bg-red-600/30 text-red-200 px-2 py-0.5 rounded-full border border-red-500/30 animate-pulse-subtle">
                   {t.territory.badgeGps}
                 </span>
               </div>
@@ -730,7 +730,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                     className="cultural-card-hover bg-white/10 hover:bg-white/20 active:scale-98 p-2.5 rounded-xl border border-white/10 hover:border-red-400/50 flex items-center justify-between transition-all duration-200 cursor-pointer group/pin"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="w-5 h-5 rounded-full bg-red-700 text-white font-black text-[10px] flex items-center justify-center group-hover/pin:scale-110 group-hover/pin:bg-red-600 transition-transform">
+                      <span className="w-5 h-5 rounded-full bg-red-700 text-white font-black text-[11px] flex items-center justify-center group-hover/pin:scale-110 group-hover/pin:bg-red-600 transition-transform">
                         {place.num}
                       </span>
                       <span className="font-bold text-white group-hover/pin:text-red-200 transition-colors">
@@ -738,7 +738,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                       </span>
                     </div>
                     {place.num === 4 ? (
-                      <span className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-bold">
+                      <span className="flex items-center gap-1.5 text-[11px] text-emerald-400 font-bold">
                         <span className="relative flex h-2 w-2">
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                           <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -746,13 +746,13 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                         {place.altitude}
                       </span>
                     ) : (
-                      <span className="text-[10px] text-red-300 font-mono">{place.altitude}</span>
+                      <span className="text-[11px] text-red-300 font-mono">{place.altitude}</span>
                     )}
                   </div>
                 ))}
               </div>
 
-              <p className="text-[10px] text-stone-300 text-center pt-1 italic">
+              <p className="text-[11px] text-stone-300 text-center pt-1 italic">
                 {t.territory.tip}
               </p>
             </div>
@@ -827,7 +827,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
       {(isPro || isAdvance) && (
         <section id="conseils" className="py-16 sm:py-24 px-4 sm:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-2">
-          <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
+          <span className="text-[11px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
             <Backpack size={13} className="animate-soft-float" />
             <span>{t.conseils.badge}</span>
           </span>
@@ -850,7 +850,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                   <span>{item.icon}</span>
                 </div>
                 <div>
-                  <span className="text-[10px] font-bold text-red-700 uppercase tracking-wider block">
+                  <span className="text-[11px] font-bold text-red-700 uppercase tracking-wider block">
                     {item.subtitle}
                   </span>
                   <h3 className="font-serif font-black text-stone-900 text-base leading-snug mt-0.5 group-hover:text-red-700 transition-colors">
@@ -879,7 +879,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           
           {/* Section Header */}
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
+            <span className="text-[11px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
               <GraduationCap size={14} className="animate-soft-float" />
               <span>{t.guides.badge}</span>
             </span>
@@ -915,7 +915,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                         sizes="(max-width: 1024px) 100vw, 380px"
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute bottom-2.5 inset-x-2.5 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold py-1.5 px-3 rounded-xl border border-white/20 flex items-center justify-between">
+                      <div className="absolute bottom-2.5 inset-x-2.5 bg-black/70 backdrop-blur-md text-white text-[11px] font-bold py-1.5 px-3 rounded-xl border border-white/20 flex items-center justify-between">
                         <span className="truncate">{finalCert}</span>
                         <span className="flex items-center text-emerald-400 font-black shrink-0">
                           <span className="relative flex h-2 w-2 mr-1">
@@ -929,7 +929,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
                     {/* Header info */}
                     <div className="space-y-1">
-                      <div className="inline-block bg-red-100 text-red-800 text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">
+                      <div className="inline-block bg-red-100 text-red-800 text-[11px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full">
                         {guide.role}
                       </div>
                       <span className="text-xs font-serif italic text-red-700 font-bold block pt-1">
@@ -1002,7 +1002,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           {/* Header & Rating Summary */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-stone-200 pb-8 text-left">
             <div className="space-y-2">
-              <span className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
+              <span className="text-[11px] sm:text-xs font-black uppercase tracking-widest text-red-800 bg-red-100 border border-red-200 px-3.5 py-1 rounded-full inline-flex items-center gap-1.5">
                 <Star size={13} className="fill-red-700 text-red-700 animate-soft-float" />
                 <span>{t.livreDor.badge}</span>
               </span>
@@ -1020,7 +1020,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 <span className="text-3xl sm:text-4xl font-serif font-black text-red-900 block leading-none">
                   4.9
                 </span>
-                <span className="text-[10px] text-stone-400 font-bold uppercase mt-1 block">{t.livreDor.scoreOutOf}</span>
+                <span className="text-[11px] text-stone-400 font-bold uppercase mt-1 block">{t.livreDor.scoreOutOf}</span>
               </div>
               <div className="space-y-1">
                 <div className="flex items-center gap-0.5 text-amber-500">
@@ -1029,7 +1029,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                   ))}
                 </div>
                 <span className="text-xs font-bold text-stone-800 block">{t.livreDor.verifiedCount}</span>
-                <span className="text-[10px] text-emerald-600 font-bold block">✓ {t.livreDor.positiveRate}</span>
+                <span className="text-[11px] text-emerald-600 font-bold block">✓ {t.livreDor.positiveRate}</span>
               </div>
             </div>
           </div>
@@ -1048,7 +1048,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                         <Star key={i} size={14} className="fill-amber-500" />
                       ))}
                     </div>
-                    <span className="text-[10px] text-stone-400 font-mono">{review.date}</span>
+                    <span className="text-[11px] text-stone-400 font-mono">{review.date}</span>
                   </div>
 
                   <p className="text-xs sm:text-sm font-serif italic text-stone-700 leading-relaxed">
@@ -1121,7 +1121,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               <span className="font-serif font-black text-sm uppercase text-stone-900 block">
                 {t.footer.townName}
               </span>
-              <span className="text-[10px] text-stone-500 uppercase tracking-widest block font-bold">
+              <span className="text-[11px] text-stone-500 uppercase tracking-widest block font-bold">
                 {t.footer.regionalDir}
               </span>
             </div>
@@ -1229,7 +1229,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
 
         {/* Bottom Bar: Copyright & Payment Badges */}
-        <div className="max-w-7xl mx-auto pt-6 mt-6 border-t border-stone-100 flex flex-col md:flex-row items-center justify-between gap-4 text-center text-stone-400 text-[10px]">
+        <div className="max-w-7xl mx-auto pt-6 mt-6 border-t border-stone-100 flex flex-col md:flex-row items-center justify-between gap-4 text-center text-stone-400 text-[11px]">
           <p>{t.footer.copyright}</p>
 
           <div className="flex flex-wrap items-center justify-center gap-2 font-bold tracking-wider text-stone-500 bg-stone-50 px-3 py-1 rounded-full border border-stone-200">
@@ -1263,7 +1263,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
       {isMobile && (
         <div className="animate-slide-up-mobile fixed bottom-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-t border-red-200 p-3 flex items-center justify-between gap-3 shadow-2xl">
           <div className="min-w-0">
-            <span className="text-[10px] text-stone-500 font-bold block uppercase tracking-wider">{t.mobileSticky.tariffLabel}</span>
+            <span className="text-[11px] text-stone-500 font-bold block uppercase tracking-wider">{t.mobileSticky.tariffLabel}</span>
             <span className="text-base font-serif font-black text-red-900 animate-pulse-subtle inline-block">{data.price || 'S/ 85 PEN'}</span>
           </div>
           <div className="flex items-center gap-2">
