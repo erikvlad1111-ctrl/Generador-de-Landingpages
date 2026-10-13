@@ -689,10 +689,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             <h2 className="text-4xl sm:text-6xl font-serif font-black italic tracking-tight text-white">
               {t.territory.title}
             </h2>
-            <p className="text-sm sm:text-base text-stone-200 leading-relaxed font-serif">
+            <p className="text-[15px] sm:text-[17px] text-stone-200 leading-relaxed font-serif">
               {t.territory.desc1}
             </p>
-            <p className="text-xs sm:text-sm text-stone-300 leading-relaxed font-normal">
+            <p className="text-[13px] sm:text-[15px] text-stone-300 leading-relaxed font-normal">
               {t.territory.desc2}
             </p>
             <div className="pt-2">
