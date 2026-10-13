@@ -19,6 +19,10 @@ import LegalTermsModal from '@/components/common/LegalTermsModal';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
 import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
+import AltimetryProfileSection from '@/components/adventure/AltimetryProfileSection';
+import GlampingDomesSection from '@/components/adventure/GlampingDomesSection';
+import TrekPreparationSection from '@/components/adventure/TrekPreparationSection';
+import AdventureBookingCard from '@/components/adventure/AdventureBookingCard';
 
 interface TemplateProps {
   data: LandingData;
@@ -445,26 +449,37 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
             </div>
           </a>
 
-          {/* Desktop Nav Links (Exactamente 6 links limpios, sin overflow) */}
+          {/* Desktop Nav Links (Navegación equilibrada y fluida) */}
           {!isMobile && (
-            <div className="hidden lg:flex items-center gap-2 xl:gap-4 2xl:gap-5 text-xs xl:text-[13px] font-bold text-slate-700 whitespace-nowrap min-w-0">
+            <div className="hidden lg:flex items-center gap-1 xl:gap-2.5 2xl:gap-3.5 text-xs xl:text-[13px] font-bold text-slate-700 whitespace-nowrap min-w-0">
               <a href="#inicio" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
                 {t.nav.home || 'Inicio'}
               </a>
-              <a href="#destinos" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
-                {t.nav.destinations || 'Destinos'}
-              </a>
-              <a href="#tours" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
-                {currentLang === 'es' ? 'Tours' : 'Tours'}
-              </a>
+              {(isPro || isAdvance) && (
+                <a href="#itinerario" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                  {t.nav.itinerary || 'Itinerario'}
+                </a>
+              )}
+              {(isPro || isAdvance) && (
+                <a href="#altimetria" className="whitespace-nowrap px-2 py-1.5 rounded-lg text-blue-600 hover:text-blue-700 hover:bg-blue-50 transition-colors font-extrabold">
+                  {currentLang === 'en' ? 'Altimetry' : currentLang === 'pt' ? 'Altimetria' : currentLang === 'fr' ? 'Altimétrie' : currentLang === 'it' ? 'Altimetria' : 'Altimetría'}
+                </a>
+              )}
+              {(isPro || isAdvance) && (
+                <a href="#campamentos" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                  {currentLang === 'en' ? 'Sky Domes' : currentLang === 'pt' ? 'Domos' : currentLang === 'fr' ? 'Dômes' : currentLang === 'it' ? 'Domi' : 'Domos'}
+                </a>
+              )}
               <a href="#incluye" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
                 {t.nav.included || 'Qué Incluye'}
               </a>
+              {!isFree && (
+                <a href="#galeria" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
+                  {t.nav.gallery || 'Galería'}
+                </a>
+              )}
               <a href="#testimonios" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
                 {t.nav.reviews || 'Reseñas'}
-              </a>
-              <a href="#contacto" className="whitespace-nowrap px-2 py-1.5 rounded-lg hover:text-blue-600 hover:bg-slate-100/80 transition-colors">
-                {t.nav.contact || 'Contacto'}
               </a>
             </div>
           )}
@@ -570,6 +585,24 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   {t.nav.itinerary}
                 </a>
               )}
+              {(isPro || isAdvance) && (
+                <a
+                  href="#altimetria"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2.5 rounded-xl bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors font-black"
+                >
+                  {currentLang === 'en' ? 'Altimetry' : currentLang === 'pt' ? 'Altimetria' : currentLang === 'fr' ? 'Altimétrie' : currentLang === 'it' ? 'Altimetria' : 'Altimetría'}
+                </a>
+              )}
+              {(isPro || isAdvance) && (
+                <a
+                  href="#campamentos"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                >
+                  {currentLang === 'en' ? 'Sky Domes' : currentLang === 'pt' ? 'Domos' : currentLang === 'fr' ? 'Dômes' : currentLang === 'it' ? 'Domi' : 'Domos Glaciares'}
+                </a>
+              )}
               {!isFree && (
                 <a
                   href="#incluye"
@@ -590,11 +623,11 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               )}
               {(isPro || isAdvance) && (
                 <a
-                  href="#mochila"
+                  href="#preparacion"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="p-2.5 rounded-xl bg-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors"
                 >
-                  {t.nav.gear || 'Equipamiento'}
+                  {currentLang === 'en' ? 'Preparation' : currentLang === 'pt' ? 'Aclimatação' : currentLang === 'fr' ? 'Préparation' : currentLang === 'it' ? 'Preparazione' : 'Preparación & Clima'}
                 </a>
               )}
               {isAdvance && (
@@ -712,14 +745,25 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               </div>
             </div>
 
-            {/* Right Column: Floating High-Impact Glass Cards */}
+            {/* Right Column: Interactive Booking Card with Social Proof */}
             <div className="lg:col-span-5 relative flex flex-col justify-center items-start lg:items-end">
-              <div className="w-full max-w-sm space-y-4">
+              <div className="w-full max-w-md space-y-3.5">
                 
-                {/* Floating Altitude & Live Confirmation Card */}
-                <div className="bg-slate-900/70 backdrop-blur-xl border border-white/20 p-5 rounded-3xl shadow-2xl text-white space-y-3">
-                  <div className="flex items-center justify-between pb-2 border-b border-white/10">
-                    <div className="flex items-center gap-2 text-xs font-black text-emerald-400">
+                {/* Interactive Booking Calculator Card */}
+                <AdventureBookingCard
+                  price={data.price}
+                  guideName={data.guideName}
+                  tourName={data.name || data.hero?.title || 'Salkantay Trek 5 Días'}
+                  cleanPhone={cleanPhone}
+                  onOpenQuote={() => setIsQuoteOpen(true)}
+                  objective={data.objective}
+                  lang={currentLang}
+                />
+
+                {/* Floating Altitude & Live Confirmation Badges */}
+                <div className="bg-slate-900/70 backdrop-blur-xl border border-white/20 p-4 rounded-2xl shadow-xl text-white space-y-2">
+                  <div className="flex items-center justify-between text-xs">
+                    <div className="flex items-center gap-2 font-black text-emerald-400">
                       <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
                       <span>{t.hero.dailyDepartures}</span>
                     </div>
@@ -728,47 +772,33 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between gap-3 text-xs">
-                    <div className="flex items-center gap-2.5">
-                      <div className="w-9 h-9 rounded-xl bg-blue-500/25 text-blue-400 flex items-center justify-center font-bold">
-                        <MapPin size={16} />
-                      </div>
-                      <div>
-                        <span className="text-[10px] text-slate-400 block font-semibold">{t.hero.highestPoint}:</span>
-                        <strong className="text-white text-xs sm:text-sm font-black">{data.altitude || '4,630 msnm (Paso Salkantay)'}</strong>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-1 flex items-center justify-between text-xs text-slate-300 border-t border-white/10">
+                  <div className="flex items-center justify-between text-xs text-slate-300 pt-2 border-t border-white/10">
                     <div className="flex items-center gap-1.5">
                       <ShieldCheck size={14} className="text-emerald-400 shrink-0" />
-                      <span>{t.hero.licensedGuide}: <strong className="text-white">{data.guideName || (currentLang === 'es' ? 'Guía Colegiado' : currentLang === 'en' ? 'Licensed Guide' : currentLang === 'fr' ? 'Guide Certifié' : currentLang === 'pt' ? 'Guia Certificado' : 'Guida Ufficiale')}</strong></span>
+                      <span>{t.hero.highestPoint}: <strong className="text-white">{data.altitude || '4,630 msnm'}</strong></span>
                     </div>
-                    <span className="text-[11px] font-mono text-blue-300 font-bold">{data.duration || '5 Días / 4 Noches'}</span>
+                    <span className="text-[11px] font-mono text-blue-300 font-bold">{data.duration || '5D / 4N'}</span>
                   </div>
                 </div>
 
                 {/* Floating Review Badge */}
-                <div className="bg-white/95 backdrop-blur-xl px-5 py-3 rounded-full shadow-2xl border border-white/80 flex items-center gap-3 w-fit hover:scale-105 transition-transform">
-                  {/* 3 Avatars Stack */}
+                <div className="bg-white/95 backdrop-blur-xl px-4 py-2.5 rounded-full shadow-xl border border-white/80 flex items-center gap-3 w-fit hover:scale-105 transition-transform">
                   <div className="flex -space-x-2 shrink-0">
-                    <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden relative bg-slate-200">
+                    <div className="w-7 h-7 rounded-full border-2 border-white overflow-hidden relative bg-slate-200">
                       <Image src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&auto=format&fit=crop" alt="User 1" fill className="object-cover" />
                     </div>
-                    <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden relative bg-slate-200">
+                    <div className="w-7 h-7 rounded-full border-2 border-white overflow-hidden relative bg-slate-200">
                       <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=120&auto=format&fit=crop" alt="User 2" fill className="object-cover" />
                     </div>
-                    <div className="w-8 h-8 rounded-full border-2 border-white overflow-hidden relative bg-slate-200">
+                    <div className="w-7 h-7 rounded-full border-2 border-white overflow-hidden relative bg-slate-200">
                       <Image src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&auto=format&fit=crop" alt="User 3" fill className="object-cover" />
                     </div>
                   </div>
 
-                  {/* Rating copy */}
                   <div className="text-left leading-tight">
-                    <span className="block text-[11px] sm:text-xs font-bold text-slate-900">{t.hero.happyCustomers}</span>
+                    <span className="block text-[11px] font-bold text-slate-900">{t.hero.happyCustomers}</span>
                     <div className="flex items-center gap-1 text-[11px] text-slate-600 font-semibold">
-                      <Star size={12} className="fill-amber-400 text-amber-400" />
+                      <Star size={11} className="fill-amber-400 text-amber-400" />
                       <span className="text-slate-900 font-black">4.9</span>
                       <span>({t.hero.reviewsCount})</span>
                     </div>
@@ -1023,6 +1053,16 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
             ))}
           </div>
         </section>
+      )}
+
+      {/* 6.5 PERFIL ALTIMÉTRICO Y DESNIVEL TÉCNICO (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
+        <AltimetryProfileSection lang={currentLang} />
+      )}
+
+      {/* 6.6 GLAMPING & DOMOS GLACIARES (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
+        <GlampingDomesSection lang={currentLang} />
       )}
 
       {/* 7. FEATURES & INCLUDED SERVICES (Con imágenes suaves, filtros y estándares de alta montaña) */}
@@ -1355,6 +1395,33 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               </div>
             )}
           </div>
+        </section>
+      )}
+
+      {/* 9.5 GUÍA DE PREPARACIÓN FÍSICA, ACLIMATACIÓN & CLIMA (PRO & ADVANCE) */}
+      {(isPro || isAdvance) && (
+        <TrekPreparationSection lang={currentLang} />
+      )}
+
+      {/* 9.6 TABLERO DE POSTALES & MOMENTOS INSPIRACIONALES (PRO & ADVANCE) */}
+      {!isFree && (
+        <section id="galeria" className="py-12 sm:py-20 px-4 sm:px-8 max-w-7xl mx-auto">
+          <PinterestPinboard
+            destination={data.destination || 'Cusco & Salkantay'}
+            tourName={data.name || data.hero?.title || 'Salkantay Trek 5 Días'}
+            images={data.galleryImages && data.galleryImages.length > 0 ? data.galleryImages : [
+              'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=1200&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1200&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1510312305653-8ed496efae75?q=80&w=1200&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1200&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1506535772317-9fca70c9b4fb?q=80&w=1200&auto=format&fit=crop',
+              'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=1200&auto=format&fit=crop'
+            ]}
+            tier={tier}
+            theme="adventure"
+            isMobile={isMobile}
+            lang={currentLang}
+          />
         </section>
       )}
 
