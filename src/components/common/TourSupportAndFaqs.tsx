@@ -1172,16 +1172,16 @@ export default function TourSupportAndFaqs({
                 </button>
               </div>
 
-              {/* Search & Category Filter */}
-              <div className={`pt-2 border-t ${isEmerald ? 'border-white/10' : 'border-stone-100'} flex ${isMobile ? 'flex-col gap-2.5' : 'flex-col md:flex-row items-stretch md:items-center gap-3'}`}>
-                <div className="relative flex-1">
+              {/* Search & Category Filter Optimizado */}
+              <div className={`pt-3 border-t ${isEmerald ? 'border-white/10' : 'border-stone-100'} flex flex-col md:flex-row md:items-center gap-3`}>
+                <div className="relative w-full md:w-72 lg:w-80 shrink-0">
                   <Search size={16} className={`absolute left-3.5 top-1/2 -translate-y-1/2 ${isEmerald ? 'text-emerald-400/60' : 'text-stone-400'}`} />
                   <input
                     type="text"
                     placeholder={st.searchPlaceholder}
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className={`w-full ${isEmerald ? 'bg-white/[0.08] border-white/15 text-white placeholder-emerald-200/50' : 'bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-400'} border rounded-xl pl-10 pr-4 py-2.5 text-xs outline-none focus:ring-2 ${themeFocusRing}`}
+                    className={`w-full ${isEmerald ? 'bg-white/[0.08] border-white/15 text-white placeholder-emerald-200/50' : 'bg-stone-50 border-stone-200 text-stone-900 placeholder:text-stone-400'} border rounded-xl pl-10 pr-8 py-2.5 text-xs outline-none focus:ring-2 ${themeFocusRing}`}
                   />
                   {searchQuery && (
                     <button
@@ -1193,7 +1193,7 @@ export default function TourSupportAndFaqs({
                   )}
                 </div>
 
-                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none w-full">
+                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none flex-1">
                   {st.categories.map((cat) => (
                     <button
                       key={cat}

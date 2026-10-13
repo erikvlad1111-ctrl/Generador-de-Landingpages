@@ -1114,34 +1114,40 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               {heroSubtitle}
             </p>
 
-            {/* BARRA FLOTANTE INTERACTIVA DE BÚSQUEDA & CALCULADORA EN VIVO */}
-            <div className="p-2.5 sm:p-3 bg-white/10 backdrop-blur-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] rounded-2xl sm:rounded-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 max-w-xl animate-pill-glow transition-all duration-300">
-              <div className="flex items-center gap-2.5 px-3 py-1.5 flex-1 border-b sm:border-b-0 sm:border-r border-white/10 text-xs">
+            {/* BARRA FLOTANTE INTERACTIVA DE BÚSQUEDA & CALCULADORA EN VIVO OPTIMIZADA */}
+            <div className="p-3 sm:p-3.5 bg-slate-950/60 backdrop-blur-2xl border border-emerald-400/30 shadow-[0_20px_50px_rgba(0,0,0,0.6)] rounded-3xl sm:rounded-full flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 max-w-2xl animate-pill-glow transition-all duration-300">
+              
+              {/* 1. Destino / Ruta */}
+              <div className="flex items-center gap-2.5 px-3 py-1 flex-1 border-b sm:border-b-0 sm:border-r border-white/10 text-xs">
                 <MapPin size={16} className="text-emerald-400 shrink-0" />
                 <div className="min-w-0">
-                  <span className="text-[10px] text-emerald-200/70 font-semibold block">{t.searchWhere}</span>
-                  <span className="text-xs font-bold text-white truncate block">{destinationName}</span>
+                  <span className="text-[10px] text-emerald-300/80 font-bold uppercase tracking-wider block">{t.searchWhere}</span>
+                  <span className="text-xs font-black text-white truncate block">{destinationName}</span>
                 </div>
               </div>
 
-              {/* Selector de Pasajeros */}
-              <div className="flex items-center justify-between sm:justify-start gap-2.5 px-3 py-1.5 flex-1 border-b sm:border-b-0 sm:border-r border-white/10 text-xs">
+              {/* 2. Selector de Pasajeros */}
+              <div className="flex items-center justify-between sm:justify-start gap-2.5 px-3 py-1 border-b sm:border-b-0 sm:border-r border-white/10 text-xs shrink-0">
                 <Users size={16} className="text-teal-400 shrink-0" />
                 <div className="min-w-0">
-                  <span className="text-[10px] text-emerald-200/70 font-semibold block">{t.passengers}</span>
-                  <div className="flex items-center gap-2">
+                  <span className="text-[10px] text-emerald-300/80 font-bold uppercase tracking-wider block">{t.passengers}</span>
+                  <div className="flex items-center gap-1.5 mt-0.5">
                     <button
                       type="button"
                       onClick={() => setPassengers(Math.max(1, passengers - 1))}
-                      className="w-5 h-5 rounded-md bg-white/15 hover:bg-emerald-500 hover:text-black flex items-center justify-center text-xs font-black transition-colors cursor-pointer"
+                      className="w-5 h-5 rounded-md bg-white/15 hover:bg-emerald-400 hover:text-black flex items-center justify-center text-xs font-black transition-colors cursor-pointer"
+                      title="Disminuir pasajeros"
                     >
                       <Minus size={11} />
                     </button>
-                    <span className="text-xs font-black text-white">{passengers} {passengers === 1 ? t.passengerSingular : t.passengerPlural}</span>
+                    <span className="text-xs font-black text-white min-w-[50px] text-center">
+                      {passengers} {passengers === 1 ? t.passengerSingular : t.passengerPlural}
+                    </span>
                     <button
                       type="button"
                       onClick={() => setPassengers(Math.min(12, passengers + 1))}
-                      className="w-5 h-5 rounded-md bg-white/15 hover:bg-emerald-500 hover:text-black flex items-center justify-center text-xs font-black transition-colors cursor-pointer"
+                      className="w-5 h-5 rounded-md bg-white/15 hover:bg-emerald-400 hover:text-black flex items-center justify-center text-xs font-black transition-colors cursor-pointer"
+                      title="Aumentar pasajeros"
                     >
                       <Plus size={11} />
                     </button>
@@ -1149,13 +1155,34 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 </div>
               </div>
 
-              {/* Botón de Acción Principal con Tarifa Calculada */}
+              {/* 3. Selector de Moneda en Vivo */}
+              <div className="flex items-center justify-between sm:justify-start gap-1.5 px-2 py-1 border-b sm:border-b-0 sm:border-r border-white/10 text-xs shrink-0">
+                <div className="inline-flex bg-white/10 rounded-xl p-0.5 border border-white/10">
+                  {(['USD', 'PEN', 'EUR'] as const).map((curr) => (
+                    <button
+                      key={curr}
+                      type="button"
+                      onClick={() => setCurrency(curr)}
+                      className={`px-2 py-1 rounded-lg text-[10px] font-black transition-all cursor-pointer ${
+                        currency === curr
+                          ? 'bg-emerald-400 text-slate-950 shadow-xs'
+                          : 'text-emerald-200/70 hover:text-white'
+                      }`}
+                    >
+                      {curr}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 4. Botón de Acción Principal con Tarifa Calculada */}
               <button
                 type="button"
                 onClick={() => handleOpenAction(data.name)}
-                className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 to-teal-400 hover:from-emerald-300 hover:to-teal-300 text-[#041716] font-black text-xs sm:text-xs px-5 py-3 rounded-xl sm:rounded-full transition-all shadow-md shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer shrink-0 hover:scale-105 active:scale-95"
+                className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 hover:from-emerald-300 hover:to-teal-200 text-[#041716] font-black text-xs px-4 py-2.5 rounded-2xl sm:rounded-full transition-all shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer shrink-0 hover:scale-103 active:scale-97"
               >
-                <span>{formatPrice(basePriceUsd, passengers)}</span>
+                <span>{t.searchBtn || 'Reservar'}:</span>
+                <span className="font-extrabold">{formatPrice(basePriceUsd, passengers)}</span>
                 <ArrowRight size={14} />
               </button>
             </div>

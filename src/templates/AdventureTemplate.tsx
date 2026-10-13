@@ -704,8 +704,9 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 )}
 
                 {data.price && (
-                  <div className="px-4 py-3 rounded-full bg-blue-600/90 text-white backdrop-blur-md border border-blue-400/40 font-black text-xs shadow-md">
-                    {t.hero.fromPrice} {data.price}
+                  <div className="inline-flex items-center gap-2 px-4 py-3 rounded-full bg-slate-900/85 text-white backdrop-blur-xl border border-white/25 shadow-lg">
+                    <span className="text-[11px] text-slate-300 font-bold uppercase tracking-wider">{t.hero.fromPrice}:</span>
+                    <span className="text-sm font-black text-amber-400">{data.price}</span>
                   </div>
                 )}
               </div>

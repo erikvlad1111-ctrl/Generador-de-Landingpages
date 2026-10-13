@@ -362,18 +362,97 @@ export default function LiveBudgetCalculator({
           )}
         </div>
 
-        {/* Calculator Main Grid: 2 Columnas Balanceadas */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Calculator Main Grid: 2 Columnas Balanceadas y Orden Secuencial */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           
           {/* ======================================================== */}
-          {/* COLUMNA IZQUIERDA: CONTROLES DE PRECIOS & DESGLOSE (6 cols) */}
+          {/* COLUMNA IZQUIERDA: PASOS DE CONFIGURACIÓN (7 cols) */}
           {/* ======================================================== */}
-          <div className="lg:col-span-6 space-y-6">
+          <div className="lg:col-span-7 space-y-6">
             
-            {/* Panel de Configuración de Presupuesto */}
+            {/* PASO 1: SELECCIONA TU RUTA / CIRCUITO */}
+            <div className="bg-stone-900/90 backdrop-blur-xl rounded-3xl p-5 sm:p-7 border border-stone-800 shadow-2xl space-y-4">
+              <div className="flex items-center justify-between border-b border-stone-800 pb-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-xl bg-[#FF5500]/20 flex items-center justify-center text-[#FF5500]">
+                    <Compass size={17} />
+                  </div>
+                  <div>
+                    <h3 className="text-sm sm:text-base font-black text-white leading-tight">
+                      {dict.toursHeading}
+                    </h3>
+                    <p className="text-[11px] text-stone-400 leading-tight">
+                      {dict.toursSubheading}
+                    </p>
+                  </div>
+                </div>
+                {availableTours && (
+                  <span className="text-[10px] text-stone-300 font-bold bg-stone-800 px-2.5 py-1 rounded-full border border-stone-700 shrink-0">
+                    {availableTours.length} {dict.optionsCount}
+                  </span>
+                )}
+              </div>
+
+              {/* Selector Scrolleable Compacto de Rutas */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[290px] overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:#FF5500_#292524]">
+                {availableTours && availableTours.map((t) => {
+                  const isSelected = selectedTourId === t.id;
+                  const tourImg = t.image || 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop';
+                  const tourDur = t.duration || 'Full Day';
+                  const tourCat = t.category || 'Tour';
+
+                  return (
+                    <button
+                      key={t.id}
+                      type="button"
+                      onClick={() => setSelectedTourId(t.id)}
+                      className={`p-2.5 rounded-2xl text-left border transition-all cursor-pointer flex items-center gap-2.5 relative ${
+                        isSelected
+                          ? 'bg-[#FF5500]/20 border-[#FF5500] ring-1 ring-[#FF5500] shadow-md'
+                          : 'bg-stone-950/70 border-stone-800/80 hover:border-stone-700 hover:bg-stone-900/90 text-stone-300'
+                      }`}
+                    >
+                      <div className="w-14 h-14 rounded-xl overflow-hidden shrink-0 relative bg-stone-900 border border-stone-800">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img 
+                          src={tourImg} 
+                          alt={t.title}
+                          className="w-full h-full object-cover"
+                        />
+                        {isSelected && (
+                          <div className="absolute inset-0 bg-[#FF5500]/30 flex items-center justify-center">
+                            <div className="w-5 h-5 rounded-full bg-[#FF5500] text-white flex items-center justify-center shadow-md">
+                              <Check size={12} strokeWidth={3} />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1.5 mb-0.5">
+                          <span className="text-[9px] font-black uppercase text-[#FF8844] truncate">
+                            {tourCat}
+                          </span>
+                          <span className="text-[9px] text-stone-400">
+                            • {tourDur}
+                          </span>
+                        </div>
+                        <h4 className={`text-xs font-bold truncate leading-snug ${isSelected ? 'text-white' : 'text-stone-200'}`}>
+                          {t.title}
+                        </h4>
+                        <div className="text-[11px] font-black text-[#FF8844] mt-0.5">
+                          {convertPrice(t.basePriceUSD, currency)}
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* PASO 2: NÚMERO DE VIAJEROS & TARIFA */}
             <div className="bg-stone-900/90 backdrop-blur-xl rounded-3xl p-5 sm:p-7 border border-stone-800 shadow-2xl space-y-6">
               
-              {/* 1. Selector de Pasajeros */}
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="text-xs font-extrabold uppercase tracking-wider text-stone-300 flex items-center gap-1.5">
@@ -381,14 +460,14 @@ export default function LiveBudgetCalculator({
                     <span>{dict.labelPassengers}</span>
                   </label>
                   {isGroupDiscount && (
-                    <span className="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">
+                    <span className="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-bold">
                       {dict.discountBadge}
                     </span>
                   )}
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center bg-stone-950 rounded-2xl border border-stone-800 p-1">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+                  <div className="flex items-center bg-stone-950 rounded-2xl border border-stone-800 p-1 w-fit">
                     <button
                       type="button"
                       onClick={() => setPassengers(Math.max(1, passengers - 1))}
@@ -408,13 +487,17 @@ export default function LiveBudgetCalculator({
                     </button>
                   </div>
                   <div className="text-xs text-stone-400 leading-tight">
-                    {passengers === 1 ? 'Viajero individual' : `${passengers} personas en tu grupo`}
-                    {isGroupDiscount ? ' (Ahorro de 10% aplicado)' : ' (A partir de 4 pers: 10% OFF)'}
+                    <span className="font-bold text-white block">
+                      {passengers === 1 ? '1 Viajero (Individual)' : `${passengers} viajeros en grupo`}
+                    </span>
+                    <span>
+                      {isGroupDiscount ? '✓ 10% de descuento grupal aplicado' : 'Grupos de 4 a más personas obtienen 10% de ahorro'}
+                    </span>
                   </div>
                 </div>
               </div>
 
-              {/* 2. Modalidad de Servicio */}
+              {/* PASO 3: MODALIDAD DE SERVICIO */}
               <div>
                 <label className="text-xs font-extrabold uppercase tracking-wider text-stone-300 block mb-2">
                   {dict.labelTier}
@@ -454,7 +537,7 @@ export default function LiveBudgetCalculator({
                 </div>
               </div>
 
-              {/* 3. Adicionales Opcionales */}
+              {/* PASO 4: ADICIONALES OPCIONALES */}
               <div>
                 <label className="text-xs font-extrabold uppercase tracking-wider text-stone-300 block mb-2">
                   {dict.labelExtras}
@@ -487,21 +570,75 @@ export default function LiveBudgetCalculator({
 
             </div>
 
-            {/* Tarjeta de Resumen / Desglose de Cotización */}
+          </div>
+
+          {/* ======================================================== */}
+          {/* COLUMNA DERECHA: RESUMEN EN VIVO PEGAJOSO (5 cols) */}
+          {/* ======================================================== */}
+          <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-4">
+            
             <div className="bg-gradient-to-b from-stone-900 via-stone-900 to-black rounded-3xl p-5 sm:p-7 border border-stone-800 shadow-2xl space-y-5">
+              
+              {/* Preview Fotográfico del Tour Seleccionado */}
+              <div className="relative rounded-2xl overflow-hidden border border-[#FF5500]/40 shadow-lg group">
+                <div className="h-32 sm:h-36 w-full relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img 
+                    src={currentTourImage} 
+                    alt={currentTourTitle}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent" />
+                  
+                  {/* Badges superiores */}
+                  <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF5500] text-white text-[10px] font-black uppercase tracking-wider shadow-md">
+                      <Check size={11} strokeWidth={3} />
+                      <span>{dict.quotingNow}</span>
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-amber-300 text-[10px] font-bold border border-white/10">
+                      <Clock size={11} />
+                      <span>{currentTourDuration}</span>
+                    </span>
+                  </div>
+
+                  {/* Info inferior */}
+                  <div className="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
+                    <div className="min-w-0 pr-2">
+                      <span className="text-[10px] font-black uppercase tracking-wider text-[#FF8844] block">
+                        {currentTourCategory}
+                      </span>
+                      <h4 className="text-sm sm:text-base font-black text-white truncate drop-shadow-md">
+                        {currentTourTitle}
+                      </h4>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <span className="text-[9px] text-stone-400 block uppercase">
+                        {dict.fromPrice}
+                      </span>
+                      <span className="text-xs font-black text-white bg-black/60 px-2 py-0.5 rounded-lg border border-white/10 block">
+                        {convertPrice(currentBasePriceUSD, currency)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Encabezado del Desglose */}
               <div className="flex items-center justify-between pb-3 border-b border-stone-800">
                 <span className="text-xs font-bold text-stone-400 uppercase tracking-wider">
                   {dict.breakdownTitle}
                 </span>
-                <span className="text-[10px] font-black uppercase text-[#FF5500] bg-[#FF5500]/10 px-2 py-0.5 rounded-md">
+                <span className="text-[10px] font-black uppercase text-[#FF5500] bg-[#FF5500]/10 px-2 py-0.5 rounded-md border border-[#FF5500]/20">
                   {dict.officialRateBadge}
                 </span>
               </div>
 
-              <div className="py-1 space-y-2 text-xs text-stone-300">
+              {/* Detalle Itemizado */}
+              <div className="space-y-2 text-xs text-stone-300">
                 <div className="flex items-center justify-between gap-2">
                   <span className="text-stone-400 shrink-0">{dict.selectedTourLabel}</span>
-                  <span className="font-bold text-white text-right truncate max-w-[220px]" title={currentTourTitle}>
+                  <span className="font-bold text-white text-right truncate max-w-[200px]" title={currentTourTitle}>
                     {currentTourTitle}
                   </span>
                 </div>
@@ -514,9 +651,9 @@ export default function LiveBudgetCalculator({
                   <span className="font-bold text-white capitalize">{serviceTier}</span>
                 </div>
                 {isGroupDiscount && (
-                  <div className="flex items-center justify-between text-emerald-400">
+                  <div className="flex items-center justify-between text-emerald-400 font-bold">
                     <span>{dict.groupDiscountLabel}</span>
-                    <span className="font-bold">-10%</span>
+                    <span>-10% Ahorro</span>
                   </div>
                 )}
                 <div className="flex items-center justify-between pt-2 border-t border-stone-800/80">
@@ -540,7 +677,7 @@ export default function LiveBudgetCalculator({
                 </span>
               </div>
 
-              {/* Action Buttons */}
+              {/* Botones de Acción */}
               <div className="space-y-2.5 pt-1">
                 <button
                   type="button"
@@ -568,157 +705,6 @@ export default function LiveBudgetCalculator({
                 </div>
               </div>
 
-            </div>
-
-          </div>
-
-          {/* ======================================================== */}
-          {/* COLUMNA DERECHA: CATÁLOGO DE TOURS DISPONIBLES (6 cols) */}
-          {/* ======================================================== */}
-          <div className="lg:col-span-6 bg-stone-900/90 backdrop-blur-xl rounded-3xl p-5 sm:p-7 border border-stone-800 shadow-2xl space-y-4">
-            
-            {/* Header de la columna derecha */}
-            <div className="flex items-center justify-between border-b border-stone-800 pb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-xl bg-[#FF5500]/20 flex items-center justify-center text-[#FF5500]">
-                  <Compass size={17} />
-                </div>
-                <div>
-                  <h3 className="text-sm sm:text-base font-black text-white leading-tight">
-                    {dict.toursHeading}
-                  </h3>
-                  <p className="text-[11px] text-stone-400 leading-tight">
-                    {dict.toursSubheading}
-                  </p>
-                </div>
-              </div>
-              {availableTours && (
-                <span className="text-[10px] text-stone-400 font-bold bg-stone-800/80 px-2.5 py-1 rounded-full border border-stone-700 shrink-0">
-                  {availableTours.length} {dict.optionsCount}
-                </span>
-              )}
-            </div>
-
-            {/* Banner Preview del Tour Seleccionado Activo */}
-            <div className="relative rounded-2xl overflow-hidden border border-[#FF5500]/50 shadow-lg group">
-              <div className="h-32 sm:h-36 w-full relative">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src={currentTourImage} 
-                  alt={currentTourTitle}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-stone-950/60 to-transparent" />
-                
-                {/* Badges superiores */}
-                <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF5500] text-white text-[10px] font-black uppercase tracking-wider shadow-md">
-                    <Check size={11} strokeWidth={3} />
-                    <span>{dict.quotingNow}</span>
-                  </span>
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-amber-300 text-[10px] font-bold border border-white/10">
-                    <Clock size={11} />
-                    <span>{currentTourDuration}</span>
-                  </span>
-                </div>
-
-                {/* Info inferior */}
-                <div className="absolute bottom-2.5 left-3 right-3 flex items-end justify-between">
-                  <div className="min-w-0 pr-2">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-[#FF8844] block">
-                      {currentTourCategory}
-                    </span>
-                    <h4 className="text-sm sm:text-base font-black text-white truncate drop-shadow-md">
-                      {currentTourTitle}
-                    </h4>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <span className="text-[9px] text-stone-400 block uppercase">
-                      {dict.fromPrice}
-                    </span>
-                    <span className="text-xs sm:text-sm font-black text-white bg-black/60 px-2 py-0.5 rounded-lg border border-white/10 block">
-                      {convertPrice(currentBasePriceUSD, currency)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Lista Scrolleable de Tours con tarjetas fotográficas */}
-            <div className="space-y-2.5 max-h-[460px] overflow-y-auto pr-1 [scrollbar-width:thin] [scrollbar-color:#FF5500_#292524]">
-              {availableTours && availableTours.map((t) => {
-                const isSelected = selectedTourId === t.id;
-                const tourImg = t.image || 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop';
-                const tourDur = t.duration || 'Full Day';
-                const tourCat = t.category || 'Tour';
-
-                return (
-                  <button
-                    key={t.id}
-                    type="button"
-                    onClick={() => setSelectedTourId(t.id)}
-                    className={`w-full p-2.5 sm:p-3 rounded-2xl text-left border transition-all cursor-pointer flex items-center gap-3 relative ${
-                      isSelected
-                        ? 'bg-[#FF5500]/15 border-[#FF5500] ring-2 ring-[#FF5500]/70 shadow-lg'
-                        : 'bg-stone-950/70 border-stone-800/80 hover:border-stone-700 hover:bg-stone-900/90 text-stone-300'
-                    }`}
-                  >
-                    {/* Miniatura del Tour */}
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shrink-0 relative bg-stone-900 border border-stone-800">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img 
-                        src={tourImg} 
-                        alt={t.title}
-                        className="w-full h-full object-cover"
-                      />
-                      {isSelected && (
-                        <div className="absolute inset-0 bg-[#FF5500]/30 flex items-center justify-center">
-                          <div className="w-6 h-6 rounded-full bg-[#FF5500] text-white flex items-center justify-center shadow-md">
-                            <Check size={14} strokeWidth={3} />
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Contenido del Tour */}
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <span className="text-[10px] font-black uppercase text-[#FF8844] truncate">
-                          {tourCat}
-                        </span>
-                        <span className="text-[10px] text-stone-400 flex items-center gap-0.5">
-                          • <Clock size={10} /> {tourDur}
-                        </span>
-                      </div>
-                      
-                      <h4 className={`text-xs sm:text-sm font-bold truncate ${isSelected ? 'text-white' : 'text-stone-200'}`}>
-                        {t.title}
-                      </h4>
-
-                      <div className="flex items-center justify-between mt-1.5">
-                        <div className="flex items-center gap-1 text-[11px] font-black text-white">
-                          <span className="text-[10px] text-stone-400 font-normal">
-                            {dict.fromPrice}
-                          </span>
-                          <span className="text-[#FF8844]">
-                            {convertPrice(t.basePriceUSD, currency)}
-                          </span>
-                        </div>
-
-                        {isSelected ? (
-                          <span className="text-[10px] font-extrabold text-[#FF5500] bg-[#FF5500]/10 px-2 py-0.5 rounded-full border border-[#FF5500]/30">
-                            {dict.selectedBadge}
-                          </span>
-                        ) : (
-                          <span className="text-[10px] font-semibold text-stone-500 hover:text-stone-300">
-                            Seleccionar →
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
             </div>
 
           </div>

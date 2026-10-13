@@ -213,35 +213,46 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             {data.hero?.subtitle ? translateText(data.hero.subtitle, currentLang) : t.heroSubtitleDefault}
           </p>
 
-          {/* 3 Circular Quick Action Icons (Centerpiece with Animated Glow & Beacon Ring) */}
-          <div className="pt-2 flex items-center justify-center gap-4">
-            <a
-              href="#territorio"
-              className="cultural-btn-primary w-11 h-11 rounded-full bg-black/45 hover:bg-red-900/90 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-115 hover:-translate-y-1 active:scale-90 cursor-pointer"
-              title={t.cta.exploreTerritory}
-            >
-              <Search size={16} />
-            </a>
-            
-            {/* WhatsApp centerpiece with beacon glow ring & constant pulse */}
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="cultural-btn-primary animate-pulse-cta relative w-13 h-13 rounded-full bg-gradient-to-tr from-red-800 via-red-600 to-red-500 hover:from-red-600 hover:to-red-700 text-white flex items-center justify-center shadow-xl shadow-red-900/60 transition-all duration-300 hover:scale-120 hover:-translate-y-1.5 active:scale-90 cursor-pointer animate-beacon-glow"
-              title={t.cta.writeWhatsApp}
-            >
-              <span className="absolute -inset-1.5 rounded-full bg-red-400 opacity-50 animate-ping-slow pointer-events-none" />
-              <Mail size={19} className="relative z-10" />
-            </a>
+          {/* Price Reference Badge & 3 Quick Action Icons Optimizado */}
+          <div className="pt-2 flex flex-col items-center justify-center gap-3.5">
+            {data.price && (
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/25 text-white shadow-lg">
+                <span className="text-[11px] text-red-200 font-serif tracking-wider uppercase">
+                  {currentLang === 'en' ? 'From' : currentLang === 'pt' ? 'A partir de' : currentLang === 'fr' ? 'À partir de' : currentLang === 'it' ? 'A partire da' : 'Tarifa desde'}:
+                </span>
+                <span className="text-sm sm:text-base font-serif font-black text-amber-300">{data.price}</span>
+              </div>
+            )}
 
-            <a
-              href={`tel:${cleanPhone}`}
-              className="cultural-btn-primary w-11 h-11 rounded-full bg-black/45 hover:bg-red-900/90 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-115 hover:-translate-y-1 active:scale-90 cursor-pointer"
-              title={t.cta.callOffice}
-            >
-              <Phone size={16} />
-            </a>
+            <div className="flex items-center justify-center gap-4">
+              <a
+                href="#territorio"
+                className="cultural-btn-primary w-11 h-11 rounded-full bg-black/45 hover:bg-red-900/90 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-115 hover:-translate-y-1 active:scale-90 cursor-pointer"
+                title={t.cta.exploreTerritory}
+              >
+                <Search size={16} />
+              </a>
+              
+              {/* WhatsApp centerpiece with beacon glow ring & constant pulse */}
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="cultural-btn-primary animate-pulse-cta relative w-13 h-13 rounded-full bg-gradient-to-tr from-red-800 via-red-600 to-red-500 hover:from-red-600 hover:to-red-700 text-white flex items-center justify-center shadow-xl shadow-red-900/60 transition-all duration-300 hover:scale-120 hover:-translate-y-1.5 active:scale-90 cursor-pointer animate-beacon-glow"
+                title={t.cta.writeWhatsApp}
+              >
+                <span className="absolute -inset-1.5 rounded-full bg-red-400 opacity-50 animate-ping-slow pointer-events-none" />
+                <MessageCircle size={19} className="relative z-10" />
+              </a>
+
+              <a
+                href={`tel:${cleanPhone}`}
+                className="cultural-btn-primary w-11 h-11 rounded-full bg-black/45 hover:bg-red-900/90 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-115 hover:-translate-y-1 active:scale-90 cursor-pointer"
+                title={t.cta.callOffice}
+              >
+                <Phone size={16} />
+              </a>
+            </div>
           </div>
         </div>
 

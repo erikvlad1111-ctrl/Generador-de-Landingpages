@@ -528,49 +528,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             {data.hero?.subtitle ? translateText(data.hero.subtitle, currentLang) : t.hero.defaultSubtitle}
           </p>
 
-          {/* CTA & Precio en marco biselado */}
-          <div className={`flex ${isMobile ? 'flex-col' : 'flex-col sm:flex-row'} items-center gap-4 w-full max-w-xl justify-center`}>
-            {data.objective === 'both' ? (
-              <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-                <a 
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white ${isMobile ? 'w-full py-3.5 text-xs' : 'text-sm px-7 py-4'} rounded-full font-bold transition-all shadow-xl shadow-emerald-500/30 hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}
-                >
-                  <MessageCircle size={18} />
-                  <span>{t.cta.whatsapp}</span>
-                </a>
-                <button
-                  onClick={() => setIsQuoteOpen(true)}
-                  className={`bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 ${isMobile ? 'w-full py-3.5 text-xs' : 'text-sm px-7 py-4'} rounded-full font-extrabold transition-all shadow-xl shadow-amber-400/35 hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}
-                >
-                  <FileText size={18} />
-                  <span>{t.cta.quote}</span>
-                </button>
-              </div>
-            ) : isQuote ? (
-              <button
-                onClick={() => setIsQuoteOpen(true)}
-                className={`bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 ${isMobile ? 'w-full py-3.5 text-sm' : 'text-base px-9 py-4'} rounded-full font-extrabold transition-all shadow-[0_8px_30px_rgba(245,158,11,0.4)] hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}
-              >
-                <FileText size={19} />
-                <span>{translateText(data.hero?.cta || t.cta.quote, currentLang)}</span>
-              </button>
-            ) : (
-              <a 
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 ${isMobile ? 'w-full py-3.5 text-sm' : 'text-base px-9 py-4'} rounded-full font-extrabold transition-all shadow-[0_8px_30px_rgba(245,158,11,0.4)] hover:scale-105 flex items-center justify-center gap-2.5 cursor-pointer`}
-              >
-                <MessageCircle size={19} />
-                <span>{translateText(data.hero?.cta || t.cta.bookNow, currentLang)}</span>
-              </a>
-            )}
-
+          {/* CTA & Precio en marco biselado Optimizado */}
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 w-full max-w-2xl mx-auto">
             {/* Price Box biselado */}
-            <div className={`bg-neutral-900/90 backdrop-blur-md rounded-2xl border border-amber-500/40 px-5 py-3 ${isMobile ? 'w-full text-center' : 'text-left'} shadow-xl`}>
+            <div className={`bg-neutral-900/90 backdrop-blur-md rounded-2xl border border-amber-500/40 px-5 py-3 ${isMobile ? 'text-center' : 'text-left'} shadow-xl shrink-0 flex flex-col justify-center`}>
               <p className="text-[10px] text-amber-400 uppercase tracking-[0.2em] font-semibold font-mono">
                 {currentLang === 'en' ? 'Starting From' : currentLang === 'pt' ? 'A Partir de' : currentLang === 'fr' ? 'À Partir de' : currentLang === 'it' ? 'A Partire da' : 'Tarifa Desde'}
               </p>
@@ -581,6 +542,46 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 {data.price || '$450 USD'}
               </p>
             </div>
+
+            {/* Botones de Acción */}
+            {data.objective === 'both' ? (
+              <div className="flex flex-col sm:flex-row items-center gap-2.5 flex-1">
+                <a 
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:flex-1 bg-gradient-to-r from-emerald-500 via-emerald-600 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white py-3.5 px-6 rounded-full font-bold text-sm transition-all shadow-xl shadow-emerald-500/30 hover:scale-103 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <MessageCircle size={18} />
+                  <span>{t.cta.whatsapp}</span>
+                </a>
+                <button
+                  onClick={() => setIsQuoteOpen(true)}
+                  className="w-full sm:flex-1 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 py-3.5 px-6 rounded-full font-extrabold text-sm transition-all shadow-xl shadow-amber-400/35 hover:scale-103 flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <FileText size={18} />
+                  <span>{t.cta.quote}</span>
+                </button>
+              </div>
+            ) : isQuote ? (
+              <button
+                onClick={() => setIsQuoteOpen(true)}
+                className="w-full sm:flex-1 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 py-3.5 px-8 rounded-full font-extrabold text-sm sm:text-base transition-all shadow-[0_8px_30px_rgba(245,158,11,0.4)] hover:scale-103 flex items-center justify-center gap-2.5 cursor-pointer"
+              >
+                <FileText size={19} />
+                <span>{translateText(data.hero?.cta || t.cta.quote, currentLang)}</span>
+              </button>
+            ) : (
+              <a 
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:flex-1 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 py-3.5 px-8 rounded-full font-extrabold text-sm sm:text-base transition-all shadow-[0_8px_30px_rgba(245,158,11,0.4)] hover:scale-103 flex items-center justify-center gap-2.5 cursor-pointer"
+              >
+                <MessageCircle size={19} />
+                <span>{translateText(data.hero?.cta || t.cta.bookNow, currentLang)}</span>
+              </a>
+            )}
           </div>
 
           {/* Intimate Group Availability Badge */}

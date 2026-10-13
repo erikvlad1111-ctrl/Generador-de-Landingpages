@@ -554,28 +554,30 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </span>
             </div>
 
-            {/* Price & Primary CTA */}
-            <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-              <div className="bg-white px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl border border-stone-200/90 shadow-2xs inline-flex sm:block items-baseline gap-2 self-start">
-                <span className="text-[13px] text-stone-500 uppercase tracking-wider font-semibold block">{t.hero.investment}</span>
-                <span className="text-xl sm:text-2xl font-serif font-bold text-stone-900">{data.price || 'S/ 180'}</span>
-                <span className="text-[13px] sm:text-[15px] text-stone-500 sm:ml-1">{t.hero.perTraveler}</span>
+            {/* Price & Primary CTA Optimizado */}
+            <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row sm:items-stretch gap-3 sm:gap-4">
+              <div className="bg-white px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl border border-stone-200/90 shadow-2xs flex sm:flex-col justify-between sm:justify-center items-center sm:items-start shrink-0">
+                <span className="text-[12px] text-stone-500 uppercase tracking-wider font-semibold block">{t.hero.investment}</span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-xl sm:text-2xl font-serif font-bold text-stone-900">{data.price || 'S/ 180'}</span>
+                  <span className="text-xs text-stone-500 font-sans">{t.hero.perTraveler}</span>
+                </div>
               </div>
 
               {data.objective === 'both' ? (
-                <div className="flex items-center gap-2 w-full sm:w-auto">
+                <div className="flex items-center gap-2.5 w-full sm:w-auto">
                   <a
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 sm:flex-initial bg-[#588157] hover:bg-[#476846] text-white px-4 py-3 rounded-2xl font-semibold text-[15px] transition-all shadow-md active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="flex-1 sm:flex-initial bg-[#588157] hover:bg-[#476846] text-white px-5 py-3 rounded-2xl font-semibold text-sm transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <MessageCircle size={16} />
                     <span>{t.cta.whatsapp}</span>
                   </a>
                   <button
                     onClick={() => setIsQuoteOpen(true)}
-                    className="flex-1 sm:flex-initial bg-[#C86D51] hover:bg-[#b05d43] text-white px-4 py-3 rounded-2xl font-semibold text-[15px] transition-all shadow-md active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="flex-1 sm:flex-initial bg-[#C86D51] hover:bg-[#b05d43] text-white px-5 py-3 rounded-2xl font-semibold text-sm transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <FileText size={16} />
                     <span>{t.cta.quote}</span>
