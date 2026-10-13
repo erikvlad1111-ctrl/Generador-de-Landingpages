@@ -61,7 +61,7 @@ export default function GlampingDomesSection({ lang = 'es' }: GlampingProps) {
         name: isEn ? 'Andean Forest Domes' : isPt ? 'Domos Andinos de Selva' : isFr ? 'Dômes Andins de Forêt' : isIt ? 'Domi Andini della Foresta' : 'Domos Andinos de Chaullay',
         location: 'Chaullay • 2,900 msnm',
         temp: isEn ? '12°C to 16°C (Pleasant)' : isPt ? '12°C a 16°C (Agradável)' : isFr ? '12°C à 16°C (Agréable)' : isIt ? '12°C a 16°C (Piacevole)' : '12°C a 16°C (Agradable)',
-        image: 'https://images.unsplash.com/photo-1506535772317-9fca70c9b4fb?q=80&w=800&auto=format&fit=crop',
+        image: 'https://images.unsplash.com/photo-1504851149312-7a075b496cc7?q=80&w=800&auto=format&fit=crop',
         desc: isEn
           ? 'Transition to lush subtropical forest. Comfortable eco-domes nestled beside the rushing Santa Teresa mountain stream with warmer temperatures and hot showers.'
           : isPt
