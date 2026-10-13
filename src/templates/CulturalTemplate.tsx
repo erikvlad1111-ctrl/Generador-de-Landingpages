@@ -943,7 +943,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                     {/* Quote */}
                     <div className="relative pl-4 py-2 border-l-2 border-red-700 bg-red-50/50 rounded-r-xl pr-3">
                       <Quote size={16} className="text-red-300 absolute -top-1.5 left-1 opacity-50" />
-                      <p className="text-xs font-serif italic text-stone-700 leading-relaxed line-clamp-4">
+                      <p className="text-sm sm:text-base font-serif italic text-stone-700 leading-relaxed">
                         « {guide.quote} »
                       </p>
                     </div>
@@ -1051,14 +1051,14 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                     <span className="text-[11px] text-stone-400 font-mono">{review.date}</span>
                   </div>
 
-                  <p className="text-xs sm:text-sm font-serif italic text-stone-700 leading-relaxed">
+                  <p className="text-sm sm:text-base font-serif italic text-stone-700 leading-relaxed">
                     « {review.comment} »
                   </p>
                 </div>
 
                 <div className="pt-3 border-t border-stone-100 flex items-center justify-between">
                   <div>
-                    <h4 className="font-serif font-black text-stone-900 text-xs sm:text-sm group-hover:text-red-700 transition-colors">
+                    <h4 className="font-serif font-black text-stone-900 text-sm sm:text-base group-hover:text-red-700 transition-colors">
                       {review.name}
                     </h4>
                     <span className="text-[11px] text-stone-500 font-medium block">
