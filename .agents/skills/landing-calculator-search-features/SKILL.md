@@ -26,9 +26,15 @@ Esta guía documenta la disponibilidad de buscadores, calculadoras y filtros int
    - Filtros por categoría de catálogo (`all`, `trekking`, `machu`, `cultura`, `adrenalina`).
 
 3. **Boho (`BohoTemplate.tsx`):**
+   - **Barra interactiva completa de reserva en Hero:**
+     - Tarifa oficial clara con inclusiones explicadas (*Todo incluido: movilidad, guía y seguro • Sin cargos ocultos*).
+     - Selector interactivo de viajeros (+ / - de 1 a 12 pax).
+     - Selector de fecha estimada de viaje (`<input type="date">`).
+     - Cálculo en tiempo real del total según número de viajeros (`Total Estimado: S/ 320 PEN`).
+     - Envío automático de cotización desglosada a WhatsApp con fecha y total.
    - Filtros de tours por categorías y de reseñas por categoría.
    - Pestañas de mochila (*Qué llevar*, *Incluye*, *No incluye*).
-   - Barra flotante inferior de precio fijo (`data.price / pers.`).
+   - Barra flotante inferior de precio unitario (`/ pers.`).
 
 4. **Adventure (`AdventureTemplate.tsx`):**
    - Filtro interactivo de inclusiones técnicas (tren, guías, domos, chef, etc.).

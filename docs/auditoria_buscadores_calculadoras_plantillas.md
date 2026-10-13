@@ -10,7 +10,7 @@ Este documento detalla el estado funcional y técnico de los sistemas de búsque
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
 | **1. Modern Emerald** | `src/templates/ModernEmeraldTemplate.tsx` | **Sí** (Barra flotante Hero) | **Sí** (Pasajeros × Tarifa base) | **Sí** (USD, PEN, EUR) | Inclusiones, Itinerario | **Sí** (Con total dinámico) |
 | **2. Agency Portal** | `src/templates/AgencyPortalTemplate.tsx` | Por Categoría | **Sí** (Avanzada completa) | **Sí** (USD, PEN, EUR, BRL) | **Sí** (Pestañas de catálogo) | Sección de Presupuesto en Vivo |
-| **3. Boho** | `src/templates/BohoTemplate.tsx` | No | No (Precio unitario fijo) | No | **Sí** (Tours, Reseñas, Mochila) | **Sí** (Sticky Quick Booking Bar) |
+| **3. Boho** | `src/templates/BohoTemplate.tsx` | Por Categoría | **Sí** (Barra interactiva Hero: Pasajeros + Fecha) | Tarifa Dinámica | **Sí** (Tours, Reseñas, Mochila) | **Sí** (Sticky Quick Booking Bar) |
 | **4. Adventure** | `src/templates/AdventureTemplate.tsx` | No (*Top Spots* fijos) | No (Precio unitario fijo) | No | **Sí** (Inclusiones técnicas) | **Sí** (Sticky Quick Booking Bar) |
 | **5. Cultural** | `src/templates/CulturalTemplate.tsx` | No (Acceso ancla) | No (Precio unitario fijo) | No | Pestañas de eventos | **Sí** (Sticky Quick Booking Bar) |
 | **6. Premium** | `src/templates/PremiumTemplate.tsx` | No | No (Tarifas fijas biseladas) | No | Selector tipográfico | Price Box biselado en Hero |
@@ -44,12 +44,19 @@ Este documento detalla el estado funcional y técnico de los sistemas de búsque
   - Pestañas interactivas: *Todos*, *Trekking*, *Machu Picchu*, *Valle Sagrado*, *Adrenalina*.
 
 ### 3. Boho (`BohoTemplate.tsx`)
+- **Barra Interactiva Completa de Reserva en Hero:**
+  - Tarjeta de reserva interactiva editorial con tarifa base formateada (`Tarifa Oficial Todo Incluido: S/ 160 / persona`).
+  - Subtítulo explicativo: *Incluye movilidad, guía oficial y seguro • Sin cargos ocultos*.
+  - Selector de viajeros interactivo (+ / - de 1 a 12 pax).
+  - Selector de fecha estimada de viaje (`<input type="date">`).
+  - Cálculo dinámico en vivo del total según número de viajeros (`Total Estimado: S/ 320 PEN`).
+  - Botón de reserva directa por WhatsApp con mensaje prearmado que incluye tour, viajeros, fecha y total estimado.
 - **Filtros:**
   - Categorías de tours (chips de filtro en catálogo).
   - Filtro por categoría de testimonios y reseñas.
   - Pestañas de equipaje e inclusiones (*Qué llevar*, *Incluye*, *No incluye*).
 - **Barra Móvil Flotante:**
-  - Sticky bottom bar con tarifa fija por persona (`data.price || 'S/ 180' / pers.`), rating promedio (4.9) y accesos directos duales a Cotizar y WhatsApp.
+  - Sticky bottom bar con tarifa unitaria formateada (`/ persona`), rating y accesos directos a WhatsApp/Cotizar.
 
 ### 4. Adventure (`AdventureTemplate.tsx`)
 - **Filtros Técnicos:**

@@ -29,6 +29,12 @@ export interface BohoI18nTexts {
     investment: string;
     perTraveler: string;
     quickResponse: string;
+    officialFare: string;
+    allIncludedNotice: string;
+    travelers: string;
+    travelDate: string;
+    estimatedTotal: string;
+    reserveWithTotal: string;
   };
   about: {
     badge: string;
@@ -164,9 +170,15 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       fastResponse: 'Respuesta en minutos • Coordinación directa con el guía',
       altitudeBadge: '4,200 msnm • Glaciar Sagrado',
       comfortBadge: 'Grupos Reducidos • Confort',
-      investment: 'Inversión',
-      perTraveler: '/ por persona',
-      quickResponse: 'Respuesta en minutos • Coordinación directa con el guía colegiado'
+      investment: 'Tarifa Oficial',
+      perTraveler: '/ persona',
+      quickResponse: 'Respuesta en minutos • Coordinación directa con el guía colegiado',
+      officialFare: 'Tarifa Oficial Todo Incluido',
+      allIncludedNotice: '✓ Incluye movilidad, guía oficial y seguro • Sin cargos ocultos',
+      travelers: 'Viajeros',
+      travelDate: 'Fecha estimada',
+      estimatedTotal: 'Total Estimado',
+      reserveWithTotal: 'Reservar por WhatsApp'
     },
     about: {
       badge: 'Nuestra Filosofía de Viaje',
@@ -305,9 +317,15 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       fastResponse: 'Instant response • Direct coordination with local mountain guide',
       altitudeBadge: '4,200 m.a.s.l. • Sacred Glacier',
       comfortBadge: 'Small Group Pace • Full Comfort',
-      investment: 'Investment',
-      perTraveler: '/ per person',
-      quickResponse: 'Instant response • Direct coordination with licensed guide'
+      investment: 'Official Rate',
+      perTraveler: '/ person',
+      quickResponse: 'Fast reply in minutes • Direct coordination with licensed guide',
+      officialFare: 'Official All-Inclusive Fare',
+      allIncludedNotice: '✓ Includes transport, licensed guide & insurance • No hidden fees',
+      travelers: 'Travelers',
+      travelDate: 'Travel Date',
+      estimatedTotal: 'Estimated Total',
+      reserveWithTotal: 'Book on WhatsApp'
     },
     about: {
       badge: 'Our Travel Philosophy',
@@ -446,9 +464,15 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       fastResponse: 'Resposta em minutos • Coordenação direta com o guia',
       altitudeBadge: '4.200 m de altitude • Geleira Sagrada',
       comfortBadge: 'Grupos Reduzidos • Conforto Total',
-      investment: 'Investimento',
-      perTraveler: '/ por pessoa',
-      quickResponse: 'Resposta rápida • Coordenação direta com guia credenciado'
+      investment: 'Tarifa Oficial',
+      perTraveler: '/ pessoa',
+      quickResponse: 'Resposta rápida • Coordenação direta com guia credenciado',
+      officialFare: 'Tarifa Oficial Tudo Incluído',
+      allIncludedNotice: '✓ Inclui transporte, guia oficial e seguro • Sem taxas ocultas',
+      travelers: 'Viajantes',
+      travelDate: 'Data da viagem',
+      estimatedTotal: 'Total Estimado',
+      reserveWithTotal: 'Reservar no WhatsApp'
     },
     about: {
       badge: 'Nossa Filosofia de Viagem',
@@ -587,9 +611,15 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       fastResponse: 'Réponse en quelques minutes • Coordination directe avec le guide',
       altitudeBadge: '4 200 m d’altitude • Glacier Sacré',
       comfortBadge: 'Petits Groupes • Confort & Sérénité',
-      investment: 'Investissement',
-      perTraveler: '/ par voyageur',
-      quickResponse: 'Réponse rapide • Échange direct avec votre guide certifié'
+      investment: 'Tarif Officiel',
+      perTraveler: '/ voyageur',
+      quickResponse: 'Réponse rapide • Échange direct avec votre guide certifié',
+      officialFare: 'Tarif Officiel Tout Compris',
+      allIncludedNotice: '✓ Comprend transport, guide officiel et assurance • Sans frais cachés',
+      travelers: 'Voyageurs',
+      travelDate: 'Date du voyage',
+      estimatedTotal: 'Total Estimé',
+      reserveWithTotal: 'Réserver sur WhatsApp'
     },
     about: {
       badge: 'Notre Philosophie du Voyage',
@@ -728,9 +758,15 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       fastResponse: 'Risposta in pochi minuti • Coordinamento diretto con la guida',
       altitudeBadge: '4.200 mslm • Ghiacciaio Sacro',
       comfortBadge: 'Piccoli Gruppi • Massimo Comfort',
-      investment: 'Tariffa',
-      perTraveler: '/ a persona',
-      quickResponse: 'Risposta rapida • Coordinamento diretto con la guida'
+      investment: 'Tariffa Ufficiale',
+      perTraveler: '/ persona',
+      quickResponse: 'Risposta rapida • Coordinamento diretto con la guida',
+      officialFare: 'Tariffa Ufficiale Tutto Incluso',
+      allIncludedNotice: '✓ Include trasporto, guida ufficiale e assicurazione • Nessun costo nascosto',
+      travelers: 'Viaggiatori',
+      travelDate: 'Data del viaggio',
+      estimatedTotal: 'Totale Stimato',
+      reserveWithTotal: 'Prenota su WhatsApp'
     },
     about: {
       badge: 'La Nostra Filosofia di Viaggio',

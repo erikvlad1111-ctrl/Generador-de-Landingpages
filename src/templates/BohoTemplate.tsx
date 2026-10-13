@@ -32,7 +32,9 @@ import {
   Building2,
   Phone,
   Mail,
-  Calendar
+  Calendar,
+  Minus,
+  Plus
 } from 'lucide-react';
 import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
@@ -281,19 +283,45 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
     ? BOHO_LANGUAGES.filter(l => l.code === 'es' || l.code === 'en')
     : BOHO_LANGUAGES;
 
+  // Cálculo dinámico de tarifa y reserva interactiva Boho
+  const rawPriceStr = data.price || 'S/ 160';
+  const currencySymbol = React.useMemo(() => {
+    if (rawPriceStr.includes('$')) return '$';
+    if (rawPriceStr.includes('€')) return '€';
+    return 'S/ ';
+  }, [rawPriceStr]);
+  
+  const currencyCode = React.useMemo(() => {
+    if (rawPriceStr.includes('USD')) return 'USD';
+    if (rawPriceStr.includes('EUR')) return 'EUR';
+    return 'PEN';
+  }, [rawPriceStr]);
+
+  const basePriceNum = React.useMemo(() => {
+    const num = parseInt(rawPriceStr.replace(/\D/g, ''), 10);
+    return isNaN(num) || num <= 0 ? 160 : num;
+  }, [rawPriceStr]);
+
+  const [bohoPassengers, setBohoPassengers] = useState<number>(2);
+  const [bohoTravelDate, setBohoTravelDate] = useState<string>('');
+
+  const totalCalculatedPrice = basePriceNum * bohoPassengers;
+  const formattedUnitPrice = `${currencySymbol}${basePriceNum} ${currencyCode}`;
+  const formattedTotalPrice = `${currencySymbol}${totalCalculatedPrice} ${currencyCode}`;
+
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const rawTourTitle = data.name || data.hero?.title || 'Tour en Cusco';
   const localizedTourTitle = translateText(rawTourTitle, currentLang);
   const encodedMsg = encodeURIComponent(
     currentLang === 'en'
-      ? `Hello ${data.guideName || 'Cusco Creativos'}, I saw your travel journal for "${localizedTourTitle}" and would like to check availability.`
+      ? `Hello ${data.guideName || 'Cusco Creativos'}, I'd like to book "${localizedTourTitle}" for ${bohoPassengers} travelers${bohoTravelDate ? ` on ${bohoTravelDate}` : ''}. Estimated total: ${formattedTotalPrice}. Is there availability?`
       : currentLang === 'pt'
-      ? `Olá ${data.guideName || 'Cusco Creativos'}, vi seu diário de viagem de "${localizedTourTitle}" e gostaria de consultar disponibilidade.`
+      ? `Olá ${data.guideName || 'Cusco Creativos'}, gostaria de reservar "${localizedTourTitle}" para ${bohoPassengers} viajantes${bohoTravelDate ? ` em ${bohoTravelDate}` : ''}. Total estimado: ${formattedTotalPrice}. Tem disponibilidade?`
       : currentLang === 'fr'
-      ? `Bonjour ${data.guideName || 'Cusco Creativos'}, j’ai vu votre carnet de voyage pour "${localizedTourTitle}" et souhaite vérifier la disponibilité.`
+      ? `Bonjour ${data.guideName || 'Cusco Creativos'}, je souhaite réserver "${localizedTourTitle}" pour ${bohoPassengers} voyageurs${bohoTravelDate ? ` le ${bohoTravelDate}` : ''}. Total estimé: ${formattedTotalPrice}. Avez-vous des disponibilités?`
       : currentLang === 'it'
-      ? `Ciao ${data.guideName || 'Cusco Creativos'}, ho visto il vostro diario di viaggio per "${localizedTourTitle}" e vorrei verificare la disponibilità.`
-      : `Hola ${data.guideName || 'Cusco Creativos'}, vi su bitácora de viaje de "${localizedTourTitle}" y me gustaría consultar disponibilidad.`
+      ? `Ciao ${data.guideName || 'Cusco Creativos'}, vorrei prenotare "${localizedTourTitle}" per ${bohoPassengers} viaggiatori${bohoTravelDate ? ` il ${bohoTravelDate}` : ''}. Totale stimato: ${formattedTotalPrice}. Avete disponibilità?`
+      : `Hola ${data.guideName || 'Cusco Creativos'}, deseo reservar "${localizedTourTitle}" para ${bohoPassengers} personas${bohoTravelDate ? ` para la fecha ${bohoTravelDate}` : ''}. Total estimado: ${formattedTotalPrice}. ¿Tienen salidas disponibles?`
   );
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
@@ -554,61 +582,151 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </span>
             </div>
 
-            {/* Price & Primary CTA Optimizado */}
-            <div className="pt-2 sm:pt-4 flex flex-col sm:flex-row sm:items-stretch gap-3 sm:gap-4">
-              <div className="bg-white px-4 py-2.5 sm:px-5 sm:py-3 rounded-2xl border border-stone-200/90 shadow-2xs flex sm:flex-col justify-between sm:justify-center items-center sm:items-start shrink-0">
-                <span className="text-[12px] text-stone-500 uppercase tracking-wider font-semibold block">{t.hero.investment}</span>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-xl sm:text-2xl font-serif font-bold text-stone-900">{data.price || 'S/ 180'}</span>
-                  <span className="text-xs text-stone-500 font-sans">{t.hero.perTraveler}</span>
+            {/* BARRA INTERACTIVA COMPLETA DE RESERVA BOHO */}
+            <div className="bg-[#FAF7F2] sm:bg-white rounded-3xl p-4 sm:p-6 border border-stone-200/90 shadow-xl shadow-stone-900/5 space-y-4 max-w-xl">
+              
+              {/* Encabezado: Tarifa Oficial & Detalle de qué incluye */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-stone-200/70">
+                <div>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#588157]/10 text-[#588157] text-[11px] font-bold uppercase tracking-wider mb-1">
+                    <Sparkles size={12} />
+                    <span>{t.hero.officialFare}</span>
+                  </div>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-2xl sm:text-3xl font-serif font-black text-stone-900 tracking-tight">
+                      {formattedUnitPrice}
+                    </span>
+                    <span className="text-xs sm:text-sm text-stone-500 font-sans">
+                      {t.hero.perTraveler}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="text-left sm:text-right bg-stone-50 sm:bg-transparent p-2 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-stone-200/60">
+                  <span className="text-[11px] text-stone-500 font-medium block">
+                    {t.hero.estimatedTotal} ({bohoPassengers} {bohoPassengers === 1 ? 'pers.' : 'pers.'}):
+                  </span>
+                  <span className="text-lg sm:text-xl font-serif font-black text-[#C86D51] block">
+                    {formattedTotalPrice}
+                  </span>
                 </div>
               </div>
 
-              {data.objective === 'both' ? (
-                <div className="flex items-center gap-2.5 w-full sm:w-auto">
+              {/* Subtítulo explicativo de inclusiones */}
+              <p className="text-[12px] sm:text-[13px] text-stone-600 font-sans leading-relaxed">
+                {t.hero.allIncludedNotice}
+              </p>
+
+              {/* Controles Interactivos: Selector de Pasajeros y Selector de Fecha */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                
+                {/* Selector de Pasajeros (+ / -) */}
+                <div className="bg-white sm:bg-[#FAF7F2] p-2.5 sm:p-3 rounded-2xl border border-stone-200/80 flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Users size={16} className="text-[#C86D51] shrink-0" />
+                    <div>
+                      <span className="text-[10px] text-stone-500 font-semibold uppercase tracking-wider block">
+                        {t.hero.travelers}
+                      </span>
+                      <span className="text-xs font-serif font-bold text-stone-900 block">
+                        {bohoPassengers} {bohoPassengers === 1 ? 'viajero' : 'viajeros'}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => setBohoPassengers(Math.max(1, bohoPassengers - 1))}
+                      className="w-7 h-7 rounded-xl bg-stone-100 hover:bg-[#C86D51] hover:text-white text-stone-800 font-black text-sm flex items-center justify-center transition-colors cursor-pointer active:scale-90"
+                      title="Disminuir viajeros"
+                    >
+                      <Minus size={13} />
+                    </button>
+                    <span className="w-5 text-center font-serif font-black text-xs text-stone-900">
+                      {bohoPassengers}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setBohoPassengers(Math.min(12, bohoPassengers + 1))}
+                      className="w-7 h-7 rounded-xl bg-stone-100 hover:bg-[#C86D51] hover:text-white text-stone-800 font-black text-sm flex items-center justify-center transition-colors cursor-pointer active:scale-90"
+                      title="Aumentar viajeros"
+                    >
+                      <Plus size={13} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Selector de Fecha de Viaje */}
+                <div className="bg-white sm:bg-[#FAF7F2] p-2.5 sm:p-3 rounded-2xl border border-stone-200/80 flex items-center gap-2">
+                  <Calendar size={16} className="text-[#588157] shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <label htmlFor="boho-travel-date" className="text-[10px] text-stone-500 font-semibold uppercase tracking-wider block">
+                      {t.hero.travelDate}
+                    </label>
+                    <input
+                      id="boho-travel-date"
+                      type="date"
+                      value={bohoTravelDate}
+                      onChange={(e) => setBohoTravelDate(e.target.value)}
+                      className="w-full bg-transparent text-xs font-serif font-bold text-stone-900 outline-none cursor-pointer p-0"
+                    />
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Botones de Acción Directa con Tarifa Calculada */}
+              <div className="pt-1 flex flex-col sm:flex-row gap-2.5">
+                {data.objective === 'both' ? (
+                  <>
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 bg-[#588157] hover:bg-[#476846] text-white py-3.5 px-4 rounded-2xl font-semibold text-xs sm:text-sm transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <MessageCircle size={16} />
+                      <span>{t.hero.reserveWithTotal} ({formattedTotalPrice})</span>
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => setIsQuoteOpen(true)}
+                      className="bg-white sm:bg-stone-50 hover:bg-stone-100 text-stone-800 border border-stone-300 py-3.5 px-4 rounded-2xl font-semibold text-xs sm:text-sm transition-all shadow-2xs active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      <FileText size={16} className="text-[#C86D51]" />
+                      <span>{t.cta.quote}</span>
+                    </button>
+                  </>
+                ) : isQuote ? (
+                  <button
+                    type="button"
+                    onClick={() => setIsQuoteOpen(true)}
+                    className="w-full bg-[#C86D51] hover:bg-[#b05d43] text-white py-3.5 px-4 rounded-2xl font-semibold text-xs sm:text-sm transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    <FileText size={16} />
+                    <span>{translateText(data.hero?.cta || t.cta.quote, currentLang)} • {formattedTotalPrice}</span>
+                  </button>
+                ) : (
                   <a
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 sm:flex-initial bg-[#588157] hover:bg-[#476846] text-white px-5 py-3 rounded-2xl font-semibold text-sm transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full bg-[#588157] hover:bg-[#476846] text-white py-3.5 px-4 rounded-2xl font-semibold text-xs sm:text-sm transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <MessageCircle size={16} />
-                    <span>{t.cta.whatsapp}</span>
+                    <span>{translateText(data.hero?.cta || t.hero.reserveWithTotal, currentLang)} ({formattedTotalPrice})</span>
                   </a>
-                  <button
-                    onClick={() => setIsQuoteOpen(true)}
-                    className="flex-1 sm:flex-initial bg-[#C86D51] hover:bg-[#b05d43] text-white px-5 py-3 rounded-2xl font-semibold text-sm transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
-                  >
-                    <FileText size={16} />
-                    <span>{t.cta.quote}</span>
-                  </button>
-                </div>
-              ) : isQuote ? (
-                <button
-                  onClick={() => setIsQuoteOpen(true)}
-                  className="w-full sm:w-auto bg-[#C86D51] hover:bg-[#b05d43] text-white px-6 py-3.5 rounded-2xl font-semibold text-[15px] sm:text-[17px] transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <FileText size={16} />
-                  <span>{translateText(data.hero?.cta || t.cta.quote, currentLang)}</span>
-                </button>
-              ) : (
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full sm:w-auto bg-[#588157] hover:bg-[#476846] text-white px-6 py-3.5 rounded-2xl font-semibold text-[15px] sm:text-[17px] transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <MessageCircle size={16} />
-                  <span>{translateText(data.hero?.cta || t.cta.whatsapp, currentLang)}</span>
-                </a>
-              )}
-            </div>
+                )}
+              </div>
 
-            {/* Micro Reassurance Banner */}
-            <p className="text-[13px] sm:text-[15px] text-stone-500 flex items-center gap-1.5 pt-1 font-serif italic">
-              <CheckCircle2 size={14} className="text-[#588157] shrink-0" />
-              <span>{t.hero.quickResponse}</span>
-            </p>
+              {/* Micro Reassurance Banner */}
+              <div className="flex items-center gap-1.5 pt-1 text-[12px] sm:text-[13px] text-stone-500 font-serif italic border-t border-stone-200/60">
+                <CheckCircle2 size={14} className="text-[#588157] shrink-0" />
+                <span>{t.hero.quickResponse}</span>
+              </div>
+
+            </div>
           </div>
 
           {/* Right Hero: Pinterest Polaroid Collage */}
@@ -1947,10 +2065,10 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         <div className="flex flex-col">
           <div className="flex items-baseline gap-1">
             <span className="text-[19px] font-serif font-bold text-stone-900 leading-none">
-              {data.price || 'S/ 180'}
+              {formattedUnitPrice}
             </span>
             <span className="text-[13px] text-stone-500 font-sans">
-              {currentLang === 'en' ? '/ pers.' : currentLang === 'pt' ? '/ pessoa' : currentLang === 'fr' ? '/ pers.' : currentLang === 'it' ? '/ persona' : '/ pers.'}
+              {t.hero.perTraveler}
             </span>
           </div>
           <div className="flex items-center gap-1 text-[13px] text-amber-600 font-medium pt-0.5">
