@@ -110,6 +110,11 @@ function DemoPreviewContent() {
 
   // 1. General & Design
   const [editName, setEditName] = useState(() => landing?.name || '');
+  const [editCompanyName, setEditCompanyName] = useState(() => landing?.companyName || '');
+  const [editLogoUrl, setEditLogoUrl] = useState(() => landing?.logoUrl || '');
+  const [editCompanyRuc, setEditCompanyRuc] = useState(() => landing?.companyRuc || '');
+  const [editCompanyTagline, setEditCompanyTagline] = useState(() => landing?.companyTagline || '');
+  const [editCompanyEmail, setEditCompanyEmail] = useState(() => landing?.companyEmail || '');
   const [editTemplate, setEditTemplate] = useState<TemplateType>(() => landing?.template || 'adventure');
   const [editTier, setEditTier] = useState<PlanTier>(() => landing?.tier || 'advance');
   const [editObjective, setEditObjective] = useState<ObjectiveType>(() => landing?.objective || 'quote');
@@ -362,6 +367,11 @@ function DemoPreviewContent() {
 
   const openEditorWithCurrentData = () => {
     setEditName(landing.name || '');
+    setEditCompanyName(landing.companyName || '');
+    setEditLogoUrl(landing.logoUrl || '');
+    setEditCompanyRuc(landing.companyRuc || '');
+    setEditCompanyTagline(landing.companyTagline || '');
+    setEditCompanyEmail(landing.companyEmail || '');
     setEditTemplate(landing.template || 'adventure');
     setEditTier(landing.tier || 'advance');
     setEditObjective(landing.objective || 'quote');
@@ -460,7 +470,12 @@ function DemoPreviewContent() {
       catalogTours: catalogTours.length > 0 ? catalogTours : landing.catalogTours,
       officeAddress: editOfficeAddress,
       officeHours: editOfficeHours,
-      mapsUrl: editMapsUrl
+      mapsUrl: editMapsUrl,
+      companyName: editCompanyName.trim() || undefined,
+      logoUrl: editLogoUrl.trim() || undefined,
+      companyRuc: editCompanyRuc.trim() || undefined,
+      companyTagline: editCompanyTagline.trim() || undefined,
+      companyEmail: editCompanyEmail.trim() || undefined
     };
   };
 
@@ -913,6 +928,140 @@ function DemoPreviewContent() {
                       className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
                       placeholder="Ej. Salkantay Trek 5 Días a Machu Picchu"
                     />
+                  </div>
+
+                  {/* IDENTIDAD CORPORATIVA Y LOGO (MARCA BLANCA) */}
+                  <div className="bg-gradient-to-br from-indigo-50/70 via-white to-slate-50 border border-indigo-200/80 rounded-2xl p-4 sm:p-5 space-y-4 shadow-xs">
+                    <div className="flex items-center justify-between gap-2 border-b border-indigo-100 pb-3">
+                      <div className="flex items-center gap-2">
+                        <span className="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-black text-xs shadow-xs">
+                          🏢
+                        </span>
+                        <div>
+                          <h4 className="text-xs sm:text-sm font-black text-slate-900 tracking-tight">Identidad de la Empresa / Agencia (Marca Blanca)</h4>
+                          <p className="text-[11px] text-slate-500 font-medium">Personaliza el logo, nombre y credenciales de la empresa para esta landing.</p>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-700 border border-indigo-200">
+                        Multi-Empresa
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Nombre Comercial de la Empresa / Agencia
+                        </label>
+                        <input
+                          type="text"
+                          value={editCompanyName}
+                          onChange={(e) => setEditCompanyName(e.target.value)}
+                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none"
+                          placeholder="Ej. Andean Horizon Tours & Expeditions"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          RUC / Licencia DIRCETUR
+                        </label>
+                        <input
+                          type="text"
+                          value={editCompanyRuc}
+                          onChange={(e) => setEditCompanyRuc(e.target.value)}
+                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none"
+                          placeholder="Ej. RUC 20608945231 • Lic. MINCETUR 2026"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        Logo de la Empresa (URL de Imagen o Preset)
+                      </label>
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                        <div className="flex-1">
+                          <input
+                            type="text"
+                            value={editLogoUrl}
+                            onChange={(e) => setEditLogoUrl(e.target.value)}
+                            className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-mono text-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none"
+                            placeholder="https://tu-dominio.com/logo.png"
+                          />
+                        </div>
+                        {editLogoUrl ? (
+                          <div className="w-12 h-12 rounded-xl border border-indigo-200 bg-white p-1 flex items-center justify-center shrink-0 shadow-xs relative group">
+                            <img src={editLogoUrl} alt="Vista previa logo" className="max-w-full max-h-full object-contain" />
+                            <button
+                              type="button"
+                              onClick={() => setEditLogoUrl('')}
+                              className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-rose-500 text-white rounded-full text-[10px] font-bold flex items-center justify-center shadow-xs hover:bg-rose-600 cursor-pointer"
+                              title="Quitar logo"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        ) : (
+                          <div className="w-12 h-12 rounded-xl border border-dashed border-slate-300 bg-slate-50 flex flex-col items-center justify-center shrink-0 text-slate-400 text-[10px] font-bold">
+                            Sin Logo
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Presets Rápidos de Logo para Pruebas */}
+                      <div className="mt-2.5 flex flex-wrap items-center gap-2">
+                        <span className="text-[11px] font-bold text-slate-500">Logos de muestra:</span>
+                        <button
+                          type="button"
+                          onClick={() => setEditLogoUrl('https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=120&auto=format&fit=crop&q=80')}
+                          className="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[11px] font-bold border border-indigo-200 cursor-pointer transition-colors"
+                        >
+                          Logo Agencia Escudo
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setEditLogoUrl('https://images.unsplash.com/photo-1516876437184-593fda40c7ce?w=120&auto=format&fit=crop&q=80')}
+                          className="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[11px] font-bold border border-indigo-200 cursor-pointer transition-colors"
+                        >
+                          Logo Montaña Moderno
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setEditLogoUrl('')}
+                          className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] font-bold border border-slate-200 cursor-pointer transition-colors"
+                        >
+                          Usar Icono Vectorial por Defecto
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Slogan / Tagline de la Marca
+                        </label>
+                        <input
+                          type="text"
+                          value={editCompanyTagline}
+                          onChange={(e) => setEditCompanyTagline(e.target.value)}
+                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none"
+                          placeholder="Ej. Operador Oficial Autorizado DIRCETUR Cusco"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Email Corporativo de Reservas
+                        </label>
+                        <input
+                          type="email"
+                          value={editCompanyEmail}
+                          onChange={(e) => setEditCompanyEmail(e.target.value)}
+                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none"
+                          placeholder="Ej. reservas@andeanhorizon.com"
+                        />
+                      </div>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

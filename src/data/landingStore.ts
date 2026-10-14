@@ -108,13 +108,22 @@ export const INITIAL_LANDINGS: LandingData[] = [
     ],
     officeAddress: 'Portal de Panes N° 123, Plaza de Armas, Centro Histórico, Cusco - Perú',
     officeHours: 'Lunes a Domingo: 08:00 AM – 08:00 PM (Horario Corrido)',
-    mapsUrl: 'https://maps.google.com/?q=Plaza+de+Armas+Cusco+Peru'
+    mapsUrl: 'https://maps.google.com/?q=Plaza+de+Armas+Cusco+Peru',
+    companyName: 'Andean Horizon Expeditions',
+    companyRuc: 'RUC 20608945231',
+    companyTagline: 'Operador Oficial Autorizado DIRCETUR Cusco',
+    companyEmail: 'reservas@andeanhorizon.com',
+    logoUrl: 'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=120&auto=format&fit=crop&q=80'
   },
   {
     id: '2',
     name: 'Valle Sagrado Aventura',
     slug: 'valle-sagrado-aventura',
     tier: 'pro',
+    companyName: 'TrekExplorer Perú',
+    companyRuc: 'RUC 20549832104',
+    companyTagline: 'Especialistas en Aventura y Alta Montaña',
+    companyEmail: 'aventura@trekexplorerperu.com',
     guideName: 'Marcos Mendoza',
     whatsapp: '+51984654321',
     price: '$120 USD',
@@ -852,6 +861,17 @@ export function simulateAiGeneration(params: {
   aboutTitle?: string;
   aboutContent?: string;
   featuresTitle?: string;
+  companyName?: string;
+  logoUrl?: string;
+  companyRuc?: string;
+  companyTagline?: string;
+  companyEmail?: string;
+  socialLinks?: {
+    instagram?: string;
+    facebook?: string;
+    tiktok?: string;
+    tripadvisor?: string;
+  };
 }): LandingData {
   const slug = params.name
     .toLowerCase()
@@ -1097,6 +1117,12 @@ export function simulateAiGeneration(params: {
     catalogTours: params.catalogTours,
     officeAddress: params.officeAddress,
     officeHours: params.officeHours,
-    mapsUrl: params.mapsUrl
+    mapsUrl: params.mapsUrl,
+    companyName: params.companyName || params.guideName || 'Cusco Creativos',
+    logoUrl: params.logoUrl,
+    companyRuc: params.companyRuc,
+    companyTagline: params.companyTagline,
+    companyEmail: params.companyEmail,
+    socialLinks: params.socialLinks
   };
 }

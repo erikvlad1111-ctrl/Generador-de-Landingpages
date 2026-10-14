@@ -604,8 +604,10 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
   // 3. Parámetros y datos dinámicos
   const tourTitle = data?.hero?.title || data?.name || 'Experiencia Machu Picchu & Cusco';
-  const brandName = 'Cusco Creativos';
-  const fullAgencyName = 'Cusco Creativos Operador Turístico S.A.C.';
+  const brandName = data?.companyName || data?.guideName || 'Cusco Creativos';
+  const fullAgencyName = data?.companyName 
+    ? `${data.companyName}${data.companyRuc ? ` • ${data.companyRuc}` : ''}` 
+    : 'Cusco Creativos Operador Turístico S.A.C.';
   const whatsappNumber = (data?.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const guideName = data?.guideName || 'Carlos Mendoza';
   const destination = data?.destination || 'Cusco, Perú';
@@ -1033,15 +1035,21 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           
           {/* Brand Logo & Name */}
           <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
-            <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-[#FF5500] to-[#FF8800] flex items-center justify-center text-white font-black shadow-md shadow-[#FF5500]/30 shrink-0">
-              <Compass size={17} className="sm:w-6 sm:h-6" />
-            </div>
+            {data?.logoUrl ? (
+              <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-white border border-stone-200/80 p-1 flex items-center justify-center shadow-md shadow-stone-200/50 shrink-0">
+                <img src={data.logoUrl} alt={brandName} className="w-full h-full object-contain" />
+              </div>
+            ) : (
+              <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-[#FF5500] to-[#FF8800] flex items-center justify-center text-white font-black shadow-md shadow-[#FF5500]/30 shrink-0">
+                <Compass size={17} className="sm:w-6 sm:h-6" />
+              </div>
+            )}
             <div className="flex flex-col justify-center min-w-0 max-w-[130px] xs:max-w-[170px] sm:max-w-[240px] md:max-w-[280px]">
               <span className="font-extrabold text-[11px] sm:text-base md:text-lg tracking-tight text-stone-900 block leading-snug truncate whitespace-nowrap">
                 {brandName.toUpperCase()}
               </span>
               <span className="text-[8px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block truncate leading-none mt-0.5 whitespace-nowrap">
-                {t.officialOperator}
+                {data?.companyTagline || (data?.companyRuc ? `${data.companyRuc}` : t.officialOperator)}
               </span>
             </div>
           </div>

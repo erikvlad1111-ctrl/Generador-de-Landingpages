@@ -300,11 +300,39 @@ grep -n "\-z-10" src/templates/<Template>.tsx
 3. **Canvas Continuo de Página:**
    Configurar el `style` del contenedor raíz con un `backgroundImage` multi-stop a lo largo de toda la extensión del scroll (8,000+ px) con orbes radiales complementarios cada 800-1,200 px.
 
+## 10. Bloqueo de Ejecución de Scripts en Windows PowerShell (`PSSecurityException`) al compilar Next.js
+
+### Síntoma / Mensaje de Error
+Al ejecutar comandos de Node/NPM en terminales Windows PowerShell:
+```text
+npm : No se puede cargar el archivo C:\Program Files\nodejs\npm.ps1 porque la ejecución de scripts está deshabilitada en este sistema.
++ CategoryInfo          : SecurityError: (:) [], PSSecurityException
++ FullyQualifiedErrorId : UnauthorizedAccess
+```
+
+### Causa Raíz
+La política de ejecución (`ExecutionPolicy`) de PowerShell en Windows está configurada como `Restricted` por defecto, impidiendo la ejecución de scripts `.ps1`.
+
+### Comando de Diagnóstico
+```powershell
+Get-ExecutionPolicy
+```
+
+### Solución Paso a Paso
+1. Invocar el comando de compilación envolviéndolo en el intérprete clásico de comandos de Windows:
+   ```cmd
+   cmd /c npm run build
+   ```
+2. O alternativamente en PowerShell:
+   ```powershell
+   powershell -ExecutionPolicy Bypass -Command "npm run build"
+   ```
+
 ---
 
 ## Lista de Verificación Antes de Desplegar
 - [ ] Ejecutar `npm run lint` y verificar que salga con código 0.
-- [ ] Ejecutar `npm run build` localmente y comprobar que todas las rutas se generen sin errores.
+- [ ] Ejecutar `cmd /c npm run build` localmente y comprobar que todas las rutas se generen sin errores.
 - [ ] Confirmar que el repositorio remoto en `main` esté actualizado (`git status` limpio).
 - [ ] Verificar que el Framework Preset en Vercel sea `Next.js`.
 - [ ] Validar que en celular (375px) `document.documentElement.scrollWidth === document.documentElement.clientWidth`.

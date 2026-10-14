@@ -383,15 +383,21 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
       <header className="sticky top-0 w-full z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-stone-200/80 shadow-2xs">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 w-full flex justify-between items-center gap-2 sm:gap-3 min-w-0">
           <div className="flex items-center gap-2 min-w-0 shrink-0">
-            <div className="w-8 h-8 rounded-full bg-[#C86D51]/15 text-[#C86D51] flex items-center justify-center font-serif text-sm font-bold shadow-xs shrink-0">
-              <Camera size={16} />
-            </div>
+            {data.logoUrl ? (
+              <div className="w-8 h-8 rounded-full overflow-hidden bg-white p-0.5 border border-stone-200 shadow-xs shrink-0 flex items-center justify-center">
+                <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain rounded-full" />
+              </div>
+            ) : (
+              <div className="w-8 h-8 rounded-full bg-[#C86D51]/15 text-[#C86D51] flex items-center justify-center font-serif text-sm font-bold shadow-xs shrink-0">
+                <Camera size={16} />
+              </div>
+            )}
             <div className="flex flex-col min-w-0 max-w-[150px] xs:max-w-[190px] sm:max-w-[240px]">
               <span className="font-serif tracking-wider uppercase text-sm sm:text-base font-bold text-stone-800 truncate leading-snug whitespace-nowrap">
-                Boho Travel Journal
+                {data.companyName || 'Boho Travel Journal'}
               </span>
               <span className="text-[12px] sm:text-[13px] text-stone-500 font-sans tracking-tight truncate leading-none mt-0.5 whitespace-nowrap">
-                {currentLang === 'en' ? 'Pinterest Inspired • Cusco, Peru' : currentLang === 'pt' ? 'Inspirado no Pinterest • Cusco, Peru' : currentLang === 'fr' ? 'Inspiré de Pinterest • Cusco, Pérou' : currentLang === 'it' ? 'Ispirato a Pinterest • Cusco, Perù' : 'Inspirado en Pinterest • Cusco, Perú'}
+                {data.companyTagline || (currentLang === 'en' ? 'Curated Travel Journal • Cusco' : 'Diario de Viajes Curado • Cusco')}
               </span>
             </div>
           </div>

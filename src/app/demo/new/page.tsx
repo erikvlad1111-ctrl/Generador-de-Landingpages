@@ -605,7 +605,14 @@ export default function NewLandingDemo() {
   const [customGalleryUrl, setCustomGalleryUrl] = useState('');
   const [faqs, setFaqs] = useState<FAQItem[]>(DEFAULT_FAQS);
   const [testimonials, setTestimonials] = useState<TestimonialItem[]>(DEFAULT_TESTIMONIALS);
-  const [showAdvancedCopy, setShowAdvancedCopy] = useState(false);
+  const [showAdvancedCopy, setShowAdvancedCopy] = useState(true);
+  const [companyName, setCompanyName] = useState('Andean Horizon Expeditions');
+  const [logoUrl, setLogoUrl] = useState('');
+  const [companyRuc, setCompanyRuc] = useState('RUC 20608945231');
+  const [companyTagline, setCompanyTagline] = useState('Operador Oficial Autorizado DIRCETUR Cusco');
+  const [companyEmail, setCompanyEmail] = useState('reservas@andeanhorizon.com');
+  const [heroTitle, setHeroTitle] = useState('');
+  const [heroSubtitle, setHeroSubtitle] = useState('');
   const [heroBadge, setHeroBadge] = useState('');
   const [heroCta, setHeroCta] = useState('');
 
@@ -924,8 +931,15 @@ export default function NewLandingDemo() {
           catalogTours: catalogTours,
           faqs: faqs.length > 0 ? faqs : undefined,
           testimonials: testimonials.length > 0 ? testimonials : undefined,
+          heroTitle: heroTitle.trim() || undefined,
+          heroSubtitle: heroSubtitle.trim() || undefined,
           heroBadge: heroBadge.trim() || undefined,
-          heroCta: heroCta.trim() || undefined
+          heroCta: heroCta.trim() || undefined,
+          companyName: companyName.trim() || undefined,
+          logoUrl: logoUrl.trim() || undefined,
+          companyRuc: companyRuc.trim() || undefined,
+          companyTagline: companyTagline.trim() || undefined,
+          companyEmail: companyEmail.trim() || undefined
         });
         saveLandingToStorage(generated);
         router.push(`/demo/preview?slug=${generated.slug}`);
@@ -1257,14 +1271,200 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* PASO 2: FOTOGRAFÍA DE PORTADA (HERO) */}
+          {/* PASO DE IDENTIDAD CORPORATIVA: EMPRESA, LOGO & MARCA BLANCA */}
+          <div className="bg-gradient-to-br from-indigo-50/70 via-white to-slate-50 rounded-3xl shadow-sm border border-indigo-200/90 p-6 sm:p-7 space-y-5 ring-2 ring-indigo-500/10">
+            <div className="flex items-center justify-between pb-2 border-b border-indigo-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-black shadow-sm">🏢</span>
+                Empresa, Agencia & Logo (Marca Blanca)
+              </label>
+              <span className="text-[11px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-700 border border-indigo-200">
+                Multi-Empresa
+              </span>
+            </div>
+
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Personaliza para qué empresa o agencia turística se generará esta landing. Puedes cambiar de empresa en cualquier momento:
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <span>🏢</span> Nombre Comercial de la Empresa / Agencia *
+                </label>
+                <input 
+                  type="text" 
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-bold text-slate-900 bg-white"
+                  placeholder="Ej. Andean Horizon Tours & Expeditions"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <span>⚖️</span> RUC / Licencia DIRCETUR
+                </label>
+                <input 
+                  type="text" 
+                  value={companyRuc}
+                  onChange={(e) => setCompanyRuc(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-semibold text-slate-900 bg-white"
+                  placeholder="Ej. RUC 20608945231 • DIRCETUR Lic. 450"
+                />
+              </div>
+            </div>
+
+            {/* Administrador de Logo */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                <span>🖼️</span> Logo de la Empresa (URL de Imagen o Preset Rápido)
+              </label>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div className="flex-1">
+                  <input 
+                    type="text" 
+                    value={logoUrl}
+                    onChange={(e) => setLogoUrl(e.target.value)}
+                    className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-mono text-slate-800 bg-white"
+                    placeholder="https://tu-dominio.com/logo.png"
+                  />
+                </div>
+                {logoUrl ? (
+                  <div className="w-12 h-12 rounded-xl border border-indigo-200 bg-white p-1 flex items-center justify-center shrink-0 shadow-xs relative group">
+                    <img src={logoUrl} alt="Logo preview" className="max-w-full max-h-full object-contain" />
+                    <button
+                      type="button"
+                      onClick={() => setLogoUrl('')}
+                      className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-rose-500 text-white rounded-full text-[10px] font-bold flex items-center justify-center shadow-xs hover:bg-rose-600 cursor-pointer"
+                      title="Quitar logo"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ) : (
+                  <div className="w-12 h-12 rounded-xl border border-dashed border-slate-300 bg-slate-50 flex flex-col items-center justify-center shrink-0 text-slate-400 text-[10px] font-bold">
+                    Sin Logo
+                  </div>
+                )}
+              </div>
+
+              {/* Botones de sugerencias de logo */}
+              <div className="mt-2.5 flex flex-wrap items-center gap-2">
+                <span className="text-[11px] font-bold text-slate-500">Logos de muestra:</span>
+                <button
+                  type="button"
+                  onClick={() => setLogoUrl('https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=120&auto=format&fit=crop&q=80')}
+                  className="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[11px] font-bold border border-indigo-200 cursor-pointer transition-colors"
+                >
+                  Logo Escudo Agencia
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLogoUrl('https://images.unsplash.com/photo-1516876437184-593fda40c7ce?w=120&auto=format&fit=crop&q=80')}
+                  className="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[11px] font-bold border border-indigo-200 cursor-pointer transition-colors"
+                >
+                  Logo Montaña Trek
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLogoUrl('')}
+                  className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] font-bold border border-slate-200 cursor-pointer transition-colors"
+                >
+                  Icono Vectorial Automático
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <span>✨</span> Slogan / Tagline Corporativo
+                </label>
+                <input 
+                  type="text" 
+                  value={companyTagline}
+                  onChange={(e) => setCompanyTagline(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-medium text-slate-900 bg-white"
+                  placeholder="Ej. Operador Oficial Autorizado DIRCETUR Cusco"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <span>✉️</span> Email Corporativo de Reservas
+                </label>
+                <input 
+                  type="email" 
+                  value={companyEmail}
+                  onChange={(e) => setCompanyEmail(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-medium text-slate-900 bg-white"
+                  placeholder="Ej. reservas@andeanhorizon.com"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* PASO 2: FOTOGRAFÍA DE PORTADA & TÍTULO DEL HERO */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                 <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">2</span>
-                Fotografía de Portada (Hero)
+                Portada Principal (Hero Section) & Título H1
               </label>
-              <span className="text-[11px] font-semibold text-slate-400">Impacto visual</span>
+              <span className="text-[11px] font-semibold text-slate-400">Impacto visual y titular</span>
+            </div>
+
+            {/* Titular del Hero */}
+            <div className="bg-blue-50/60 border border-blue-200/80 rounded-2xl p-4 space-y-3">
+              <div className="flex items-center gap-2">
+                <Sparkles size={16} className="text-blue-600" />
+                <h4 className="text-xs font-black text-slate-900 uppercase tracking-wider">Titular y Textos de la Sección Hero</h4>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1">
+                  Título Principal del Hero (H1):
+                </label>
+                <input 
+                  type="text" 
+                  value={heroTitle}
+                  onChange={(e) => setHeroTitle(e.target.value)}
+                  placeholder="Ej. Machu Picchu de Lujo con Tren Panorámico (o deja en blanco para IA)"
+                  className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-sm font-extrabold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+                <span className="text-[10px] text-slate-500 mt-1 block">
+                  Si lo dejas en blanco, la IA redactará un título optimizado según el tour seleccionado.
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Insignia Superior (Hero Badge):
+                  </label>
+                  <input 
+                    type="text" 
+                    value={heroBadge}
+                    onChange={(e) => setHeroBadge(e.target.value)}
+                    placeholder="Ej. Experiencia Exclusiva VIP • Temporada 2026"
+                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Texto del Botón Principal (Hero CTA):
+                  </label>
+                  <input 
+                    type="text" 
+                    value={heroCta}
+                    onChange={(e) => setHeroCta(e.target.value)}
+                    placeholder="Ej. Solicitar Cotización y Disponibilidad"
+                    className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                  />
+                </div>
+              </div>
             </div>
 
             {/* Hero Image Selection */}

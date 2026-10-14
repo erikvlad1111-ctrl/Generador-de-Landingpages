@@ -87,5 +87,17 @@ export interface LandingData {
   officeAddress?: string;
   officeHours?: string;
   mapsUrl?: string;
+  // Campos de Identidad Corporativa y Marca Blanca
+  companyName?: string;
+  logoUrl?: string;
+  companyRuc?: string;
+  companyTagline?: string;
+  companyEmail?: string;
+  socialLinks?: {
+    instagram?: string;
+    facebook?: string;
+    tiktok?: string;
+    tripadvisor?: string;
+  };
 }
 

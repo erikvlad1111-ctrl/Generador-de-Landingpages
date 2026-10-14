@@ -431,20 +431,26 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           
           {/* Brand Logo & Authority Badge */}
           <a href="#inicio" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-sm shadow-md shadow-slate-900/10 shrink-0 group-hover:scale-105 transition-transform">
-              <Mountain size={20} className="text-white" />
-            </div>
+            {data.logoUrl ? (
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl overflow-hidden bg-white/90 border border-slate-200/80 p-1 flex items-center justify-center shadow-md shadow-slate-900/10 shrink-0 group-hover:scale-105 transition-transform">
+                <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
+              </div>
+            ) : (
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-sm shadow-md shadow-slate-900/10 shrink-0 group-hover:scale-105 transition-transform">
+                <Mountain size={20} className="text-white" />
+              </div>
+            )}
             <div className="flex flex-col min-w-0">
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900 leading-snug truncate whitespace-nowrap">
-                  Trek<span className="text-blue-600">Explorer</span>
+                <span className="text-base sm:text-xl font-black tracking-tight text-slate-900 leading-snug truncate whitespace-nowrap">
+                  {data.companyName || 'TrekExplorer'}
                 </span>
                 <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[9px] sm:text-[10px] font-black uppercase tracking-wider border border-blue-200/60 shrink-0 whitespace-nowrap">
-                  {t.brand.badge}
+                  {data.companyRuc ? 'RUC VERIFICADO' : t.brand.badge}
                 </span>
               </div>
               <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 leading-none mt-0.5 hidden xs:block truncate whitespace-nowrap">
-                {t.brand.subtitle}
+                {data.companyTagline || t.brand.subtitle}
               </span>
             </div>
           </a>
@@ -691,11 +697,17 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
               {/* Main Headline */}
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-md">
-                {t.hero.titleLine1} <br />
-                <span className="text-white">{t.hero.titleLine2}</span> <br />
-                <span className="text-white flex items-center gap-2">
-                  {t.hero.titleLine3}
-                </span>
+                {data.hero?.title ? (
+                  <span>{translateText(data.hero.title, currentLang)}</span>
+                ) : (
+                  <>
+                    {t.hero.titleLine1} <br />
+                    <span className="text-white">{t.hero.titleLine2}</span> <br />
+                    <span className="text-white flex items-center gap-2">
+                      {t.hero.titleLine3}
+                    </span>
+                  </>
+                )}
               </h1>
 
               {/* Tour Subtitle / Description */}
@@ -1755,15 +1767,21 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
             {/* Column 1: Brand Authority (4 cols) */}
             <div className="lg:col-span-4 space-y-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-slate-900 text-white flex items-center justify-center shadow-md shadow-blue-500/10">
-                  <Mountain size={22} className="text-white" />
-                </div>
+                {data.logoUrl ? (
+                  <div className="w-10 h-10 rounded-2xl overflow-hidden bg-white/90 p-1 flex items-center justify-center shadow-md shadow-blue-500/10">
+                    <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
+                  </div>
+                ) : (
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-slate-900 text-white flex items-center justify-center shadow-md shadow-blue-500/10">
+                    <Mountain size={22} className="text-white" />
+                  </div>
+                )}
                 <div>
                   <span className="text-xl font-black text-white tracking-tight">
-                    Trek<span className="text-blue-500">Explorer</span>
+                    {data.companyName || 'TrekExplorer'}
                   </span>
                   <span className="text-[10px] text-slate-400 font-bold block uppercase tracking-wider">
-                    {t.brand.subtitle}
+                    {data.companyTagline || (data.companyRuc ? `${data.companyRuc} • Operador Oficial` : t.brand.subtitle)}
                   </span>
                 </div>
               </div>
@@ -1855,7 +1873,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
                 <div className="flex items-center gap-2.5">
                   <Mail size={15} className="text-rose-400 shrink-0" />
-                  <span className="text-slate-400">reservas@trekexplorerperu.com</span>
+                  <span className="text-slate-400">{data.companyEmail || 'reservas@trekexplorerperu.com'}</span>
                 </div>
               </div>
 

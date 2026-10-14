@@ -896,14 +896,20 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           
           {/* Logo y Marca */}
           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-400 flex items-center justify-center text-[#02181f] shadow-lg shadow-emerald-500/30 shrink-0">
-              <Compass size={20} className="stroke-[2.5]" />
-            </div>
+            {data.logoUrl ? (
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl overflow-hidden bg-white/90 p-1 flex items-center justify-center shadow-lg shadow-emerald-500/20 shrink-0">
+                <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
+              </div>
+            ) : (
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-400 flex items-center justify-center text-[#02181f] shadow-lg shadow-emerald-500/30 shrink-0">
+                <Compass size={20} className="stroke-[2.5]" />
+              </div>
+            )}
             <div className="min-w-0">
               <span className="font-black text-base sm:text-lg tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap leading-snug">
-                NavikX <span className="text-emerald-300 font-medium text-[10px] sm:text-xs bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-full border border-emerald-400/40">Cusco</span>
+                {data.companyName || 'NavikX'} <span className="text-emerald-300 font-medium text-[10px] sm:text-xs bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-full border border-emerald-400/40">{data.companyRuc ? 'RUC VERIFICADO' : (data.destination ? data.destination.split(',')[0] : 'Cusco')}</span>
               </span>
-              <p className="text-[10px] text-emerald-200/70 font-medium tracking-wide leading-none mt-0.5 truncate hidden sm:block">{t.brandTag}</p>
+              <p className="text-[10px] text-emerald-200/70 font-medium tracking-wide leading-none mt-0.5 truncate hidden sm:block">{data.companyTagline || t.brandTag}</p>
             </div>
           </div>
 

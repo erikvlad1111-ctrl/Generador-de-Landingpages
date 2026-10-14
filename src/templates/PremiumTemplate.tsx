@@ -391,18 +391,24 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       <header className="sticky top-0 w-full z-40 bg-[#0a080e]/95 backdrop-blur-xl border-b border-amber-500/20 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.6)]">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex justify-between items-center gap-2 sm:gap-4 w-full min-w-0">
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400/30 via-amber-500/15 to-transparent border border-amber-400/50 flex items-center justify-center text-amber-300 shrink-0 shadow-[0_0_18px_rgba(245,158,11,0.3)]">
-              <Crown size={isMobile ? 16 : 20} className="text-amber-300 drop-shadow-[0_2px_8px_rgba(245,158,11,0.6)]" />
-            </div>
+            {data.logoUrl ? (
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl overflow-hidden bg-white/90 p-1 border border-amber-400/50 flex items-center justify-center shrink-0 shadow-[0_0_18px_rgba(245,158,11,0.3)]">
+                <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
+              </div>
+            ) : (
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400/30 via-amber-500/15 to-transparent border border-amber-400/50 flex items-center justify-center text-amber-300 shrink-0 shadow-[0_0_18px_rgba(245,158,11,0.3)]">
+                <Crown size={isMobile ? 16 : 20} className="text-amber-300 drop-shadow-[0_2px_8px_rgba(245,158,11,0.6)]" />
+              </div>
+            )}
             <div className="flex flex-col min-w-0">
               <span 
                 style={{ fontFamily: FONT_CONFIG[luxuryFontVariant].titleFont }}
                 className="text-xs sm:text-sm md:text-base tracking-wider uppercase font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 leading-snug whitespace-nowrap"
               >
-                Cusco Luxury Collection
+                {data.companyName ? data.companyName.toUpperCase() : 'Cusco Luxury Collection'}
               </span>
               <span className="text-[8px] sm:text-[9px] uppercase tracking-wider text-amber-400/80 font-medium leading-none whitespace-nowrap">
-                {t.hero.privateConciergeBadge}
+                {data.companyTagline || (data.companyRuc ? `${data.companyRuc}` : t.hero.privateConciergeBadge)}
               </span>
             </div>
           </div>

@@ -126,15 +126,21 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         <nav className="relative z-50 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-4 flex items-center justify-between border-b border-white/15 w-full min-w-0 gap-2">
           {/* Official Emblem / Coat of arms */}
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 min-w-0">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-red-600/30 backdrop-blur-md border border-red-400/50 flex items-center justify-center text-red-200 shadow-md shrink-0 animate-soft-float">
-              <Landmark size={20} className="sm:w-[22px] sm:h-[22px]" />
-            </div>
+            {data.logoUrl ? (
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden bg-white/90 p-1 flex items-center justify-center shadow-md shrink-0 border border-white/30">
+                <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
+              </div>
+            ) : (
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-red-600/30 backdrop-blur-md border border-red-400/50 flex items-center justify-center text-red-200 shadow-md shrink-0 animate-soft-float">
+                <Landmark size={20} className="sm:w-[22px] sm:h-[22px]" />
+              </div>
+            )}
             <div className="flex flex-col min-w-0 max-w-[140px] xs:max-w-[180px] sm:max-w-[240px]">
               <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-red-200 truncate leading-snug whitespace-nowrap">
-                {t.emblemTitle}
+                {data.companyName ? data.companyName.toUpperCase() : t.emblemTitle}
               </span>
               <span className="text-[11px] text-stone-300 tracking-wider font-sans block truncate leading-none mt-0.5 whitespace-nowrap">
-                {t.emblemSub}
+                {data.companyTagline || (data.companyRuc ? `${data.companyRuc}` : t.emblemSub)}
               </span>
             </div>
           </div>
