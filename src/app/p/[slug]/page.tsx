@@ -21,7 +21,7 @@ function PublicLandingContent() {
   const [isBannerVisible, setIsBannerVisible] = useState(true);
   const [isDeployModalOpen, setIsDeployModalOpen] = useState(false);
 
-  const [landing] = useState<LandingData | null>(() => {
+  const [landing, setLanding] = useState<LandingData | null>(() => {
     const landings = getStoredLandings();
     const found = !slug 
       ? landings[0] 
@@ -40,6 +40,25 @@ function PublicLandingContent() {
       ...(isFreeOrBasic ? { language: 'es' as const, languages: ['es' as const] } : {}),
     };
   });
+
+  React.useEffect(() => {
+    const landings = getStoredLandings();
+    const found = !slug 
+      ? landings[0] 
+      : (landings.find(l => l.slug.toLowerCase() === slug.toLowerCase()) || landings[0]);
+    if (found) {
+      const activeTier: PlanTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery))
+        ? tierQuery
+        : (found.tier || 'advance');
+      const isFreeOrBasic = activeTier === 'free' || activeTier === 'basic';
+      setLanding({
+        ...found,
+        ...(templateQuery ? { template: templateQuery } : {}),
+        tier: activeTier,
+        ...(isFreeOrBasic ? { language: 'es' as const, languages: ['es' as const] } : {}),
+      });
+    }
+  }, [slug, templateQuery, tierQuery]);
 
   if (!landing) {
     return (

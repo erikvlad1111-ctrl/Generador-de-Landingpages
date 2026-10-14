@@ -531,7 +531,8 @@ function DemoPreviewContent() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [
-    isEditorOpen, editName, editTemplate, editTier, editObjective, editLanguage,
+    isEditorOpen, editName, editCompanyName, editLogoUrl, editCompanyRuc, editCompanyTagline, editCompanyEmail,
+    editTemplate, editTier, editObjective, editLanguage,
     editHeroBadge, editHeroTitle, editHeroSubtitle, editHeroCta, editHeroImage,
     editAboutTitle, editAboutContent, editPrice, editDuration, editDifficulty,
     editDestination, editAltitude, editGroupType, editTargetAudience, editWhatsapp,
@@ -782,18 +783,13 @@ function DemoPreviewContent() {
 
           {/* Scrollable Frame Content: Isolated viewport for mobile/tablet */}
           <div className="w-full h-full relative isolate">
-            {viewMode === 'desktop' ? (
-              <div className="w-full h-full overflow-y-auto overflow-x-hidden relative isolate table-scrollbar overscroll-x-none touch-pan-y">
-                <TemplateRenderer data={landing} viewMode="desktop" />
-              </div>
-            ) : (
-              <iframe
-                key={`${landing.slug}-${landing.template}-${viewMode}-${refreshKey}`}
-                src={`/p/${landing.slug}?embed=true&mode=${viewMode}&tpl=${landing.template}&r=${refreshKey}`}
-                title={`Simulador ${viewMode}`}
-                className="w-full h-full border-0 bg-white"
+            <div className="w-full h-full overflow-y-auto overflow-x-hidden relative isolate table-scrollbar overscroll-x-none touch-pan-y">
+              <TemplateRenderer 
+                key={`${landing.id}-${landing.slug}-${landing.template}-${viewMode}-${refreshKey}`} 
+                data={landing} 
+                viewMode={viewMode} 
               />
-            )}
+            </div>
           </div>
         </div>
       </main>

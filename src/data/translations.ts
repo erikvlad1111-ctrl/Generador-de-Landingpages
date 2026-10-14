@@ -2439,6 +2439,11 @@ export function translateText(text: string | undefined, targetLang: LanguageType
     }
   }
 
+  // Para el idioma base español, respetar 100% las ediciones personalizadas del usuario sin sobreescrituras heurísticas
+  if ((targetLang as string) === 'es') {
+    return trimmed;
+  }
+
   // Heurísticas semánticas para Títulos de Tours
   if (lowerTrimmed.includes('machu picchu') && (lowerTrimmed.includes('lujo') || lowerTrimmed.includes('tren') || lowerTrimmed.includes('vip') || lowerTrimmed.includes('panorámico') || lowerTrimmed.includes('panoramico') || lowerTrimmed.includes('panoramique') || lowerTrimmed.includes('panoramic'))) {
     if (targetLang === 'es') return 'Machu Picchu de Lujo con Tren Panorámico';

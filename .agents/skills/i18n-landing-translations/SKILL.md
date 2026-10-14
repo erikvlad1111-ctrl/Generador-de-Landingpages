@@ -298,10 +298,27 @@ Guía para diagnosticar y solucionar problemas de traducción, mezcla de idiomas
   git grep -n "Historias actualizadas en tiempo real" src/
   ```
 
+### Error: El Título del Logo, Hero y Otras Secciones no cambian al editar (Sobreescritura por Heurísticas de Traducción y Desincronización Reactiva)
+
+- **Síntoma / Mensaje de Error:**
+  Al editar en el modal o previsualizador el "Nombre Comercial de la Empresa", "Nombre del Tour / Landing", título del Hero o descripción, la previsualización en vivo (o el simulador) mantiene los textos por defecto (ej. `'TrekExplorer'`, `'NavikX'`, `'Machu Picchu de Lujo con Tren Panorámico'`, `'Carlos Mendoza'`) o no refleja los cambios efectuados.
+
+- **Causa Raíz:**
+  1. En `src/data/translations.ts`, la función `translateText` aplicaba heurísticas semánticas basadas en subcadenas (`lowerTrimmed.includes('machu picchu') && lowerTrimmed.includes('vip')`, `'vinicunca'`, `'humantay'`, etc.) incluso cuando el idioma destino era español (`targetLang === 'es'`), sustituyendo el texto libre personalizado del usuario por cadenas estáticas prefijadas.
+  2. En las 6 plantillas turísticas (`AdventureTemplate`, `ModernEmeraldTemplate`, `AgencyPortalTemplate`, `BohoTemplate`, `CulturalTemplate`, `PremiumTemplate`), el título de la marca junto al logo evaluaba únicamente `data.companyName || 'NombreEstático'`, ignorando `data.name` (el campo primario de nombre del tour editado por el usuario) o cayendo en `guideName` en el caso del portal de agencia.
+  3. En `src/app/demo/preview/page.tsx`, los modos móvil y tablet renderizaban un `<iframe>` apuntando a `/p/${landing.slug}`, provocando desincronización con el estado reactivo en memoria de React y latencias de actualización.
+
+- **Comando de Diagnóstico:**
+  ```bash
+  git grep -n "translateText" src/templates/
+  git grep -n "data.companyName || '" src/templates/
+  ```
+
 - **Solución Paso a Paso:**
-  1. Modificar la heurística de altitud en `translations.ts` para detectar rangos con `-` o ` a `, extraer y limpiar cada número independientemente, y devolver `${parts[0]} - ${parts[1]} ${unit}`.
-  2. En `SustainabilityAndSocialProof.tsx`, agregar la clave `feedRealTime` a los diccionarios de los 5 idiomas y dinamizar `travelerFeed` para traducir país, tiempo, tour y comentarios según `lang`.
-  3. Agregar a `PHRASE_MAP` todas las cadenas del preset (dificultad, duración, modalidad, certificaciones, servicios incluidos, exclusiones, mochila y testimonios de demostración).
+  1. En `src/data/translations.ts`, agregar una salvaguarda inicial para español con cast de tipo `if ((targetLang as string) === 'es') return trimmed;` para asegurar que todo texto ingresado en español se respete al 100% sin ser alterado por heurísticas de palabras clave.
+  2. En todas las plantillas, unificar el fallback del título de marca a `data.companyName || data.name || 'Operador Turístico'` tanto en el encabezado, pie de página, brochure como en los modales de libro de reclamaciones y términos legales.
+  3. En `src/app/demo/preview/page.tsx`, eliminar el `<iframe>` en modos móvil/tablet y renderizar directamente `<TemplateRenderer key={...} data={landing} viewMode={viewMode} />`, garantizando previsualización reactiva instantánea en 0ms.
+
 
 
 

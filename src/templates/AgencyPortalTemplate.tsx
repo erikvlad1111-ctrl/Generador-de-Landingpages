@@ -604,9 +604,11 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
   // 3. Parámetros y datos dinámicos
   const tourTitle = data?.hero?.title || data?.name || 'Experiencia Machu Picchu & Cusco';
-  const brandName = data?.companyName || data?.guideName || 'Cusco Creativos';
+  const brandName = data?.companyName || data?.name || data?.guideName || 'Cusco Creativos';
   const fullAgencyName = data?.companyName 
     ? `${data.companyName}${data.companyRuc ? ` • ${data.companyRuc}` : ''}` 
+    : data?.name
+    ? `${data.name}${data.companyRuc ? ` • ${data.companyRuc}` : ''}`
     : 'Cusco Creativos Operador Turístico S.A.C.';
   const whatsappNumber = (data?.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const guideName = data?.guideName || 'Carlos Mendoza';

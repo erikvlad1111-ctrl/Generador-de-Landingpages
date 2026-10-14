@@ -907,7 +907,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             )}
             <div className="min-w-0">
               <span className="font-black text-base sm:text-lg tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap leading-snug">
-                {data.companyName || 'NavikX'} <span className="text-emerald-300 font-medium text-[10px] sm:text-xs bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-full border border-emerald-400/40">{data.companyRuc ? 'RUC VERIFICADO' : (data.destination ? data.destination.split(',')[0] : 'Cusco')}</span>
+                {data.companyName || data.name || 'NavikX'} <span className="text-emerald-300 font-medium text-[10px] sm:text-xs bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-full border border-emerald-400/40">{data.companyRuc ? 'RUC VERIFICADO' : (data.destination ? data.destination.split(',')[0] : 'Cusco')}</span>
               </span>
               <p className="text-[10px] text-emerald-200/70 font-medium tracking-wide leading-none mt-0.5 truncate hidden sm:block">{data.companyTagline || t.brandTag}</p>
             </div>
@@ -2346,7 +2346,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       {isAdvance && (
         <SustainabilityAndSocialProof 
           lang={currentLang} 
-          brandName="NavikX Cusco Expeditions" 
+          brandName={data.companyName || data.name || 'NavikX Cusco Expeditions'} 
           isMobile={isMobile} 
         />
       )}
@@ -2449,7 +2449,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               <Compass size={16} />
             </div>
             <div>
-              <span className="font-bold text-white text-sm">NavikX Cusco</span>
+              <span className="font-bold text-white text-sm">{data.companyName || data.name || 'NavikX Cusco'}</span>
               <p className="text-[11px] text-emerald-300/70">{t.footerRights}</p>
             </div>
           </div>
@@ -2490,7 +2490,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       <ComplaintsBookModal
         isOpen={isComplaintsOpen}
         onClose={() => setIsComplaintsOpen(false)}
-        agencyName={data.name || 'NavikX Cusco Expeditions • Cusco Creativos S.A.C.'}
+        agencyName={data.companyName || data.name || 'NavikX Cusco Expeditions • Cusco Creativos S.A.C.'}
         agencyRuc="20601234567"
         agencyAddress={data.officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
       />
@@ -2498,7 +2498,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       <LegalTermsModal
         isOpen={isTermsOpen}
         onClose={() => setIsTermsOpen(false)}
-        agencyName={data.name || 'NavikX Cusco Expeditions • Cusco Creativos S.A.C.'}
+        agencyName={data.companyName || data.name || 'NavikX Cusco Expeditions • Cusco Creativos S.A.C.'}
         lang={currentLang}
       />
 
@@ -2507,8 +2507,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         isOpen={isBrochureOpen}
         onClose={() => setIsBrochureOpen(false)}
         data={data || {}}
-        brandName="NavikX Cusco"
-        fullAgencyName="NavikX Cusco Expeditions • Cusco Creativos S.A.C."
+        brandName={data.companyName || data.name || 'NavikX Cusco'}
+        fullAgencyName={data.companyName ? `${data.companyName} • Operador Turístico` : (data.name ? `${data.name} • Operador Turístico` : 'NavikX Cusco Expeditions • Cusco Creativos S.A.C.')}
         whatsappNumber={guidePhone}
         lang={currentLang}
       />

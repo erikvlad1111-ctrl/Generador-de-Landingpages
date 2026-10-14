@@ -137,7 +137,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             )}
             <div className="flex flex-col min-w-0 max-w-[140px] xs:max-w-[180px] sm:max-w-[240px]">
               <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-red-200 truncate leading-snug whitespace-nowrap">
-                {data.companyName ? data.companyName.toUpperCase() : t.emblemTitle}
+                {(data.companyName || data.name || t.emblemTitle).toUpperCase()}
               </span>
               <span className="text-[11px] text-stone-300 tracking-wider font-sans block truncate leading-none mt-0.5 whitespace-nowrap">
                 {data.companyTagline || (data.companyRuc ? `${data.companyRuc}` : t.emblemSub)}
@@ -1305,7 +1305,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         isOpen={isComplaintsOpen}
         onClose={() => setIsComplaintsOpen(false)}
         lang={currentLang}
-        agencyName="Cusco Patrimonial • Cusco Creativos S.A.C."
+        agencyName={data.companyName || data.name || "Cusco Patrimonial • Cusco Creativos S.A.C."}
         agencyAddress={data.officeAddress || t.footer.officeDesc}
       />
 
@@ -1315,7 +1315,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         onClose={() => setIsLegalOpen(false)}
         lang={currentLang}
         initialTab={legalTab}
-        agencyName="Cusco Patrimonial • Cusco Creativos S.A.C."
+        agencyName={data.companyName || data.name || "Cusco Patrimonial • Cusco Creativos S.A.C."}
       />
     </div>
   );

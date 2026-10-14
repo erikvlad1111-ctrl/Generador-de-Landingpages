@@ -443,7 +443,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
             <div className="flex flex-col min-w-0">
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <span className="text-base sm:text-xl font-black tracking-tight text-slate-900 leading-snug truncate whitespace-nowrap">
-                  {data.companyName || 'TrekExplorer'}
+                  {data.companyName || data.name || 'TrekExplorer'}
                 </span>
                 <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[9px] sm:text-[10px] font-black uppercase tracking-wider border border-blue-200/60 shrink-0 whitespace-nowrap">
                   {data.companyRuc ? 'RUC VERIFICADO' : t.brand.badge}
@@ -1778,7 +1778,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 )}
                 <div>
                   <span className="text-xl font-black text-white tracking-tight">
-                    {data.companyName || 'TrekExplorer'}
+                    {data.companyName || data.name || 'TrekExplorer'}
                   </span>
                   <span className="text-[10px] text-slate-400 font-bold block uppercase tracking-wider">
                     {data.companyTagline || (data.companyRuc ? `${data.companyRuc} • Operador Oficial` : t.brand.subtitle)}
@@ -1990,7 +1990,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         isOpen={isComplaintsOpen}
         onClose={() => setIsComplaintsOpen(false)}
         lang={currentLang}
-        agencyName="TrekExplorer Perú • Cusco Creativos S.A.C."
+        agencyName={data.companyName || data.name || "TrekExplorer Perú • Cusco Creativos S.A.C."}
         agencyAddress={data.officeAddress || t.office.address}
       />
 
@@ -2000,7 +2000,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         onClose={() => setIsLegalOpen(false)}
         lang={currentLang}
         initialTab={legalTab}
-        agencyName="TrekExplorer Perú • Cusco Creativos S.A.C."
+        agencyName={data.companyName || data.name || "TrekExplorer Perú • Cusco Creativos S.A.C."}
       />
     </div>
   );
