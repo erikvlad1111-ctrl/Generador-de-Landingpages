@@ -54,7 +54,8 @@ import {
   Minimize2,
   Zap,
   Eye,
-  CheckCheck
+  CheckCheck,
+  Upload
 } from 'lucide-react';
 import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
@@ -170,6 +171,22 @@ function DemoPreviewContent() {
   const [catalogTours, setCatalogTours] = useState<CatalogTourItem[]>(() => landing?.catalogTours || []);
   const [isEditorFullscreen, setIsEditorFullscreen] = useState(false);
   const [liveSavedToast, setLiveSavedToast] = useState(false);
+
+  const handleLogoFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      alert('El archivo de imagen no debe superar los 5MB.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (typeof event.target?.result === 'string') {
+        setEditLogoUrl(event.target.result);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleAddItineraryStep = () => {
     setEditItinerary(prev => [
@@ -975,42 +992,78 @@ function DemoPreviewContent() {
                       </div>
                     </div>
 
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                        Logo de la Empresa (URL de Imagen o Preset)
-                      </label>
+                    {/* Administrador de Logo con Subida de Archivo Local y URL */}
+                    <div className="space-y-3 bg-white/90 border border-indigo-100 rounded-2xl p-4">
+                      <div className="flex items-center justify-between">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+                          <span>🖼️</span> Logo de la Empresa (Subir Archivo o URL Web)
+                        </label>
+                        <span className="text-[10px] text-indigo-600 font-bold bg-indigo-50 px-2 py-0.5 rounded-md">
+                          PNG transparente, JPG o SVG (máx. 5MB)
+                        </span>
+                      </div>
+
+                      {/* Contenedor Interactivo de Subida y Vista Previa */}
                       <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                        <div className="flex-1">
+                        {/* Botón para subir archivo desde la computadora */}
+                        <label className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white rounded-xl font-bold text-xs shadow-md shadow-indigo-600/20 cursor-pointer transition-all hover:scale-[1.01] active:scale-[0.99]">
+                          <Upload size={16} />
+                          <span>Subir Archivo desde tu Dispositivo</span>
                           <input
-                            type="text"
-                            value={editLogoUrl}
-                            onChange={(e) => setEditLogoUrl(e.target.value)}
-                            className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-mono text-slate-800 focus:ring-2 focus:ring-indigo-500 outline-none"
-                            placeholder="https://tu-dominio.com/logo.png"
+                            type="file"
+                            accept="image/png, image/jpeg, image/jpg, image/webp, image/svg+xml"
+                            onChange={handleLogoFileUpload}
+                            className="hidden"
                           />
-                        </div>
+                        </label>
+
+                        {/* Previsualización del Logo o Estado Sin Logo */}
                         {editLogoUrl ? (
-                          <div className="w-12 h-12 rounded-xl border border-indigo-200 bg-white p-1 flex items-center justify-center shrink-0 shadow-xs relative group">
-                            <img src={editLogoUrl} alt="Vista previa logo" className="max-w-full max-h-full object-contain" />
+                          <div className="flex items-center gap-2.5 bg-slate-50 border border-indigo-200 rounded-xl px-3 py-2">
+                            <div className="w-10 h-10 rounded-lg bg-white border border-slate-200 p-1 flex items-center justify-center shrink-0 shadow-2xs">
+                              <img src={editLogoUrl} alt="Logo de empresa" className="max-w-full max-h-full object-contain" />
+                            </div>
+                            <div className="flex flex-col min-w-0 pr-1">
+                              <span className="text-[11px] font-black text-emerald-700 flex items-center gap-1">
+                                <Check size={12} strokeWidth={3} /> Logo Activo
+                              </span>
+                              <span className="text-[10px] text-slate-400 truncate max-w-[140px]">
+                                {editLogoUrl.startsWith('data:') ? 'Imagen local cargada' : editLogoUrl}
+                              </span>
+                            </div>
                             <button
                               type="button"
                               onClick={() => setEditLogoUrl('')}
-                              className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-rose-500 text-white rounded-full text-[10px] font-bold flex items-center justify-center shadow-xs hover:bg-rose-600 cursor-pointer"
+                              className="px-2 py-1 text-[11px] font-bold text-rose-600 hover:text-white hover:bg-rose-600 rounded-lg transition-colors cursor-pointer border border-rose-200 hover:border-rose-600 ml-auto"
                               title="Quitar logo"
                             >
-                              ✕
+                              Quitar
                             </button>
                           </div>
                         ) : (
-                          <div className="w-12 h-12 rounded-xl border border-dashed border-slate-300 bg-slate-50 flex flex-col items-center justify-center shrink-0 text-slate-400 text-[10px] font-bold">
-                            Sin Logo
+                          <div className="flex items-center gap-2 px-3 py-2 border border-dashed border-slate-300 rounded-xl bg-slate-50 text-slate-400 text-xs font-semibold shrink-0">
+                            <span>Sin logo cargado</span>
                           </div>
                         )}
                       </div>
 
+                      {/* Opción secundaria: Pegar URL */}
+                      <div>
+                        <label className="block text-[11px] font-semibold text-slate-500 mb-1">
+                          O pega una URL directa de tu logo en internet:
+                        </label>
+                        <input
+                          type="text"
+                          value={editLogoUrl.startsWith('data:') ? '' : editLogoUrl}
+                          onChange={(e) => setEditLogoUrl(e.target.value)}
+                          className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs font-mono text-slate-800 bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                          placeholder="https://tu-sitio-web.com/imagenes/logo.png"
+                        />
+                      </div>
+
                       {/* Presets Rápidos de Logo para Pruebas */}
-                      <div className="mt-2.5 flex flex-wrap items-center gap-2">
-                        <span className="text-[11px] font-bold text-slate-500">Logos de muestra:</span>
+                      <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-100">
+                        <span className="text-[11px] font-bold text-slate-400">Probar con logos de muestra:</span>
                         <button
                           type="button"
                           onClick={() => setEditLogoUrl('https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=120&auto=format&fit=crop&q=80')}
@@ -1025,13 +1078,15 @@ function DemoPreviewContent() {
                         >
                           Logo Montaña Moderno
                         </button>
-                        <button
-                          type="button"
-                          onClick={() => setEditLogoUrl('')}
-                          className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] font-bold border border-slate-200 cursor-pointer transition-colors"
-                        >
-                          Usar Icono Vectorial por Defecto
-                        </button>
+                        {editLogoUrl && (
+                          <button
+                            type="button"
+                            onClick={() => setEditLogoUrl('')}
+                            className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] font-bold border border-slate-200 cursor-pointer transition-colors"
+                          >
+                            Restablecer a Icono Vectorial
+                          </button>
+                        )}
                       </div>
                     </div>
 
