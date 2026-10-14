@@ -4,7 +4,7 @@ export type { LandingData };
 export const INITIAL_LANDINGS: LandingData[] = [
   {
     id: '1',
-    name: 'Machu Picchu VIP (Diseño 1)',
+    name: 'Machu Picchu VIP & Valle Sagrado',
     slug: 'machu-picchu-vip',
     tier: 'advance',
     guideName: 'Carlos Mendoza',
@@ -109,10 +109,10 @@ export const INITIAL_LANDINGS: LandingData[] = [
     officeAddress: 'Portal de Panes N° 123, Plaza de Armas, Centro Histórico, Cusco - Perú',
     officeHours: 'Lunes a Domingo: 08:00 AM – 08:00 PM (Horario Corrido)',
     mapsUrl: 'https://maps.google.com/?q=Plaza+de+Armas+Cusco+Peru',
-    companyName: 'Andean Horizon Expeditions',
+    companyName: 'Cusco Grand Expeditions',
     companyRuc: 'RUC 20608945231',
     companyTagline: 'Operador Oficial Autorizado DIRCETUR Cusco',
-    companyEmail: 'reservas@andeanhorizon.com',
+    companyEmail: 'reservas@cuscograndexpeditions.com',
     logoUrl: 'https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=120&auto=format&fit=crop&q=80'
   },
   {
@@ -891,32 +891,32 @@ export function simulateAiGeneration(params: {
   const isWhatsapp = params.objective === 'whatsapp';
   const isBoth = params.objective === 'both';
 
-  let heroTitle = `${params.name}: La Experiencia Definitiva en Cusco`;
-  let heroSubtitle = params.description || 'Vive una aventura inolvidable con guías expertos locales y atención de primer nivel.';
-  let heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : (params.template === 'agency-portal' ? 'Diseño 1 • Portal Oficial' : params.template === 'emerald-explorer' ? 'Diseño 6 • Emerald Explorer' : params.template === 'premium' ? 'Experiencia Exclusiva VIP' : params.template === 'cultural' ? 'Historia y Cultura Andina' : 'Aventura y Naturaleza');
+  let heroTitle = params.heroTitle?.trim() || params.name;
+  let heroSubtitle = params.heroSubtitle?.trim() || params.description || 'Vive una aventura inolvidable con guías expertos locales y atención de primer nivel.';
+  let heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : (params.template === 'agency-portal' ? 'Portal Oficial • Operador Autorizado' : params.template === 'emerald-explorer' ? 'Emerald Explorer • Alta Montaña' : params.template === 'premium' ? 'Experiencia Exclusiva VIP' : params.template === 'cultural' ? 'Historia y Cultura Andina' : 'Aventura y Naturaleza'));
   let ctaText = isBoth 
     ? 'WhatsApp & Cotizar Online' 
     : (isWhatsapp ? 'Reservar Directo por WhatsApp' : 'Solicitar Cotización y Disponibilidad');
 
   if (isEn) {
-    heroTitle = `${params.name}: The Ultimate Cusco Experience`;
-    heroSubtitle = params.description || 'Live an unforgettable Andean adventure with top certified local guides and premium service.';
-    heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : 'Official Agency Portal';
+    heroTitle = params.heroTitle?.trim() || params.name;
+    heroSubtitle = params.heroSubtitle?.trim() || params.description || 'Live an unforgettable Andean adventure with top certified local guides and premium service.';
+    heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : 'Official Agency Portal');
     ctaText = isBoth ? 'WhatsApp & Online Quote' : (isWhatsapp ? 'Book via WhatsApp' : 'Request Instant Quote');
   } else if (isPt) {
-    heroTitle = `${params.name}: A Experiência Definitiva em Cusco`;
-    heroSubtitle = params.description || 'Viva uma aventura andina inesquecível com guias locais certificados e atendimento de primeiro nível.';
-    heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : 'Portal Oficial da Agência';
+    heroTitle = params.heroTitle?.trim() || params.name;
+    heroSubtitle = params.heroSubtitle?.trim() || params.description || 'Viva uma aventura andina inesquecível com guias locais certificados e atendimento de primeiro nível.';
+    heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : 'Portal Oficial da Agência');
     ctaText = isBoth ? 'WhatsApp & Orçamento Online' : (isWhatsapp ? 'Reservar pelo WhatsApp' : 'Solicitar Orçamento Grátis');
   } else if (isFr) {
-    heroTitle = `${params.name}: L'Expérience Ultime à Cusco`;
-    heroSubtitle = params.description || 'Vivez une aventure inoubliable avec des guides locaux experts et une assistance sur mesure.';
-    heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : "Portail Officiel de l'Agence";
+    heroTitle = params.heroTitle?.trim() || params.name;
+    heroSubtitle = params.heroSubtitle?.trim() || params.description || 'Vivez une aventure inoubliable avec des guides locaux experts et une assistance sur mesure.';
+    heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : "Portail Officiel de l'Agence");
     ctaText = isBoth ? 'WhatsApp & Devis en Ligne' : (isWhatsapp ? 'Réserver via WhatsApp' : 'Demander un Devis Gratuit');
   } else if (isIt) {
-    heroTitle = `${params.name}: L'Esperienza Definitiva a Cusco`;
-    heroSubtitle = params.description || "Vivi un'avventura indimenticabile sulle Ande con guide locali certificate e massima assistenza.";
-    heroBadge = params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : "Portale Ufficiale dell'Agenzia";
+    heroTitle = params.heroTitle?.trim() || params.name;
+    heroSubtitle = params.heroSubtitle?.trim() || params.description || "Vivi un'avventura indimenticabile sulle Ande con guide locali certificate e massima assistenza.";
+    heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : "Portale Ufficiale dell'Agenzia");
     ctaText = isBoth ? 'WhatsApp & Preventivo Online' : (isWhatsapp ? 'Prenota su WhatsApp' : 'Richiedi Preventivo Gratuito');
   }
 

@@ -602,14 +602,20 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const [lightboxOpen, setLightboxOpen] = useState<boolean>(false);
   const [lightboxIndex, setLightboxIndex] = useState<number>(0);
 
-  // 3. Parámetros y datos dinámicos
-  const tourTitle = data?.hero?.title || data?.name || 'Experiencia Machu Picchu & Cusco';
-  const brandName = data?.companyName || data?.name || data?.guideName || 'Cusco Creativos';
+  // 3. Parámetros y datos dinámicos con saneamiento de presets mock
+  const rawBrand = data?.companyName?.trim();
+  const brandName = (rawBrand && !/^dise[ñn]o\s*\d+/i.test(rawBrand)) 
+    ? rawBrand 
+    : 'Cusco Grand Expeditions';
+
+  const rawTourTitle = data?.hero?.title?.trim() || data?.name?.trim();
+  const tourTitle = (rawTourTitle && !/^dise[ñn]o\s*\d+/i.test(rawTourTitle))
+    ? rawTourTitle.replace(/:\s*la experiencia definitiva en cusco$/i, '')
+    : 'Machu Picchu de Lujo con Tren Panorámico';
+
   const fullAgencyName = data?.companyName 
-    ? `${data.companyName}${data.companyRuc ? ` • ${data.companyRuc}` : ''}` 
-    : data?.name
-    ? `${data.name}${data.companyRuc ? ` • ${data.companyRuc}` : ''}`
-    : 'Cusco Creativos Operador Turístico S.A.C.';
+    ? `${brandName}${data.companyRuc ? ` • ${data.companyRuc}` : ''}` 
+    : `${brandName} Operador Turístico S.A.C.`;
   const whatsappNumber = (data?.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
   const guideName = data?.guideName || 'Carlos Mendoza';
   const destination = data?.destination || 'Cusco, Perú';
@@ -649,10 +655,13 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   // 5. HELPERS DE TRADUCCIÓN DINÁMICA DE 5 IDIOMAS
   // -----------------------------------------------------------
   const getLocalizedHeroTitle = (originalTitle?: string) => {
-    if (!originalTitle) {
-      return translateText('Machu Picchu de Lujo con Tren Panorámico', lang).toUpperCase();
+    let clean = (originalTitle || '').trim();
+    if (!clean || /^dise[ñn]o\s*\d+/i.test(clean)) {
+      clean = 'Machu Picchu de Lujo con Tren Panorámico';
+    } else {
+      clean = clean.replace(/:\s*la experiencia definitiva en cusco$/i, '');
     }
-    return translateText(originalTitle, lang).toUpperCase();
+    return translateText(clean, lang).toUpperCase();
   };
 
   const getLocalizedHeroSubtitle = (originalSubtitle?: string) => {
@@ -977,7 +986,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             </a>
             <span className="hidden md:flex items-center gap-1.5 text-stone-400 truncate text-[10px]">
               <Mail size={12} className="text-[#FF5500] shrink-0" />
-              <span className="truncate">reservas@{brandName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 16) || 'tours'}.pe</span>
+              <span className="truncate">{data?.companyEmail || `reservas@${brandName.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 16) || 'tours'}.pe`}</span>
             </span>
           </div>
           

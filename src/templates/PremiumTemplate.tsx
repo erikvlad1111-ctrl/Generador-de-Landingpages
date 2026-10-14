@@ -405,7 +405,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 style={{ fontFamily: FONT_CONFIG[luxuryFontVariant].titleFont }}
                 className="text-xs sm:text-sm md:text-base tracking-wider uppercase font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 leading-snug whitespace-nowrap"
               >
-                {(data.companyName || data.name || 'Cusco Luxury Collection').toUpperCase()}
+                {(data.companyName || 'Cusco Luxury Collection').toUpperCase()}
               </span>
               <span className="text-[8px] sm:text-[9px] uppercase tracking-wider text-amber-400/80 font-medium leading-none whitespace-nowrap">
                 {data.companyTagline || (data.companyRuc ? `${data.companyRuc}` : t.hero.privateConciergeBadge)}

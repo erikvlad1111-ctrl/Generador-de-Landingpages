@@ -394,7 +394,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             )}
             <div className="flex flex-col min-w-0 max-w-[150px] xs:max-w-[190px] sm:max-w-[240px]">
               <span className="font-serif tracking-wider uppercase text-sm sm:text-base font-bold text-stone-800 truncate leading-snug whitespace-nowrap">
-                {data.companyName || data.name || 'Boho Travel Journal'}
+                {data.companyName || 'Boho Travel Journal'}
               </span>
               <span className="text-[12px] sm:text-[13px] text-stone-500 font-sans tracking-tight truncate leading-none mt-0.5 whitespace-nowrap">
                 {data.companyTagline || (currentLang === 'en' ? 'Curated Travel Journal • Cusco' : 'Diario de Viajes Curado • Cusco')}
