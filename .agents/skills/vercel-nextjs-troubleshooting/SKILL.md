@@ -328,6 +328,38 @@ Get-ExecutionPolicy
    powershell -ExecutionPolicy Bypass -Command "npm run build"
    ```
 
+## 11. Título Mock de Desarrollador ("Diseño X...") o Sufijo Forzado en Navbar y Hero H1
+
+### Síntoma / Mensaje de Error
+Al publicar o previsualizar una landing generada (ej. `/p/diseno-1-portal-oficial-de-agencia-de-viajes-peru`), se mostraba:
+- Al lado del logo en la barra superior: `"DISEÑO 1 - PORTAL OFICIAL DE ... AGENCIA OFICIAL"`.
+- En el título principal H1 del Hero: `"DISEÑO 1 - PORTAL OFICIAL DE AGENCIA DE VIAJES PERÚ: LA EXPERIENCIA DEFINITIVA EN CUSCO"`.
+- En el correo de cabecera: `reservas@diseo1portalofic.pe`.
+
+### Causa Raíz
+1. **Confusión entre Marca y Tour:** Las plantillas caían en fallback a `data.name` (nombre del tour) cuando `data.companyName` no existía, incrustando el título largo del tour en el navbar junto al isotipo.
+2. **Textos Mock en Presets:** En `PRESET_TOURS` de `src/app/demo/new/page.tsx`, el Preset 1 tenía `name: 'Diseño 1 - Portal Oficial de Agencia de Viajes Perú'` sin campos propios de `companyName`, `heroTitle`, `companyTagline` ni `companyEmail`.
+3. **Sufijo forzado en IA generativa:** En `src/data/landingStore.ts`, `generateLandingFromPrompt` concatenaba obligatoriamente `${params.name}: La Experiencia Definitiva en Cusco` en el `heroTitle` si no se especificaba explícitamente.
+4. **Falta de sincronización en `handleApplyPreset`:** Al presionar un preset de 1 clic, solo se transferían los campos de tour, dejando vacíos los estados avanzados de marca de agencia y hero.
+
+### Comando de Diagnóstico
+Buscar en el código fuentes de textos "Diseño" o concatenaciones fijas:
+```bash
+git grep -n "Portal Oficial de Agencia de Viajes Perú"
+git grep -n "La Experiencia Definitiva en Cusco"
+```
+
+### Solución Paso a Paso
+1. **Desacoplamiento Estricto de Marca vs. Tour en Plantillas:**
+   - En `AgencyPortalTemplate.tsx`, el nombre de marca al lado del logo lee `data.companyName || 'Cusco Grand Expeditions'` y nunca cae en `data.name`.
+   - Se aplicó lo mismo en `AdventureTemplate.tsx` (`TrekExplorer Perú`), `ModernEmeraldTemplate.tsx` (`NavikX Cusco`), `BohoTemplate.tsx` (`Boho Travel Journal`), `CulturalTemplate.tsx` (`Cusco Patrimonial Tours`) y `PremiumTemplate.tsx` (`Cusco Luxury Collection`).
+2. **Saneamiento Defensivo con Expresiones Regulares:**
+   - Filtrar con `!/^dise[ñn]o\s*\d+/i.test(...)` tanto `brandName` como `heroTitle` para que si un usuario tiene guardada una versión antigua en su `localStorage`, la plantilla limpie automáticamente el texto mock y muestre nombres comerciales reales.
+   - Retirar el sufijo residual `replace(/:\s*la experiencia definitiva en cusco$/i, '')`.
+3. **Poblado Completo en `PRESET_TOURS` y `handleApplyPreset`:**
+   - Asignar a cada preset nombres reales de operador formal (RUC 20, DIRCETUR), títulos de hero auténticos (ej. `"Machu Picchu de Lujo con Tren Panorámico"`) y emails corporativos (`reservas@cuscograndexpeditions.com`).
+   - En `handleApplyPreset`, actualizar simultáneamente `companyName`, `companyTagline`, `companyRuc`, `companyEmail`, `heroTitle`, `heroSubtitle`, `heroBadge` y `heroCta`.
+
 ---
 
 ## Lista de Verificación Antes de Desplegar
@@ -338,5 +370,6 @@ Get-ExecutionPolicy
 - [ ] Validar que en celular (375px) `document.documentElement.scrollWidth === document.documentElement.clientWidth`.
 - [ ] Validar que el botón "Móvil" en `/demo/preview` muestre la réplica exacta de 390px sin desbordes de escritorio.
 - [ ] Validar que los halos luminosos y gradientes decorativos se ubiquen en `z-0` y el contenido en `z-10` para garantizar su visibilidad en todo el scroll.
+
 
 
