@@ -54,3 +54,19 @@ Esta guía documenta la disponibilidad de buscadores, calculadoras y filtros int
 ## Módulos Universales
 - **`TourSupportAndFaqs.tsx`:** Presente en las 6 plantillas. Contiene buscador de texto en tiempo real (`<input type="text" />`) con filtrado dinámico de preguntas y respuestas por texto y categoría.
 - **`QuoteModal.tsx`:** Presente en las 6 plantillas. Formulario cotizador con selector de rangos de pasajeros (1, 2, 3-5, 6+) y captura de datos.
+
+---
+
+## 3. Errores Diagnosticados y Solucionados
+
+### Error 1: Desborde y Corte de Borde Ovalado en Selector de Divisas de la Barra Hero
+- **Síntoma / Mensaje de Error:** En el Diseño 6 Esmeralda (`ModernEmeraldTemplate.tsx`), el selector de moneda `[USD] PEN EUR` se sale del contenedor ovalado de la barra de búsqueda en el Hero, cortándose con el borde curvo y montándose sobre el fondo o la foto de la derecha.
+- **Causa Raíz:** 
+  1. El contenedor utilizaba `sm:rounded-full flex flex-col sm:flex-row` intentando meter 4 controles complejos en línea horizontal (Destino, Pasajeros con botones +/-, Divisa y Botón de reserva).
+  2. Al encontrarse dentro de una columna de 6 espacios en grid (`lg:col-span-6`), el ancho disponible (~500px) era insuficiente para albergar los 680px que requerían los 4 elementos en línea horizontal. La curvatura pronunciada de `sm:rounded-full` cortaba el selector de moneda y expulsaba el botón.
+- **Solución Paso a Paso:**
+  1. Rediseñar la barra flotante a una tarjeta *glassmorphic pod* elegante de dos niveles con `rounded-3xl` y `space-y-3`:
+     - **Fila Superior:** Grid de 2 columnas (`sm:grid-cols-12`) con Destino (6 cols) y Selector de Pasajeros (6 cols), cada uno en su propia tarjeta translúcida `rounded-2xl`.
+     - **Fila Inferior:** Barra con separador superior fino, mostrando la etiqueta y selector de divisa a la izquierda y el botón de acción principal con tarifa en tiempo real calculada a la derecha.
+  2. Resultado: Cero desborde, máxima claridad táctil en móviles y orden visual impecable en cualquier resolución.
+
