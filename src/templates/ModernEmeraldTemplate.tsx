@@ -894,8 +894,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       <header className="relative z-30 border-b border-white/10 bg-[#021219]/90 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.45)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-4">
           
-          {/* Logo y Marca */}
-          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+          {/* Logo y Marca con protección contra textos largos */}
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 max-w-[200px] xs:max-w-[240px] sm:max-w-[290px] md:max-w-[340px] lg:max-w-[250px] xl:max-w-[340px] 2xl:max-w-[400px] shrink">
             {data.logoUrl ? (
               <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl overflow-hidden bg-white/90 p-1 flex items-center justify-center shadow-lg shadow-emerald-500/20 shrink-0">
                 <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
@@ -905,35 +905,42 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <Compass size={20} className="stroke-[2.5]" />
               </div>
             )}
-            <div className="min-w-0">
-              <span className="font-black text-base sm:text-lg tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap leading-snug">
-                {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'NavikX Cusco'} <span className="text-emerald-300 font-medium text-[10px] sm:text-xs bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-full border border-emerald-400/40">{data.companyRuc ? 'RUC VERIFICADO' : (data.destination ? data.destination.split(',')[0] : 'Cusco')}</span>
-              </span>
-              <p className="text-[10px] text-emerald-200/70 font-medium tracking-wide leading-none mt-0.5 truncate hidden sm:block">{data.companyTagline || t.brandTag}</p>
+            <div className="min-w-0 flex flex-col justify-center">
+              <div className="flex items-center gap-1.5 min-w-0">
+                <span className="font-black text-sm sm:text-base lg:text-sm xl:text-base tracking-tight text-white truncate block leading-snug">
+                  {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'NavikX Cusco'}
+                </span>
+                <span className="text-emerald-300 font-medium text-[9px] sm:text-[10px] bg-emerald-500/20 px-1.5 py-0.5 rounded-full border border-emerald-400/40 shrink-0 whitespace-nowrap hidden sm:inline-flex">
+                  {data.companyRuc ? 'RUC' : (data.destination ? data.destination.split(',')[0] : 'Cusco')}
+                </span>
+              </div>
+              <p className="text-[10px] text-emerald-200/70 font-medium tracking-wide leading-none mt-0.5 truncate hidden sm:block">
+                {data.companyTagline || t.brandTag}
+              </p>
             </div>
           </div>
 
-          {/* Menú Desktop Translúcido Flotante (Exactamente 7 links) */}
-          <nav className="hidden lg:flex items-center gap-1 bg-white/[0.08] backdrop-blur-xl p-1.5 rounded-full border border-white/15 shadow-lg text-xs font-semibold text-emerald-100">
-            <a href="#inicio" className="px-3 py-1.5 rounded-full bg-emerald-500 text-[#02181f] font-black shadow-xs transition-all">
+          {/* Menú Desktop Translúcido Flotante Responsivo */}
+          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1 bg-white/[0.08] backdrop-blur-xl p-1 xl:p-1.5 rounded-full border border-white/15 shadow-lg text-[11px] xl:text-xs font-semibold text-emerald-100 shrink-0">
+            <a href="#inicio" className="px-2.5 xl:px-3 py-1 xl:py-1.5 rounded-full bg-emerald-500 text-[#02181f] font-black shadow-xs transition-all">
               {t.navHome}
             </a>
-            <a href="#destinos" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+            <a href="#destinos" className="px-2 xl:px-3 py-1 xl:py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navDestinations}
             </a>
-            <a href="#tours" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+            <a href="#tours" className="px-2 xl:px-3 py-1 xl:py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navTours}
             </a>
-            <a href="#itinerario" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+            <a href="#itinerario" className="px-2 xl:px-3 py-1 xl:py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navItinerary}
             </a>
-            <a href="#incluye" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+            <a href="#incluye" className="px-2 xl:px-3 py-1 xl:py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navServices}
             </a>
-            <a href="#galeria" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+            <a href="#galeria" className="hidden xl:inline-block px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navGallery}
             </a>
-            <a href="#faqs" className="px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+            <a href="#faqs" className="hidden 2xl:inline-block px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navFaqs}
             </a>
           </nav>

@@ -118,3 +118,16 @@ Estos campos deben propagarse coherentemente en:
 - **Síntoma:** El panel derecho de `/demo/new` mostraba "NavikX Tours", "Cusco Patrimonial", etc., sin actualizarse en vivo al escribir la empresa o subir un logo.
 - **Causa Raíz:** Las 6 plantillas de previsualización en el smartphone tenían textos de marca y banners estáticos.
 - **Solución Paso a Paso:** Conectar `companyName`, `companyRuc` y `logoUrl` con truncamiento elegante (`truncate`, `max-w-[140px]`) en los headers y footers del mockup móvil.
+
+---
+
+### Error 5: Desborde y Colisión de Texto Largo de Empresa/Logo con la Barra de Navegación
+- **Síntoma:** Cuando el usuario introduce un nombre de empresa largo o el tour tiene un título largo (ej. *"Vive Tu Aventura (Diseño 6 Esmeralda)"* o *"Andean Horizon Expeditions"*), el texto se monta y se encima sobre la barra flotante de enlaces (`[Inicio] Destinos Tours...`), viéndose amontonado y desordenado.
+- **Causa Raíz:**
+  1. El texto del nombre de la empresa y la insignia (badge) compartían el mismo elemento con `flex whitespace-nowrap` sin `max-width`, sin `min-w-0` y sin `truncate` directo en el string de texto. Al tener `white-space: nowrap`, el texto físico desbordaba el contenedor y se dibujaba directamente encima de los enlaces de navegación.
+  2. En pantallas `lg` (1024px a 1280px), la barra de navegación `<nav>` renderizaba hasta 7 enlaces con padding amplio, requiriendo más de 530px de ancho y chocando con el área de marca y controles de divisas/idioma.
+- **Solución Paso a Paso:**
+  1. En las 6 plantillas (`ModernEmeraldTemplate.tsx`, `PremiumTemplate.tsx`, `AdventureTemplate.tsx`, `BohoTemplate.tsx`, `CulturalTemplate.tsx`, `AgencyPortalTemplate.tsx`), delimitar el contenedor del logo/marca con límites responsivos: `max-w-[170px] xs:max-w-[210px] sm:max-w-[260px] md:max-w-[340px] lg:max-w-[250px] xl:max-w-[340px] shrink`.
+  2. Envolver el nombre comercial en un `span` con `truncate block leading-snug` dentro de un flex container `min-w-0`, y separar la insignia con `shrink-0 whitespace-nowrap hidden sm:inline-flex`.
+  3. En `ModernEmeraldTemplate.tsx`, hacer la barra de navegación responsiva: mostrar los 5 enlaces principales en `lg` con espaciado compacto (`gap-0.5 text-[11px] px-2.5 py-1`), habilitar Galería en `xl:` y FAQs en `2xl:`, garantizando al menos 130px de holgura y cero solapamiento en cualquier resolución.
+

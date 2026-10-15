@@ -429,8 +429,8 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       <nav className="sticky top-0 w-full z-40 bg-white/95 backdrop-blur-xl border-b border-slate-200/80 shadow-xs transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex justify-between items-center gap-2 sm:gap-4 w-full min-w-0">
           
-          {/* Brand Logo & Authority Badge */}
-          <a href="#inicio" className="flex items-center gap-2.5 sm:gap-3 shrink-0 group">
+          {/* Brand Logo & Authority Badge con protección contra textos largos */}
+          <a href="#inicio" className="flex items-center gap-2.5 sm:gap-3 min-w-0 max-w-[200px] xs:max-w-[240px] sm:max-w-[290px] md:max-w-[340px] lg:max-w-[260px] xl:max-w-[340px] shrink group">
             {data.logoUrl ? (
               <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl overflow-hidden bg-white/90 border border-slate-200/80 p-1 flex items-center justify-center shadow-md shadow-slate-900/10 shrink-0 group-hover:scale-105 transition-transform">
                 <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
@@ -440,16 +440,16 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 <Mountain size={20} className="text-white" />
               </div>
             )}
-            <div className="flex flex-col min-w-0">
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="text-base sm:text-xl font-black tracking-tight text-slate-900 leading-snug truncate whitespace-nowrap">
+            <div className="flex flex-col min-w-0 justify-center">
+              <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                <span className="text-sm sm:text-lg lg:text-base xl:text-lg font-black tracking-tight text-slate-900 leading-snug truncate block">
                   {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'TrekExplorer Perú'}
                 </span>
-                <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[9px] sm:text-[10px] font-black uppercase tracking-wider border border-blue-200/60 shrink-0 whitespace-nowrap">
-                  {data.companyRuc ? 'RUC VERIFICADO' : t.brand.badge}
+                <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[9px] sm:text-[10px] font-black uppercase tracking-wider border border-blue-200/60 shrink-0 whitespace-nowrap hidden sm:inline-flex">
+                  {data.companyRuc ? 'RUC' : t.brand.badge}
                 </span>
               </div>
-              <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 leading-none mt-0.5 hidden xs:block truncate whitespace-nowrap">
+              <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 leading-none mt-0.5 hidden xs:block truncate">
                 {data.companyTagline || t.brand.subtitle}
               </span>
             </div>

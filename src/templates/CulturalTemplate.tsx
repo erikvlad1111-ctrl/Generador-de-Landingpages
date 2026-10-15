@@ -125,7 +125,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         {/* Municipal / Heritage Navigation Bar */}
         <nav className="relative z-50 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-4 flex items-center justify-between border-b border-white/15 w-full min-w-0 gap-2">
           {/* Official Emblem / Coat of arms */}
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 min-w-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 max-w-[170px] xs:max-w-[210px] sm:max-w-[260px] md:max-w-[320px] lg:max-w-[250px] xl:max-w-[320px] shrink">
             {data.logoUrl ? (
               <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden bg-white/90 p-1 flex items-center justify-center shadow-md shrink-0 border border-white/30">
                 <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
@@ -135,11 +135,11 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 <Landmark size={20} className="sm:w-[22px] sm:h-[22px]" />
               </div>
             )}
-            <div className="flex flex-col min-w-0 max-w-[140px] xs:max-w-[180px] sm:max-w-[240px]">
-              <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-red-200 truncate leading-snug whitespace-nowrap">
+            <div className="flex flex-col min-w-0 justify-center">
+              <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-red-200 truncate leading-snug">
                 {(data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || t.emblemTitle).toUpperCase()}
               </span>
-              <span className="text-[11px] text-stone-300 tracking-wider font-sans block truncate leading-none mt-0.5 whitespace-nowrap">
+              <span className="text-[10px] sm:text-[11px] text-stone-300 tracking-wider font-sans block truncate leading-none mt-0.5">
                 {data.companyTagline || (data.companyRuc ? `${data.companyRuc}` : t.emblemSub)}
               </span>
             </div>

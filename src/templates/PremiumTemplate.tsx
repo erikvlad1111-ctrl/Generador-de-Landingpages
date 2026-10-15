@@ -390,7 +390,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       {/* 2. ULTRA LUXURY TOP HEADER */}
       <header className="sticky top-0 w-full z-40 bg-[#0a080e]/95 backdrop-blur-xl border-b border-amber-500/20 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.6)]">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex justify-between items-center gap-2 sm:gap-4 w-full min-w-0">
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 max-w-[190px] xs:max-w-[230px] sm:max-w-[280px] md:max-w-[340px] lg:max-w-[250px] xl:max-w-[340px] shrink">
             {data.logoUrl ? (
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl overflow-hidden bg-white/90 p-1 border border-amber-400/50 flex items-center justify-center shrink-0 shadow-[0_0_18px_rgba(245,158,11,0.3)]">
                 <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
@@ -400,21 +400,21 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 <Crown size={isMobile ? 16 : 20} className="text-amber-300 drop-shadow-[0_2px_8px_rgba(245,158,11,0.6)]" />
               </div>
             )}
-            <div className="flex flex-col min-w-0">
+            <div className="flex flex-col min-w-0 justify-center">
               <span 
                 style={{ fontFamily: FONT_CONFIG[luxuryFontVariant].titleFont }}
-                className="text-xs sm:text-sm md:text-base tracking-wider uppercase font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 leading-snug whitespace-nowrap"
+                className="text-xs sm:text-sm md:text-base tracking-wider uppercase font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 leading-snug truncate block"
               >
                 {(data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'Cusco Luxury Collection').toUpperCase()}
               </span>
-              <span className="text-[8px] sm:text-[9px] uppercase tracking-wider text-amber-400/80 font-medium leading-none whitespace-nowrap">
+              <span className="text-[8px] sm:text-[9px] uppercase tracking-wider text-amber-400/80 font-medium leading-none truncate block mt-0.5">
                 {data.companyTagline || (data.companyRuc ? `${data.companyRuc}` : t.hero.privateConciergeBadge)}
               </span>
             </div>
           </div>
 
           {!isMobile && (
-            <nav className="hidden lg:flex items-center gap-4 xl:gap-6 text-xs uppercase tracking-wider text-neutral-300 font-semibold shrink-0">
+            <nav className="hidden lg:flex items-center gap-3 xl:gap-5 2xl:gap-6 text-[11px] xl:text-xs uppercase tracking-wider text-neutral-300 font-semibold shrink-0">
               <a href="#inicio" className="hover:text-amber-300 transition-colors py-1 whitespace-nowrap">
                 {currentLang === 'en' ? 'Home' : currentLang === 'fr' ? 'Accueil' : currentLang === 'pt' ? 'Início' : currentLang === 'it' ? 'Inizio' : 'Inicio'}
               </a>

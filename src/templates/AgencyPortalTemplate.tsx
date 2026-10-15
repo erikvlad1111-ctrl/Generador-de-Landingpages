@@ -1047,7 +1047,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         <div className="max-w-7xl mx-auto px-2.5 sm:px-6 h-14 sm:h-20 flex items-center justify-between gap-2 sm:gap-3">
           
           {/* Brand Logo & Name */}
-          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 max-w-[170px] xs:max-w-[210px] sm:max-w-[260px] md:max-w-[320px] lg:max-w-[250px] xl:max-w-[320px] shrink">
             {data?.logoUrl ? (
               <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-white border border-stone-200/80 p-1 flex items-center justify-center shadow-md shadow-stone-200/50 shrink-0">
                 <img src={data.logoUrl} alt={brandName} className="w-full h-full object-contain" />
@@ -1057,11 +1057,11 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                 <Compass size={17} className="sm:w-6 sm:h-6" />
               </div>
             )}
-            <div className="flex flex-col justify-center min-w-0 max-w-[130px] xs:max-w-[170px] sm:max-w-[240px] md:max-w-[280px]">
-              <span className="font-extrabold text-[11px] sm:text-base md:text-lg tracking-tight text-stone-900 block leading-snug truncate whitespace-nowrap">
+            <div className="flex flex-col justify-center min-w-0">
+              <span className="font-extrabold text-[11px] sm:text-base md:text-lg tracking-tight text-stone-900 block leading-snug truncate">
                 {brandName.toUpperCase()}
               </span>
-              <span className="text-[8px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block truncate leading-none mt-0.5 whitespace-nowrap">
+              <span className="text-[8px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block truncate leading-none mt-0.5">
                 {data?.companyTagline || (data?.companyRuc ? `${data.companyRuc}` : t.officialOperator)}
               </span>
             </div>
