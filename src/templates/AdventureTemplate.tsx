@@ -443,7 +443,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
             <div className="flex flex-col min-w-0">
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <span className="text-base sm:text-xl font-black tracking-tight text-slate-900 leading-snug truncate whitespace-nowrap">
-                  {data.companyName || 'TrekExplorer Perú'}
+                  {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'TrekExplorer Perú'}
                 </span>
                 <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[9px] sm:text-[10px] font-black uppercase tracking-wider border border-blue-200/60 shrink-0 whitespace-nowrap">
                   {data.companyRuc ? 'RUC VERIFICADO' : t.brand.badge}
@@ -1778,7 +1778,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 )}
                 <div>
                   <span className="text-xl font-black text-white tracking-tight">
-                    {data.companyName || 'TrekExplorer Perú'}
+                    {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'TrekExplorer Perú'}
                   </span>
                   <span className="text-[10px] text-slate-400 font-bold block uppercase tracking-wider">
                     {data.companyTagline || (data.companyRuc ? `${data.companyRuc} • Operador Oficial` : t.brand.subtitle)}
@@ -1894,7 +1894,11 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
           {/* C. Bottom Bar / Copyright, Payment Badges & Legal */}
           <div className="pt-8 border-t border-slate-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
-            <p className="text-center md:text-left">{t.footer.rights}</p>
+            <p className="text-center md:text-left">
+              {data.companyName 
+                ? `© 2026 ${data.companyName}${data.companyRuc ? ` • ${data.companyRuc}` : ''}. ${currentLang === 'en' ? 'All rights reserved.' : currentLang === 'pt' ? 'Todos os direitos reservados.' : currentLang === 'fr' ? 'Tous droits réservés.' : currentLang === 'it' ? 'Tutti i diritti riservati.' : 'Todos los derechos reservados.'}`
+                : t.footer.rights}
+            </p>
 
             {/* Payment Methods Badges */}
             <div className="flex items-center gap-2 text-[10px] font-bold tracking-wider text-slate-400 bg-slate-900 px-3 py-1 rounded-full border border-slate-800">
@@ -1990,7 +1994,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         isOpen={isComplaintsOpen}
         onClose={() => setIsComplaintsOpen(false)}
         lang={currentLang}
-        agencyName={data.companyName || data.name || "TrekExplorer Perú • Cusco Creativos S.A.C."}
+        agencyName={data.companyName || data.name || "TrekExplorer Perú"}
         agencyAddress={data.officeAddress || t.office.address}
       />
 
@@ -2000,7 +2004,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         onClose={() => setIsLegalOpen(false)}
         lang={currentLang}
         initialTab={legalTab}
-        agencyName={data.companyName || data.name || "TrekExplorer Perú • Cusco Creativos S.A.C."}
+        agencyName={data.companyName || data.name || "TrekExplorer Perú"}
       />
     </div>
   );

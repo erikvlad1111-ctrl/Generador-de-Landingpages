@@ -405,7 +405,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 style={{ fontFamily: FONT_CONFIG[luxuryFontVariant].titleFont }}
                 className="text-xs sm:text-sm md:text-base tracking-wider uppercase font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 leading-snug whitespace-nowrap"
               >
-                {(data.companyName || 'Cusco Luxury Collection').toUpperCase()}
+                {(data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'Cusco Luxury Collection').toUpperCase()}
               </span>
               <span className="text-[8px] sm:text-[9px] uppercase tracking-wider text-amber-400/80 font-medium leading-none whitespace-nowrap">
                 {data.companyTagline || (data.companyRuc ? `${data.companyRuc}` : t.hero.privateConciergeBadge)}
@@ -1948,15 +1948,21 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             {/* Col 1: VIP Brand & Licensing (4 cols) */}
             <div className="lg:col-span-4 space-y-3.5">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500/20 to-neutral-900 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md">
-                  <Crown size={20} />
-                </div>
+                {data.logoUrl ? (
+                  <div className="w-10 h-10 rounded-2xl overflow-hidden bg-white p-1 border border-amber-500/30 flex items-center justify-center shadow-md shrink-0">
+                    <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
+                  </div>
+                ) : (
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500/20 to-neutral-900 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md">
+                    <Crown size={20} />
+                  </div>
+                )}
                 <div>
                   <span className="font-serif font-black text-white text-base tracking-wide block">
-                    Cusco Creativos VIP Collection
+                    {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'Cusco Luxury Collection'}
                   </span>
                   <span className="text-[10px] text-amber-400/90 tracking-widest uppercase font-bold block">
-                    {t.hero.privateConciergeBadge}
+                    {data.companyTagline || (data.companyRuc ? `${data.companyRuc}` : t.hero.privateConciergeBadge)}
                   </span>
                 </div>
               </div>
@@ -1977,7 +1983,11 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 </div>
                 <div className="flex items-center gap-2 text-neutral-400">
                   <Building2 size={14} className="text-neutral-600 shrink-0" />
-                  <span className="text-[10px] font-mono text-neutral-400">RUC: 20608945123 • Inversiones Turísticas Cusco S.A.C.</span>
+                  <span className="text-[10px] font-mono text-neutral-400">
+                    {data.companyRuc 
+                      ? `${data.companyRuc} • ${data.companyName || 'Cusco Luxury Collection'}` 
+                      : `RUC: 20608945123 • ${data.companyName || 'Inversiones Turísticas Cusco S.A.C.'}`}
+                  </span>
                 </div>
               </div>
             </div>
@@ -2092,7 +2102,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail size={14} className="text-neutral-400 shrink-0" />
-                  <span className="text-neutral-400">concierge@cuscocreativos.com</span>
+                  <span className="text-neutral-400">{data.companyEmail || 'concierge@cuscoluxury.com'}</span>
                 </div>
               </div>
             </div>
@@ -2101,7 +2111,11 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
           {/* Bottom Bar: Copyright, Payments & SSL */}
           <div className="pt-6 border-t border-neutral-900 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-neutral-500">
-            <p className="text-center md:text-left">{t.footer.rights}</p>
+            <p className="text-center md:text-left">
+              {data.companyName 
+                ? `© 2026 ${data.companyName}${data.companyRuc ? ` • ${data.companyRuc}` : ''}. ${currentLang === 'en' ? 'All rights reserved.' : currentLang === 'pt' ? 'Todos os direitos reservados.' : currentLang === 'fr' ? 'Tous droits réservés.' : currentLang === 'it' ? 'Tutti i diritti riservati.' : 'Todos los derechos reservados.'}`
+                : t.footer.rights}
+            </p>
 
             <div className="flex flex-wrap items-center justify-center gap-2 text-[10px] font-bold tracking-wider text-neutral-400 bg-neutral-950 px-3.5 py-1.5 rounded-full border border-neutral-800">
               <span className="text-neutral-500">💳 {t.footer.paymentsTitle}:</span>
@@ -2148,7 +2162,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         isOpen={isComplaintsOpen}
         onClose={() => setIsComplaintsOpen(false)}
         lang={currentLang}
-        agencyName={data.companyName || data.name || "Cusco Creativos VIP Collection • Inversiones Turísticas Cusco S.A.C."}
+        agencyName={data.companyName || data.name || "Cusco Luxury VIP Collection"}
         agencyAddress={data.officeAddress || t.footer.officeDesc}
       />
 
@@ -2158,7 +2172,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         onClose={() => setIsLegalOpen(false)}
         lang={currentLang}
         initialTab={legalTab}
-        agencyName={data.companyName || data.name || "Cusco Creativos VIP Collection • Inversiones Turísticas Cusco S.A.C."}
+        agencyName={data.companyName || data.name || "Cusco Luxury VIP Collection"}
       />
     </div>
   );

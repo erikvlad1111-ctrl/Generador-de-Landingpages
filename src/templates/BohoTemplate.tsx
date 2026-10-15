@@ -394,7 +394,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             )}
             <div className="flex flex-col min-w-0 max-w-[150px] xs:max-w-[190px] sm:max-w-[240px]">
               <span className="font-serif tracking-wider uppercase text-sm sm:text-base font-bold text-stone-800 truncate leading-snug whitespace-nowrap">
-                {data.companyName || 'Boho Travel Journal'}
+                {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'Boho Travel Journal'}
               </span>
               <span className="text-[12px] sm:text-[13px] text-stone-500 font-sans tracking-tight truncate leading-none mt-0.5 whitespace-nowrap">
                 {data.companyTagline || (currentLang === 'en' ? 'Curated Travel Journal • Cusco' : 'Diario de Viajes Curado • Cusco')}
@@ -1891,15 +1891,21 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
           {/* Col 1: Boho Philosophy & Regulatory License (4 cols) */}
           <div className="lg:col-span-4 space-y-3">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-xl bg-[#C86D51]/15 border border-[#C86D51]/30 flex items-center justify-center text-[#C86D51] shrink-0">
-                <Camera size={18} />
-              </div>
+              {data.logoUrl ? (
+                <div className="w-10 h-10 rounded-xl overflow-hidden bg-white p-1 border border-stone-200 shadow-sm flex items-center justify-center shrink-0">
+                  <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain rounded-lg" />
+                </div>
+              ) : (
+                <div className="w-9 h-9 rounded-xl bg-[#C86D51]/15 border border-[#C86D51]/30 flex items-center justify-center text-[#C86D51] shrink-0">
+                  <Camera size={18} />
+                </div>
+              )}
               <div>
                 <span className="font-serif font-bold text-[17px] text-white tracking-wide block">
-                  Boho Travel Journal
+                  {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'Boho Travel Journal'}
                 </span>
                 <span className="text-[13px] text-stone-400 font-sans tracking-wider block">
-                  {t.footer.dircetur}
+                  {data.companyTagline || t.footer.dircetur}
                 </span>
               </div>
             </div>
@@ -1915,7 +1921,11 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </div>
               <div className="flex items-center gap-2 text-stone-400">
                 <Building2 size={15} className="text-stone-500 shrink-0" />
-                <span className="text-[14px] font-mono">RUC: 20608945123 • Cusco Creativos S.A.C.</span>
+                <span className="text-[14px] font-mono">
+                  {data.companyRuc 
+                    ? `${data.companyRuc} • ${data.companyName || 'Boho Travel Journal'}` 
+                    : `RUC: 20608945123 • ${data.companyName || 'Cusco Creativos S.A.C.'}`}
+                </span>
               </div>
             </div>
           </div>
@@ -2030,7 +2040,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               </div>
               <div className="flex items-center gap-2">
                 <Mail size={15} className="text-stone-400 shrink-0" />
-                <span className="text-stone-400">hola@cuscocreativos.com</span>
+                <span className="text-stone-400">{data.companyEmail || 'reservas@bohotravel.com'}</span>
               </div>
             </div>
           </div>
@@ -2039,7 +2049,11 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
         {/* Bottom Bar: Copyright, Payments & Made with Love */}
         <div className="max-w-7xl mx-auto pt-6 border-t border-stone-800/80 flex flex-col md:flex-row items-center justify-between gap-4 text-[13px] sm:text-sm text-stone-500">
-          <p className="text-center md:text-left">{t.footer.rights}</p>
+          <p className="text-center md:text-left">
+            {data.companyName 
+              ? `© 2026 ${data.companyName}${data.companyRuc ? ` • ${data.companyRuc}` : ''}. ${currentLang === 'en' ? 'Licensed tourism operator.' : currentLang === 'pt' ? 'Operador oficial registrado.' : currentLang === 'fr' ? 'Opérateur officiel enregistré.' : currentLang === 'it' ? 'Operatore ufficiale registrato.' : 'Operador formal registrado.'}`
+              : t.footer.rights}
+          </p>
 
           <div className="flex flex-wrap items-center justify-center gap-2 text-[14px] font-bold tracking-wider text-stone-400 bg-stone-950/80 px-3.5 py-1.5 rounded-full border border-stone-800">
             <span className="text-stone-500">💳 {t.footer.paymentsTitle}:</span>
@@ -2137,7 +2151,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         isOpen={isComplaintsOpen}
         onClose={() => setIsComplaintsOpen(false)}
         lang={currentLang}
-        agencyName={data.companyName || data.name || "Boho Travel Journal • Cusco Creativos S.A.C."}
+        agencyName={data.companyName || data.name || "Boho Travel Journal"}
         agencyAddress={data.officeAddress || t.footer.officeDesc}
       />
 
@@ -2147,7 +2161,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         onClose={() => setIsLegalOpen(false)}
         lang={currentLang}
         initialTab={legalTab}
-        agencyName={data.companyName || data.name || "Boho Travel Journal • Cusco Creativos S.A.C."}
+        agencyName={data.companyName || data.name || "Boho Travel Journal"}
       />
     </div>
   );

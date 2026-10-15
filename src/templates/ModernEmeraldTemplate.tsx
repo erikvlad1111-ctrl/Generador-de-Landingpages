@@ -907,7 +907,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             )}
             <div className="min-w-0">
               <span className="font-black text-base sm:text-lg tracking-tight text-white flex items-center gap-1.5 whitespace-nowrap leading-snug">
-                {data.companyName || 'NavikX Cusco'} <span className="text-emerald-300 font-medium text-[10px] sm:text-xs bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-full border border-emerald-400/40">{data.companyRuc ? 'RUC VERIFICADO' : (data.destination ? data.destination.split(',')[0] : 'Cusco')}</span>
+                {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'NavikX Cusco'} <span className="text-emerald-300 font-medium text-[10px] sm:text-xs bg-emerald-500/20 px-1.5 sm:px-2 py-0.5 rounded-full border border-emerald-400/40">{data.companyRuc ? 'RUC VERIFICADO' : (data.destination ? data.destination.split(',')[0] : 'Cusco')}</span>
               </span>
               <p className="text-[10px] text-emerald-200/70 font-medium tracking-wide leading-none mt-0.5 truncate hidden sm:block">{data.companyTagline || t.brandTag}</p>
             </div>
@@ -2445,12 +2445,20 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       <footer className="relative z-10 border-t border-emerald-900/60 bg-[#020d0d] py-10 px-4 sm:px-6 lg:px-8 text-xs text-emerald-200/70">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
-              <Compass size={16} />
-            </div>
+            {data.logoUrl ? (
+              <div className="w-9 h-9 rounded-xl overflow-hidden bg-white/95 p-1 flex items-center justify-center border border-emerald-400/40 shadow-xs shrink-0">
+                <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
+              </div>
+            ) : (
+              <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+                <Compass size={16} />
+              </div>
+            )}
             <div>
-              <span className="font-bold text-white text-sm">{data.companyName || 'NavikX Cusco'}</span>
-              <p className="text-[11px] text-emerald-300/70">{t.footerRights}</p>
+              <span className="font-bold text-white text-sm">{data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'NavikX Cusco'}</span>
+              <p className="text-[11px] text-emerald-300/70">
+                {data.companyTagline ? `${data.companyTagline} • ` : ''}{data.companyRuc ? `${data.companyRuc} • ` : ''}{t.footerRights}
+              </p>
             </div>
           </div>
 
@@ -2490,15 +2498,15 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       <ComplaintsBookModal
         isOpen={isComplaintsOpen}
         onClose={() => setIsComplaintsOpen(false)}
-        agencyName={data.companyName || data.name || 'NavikX Cusco Expeditions • Cusco Creativos S.A.C.'}
-        agencyRuc="20601234567"
+        agencyName={data.companyName || data.name || 'NavikX Cusco Expeditions'}
+        agencyRuc={data.companyRuc || "20601234567"}
         agencyAddress={data.officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
       />
 
       <LegalTermsModal
         isOpen={isTermsOpen}
         onClose={() => setIsTermsOpen(false)}
-        agencyName={data.companyName || data.name || 'NavikX Cusco Expeditions • Cusco Creativos S.A.C.'}
+        agencyName={data.companyName || data.name || 'NavikX Cusco Expeditions'}
         lang={currentLang}
       />
 
@@ -2508,7 +2516,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         onClose={() => setIsBrochureOpen(false)}
         data={data || {}}
         brandName={data.companyName || 'NavikX Cusco'}
-        fullAgencyName={data.companyName ? `${data.companyName} • Operador Turístico` : 'NavikX Cusco Expeditions • Cusco Creativos S.A.C.'}
+        fullAgencyName={data.companyName ? `${data.companyName}${data.companyRuc ? ` • ${data.companyRuc}` : ' • Operador Turístico'}` : 'NavikX Cusco Expeditions'}
         whatsappNumber={guidePhone}
         lang={currentLang}
       />

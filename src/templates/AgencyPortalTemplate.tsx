@@ -603,15 +603,16 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const [lightboxIndex, setLightboxIndex] = useState<number>(0);
 
   // 3. Parámetros y datos dinámicos con saneamiento de presets mock
-  const rawBrand = data?.companyName?.trim();
-  const brandName = (rawBrand && !/^dise[ñn]o\s*\d+/i.test(rawBrand)) 
-    ? rawBrand 
-    : 'Cusco Grand Expeditions';
+  const rawBrand = (data?.companyName?.trim() || data?.name?.trim() || '')
+    .replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '')
+    .trim();
+  const brandName = rawBrand || 'Cusco Grand Expeditions';
 
-  const rawTourTitle = data?.hero?.title?.trim() || data?.name?.trim();
-  const tourTitle = (rawTourTitle && !/^dise[ñn]o\s*\d+/i.test(rawTourTitle))
-    ? rawTourTitle.replace(/:\s*la experiencia definitiva en cusco$/i, '')
-    : 'Machu Picchu de Lujo con Tren Panorámico';
+  const rawTourTitle = (data?.hero?.title?.trim() || data?.name?.trim() || '')
+    .replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '')
+    .replace(/:\s*la experiencia definitiva en cusco$/i, '')
+    .trim();
+  const tourTitle = rawTourTitle || 'Machu Picchu de Lujo con Tren Panorámico';
 
   const fullAgencyName = data?.companyName 
     ? `${brandName}${data.companyRuc ? ` • ${data.companyRuc}` : ''}` 
@@ -655,11 +656,12 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   // 5. HELPERS DE TRADUCCIÓN DINÁMICA DE 5 IDIOMAS
   // -----------------------------------------------------------
   const getLocalizedHeroTitle = (originalTitle?: string) => {
-    let clean = (originalTitle || '').trim();
-    if (!clean || /^dise[ñn]o\s*\d+/i.test(clean)) {
+    let clean = (originalTitle?.trim() || data?.hero?.title?.trim() || data?.name?.trim() || '')
+      .replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '')
+      .replace(/:\s*la experiencia definitiva en cusco$/i, '')
+      .trim();
+    if (!clean) {
       clean = 'Machu Picchu de Lujo con Tren Panorámico';
-    } else {
-      clean = clean.replace(/:\s*la experiencia definitiva en cusco$/i, '');
     }
     return translateText(clean, lang).toUpperCase();
   };
@@ -2279,15 +2281,21 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             {/* Col 1: Brand & Official Licensing (4 cols) */}
             <div className="lg:col-span-4 space-y-3.5">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 shrink-0">
-                  <Compass size={22} />
-                </div>
+                {data?.logoUrl ? (
+                  <div className="w-10 h-10 rounded-2xl overflow-hidden bg-white p-1 border border-stone-700/60 flex items-center justify-center shadow-xs shrink-0">
+                    <img src={data.logoUrl} alt={brandName} className="w-full h-full object-contain" />
+                  </div>
+                ) : (
+                  <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 shrink-0">
+                    <Compass size={22} />
+                  </div>
+                )}
                 <div>
                   <span className="text-base font-black text-white tracking-tight block">
-                    Cusco Creativos Operador Turístico
+                    {brandName}
                   </span>
                   <span className="text-[10px] text-amber-400 font-bold block uppercase tracking-wider">
-                    {t.officialBadge} • {t.officialOperator}
+                    {data?.companyTagline || `${t.officialBadge} • ${t.officialOperator}`}
                   </span>
                 </div>
               </div>
@@ -2308,7 +2316,11 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                 </div>
                 <div className="flex items-center gap-2 text-stone-300">
                   <Building2 size={14} className="text-stone-500 shrink-0" />
-                  <span className="text-[10px] font-mono text-stone-400">RUC: 20608945123 • Cusco Creativos Operador Turístico S.A.C.</span>
+                  <span className="text-[10px] font-mono text-stone-400">
+                    {data?.companyRuc 
+                      ? `${data.companyRuc} • ${brandName}` 
+                      : `RUC: 20608945123 • ${brandName}`}
+                  </span>
                 </div>
               </div>
             </div>
@@ -2423,7 +2435,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail size={14} className="text-rose-400 shrink-0" />
-                  <span className="text-stone-400">{t.footerEmail}</span>
+                  <span className="text-stone-400">{data?.companyEmail || t.footerEmail}</span>
                 </div>
               </div>
             </div>

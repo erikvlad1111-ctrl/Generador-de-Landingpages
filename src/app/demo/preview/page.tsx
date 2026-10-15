@@ -97,6 +97,30 @@ function DemoPreviewContent() {
     return null;
   });
 
+  useEffect(() => {
+    const list = getStoredLandings();
+    let selected: LandingData | null = null;
+    if (slugQuery) {
+      selected = list.find(item => item.slug.toLowerCase() === slugQuery.toLowerCase()) || null;
+    }
+    if (!selected && templateQuery) {
+      selected = list.find(item => item.template === templateQuery) || null;
+    }
+    if (!selected) {
+      selected = list[0] || null;
+    }
+    if (selected) {
+      const activeTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery)) ? tierQuery : selected.tier;
+      const isFreeOrBasic = activeTier === 'free' || activeTier === 'basic';
+      setLanding({
+        ...selected,
+        ...(templateQuery ? { template: templateQuery } : {}),
+        ...(tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery) ? { tier: tierQuery } : {}),
+        ...(isFreeOrBasic ? { language: 'es' as LanguageType, languages: ['es' as LanguageType] } : {})
+      });
+    }
+  }, [slugQuery, templateQuery, tierQuery]);
+
   const [viewMode, setViewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [isQrOpen, setIsQrOpen] = useState(false);
@@ -181,9 +205,40 @@ function DemoPreviewContent() {
     }
     const reader = new FileReader();
     reader.onload = (event) => {
-      if (typeof event.target?.result === 'string') {
-        setEditLogoUrl(event.target.result);
-      }
+      const result = event.target?.result;
+      if (typeof result !== 'string') return;
+      
+      const img = new (window as any).Image();
+      img.onload = () => {
+        const MAX_DIM = 400;
+        let width = img.width;
+        let height = img.height;
+        if (width > MAX_DIM || height > MAX_DIM) {
+          if (width > height) {
+            height = Math.round((height * MAX_DIM) / width);
+            width = MAX_DIM;
+          } else {
+            width = Math.round((width * MAX_DIM) / height);
+            height = MAX_DIM;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const isPng = file.type === 'image/png' || file.type === 'image/svg+xml';
+          const compressed = canvas.toDataURL(isPng ? 'image/png' : 'image/webp', 0.85);
+          setEditLogoUrl(compressed);
+        } else {
+          setEditLogoUrl(result);
+        }
+      };
+      img.onerror = () => {
+        setEditLogoUrl(result);
+      };
+      img.src = result;
     };
     reader.readAsDataURL(file);
   };
@@ -383,8 +438,15 @@ function DemoPreviewContent() {
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(publicUrl)}`;
 
   const openEditorWithCurrentData = () => {
-    setEditName(landing.name || '');
-    setEditCompanyName(landing.companyName || '');
+    const rawName = (landing.name || '').replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim();
+    const rawHeroTitle = (landing.hero?.title || landing.name || '')
+      .replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '')
+      .replace(/:\s*la experiencia definitiva en cusco$/i, '')
+      .trim();
+    const rawCompany = (landing.companyName || '').replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim();
+
+    setEditName(rawName);
+    setEditCompanyName(rawCompany);
     setEditLogoUrl(landing.logoUrl || '');
     setEditCompanyRuc(landing.companyRuc || '');
     setEditCompanyTagline(landing.companyTagline || '');
@@ -395,7 +457,7 @@ function DemoPreviewContent() {
     setEditLanguage(landing.language || 'es');
 
     setEditHeroBadge(landing.hero?.badge || '');
-    setEditHeroTitle(landing.hero?.title || '');
+    setEditHeroTitle(rawHeroTitle);
     setEditHeroSubtitle(landing.hero?.subtitle || '');
     setEditHeroCta(landing.hero?.cta || '');
     setEditHeroImage(landing.heroImage || '');
@@ -442,9 +504,14 @@ function DemoPreviewContent() {
   const buildUpdatedLandingData = (): LandingData => {
     if (!landing) throw new Error('No landing selected');
     const isFreeOrBasic = editTier === 'free' || editTier === 'basic';
+    const cleanName = editName.trim() || landing.name;
+    const cleanHeroTitle = editHeroTitle.trim() || cleanName;
+    const cleanCompanyName = editCompanyName.trim() || undefined;
+    const cleanLogoUrl = editLogoUrl.trim() || undefined;
+
     return {
       ...landing,
-      name: editName,
+      name: cleanName,
       template: editTemplate,
       tier: editTier,
       objective: editObjective,
@@ -465,7 +532,7 @@ function DemoPreviewContent() {
       heroImage: editHeroImage,
       hero: {
         badge: editHeroBadge,
-        title: editHeroTitle,
+        title: cleanHeroTitle,
         subtitle: editHeroSubtitle,
         cta: editHeroCta,
       },
@@ -488,8 +555,8 @@ function DemoPreviewContent() {
       officeAddress: editOfficeAddress,
       officeHours: editOfficeHours,
       mapsUrl: editMapsUrl,
-      companyName: editCompanyName.trim() || undefined,
-      logoUrl: editLogoUrl.trim() || undefined,
+      companyName: cleanCompanyName,
+      logoUrl: cleanLogoUrl,
       companyRuc: editCompanyRuc.trim() || undefined,
       companyTagline: editCompanyTagline.trim() || undefined,
       companyEmail: editCompanyEmail.trim() || undefined
@@ -501,6 +568,9 @@ function DemoPreviewContent() {
     const updated = buildUpdatedLandingData();
     setLanding(updated);
     saveLandingToStorage(updated);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('storage'));
+    }
     setRefreshKey(k => k + 1);
     setLiveSavedToast(true);
     setTimeout(() => setLiveSavedToast(false), 2400);
@@ -512,6 +582,9 @@ function DemoPreviewContent() {
     const updated = buildUpdatedLandingData();
     setLanding(updated);
     saveLandingToStorage(updated);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('storage'));
+    }
     setIsEditorOpen(false);
     setRefreshKey(k => k + 1);
   };

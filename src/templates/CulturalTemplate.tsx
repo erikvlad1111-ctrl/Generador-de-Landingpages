@@ -137,7 +137,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             )}
             <div className="flex flex-col min-w-0 max-w-[140px] xs:max-w-[180px] sm:max-w-[240px]">
               <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-red-200 truncate leading-snug whitespace-nowrap">
-                {(data.companyName || t.emblemTitle).toUpperCase()}
+                {(data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || t.emblemTitle).toUpperCase()}
               </span>
               <span className="text-[11px] text-stone-300 tracking-wider font-sans block truncate leading-none mt-0.5 whitespace-nowrap">
                 {data.companyTagline || (data.companyRuc ? `${data.companyRuc}` : t.emblemSub)}
@@ -1120,15 +1120,21 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           
           {/* Column 1: Emblem & Town Name */}
           <div className="md:col-span-3 flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-red-100 border border-red-300 text-red-800 flex items-center justify-center shrink-0 animate-soft-float">
-              <Landmark size={24} />
-            </div>
+            {data.logoUrl ? (
+              <div className="w-12 h-12 rounded-xl overflow-hidden bg-white p-1 border border-stone-200 shadow-sm flex items-center justify-center shrink-0">
+                <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain rounded-lg" />
+              </div>
+            ) : (
+              <div className="w-12 h-12 rounded-xl bg-red-100 border border-red-300 text-red-800 flex items-center justify-center shrink-0 animate-soft-float">
+                <Landmark size={24} />
+              </div>
+            )}
             <div>
               <span className="font-serif font-black text-sm uppercase text-stone-900 block">
-                {t.footer.townName}
+                {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || t.footer.townName}
               </span>
               <span className="text-[11px] text-stone-500 uppercase tracking-widest block font-bold">
-                {t.footer.regionalDir}
+                {data.companyTagline || (data.companyRuc ? `${data.companyRuc}` : t.footer.regionalDir)}
               </span>
             </div>
           </div>
@@ -1190,7 +1196,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               <span>{t.footer.dirceturLic}</span>
             </div>
             <p className="text-[11px] text-stone-500">
-              Operado por Cusco Creativos S.A.C. • RUC: 20608945123 • {t.footer.legalNotice}
+              {data.companyName ? `${data.companyName} • ` : 'Operado por Cusco Patrimonial • '}{data.companyRuc ? `${data.companyRuc} • ` : 'RUC: 20608945123 • '}{t.footer.legalNotice}
             </p>
           </div>
 
@@ -1236,7 +1242,11 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
         {/* Bottom Bar: Copyright & Payment Badges */}
         <div className="max-w-7xl mx-auto pt-6 mt-6 border-t border-stone-100 flex flex-col md:flex-row items-center justify-between gap-4 text-center text-stone-400 text-[11px]">
-          <p>{t.footer.copyright}</p>
+          <p>
+            {data.companyName 
+              ? `© 2026 ${data.companyName}${data.companyRuc ? ` • ${data.companyRuc}` : ''}. ${currentLang === 'en' ? 'All rights reserved.' : currentLang === 'pt' ? 'Todos os direitos reservados.' : currentLang === 'fr' ? 'Tous droits réservés.' : currentLang === 'it' ? 'Tutti i diritti riservati.' : 'Todos los derechos reservados.'}`
+              : t.footer.copyright}
+          </p>
 
           <div className="flex flex-wrap items-center justify-center gap-2 font-bold tracking-wider text-stone-500 bg-stone-50 px-3 py-1 rounded-full border border-stone-200">
             <span className="text-stone-400">💳 {t.footer.paymentsTitle}:</span>
@@ -1305,7 +1315,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         isOpen={isComplaintsOpen}
         onClose={() => setIsComplaintsOpen(false)}
         lang={currentLang}
-        agencyName={data.companyName || data.name || "Cusco Patrimonial • Cusco Creativos S.A.C."}
+        agencyName={data.companyName || data.name || "Cusco Patrimonial"}
         agencyAddress={data.officeAddress || t.footer.officeDesc}
       />
 
@@ -1315,7 +1325,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         onClose={() => setIsLegalOpen(false)}
         lang={currentLang}
         initialTab={legalTab}
-        agencyName={data.companyName || data.name || "Cusco Patrimonial • Cusco Creativos S.A.C."}
+        agencyName={data.companyName || data.name || "Cusco Patrimonial"}
       />
     </div>
   );

@@ -676,6 +676,7 @@ export default function NewLandingDemo() {
   const [companyRuc, setCompanyRuc] = useState('RUC 20608945231');
   const [companyTagline, setCompanyTagline] = useState('Operador Oficial Autorizado DIRCETUR Cusco');
   const [companyEmail, setCompanyEmail] = useState('reservas@andeanhorizon.com');
+  const [isCompanyCustomized, setIsCompanyCustomized] = useState(false);
   const [heroTitle, setHeroTitle] = useState('');
   const [heroSubtitle, setHeroSubtitle] = useState('');
   const [heroBadge, setHeroBadge] = useState('');
@@ -864,10 +865,12 @@ export default function NewLandingDemo() {
     setWhatToBring(preset.whatToBring || []);
     setTrustBadges(preset.trustBadges || []);
     if (preset.aiTone) setAiTone(preset.aiTone);
-    if ((preset as any).companyName) setCompanyName((preset as any).companyName);
-    if ((preset as any).companyTagline) setCompanyTagline((preset as any).companyTagline);
-    if ((preset as any).companyRuc) setCompanyRuc((preset as any).companyRuc);
-    if ((preset as any).companyEmail) setCompanyEmail((preset as any).companyEmail);
+    if (!isCompanyCustomized) {
+      if ((preset as any).companyName) setCompanyName((preset as any).companyName);
+      if ((preset as any).companyTagline) setCompanyTagline((preset as any).companyTagline);
+      if ((preset as any).companyRuc) setCompanyRuc((preset as any).companyRuc);
+      if ((preset as any).companyEmail) setCompanyEmail((preset as any).companyEmail);
+    }
     if ((preset as any).heroTitle) setHeroTitle((preset as any).heroTitle);
     if ((preset as any).heroSubtitle) setHeroSubtitle((preset as any).heroSubtitle);
     if ((preset as any).heroBadge) setHeroBadge((preset as any).heroBadge);
@@ -899,11 +902,43 @@ export default function NewLandingDemo() {
       alert('El archivo de imagen no debe superar los 5MB.');
       return;
     }
+    setIsCompanyCustomized(true);
     const reader = new FileReader();
     reader.onload = (event) => {
-      if (typeof event.target?.result === 'string') {
-        setLogoUrl(event.target.result);
-      }
+      const result = event.target?.result;
+      if (typeof result !== 'string') return;
+      
+      const img = new (window as any).Image();
+      img.onload = () => {
+        const MAX_DIM = 400;
+        let width = img.width;
+        let height = img.height;
+        if (width > MAX_DIM || height > MAX_DIM) {
+          if (width > height) {
+            height = Math.round((height * MAX_DIM) / width);
+            width = MAX_DIM;
+          } else {
+            width = Math.round((width * MAX_DIM) / height);
+            height = MAX_DIM;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const isPng = file.type === 'image/png' || file.type === 'image/svg+xml';
+          const compressed = canvas.toDataURL(isPng ? 'image/png' : 'image/webp', 0.85);
+          setLogoUrl(compressed);
+        } else {
+          setLogoUrl(result);
+        }
+      };
+      img.onerror = () => {
+        setLogoUrl(result);
+      };
+      img.src = result;
     };
     reader.readAsDataURL(file);
   };
@@ -1384,7 +1419,10 @@ export default function NewLandingDemo() {
                 <input 
                   type="text" 
                   value={companyName}
-                  onChange={(e) => setCompanyName(e.target.value)}
+                  onChange={(e) => {
+                    setCompanyName(e.target.value);
+                    setIsCompanyCustomized(true);
+                  }}
                   className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-bold text-slate-900 bg-white"
                   placeholder="Ej. Andean Horizon Tours & Expeditions"
                 />
@@ -1397,7 +1435,10 @@ export default function NewLandingDemo() {
                 <input 
                   type="text" 
                   value={companyRuc}
-                  onChange={(e) => setCompanyRuc(e.target.value)}
+                  onChange={(e) => {
+                    setCompanyRuc(e.target.value);
+                    setIsCompanyCustomized(true);
+                  }}
                   className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-semibold text-slate-900 bg-white"
                   placeholder="Ej. RUC 20608945231 • DIRCETUR Lic. 450"
                 />
@@ -1445,7 +1486,10 @@ export default function NewLandingDemo() {
                     </div>
                     <button
                       type="button"
-                      onClick={() => setLogoUrl('')}
+                      onClick={() => {
+                        setLogoUrl('');
+                        setIsCompanyCustomized(true);
+                      }}
                       className="px-2 py-1 text-[11px] font-bold text-rose-600 hover:text-white hover:bg-rose-600 rounded-lg transition-colors cursor-pointer border border-rose-200 hover:border-rose-600 ml-auto"
                       title="Quitar logo"
                     >
@@ -1467,7 +1511,10 @@ export default function NewLandingDemo() {
                 <input 
                   type="text" 
                   value={logoUrl.startsWith('data:') ? '' : logoUrl}
-                  onChange={(e) => setLogoUrl(e.target.value)}
+                  onChange={(e) => {
+                    setLogoUrl(e.target.value);
+                    setIsCompanyCustomized(true);
+                  }}
                   className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs font-mono text-slate-800 bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
                   placeholder="https://tu-sitio-web.com/imagenes/logo.png"
                 />
@@ -1478,14 +1525,20 @@ export default function NewLandingDemo() {
                 <span className="text-[11px] font-bold text-slate-400">Probar con logos de muestra:</span>
                 <button
                   type="button"
-                  onClick={() => setLogoUrl('https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=120&auto=format&fit=crop&q=80')}
+                  onClick={() => {
+                    setLogoUrl('https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=120&auto=format&fit=crop&q=80');
+                    setIsCompanyCustomized(true);
+                  }}
                   className="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[11px] font-bold border border-indigo-200 cursor-pointer transition-colors"
                 >
                   Logo Escudo Agencia
                 </button>
                 <button
                   type="button"
-                  onClick={() => setLogoUrl('https://images.unsplash.com/photo-1516876437184-593fda40c7ce?w=120&auto=format&fit=crop&q=80')}
+                  onClick={() => {
+                    setLogoUrl('https://images.unsplash.com/photo-1516876437184-593fda40c7ce?w=120&auto=format&fit=crop&q=80');
+                    setIsCompanyCustomized(true);
+                  }}
                   className="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[11px] font-bold border border-indigo-200 cursor-pointer transition-colors"
                 >
                   Logo Montaña Trek
@@ -1493,7 +1546,10 @@ export default function NewLandingDemo() {
                 {logoUrl && (
                   <button
                     type="button"
-                    onClick={() => setLogoUrl('')}
+                    onClick={() => {
+                      setLogoUrl('');
+                      setIsCompanyCustomized(true);
+                    }}
                     className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 text-[11px] font-bold border border-slate-200 cursor-pointer transition-colors"
                   >
                     Restablecer a Icono Vectorial
@@ -1510,7 +1566,10 @@ export default function NewLandingDemo() {
                 <input 
                   type="text" 
                   value={companyTagline}
-                  onChange={(e) => setCompanyTagline(e.target.value)}
+                  onChange={(e) => {
+                    setCompanyTagline(e.target.value);
+                    setIsCompanyCustomized(true);
+                  }}
                   className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-medium text-slate-900 bg-white"
                   placeholder="Ej. Operador Oficial Autorizado DIRCETUR Cusco"
                 />
@@ -1523,7 +1582,10 @@ export default function NewLandingDemo() {
                 <input 
                   type="email" 
                   value={companyEmail}
-                  onChange={(e) => setCompanyEmail(e.target.value)}
+                  onChange={(e) => {
+                    setCompanyEmail(e.target.value);
+                    setIsCompanyCustomized(true);
+                  }}
                   className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-indigo-500 outline-none font-medium text-slate-900 bg-white"
                   placeholder="Ej. reservas@andeanhorizon.com"
                 />
@@ -3170,13 +3232,17 @@ export default function NewLandingDemo() {
 
                   {/* Top Bar Navigation */}
                   <div className="px-3.5 py-2.5 flex items-center justify-between border-b border-white/10 bg-[#021219]/90 backdrop-blur-md sticky top-0 z-20 shadow-xs">
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-5 h-5 rounded-lg bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-[10px]">
-                        🌲
-                      </div>
-                      <div>
-                        <span className="text-[10px] font-black tracking-wider text-white block leading-tight">
-                          NavikX <span className="text-emerald-300 font-medium text-[8px]">Tours</span>
+                    <div className="flex items-center gap-1.5 min-w-0 max-w-[150px]">
+                      {logoUrl ? (
+                        <img src={logoUrl} alt={companyName} className="w-5 h-5 object-contain rounded-lg border border-emerald-400/40 shrink-0" />
+                      ) : (
+                        <div className="w-5 h-5 rounded-lg bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-[10px] shrink-0">
+                          🌲
+                        </div>
+                      )}
+                      <div className="min-w-0 truncate">
+                        <span className="text-[10px] font-black tracking-wider text-white block leading-tight truncate">
+                          {companyName || 'NavikX Tours'}
                         </span>
                       </div>
                     </div>
@@ -3405,15 +3471,10 @@ export default function NewLandingDemo() {
 
                   {/* Sticky Bottom Navigation Bar with Coral Button */}
                   <div className="mt-auto p-2.5 bg-[#02111d]/80 backdrop-blur-xl border-t border-white/10 flex items-center justify-between gap-2 text-[9px] sticky bottom-0 z-20">
-                    <div className="flex items-center gap-2 text-emerald-300/80 text-[8px]">
-                      <div>
-                        <span className="font-bold text-white block">50+</span>
-                        <span>Destinos</span>
-                      </div>
-                      <div className="h-4 w-px bg-emerald-900" />
-                      <div>
-                        <span className="font-bold text-white block">4.8 ★</span>
-                        <span>Rating</span>
+                    <div className="flex items-center gap-2 text-emerald-300/80 text-[8px] min-w-0 max-w-[130px]">
+                      <div className="min-w-0 truncate">
+                        <span className="font-bold text-white block truncate">{companyName || 'NavikX Tours'}</span>
+                        <span className="truncate block text-[7px] text-emerald-300/70">{companyRuc || '50+ Destinos'}</span>
                       </div>
                     </div>
 
@@ -3441,12 +3502,16 @@ export default function NewLandingDemo() {
                     
                     {/* Top Bar with Dynamic Language Switcher */}
                     <div className="absolute top-3 inset-x-3 flex justify-between items-center text-[10px]">
-                      <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-emerald-400 font-extrabold flex items-center gap-1.5 border border-white/10">
-                        <span className="relative flex h-1.5 w-1.5">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                        </span>
-                        DIRCETUR Oficial
+                      <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-white font-extrabold flex items-center gap-1.5 border border-white/10 min-w-0 max-w-[150px]">
+                        {logoUrl ? (
+                          <img src={logoUrl} alt={companyName} className="w-3.5 h-3.5 object-contain rounded shrink-0" />
+                        ) : (
+                          <span className="relative flex h-1.5 w-1.5 shrink-0">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
+                          </span>
+                        )}
+                        <span className="truncate text-[9px]">{companyName || 'DIRCETUR Oficial'}</span>
                       </span>
                       <div className="flex items-center gap-1.5">
                         {/* Selected Languages Switcher in Preview */}
@@ -3548,10 +3613,15 @@ export default function NewLandingDemo() {
                     </div>
 
                     {/* Certifications Footer */}
-                    <div className="pt-1 flex items-center justify-center gap-3 text-[8px] text-stone-400 font-bold">
-                      <span>✓ MINCETUR</span>
-                      <span>✓ DIRCETUR</span>
-                      <span>✓ SAFE TRAVELS</span>
+                    <div className="pt-1 flex flex-col items-center justify-center gap-1 text-[8px] text-stone-400 font-bold">
+                      <div className="flex items-center gap-3">
+                        <span>✓ MINCETUR</span>
+                        <span>✓ DIRCETUR</span>
+                        <span>✓ SAFE TRAVELS</span>
+                      </div>
+                      <div className="text-[7px] text-stone-500 text-center font-normal">
+                        {companyName || 'Cusco Creativos'} {companyRuc ? `• ${companyRuc}` : ''}
+                      </div>
                     </div>
                   </div>
 
@@ -3574,11 +3644,16 @@ export default function NewLandingDemo() {
                   <div className="p-4 space-y-3">
                     {/* Top Header */}
                     <div className="flex justify-between items-center text-[10px] text-stone-600 pb-1 border-b border-stone-200">
-                      <span className="font-extrabold flex items-center gap-1 text-[#C86D51]">
-                        <span>📌</span> BOHO TRAVEL JOURNAL
+                      <span className="font-extrabold flex items-center gap-1 text-[#C86D51] min-w-0 max-w-[140px]">
+                        {logoUrl ? (
+                          <img src={logoUrl} alt={companyName} className="w-3.5 h-3.5 object-contain rounded shrink-0" />
+                        ) : (
+                          <span className="shrink-0">📌</span>
+                        )}
+                        <span className="truncate">{companyName || 'BOHO TRAVEL JOURNAL'}</span>
                       </span>
-                      <span className="bg-[#E8DEC8] px-2 py-0.5 rounded-full font-mono text-[9px] text-stone-800">
-                        CUSCO • PINTEREST
+                      <span className="bg-[#E8DEC8] px-2 py-0.5 rounded-full font-mono text-[9px] text-stone-800 shrink-0">
+                        {companyRuc || 'CUSCO • PINTEREST'}
                       </span>
                     </div>
 
@@ -3663,10 +3738,15 @@ export default function NewLandingDemo() {
                     </div>
 
                     {/* Certifications Footer */}
-                    <div className="pt-1 flex items-center justify-center gap-3 text-[8px] text-stone-500 font-bold">
-                      <span>✓ MINCETUR</span>
-                      <span>✓ DIRCETUR</span>
-                      <span>✓ SAFE TRAVELS</span>
+                    <div className="pt-1 flex flex-col items-center justify-center gap-1 text-[8px] text-stone-500 font-bold">
+                      <div className="flex items-center gap-3">
+                        <span>✓ MINCETUR</span>
+                        <span>✓ DIRCETUR</span>
+                        <span>✓ SAFE TRAVELS</span>
+                      </div>
+                      <div className="text-[7px] text-stone-400 text-center font-normal">
+                        © 2026 {companyName || 'Boho Travel Journal'} {companyRuc ? `• ${companyRuc}` : ''}
+                      </div>
                     </div>
                   </div>
 
@@ -3697,10 +3777,14 @@ export default function NewLandingDemo() {
 
                   {/* Header bar */}
                   <div className="px-4 py-2.5 flex items-center justify-between border-b border-amber-500/15 bg-black/40 backdrop-blur-md">
-                    <div className="flex items-center gap-1.5">
-                      <Crown size={13} className="text-amber-400 shrink-0" />
-                      <span className="text-[11px] font-black tracking-widest text-amber-300">
-                        CUSCO LUXURY VIP
+                    <div className="flex items-center gap-1.5 min-w-0 max-w-[150px]">
+                      {logoUrl ? (
+                        <img src={logoUrl} alt={companyName} className="w-4 h-4 object-contain rounded shrink-0" />
+                      ) : (
+                        <Crown size={13} className="text-amber-400 shrink-0" />
+                      )}
+                      <span className="text-[11px] font-black tracking-widest text-amber-300 truncate">
+                        {companyName ? companyName.toUpperCase() : 'CUSCO LUXURY VIP'}
                       </span>
                     </div>
                     <div className="flex items-center gap-1 text-[8px] font-bold text-amber-400/80 bg-amber-500/10 px-2 py-0.5 rounded-full border border-amber-500/20">
@@ -3874,14 +3958,17 @@ export default function NewLandingDemo() {
                     </div>
 
                     {/* Certifications Footer */}
-                    <div className="pt-2 pb-3 flex items-center justify-center gap-2.5 text-[7px] text-amber-400/70 font-bold tracking-wider">
-                      <span>✓ MINCETUR</span>
-                      <span>•</span>
-                      <span>✓ DIRCETUR</span>
-                      <span>•</span>
-                      <span>✓ SAFE TRAVELS</span>
-                      <span>•</span>
-                      <span>✓ RUC 20</span>
+                    <div className="pt-2 pb-3 flex flex-col items-center justify-center gap-1 text-[7px] text-amber-400/70 font-bold tracking-wider">
+                      <div className="flex items-center gap-2">
+                        <span>✓ MINCETUR</span>
+                        <span>•</span>
+                        <span>✓ DIRCETUR</span>
+                        <span>•</span>
+                        <span>✓ SAFE TRAVELS</span>
+                      </div>
+                      <div className="text-amber-400/50 text-center font-normal">
+                        {companyName || 'Cusco Luxury Collection VIP'} {companyRuc ? `• ${companyRuc}` : '• RUC 20'}
+                      </div>
                     </div>
                   </div>
 
@@ -3914,11 +4001,16 @@ export default function NewLandingDemo() {
                     
                     {/* Top Pill Header */}
                     <div className="relative z-10 flex justify-between items-center text-[10px]">
-                      <span className="bg-white/20 backdrop-blur-md text-white font-bold px-2 py-0.5 rounded-full flex items-center gap-1 border border-white/20">
-                        <span>🌐</span> Discover the World
+                      <span className="bg-white/20 backdrop-blur-md text-white font-bold px-2 py-0.5 rounded-full flex items-center gap-1 border border-white/20 min-w-0 max-w-[140px]">
+                        {logoUrl ? (
+                          <img src={logoUrl} alt={companyName} className="w-3.5 h-3.5 object-contain rounded shrink-0" />
+                        ) : (
+                          <span className="shrink-0">🌐</span>
+                        )}
+                        <span className="truncate">{companyName || 'Discover the World'}</span>
                       </span>
-                      <span className="bg-black/40 backdrop-blur-md text-white font-bold text-[9px] px-2 py-0.5 rounded-full border border-white/20">
-                        {altitude || '4,630 msnm'}
+                      <span className="bg-black/40 backdrop-blur-md text-white font-bold text-[9px] px-2 py-0.5 rounded-full border border-white/20 shrink-0">
+                        {companyRuc || altitude || '4,630 msnm'}
                       </span>
                     </div>
 
@@ -4010,10 +4102,15 @@ export default function NewLandingDemo() {
                     </div>
 
                     {/* Certifications Footer */}
-                    <div className="pt-1 flex items-center justify-center gap-3 text-[8px] text-slate-500 font-bold">
-                      <span>✓ MINCETUR</span>
-                      <span>✓ DIRCETUR</span>
-                      <span>✓ SAFE TRAVELS</span>
+                    <div className="pt-1 flex flex-col items-center justify-center gap-1 text-[8px] text-slate-500 font-bold">
+                      <div className="flex items-center gap-3">
+                        <span>✓ MINCETUR</span>
+                        <span>✓ DIRCETUR</span>
+                        <span>✓ SAFE TRAVELS</span>
+                      </div>
+                      <div className="text-[7px] text-slate-400 text-center font-normal">
+                        © 2026 {companyName || 'TrekExplorer Perú'} {companyRuc ? `• ${companyRuc}` : ''}
+                      </div>
                     </div>
                   </div>
 
@@ -4047,11 +4144,16 @@ export default function NewLandingDemo() {
                       
                       {/* Top Header */}
                       <div className="absolute top-2.5 inset-x-3 flex justify-between items-center text-[10px]">
-                        <span className="bg-red-600/30 backdrop-blur-md px-2 py-0.5 rounded-full text-red-100 font-serif font-black flex items-center gap-1 border border-red-400/40">
-                          <Landmark size={11} /> Qosqo Ancestral
+                        <span className="bg-red-600/30 backdrop-blur-md px-2 py-0.5 rounded-full text-red-100 font-serif font-black flex items-center gap-1 border border-red-400/40 min-w-0 max-w-[140px]">
+                          {logoUrl ? (
+                            <img src={logoUrl} alt={companyName} className="w-3.5 h-3.5 object-contain rounded shrink-0" />
+                          ) : (
+                            <Landmark size={11} className="shrink-0" />
+                          )}
+                          <span className="truncate">{companyName || 'Qosqo Ancestral'}</span>
                         </span>
-                        <span className="bg-black/50 backdrop-blur-md text-red-200 px-2 py-0.5 rounded-full font-bold text-[9px]">
-                          Patrimoine UNESCO
+                        <span className="bg-black/50 backdrop-blur-md text-red-200 px-2 py-0.5 rounded-full font-bold text-[9px] shrink-0">
+                          {companyRuc || 'Patrimoine UNESCO'}
                         </span>
                       </div>
 
@@ -4231,8 +4333,8 @@ export default function NewLandingDemo() {
                   {/* Municipal / Heritage Footer Block */}
                   <div className="p-3 bg-white border-t border-red-200/80 space-y-1.5 text-[8px] text-stone-600 text-left">
                     <div className="flex items-center justify-between font-serif font-bold text-stone-900">
-                      <span>🏛️ Cusco Patrimonial</span>
-                      <span className="text-red-700 font-bold">DIRCETUR Oficial</span>
+                      <span className="truncate max-w-[150px]">{companyName ? `🏛️ ${companyName}` : '🏛️ Cusco Patrimonial'}</span>
+                      <span className="text-red-700 font-bold">{companyRuc || 'DIRCETUR Oficial'}</span>
                     </div>
                     <p className="text-stone-500 line-clamp-1">
                       {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}

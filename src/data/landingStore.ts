@@ -789,7 +789,13 @@ export function saveLandingToStorage(landing: LandingData): void {
     }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
   } catch (err) {
-    console.error('Error saving landing to localStorage', err);
+    console.error('Error saving landing to localStorage, attempting quota recovery', err);
+    try {
+      // Si la cuota de localStorage se llenó, guardar prioritariamente la landing activa
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([landing]));
+    } catch (fallbackErr) {
+      console.error('Fatal: localStorage quota exceeded even for single landing', fallbackErr);
+    }
   }
 }
 
