@@ -831,6 +831,48 @@ export function deleteLandingFromStorage(id: string): LandingData[] {
   }
 }
 
+export function resetAllLandingsToDefault(): LandingData[] {
+  if (typeof window === 'undefined') return INITIAL_LANDINGS;
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_LANDINGS));
+    return [...INITIAL_LANDINGS];
+  } catch {
+    return [...INITIAL_LANDINGS];
+  }
+}
+
+export function resetCurrentLanding(idOrSlug: string, fallbackTemplate?: TemplateType): LandingData | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    let initial = INITIAL_LANDINGS.find(
+      l => l.id === idOrSlug || l.slug.toLowerCase() === idOrSlug.toLowerCase()
+    );
+    if (!initial && fallbackTemplate) {
+      initial = INITIAL_LANDINGS.find(l => l.template === fallbackTemplate);
+    }
+    if (!initial) {
+      initial = INITIAL_LANDINGS.find(l => l.template === idOrSlug as TemplateType);
+    }
+
+    if (initial) {
+      const list = getStoredLandings();
+      const idx = list.findIndex(
+        l => l.id === idOrSlug || l.slug.toLowerCase() === idOrSlug.toLowerCase() || l.id === initial!.id
+      );
+      if (idx >= 0) {
+        list[idx] = { ...initial };
+      } else {
+        list.push({ ...initial });
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+      return { ...initial };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 export function simulateAiGeneration(params: {
   name: string;
   guideName: string;

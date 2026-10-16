@@ -129,7 +129,9 @@ export default function AdventureBookingCard({
                 {isEn ? 'Hikers' : isPt ? 'Viajantes' : isFr ? 'Randonneurs' : isIt ? 'Partecipanti' : 'Excursionistas'}
               </span>
               <span className="text-xs font-black text-white block">
-                {passengers} {passengers === 1 ? (isEn ? 'hiker' : 'persona') : (isEn ? 'hikers' : 'personas')}
+                {passengers} {passengers === 1 
+                  ? (isEn ? 'hiker' : isPt ? 'viajante' : isFr ? 'randonneur' : isIt ? 'partecipante' : 'excursionista') 
+                  : (isEn ? 'hikers' : isPt ? 'viajantes' : isFr ? 'randonneurs' : isIt ? 'partecipanti' : 'excursionistas')}
               </span>
             </div>
           </div>

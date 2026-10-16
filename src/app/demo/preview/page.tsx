@@ -61,7 +61,7 @@ import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import CatalogToursEditorModal from '@/components/common/CatalogToursEditorModal';
 import { SAMPLE_TOUR_IMAGES } from '@/data/sampleImages';
-import { getStoredLandings, saveLandingToStorage, LandingData } from '@/data/landingStore';
+import { getStoredLandings, saveLandingToStorage, resetCurrentLanding, resetAllLandingsToDefault, INITIAL_LANDINGS, LandingData } from '@/data/landingStore';
 import { TemplateType, PlanTier, LanguageType, ObjectiveType, ItineraryItem, FAQItem, TestimonialItem, CatalogTourItem } from '@/types/landing';
 import { OFFICIAL_PERUVIAN_GUIDE_PRESETS, getSanitizedGuideAvatar } from '@/utils/guideAvatars';
 
@@ -75,15 +75,21 @@ function DemoPreviewContent() {
     const list = getStoredLandings();
     let selected: LandingData | null = null;
     if (slugQuery) {
-      const found = list.find(item => item.slug === slugQuery);
+      const found = list.find(item => item.slug.toLowerCase() === slugQuery.toLowerCase());
       if (found) selected = found;
     }
     if (!selected && templateQuery) {
-      const foundByTpl = list.find(item => item.template === templateQuery);
-      if (foundByTpl) selected = foundByTpl;
+      // Priorizar la plantilla oficial de fábrica para garantizar que siempre se muestre el contenido limpio y profesional
+      const officialTpl = INITIAL_LANDINGS.find(item => item.template === templateQuery);
+      if (officialTpl) {
+        selected = officialTpl;
+      } else {
+        const foundByTpl = list.find(item => item.template === templateQuery);
+        if (foundByTpl) selected = foundByTpl;
+      }
     }
     if (!selected) {
-      selected = list[0] || null;
+      selected = INITIAL_LANDINGS[0] || list[0] || null;
     }
     if (selected) {
       const activeTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery)) ? tierQuery : selected.tier;
@@ -105,10 +111,10 @@ function DemoPreviewContent() {
       selected = list.find(item => item.slug.toLowerCase() === slugQuery.toLowerCase()) || null;
     }
     if (!selected && templateQuery) {
-      selected = list.find(item => item.template === templateQuery) || null;
+      selected = INITIAL_LANDINGS.find(item => item.template === templateQuery) || list.find(item => item.template === templateQuery) || null;
     }
     if (!selected) {
-      selected = list[0] || null;
+      selected = INITIAL_LANDINGS[0] || list[0] || null;
     }
     if (selected) {
       const activeTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery)) ? tierQuery : selected.tier;
@@ -127,6 +133,7 @@ function DemoPreviewContent() {
   const [isQrOpen, setIsQrOpen] = useState(false);
   const [isDeployModalOpen, setIsDeployModalOpen] = useState(false);
   const [publishToast, setPublishToast] = useState(false);
+  const [resetToast, setResetToast] = useState(false);
   const [copied, setCopied] = useState(false);
 
   const [refreshKey, setRefreshKey] = useState(0);
@@ -438,68 +445,84 @@ function DemoPreviewContent() {
 
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(publicUrl)}`;
 
-  const openEditorWithCurrentData = () => {
-    const rawName = (landing.name || '').replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim();
-    const rawHeroTitle = (landing.hero?.title || landing.name || '')
+  const populateEditorWithLanding = (l: LandingData) => {
+    const rawName = (l.name || '').replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim();
+    const rawHeroTitle = (l.hero?.title || l.name || '')
       .replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '')
       .replace(/:\s*la experiencia definitiva en cusco$/i, '')
       .trim();
-    const rawCompany = (landing.companyName || '').replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim();
+    const rawCompany = (l.companyName || '').replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim();
 
     setEditName(rawName);
     setEditCompanyName(rawCompany);
-    setEditLogoUrl(landing.logoUrl || '');
-    setEditCompanyRuc(landing.companyRuc || '');
-    setEditCompanyTagline(landing.companyTagline || '');
-    setEditCompanyEmail(landing.companyEmail || '');
-    setEditTemplate(landing.template || 'adventure');
-    setEditTier(landing.tier || 'advance');
-    setEditObjective(landing.objective || 'quote');
-    setEditLanguage(landing.language || 'es');
+    setEditLogoUrl(l.logoUrl || '');
+    setEditCompanyRuc(l.companyRuc || '');
+    setEditCompanyTagline(l.companyTagline || '');
+    setEditCompanyEmail(l.companyEmail || '');
+    setEditTemplate(l.template || 'adventure');
+    setEditTier(l.tier || 'advance');
+    setEditObjective(l.objective || 'quote');
+    setEditLanguage(l.language || 'es');
 
-    setEditHeroBadge(landing.hero?.badge || '');
+    setEditHeroBadge(l.hero?.badge || '');
     setEditHeroTitle(rawHeroTitle);
-    setEditHeroSubtitle(landing.hero?.subtitle || '');
-    setEditHeroCta(landing.hero?.cta || '');
-    setEditHeroImage(landing.heroImage || '');
+    setEditHeroSubtitle(l.hero?.subtitle || '');
+    setEditHeroCta(l.hero?.cta || '');
+    setEditHeroImage(l.heroImage || '');
 
-    setEditAboutTitle(landing.about?.title || '');
-    setEditAboutContent(landing.about?.content || '');
+    setEditAboutTitle(l.about?.title || '');
+    setEditAboutContent(l.about?.content || '');
 
-    setEditPrice(landing.price || '');
-    setEditDuration(landing.duration || '');
-    setEditDifficulty(landing.difficulty || '');
-    setEditDestination(landing.destination || '');
-    setEditAltitude(landing.altitude || '');
-    setEditGroupType(landing.groupType || '');
-    setEditTargetAudience(landing.targetAudience || '');
+    setEditPrice(l.price || '');
+    setEditDuration(l.duration || '');
+    setEditDifficulty(l.difficulty || '');
+    setEditDestination(l.destination || '');
+    setEditAltitude(l.altitude || '');
+    setEditGroupType(l.groupType || '');
+    setEditTargetAudience(l.targetAudience || '');
 
-    setEditWhatsapp(landing.whatsapp || '');
-    setEditGuideName(landing.guideName || '');
-    setEditGuideCert(landing.guideCert || '');
-    setEditGuideLanguages(landing.guideLanguages || '');
-    setEditGuideAvatar(getSanitizedGuideAvatar(landing.guideAvatar, landing.guideName));
+    setEditWhatsapp(l.whatsapp || '');
+    setEditGuideName(l.guideName || '');
+    setEditGuideCert(l.guideCert || '');
+    setEditGuideLanguages(l.guideLanguages || '');
+    setEditGuideAvatar(getSanitizedGuideAvatar(l.guideAvatar, l.guideName));
 
-    setEditFeaturesTitle(landing.features?.title || '');
-    setEditFeaturesItems(landing.features?.items?.join('\n') || '');
+    setEditFeaturesTitle(l.features?.title || '');
+    setEditFeaturesItems(l.features?.items?.join('\n') || '');
 
-    setEditNotIncluded(landing.notIncluded?.join('\n') || '');
-    setEditWhatToBring(landing.whatToBring?.join('\n') || '');
-    setEditTrustBadges(landing.trustBadges?.join('\n') || '');
+    setEditNotIncluded(l.notIncluded?.join('\n') || '');
+    setEditWhatToBring(l.whatToBring?.join('\n') || '');
+    setEditTrustBadges(l.trustBadges?.join('\n') || '');
 
-    setEditItinerary(landing.itinerary || []);
-    setEditFaqs(landing.faqs || []);
-    setEditTestimonials(landing.testimonials || []);
+    setEditItinerary(l.itinerary || []);
+    setEditFaqs(l.faqs || []);
+    setEditTestimonials(l.testimonials || []);
 
-    setEditGalleryImages(landing.galleryImages?.join('\n') || '');
-    setEditOfficeAddress(landing.officeAddress || '');
-    setEditOfficeHours(landing.officeHours || '');
-    setEditMapsUrl(landing.mapsUrl || '');
+    setEditGalleryImages(l.galleryImages?.join('\n') || '');
+    setEditOfficeAddress(l.officeAddress || '');
+    setEditOfficeHours(l.officeHours || '');
+    setEditMapsUrl(l.mapsUrl || '');
 
-    setCatalogTours(landing.catalogTours || []);
+    setCatalogTours(l.catalogTours || []);
+  };
 
+  const openEditorWithCurrentData = () => {
+    if (!landing) return;
+    populateEditorWithLanding(landing);
     setActiveEditorTab('general');
     setIsEditorOpen(true);
+  };
+
+  const handleResetToOfficial = () => {
+    if (!landing) return;
+    const restored = resetCurrentLanding(landing.id, landing.template);
+    if (restored) {
+      setLanding(restored);
+      populateEditorWithLanding(restored);
+      setRefreshKey(k => k + 1);
+      setResetToast(true);
+      setTimeout(() => setResetToast(false), 3000);
+    }
   };
 
   const buildUpdatedLandingData = (): LandingData => {
@@ -708,6 +731,17 @@ function DemoPreviewContent() {
                 <span>Editar Landing</span>
               </button>
 
+              {/* Reset to Factory Original Values */}
+              <button
+                type="button"
+                onClick={handleResetToOfficial}
+                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-slate-800/80 hover:bg-rose-950/40 text-slate-300 hover:text-rose-300 font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-rose-500/50 cursor-pointer shadow-xs shrink-0"
+                title="Restablecer textos, títulos y logística al diseño oficial original de fábrica (limpia textos de prueba guardados)"
+              >
+                <RotateCcw size={14} className="text-slate-400 group-hover:text-rose-400 shrink-0" />
+                <span className="hidden xl:inline">Restablecer Fábrica</span>
+              </button>
+
               {/* QR Code */}
               <button
                 onClick={() => setIsQrOpen(true)}
@@ -827,6 +861,17 @@ function DemoPreviewContent() {
           <div>
             <p className="font-bold text-xs">¡Landing Publicada Exitosamente!</p>
             <p className="text-[11px] text-emerald-100">Haz clic en &quot;Ver Web&quot; para ver la versión en vivo.</p>
+          </div>
+        </div>
+      )}
+
+      {/* Reset to Factory Toast */}
+      {resetToast && (
+        <div className="fixed top-24 right-6 z-50 bg-emerald-600 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-in slide-in-from-top-3 duration-300 border border-emerald-400/40">
+          <CheckCircle size={20} />
+          <div>
+            <p className="font-bold text-xs">¡Diseño Restablecido al Original!</p>
+            <p className="text-[11px] text-emerald-100">Se han restaurado los textos, títulos y logística oficiales de fábrica.</p>
           </div>
         </div>
       )}
@@ -2300,6 +2345,15 @@ function DemoPreviewContent() {
                     className="px-4 py-2.5 border border-slate-300 text-slate-700 font-bold rounded-xl hover:bg-slate-100 text-xs sm:text-sm cursor-pointer transition-colors"
                   >
                     Cancelar
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleResetToOfficial}
+                    className="px-3 sm:px-4 py-2.5 border border-rose-200 text-rose-700 bg-rose-50 hover:bg-rose-100 font-bold rounded-xl text-xs sm:text-sm cursor-pointer transition-colors flex items-center gap-1.5"
+                    title="Restablecer todos los campos a los textos y datos oficiales de fábrica"
+                  >
+                    <RotateCcw size={14} className="text-rose-600" />
+                    <span>Restablecer Fábrica</span>
                   </button>
                   {liveSavedToast && (
                     <span className="inline-flex items-center gap-1.5 text-xs text-emerald-700 font-bold bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl animate-in fade-in duration-200">

@@ -6,10 +6,10 @@ import {
   FileText, Globe, CalendarDays, Sparkles, Languages, CheckCircle2,
   ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download,
   Layers, Pin, LayoutTemplate, LayoutGrid, List, User, Tag,
-  ChevronLeft, ChevronRight, SlidersHorizontal
+  ChevronLeft, ChevronRight, SlidersHorizontal, RotateCcw
 } from 'lucide-react';
 import DeploymentModal from '@/components/common/DeploymentModal';
-import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, LandingData } from '@/data/landingStore';
+import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, resetAllLandingsToDefault, LandingData } from '@/data/landingStore';
 
 export default function DemoDashboard() {
   const [projects, setProjects] = useState<LandingData[]>(() => getStoredLandings());
@@ -19,6 +19,7 @@ export default function DemoDashboard() {
   const [viewMode, setViewMode] = useState<'cards' | 'table'>('table');
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
   const [selectedLandingForDeploy, setSelectedLandingForDeploy] = useState<LandingData | null>(null);
+  const [resetDemosToast, setResetDemosToast] = useState(false);
 
   // Table scroll & column view controls
   const tableContainerRef = useRef<HTMLDivElement>(null);
@@ -116,6 +117,15 @@ export default function DemoDashboard() {
     if (confirm(`¿Estás seguro de eliminar el proyecto "${name}"?`)) {
       const updated = deleteLandingFromStorage(id);
       setProjects(updated);
+    }
+  };
+
+  const handleResetAllDemos = () => {
+    if (confirm('¿Deseas restablecer todas las landings y plantillas a sus datos oficiales de fábrica? Esto limpiará cualquier texto de prueba guardado en tu navegador.')) {
+      const restored = resetAllLandingsToDefault();
+      setProjects(restored);
+      setResetDemosToast(true);
+      setTimeout(() => setResetDemosToast(false), 3000);
     }
   };
 
@@ -535,6 +545,17 @@ export default function DemoDashboard() {
                 <span>Tabla</span>
               </button>
             </div>
+
+            {/* Reset All Demos to Factory Default */}
+            <button
+              type="button"
+              onClick={handleResetAllDemos}
+              className="px-3 py-1.5 rounded-xl border border-rose-200 bg-rose-50/70 hover:bg-rose-100/90 text-rose-700 font-bold flex items-center gap-1.5 transition-all cursor-pointer text-xs shadow-2xs active:scale-95"
+              title="Restablecer todas las plantillas y tours a sus datos oficiales de fábrica (elimina textos de prueba guardados en el navegador)"
+            >
+              <RotateCcw size={13} className="text-rose-600" />
+              <span className="hidden sm:inline">Restablecer Fábrica</span>
+            </button>
           </div>
         </div>
 
@@ -1063,6 +1084,17 @@ export default function DemoDashboard() {
           onClose={() => setSelectedLandingForDeploy(null)}
           landing={selectedLandingForDeploy}
         />
+      )}
+
+      {/* Toast de confirmación de restablecimiento */}
+      {resetDemosToast && (
+        <div className="fixed top-24 right-6 z-50 bg-emerald-600 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-in slide-in-from-top-3 duration-300 border border-emerald-400/40">
+          <CheckCircle2 size={20} />
+          <div>
+            <p className="font-bold text-xs">¡Plantillas Restablecidas al Original!</p>
+            <p className="text-[11px] text-emerald-100">Se han restaurado todos los tours oficiales y limpiado los textos de prueba.</p>
+          </div>
+        </div>
       )}
     </div>
   );

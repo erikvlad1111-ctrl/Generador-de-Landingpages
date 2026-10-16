@@ -151,3 +151,27 @@ Estos campos deben propagarse coherentemente en:
   3. En `demo/new` y `demo/preview`, renderizar la grilla de 5 presets peruanos oficiales con previsualización en vivo, y actualizar `PRESET_TOURS` con su respectivo `guideAvatar`.
   4. En todas las plantillas (`PremiumTemplate.tsx`, `ModernEmeraldTemplate.tsx`, `AgencyPortalTemplate.tsx`, `CulturalTemplate.tsx`), resolver el avatar siempre a través de `getSanitizedGuideAvatar`.
 
+
+---
+
+### Error 7: Cadenas de Prueba Guardadas en LocalStorage Aparentan ser Valores por Defecto del Diseño ("FRFRFRFR", "FEFRGRG", "GGGTGTGT")
+- **Síntoma / Mensaje:** Al abrir la vista previa de una plantilla (ej. `/demo/preview?template=adventure`) o inspeccionar el diseño, se muestran títulos o textos con letras aleatorias ("FRFRFRFR TTTTGGGBBVVCCC", "GGGTGTGT BBBBB", "FEFRGRG") y el usuario cree que vienen por defecto en el código del diseño.
+- **Causa Raíz:**
+  1. Al probar el creador o editor en sesiones previas, las pruebas locales se guardan en el `localStorage` del navegador bajo `cusco_creativos_landings_v6` con `list.unshift(landing)`.
+  2. En `src/app/demo/preview/page.tsx`, al evaluar `templateQuery` sin `slugQuery`, la búsqueda tomaba el primer elemento de la lista local (`list.find(...) || list[0]`), que correspondía a la landing modificada con los textos de prueba.
+  3. No existía un mecanismo visible para restablecer los datos al diseño limpio oficial sin borrar manualmente la memoria del navegador.
+- **Comando de Diagnóstico:**
+  Comprobar si el texto existe en el repositorio o solo en `localStorage`:
+  ```bash
+  git grep -i "FRFRFRFR" src/
+  ```
+- **Solución Paso a Paso:**
+  1. En `src/data/landingStore.ts`, exportar `resetCurrentLanding(idOrSlug, fallbackTemplate)` y `resetAllLandingsToDefault()`.
+  2. En `src/app/demo/preview/page.tsx`, priorizar la plantilla oficial prístina de `INITIAL_LANDINGS` cuando se accede vía `templateQuery`:
+     ```tsx
+     if (!selected && templateQuery) {
+       selected = INITIAL_LANDINGS.find(item => item.template === templateQuery) || list.find(item => item.template === templateQuery) || null;
+     }
+     ```
+  3. Añadir botón con icono `RotateCcw` "Restablecer Fábrica" en la barra de herramientas superior y en el pie del modal de edición de `/demo/preview`.
+  4. Añadir botón "Restablecer Fábrica" en el panel `/demo` con confirmación y toast de notificación para limpiar cualquier borrador de prueba del navegador con 1 solo clic.

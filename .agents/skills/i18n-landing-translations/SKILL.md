@@ -323,3 +323,17 @@ Guía para diagnosticar y solucionar problemas de traducción, mezcla de idiomas
 
 
 
+
+### Error: Fuga de Idioma en Conteo de Pasajeros de Tarjeta de Reserva ("2 personas" en Portugués/Francés/Italiano/Inglés)
+- **Síntoma / Mensaje:** En la tarjeta de reserva (`AdventureBookingCard.tsx`), al cambiar el idioma a Portugués, Francés, Italiano o Inglés, el selector de pasajeros mostraba `2 personas` en español en lugar de `2 viajantes` (pt), `2 randonneurs` (fr), `2 viaggiatori` (it) o `2 travelers` (en).
+- **Causa Raíz:** La etiqueta pluralizaba con una cadena fija `'persona'` / `'personas'` sin evaluar el idioma activo (`isPt`, `isFr`, `isIt`, `isEn`).
+- **Solución Paso a Paso:** En `AdventureBookingCard.tsx`, computar dinámicamente el sustantivo según el idioma:
+  ```tsx
+  {passengers} {
+    isPt ? (passengers === 1 ? 'viajante' : 'viajantes') :
+    isFr ? (passengers === 1 ? 'randonneur' : 'randonneurs') :
+    isIt ? (passengers === 1 ? 'viaggiatore' : 'viaggiatori') :
+    isEn ? (passengers === 1 ? 'traveler' : 'travelers') :
+    (passengers === 1 ? 'persona' : 'personas')
+  }
+  ```
