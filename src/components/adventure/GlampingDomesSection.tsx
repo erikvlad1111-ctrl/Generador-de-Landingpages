@@ -38,7 +38,7 @@ export default function GlampingDomesSection({ lang = 'es' }: GlampingProps) {
       {
         night: 1,
         name: isEn ? '360° Glass Sky Domes' : isPt ? 'Sky Domes de Cristal 360°' : isFr ? 'Sky Domes de Verre 360°' : isIt ? 'Sky Domes di Vetro 360°' : 'Sky Domes de Cristal 360°',
-        location: 'Soraypampa • 3,900 msnm',
+        location: isEn ? 'Soraypampa • 3,900 masl' : isFr ? 'Soraypampa • 3 900 m d’altitude' : isPt ? 'Soraypampa • 3.900 m de altitude' : isIt ? 'Soraypampa • 3.900 m s.l.m.' : 'Soraypampa • 3,900 msnm',
         temp: isEn ? '-2°C to 4°C (Night)' : isPt ? '-2°C a 4°C (Noite)' : isFr ? '-2°C à 4°C (Nuit)' : isIt ? '-2°C a 4°C (Notte)' : '-2°C a 4°C (Nocturna)',
         image: 'https://images.unsplash.com/photo-1510312305653-8ed496efae75?q=80&w=800&auto=format&fit=crop',
         desc: isEn
@@ -59,7 +59,7 @@ export default function GlampingDomesSection({ lang = 'es' }: GlampingProps) {
       {
         night: 2,
         name: isEn ? 'Andean Forest Domes' : isPt ? 'Domos Andinos de Selva' : isFr ? 'Dômes Andins de Forêt' : isIt ? 'Domi Andini della Foresta' : 'Domos Andinos de Chaullay',
-        location: 'Chaullay • 2,900 msnm',
+        location: isEn ? 'Chaullay • 2,900 masl' : isFr ? 'Chaullay • 2 900 m d’altitude' : isPt ? 'Chaullay • 2.900 m de altitude' : isIt ? 'Chaullay • 2.900 m s.l.m.' : 'Chaullay • 2,900 msnm',
         temp: isEn ? '12°C to 16°C (Pleasant)' : isPt ? '12°C a 16°C (Agradável)' : isFr ? '12°C à 16°C (Agréable)' : isIt ? '12°C a 16°C (Piacevole)' : '12°C a 16°C (Agradable)',
         image: 'https://images.unsplash.com/photo-1504851149312-7a075b496cc7?q=80&w=800&auto=format&fit=crop',
         desc: isEn
@@ -80,7 +80,7 @@ export default function GlampingDomesSection({ lang = 'es' }: GlampingProps) {
       {
         night: 3,
         name: isEn ? 'Jungle Domes & Coffee Camp' : isPt ? 'Jungle Domes & Fazenda de Café' : isFr ? 'Éco-Dômes & Plantation de Café' : isIt ? 'Jungle Domes & Piantagione Caffè' : 'Jungle Domes & Coffee Camp',
-        location: 'Lucmabamba • 2,060 msnm',
+        location: isEn ? 'Lucmabamba • 2,060 masl' : isFr ? 'Lucmabamba • 2 060 m d’altitude' : isPt ? 'Lucmabamba • 2.060 m de altitude' : isIt ? 'Lucmabamba • 2.060 m s.l.m.' : 'Lucmabamba • 2,060 msnm',
         temp: isEn ? '16°C to 20°C (Warm)' : isPt ? '16°C a 20°C (Quente)' : isFr ? '16°C à 20°C (Chaud)' : isIt ? '16°C a 20°C (Caldo)' : '16°C a 20°C (Cálido)',
         image: 'https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=800&auto=format&fit=crop',
         desc: isEn

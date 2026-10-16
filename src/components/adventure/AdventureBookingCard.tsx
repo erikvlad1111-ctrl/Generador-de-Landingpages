@@ -50,12 +50,38 @@ export default function AdventureBookingCard({
     ? (isEn ? 'Private Expedition' : isPt ? 'Expedição Privada' : isFr ? 'Expédition Privée' : isIt ? 'Spedizione Privata' : 'Expedición Privada')
     : (isEn ? 'Small Group (Max 10)' : isPt ? 'Grupo Pequeno (Máx 10)' : isFr ? 'Petit Groupe (Max 10)' : isIt ? 'Piccolo Gruppo (Max 10)' : 'Grupo Reducido (Máx 10)');
 
+  const guideTitle = isEn ? 'Trekking Guide' : isPt ? 'Guia de Trekking' : isFr ? 'Guide de Trekking' : isIt ? 'Guida Trekking' : 'Guía de Trekking';
+  const greeting = isEn
+    ? `Hello ${guideName || guideTitle}, I would like to book the "${tourName}" expedition:\n\n`
+    : isPt
+    ? `Olá ${guideName || guideTitle}, desejo reservar a expedição "${tourName}":\n\n`
+    : isFr
+    ? `Bonjour ${guideName || guideTitle}, je souhaite réserver l'expédition "${tourName}" :\n\n`
+    : isIt
+    ? `Buongiorno ${guideName || guideTitle}, desidero prenotare la spedizione "${tourName}":\n\n`
+    : `Hola ${guideName || guideTitle}, deseo reservar la expedición "${tourName}":\n\n`;
+
+  const hikersLabel = isEn ? 'Hikers' : isPt ? 'Viajantes' : isFr ? 'Randonneurs' : isIt ? 'Partecipanti' : 'Excursionistas';
+  const dateLabel = isEn ? 'Departure date' : isPt ? 'Data de partida' : isFr ? 'Date de départ' : isIt ? 'Data di partenza' : 'Fecha de salida';
+  const toCoordinate = isEn ? 'To be coordinated' : isPt ? 'A coordenar' : isFr ? 'À convenir' : isIt ? 'Da concordare' : 'A coordinar';
+  const rateLabel = isEn ? 'Estimated total fare' : isPt ? 'Tarifa total estimada' : isFr ? 'Tarif total estimé' : isIt ? 'Tariffa totale stimata' : 'Tarifa total estimada';
+  const perPersonLabel = isEn ? 'person' : isPt ? 'pessoa' : isFr ? 'personne' : isIt ? 'persona' : 'persona';
+  const questionClosing = isEn
+    ? 'Do you have spots available for this date?'
+    : isPt
+    ? 'Vocês têm vagas disponíveis para esta data?'
+    : isFr
+    ? 'Avez-vous des disponibilités pour cette date ?'
+    : isIt
+    ? 'Ci sono posti disponibili per questa data?'
+    : '¿Tienen cupos disponibles para esta fecha?';
+
   const whatsappMessage = encodeURIComponent(
-    `Hola ${guideName || 'Guía de Trekking'}, deseo reservar la expedición "${tourName}":\n\n` +
-    `👥 Excursionistas: ${passengers} (${serviceLabel})\n` +
-    `📅 Fecha de salida: ${travelDate || 'A coordinar'}\n` +
-    `💰 Tarifa total estimada: ${formattedTotalPrice} (${formattedUnitPrice} / persona)\n\n` +
-    `¿Tienen cupos disponibles para esta fecha?`
+    `${greeting}` +
+    `👥 ${hikersLabel}: ${passengers} (${serviceLabel})\n` +
+    `📅 ${dateLabel}: ${travelDate || toCoordinate}\n` +
+    `💰 ${rateLabel}: ${formattedTotalPrice} (${formattedUnitPrice} / ${perPersonLabel})\n\n` +
+    `${questionClosing}`
   );
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${whatsappMessage}`;
 

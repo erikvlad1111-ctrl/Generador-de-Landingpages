@@ -3,6 +3,496 @@ import { LanguageType, ItineraryItem, FAQItem } from '@/types/landing';
 // Mapeo exhaustivo de frases, títulos, descripciones y términos turísticos a los 5 idiomas
 const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
   // --- TÍTULOS DE TOURS Y HERO ---
+  'Salkantay Trek 5 Días a Machu Picchu': {
+    es: 'Salkantay Trek 5 Días a Machu Picchu',
+    en: 'Salkantay Trek 5 Days to Machu Picchu',
+    pt: 'Salkantay Trek 5 Dias para Machu Picchu',
+    fr: 'Salkantay Trek 5 Jours vers Machu Picchu',
+    it: 'Salkantay Trek 5 Giorni a Machu Picchu'
+  },
+  'Salkantay Trek 5 Días': {
+    es: 'Salkantay Trek 5 Días',
+    en: 'Salkantay Trek 5 Days',
+    pt: 'Salkantay Trek 5 Dias',
+    fr: 'Salkantay Trek 5 Jours',
+    it: 'Salkantay Trek 5 Giorni'
+  },
+  'Expedición Oficial de Alta Montaña': {
+    es: 'Expedición Oficial de Alta Montaña',
+    en: 'Official High-Altitude Mountain Expedition',
+    pt: 'Expedição Oficial de Alta Montanha',
+    fr: 'Expédition Officielle de Haute Montagne',
+    it: 'Spedizione Ufficiale di Alta Montagna'
+  },
+  'Desafía el legendario paso Salkantay a 4,630 msnm, duerme bajo las estrellas en domos geodésicos de cristal y culmina en la maravilla inca.': {
+    es: 'Desafía el legendario paso Salkantay a 4,630 msnm, duerme bajo las estrellas en domos geodésicos de cristal y culmina en la maravilla inca.',
+    en: 'Conquer the legendary Salkantay Pass at 4,630 m.a.s.l., sleep beneath the stars in crystal glass domes, and conclude at the Inca wonder.',
+    pt: 'Desafie o lendário passo Salkantay a 4.630 m de altitude, durma sob as estrelas em domos geodésicos de cristal e culmine na maravilha inca.',
+    fr: 'Défiez le col mythique de Salkantay à 4 630 m d’altitude, dormez sous les étoiles dans des dômes géodésiques de verre et terminez en apothéose au Machu Picchu.',
+    it: 'Sfida il leggendario passo Salkantay a 4.630 m s.l.m., dormi sotto le stelle in cupole geodetiche di vetro e culmina nella meraviglia inca.'
+  },
+  'Reservar Expedición ($380 USD)': {
+    es: 'Reservar Expedición ($380 USD)',
+    en: 'Book Expedition ($380 USD)',
+    pt: 'Reservar Expedição ($380 USD)',
+    fr: 'Réserver l’Expédition ($380 USD)',
+    it: 'Prenota la Spedizione ($380 USD)'
+  },
+  'Reservar Expedición': {
+    es: 'Reservar Expedición',
+    en: 'Book Expedition',
+    pt: 'Reservar Expedição',
+    fr: 'Réserver l’Expédition',
+    it: 'Prenota la Spedizione'
+  },
+  '5D / 4N': {
+    es: '5D / 4N',
+    en: '5D / 4N',
+    pt: '5D / 4N',
+    fr: '5J / 4N',
+    it: '5G / 4N'
+  },
+  'La ruta de trekking más espectacular hacia Machu Picchu': {
+    es: 'La ruta de trekking más espectacular hacia Machu Picchu',
+    en: 'The Most Spectacular Trekking Route to Machu Picchu',
+    pt: 'A Rota de Trekking Mais Espetacular para Machu Picchu',
+    fr: 'L’Itinéraire de Trekking le Plus Spectaculaire vers le Machu Picchu',
+    it: 'Il Percorso di Trekking Più Spettacolare verso Machu Picchu'
+  },
+  'Elegida entre los 25 mejores trekkings del mundo por National Geographic. Una travesía épica que une glaciares imponentes, campamentos en domos con vista estelar, ceja de selva con plantaciones de café orgánico, baños termales de Cocalmayo y la ciudadela sagrada de Machu Picchu.': {
+    es: 'Elegida entre los 25 mejores trekkings del mundo por National Geographic. Una travesía épica que une glaciares imponentes, campamentos en domos con vista estelar, ceja de selva con plantaciones de café orgánico, baños termales de Cocalmayo y la ciudadela sagrada de Machu Picchu.',
+    en: 'Chosen among the top 25 treks in the world by National Geographic. An epic journey connecting towering glaciers, starlit glass dome campsites, cloud forest organic coffee plantations, Cocalmayo thermal hot springs, and the sacred citadel of Machu Picchu.',
+    pt: 'Eleita entre os 25 melhores trekkings do mundo pela National Geographic. Uma travessia épica unindo geleiras imponentes, acampamento em domos de vidro sob as estrelas, floresta alta com café orgânico, termas de Cocalmayo e a cidade sagrada de Machu Picchu.',
+    fr: 'Élu parmi les 25 plus beaux treks au monde par National Geographic. Une traversée épique reliant des glaciers imposants, des nuits sous dômes vitrés avec vue sur la Voie Lactée, la forêt de nuages et ses plantations de café bio, les thermes naturels de Cocalmayo et la cité sacrée du Machu Picchu.',
+    it: 'Scelto tra i 25 migliori trekking al mondo da National Geographic. Una traversata epica tra ghiacciai maestosi, notti in cupole di vetro sotto le stelle, foreste pluviali con piantagioni di caffè biologico, bagni termali di Cocalmayo e la città sacra di Machu Picchu.'
+  },
+  'Especialistas en Aventura, Domos y Alta Montaña': {
+    es: 'Especialistas en Aventura, Domos y Alta Montaña',
+    en: 'Specialists in High Mountain Adventure, Domes & Trekking',
+    pt: 'Especialistas em Aventura, Domos e Alta Montanha',
+    fr: 'Spécialistes en Aventure de Haute Montagne, Dômes & Trekking',
+    it: 'Specialisti in Avventura di Alta Quota, Domes & Trekking'
+  },
+  'Guía Oficial de Alta Montaña DIRCETUR & Rescatista': {
+    es: 'Guía Oficial de Alta Montaña DIRCETUR & Rescatista',
+    en: 'Official DIRCETUR High-Mountain Guide & Mountain Rescuer',
+    pt: 'Guia Oficial de Alta Montanha DIRCETUR & Socorrista',
+    fr: 'Guide Officiel de Haute Montagne DIRCETUR & Sauveteur',
+    it: 'Guida Ufficiale di Alta Montagna DIRCETUR & Soccorritore'
+  },
+  'Español, Quechua e Inglés Técnico': {
+    es: 'Español, Quechua e Inglés Técnico',
+    en: 'Spanish, Quechua & Fluent Technical English',
+    pt: 'Espanhol, Quechua e Inglês Técnico',
+    fr: 'Espagnol, Quechua et Anglais Technique Fluide',
+    it: 'Spagnolo, Quechua e Inglese Tecnico Fluente'
+  },
+  'Exigente - Alta Montaña (4,630 m)': {
+    es: 'Exigente - Alta Montaña (4,630 m)',
+    en: 'Challenging - High Altitude (4,630 m)',
+    pt: 'Exigente - Alta Montanha (4.630 m)',
+    fr: 'Exigeant - Haute Montagne (4 630 m)',
+    it: 'Impegnativo - Alta Montagna (4.630 m)'
+  },
+  'Grupos Reducidos & Domos Sky VIP': {
+    es: 'Grupos Reducidos & Domos Sky VIP',
+    en: 'Small Groups & VIP Sky Domes',
+    pt: 'Grupos Pequenos & Domos Panorâmicos VIP',
+    fr: 'Petits Groupes & Dômes Panoramiques VIP',
+    it: 'Piccoli Gruppi & Cupole Panoramiche VIP'
+  },
+  'Amantes del Trekking, Parejas y Aventureros': {
+    es: 'Amantes del Trekking, Parejas y Aventureros',
+    en: 'Trekking Lovers, Couples & Outdoor Adventurers',
+    pt: 'Amantes de Trekking, Casais e Aventureiros',
+    fr: 'Passionnés de Trekking, Couples et Baroudeurs',
+    it: 'Amanti del Trekking, Coppie e Avventurosi'
+  },
+  'Lo que incluye esta expedición de montaña': {
+    es: 'Lo que incluye esta expedición de montaña',
+    en: 'What This High-Mountain Expedition Includes',
+    pt: 'O Que Esta Expedição de Alta Montanha Inclui',
+    fr: 'Ce que Comprend cette Expédition de Haute Montagne',
+    it: 'Cosa Include questa Spedizione di Alta Montagna'
+  },
+  'Noches en Sky Domes Geodésicos de Cristal': {
+    es: 'Noches en Sky Domes Geodésicos de Cristal',
+    en: 'Nights in Geodesic Glass Sky Domes',
+    pt: 'Noites em Sky Domes Geodésicos de Cristal',
+    fr: 'Nuitées en Sky Domes Géodésiques de Verre',
+    it: 'Notti in Cupole Geodetiche Panoramiche in Vetro'
+  },
+  'Campamentos privados con vista panorámica a la Vía Láctea y a los nevados Humantay y Salkantay.': {
+    es: 'Campamentos privados con vista panorámica a la Vía Láctea y a los nevados Humantay y Salkantay.',
+    en: 'Private scenic campsites with panoramic views of the Milky Way and the Humantay and Salkantay peaks.',
+    pt: 'Acampamentos privados com vista panorâmica para a Via Láctea e as montanhas Humantay e Salkantay.',
+    fr: 'Campements privés exclusifs avec vue panoramique sur la Voie Lactée et les glaciers Humantay et Salkantay.',
+    it: 'Campi privati con vista panoramica sulla Via Lattea e sui ghiacciai Humantay e Salkantay.'
+  },
+  'Guía de Alta Montaña Certificado DIRCETUR': {
+    es: 'Guía de Alta Montaña Certificado DIRCETUR',
+    en: 'DIRCETUR Certified High-Mountain Guide',
+    pt: 'Guia de Alta Montanha Certificado DIRCETUR',
+    fr: 'Guide de Haute Montagne Diplômé DIRCETUR',
+    it: 'Guida di Alta Montagna Certificata DIRCETUR'
+  },
+  'Líder bilingüe acreditado con balón de oxígeno, botiquín de trauma y pulsioxímetro permanente.': {
+    es: 'Líder bilingüe acreditado con balón de oxígeno, botiquín de trauma y pulsioxímetro permanente.',
+    en: 'Accredited bilingual expedition leader equipped with medical oxygen, trauma first-aid kit, and pulse oximeter.',
+    pt: 'Líder credenciado com cilindro de oxigênio, kit de trauma e oxímetro de pulso permanente.',
+    fr: 'Chef d’expédition accrédité avec bouteille d’oxygène, trousse de secours traumatologique et oxymètre continu.',
+    it: 'Capospedizione bilingue con bombola d\'ossigeno, kit di primo soccorso traumatologico e pulsossimetro costante.'
+  },
+  'Chef de Montaña & Pensión Completa Gourmet': {
+    es: 'Chef de Montaña & Pensión Completa Gourmet',
+    en: 'Mountain Chef & Full Gourmet Board',
+    pt: 'Chef de Montanha & Pensão Completa Gourmet',
+    fr: 'Chef Cuisinier de Montagne & Pension Complète Gourmet',
+    it: 'Chef di Montagna & Pensione Completa Gourmet'
+  },
+  'Desayunos energéticos, almuerzos buffet calientes, lonches con chocolate cusqueño y cenas nutritivas.': {
+    es: 'Desayunos energéticos, almuerzos buffet calientes, lonches con chocolate cusqueño y cenas nutritivas.',
+    en: 'Hearty hot buffet breakfasts, energizing lunches, afternoon Cusco cocoa tea, and nutritious dinners.',
+    pt: 'Café da manhã reforçado, almoços quentes em buffet, lanche com chocolate cusquenho e jantares nutritivos.',
+    fr: 'Petits-déjeuners riches, déjeuners buffet chauds, goûters avec chocolat de Cusco et dîners réparateurs.',
+    it: 'Colazioni abbondanti, pranzi caldi a buffet, merende con cioccolata di Cusco e cene nutrienti.'
+  },
+  'Transporte Turístico & Caballos de Apoyo': {
+    es: 'Transporte Turístico & Caballos de Apoyo',
+    en: 'Tourist Transport & Packhorses',
+    pt: 'Transporte Turístico & Cavalos de Apoio',
+    fr: 'Transport Touristique Privé & Chevaux de Bât',
+    it: 'Trasporto Turistico & Cavalli da Soma'
+  },
+  'Van privada Cusco - Mollepata y arrieros con mulas para transportar hasta 7 kg de tu equipaje.': {
+    es: 'Van privada Cusco - Mollepata y arrieros con mulas para transportar hasta 7 kg de tu equipaje.',
+    en: 'Private van Cusco - Mollepata and packhorses to transport up to 7 kg of your duffle luggage.',
+    pt: 'Van privativa Cusco - Mollepata e tropeiros com mulas para transportar até 7 kg da sua bagagem.',
+    fr: 'Minibus privé Cusco - Mollepata et muletiers avec chevaux pour transporter jusqu’à 7 kg de vos affaires.',
+    it: 'Van privato Cusco - Mollepata e mulattieri con cavalli per trasportare fino a 7 kg del tuo bagaglio.'
+  },
+  'Boletos Oficiales de Tren Panorámico & Machu Picchu': {
+    es: 'Boletos Oficiales de Tren Panorámico & Machu Picchu',
+    en: 'Panoramic Train & Machu Picchu Official Tickets',
+    pt: 'Passagens de Trem Panorâmico & Ingressos para Machu Picchu',
+    fr: 'Billets de Train Panoramique & Entrées Machu Picchu',
+    it: 'Biglietti per Treno Panoramico & Ingressi Machu Picchu'
+  },
+  'Retorno en tren Expedition/Vistadome y boleto de ingreso oficial al circuito inca garantizado.': {
+    es: 'Retorno en tren Expedition/Vistadome y boleto de ingreso oficial al circuito inca garantizado.',
+    en: 'Return scenic train ticket Expedition/Vistadome and guaranteed official Machu Picchu entrance pass.',
+    pt: 'Retorno em trem panorâmico Expedition/Vistadome e entrada oficial para Machu Picchu garantida.',
+    fr: 'Retour en train panoramique Expedition/Vistadome et billet officiel pour le circuit du Machu Picchu garanti.',
+    it: 'Rientro in treno panoramico Expedition/Vistadome e ingresso ufficiale al circuito di Machu Picchu garantito.'
+  },
+  'Bastones de Trekking & Bolsas de Dormir Térmicas': {
+    es: 'Bastones de Trekking & Bolsas de Dormir Térmicas',
+    en: 'Trekking Poles & Thermal Sleeping Bags',
+    pt: 'Bastões de Caminhada & Sacos de Dormir Térmicos',
+    fr: 'Bâtons de Randonnée & Duvets Thermiques Grand Froid',
+    it: 'Bastoncini da Trekking & Sacchi a Pelo Termici'
+  },
+  'Equipamiento profesional de montaña para climas bajo cero homologado para los Andes.': {
+    es: 'Equipamiento profesional de montaña para climas bajo cero homologado para los Andes.',
+    en: 'Professional sub-zero mountain equipment fully rated for high Andean terrain.',
+    pt: 'Equipamento profissional de montanha para clima abaixo de zero homologado para os Andes.',
+    fr: 'Équipement professionnel de montagne certifié pour des températures négatives dans les Andes.',
+    it: 'Attrezzatura professionale da montagna per temperature sottozero omologata per le Ande.'
+  },
+  'Transporte turístico privado ida y vuelta desde tu hotel en Cusco': {
+    es: 'Transporte turístico privado ida y vuelta desde tu hotel en Cusco',
+    en: 'Round-trip private tourist transport directly from your hotel in Cusco',
+    pt: 'Transporte turístico privativo de ida e volta do seu hotel em Cusco',
+    fr: 'Transport touristique privé aller-retour depuis votre hôtel à Cusco',
+    it: 'Trasporto turistico privato andata e ritorno dal tuo hotel a Cusco'
+  },
+  'Noches de alojamiento en Domos de Cristal Sky Domes y hotel boutique en Aguas Calientes': {
+    es: 'Noches de alojamiento en Domos de Cristal Sky Domes y hotel boutique en Aguas Calientes',
+    en: 'Nights in Sky Domes glass campsites and boutique hotel in Aguas Calientes',
+    pt: 'Noites de hospedagem em Sky Domes de cristal e hotel boutique em Aguas Calientes',
+    fr: 'Nuitées en dômes géodésiques Sky Domes et hôtel de charme à Aguas Calientes',
+    it: 'Pernottamenti in cupole di vetro Sky Domes e boutique hotel ad Aguas Calientes'
+  },
+  'Todas las comidas gourmet de montaña preparadas por chef profesional': {
+    es: 'Todas las comidas gourmet de montaña preparadas por chef profesional',
+    en: 'All hot mountain meals freshly prepared by a professional expedition chef',
+    pt: 'Todas as refeições gourmet preparadas na montanha por chef profissional',
+    fr: 'Tous les repas gastronomiques chauds préparés sur place par un chef de haute montagne',
+    it: 'Tutti i pasti gourmet di montagna preparati da chef professionista'
+  },
+  'Guía oficial colegiado DIRCETUR experto en alta montaña y primeros auxilios': {
+    es: 'Guía oficial colegiado DIRCETUR experto en alta montaña y primeros auxilios',
+    en: 'Official licensed DIRCETUR guide specialized in high alpine terrain and Wilderness First Aid',
+    pt: 'Guia oficial registrado na DIRCETUR especialista em alta montanha e primeiros socorros',
+    fr: 'Guide officiel certifié DIRCETUR spécialiste de haute altitude et premiers secours',
+    it: 'Guida ufficiale abilitata DIRCETUR esperta in alta montagna e pronto soccorso'
+  },
+  'Caballos de carga y arrieros para equipaje personal (hasta 7 kg por persona)': {
+    es: 'Caballos de carga y arrieros para equipaje personal (hasta 7 kg por persona)',
+    en: 'Packhorses and horsemen for personal luggage (up to 7 kg per hiker)',
+    pt: 'Cavalos de carga e tropeiros para bagagem pessoal (até 7 kg por pessoa)',
+    fr: 'Chevaux de bât et muletiers pour le sac de voyage (jusqu’à 7 kg par personne)',
+    it: 'Cavalli da soma e mulattieri per il bagaglio personale (fino a 7 kg a persona)'
+  },
+  'Balón de oxígeno medicinal de emergencia y botiquín de primeros auxilios 24/7': {
+    es: 'Balón de oxígeno medicinal de emergencia y botiquín de primeros auxilios 24/7',
+    en: 'Emergency medical oxygen cylinder and comprehensive 24/7 first aid trauma kit',
+    pt: 'Cilindro de oxigênio medicinal de emergência e kit de primeiros socorros 24/7',
+    fr: 'Bouteille d’oxygène médical d’urgence et trousse de premiers secours 24/7',
+    it: 'Bombola di ossigeno medicinale di emergenza e kit di primo soccorso 24/7'
+  },
+  'Boletos oficiales de ingreso a Machu Picchu y tren panorámico de retorno a Ollantaytambo': {
+    es: 'Boletos oficiales de ingreso a Machu Picchu y tren panorámico de retorno a Ollantaytambo',
+    en: 'Official Machu Picchu entrance tickets and scenic panoramic return train to Ollantaytambo',
+    pt: 'Ingressos oficiais para Machu Picchu e trem panorâmico de retorno a Ollantaytambo',
+    fr: 'Billets officiels pour le Machu Picchu et train panoramique de retour vers Ollantaytambo',
+    it: 'Biglietti ufficiali per Machu Picchu e treno panoramico di rientro ad Ollantaytambo'
+  },
+  'Bolsa de dormir térmica (disponible para alquiler por $20 USD)': {
+    es: 'Bolsa de dormir térmica (disponible para alquiler por $20 USD)',
+    en: 'Thermal sleeping bag (available for rent for $20 USD)',
+    pt: 'Saco de dormir térmico (disponível para aluguel por US$ 20)',
+    fr: 'Duvet thermique de haute montagne (disponible en location pour 20 $ USD)',
+    it: 'Sacco a pelo termico da alta quota (disponibile a noleggio per 20 $ USD)'
+  },
+  'Ingreso opcional a las aguas termales de Cocalmayo (S/ 10 PEN)': {
+    es: 'Ingreso opcional a las aguas termales de Cocalmayo (S/ 10 PEN)',
+    en: 'Optional entrance to Cocalmayo natural hot springs (S/ 10 PEN)',
+    pt: 'Entrada opcional para as águas termais de Cocalmayo (S/ 10 PEN)',
+    fr: 'Entrée optionnelle aux bains thermaux de Cocalmayo (10 S/ PEN)',
+    it: 'Ingresso facoltativo alle terme di Cocalmayo (10 S/ PEN)'
+  },
+  'Almuerzo del día 5 en Aguas Calientes': {
+    es: 'Almuerzo del día 5 en Aguas Calientes',
+    en: 'Day 5 lunch in Aguas Calientes town',
+    pt: 'Almoço do 5º dia na vila de Aguas Calientes',
+    fr: 'Déjeuner du jour 5 au village d’Aguas Calientes',
+    it: 'Pranzo del quinto giorno ad Aguas Calientes'
+  },
+  'Propinas voluntarias para el guía, cocinero y arrieros': {
+    es: 'Propinas voluntarias para el guía, cocinero y arrieros',
+    en: 'Voluntary tips for guide, cook, and horsemen',
+    pt: 'Gorjetas voluntárias para o guia, cozinheiro e tropeiros',
+    fr: 'Pourboires volontaires pour le guide, le cuisinier et les muletiers',
+    it: 'Mance facoltative per guida, cuoco e mulattieri'
+  },
+  'Pasaporte físico original vigente (indispensable para ingresar a Machu Picchu)': {
+    es: 'Pasaporte físico original vigente (indispensable para ingresar a Machu Picchu)',
+    en: 'Valid original physical passport (mandatory for Machu Picchu entry)',
+    pt: 'Passaporte original físico válido (obrigatório para entrar em Machu Picchu)',
+    fr: 'Passeport original en cours de validité (indispensable pour entrer au Machu Picchu)',
+    it: 'Passaporto originale valido (indispensabile per accedere a Machu Picchu)'
+  },
+  'Mochila de ataque de 20 a 30 litros para tus objetos personales de diario': {
+    es: 'Mochila de ataque de 20 a 30 litros para tus objetos personales de diario',
+    en: '20-30L daypack for your daily essentials and hydration',
+    pt: 'Mochila de ataque de 20 a 30 litros para seus itens essenciais diários',
+    fr: 'Sac à dos de journée de 20 à 30 litres pour vos affaires indispensables',
+    it: 'Zaino da giornata da 20-30 litri per gli oggetti personali essenziali'
+  },
+  'Botas de trekking con buen agarre y caña media': {
+    es: 'Botas de trekking con buen agarre y caña media',
+    en: 'Sturdy ankle-high trekking boots with good grip',
+    pt: 'Botas de trekking com boa aderência e cano médio',
+    fr: 'Chaussures de randonnée montantes et imperméables avec bonne adhérence',
+    it: 'Scarponi da trekking a caviglia media con ottima aderenza'
+  },
+  'Ropa térmica en capas, cortavientos impermeable y guantes de montaña': {
+    es: 'Ropa térmica en capas, cortavientos impermeable y guantes de montaña',
+    en: 'Layered thermal clothing, waterproof windbreaker, and warm gloves',
+    pt: 'Roupas térmicas em camadas, corta-vento impermeável e luvas de montanha',
+    fr: 'Vêtements thermiques multicouches, coupe-vent imperméable et gants chauds',
+    it: 'Abbigliamento termico a strati, giacca antivento impermeabile e guanti caldi'
+  },
+  'Lentes de sol con protección UV, bloqueador solar SPF 50+ y gorro para el frío': {
+    es: 'Lentes de sol con protección UV, bloqueador solar SPF 50+ y gorro para el frío',
+    en: 'UV protection sunglasses, SPF 50+ sunscreen, and warm fleece beanie',
+    pt: 'Óculos escuros com proteção UV, protetor solar FPS 50+ e gorro térmico',
+    fr: 'Lunettes de soleil avec protection UV, crème solaire SPF 50+ et bonnet polaire',
+    it: 'Occhiali da sole con protezione UV, crema solare SPF 50+ e berretto termico'
+  },
+  'Pastillas para el mal de altura (soroche) y botella de agua reutilizable': {
+    es: 'Pastillas para el mal de altura (soroche) y botella de agua reutilizable',
+    en: 'Altitude sickness medication (soroche pills) and reusable water bottle',
+    pt: 'Remédios para o mal de altitude (soroche) e garrafa de água reutilizável',
+    fr: 'Médicaments contre le mal des montagnes (soroche) et gourde réutilisable',
+    it: 'Pastiglie per il mal di montagna (soroche) e borraccia riutilizzabile'
+  },
+  'Cusco - Mollepata - Soraypampa & Laguna Humantay': {
+    es: 'Cusco - Mollepata - Soraypampa & Laguna Humantay',
+    en: 'Cusco - Mollepata - Soraypampa & Humantay Lake',
+    pt: 'Cusco - Mollepata - Soraypampa & Laguna Humantay',
+    fr: 'Cusco - Mollepata - Soraypampa & Lagune Humantay',
+    it: 'Cusco - Mollepata - Soraypampa & Laguna Humantay'
+  },
+  'Recojo a las 04:30 AM en Cusco. Desayuno en Mollepata y caminata hacia Soraypampa (3,900m). Ascenso por la tarde a la deslumbrante Laguna Humantay (4,200m). Cena andina y noche mágica en domos geodésicos bajo las estrellas.': {
+    es: 'Recojo a las 04:30 AM en Cusco. Desayuno en Mollepata y caminata hacia Soraypampa (3,900m). Ascenso por la tarde a la deslumbrante Laguna Humantay (4,200m). Cena andina y noche mágica en domos geodésicos bajo las estrellas.',
+    en: '04:30 AM pickup in Cusco. Breakfast in Mollepata and trek to Soraypampa (3,900m). Afternoon hike to turquoise Humantay Lake (4,200m). Andean dinner and magical night under the stars in glass domes.',
+    pt: 'Embarque às 04h30 em Cusco. Café da manhã em Mollepata e caminhada para Soraypampa (3.900m). Subida à deslumbrante Laguna Humantay (4.200m). Jantar andino e noite mágica em domos de cristal sob as estrelas.',
+    fr: 'Départ à 04h30 de Cusco. Petit-déjeuner à Mollepata et marche vers Soraypampa (3 900 m). Ascension vers l’éblouissante lagune Humantay (4 200 m). Dîner andin et nuit magique sous les étoiles en dômes de verre.',
+    it: 'Prelievo alle 04:30 a Cusco. Colazione a Mollepata e cammino verso Soraypampa (3.900m). Salita alla spettacolare Laguna Humantay (4.200m). Cena andina e notte magica sotto le stelle in cupole di vetro.'
+  },
+  'Soraypampa - Paso Salkantay (4,630m) - Chaullay': {
+    es: 'Soraypampa - Paso Salkantay (4,630m) - Chaullay',
+    en: 'Soraypampa - Salkantay Pass Summit (4,630m) - Chaullay',
+    pt: 'Soraypampa - Passo Salkantay (4.630m) - Chaullay',
+    fr: 'Soraypampa - Col du Salkantay (4 630m) - Chaullay',
+    it: 'Soraypampa - Passo Salkantay (4.630m) - Chaullay'
+  },
+  'Despertar con mate de coca caliente. Ascenso desafiante al punto más alto: el Paso Salkantay (4,630m) frente al glaciar. Ceremonia de pago a la tierra y descenso hacia el bosque nublado de Chaullay.': {
+    es: 'Despertar con mate de coca caliente. Ascenso desafiante al punto más alto: el Paso Salkantay (4,630m) frente al glaciar. Ceremonia de pago a la tierra y descenso hacia el bosque nublado de Chaullay.',
+    en: 'Wake up with hot coca tea. Challenging ascent to the highest summit: Salkantay Pass (4,630m) facing the glacier. Traditional earth ceremony and descent to Chaullay cloud forest.',
+    pt: 'Despertar com chá de coca quente. Subida desafiadora ao ponto mais alto: o Passo Salkantay (4.630m) diante da geleira. Cerimônia de pagamento à terra e descida para a floresta de Chaullay.',
+    fr: 'Réveil avec thé de coca bien chaud. Ascension du point culminant : le col du Salkantay (4 630 m) face au glacier. Cérémonie d’offrande à la terre et descente vers la haute forêt de Chaullay.',
+    it: 'Risveglio con tè di coca caldo. Salita impegnativa al punto più alto: il Passo Salkantay (4.630m) di fronte al ghiacciaio. Cerimonia tradizionale di offerta alla terra e discesa verso la foresta di Chaullay.'
+  },
+  'Chaullay - Collpapampa - La Playa & Termas de Cocalmayo': {
+    es: 'Chaullay - Collpapampa - La Playa & Termas de Cocalmayo',
+    en: 'Chaullay - Collpapampa - La Playa & Cocalmayo Hot Springs',
+    pt: 'Chaullay - Collpapampa - La Playa & Termas de Cocalmayo',
+    fr: 'Chaullay - Collpapampa - La Playa & Bains de Cocalmayo',
+    it: 'Chaullay - Collpapampa - La Playa & Terme di Cocalmayo'
+  },
+  'Caminata suave por senderos tropicales cruzando cascadas, plantaciones de café orgánico y orquídeas. Tarde de relajación en las aguas termales naturales de Cocalmayo en Santa Teresa.': {
+    es: 'Caminata suave por senderos tropicales cruzando cascadas, plantaciones de café orgánico y orquídeas. Tarde de relajación en las aguas termales naturales de Cocalmayo en Santa Teresa.',
+    en: 'Gentle hike along tropical trails past waterfalls, organic coffee orchards, and wild orchids. Afternoon soaking in the natural thermal hot springs of Cocalmayo in Santa Teresa.',
+    pt: 'Caminhada suave por trilhas tropicais passando por cachoeiras, cafezais orgânicos e orquídeas. Tarde relaxante nas águas termais de Cocalmayo em Santa Teresa.',
+    fr: 'Marche douce sur des sentiers tropicaux parsemés de cascades, caféiers bio et orchidées. Après-midi de détente bien méritée aux sources chaudes de Cocalmayo à Santa Teresa.',
+    it: 'Camminata piacevole lungo sentieri tropicali tra cascate, piantagioni di caffè biologico e orchidee. Pomeriggio di relax nelle sorgenti termali naturali di Cocalmayo a Santa Teresa.'
+  },
+  'Hidroeléctrica - Vías del Tren - Aguas Calientes': {
+    es: 'Hidroeléctrica - Vías del Tren - Aguas Calientes',
+    en: 'Hydroelectric - Train Tracks - Aguas Calientes',
+    pt: 'Hidrelétrica - Trilhos do Trem - Aguas Calientes',
+    fr: 'Hydroélectrique - Voie Ferrée - Aguas Calientes',
+    it: 'Idroelettrica - Binari del Treno - Aguas Calientes'
+  },
+  'Recorrido escénico siguiendo las vías del tren rodeadas de flora subtropical y vistas de Huayna Picchu. Arribo al pueblo de Machu Picchu (Aguas Calientes), acomodación en hotel boutique y cena de coordinación.': {
+    es: 'Recorrido escénico siguiendo las vías del tren rodeadas de flora subtropical y vistas de Huayna Picchu. Arribo al pueblo de Machu Picchu (Aguas Calientes), acomodación en hotel boutique y cena de coordinación.',
+    en: 'Scenic walk along the subtropical railway surrounded by lush greenery and distant views of Huayna Picchu. Arrival in Aguas Calientes, boutique hotel check-in, and briefing dinner.',
+    pt: 'Caminhada panorâmica pelos trilhos do trem cercados por vegetação subtropical e vista do Huayna Picchu. Chegada a Aguas Calientes, check-in no hotel boutique e jantar de briefing.',
+    fr: 'Randonnée le long des rails bordés de végétation subtropicale avec vue sur le Huayna Picchu. Arrivée à Aguas Calientes, installation à l’hôtel de charme et dîner de briefing.',
+    it: 'Passeggiata panoramica lungo i binari del treno immersi nella flora subtropicale con vista su Huayna Picchu. Arrivo ad Aguas Calientes, sistemazione in boutique hotel e cena informativa.'
+  },
+  'Ciudadela Inca de Machu Picchu & Tren a Cusco': {
+    es: 'Ciudadela Inca de Machu Picchu & Tren a Cusco',
+    en: 'Machu Picchu Inca Citadel & Train to Cusco',
+    pt: 'Cidadela Inca de Machu Picchu & Trem para Cusco',
+    fr: 'Citadelle Inca du Machu Picchu & Train pour Cusco',
+    it: 'Cittadella Inca di Machu Picchu & Treno per Cusco'
+  },
+  'Ascenso en bus matutino a Machu Picchu. Recorrido guiado de 2.5 horas por los templos, recintos sagrados y mirador clásico. Por la tarde, tren escénico Expedition/Vistadome hacia Ollantaytambo y transfer privado a Cusco.': {
+    es: 'Ascenso en bus matutino a Machu Picchu. Recorrido guiado de 2.5 horas por los templos, recintos sagrados y mirador clásico. Por la tarde, tren escénico Expedition/Vistadome hacia Ollantaytambo y transfer privado a Cusco.',
+    en: 'Early morning bus up to Machu Picchu. 2.5-hour guided exploration of sacred temples, royal sectors, and classic viewpoint. Afternoon scenic Expedition/Vistadome train to Ollantaytambo and private transfer back to Cusco.',
+    pt: 'Subida em ônibus matinal até Machu Picchu. Visita guiada de 2h30 pelos templos, recintos sagrados e mirante clássico. À tarde, trem panorâmico para Ollantaytambo e traslado privativo a Cusco.',
+    fr: 'Montée en bus matinal vers le Machu Picchu. Visite guidée de 2h30 des temples, secteurs sacrés et belvédère classique. Train panoramique Expedition/Vistadome l’après-midi vers Ollantaytambo et transfert privé à Cusco.',
+    it: 'Salita mattutina in bus verso Machu Picchu. Tour guidato di 2,5 ore tra templi, recinti sacri e punto panoramico classico. Nel pomeriggio treno panoramico per Ollantaytambo e transfer privato a Cusco.'
+  },
+  '¿Cuál es el día más exigente de la caminata?': {
+    es: '¿Cuál es el día más exigente de la caminata?',
+    en: 'What is the most challenging day of the trek?',
+    pt: 'Qual é o dia mais exigente da caminhada?',
+    fr: 'Quel est le jour le plus exigeant de la randonnée ?',
+    it: 'Qual è il giorno più impegnativo del trekking?'
+  },
+  'El Día 2 es el más demandante físicamente: se asciende desde Soraypampa (3,900 m) hasta el paso Salkantay (4,630 m) durante 4 horas y luego se desciende hacia Chaullay (2,900 m). Nuestro guía mantiene un ritmo constante y monitorea la oxigenación de cada viajero.': {
+    es: 'El Día 2 es el más demandante físicamente: se asciende desde Soraypampa (3,900 m) hasta el paso Salkantay (4,630 m) durante 4 horas y luego se desciende hacia Chaullay (2,900 m). Nuestro guía mantiene un ritmo constante y monitorea la oxigenación de cada viajero.',
+    en: 'Day 2 is the most physically demanding: you climb from Soraypampa (3,900m) to Salkantay Pass (4,630m) over 4 hours, then descend into Chaullay (2,900m). Our guide keeps a steady pace and monitors oxygen levels continuously.',
+    pt: 'O Dia 2 é o mais exigente fisicamente: sobe-se de Soraypampa (3.900 m) ao passo Salkantay (4.630 m) durante 4 horas e depois desce-se até Chaullay (2.900 m). Nosso guia mantém ritmo seguro e monitora a oxigenação.',
+    fr: 'Le jour 2 est le plus intense physiquement : montée de Soraypampa (3 900 m) au col du Salkantay (4 630 m) pendant 4 heures puis descente vers Chaullay (2 900 m). Notre guide régule le rythme et contrôle l’oxygénation de chacun.',
+    it: 'Il Giorno 2 è il più impegnativo fisicamente: si sale da Soraypampa (3.900 m) al passo Salkantay (4.630 m) in circa 4 ore e poi si scende fino a Chaullay (2.900 m). La nostra guida mantiene un passo costante e controlla l’ossigenazione.'
+  },
+  '¿Se necesita aclimatación previa en Cusco?': {
+    es: '¿Se necesita aclimatación previa en Cusco?',
+    en: 'Is prior acclimatization in Cusco required?',
+    pt: 'É necessária aclimatação prévia em Cusco?',
+    fr: 'Faut-il une acclimatation préalable à Cusco ?',
+    it: 'È necessaria una previa acclimatazione a Cusco?'
+  },
+  'Sí, recomendamos estar en Cusco al menos 2 días antes de iniciar el trek para adaptarse a la altitud y disfrutar la caminata con total confort y seguridad.': {
+    es: 'Sí, recomendamos estar en Cusco al menos 2 días antes de iniciar el trek para adaptarse a la altitud y disfrutar la caminata con total confort y seguridad.',
+    en: 'Yes, we strongly recommend arriving in Cusco at least 2 full days before the trek to adjust to the elevation and enjoy the route safely and comfortably.',
+    pt: 'Sim, recomendamos ficar em Cusco pelo menos 2 dias antes da trilha para se adaptar à altitude e curtir o passeio com segurança e conforto.',
+    fr: 'Oui, nous recommandons de séjourner à Cusco au moins 2 jours avant le départ pour s’habituer à l’altitude et vivre le trek en toute sérénité.',
+    it: 'Sì, raccomandiamo di trascorrere a Cusco almeno 2 giorni prima del trekking per adattarsi all’altitudine e godersi il cammino in totale sicurezza e comfort.'
+  },
+  '¿Qué peso puedo llevar en los caballos?': {
+    es: '¿Qué peso puedo llevar en los caballos?',
+    en: 'How much luggage weight can I send on the horses?',
+    pt: 'Quanto peso posso enviar nos cavalos?',
+    fr: 'Quel poids peut-on confier aux chevaux ?',
+    it: 'Quanto peso posso caricare sui cavalli?'
+  },
+  'Te entregamos una bolsa de lona (duffle bag) donde puedes guardar hasta 7 kg de ropa y pertenencias que serán llevadas por los caballos durante los primeros 3 días.': {
+    es: 'Te entregamos una bolsa de lona (duffle bag) donde puedes guardar hasta 7 kg de ropa y pertenencias que serán llevadas por los caballos durante los primeros 3 días.',
+    en: 'We provide a heavy-duty duffle bag where you can pack up to 7 kg of clothing and personal gear, carried by packhorses over the first 3 days.',
+    pt: 'Fornecemos uma bolsa de lona onde você pode colocar até 7 kg de roupas e itens pessoais que serão levados pelos cavalos durante os primeiros 3 dias.',
+    fr: 'Nous vous remettons un sac polochon étanche où vous pouvez mettre jusqu’à 7 kg de vêtements et d’effets personnels qui seront portés par les chevaux pendant les 3 premiers jours.',
+    it: 'Ti forniamo un borsone da viaggio (duffle bag) in cui puoi inserire fino a 7 kg di vestiti ed effetti personali che saranno trasportati dai cavalli per i primi 3 giorni.'
+  },
+  '¿Cómo son los domos geodésicos en Soraypampa?': {
+    es: '¿Cómo son los domos geodésicos en Soraypampa?',
+    en: 'What are the geodesic domes in Soraypampa like?',
+    pt: 'Como são os domos geodésicos em Soraypampa?',
+    fr: 'Comment sont équipés les dômes géodésiques à Soraypampa ?',
+    it: 'Come sono i domi geodetici a Soraypampa?'
+  },
+  'Son domos térmicos privados con techos de cristal templado transparente, camas confortables, sábanas abrigadoras y vista directa a las estrellas y a los glaciares.': {
+    es: 'Son domos térmicos privados con techos de cristal templado transparente, camas confortables, sábanas abrigadoras y vista directa a las estrellas y a los glaciares.',
+    en: 'They are heated private domes with transparent glass ceilings, comfortable beds, plush down duvets, and direct views of the Milky Way and glaciers.',
+    pt: 'São domos térmicos privativos com teto de vidro temperado transparente, camas aconchegantes, edredons de pluma e vista direta para as estrelas e geleiras.',
+    fr: 'Ce sont des dômes chauffés privatifs équipés d’un toit en verre trempé transparent, de lits douillets avec couettes en duvet et d’une vue plongeante sur les glaciers et la Voie Lactée.',
+    it: 'Sono cupole termiche private con tetto in vetro temperato trasparente, letti comodi, caldi piumoni e vista diretta sulle stelle e sui ghiacciai.'
+  },
+  '¡La mejor experiencia de nuestras vidas! La noche en los domos mirando las estrellas frente al nevado Salkantay no tiene precio. Marco fue un guía excepcional.': {
+    es: '¡La mejor experiencia de nuestras vidas! La noche en los domos mirando las estrellas frente al nevado Salkantay no tiene precio. Marco fue un guía excepcional.',
+    en: 'The best experience of our lives! The night in the domes watching the stars in front of Mount Salkantay is priceless. Marco was an exceptional guide.',
+    pt: 'A melhor experiência das nossas vidas! A noite nos domos vendo as estrelas em frente ao nevado Salkantay não tem preço. O Marco foi um guia excepcional.',
+    fr: 'La plus belle expérience de nos vies ! La nuit sous les dômes à admirer les étoiles face au mont Salkantay n’a pas de prix. Marco a été un guide exceptionnel.',
+    it: 'La miglior esperienza della nostra vita! La notte nelle cupole a guardare le stelle davanti al ghiacciaio Salkantay non ha prezzo. Marco è stato una guida eccezionale.'
+  },
+  'Excelente organización, puntualidad y seguridad en todo momento. Los bastones y el equipamiento fueron de primera.': {
+    es: 'Excelente organización, puntualidad y seguridad en todo momento. Los bastones y el equipamiento fueron de primera.',
+    en: 'Outstanding organization, punctuality, and safety at all times. Trekking poles and all gear were top notch.',
+    pt: 'Excelente organização, pontualidade e segurança o tempo todo. Os bastões e equipamentos foram de primeira linha.',
+    fr: 'Organisation exemplaire, ponctualité et sécurité sans faille. Les bâtons et tout l’équipement étaient de très haute qualité.',
+    it: 'Organizzazione eccellente, puntualità e massima sicurezza in ogni momento. I bastoncini e tutta l’attrezzatura erano di altissimo livello.'
+  },
+  'Licencia DIRCETUR Oficial N° 2026-CUS': {
+    es: 'Licencia DIRCETUR Oficial N° 2026-CUS',
+    en: 'Official DIRCETUR License No. 2026-CUS',
+    pt: 'Licença DIRCETUR Oficial Nº 2026-CUS',
+    fr: 'Licence Officielle DIRCETUR N° 2026-CUS',
+    it: 'Licenza Ufficiale DIRCETUR N° 2026-CUS'
+  },
+  'Guías Colegiados de Alta Montaña': {
+    es: 'Guías Colegiados de Alta Montaña',
+    en: 'Certified Mountain Guides',
+    pt: 'Guias Credenciados de Alta Montanha',
+    fr: 'Guides Diplômés de Haute Montagne',
+    it: 'Guide Abilitate di Alta Montagna'
+  },
+  'Balón de Oxígeno & Monitoreo 24/7': {
+    es: 'Balón de Oxígeno & Monitoreo 24/7',
+    en: 'Oxygen Cylinder & 24/7 Saturation Check',
+    pt: 'Cilindro de Oxigênio & Monitoramento 24/7',
+    fr: 'Bouteille d’Oxygène & Contrôle 24/7',
+    it: 'Bombola d’Ossigeno & Controllo 24/7'
+  },
+  'Domos de Cristal Certificados': {
+    es: 'Domos de Cristal Certificados',
+    en: 'Certified Glass Sky Domes',
+    pt: 'Domos de Cristal Certificados',
+    fr: 'Dômes Panoramiques Certifiés',
+    it: 'Cupole Panoramiche Certificate'
+  },
+  'Sello Safe Travels Internacional': {
+    es: 'Sello Safe Travels Internacional',
+    en: 'Safe Travels International Seal',
+    pt: 'Selo Safe Travels Internacional',
+    fr: 'Label Safe Travels International',
+    it: 'Sigillo Safe Travels Internazionale'
+  },
   'Machu Picchu de Lujo con Tren Panorámico': {
     es: 'Machu Picchu de Lujo con Tren Panorámico',
     en: 'Luxury Machu Picchu with Scenic Panoramic Train',
@@ -2533,12 +3023,19 @@ export function translateText(text: string | undefined, targetLang: LanguageType
     const unit = targetLang === 'en' ? 'm.a.s.l.' : targetLang === 'fr' ? 'm d’altitude' : targetLang === 'pt' ? 'm de altitude' : targetLang === 'it' ? 'mslm' : 'msnm';
     if (text.includes('-') || text.includes(' a ')) {
       const separator = text.includes('-') ? '-' : ' a ';
-      const parts = text.split(separator).map(p => p.replace(/[^0-9,.]/g, '').trim()).filter(Boolean);
+      const parts = text.split(separator).map(p => {
+        const digits = p.replace(/[^0-9]/g, '');
+        if (!digits) return '';
+        const n = parseInt(digits, 10);
+        return isNaN(n) ? '' : n.toLocaleString('en-US');
+      }).filter(Boolean);
       if (parts.length >= 2) {
         return `${parts[0]} - ${parts[1]} ${unit}`;
       }
     }
-    const num = text.replace(/[^0-9,.]/g, '');
+    const digits = text.replace(/[^0-9]/g, '');
+    const n = digits ? parseInt(digits, 10) : NaN;
+    const num = isNaN(n) ? text.replace(/[^0-9,.]/g, '').replace(/[,.]*$/, '') : n.toLocaleString('en-US');
     return `${num} ${unit}`;
   }
 

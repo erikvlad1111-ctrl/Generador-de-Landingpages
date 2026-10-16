@@ -30,7 +30,7 @@ export default function AltimetryProfileSection({ lang = 'es' }: AltimetryProps)
       : 'Cotas máximas, distancias y desniveles acumulados para planificar con precisión tu esfuerzo físico en la cordillera.',
     stats: {
       maxAlt: isEn ? 'Max Altitude' : isPt ? 'Altitude Máxima' : isFr ? 'Altitude Max' : isIt ? 'Altitudine Max' : 'Punto Más Alto',
-      maxAltVal: '4,630 msnm',
+      maxAltVal: isEn ? '4,630 masl' : isFr ? '4 630 m d’altitude' : isPt ? '4.630 m de altitude' : isIt ? '4.630 m s.l.m.' : '4,630 msnm',
       maxAltSub: isEn ? 'Salkantay Pass Summit' : isPt ? 'Passo Salkantay' : isFr ? 'Col de Salkantay' : isIt ? 'Passo Salkantay' : 'Paso Abra Salkantay',
       elevGain: isEn ? 'Elevation Gain/Loss' : isPt ? 'Desnível Acumulado' : isFr ? 'Dénivelé Cumulé' : isIt ? 'Dislivello Totale' : 'Desnivel Acumulado',
       elevGainVal: '+2,180m / -3,150m',

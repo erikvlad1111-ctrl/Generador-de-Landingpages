@@ -337,3 +337,32 @@ Guía para diagnosticar y solucionar problemas de traducción, mezcla de idiomas
     (passengers === 1 ? 'persona' : 'personas')
   }
   ```
+
+### Error: Fugas de Español en Salkantay Trek 5 Días en Francés, Inglés, Portugués e Italiano (Hero Badge, Altitud, Duración, Mensajes de WhatsApp y Descripción)
+- **Síntoma / Mensaje de Error:**
+  Al visualizar la landing oficial de Salkantay Trek (`/p/salkantay-trek-5-dias?template=adventure&tier=advance`) en idiomas no hispanos (Francés, Inglés, Portugués, Italiano):
+  1. El badge píldora superior permanecía en español: `🌐Expedición Oficial de Alta Montaña`.
+  2. El título principal del Hero permanecía en español: `Salkantay Trek 5 Días a Machu Picchu`.
+  3. El botón principal CTA permanecía en español: `Reservar Expedición ($380 USD)`.
+  4. La ficha técnica flotante mostraba dos puntos dobles y altitud sin traducir: `Point culminant:: 1,900 msnm - 4,630 msnm` y `5 Días / 4 Noches`.
+  5. La barra de confianza mostraba `DIRCETUR Oficial` sin adaptar.
+  6. La sección "Acerca de / Vue d'Ensemble" mostraba título y párrafo en español: `La ruta de trekking más espectacular hacia Machu Picchu` y `Elegida entre los 25 mejores trekkings del mundo por National Geographic...`.
+  7. Los botones de WhatsApp (Hero y Tarjeta de Reserva) enviaban mensajes formateados en español: `Hola Marco Quispe, deseo reservar la expedición... 👥 Excursionistas: ... 📅 Fecha de salida: ... ¿Tienen cupos disponibles para esta fecha?`.
+- **Causa Raíz:**
+  1. En `AdventureTemplate.tsx`, `data.hero?.badge`, `data.altitude`, `data.duration` y `data.companyTagline` se imprimían directamente en el JSX sin pasar por `translateText`.
+  2. La etiqueta `t.hero.highestPoint` terminaba con `:` en el archivo `adventureI18n.ts`, y el JSX contenía otro `:` literal (`{t.hero.highestPoint}:`), generando dos puntos consecutivos (`Point culminant::`).
+  3. En `translations.ts`, faltaban las entradas en `PHRASE_MAP` para los textos y datos de Salkantay Trek 5 Días (`hero.badge`, `hero.title`, `hero.cta`, `about.title`, `about.content`, servicios incluidos, qué llevar, itinerario y FAQs).
+  4. La heurística de especificaciones técnicas no limpiaba signos de puntuación sueltos y no formateaba con separador de miles.
+  5. En `AdventureTemplate.tsx` y `AdventureBookingCard.tsx`, el texto codificado para WhatsApp (`encodedMsg` y `whatsappMessage`) estaba cableado en español sin condicionales de idioma.
+- **Solución Paso a Paso:**
+  1. En `AdventureTemplate.tsx`:
+     - Envolver `data.hero?.badge`, `data.altitude`, `data.duration` y `data.companyTagline` con `translateText(..., currentLang)`.
+     - Eliminar los dos puntos redundantes en `{t.hero.highestPoint}`.
+     - Localizar dinámicamente el badge de DIRCETUR (`Official DIRCETUR` / `DIRCETUR Officiel` / `DIRCETUR Ufficiale`).
+     - Localizar dinámicamente `encodedMsg` y `createWhatsAppLink` para los 5 idiomas.
+  2. En `AdventureBookingCard.tsx`:
+     - Localizar dinámicamente saludo, etiquetas (`Excursionistas`/`Randonneurs`/`Travelers`), fecha (`Date de départ`), tarifa (`Tarif total estimé`), unidad (`personne`/`person`) y pregunta final (`Avez-vous des disponibilités pour cette date ?`).
+  3. En `src/data/translations.ts`:
+     - Registrar exhaustivamente todas las frases de Salkantay Trek 5 Días en `PHRASE_MAP` para `es`, `en`, `pt`, `fr`, e `it`.
+     - Robustecer la heurística de altitud para formatear rangos numéricos limpios y con las unidades de cada idioma (`m.a.s.l.`, `m d’altitude`, `m de altitude`, `mslm`, `msnm`).
+

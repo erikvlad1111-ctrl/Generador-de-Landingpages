@@ -103,14 +103,35 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
     : t.testimonials.items;
 
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
-  const encodedMsg = encodeURIComponent(
-    `Hola ${data.guideName || 'Guía de Trekking'}, deseo información y reservar la expedición "${data.name || data.hero?.title || 'Tour de Aventura'}". ¿Tienen salidas disponibles?`
-  );
+  const localizedTourName = translateText(data.name || data.hero?.title || 'Tour de Aventura', currentLang);
+  const localizedGuideTitle = currentLang === 'en' ? 'Trekking Guide' : currentLang === 'fr' ? 'Guide de Trekking' : currentLang === 'pt' ? 'Guia de Trekking' : currentLang === 'it' ? 'Guida Trekking' : 'Guía de Trekking';
+  const localizedAdvisorTitle = currentLang === 'en' ? 'Advisor' : currentLang === 'fr' ? 'Conseiller' : currentLang === 'pt' ? 'Consultor' : currentLang === 'it' ? 'Consulente' : 'Asesor';
+
+  const heroWhatsAppText = currentLang === 'en'
+    ? `Hello ${data.guideName || localizedGuideTitle}, I would like information and to reserve the "${localizedTourName}" expedition. Do you have departures available?`
+    : currentLang === 'fr'
+    ? `Bonjour ${data.guideName || localizedGuideTitle}, je souhaite obtenir des informations et réserver l'expédition "${localizedTourName}". Avez-vous des départs disponibles ?`
+    : currentLang === 'pt'
+    ? `Olá ${data.guideName || localizedGuideTitle}, desejo informações e reservar a expedição "${localizedTourName}". Vocês têm saídas disponíveis?`
+    : currentLang === 'it'
+    ? `Buongiorno ${data.guideName || localizedGuideTitle}, desidero informazioni e prenotare la spedizione "${localizedTourName}". Ci sono partenze disponibili?`
+    : `Hola ${data.guideName || localizedGuideTitle}, deseo información y reservar la expedición "${data.name || data.hero?.title || 'Tour de Aventura'}". ¿Tienen salidas disponibles?`;
+
+  const encodedMsg = encodeURIComponent(heroWhatsAppText);
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
   const createWhatsAppLink = (tourTitle: string) => {
-    const msg = encodeURIComponent(`Hola ${data.guideName || 'Asesor'}, me interesa el tour "${tourTitle}". ¿Tienen cupos disponibles?`);
-    return `https://wa.me/${cleanPhone}?text=${msg}`;
+    const translatedSpotTitle = translateText(tourTitle, currentLang);
+    const spotMsg = currentLang === 'en'
+      ? `Hello ${data.guideName || localizedAdvisorTitle}, I am interested in the "${translatedSpotTitle}" tour. Do you have spots available?`
+      : currentLang === 'fr'
+      ? `Bonjour ${data.guideName || localizedAdvisorTitle}, je suis intéressé par le tour "${translatedSpotTitle}". Avez-vous des disponibilités ?`
+      : currentLang === 'pt'
+      ? `Olá ${data.guideName || localizedAdvisorTitle}, tenho interesse no tour "${translatedSpotTitle}". Vocês têm vagas disponíveis?`
+      : currentLang === 'it'
+      ? `Buongiorno ${data.guideName || localizedAdvisorTitle}, mi interessa il tour "${translatedSpotTitle}". Ci sono posti disponibili?`
+      : `Hola ${data.guideName || localizedAdvisorTitle}, me interesa el tour "${tourTitle}". ¿Tienen cupos disponibles?`;
+    return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(spotMsg)}`;
   };
 
   // Tours secundarios del catálogo (editables desde el modal o sugeridos)
@@ -450,7 +471,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 </span>
               </div>
               <span className="text-[10px] sm:text-[11px] font-bold text-slate-400 leading-none mt-0.5 hidden xs:block truncate">
-                {data.companyTagline || t.brand.subtitle}
+                {translateText(data.companyTagline || t.brand.subtitle, currentLang)}
               </span>
             </div>
           </a>
@@ -692,7 +713,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               {/* Pill Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold shadow-sm">
                 <span className="text-xs">🌐</span>
-                <span>{data.hero?.badge || t.hero.badge}</span>
+                <span>{translateText(data.hero?.badge || t.hero.badge, currentLang)}</span>
               </div>
 
               {/* Main Headline */}
@@ -765,7 +786,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 <AdventureBookingCard
                   price={data.price}
                   guideName={data.guideName}
-                  tourName={data.name || data.hero?.title || 'Salkantay Trek 5 Días'}
+                  tourName={translateText(data.name || data.hero?.title || 'Salkantay Trek 5 Días', currentLang)}
                   cleanPhone={cleanPhone}
                   onOpenQuote={() => setIsQuoteOpen(true)}
                   objective={data.objective}
@@ -787,9 +808,9 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   <div className="flex items-center justify-between text-xs text-slate-300 pt-2 border-t border-white/10">
                     <div className="flex items-center gap-1.5">
                       <ShieldCheck size={14} className="text-emerald-400 shrink-0" />
-                      <span>{t.hero.highestPoint}: <strong className="text-white">{data.altitude || '4,630 msnm'}</strong></span>
+                      <span>{t.hero.highestPoint} <strong className="text-white">{translateText(data.altitude || '4,630 msnm', currentLang)}</strong></span>
                     </div>
-                    <span className="text-[11px] font-mono text-blue-300 font-bold">{data.duration || '5D / 4N'}</span>
+                    <span className="text-[11px] font-mono text-blue-300 font-bold">{translateText(data.duration || '5D / 4N', currentLang)}</span>
                   </div>
                 </div>
 
@@ -844,7 +865,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               Booking<span className="text-blue-600">.com</span>
             </div>
             <div className="flex items-center gap-1 text-xs text-emerald-700 font-bold bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-              <ShieldCheck size={14} /> DIRCETUR Oficial
+              <ShieldCheck size={14} /> {currentLang === 'en' ? 'Official DIRCETUR' : currentLang === 'fr' ? 'DIRCETUR Officiel' : currentLang === 'it' ? 'DIRCETUR Ufficiale' : 'DIRCETUR Oficial'}
             </div>
           </div>
         </section>
