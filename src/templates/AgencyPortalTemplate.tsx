@@ -35,7 +35,9 @@ import {
   Printer,
   Download,
   Maximize2,
-  CloudSun
+  CloudSun,
+  Languages,
+  CreditCard
 } from 'lucide-react';
 import { LandingData, PlanTier, ObjectiveType, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
@@ -141,7 +143,7 @@ const DICTIONARIES = {
     ctaBannerTitle: '¿LISTO PARA TU PRÓXIMA AVENTURA?',
     ctaBannerDesc: 'Contáctanos hoy mismo para asegurar tus accesos a Machu Picchu y disfrutar del mejor viaje de tu vida en el Perú.',
     contactNow: 'Contactar Ahora',
-    freeBanner: '⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas',
+    freeBanner: 'Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas',
     questionsTooltip: '¿Dudas? Habla con un asesor',
     certificationsTitle: 'Acreditaciones Oficiales',
     footerRights: '© 2026 Cusco Creativos Operador Turístico S.A.C. RUC: 20608945123. Todos los derechos reservados.',
@@ -238,7 +240,7 @@ const DICTIONARIES = {
     ctaBannerTitle: 'READY FOR YOUR NEXT ADVENTURE?',
     ctaBannerDesc: 'Contact our team today to lock in your Machu Picchu tickets and personalized Andean itinerary.',
     contactNow: 'Contact Us Now',
-    freeBanner: '⚡ Created with Cusco Creativos Web — Fast Tourism Landing Builder',
+    freeBanner: 'Created with Cusco Creativos Web — Fast Tourism Landing Builder',
     questionsTooltip: 'Questions? Chat with an advisor',
     certificationsTitle: 'Official Certifications',
     footerRights: '© 2026 Cusco Creativos Tour Operator S.A.C. Tax ID: 20608945123. All rights reserved.',
@@ -335,7 +337,7 @@ const DICTIONARIES = {
     ctaBannerTitle: 'PRONTO PARA SUA PRÓXIMA AVENTURA?',
     ctaBannerDesc: 'Fale conosco hoje mesmo para garantir seus ingressos para Machu Picchu e viver a viagem dos seus sonhos no Peru.',
     contactNow: 'Falar Conosco Agora',
-    freeBanner: '⚡ Criado com Cusco Creativos Web — Gerador Rápido de Landings Turísticas',
+    freeBanner: 'Criado com Cusco Creativos Web — Gerador Rápido de Landings Turísticas',
     questionsTooltip: 'Dúvidas? Fale com um consultor',
     certificationsTitle: 'Acreditações Oficiais',
     footerRights: '© 2026 Cusco Creativos Operador Turístico S.A.C. RUC: 20608945123. Todos os direitos reservados.',
@@ -432,7 +434,7 @@ const DICTIONARIES = {
     ctaBannerTitle: 'PRÊT POUR VOTRE PROCHAINE AVENTURE ?',
     ctaBannerDesc: 'Contactez notre équipe dès aujourd’hui pour réserver vos accès au Machu Picchu et profiter du voyage de votre vie au Pérou.',
     contactNow: 'Nous Contacter',
-    freeBanner: '⚡ Créé avec Cusco Creativos Web — Générateur Rapide de Landing Pages',
+    freeBanner: 'Créé avec Cusco Creativos Web — Générateur Rapide de Landing Pages',
     questionsTooltip: 'Des questions ? Échangez avec un conseiller',
     certificationsTitle: 'Certifications Officielles',
     footerRights: '© 2026 Cusco Creativos Tour Operator S.A.C. RUC: 20608945123. Tous droits réservés.',
@@ -529,7 +531,7 @@ const DICTIONARIES = {
     ctaBannerTitle: 'PRONTO PER LA TUA PROSSIMA AVVENTURA?',
     ctaBannerDesc: 'Contattaci oggi stesso per assicurarti gli ingressi a Machu Picchu e vivere il miglior viaggio della tua vita in Perù.',
     contactNow: 'Contattaci Ora',
-    freeBanner: '⚡ Creato con Cusco Creativos Web — Generatore Rapido di Landing Turistiche',
+    freeBanner: 'Creato con Cusco Creativos Web — Generatore Rapido di Landing Turistiche',
     questionsTooltip: 'Dubbi? Parla con un consulente',
     certificationsTitle: 'Certificazioni Ufficiali',
     footerRights: '© 2026 Cusco Creativos Tour Operator S.A.C. P. IVA: 20608945123. Tutti i diritti riservati.',
@@ -1426,8 +1428,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FF5500] opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-[#FF5500]"></span>
             </span>
-            <span className="font-black text-stone-200 uppercase tracking-wider text-[11px]">
-              ⚡ Próxima Salida Confirmada:
+            <span className="font-black text-stone-200 uppercase tracking-wider text-[11px] inline-flex items-center gap-1">
+              <Zap size={13} className="text-[#FF5500] shrink-0" /> Próxima Salida Confirmada:
             </span>
             <span className="text-amber-400 font-bold text-[11px]">
               Mañana 04:30 AM • Solo 4 cupos disponibles
@@ -1621,7 +1623,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   <div>
                     <h4 className="text-xl font-black text-white tracking-tight drop-shadow-sm">{guideName}</h4>
                     <p className="text-xs text-stone-200 font-semibold">{translateText(data?.guideCert || 'Guía Oficial de Turismo DIRCETUR', lang)}</p>
-                    <p className="text-[11px] text-[#FF9955] font-medium mt-0.5">🗣️ {t.guideSpokenLanguages}: {translateText(data?.guideLanguages || 'Español, Inglés, Francés, Portugués, Italiano', lang)}</p>
+                    <p className="text-[11px] text-[#FF9955] font-medium mt-0.5 inline-flex items-center gap-1"><Languages size={12} className="shrink-0" /> {t.guideSpokenLanguages}: {translateText(data?.guideLanguages || 'Español, Inglés, Francés, Portugués, Italiano', lang)}</p>
                   </div>
                 </div>
 
@@ -2449,7 +2451,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
             {/* Badges de Medios de Pago Aceptados */}
             <div className="flex flex-wrap items-center justify-center gap-2 text-[10px] font-bold tracking-wider text-stone-400 bg-stone-900/90 px-3.5 py-1.5 rounded-full border border-stone-800">
-              <span className="text-stone-400">💳 {t.footerSafePayment}:</span>
+              <span className="text-stone-400 inline-flex items-center gap-1"><CreditCard size={12} className="text-[#FF5500]" /> {t.footerSafePayment}:</span>
               <span>VISA</span>
               <span>•</span>
               <span>MASTERCARD</span>
@@ -2482,12 +2484,12 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       <div className="z-40 flex items-center gap-2 fixed bottom-5 right-5 sm:bottom-6 sm:right-6 pointer-events-auto select-none max-w-[calc(100vw-2.5rem)]">
         {showWaTooltip && !isMobile && (
           <div className="hidden sm:flex items-center gap-2 bg-white text-stone-900 text-xs font-bold px-3.5 py-2 rounded-2xl shadow-xl border border-stone-200 animate-in fade-in slide-in-from-right-2">
-            <span>💬 {t.questionsTooltip}</span>
+            <span className="inline-flex items-center gap-1.5"><MessageCircle size={14} className="text-emerald-500" /> {t.questionsTooltip}</span>
             <button
               onClick={() => setShowWaTooltip(false)}
               className="text-stone-400 hover:text-stone-700 text-xs p-0.5 cursor-pointer"
             >
-              ✕
+              <X size={12} />
             </button>
           </div>
         )}

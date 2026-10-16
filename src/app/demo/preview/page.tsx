@@ -43,6 +43,7 @@ import {
   Sliders,
   Plus,
   Trash2,
+  Building2,
   Calendar,
   Star,
   Quote,
@@ -1067,7 +1068,7 @@ function DemoPreviewContent() {
                     <div className="flex items-center justify-between gap-2 border-b border-indigo-100 pb-3">
                       <div className="flex items-center gap-2">
                         <span className="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-black text-xs shadow-xs">
-                          🏢
+                          <Building2 size={14} className="text-white" />
                         </span>
                         <div>
                           <h4 className="text-xs sm:text-sm font-black text-slate-900 tracking-tight">Identidad de la Empresa / Agencia (Marca Blanca)</h4>
@@ -1111,7 +1112,7 @@ function DemoPreviewContent() {
                     <div className="space-y-3 bg-white/90 border border-indigo-100 rounded-2xl p-4">
                       <div className="flex items-center justify-between">
                         <label className="block text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
-                          <span>🖼️</span> Logo de la Empresa (Subir Archivo o URL Web)
+                          <ImageIcon size={13} className="text-indigo-600" /> Logo de la Empresa (Subir Archivo o URL Web)
                         </label>
                         <span className="text-[10px] text-indigo-600 font-bold bg-indigo-50 px-2 py-0.5 rounded-md">
                           PNG transparente, JPG o SVG (máx. 5MB)
@@ -1244,8 +1245,8 @@ function DemoPreviewContent() {
                         onChange={(e) => setEditTemplate(e.target.value as TemplateType)}
                         className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm bg-white font-semibold text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none"
                       >
-                        <option value="emerald-explorer">🌲 Diseño 6 — Emerald Explorer (NavikX Style)</option>
-                        <option value="agency-portal">🔥 Diseño 1 (Portal Oficial de Agencia)</option>
+                        <option value="emerald-explorer">Diseño 6 — Emerald Explorer (NavikX Style)</option>
+                        <option value="agency-portal">Diseño 1 (Portal Oficial de Agencia)</option>
                         <option value="adventure">Trek & Aventura (Trekking y Alta Montaña)</option>
                         <option value="premium">Premium Luxury (Colección Exclusiva VIP)</option>
                         <option value="cultural">Patrimonio Cultural (Historia e Incas)</option>
@@ -1689,14 +1690,14 @@ function DemoPreviewContent() {
                         onClick={handleLoadInclusionsPreset}
                         className="px-2.5 py-1 bg-white hover:bg-emerald-600 hover:text-white border border-emerald-200 text-emerald-800 rounded-lg text-[11px] font-bold transition-all shadow-xs cursor-pointer"
                       >
-                        ⚡ Inclusiones Todo Incluido
+                        Inclusiones Todo Incluido
                       </button>
                       <button
                         type="button"
                         onClick={handleLoadBackpackPreset}
                         className="px-2.5 py-1 bg-white hover:bg-emerald-600 hover:text-white border border-emerald-200 text-emerald-800 rounded-lg text-[11px] font-bold transition-all shadow-xs cursor-pointer"
                       >
-                        ⚡ Mochila Sugerida
+                        Mochila Sugerida
                       </button>
                     </div>
                   </div>
@@ -1788,21 +1789,21 @@ function DemoPreviewContent() {
                         onClick={() => handleLoadItineraryPreset('machupicchu')}
                         className="px-2.5 py-1 bg-white hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 rounded-lg text-[11px] font-bold transition-all shadow-xs cursor-pointer"
                       >
-                        🚂 Machu Picchu 1 Día
+                        Machu Picchu 1 Día
                       </button>
                       <button
                         type="button"
                         onClick={() => handleLoadItineraryPreset('humantay')}
                         className="px-2.5 py-1 bg-white hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 rounded-lg text-[11px] font-bold transition-all shadow-xs cursor-pointer"
                       >
-                        🏔️ Laguna Humantay Trek
+                        Laguna Humantay Trek
                       </button>
                       <button
                         type="button"
                         onClick={() => handleLoadItineraryPreset('valle')}
                         className="px-2.5 py-1 bg-white hover:bg-blue-600 hover:text-white border border-blue-200 text-blue-700 rounded-lg text-[11px] font-bold transition-all shadow-xs cursor-pointer"
                       >
-                        🏺 Valle Sagrado VIP
+                        Valle Sagrado VIP
                       </button>
                     </div>
                   </div>
@@ -1961,14 +1962,14 @@ function DemoPreviewContent() {
                         onClick={handleLoadFaqsPreset}
                         className="px-2.5 py-1 bg-white hover:bg-purple-600 hover:text-white border border-purple-200 text-purple-800 rounded-lg text-[11px] font-bold transition-all shadow-xs cursor-pointer"
                       >
-                        ⚡ 4 FAQs Reales de Cusco
+                        4 FAQs Reales de Cusco
                       </button>
                       <button
                         type="button"
                         onClick={handleLoadTestimonialsPreset}
                         className="px-2.5 py-1 bg-white hover:bg-purple-600 hover:text-white border border-purple-200 text-purple-800 rounded-lg text-[11px] font-bold transition-all shadow-xs cursor-pointer"
                       >
-                        ⚡ 3 Reseñas 5 Estrellas
+                        3 Reseñas 5 Estrellas
                       </button>
                     </div>
                   </div>
@@ -1987,7 +1988,7 @@ function DemoPreviewContent() {
                         onClick={() => setEditTier('advance')}
                         className="px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold text-[11px] shrink-0 transition-colors cursor-pointer self-start sm:self-auto"
                       >
-                        ⚡ Cambiar a Advance
+                        Cambiar a Advance
                       </button>
                     </div>
                   )}
@@ -2022,7 +2023,7 @@ function DemoPreviewContent() {
                             onClick={handleLoadFaqsPreset}
                             className="px-3.5 py-1.5 bg-purple-600 text-white rounded-xl text-xs font-bold hover:bg-purple-700 cursor-pointer"
                           >
-                            ⚡ Cargar 4 FAQs Reales
+                            Cargar 4 FAQs Reales
                           </button>
                           <button
                             type="button"

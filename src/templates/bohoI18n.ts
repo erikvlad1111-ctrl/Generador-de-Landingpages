@@ -224,7 +224,7 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       subtitle: 'Preparamos todo lo necesario para que tu caminata sea segura, abrigada y placentera.',
       tabIncludes: '✓ Qué incluye el tour',
       tabNotIncludes: '✕ Qué no incluye',
-      tabBackpack: '🎒 Checklist de Mochila',
+      tabBackpack: 'Checklist de Mochila',
       guaranteedNote: 'Todos nuestros traslados cuentan con conductores profesionales y balón de oxígeno medicinal a bordo.'
     },
     fieldGuide: {
@@ -371,7 +371,7 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       subtitle: 'Everything prepared to keep your high-altitude trek warm, comfortable, and safe.',
       tabIncludes: '✓ What is Included',
       tabNotIncludes: '✕ What is Not Included',
-      tabBackpack: '🎒 Daypack Checklist',
+      tabBackpack: 'Daypack Checklist',
       guaranteedNote: 'All our private transport units carry certified professional drivers and medical emergency oxygen tanks on board.'
     },
     fieldGuide: {
@@ -518,7 +518,7 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       subtitle: 'Preparamos tudo para que sua caminhada seja segura, aconchegante e sem surpresas.',
       tabIncludes: '✓ O que está incluso',
       tabNotIncludes: '✕ O que não inclui',
-      tabBackpack: '🎒 Checklist de Mochila',
+      tabBackpack: 'Checklist de Mochila',
       guaranteedNote: 'Nossos veículos contam com motoristas profissionais credenciados e oxigênio medicinal a bordo.'
     },
     fieldGuide: {
@@ -665,7 +665,7 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       subtitle: 'Tout est préparé avec soin pour que votre ascension soit confortable, chaude et sécurisée.',
       tabIncludes: '✓ Ce qui est inclus',
       tabNotIncludes: '✕ Ce qui n’est pas inclus',
-      tabBackpack: '🎒 Checklist du Sac à Dos',
+      tabBackpack: 'Checklist du Sac à Dos',
       guaranteedNote: 'Tous nos véhicules privés sont conduits par des professionnels et disposent d’une bouteille d’oxygène médical à bord.'
     },
     fieldGuide: {
@@ -812,7 +812,7 @@ export const BOHO_I18N: Record<LanguageType, BohoI18nTexts> = {
       subtitle: 'Prepariamo ogni dettaglio per rendere la tua escursione sicura, calda e piacevole.',
       tabIncludes: '✓ Cosa include il tour',
       tabNotIncludes: '✕ Cosa non include',
-      tabBackpack: '🎒 Checklist dello Zaino',
+      tabBackpack: 'Checklist dello Zaino',
       guaranteedNote: 'Tutti i nostri transfer privati dispongono di autisti professionisti e bombola di ossigeno medicale a bordo.'
     },
     fieldGuide: {

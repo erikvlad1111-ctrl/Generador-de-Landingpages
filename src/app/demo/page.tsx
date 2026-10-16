@@ -6,7 +6,8 @@ import {
   FileText, Globe, CalendarDays, Sparkles, Languages, CheckCircle2,
   ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download,
   Layers, Pin, LayoutTemplate, LayoutGrid, List, User, Tag,
-  ChevronLeft, ChevronRight, SlidersHorizontal, RotateCcw
+  ChevronLeft, ChevronRight, SlidersHorizontal, RotateCcw,
+  Camera, Crown, Mountain, Landmark, Compass, Zap
 } from 'lucide-react';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, resetAllLandingsToDefault, LandingData } from '@/data/landingStore';
@@ -223,12 +224,12 @@ export default function DemoDashboard() {
           >
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-300 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
-                🌐
+                <Globe size={20} />
               </div>
               <div className="text-left min-w-0">
                 <span className="text-xs sm:text-sm font-black text-amber-300 block leading-tight truncate">Diseño 1</span>
                 <span className="text-[11px] text-slate-200 font-semibold block truncate">Portal Agencia</span>
-                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance ★</span>
+                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance</span>
               </div>
             </div>
             <ExternalLink size={15} className="text-slate-400 group-hover:text-amber-300 transition-colors shrink-0" />
@@ -243,12 +244,12 @@ export default function DemoDashboard() {
           >
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-10 h-10 rounded-xl bg-orange-500/15 border border-orange-500/30 text-orange-300 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
-                📷
+                <Camera size={20} />
               </div>
               <div className="text-left min-w-0">
                 <span className="text-xs sm:text-sm font-black text-orange-300 block leading-tight truncate">Diseño 2</span>
                 <span className="text-[11px] text-slate-200 font-semibold block truncate">Boho & Paisaje</span>
-                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance ★</span>
+                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance</span>
               </div>
             </div>
             <ExternalLink size={15} className="text-slate-400 group-hover:text-orange-300 transition-colors shrink-0" />
@@ -263,12 +264,12 @@ export default function DemoDashboard() {
           >
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-10 h-10 rounded-xl bg-yellow-500/20 border border-yellow-400/40 text-yellow-300 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform shadow-xs">
-                👑
+                <Crown size={20} />
               </div>
               <div className="text-left min-w-0">
                 <span className="text-xs sm:text-sm font-black text-yellow-300 block leading-tight truncate">Diseño 3</span>
                 <span className="text-[11px] text-slate-200 font-semibold block truncate">VIP Luxury</span>
-                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance ★</span>
+                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance</span>
               </div>
             </div>
             <ExternalLink size={15} className="text-slate-400 group-hover:text-yellow-300 transition-colors shrink-0" />
@@ -283,12 +284,12 @@ export default function DemoDashboard() {
           >
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-500/30 text-blue-300 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
-                🏔️
+                <Mountain size={20} />
               </div>
               <div className="text-left min-w-0">
                 <span className="text-xs sm:text-sm font-black text-blue-300 block leading-tight truncate">Diseño 4</span>
                 <span className="text-[11px] text-slate-200 font-semibold block truncate">Trek Aventura</span>
-                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance ★</span>
+                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance</span>
               </div>
             </div>
             <ExternalLink size={15} className="text-slate-400 group-hover:text-blue-300 transition-colors shrink-0" />
@@ -303,12 +304,12 @@ export default function DemoDashboard() {
           >
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-10 h-10 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
-                🏛️
+                <Landmark size={20} />
               </div>
               <div className="text-left min-w-0">
                 <span className="text-xs sm:text-sm font-black text-rose-300 block leading-tight truncate">Diseño 5</span>
                 <span className="text-[11px] text-slate-200 font-semibold block truncate">Cultural VIP</span>
-                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance ★</span>
+                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance</span>
               </div>
             </div>
             <ExternalLink size={15} className="text-slate-400 group-hover:text-rose-300 transition-colors shrink-0" />
@@ -323,12 +324,12 @@ export default function DemoDashboard() {
           >
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 flex items-center justify-center text-lg shrink-0 group-hover:scale-105 transition-transform">
-                🌲
+                <Compass size={20} />
               </div>
               <div className="text-left min-w-0">
                 <span className="text-xs sm:text-sm font-black text-emerald-300 block leading-tight truncate">Diseño 6</span>
                 <span className="text-[11px] text-slate-200 font-semibold block truncate">Esmeralda VIP</span>
-                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance ★</span>
+                <span className="text-[9px] text-purple-300 font-bold uppercase tracking-wider">Plan Advance</span>
               </div>
             </div>
             <ExternalLink size={15} className="text-slate-400 group-hover:text-emerald-300 transition-colors shrink-0" />
@@ -515,7 +516,7 @@ export default function DemoDashboard() {
               >
                 <span className="text-slate-400 text-[11px]">Obj:</span>
                 <span className="text-blue-600 font-extrabold">
-                  {objectiveFilter === 'all' ? 'Todos' : objectiveFilter === 'whatsapp' ? '💬 WhatsApp' : objectiveFilter === 'quote' ? '📋 Cotización' : '⚡ Ambos'}
+                  {objectiveFilter === 'all' ? 'Todos' : objectiveFilter === 'whatsapp' ? 'WhatsApp' : objectiveFilter === 'quote' ? 'Cotización' : 'Ambos'}
                 </span>
               </button>
             </div>
@@ -590,8 +591,8 @@ export default function DemoDashboard() {
                       <div className="space-y-3">
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex items-center gap-3 min-w-0">
-                            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 font-bold text-lg border border-blue-100 shadow-xs">
-                              {p.template === 'agency-portal' ? '🔥' : p.template === 'adventure' ? '🏔️' : p.template === 'premium' ? '✨' : p.template === 'boho-nature' ? '📷' : '🏛️'}
+                            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 font-bold border border-blue-100 shadow-xs">
+                              {p.template === 'agency-portal' ? <Zap size={22} className="text-[#FF5500]" /> : p.template === 'adventure' ? <Mountain size={22} className="text-emerald-600" /> : p.template === 'premium' ? <Crown size={22} className="text-amber-500" /> : p.template === 'boho-nature' ? <Camera size={22} className="text-amber-600" /> : p.template === 'emerald-explorer' ? <Compass size={22} className="text-emerald-500" /> : <Landmark size={22} className="text-amber-700" />}
                             </div>
                             <div className="min-w-0">
                               <div className="flex items-center gap-1.5 flex-wrap">
@@ -613,7 +614,7 @@ export default function DemoDashboard() {
                                     ? 'text-amber-600 font-extrabold'
                                     : 'text-slate-500 capitalize'
                                 }`}>
-                                  {p.template === 'agency-portal' ? 'Diseño 1' : p.template === 'premium' ? '👑 Luxury VIP' : p.template}
+                                  {p.template === 'agency-portal' ? 'Diseño 1' : p.template === 'premium' ? 'Luxury VIP' : p.template}
                                 </span>
                               </div>
                               <Link 
@@ -652,9 +653,11 @@ export default function DemoDashboard() {
                           <div className="bg-slate-50 p-2.5 rounded-xl border border-slate-100">
                             <span className="text-[10px] text-slate-400 block font-semibold uppercase">Objetivo & Idioma</span>
                             <span className="font-bold text-slate-700 block truncate">
-                              {p.objective === 'both' ? '⚡ Híbrido' : p.objective === 'whatsapp' ? '💬 WhatsApp' : '📋 Cotización'}
+                              {p.objective === 'both' ? 'Híbrido' : p.objective === 'whatsapp' ? 'WhatsApp' : 'Cotización'}
                             </span>
-                            <span className="text-blue-700 text-xs font-semibold uppercase tracking-wider font-mono">🌐 {p.language || 'es'}</span>
+                            <span className="text-blue-700 text-xs font-semibold uppercase tracking-wider font-mono flex items-center gap-1">
+                              <Languages size={11} /> {p.language || 'es'}
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -817,7 +820,7 @@ export default function DemoDashboard() {
                     
                     {/* Fecha de Registro: siempre visible si showFullDetails está activo o en pantallas grandes */}
                     <th className={`px-4 py-3.5 whitespace-nowrap ${showFullDetails ? 'table-cell min-w-[160px]' : 'hidden xl:table-cell min-w-[130px]'}`}>
-                      {showFullDetails ? '📅 Fecha Completa' : 'Fecha'}
+                      {showFullDetails ? 'Fecha Completa' : 'Fecha'}
                     </th>
 
                     {/* Enlace / Slug Web: solo en modo detallado */}
@@ -857,8 +860,8 @@ export default function DemoDashboard() {
                           {/* Tour Name & Guide */}
                           <td className="px-4 py-3.5">
                             <div className="flex items-start gap-2.5">
-                              <div className="w-9 h-9 rounded-xl bg-slate-100/90 group-hover:bg-blue-50 text-slate-700 group-hover:text-blue-600 flex items-center justify-center shrink-0 text-base border border-slate-200/80 group-hover:border-blue-200 transition-colors shadow-2xs mt-0.5">
-                                {p.template === 'agency-portal' ? '🔥' : p.template === 'adventure' ? '🏔️' : p.template === 'premium' ? '👑' : p.template === 'boho-nature' ? '📷' : '🏛️'}
+                              <div className="w-9 h-9 rounded-xl bg-slate-100/90 group-hover:bg-blue-50 text-slate-700 group-hover:text-blue-600 flex items-center justify-center shrink-0 border border-slate-200/80 group-hover:border-blue-200 transition-colors shadow-2xs mt-0.5">
+                                {p.template === 'agency-portal' ? <Zap size={16} className="text-[#FF5500]" /> : p.template === 'adventure' ? <Mountain size={16} className="text-emerald-600" /> : p.template === 'premium' ? <Crown size={16} className="text-amber-500" /> : p.template === 'boho-nature' ? <Camera size={16} className="text-amber-600" /> : p.template === 'emerald-explorer' ? <Compass size={16} className="text-emerald-500" /> : <Landmark size={16} className="text-amber-700" />}
                               </div>
                               <div className="min-w-0 space-y-1 flex-1">
                                 <div className="flex items-center gap-1.5 flex-wrap">
@@ -911,7 +914,7 @@ export default function DemoDashboard() {
                                 ? 'bg-amber-50 text-amber-600 border border-amber-300 font-bold'
                                 : 'capitalize bg-slate-100 text-slate-600 border border-slate-200/60'
                             }`}>
-                              {p.template === 'agency-portal' ? 'Diseño 1' : p.template === 'premium' ? '👑 Luxury VIP' : p.template}
+                              {p.template === 'agency-portal' ? 'Diseño 1' : p.template === 'premium' ? 'Luxury VIP' : p.template}
                             </span>
                           </td>
 
@@ -924,7 +927,7 @@ export default function DemoDashboard() {
                                   ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' 
                                   : 'bg-blue-50 text-blue-700 border border-blue-200/60'
                             }`}>
-                              {p.objective === 'both' ? '⚡ Híbrido' : p.objective === 'whatsapp' ? '💬 WhatsApp' : '📋 Cotización'}
+                              {p.objective === 'both' ? 'Híbrido' : p.objective === 'whatsapp' ? 'WhatsApp' : 'Cotización'}
                             </span>
                           </td>
 

@@ -185,7 +185,7 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       badge: 'Descubre el Mundo • Aventura & Trekking',
       titleLine1: 'Viaja a lo Grande',
       titleLine2: 'El Mundo es Gigante,',
-      titleLine3: '¡Sal a Explorar! 🚀',
+      titleLine3: '¡Sal a Explorar!',
       subtitle: 'Un trekking legendario de alta montaña cruzando nevados imponentes, ceja de selva y plantaciones de café hasta la ciudadela inca de Machu Picchu.',
       ctaWhatsapp: 'Reservar Directo por WhatsApp',
       ctaQuote: 'Cotizar Expedición',
@@ -199,7 +199,7 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       reviewsCount: '(10.2k Reseñas)'
     },
     searchedSpots: {
-      title: 'Explora los Destinos Más Buscados 🔥',
+      title: 'Explora los Destinos Más Buscados',
       subtitle: 'Rutas andinas legendarias con campamentos acondicionados, guías oficiales y logística de alta montaña.',
       spots: [
         { id: 'salkantay', name: 'Salkantay Trek', tours: '450 Tours', badge: '5 Días • 4,630 msnm', price: '$350 USD', image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=400&auto=format&fit=crop' },
@@ -390,7 +390,7 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       badge: 'Discover the World • High Altitude Trekking',
       titleLine1: 'Travel the Best',
       titleLine2: "It's a Big World,",
-      titleLine3: 'Go Explore! 🚀',
+      titleLine3: 'Go Explore!',
       subtitle: 'A legendary high-mountain trek crossing majestic snowcapped peaks, cloud forest, and coffee plantations down to the lost citadel of Machu Picchu.',
       ctaWhatsapp: 'Book Direct on WhatsApp',
       ctaQuote: 'Request Expedition Quote',
@@ -404,7 +404,7 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       reviewsCount: '(10.2k Reviews)'
     },
     searchedSpots: {
-      title: 'Explore Top Searched Spots 🔥',
+      title: 'Explore Top Searched Spots',
       subtitle: 'Legendary Andean trails equipped with dome campsites, certified mountain leaders, and high-altitude medical support.',
       spots: [
         { id: 'salkantay', name: 'Salkantay Trek', tours: '450 Tours', badge: '5 Days • 4,630 masl', price: '$350 USD', image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=400&auto=format&fit=crop' },
@@ -595,7 +595,7 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       badge: 'Découvrez le Monde • Trekking Haute Montagne',
       titleLine1: 'Voyagez au Sommet',
       titleLine2: 'Le Monde est Vaste,',
-      titleLine3: 'Partez Explorer! 🚀',
+      titleLine3: 'Partez Explorer!',
       subtitle: 'Un trekking légendaire franchissant des cols enneigés majestueux, la forêt de nuages et des plantations de café jusqu’à la cité sacrée du Machu Picchu.',
       ctaWhatsapp: 'Réserver via WhatsApp',
       ctaQuote: 'Demander un Devis',
@@ -609,7 +609,7 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       reviewsCount: '(10.2k Avis)'
     },
     searchedSpots: {
-      title: 'Explorez les Destinations Phares 🔥',
+      title: 'Explorez les Destinations Phares',
       subtitle: 'Des sentiers andins d’exception avec dômes confortables, guides de montagne francophones et assistance médicale.',
       spots: [
         { id: 'salkantay', name: 'Salkantay Trek', tours: '450 Tours', badge: '5 Jours • 4 630 m', price: '$350 USD', image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=400&auto=format&fit=crop' },
@@ -800,7 +800,7 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       badge: 'Descubra o Mundo • Trekking nos Andes',
       titleLine1: 'Viaje ao Máximo',
       titleLine2: 'O Mundo é Gigante,',
-      titleLine3: 'Vá Explorar! 🚀',
+      titleLine3: 'Vá Explorar!',
       subtitle: 'Um trekking lendário de alta montanha cruzando nevados imponentes, selva alta e plantações de café até a cidadela sagrada de Machu Picchu.',
       ctaWhatsapp: 'Reservar Direto no WhatsApp',
       ctaQuote: 'Solicitar Cotação',
@@ -814,7 +814,7 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       reviewsCount: '(10.2k Avaliações)'
     },
     searchedSpots: {
-      title: 'Destinos Mais Procurados nos Andes 🔥',
+      title: 'Destinos Mais Procurados nos Andes',
       subtitle: 'Rotas lendárias com acampamento em domos confortáveis, guías experientes e suporte médico de altitude.',
       spots: [
         { id: 'salkantay', name: 'Salkantay Trek', tours: '450 Tours', badge: '5 Dias • 4.630 m', price: '$350 USD', image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=400&auto=format&fit=crop' },
@@ -1005,7 +1005,7 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       badge: 'Scopri il Mondo • Trekking ad Alta Quota',
       titleLine1: 'Viaggia al Meglio',
       titleLine2: 'Il Mondo è Grande,',
-      titleLine3: 'Vai ad Esplorare! 🚀',
+      titleLine3: 'Vai ad Esplorare!',
       subtitle: 'Un trekking andino leggendario attraverso passi montani innevati, foreste nebbiose e piantagioni di caffè fino alla città sacra di Machu Picchu.',
       ctaWhatsapp: 'Prenota Diretto su WhatsApp',
       ctaQuote: 'Richiedi Preventivo',
@@ -1019,7 +1019,7 @@ export const ADVENTURE_I18N: Record<LanguageType, AdventureI18nTexts> = {
       reviewsCount: '(10.2k Recensioni)'
     },
     searchedSpots: {
-      title: 'Destinazioni Più Richieste sulle Ande 🔥',
+      title: 'Destinazioni Più Richieste sulle Ande',
       subtitle: 'Percorsi leggendari con accampamenti in cupole panoramiche, guide certificate e supporto medico per l’altitudine.',
       spots: [
         { id: 'salkantay', name: 'Salkantay Trek', tours: '450 Tours', badge: '5 Giorni • 4.630 m', price: '$350 USD', image: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=400&auto=format&fit=crop' },

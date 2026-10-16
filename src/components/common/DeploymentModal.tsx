@@ -21,7 +21,9 @@ import {
   ArrowRight,
   Info,
   Laptop,
-  CheckCircle2
+  CheckCircle2,
+  Folder,
+  FileText
 } from 'lucide-react';
 import { LandingData } from '@/types/landing';
 import { generateStandaloneHtml, downloadHtmlFile, downloadLandingZip } from '@/utils/exportLandingHtml';
@@ -114,7 +116,7 @@ export default function DeploymentModal({ isOpen, onClose, landing }: Deployment
         {/* Informative Guidance Banner for User (UX Improvement) */}
         <div className="bg-gradient-to-r from-blue-950/60 via-slate-900 to-indigo-950/40 px-6 py-3.5 border-b border-slate-800/80 flex items-start sm:items-center gap-3 text-xs text-slate-300">
           <div className="w-7 h-7 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 mt-0.5 sm:mt-0 font-bold">
-            💡
+            <Info size={14} className="text-blue-400" />
           </div>
           <div className="leading-relaxed">
             <strong className="text-white">¿Cómo funciona la entrega al cliente? </strong> 
@@ -306,10 +308,10 @@ export default function DeploymentModal({ isOpen, onClose, landing }: Deployment
                     Archivos incluidos en la descarga:
                   </div>
                   <div className="pl-4 text-[10px] space-y-0.5 text-slate-400">
-                    <div>📁 landing-{landing.slug}/</div>
-                    <div>├── 📄 <strong>index.html</strong> <span className="text-slate-500">(Web completa con Tailwind CSS)</span></div>
-                    <div>├── 📝 <strong>LEEME_INSTRUCCIONES.txt</strong> <span className="text-slate-500">(Manual de subida)</span></div>
-                    <div>└── 📊 <strong>datos_landing_ia.json</strong> <span className="text-slate-500">(Textos generados)</span></div>
+                    <div className="flex items-center gap-1"><Folder size={11} className="text-blue-400" /> landing-{landing.slug}/</div>
+                    <div className="flex items-center gap-1">├── <FileText size={11} className="text-emerald-400" /> <strong>index.html</strong> <span className="text-slate-500">(Web completa con Tailwind CSS)</span></div>
+                    <div className="flex items-center gap-1">├── <FileText size={11} className="text-amber-400" /> <strong>LEEME_INSTRUCCIONES.txt</strong> <span className="text-slate-500">(Manual de subida)</span></div>
+                    <div className="flex items-center gap-1">└── <FileCode size={11} className="text-cyan-400" /> <strong>datos_landing_ia.json</strong> <span className="text-slate-500">(Textos generados)</span></div>
                   </div>
                 </div>
               </div>

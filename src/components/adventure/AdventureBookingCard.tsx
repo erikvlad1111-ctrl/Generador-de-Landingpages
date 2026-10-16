@@ -78,9 +78,9 @@ export default function AdventureBookingCard({
 
   const whatsappMessage = encodeURIComponent(
     `${greeting}` +
-    `👥 ${hikersLabel}: ${passengers} (${serviceLabel})\n` +
-    `📅 ${dateLabel}: ${travelDate || toCoordinate}\n` +
-    `💰 ${rateLabel}: ${formattedTotalPrice} (${formattedUnitPrice} / ${perPersonLabel})\n\n` +
+    `• ${hikersLabel}: ${passengers} (${serviceLabel})\n` +
+    `• ${dateLabel}: ${travelDate || toCoordinate}\n` +
+    `• ${rateLabel}: ${formattedTotalPrice} (${formattedUnitPrice} / ${perPersonLabel})\n\n` +
     `${questionClosing}`
   );
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${whatsappMessage}`;

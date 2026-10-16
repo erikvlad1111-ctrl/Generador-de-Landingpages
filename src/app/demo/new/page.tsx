@@ -12,7 +12,7 @@ import {
   Plus, Trash2, XCircle, Backpack, ShieldCheck, Share2, Calendar, Search,
   Star, ArrowRight, Camera, Crown, ChevronDown, Layers, Navigation, Landmark,
   HelpCircle, MessageSquare, Quote, AlertCircle, Image as ImageIcon, SlidersHorizontal, ChevronUp, Copy,
-  Upload
+  Upload, Mail, Ticket, Wine, Building2, Map, Heart
 } from 'lucide-react';
 import { ObjectiveType, TemplateType, LanguageType, ItineraryItem, PlanTier, LandingData, CatalogTourItem, FAQItem, TestimonialItem } from '@/types/landing';
 import { simulateAiGeneration, saveLandingToStorage } from '@/data/landingStore';
@@ -85,7 +85,7 @@ const AVAILABLE_TRUST_BADGES = [
 const PRESET_TOURS = [
   {
     id: 'peru-portal-agency',
-    label: '🔥 Portal Agencia VIP (Diseño 1)',
+    label: 'Portal Agencia VIP (Diseño 1)',
     name: 'Machu Picchu VIP & Valle Sagrado Multidía',
     companyName: 'Cusco Grand Expeditions',
     companyTagline: 'Operador Oficial Autorizado DIRCETUR Cusco',
@@ -147,7 +147,7 @@ const PRESET_TOURS = [
   },
   {
     id: 'emerald-explorer-navikx',
-    label: '🌲 Diseño 6 (Emerald Explorer)',
+    label: 'Diseño 6 (Emerald Explorer)',
     name: 'Vive Tu Aventura: Expediciones & Trekking en Cusco',
     companyName: 'NavikX Cusco Expeditions',
     companyTagline: 'Operador Autorizado de Alta Montaña',
@@ -209,7 +209,7 @@ const PRESET_TOURS = [
   },
   {
     id: 'salkantay',
-    label: '🏔️ Salkantay Trek 5D',
+    label: 'Salkantay Trek 5D',
     name: 'Tour Salkantay Trek Clásico hacia Machu Picchu',
     companyName: 'TrekExplorer Perú',
     companyTagline: 'Operador Oficial de Rutas de Aventura & Trekking',
@@ -337,7 +337,7 @@ const PRESET_TOURS = [
   },
   {
     id: 'city-tour',
-    label: '🏛️ City Tour & Sacsayhuamán',
+    label: 'City Tour & Sacsayhuamán',
     name: 'City Tour Cusco Ancestral & 4 Ruinas Arqueológicas',
     companyName: 'Cusco Patrimonial Tours',
     companyTagline: 'Guías Arqueólogos Colegiados DIRCETUR',
@@ -401,7 +401,7 @@ const PRESET_TOURS = [
   },
   {
     id: 'vinicunca',
-    label: '🌈 Montaña 7 Colores',
+    label: 'Montaña 7 Colores',
     name: 'Expedición Vinicunca & Mirador del Valle Rojo',
     companyName: 'Andes Summit Expeditions',
     companyTagline: 'Especialistas en Alta Montaña y Asistencia Médica',
@@ -463,7 +463,7 @@ const PRESET_TOURS = [
   },
   {
     id: 'humantay-boho',
-    label: '📷 Laguna Humantay (Boho Journal)',
+    label: 'Laguna Humantay (Boho Journal)',
     name: 'Laguna Humantay — Bitácora Fotográfica & Paisajismo',
     companyName: 'Boho Travel Journal',
     companyTagline: 'Viajes Conscientes & Fotografía de Paisajes',
@@ -525,7 +525,7 @@ const PRESET_TOURS = [
   },
   {
     id: 'free-tour',
-    label: '🚶 Free Walking Tour (Gratis)',
+    label: 'Free Walking Tour (Gratis)',
     name: 'Free Tour Cusco Histórico & Leyendas Incas',
     companyName: 'Cusco Free Walking Co.',
     companyTagline: 'Cultura Viva & Leyendas Andinas',
@@ -1171,8 +1171,8 @@ export default function NewLandingDemo() {
             </label>
             <span className="text-[11px] font-semibold text-slate-400">
               {creationMode === 'express' 
-                ? '⚡ Modo IA — Ahorra más del 80% de tiempo' 
-                : '✍️ Modo Manual — Edición campo por campo'}
+                ? 'Modo IA — Ahorra más del 80% de tiempo' 
+                : 'Modo Manual — Edición campo por campo'}
             </span>
           </div>
 
@@ -1313,7 +1313,6 @@ export default function NewLandingDemo() {
                   id: 'agency-portal', 
                   name: 'Diseño 1', 
                   desc: 'Naranja viral, métricas +10k, catálogo de tours, FAQ y WhatsApp con radar.', 
-                  icon: '🔥',
                   badge: 'Diseño 1',
                   badgeClass: 'bg-[#FF5500] text-white'
                 },
@@ -1321,7 +1320,6 @@ export default function NewLandingDemo() {
                   id: 'boho-nature', 
                   name: 'Boho Travel Journal', 
                   desc: 'Estilo Pinterest con fotos polaroid inclinadas, cinta washi y notas de campo.', 
-                  icon: '📷',
                   badge: 'Pinterest Aesthetic',
                   badgeClass: 'bg-amber-600 text-white'
                 },
@@ -1329,7 +1327,6 @@ export default function NewLandingDemo() {
                   id: 'premium', 
                   name: 'Lujo & Exclusivo (VIP)', 
                   desc: 'Dorado y negro profundo. Ideal para experiencias Hiram Bingham y 5 estrellas.', 
-                  icon: '👑',
                   badge: 'High-End VIP',
                   badgeClass: 'bg-stone-900 text-amber-300'
                 },
@@ -1337,7 +1334,6 @@ export default function NewLandingDemo() {
                   id: 'adventure', 
                   name: 'Aventura & Trekking', 
                   desc: 'Tonos esmeralda y montaña. Diseñado para rutas de alta dificultad y caminatas.', 
-                  icon: '🏔️',
                   badge: 'Trekking & Outdoor',
                   badgeClass: 'bg-emerald-600 text-white'
                 },
@@ -1345,7 +1341,6 @@ export default function NewLandingDemo() {
                   id: 'cultural', 
                   name: 'Cultural & Ancestral', 
                   desc: 'Piedra incaica y ámbar cálido. Para City Tours, Sacsayhuamán y arqueología.', 
-                  icon: '🏛️',
                   badge: 'Heritage & History',
                   badgeClass: 'bg-amber-700 text-white'
                 },
@@ -1353,7 +1348,6 @@ export default function NewLandingDemo() {
                   id: 'emerald-explorer', 
                   name: 'Diseño 6 (Emerald Explorer)', 
                   desc: 'Deep Teal oscuro con Bento Grid, buscador flotante tipo píldora, métricas y glow esmeralda.', 
-                  icon: '🌲',
                   badge: 'NavikX Tech Style',
                   badgeClass: 'bg-emerald-600 text-white'
                 }
@@ -1379,7 +1373,14 @@ export default function NewLandingDemo() {
                   >
                     <div>
                       <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-xl">{t.icon}</span>
+                        <span className="p-1 rounded-lg bg-slate-100 flex items-center justify-center">
+                          {t.id === 'agency-portal' && <Zap size={18} className="text-[#FF5500]" />}
+                          {t.id === 'boho-nature' && <Camera size={18} className="text-amber-600" />}
+                          {t.id === 'premium' && <Crown size={18} className="text-amber-500" />}
+                          {t.id === 'adventure' && <Mountain size={18} className="text-emerald-600" />}
+                          {t.id === 'cultural' && <Landmark size={18} className="text-amber-700" />}
+                          {t.id === 'emerald-explorer' && <Compass size={18} className="text-emerald-600" />}
+                        </span>
                         <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md ${t.badgeClass}`}>
                           {t.badge}
                         </span>
@@ -1404,7 +1405,9 @@ export default function NewLandingDemo() {
           <div className="bg-gradient-to-br from-indigo-50/70 via-white to-slate-50 rounded-3xl shadow-sm border border-indigo-200/90 p-6 sm:p-7 space-y-5 ring-2 ring-indigo-500/10">
             <div className="flex items-center justify-between pb-2 border-b border-indigo-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-black shadow-sm">🏢</span>
+                <span className="w-6 h-6 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
+                  <Building2 size={13} />
+                </span>
                 Empresa, Agencia & Logo (Marca Blanca)
               </label>
               <span className="text-[11px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-700 border border-indigo-200">
@@ -1419,7 +1422,7 @@ export default function NewLandingDemo() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <span>🏢</span> Nombre Comercial de la Empresa / Agencia *
+                  <Building2 size={13} className="text-slate-500" /> Nombre Comercial de la Empresa / Agencia *
                 </label>
                 <input 
                   type="text" 
@@ -1435,7 +1438,7 @@ export default function NewLandingDemo() {
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <span>⚖️</span> RUC / Licencia DIRCETUR
+                  <ShieldCheck size={13} className="text-slate-500" /> RUC / Licencia DIRCETUR
                 </label>
                 <input 
                   type="text" 
@@ -1454,7 +1457,7 @@ export default function NewLandingDemo() {
             <div className="space-y-3 bg-white/80 border border-indigo-100 rounded-2xl p-4">
               <div className="flex items-center justify-between">
                 <label className="block text-xs font-bold text-slate-800 flex items-center gap-1.5">
-                  <span>🖼️</span> Logo de la Empresa (Subir Archivo o URL Web)
+                  <ImageIcon size={13} className="text-slate-500" /> Logo de la Empresa (Subir Archivo o URL Web)
                 </label>
                 <span className="text-[10px] text-indigo-600 font-bold bg-indigo-50 px-2 py-0.5 rounded-md">
                   PNG transparente, JPG o SVG (máx. 5MB)
@@ -1959,7 +1962,7 @@ export default function NewLandingDemo() {
                           ? 'bg-blue-600 text-white'
                           : 'bg-slate-100 text-slate-600'
                       }`}>
-                        {isLocked ? (isFreeOrBasic ? '🔒 Plan Pro/Advance' : '🔒 Plan Advance') : isSelected ? '✓ Activo' : '+ Clic para activar'}
+                        {isLocked ? (isFreeOrBasic ? 'Plan Pro/Advance' : 'Plan Advance') : isSelected ? '✓ Activo' : '+ Clic para activar'}
                       </span>
                     </div>
                   </button>
@@ -1980,7 +1983,7 @@ export default function NewLandingDemo() {
                       : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                   }`}
                 >
-                  2 Idiomas: Bilingüe (🇺🇸 EN + 🇵🇪 ES)
+                  2 Idiomas: Bilingüe (EN + ES)
                 </button>
                 {tier === 'advance' && (
                   <>
@@ -1993,7 +1996,7 @@ export default function NewLandingDemo() {
                           : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                       }`}
                     >
-                      3 Idiomas: Trilingüe (🇺🇸 EN + 🇵🇪 ES + 🇧🇷 PT)
+                      3 Idiomas: Trilingüe (EN + ES + PT)
                     </button>
                     <button
                       type="button"
@@ -2004,7 +2007,7 @@ export default function NewLandingDemo() {
                           : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
                       }`}
                     >
-                      Todos los 5 Idiomas 🌐 (EN + ES + PT + FR + IT)
+                      Todos los 5 Idiomas (EN + ES + PT + FR + IT)
                     </button>
                   </>
                 )}
@@ -2017,7 +2020,7 @@ export default function NewLandingDemo() {
                       : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
                   }`}
                 >
-                  Solo Español 🇵🇪
+                  Solo Español (ES)
                 </button>
                 {tier !== 'pro' && (
                   <button
@@ -2306,7 +2309,7 @@ export default function NewLandingDemo() {
                     className="inline-flex items-center justify-center gap-2 bg-[#FF5500] hover:bg-[#e04b00] text-white px-5 py-3 rounded-xl font-black text-xs transition-all shadow-md shadow-orange-500/25 cursor-pointer hover:scale-102 active:scale-98"
                   >
                     <Layers size={16} />
-                    <span>⚙️ Editar Tours del Catálogo</span>
+                    <span>Editar Tours del Catálogo</span>
                   </button>
                 </div>
               </div>
@@ -2337,7 +2340,7 @@ export default function NewLandingDemo() {
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-black uppercase tracking-wider text-amber-300 bg-amber-400/20 px-2.5 py-0.5 rounded-full border border-amber-400/30">
-                      ⚡ Modo IA Activado
+                      Modo IA Activado
                     </span>
                     <span className="text-[11px] text-purple-200 font-semibold">Generación Instantánea</span>
                   </div>
@@ -2352,22 +2355,22 @@ export default function NewLandingDemo() {
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1 text-xs">
                 <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10">
-                  <span className="block text-xl mb-1">🗺️</span>
+                  <Map size={20} className="mb-1 text-purple-300" />
                   <span className="font-bold text-white text-[11px] block">Itinerario por Etapas</span>
                   <span className="text-[10px] text-purple-200 leading-tight block mt-0.5">Cronograma de actividades y paradas clave</span>
                 </div>
                 <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10">
-                  <span className="block text-xl mb-1">🎒</span>
+                  <Backpack size={20} className="mb-1 text-purple-300" />
                   <span className="font-bold text-white text-[11px] block">Mochila & Servicios</span>
                   <span className="text-[10px] text-purple-200 leading-tight block mt-0.5">Qué llevar y lista de exclusiones transparentes</span>
                 </div>
                 <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10">
-                  <span className="block text-xl mb-1">❓</span>
+                  <HelpCircle size={20} className="mb-1 text-purple-300" />
                   <span className="font-bold text-white text-[11px] block">Preguntas Frecuentes</span>
                   <span className="text-[10px] text-purple-200 leading-tight block mt-0.5">Respuestas automáticas a dudas turísticas</span>
                 </div>
                 <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 border border-white/10">
-                  <span className="block text-xl mb-1">⭐</span>
+                  <Star size={20} className="mb-1 text-purple-300" />
                   <span className="font-bold text-white text-[11px] block">Reseñas de Viajeros</span>
                   <span className="text-[10px] text-purple-200 leading-tight block mt-0.5">Testimonios realistas con alta calificación</span>
                 </div>
@@ -2375,7 +2378,7 @@ export default function NewLandingDemo() {
 
               <div className="pt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/15 text-xs">
                 <span className="text-purple-300 text-[11px]">
-                  💡 ¿Prefieres personalizar cada campo antes de publicar?
+                  ¿Prefieres personalizar cada campo antes de publicar?
                 </span>
                 <button
                   type="button"
@@ -2915,7 +2918,7 @@ export default function NewLandingDemo() {
                   className="px-2.5 py-1 bg-purple-50 hover:bg-purple-100 border border-purple-200 text-purple-700 rounded-lg text-[11px] font-bold transition-all cursor-pointer shadow-2xs"
                   title="Cargar 4 preguntas estándar de Cusco"
                 >
-                  ⚡ Cargar 4 FAQs Reales
+                  Cargar 4 FAQs Reales
                 </button>
                 <button
                   type="button"
@@ -2995,7 +2998,7 @@ export default function NewLandingDemo() {
                   className="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-800 rounded-lg text-[11px] font-bold transition-all cursor-pointer shadow-2xs"
                   title="Cargar 3 reseñas 5 estrellas de muestra"
                 >
-                  ⚡ Cargar 3 Reseñas 5★
+                  Cargar 3 Reseñas (5 Estrellas)
                 </button>
                 <button
                   type="button"
@@ -3036,9 +3039,9 @@ export default function NewLandingDemo() {
                         onChange={(e) => handleUpdateTestimonial(idx, 'rating', Number(e.target.value))}
                         className="bg-white border border-slate-300 rounded-xl px-2.5 py-1.5 text-xs font-bold text-amber-600 focus:ring-2 focus:ring-blue-500 outline-none"
                       >
-                        <option value={5}>⭐⭐⭐⭐⭐ (5 Estrellas)</option>
-                        <option value={4}>⭐⭐⭐⭐ (4 Estrellas)</option>
-                        <option value={3}>⭐⭐⭐ (3 Estrellas)</option>
+                        <option value={5}>5 Estrellas (Excelente)</option>
+                        <option value={4}>4 Estrellas (Muy Bueno)</option>
+                        <option value={3}>3 Estrellas (Bueno)</option>
                       </select>
                     </div>
                     {testimonials.length > 1 && (
@@ -3073,7 +3076,7 @@ export default function NewLandingDemo() {
             >
               <div className="flex items-center gap-2">
                 <SlidersHorizontal size={15} className="text-blue-600" />
-                <span>⚙️ Afinamiento Opcional de Copys & Botón Principal (Avanzado)</span>
+                <span>Afinamiento Opcional de Copys & Botón Principal (Avanzado)</span>
               </div>
               <ChevronDown size={16} className={`text-slate-400 transition-transform ${showAdvancedCopy ? 'rotate-180' : ''}`} />
             </button>
@@ -3172,12 +3175,12 @@ export default function NewLandingDemo() {
           {/* Quick Template Switcher Pills */}
           <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none pb-1 text-[11px] px-0.5">
             {[
-              { id: 'emerald-explorer', icon: '🌲', label: 'Diseño 6' },
-              { id: 'agency-portal', icon: '🔥', label: 'Diseño 1' },
-              { id: 'boho-nature', icon: '📷', label: 'Boho' },
-              { id: 'premium', icon: '👑', label: 'VIP' },
-              { id: 'adventure', icon: '🏔️', label: 'Aventura' },
-              { id: 'cultural', icon: '🏛️', label: 'Cultural' }
+              { id: 'emerald-explorer', label: 'Diseño 6' },
+              { id: 'agency-portal', label: 'Diseño 1' },
+              { id: 'boho-nature', label: 'Boho' },
+              { id: 'premium', label: 'VIP' },
+              { id: 'adventure', label: 'Aventura' },
+              { id: 'cultural', label: 'Cultural' }
             ].map(t => (
               <button
                 key={t.id}
@@ -3190,13 +3193,18 @@ export default function NewLandingDemo() {
                     handleApplyPreset(matchingPreset);
                   }
                 }}
-                className={`px-2.5 py-1 rounded-xl font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1 border ${
+                className={`px-2.5 py-1 rounded-xl font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1.5 border ${
                   template === t.id
                     ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
                     : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
                 }`}
               >
-                <span>{t.icon}</span>
+                {t.id === 'emerald-explorer' && <Compass size={12} className={template === t.id ? 'text-white' : 'text-emerald-600'} />}
+                {t.id === 'agency-portal' && <Zap size={12} className={template === t.id ? 'text-white' : 'text-[#FF5500]'} />}
+                {t.id === 'boho-nature' && <Camera size={12} className={template === t.id ? 'text-white' : 'text-amber-600'} />}
+                {t.id === 'premium' && <Crown size={12} className={template === t.id ? 'text-white' : 'text-amber-500'} />}
+                {t.id === 'adventure' && <Mountain size={12} className={template === t.id ? 'text-white' : 'text-emerald-600'} />}
+                {t.id === 'cultural' && <Landmark size={12} className={template === t.id ? 'text-white' : 'text-amber-700'} />}
                 <span>{t.label}</span>
               </button>
             ))}
@@ -3250,7 +3258,7 @@ export default function NewLandingDemo() {
                         <img src={logoUrl} alt={companyName} className="w-5 h-5 object-contain rounded-lg border border-emerald-400/40 shrink-0" />
                       ) : (
                         <div className="w-5 h-5 rounded-lg bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-[10px] shrink-0">
-                          🌲
+                          <Compass size={11} className="text-emerald-400 shrink-0" />
                         </div>
                       )}
                       <div className="min-w-0 truncate">
@@ -3321,7 +3329,7 @@ export default function NewLandingDemo() {
                         {/* Floating Local Experts Chip con Levitación */}
                         <div className="absolute top-2 left-2 z-20 bg-black/40 backdrop-blur-md border border-white/20 px-2 py-1 rounded-xl text-[8px] space-y-0.5 shadow-lg animate-float-badge">
                           <div className="flex items-center gap-1 text-emerald-300 font-bold">
-                            <span>📍</span> {translateText('Local Experts', language)}
+                            <MapPin size={9} className="text-emerald-400 shrink-0" /> {translateText('Local Experts', language)}
                           </div>
                           <span className="text-[7px] text-emerald-100/70 block">{translateText('Authentic experiences', language)}</span>
                         </div>
@@ -3358,21 +3366,21 @@ export default function NewLandingDemo() {
                     <div className="grid grid-cols-3 gap-1.5 text-center text-[8px]">
                       <div className="glass-floating-card p-2 rounded-xl space-y-0.5 shadow-xs animate-emerald-float">
                         <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-300 mx-auto flex items-center justify-center text-[10px] mb-1">
-                          🏠
+                          <Users size={12} className="text-emerald-300" />
                         </span>
                         <span className="font-black text-white block line-clamp-1">{translateText('Guías Expertos', language)}</span>
                         <span className="text-[7px] text-emerald-200/70 block line-clamp-1">{translateText('Conocimiento local y tips auténticos', language)}</span>
                       </div>
                       <div className="glass-floating-card p-2 rounded-xl space-y-0.5 shadow-xs animate-emerald-float-delayed">
                         <span className="w-5 h-5 rounded-lg bg-teal-500/20 text-teal-300 mx-auto flex items-center justify-center text-[10px] mb-1">
-                          📋
+                          <FileText size={12} className="text-teal-300" />
                         </span>
                         <span className="font-black text-white block line-clamp-1">{translateText('Rutas a Medida', language)}</span>
                         <span className="text-[7px] text-emerald-200/70 block line-clamp-1">{translateText('Planes flexibles para cada viajero', language)}</span>
                       </div>
                       <div className="glass-floating-card p-2 rounded-xl space-y-0.5 shadow-xs animate-emerald-float-alt">
                         <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-300 mx-auto flex items-center justify-center text-[10px] mb-1">
-                          🛡️
+                          <ShieldCheck size={12} className="text-amber-300" />
                         </span>
                         <span className="font-black text-white block line-clamp-1">{translateText('Mejor Precio Garantizado', language)}</span>
                         <span className="text-[7px] text-emerald-200/70 block line-clamp-1">{translateText('Tarifas directas sin intermediarios', language)}</span>
@@ -3407,7 +3415,7 @@ export default function NewLandingDemo() {
                               ★ 4.8
                             </span>
                             <span className="w-5 h-5 rounded-full bg-black/40 backdrop-blur-md text-rose-500 flex items-center justify-center text-[9px] border border-white/20">
-                              ♥
+                              <Heart size={9} className="text-rose-500 fill-rose-500" />
                             </span>
                           </div>
 
@@ -3443,7 +3451,7 @@ export default function NewLandingDemo() {
                           <span className="text-[8px] text-emerald-300/80 font-semibold block">{translateText('Viajeros Felices', language)}</span>
                         </div>
                         <span className="w-6 h-6 rounded-xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center text-[10px]">
-                          👥
+                          <Users size={12} className="text-emerald-300" />
                         </span>
                       </div>
 
@@ -3453,7 +3461,7 @@ export default function NewLandingDemo() {
                           <span className="text-[8px] text-emerald-300/80 font-semibold block">{translateText('Reseñas Positivas', language)}</span>
                         </div>
                         <span className="w-6 h-6 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center text-[10px]">
-                          ⭐
+                          <Star size={12} className="text-amber-300 fill-amber-300" />
                         </span>
                       </div>
                     </div>
@@ -3553,8 +3561,8 @@ export default function NewLandingDemo() {
 
                     {/* Hero Content */}
                     <div className="absolute bottom-3 inset-x-3 space-y-1.5">
-                      <span className="inline-block bg-[#FF5500]/90 text-white text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full shadow-xs">
-                        🔥 Portal Agencia Pinterest
+                      <span className="inline-flex items-center gap-1 bg-[#FF5500]/90 text-white text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full shadow-xs">
+                        <Zap size={9} className="text-white fill-white" /> Portal Agencia VIP
                       </span>
                       <h3 className="text-base font-black leading-tight text-white drop-shadow-md line-clamp-2">
                         {name || 'Machu Picchu VIP con Tren Panorámico'}
@@ -3661,7 +3669,7 @@ export default function NewLandingDemo() {
                         {logoUrl ? (
                           <img src={logoUrl} alt={companyName} className="w-3.5 h-3.5 object-contain rounded shrink-0" />
                         ) : (
-                          <span className="shrink-0">📌</span>
+                          <Compass size={11} className="text-[#C86D51] shrink-0" />
                         )}
                         <span className="truncate">{companyName || 'BOHO TRAVEL JOURNAL'}</span>
                       </span>
@@ -3690,10 +3698,10 @@ export default function NewLandingDemo() {
                     {/* Mini Highlights Chips */}
                     <div className="grid grid-cols-2 gap-1.5 text-[9px]">
                       <div className="bg-[#F0EAE1] p-1.5 rounded-lg text-stone-700 font-bold flex items-center gap-1">
-                        <span>⭐</span> 4.9 ★ (340+ reviews)
+                        <Star size={11} className="text-amber-500 fill-amber-500 shrink-0" /> 4.9 (340+ reviews)
                       </div>
                       <div className="bg-[#F0EAE1] p-1.5 rounded-lg text-stone-700 font-bold flex items-center gap-1">
-                        <span>📷</span> Spots Fotográficos
+                        <Camera size={11} className="text-stone-700 shrink-0" /> Spots Fotográficos
                       </div>
                     </div>
 
@@ -3785,7 +3793,10 @@ export default function NewLandingDemo() {
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                       Salidas Diarias 2026
                     </span>
-                    <span className="text-amber-200">⭐ 4.9/5 • Safe Travels</span>
+                    <span className="text-amber-200 flex items-center gap-1">
+                      <Star size={9} className="text-amber-400 fill-amber-400" />
+                      <span>4.9/5 • Safe Travels</span>
+                    </span>
                   </div>
 
                   {/* Header bar */}
@@ -3859,16 +3870,16 @@ export default function NewLandingDemo() {
                         <span className="text-stone-400 text-[8px]">100% Incluido</span>
                       </div>
                       <div className="grid grid-cols-3 gap-1.5 text-center text-[8px]">
-                        <div className="p-1.5 rounded-lg bg-stone-900/80 border border-amber-500/10">
-                          <span className="block text-[12px] mb-0.5">🍷</span>
+                        <div className="p-1.5 rounded-lg bg-stone-900/80 border border-amber-500/10 flex flex-col items-center">
+                          <Wine size={12} className="text-amber-400 mb-0.5" />
                           <span className="font-bold text-stone-200 line-clamp-1">Belmond Lodge</span>
                         </div>
-                        <div className="p-1.5 rounded-lg bg-stone-900/80 border border-amber-500/10">
-                          <span className="block text-[12px] mb-0.5">🎷</span>
+                        <div className="p-1.5 rounded-lg bg-stone-900/80 border border-amber-500/10 flex flex-col items-center">
+                          <Sparkles size={12} className="text-amber-400 mb-0.5" />
                           <span className="font-bold text-stone-200 line-clamp-1">Hiram Bingham</span>
                         </div>
-                        <div className="p-1.5 rounded-lg bg-stone-900/80 border border-amber-500/10">
-                          <span className="block text-[12px] mb-0.5">🚗</span>
+                        <div className="p-1.5 rounded-lg bg-stone-900/80 border border-amber-500/10 flex flex-col items-center">
+                          <ShieldCheck size={12} className="text-amber-400 mb-0.5" />
                           <span className="font-bold text-stone-200 line-clamp-1">SUV Privada</span>
                         </div>
                       </div>
@@ -4018,7 +4029,7 @@ export default function NewLandingDemo() {
                         {logoUrl ? (
                           <img src={logoUrl} alt={companyName} className="w-3.5 h-3.5 object-contain rounded shrink-0" />
                         ) : (
-                          <span className="shrink-0">🌐</span>
+                          <Compass size={11} className="text-emerald-400 shrink-0" />
                         )}
                         <span className="truncate">{companyName || 'Discover the World'}</span>
                       </span>
@@ -4030,7 +4041,7 @@ export default function NewLandingDemo() {
                     {/* Headline Banner */}
                     <div className="relative z-10 space-y-1 mt-6 mb-2">
                       <h3 className="text-sm font-black text-white leading-tight drop-shadow-md">
-                        Travel the Best, It&apos;s a Big World, Go Explore! 🚀
+                        Travel the Best, It&apos;s a Big World, Go Explore!
                       </h3>
                       <p className="text-[10px] text-slate-200 line-clamp-1">
                         {name || 'Tour Salkantay Trek Clásico'} • {duration || '5 Días'}
@@ -4052,7 +4063,7 @@ export default function NewLandingDemo() {
                     {/* Quick Searched Spots Pills (Mini) */}
                     <div className="space-y-1">
                       <span className="text-[10px] font-black text-slate-800 block">
-                        Explore Top Searched Spots 🔥
+                        Explore Top Searched Spots
                       </span>
                       <div className="grid grid-cols-2 gap-1.5 text-[9px]">
                         <div className="bg-slate-50 border border-slate-200/80 p-1.5 rounded-xl font-bold flex items-center justify-between">
@@ -4182,13 +4193,13 @@ export default function NewLandingDemo() {
                         {/* 3 Circular Mini Action Buttons */}
                         <div className="pt-1.5 flex items-center justify-center gap-2">
                           <span className="w-6 h-6 rounded-full bg-black/40 border border-white/30 text-white flex items-center justify-center text-[9px]">
-                            🔍
+                            <Search size={11} />
                           </span>
                           <span className="w-6 h-6 rounded-full bg-red-700 text-white flex items-center justify-center text-[9px] shadow-sm">
-                            ✉️
+                            <Mail size={11} />
                           </span>
                           <span className="w-6 h-6 rounded-full bg-black/40 border border-white/30 text-white flex items-center justify-center text-[9px]">
-                            📞
+                            <Phone size={11} />
                           </span>
                         </div>
                       </div>
@@ -4207,14 +4218,20 @@ export default function NewLandingDemo() {
                     {/* 5 Circular Quick Access Badges (Matching reference image) */}
                     <div className="grid grid-cols-5 gap-1 text-center -mt-3 relative z-10">
                       {[
-                        { icon: '🎫', label: 'Boleto' },
-                        { icon: '📜', label: 'Guía' },
-                        { icon: '🕯️', label: 'Ritual' },
-                        { icon: '🏛️', label: 'Templos' },
-                        { icon: '📞', label: 'Reserva' }
+                        { label: 'Boleto' },
+                        { label: 'Guía' },
+                        { label: 'Ritual' },
+                        { label: 'Templos' },
+                        { label: 'Reserva' }
                       ].map((item, idx) => (
                         <div key={idx} className="bg-white rounded-2xl p-1.5 border border-stone-200 hover:border-red-300 shadow-xs flex flex-col items-center">
-                          <span className="text-sm">{item.icon}</span>
+                          <span className="text-red-700 flex items-center justify-center h-4">
+                            {idx === 0 && <Ticket size={12} />}
+                            {idx === 1 && <Award size={12} />}
+                            {idx === 2 && <Sparkles size={12} />}
+                            {idx === 3 && <Landmark size={12} />}
+                            {idx === 4 && <Phone size={12} />}
+                          </span>
                           <span className="text-[8px] font-serif font-black text-stone-800 leading-tight mt-0.5 truncate w-full">
                             {item.label}
                           </span>
@@ -4326,7 +4343,7 @@ export default function NewLandingDemo() {
 
                     {/* Conseils Mochila Chip */}
                     <div className="p-1.5 rounded-lg bg-stone-100 border border-stone-200 text-left text-[7px] flex items-center justify-between">
-                      <span className="font-bold text-stone-800">👟 Mochila del Historiador:</span>
+                      <span className="font-bold text-stone-800">Mochila del Historiador:</span>
                       <span className="text-stone-500">Calzado con tracción • UV400</span>
                     </div>
 
@@ -4346,7 +4363,7 @@ export default function NewLandingDemo() {
                   {/* Municipal / Heritage Footer Block */}
                   <div className="p-3 bg-white border-t border-red-200/80 space-y-1.5 text-[8px] text-stone-600 text-left">
                     <div className="flex items-center justify-between font-serif font-bold text-stone-900">
-                      <span className="truncate max-w-[150px]">{companyName ? `🏛️ ${companyName}` : '🏛️ Cusco Patrimonial'}</span>
+                      <span className="truncate max-w-[150px]">{companyName || 'Cusco Patrimonial'}</span>
                       <span className="text-red-700 font-bold">{companyRuc || 'DIRCETUR Oficial'}</span>
                     </div>
                     <p className="text-stone-500 line-clamp-1">

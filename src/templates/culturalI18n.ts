@@ -180,11 +180,11 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
     },
     heroSubtitleDefault: 'Entre montañas sagradas y tradición milenaria, bienvenido a la capital arqueológica de América.',
     quickServices: [
-      { icon: '🎫', label: 'Boleto Turístico', sub: 'Accesos Oficiales' },
-      { icon: '📜', label: 'Guía Colegiado', sub: 'DIRCETUR Oficial' },
-      { icon: '🕯️', label: 'Ceremonias Andinas', sub: 'Pago a la Pachamama' },
-      { icon: '🏛️', label: 'Templos & Palacios', sub: 'Arquitectura Inca' },
-      { icon: '📞', label: 'Asistencia 24/7', sub: 'Horarios & Reservas' }
+      { icon: '', label: 'Boleto Turístico', sub: 'Accesos Oficiales' },
+      { icon: '', label: 'Guía Colegiado', sub: 'DIRCETUR Oficial' },
+      { icon: '', label: 'Ceremonias Andinas', sub: 'Pago a la Pachamama' },
+      { icon: '', label: 'Templos & Palacios', sub: 'Arquitectura Inca' },
+      { icon: '', label: 'Asistencia 24/7', sub: 'Horarios & Reservas' }
     ],
     actualites: {
       title: 'Crónicas & Patrimonio',
@@ -256,7 +256,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
         { num: 3, name: 'Qenqo & Puka Pukara', altitude: '3,800 m' },
         { num: 4, name: 'Plaza de Armas & Catedral', altitude: 'Punto Cero' }
       ],
-      tip: '💡 Haz clic para abrir la ruta directa en tu aplicación de navegación GPS.'
+      tip: 'Haz clic para abrir la ruta directa en tu aplicación de navegación GPS.'
     },
     itinerary: {
       badge: 'Itinerario Oficial DIRCETUR',
@@ -274,25 +274,25 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       recommended: '✓ Recomendado',
       items: [
         {
-          icon: '👟',
+          icon: '',
           title: 'Calzado con buena tracción',
           subtitle: 'Empedrado & escalinatas incas',
           desc: 'Las losas de Hatun Rumiyoc y los caminos de piedra de Sacsayhuamán están pulidos por los siglos. Usa zapatillas de marcha con suela antideslizante.'
         },
         {
-          icon: '☀️',
+          icon: '',
           title: 'Protección solar andina',
           subtitle: 'Radiación UV de altura',
           desc: 'Bajo el cielo diáfano de los Andes, los rayos UV son potentes incluso en días nublados. Sombrero de ala ancha, lentes UV400 y bloqueador solar son indispensables.'
         },
         {
-          icon: '💵',
+          icon: '',
           title: 'Efectivo en Soles (PEN)',
           subtitle: 'Taquillas & artesanías locales',
           desc: 'Algunas ventanillas de parques arqueológicos y maestras tejedoras tradicionales no cuentan con terminal POS. Recomendamos llevar 100 a 150 soles en efectivo.'
         },
         {
-          icon: '🧥',
+          icon: '',
           title: 'Prendas en varias capas',
           subtitle: 'Gradiente térmico andino',
           desc: 'El sol abriga al mediodía (20°C), pero a partir de las 16:30 hrs el viento fresco sopla con fuerza en Sacsayhuamán (10°C). Lleva casaca cortaviento y abrigo ligero.'
@@ -314,10 +314,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-carlos.jpg',
           quote: 'Transmitir la memoria de las piedras no es recitar fechas: es una inmersión viva en la cosmogonía de nuestros ancestros. Cada templo que recorremos guarda el equilibrio sagrado entre el ser humano y la Pachamama.',
           specs: [
-            { icon: '🎓', label: 'Titulado de la UNSAAC Cusco' },
-            { icon: '🗣️', label: 'Español, Inglés y Francés' },
-            { icon: '🏛️', label: '12 años de labor arqueológica' },
-            { icon: '🛡️', label: 'Primeros Auxilios & Altitud' }
+            { icon: '', label: 'Titulado de la UNSAAC Cusco' },
+            { icon: '', label: 'Español, Inglés y Francés' },
+            { icon: '', label: '12 años de labor arqueológica' },
+            { icon: '', label: 'Primeros Auxilios & Altitud' }
           ],
           directBtn: 'Consultar con Carlos Mendoza',
           msgPrefix: 'Hola Carlos Mendoza, deseo información y disponibilidad para el tour cultural'
@@ -331,10 +331,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-marco.jpg',
           quote: 'La arquitectura inca no fue únicamente monumental, sino asísmica y sagrada. Analizar el ensamblaje de los bloques ciclópeos en el terreno permite comprender el genio matemático andino.',
           specs: [
-            { icon: '🎓', label: 'Titulado de la UNSAAC Cusco' },
-            { icon: '🗣️', label: 'Español, Quechua y Francés' },
-            { icon: '🏛️', label: '15 años investigando canteras' },
-            { icon: '🛡️', label: 'Guía de Alta Montaña DIRCETUR' }
+            { icon: '', label: 'Titulado de la UNSAAC Cusco' },
+            { icon: '', label: 'Español, Quechua y Francés' },
+            { icon: '', label: '15 años investigando canteras' },
+            { icon: '', label: 'Guía de Alta Montaña DIRCETUR' }
           ],
           directBtn: 'Consultar con Marco Quispe',
           msgPrefix: 'Hola Marco Antonio Quispe, deseo información y disponibilidad para el tour cultural'
@@ -348,10 +348,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-valdivia.jpg',
           quote: 'El encuentro entre los templos incas del Sol y las arquerías virreinales del convento de Santo Domingo refleja el diálogo, resistencia y mestizaje de nuestra capital imperial.',
           specs: [
-            { icon: '🎓', label: 'Maestría Arte Andino (UNSAAC)' },
-            { icon: '🗣️', label: 'Español, Inglés e Italiano' },
-            { icon: '🏛️', label: '10 años en museos y templos' },
-            { icon: '🛡️', label: 'Guía Conferencista Oficial' }
+            { icon: '', label: 'Maestría Arte Andino (UNSAAC)' },
+            { icon: '', label: 'Español, Inglés e Italiano' },
+            { icon: '', label: '10 años en museos y templos' },
+            { icon: '', label: 'Guía Conferencista Oficial' }
           ],
           directBtn: 'Consultar con Carlos Valdivia',
           msgPrefix: 'Hola Carlos Eduardo Valdivia, deseo información y disponibilidad para el tour cultural'
@@ -371,21 +371,21 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       reviews: [
         {
           name: 'Jean-Luc & Françoise Moreau',
-          origin: '🇫🇷 Lyon, Francia',
+          origin: 'Lyon, Francia',
           date: 'Visita realizada el 14 Septiembre 2026',
           stars: 5,
           comment: 'Una visita magistral que supera por completo cualquier tour convencional. Las explicaciones sobre la ingeniería sismorresistente de Sacsayhuamán y la simbología del Templo del Sol fueron de un rigor admirable.'
         },
         {
           name: 'Dra. Elena Santillán',
-          origin: '🇪🇸 Madrid, España',
+          origin: 'Madrid, España',
           date: 'Visita realizada el 02 Agosto 2026',
           stars: 5,
           comment: 'Como docente de historia del arte, buscaba un guiado sin mitos inventados. La preparación académica de la guía y su respeto por las fuentes cronistas coloniales me pareció extraordinaria. Diez sobre diez.'
         },
         {
           name: 'Michael & Sarah Jenkins',
-          origin: '🇺🇸 Boston, EE.UU.',
+          origin: 'Boston, EE.UU.',
           date: 'Visita realizada el 19 Julio 2026',
           stars: 5,
           comment: 'The best tour we took in Peru! Small group, zero rush, crystal-clear audio receivers, and fascinating insights into Inca astronomy that you simply cannot get on standard commercial buses.'
@@ -443,11 +443,11 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
     },
     heroSubtitleDefault: 'Between sacred mountains and millennial traditions, welcome to the archaeological capital of the Americas.',
     quickServices: [
-      { icon: '🎫', label: 'Tourist Ticket', sub: 'Official Passes' },
-      { icon: '📜', label: 'Certified Guide', sub: 'Official DIRCETUR' },
-      { icon: '🕯️', label: 'Andean Rituals', sub: 'Pachamama Tribute' },
-      { icon: '🏛️', label: 'Temples & Palaces', sub: 'Inca Architecture' },
-      { icon: '📞', label: '24/7 Concierge', sub: 'Times & Bookings' }
+      { icon: '', label: 'Tourist Ticket', sub: 'Official Passes' },
+      { icon: '', label: 'Certified Guide', sub: 'Official DIRCETUR' },
+      { icon: '', label: 'Andean Rituals', sub: 'Pachamama Tribute' },
+      { icon: '', label: 'Temples & Palaces', sub: 'Inca Architecture' },
+      { icon: '', label: '24/7 Concierge', sub: 'Times & Bookings' }
     ],
     actualites: {
       title: 'Heritage Chronicles & News',
@@ -519,7 +519,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
         { num: 3, name: 'Qenqo & Puka Pukara', altitude: '3,800 m' },
         { num: 4, name: 'Plaza de Armas & Cathedral', altitude: 'Point Zero' }
       ],
-      tip: '💡 Click to open direct navigation coordinates in your mobile GPS application.'
+      tip: 'Click to open direct navigation coordinates in your mobile GPS application.'
     },
     itinerary: {
       badge: 'Official DIRCETUR Itinerary',
@@ -537,25 +537,25 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       recommended: '✓ Recommended',
       items: [
         {
-          icon: '👟',
+          icon: '',
           title: 'High-traction footwear',
           subtitle: 'Cobblestones & Inca stairs',
           desc: 'Hatun Rumiyoc stones and Sacsayhuamán steps have been polished by centuries. Opt for sturdy walking shoes or sneakers with ribbed grip.'
         },
         {
-          icon: '☀️',
+          icon: '',
           title: 'High altitude sun defense',
           subtitle: 'UV radiation at 3,400m',
           desc: 'Under clear Andean skies, UV rays are intense even on overcast days. Wide-brimmed hats, UV400 sunglasses and sunscreen are essential.'
         },
         {
-          icon: '💵',
+          icon: '',
           title: 'Cash in Peruvian Soles (PEN)',
           subtitle: 'Park ticket booths & crafts',
           desc: 'Some archaeological entrances and traditional weavers do not have card terminals. Carry 100 to 150 Soles in cash per person.'
         },
         {
-          icon: '🧥',
+          icon: '',
           title: 'Layered clothing',
           subtitle: 'Andean thermal shifts',
           desc: 'Sun warms nicely at noon (20°C / 68°F), but brisk mountain winds pick up at Sacsayhuamán by 4:30 PM (10°C / 50°F). Bring a fleece or windbreaker.'
@@ -577,10 +577,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-carlos.jpg',
           quote: 'Passing down the memory of the stones is not reciting dates: it is a living immersion in the cosmovision of our ancestors. Every temple we tread holds the sacred balance between humanity and Pachamama.',
           specs: [
-            { icon: '🎓', label: 'UNSAAC Cusco Alumna' },
-            { icon: '🗣️', label: 'English, French & Spanish' },
-            { icon: '🏛️', label: '12 years in archaeological research' },
-            { icon: '🛡️', label: 'High Altitude First Aid Certified' }
+            { icon: '', label: 'UNSAAC Cusco Alumna' },
+            { icon: '', label: 'English, French & Spanish' },
+            { icon: '', label: '12 years in archaeological research' },
+            { icon: '', label: 'High Altitude First Aid Certified' }
           ],
           directBtn: 'Chat with Carlos Mendoza',
           msgPrefix: 'Hello Carlos Mendoza, I would like information and availability for the cultural tour'
@@ -594,10 +594,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-marco.jpg',
           quote: 'Inca architecture was not only monumental, but seismic-resistant and sacred. Examining cyclopean joinery in person unveils the true mathematical genius of the Andes.',
           specs: [
-            { icon: '🎓', label: 'UNSAAC Cusco Alumnus' },
-            { icon: '🗣️', label: 'Quechua, Spanish & French' },
-            { icon: '🏛️', label: '15 years studying megaliths' },
-            { icon: '🛡️', label: 'Certified Mountain Guide' }
+            { icon: '', label: 'UNSAAC Cusco Alumnus' },
+            { icon: '', label: 'Quechua, Spanish & French' },
+            { icon: '', label: '15 years studying megaliths' },
+            { icon: '', label: 'Certified Mountain Guide' }
           ],
           directBtn: 'Chat with Marco Quispe',
           msgPrefix: 'Hello Marco Antonio Quispe, I would like information and availability for the cultural tour'
@@ -611,10 +611,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-valdivia.jpg',
           quote: 'The encounter between the Inca Sun Temples and the viceregal arcades of Santo Domingo Convent illustrates the dialogue, resilience, and artistic synthesis of our imperial city.',
           specs: [
-            { icon: '🎓', label: "Master's Degree Andean Art (UNSAAC)" },
-            { icon: '🗣️', label: 'English, Italian & Spanish' },
-            { icon: '🏛️', label: '10 years museum & churches guide' },
-            { icon: '🛡️', label: 'Official Lecturer Guide' }
+            { icon: '', label: "Master's Degree Andean Art (UNSAAC)" },
+            { icon: '', label: 'English, Italian & Spanish' },
+            { icon: '', label: '10 years museum & churches guide' },
+            { icon: '', label: 'Official Lecturer Guide' }
           ],
           directBtn: 'Chat with Carlos Valdivia',
           msgPrefix: 'Hello Carlos Eduardo Valdivia, I would like information and availability for the cultural tour'
@@ -634,21 +634,21 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       reviews: [
         {
           name: 'Jean-Luc & Françoise Moreau',
-          origin: '🇫🇷 Lyon, France',
+          origin: 'Lyon, France',
           date: 'Tour completed on September 14, 2026',
           stars: 5,
           comment: 'A masterful visit that far surpasses standard commercial tours. Explanations of earthquake-resistant engineering at Sacsayhuamán and Sun Temple symbols were of absolute academic rigor.'
         },
         {
           name: 'Dr. Elena Santillán',
-          origin: '🇪🇸 Madrid, Spain',
+          origin: 'Madrid, Spain',
           date: 'Tour completed on August 02, 2026',
           stars: 5,
           comment: 'As an art history professor, I sought a tour free of invented myths. The guide’s deep academic knowledge and respectful grounding in colonial chronicles were extraordinary. Ten out of ten.'
         },
         {
           name: 'Michael & Sarah Jenkins',
-          origin: '🇺🇸 Boston, USA',
+          origin: 'Boston, USA',
           date: 'Tour completed on July 19, 2026',
           stars: 5,
           comment: 'The best tour we took in Peru! Small group, zero rush, crystal-clear audio receivers, and fascinating insights into Inca astronomy that you simply cannot get on standard commercial buses.'
@@ -706,11 +706,11 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
     },
     heroSubtitleDefault: 'Entre montagnes sacrées et tradition millénaire, bienvenue dans la capitale archéologique des Amériques.',
     quickServices: [
-      { icon: '🎫', label: 'Billet Touristique', sub: 'Accès Officiels' },
-      { icon: '📜', label: 'Guide Diplômé', sub: 'DIRCETUR Officiel' },
-      { icon: '🕯️', label: 'Cérémonies Andines', sub: 'Paiement à la Terre' },
-      { icon: '🏛️', label: 'Temples & Palais', sub: 'Architecture Inca' },
-      { icon: '📞', label: 'Assistance 24/7', sub: 'Horaires & Réservations' }
+      { icon: '', label: 'Billet Touristique', sub: 'Accès Officiels' },
+      { icon: '', label: 'Guide Diplômé', sub: 'DIRCETUR Officiel' },
+      { icon: '', label: 'Cérémonies Andines', sub: 'Paiement à la Terre' },
+      { icon: '', label: 'Temples & Palais', sub: 'Architecture Inca' },
+      { icon: '', label: 'Assistance 24/7', sub: 'Horaires & Réservations' }
     ],
     actualites: {
       title: 'Actualités & Chroniques du Patrimoine',
@@ -782,7 +782,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
         { num: 3, name: 'Qenqo & Puka Pukara', altitude: '3 800 m' },
         { num: 4, name: 'Plaza de Armas & Cathédrale', altitude: 'Point Zéro' }
       ],
-      tip: '💡 Cliquez pour ouvrir l’itinéraire direct dans votre application de navigation GPS.'
+      tip: 'Cliquez pour ouvrir l’itinéraire direct dans votre application de navigation GPS.'
     },
     itinerary: {
       badge: 'Itinéraire Officiel DIRCETUR',
@@ -800,25 +800,25 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       recommended: '✓ Recommandé',
       items: [
         {
-          icon: '👟',
+          icon: '',
           title: 'Chaussures à bonne adhérence',
           subtitle: 'Sol pavé & escaliers incas',
           desc: 'Les dalles de Hatun Rumiyoc et les chemins de pierre de Sacsayhuamán sont polis par les siècles. Privilégiez des baskets de marche à semelle crantée.'
         },
         {
-          icon: '☀️',
+          icon: '',
           title: 'Protection solaire maximale',
           subtitle: 'Indice UV d’altitude',
           desc: 'Sous le ciel limpide des Andes, la réverbération solaire est intense même par temps voilé. Chapeau à larges bords, lunettes UV400 et écran total indispensables.'
         },
         {
-          icon: '💵',
+          icon: '',
           title: 'Espèces en Soles (PEN)',
           subtitle: 'Guichets & artisanat local',
           desc: 'Certains postes de contrôle archéologiques et les tisseuses traditionnelles ne disposent pas de terminal carte. Prévoyez 100 à 150 PEN en liquide.'
         },
         {
-          icon: '🧥',
+          icon: '',
           title: 'Vêtements en plusieurs couches',
           subtitle: 'Climat thermique andin',
           desc: 'Le soleil chauffe à midi (20°C), mais dès 16h30 le vent frais souffle sur les crêtes de Sacsayhuamán (10°C). Prévoyez un pull chaud et une veste coupe-vent.'
@@ -840,10 +840,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-carlos.jpg',
           quote: 'Transmettre la mémoire des pierres n’est pas une récitation de dates : c’est une immersion vivante dans la cosmogonie de nos ancêtres. Chaque temple que nous foulons raconte l’équilibre sacré entre l’homme et la Pachamama.',
           specs: [
-            { icon: '🎓', label: 'Diplômé de l’UNSAAC Cusco' },
-            { icon: '🗣️', label: 'Espagnol, Anglais et Français' },
-            { icon: '🏛️', label: '12 ans d’expertise archéologique' },
-            { icon: '🛡️', label: 'Secourisme & Altitude certifié' }
+            { icon: '', label: 'Diplômé de l’UNSAAC Cusco' },
+            { icon: '', label: 'Espagnol, Anglais et Français' },
+            { icon: '', label: '12 ans d’expertise archéologique' },
+            { icon: '', label: 'Secourisme & Altitude certifié' }
           ],
           directBtn: 'Échanger avec Carlos Mendoza',
           msgPrefix: 'Bonjour Carlos Mendoza, je souhaite des renseignements et disponibilités pour le circuit culturel'
@@ -857,10 +857,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-marco.jpg',
           quote: 'L’architecture inca n’était pas seulement monumentale mais parasismique et sacrée. Analyser la taille des blocs de Sacsayhuamán sur place permet de comprendre le génie mathématique andin.',
           specs: [
-            { icon: '🎓', label: 'Diplômé de l’UNSAAC Cusco' },
-            { icon: '🗣️', label: 'Espagnol, Quechua et Français' },
-            { icon: '🏛️', label: '15 ans de recherche mégalithique' },
-            { icon: '🛡️', label: 'Accompagnateur Haute Montagne' }
+            { icon: '', label: 'Diplômé de l’UNSAAC Cusco' },
+            { icon: '', label: 'Espagnol, Quechua et Français' },
+            { icon: '', label: '15 ans de recherche mégalithique' },
+            { icon: '', label: 'Accompagnateur Haute Montagne' }
           ],
           directBtn: 'Échanger avec Marco Quispe',
           msgPrefix: 'Bonjour Marco Antonio Quispe, je souhaite des renseignements et disponibilités pour le circuit culturel'
@@ -874,10 +874,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-valdivia.jpg',
           quote: 'La rencontre entre les temples incas du Soleil et les arcades virreinales du couvent de Santo Domingo illustre le dialogue et la résistance culturelle de notre cité impériale.',
           specs: [
-            { icon: '🎓', label: 'Master Histoire de l’Art (UNSAAC)' },
-            { icon: '🗣️', label: 'Espagnol, Anglais et Italien' },
-            { icon: '🏛️', label: '10 ans de guidage muséal & églises' },
-            { icon: '🛡️', label: 'Guide-Conférencier Agréé' }
+            { icon: '', label: 'Master Histoire de l’Art (UNSAAC)' },
+            { icon: '', label: 'Espagnol, Anglais et Italien' },
+            { icon: '', label: '10 ans de guidage muséal & églises' },
+            { icon: '', label: 'Guide-Conférencier Agréé' }
           ],
           directBtn: 'Échanger avec Carlos Valdivia',
           msgPrefix: 'Bonjour Carlos Eduardo Valdivia, je souhaite des renseignements et disponibilités pour le circuit culturel'
@@ -897,21 +897,21 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       reviews: [
         {
           name: 'Jean-Luc & Françoise Moreau',
-          origin: '🇫🇷 Lyon, France',
+          origin: 'Lyon, France',
           date: 'Visite effectuée le 14 Septembre 2026',
           stars: 5,
           comment: 'Une visite magistrale qui dépasse de loin tous les circuits conventionnels. Les explications sur l’ingénierie parasismique de Sacsayhuamán et la symbolique du temple du Soleil étaient d’une rigueur absolue. Un moment inoubliable.'
         },
         {
           name: 'Dra. Elena Santillán',
-          origin: '🇪🇸 Madrid, Espagne',
+          origin: 'Madrid, Espagne',
           date: 'Visite effectuée le 02 Août 2026',
           stars: 5,
           comment: 'En tant que professeure d’histoire de l’art, je cherchais une visite sans légendes inventées. La rigueur académique du guide et son respect des chroniques coloniales étaient tout simplement remarquables. Dix sur dix.'
         },
         {
           name: 'Michael & Sarah Jenkins',
-          origin: '🇺🇸 Boston, USA',
+          origin: 'Boston, USA',
           date: 'Visite effectuée le 19 Juillet 2026',
           stars: 5,
           comment: 'Le meilleur circuit que nous ayons fait au Pérou ! Petit groupe, aucune précipitation, casques audio impeccables et explications passionnantes sur l’astronomie inca qu’on ne trouve dans aucun bus touristique.'
@@ -969,11 +969,11 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
     },
     heroSubtitleDefault: 'Entre montanhas sagradas e tradição milenar, bem-vindo à capital arqueológica da América.',
     quickServices: [
-      { icon: '🎫', label: 'Boleto Turístico', sub: 'Acessos Oficiais' },
-      { icon: '📜', label: 'Guia Credenciado', sub: 'DIRCETUR Oficial' },
-      { icon: '🕯️', label: 'Rituais Andinos', sub: 'Oferenda à Terra' },
-      { icon: '🏛️', label: 'Templos & Palácios', sub: 'Arquitetura Inca' },
-      { icon: '📞', label: 'Atendimento 24/7', sub: 'Horários & Reservas' }
+      { icon: '', label: 'Boleto Turístico', sub: 'Acessos Oficiais' },
+      { icon: '', label: 'Guia Credenciado', sub: 'DIRCETUR Oficial' },
+      { icon: '', label: 'Rituais Andinos', sub: 'Oferenda à Terra' },
+      { icon: '', label: 'Templos & Palácios', sub: 'Arquitetura Inca' },
+      { icon: '', label: 'Atendimento 24/7', sub: 'Horários & Reservas' }
     ],
     actualites: {
       title: 'Crônicas & Patrimônio',
@@ -1045,7 +1045,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
         { num: 3, name: 'Qenqo & Puka Pukara', altitude: '3.800 m' },
         { num: 4, name: 'Plaza de Armas & Catedral', altitude: 'Ponto Zero' }
       ],
-      tip: '💡 Clique para abrir a rota direta no seu aplicativo de navegação GPS.'
+      tip: 'Clique para abrir a rota direta no seu aplicativo de navegação GPS.'
     },
     itinerary: {
       badge: 'Itinerário Oficial DIRCETUR',
@@ -1063,25 +1063,25 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       recommended: '✓ Recomendado',
       items: [
         {
-          icon: '👟',
+          icon: '',
           title: 'Calçado com boa aderência',
           subtitle: 'Pedras polidas & escadarias',
           desc: 'As pedras de Hatun Rumiyoc e os caminhos de Sacsayhuamán foram polidos pelos séculos. Use calçados de caminhada com sola antiderrapante.'
         },
         {
-          icon: '☀️',
+          icon: '',
           title: 'Proteção solar máxima',
           subtitle: 'Índice UV de altitude',
           desc: 'Sob o céu límpido dos Andes, os raios UV são muito intensos. Chapéu de abas largas, óculos UV400 e protetor solar são indispensáveis.'
         },
         {
-          icon: '💵',
+          icon: '',
           title: 'Dinheiro em Soles (PEN)',
           subtitle: 'Bilheterias & artesanato',
           desc: 'Alguns postos arqueológicos e tecelãs tradicionais não aceitam cartão de crédito. Leve de 100 a 150 Soles em espécie.'
         },
         {
-          icon: '🧥',
+          icon: '',
           title: 'Roupas em camadas',
           subtitle: 'Variação térmica andina',
           desc: 'O sol esquenta ao meio-dia (20°C), mas às 16h30 o vento frio começa a soprar em Sacsayhuamán (10°C). Traga um casaco corta-vento.'
@@ -1103,10 +1103,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-carlos.jpg',
           quote: 'Transmitir a memória das pedras não é recitar datas: é uma imersão viva na cosmovisão dos nossos antepassados. Cada templo guarda o equilíbrio sagrado entre a humanidade e a Pachamama.',
           specs: [
-            { icon: '🎓', label: 'Formado pela UNSAAC Cusco' },
-            { icon: '🗣️', label: 'Espanhol, Inglês e Francês' },
-            { icon: '🏛️', label: '12 anos de pesquisa arqueológica' },
-            { icon: '🛡️', label: 'Primeiros Socorros & Altitude' }
+            { icon: '', label: 'Formado pela UNSAAC Cusco' },
+            { icon: '', label: 'Espanhol, Inglês e Francês' },
+            { icon: '', label: '12 anos de pesquisa arqueológica' },
+            { icon: '', label: 'Primeiros Socorros & Altitude' }
           ],
           directBtn: 'Falar com Carlos Mendoza',
           msgPrefix: 'Olá Carlos Mendoza, gostaria de informações e disponibilidade para o passeio cultural'
@@ -1120,10 +1120,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-marco.jpg',
           quote: 'A arquitetura incaica não foi apenas monumental, mas sismorresistente e sagrada. Analisar o encaixe das pedras ciclópeas revela a impressionante genialidade andina.',
           specs: [
-            { icon: '🎓', label: 'Formado pela UNSAAC Cusco' },
-            { icon: '🗣️', label: 'Espanhol, Quechua e Francês' },
-            { icon: '🏛️', label: '15 anos estudando muralhas' },
-            { icon: '🛡️', label: 'Guia de Alta Montanha DIRCETUR' }
+            { icon: '', label: 'Formado pela UNSAAC Cusco' },
+            { icon: '', label: 'Espanhol, Quechua e Francês' },
+            { icon: '', label: '15 anos estudando muralhas' },
+            { icon: '', label: 'Guia de Alta Montanha DIRCETUR' }
           ],
           directBtn: 'Falar com Marco Quispe',
           msgPrefix: 'Olá Marco Antonio Quispe, gostaria de informações e disponibilidade para o passeio cultural'
@@ -1137,10 +1137,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-valdivia.jpg',
           quote: 'O encontro entre os templos incas do Sol e os claustros de Santo Domingo reflete o diálogo, resistência e mestiçagem artística da nossa capital imperial.',
           specs: [
-            { icon: '🎓', label: 'Mestrado em Arte Andina (UNSAAC)' },
-            { icon: '🗣️', label: 'Espanhol, Inglês e Italiano' },
-            { icon: '🏛️', label: '10 anos em museus e igrejas' },
-            { icon: '🛡️', label: 'Guia Conferencista Oficial' }
+            { icon: '', label: 'Mestrado em Arte Andina (UNSAAC)' },
+            { icon: '', label: 'Espanhol, Inglês e Italiano' },
+            { icon: '', label: '10 anos em museus e igrejas' },
+            { icon: '', label: 'Guia Conferencista Oficial' }
           ],
           directBtn: 'Falar com Carlos Valdivia',
           msgPrefix: 'Olá Carlos Eduardo Valdivia, gostaria de informações e disponibilidade para o passeio cultural'
@@ -1160,21 +1160,21 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       reviews: [
         {
           name: 'Jean-Luc & Françoise Moreau',
-          origin: '🇫🇷 Lyon, França',
+          origin: 'Lyon, França',
           date: 'Passeio realizado em 14 de Setembro de 2026',
           stars: 5,
           comment: 'Uma visita magistral que supera qualquer tour convencional. As explicações sobre a engenharia antissísmica de Sacsayhuamán e os símbolos do Templo do Sol foram de absoluto rigor.'
         },
         {
           name: 'Dra. Elena Santillán',
-          origin: '🇪🇸 Madri, Espanha',
+          origin: 'Madri, Espanha',
           date: 'Passeio realizado em 02 de Agosto de 2026',
           stars: 5,
           comment: 'Como professora de história da arte, buscava um roteiro sem mitos inventados. O preparo acadêmico da guia e o respeito às crônicas coloniais foram admiráveis. Nota dez.'
         },
         {
           name: 'Michael & Sarah Jenkins',
-          origin: '🇺🇸 Boston, EUA',
+          origin: 'Boston, EUA',
           date: 'Passeio realizado em 19 de Julho de 2026',
           stars: 5,
           comment: 'O melhor passeio que fizemos no Peru! Grupo pequeno, sem correria, fones de áudio nítidos e explicações fascinantes sobre a astronomia inca que você não encontra em ônibus turísticos comerciais.'
@@ -1232,11 +1232,11 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
     },
     heroSubtitleDefault: 'Tra montagne sacre e tradizioni millenarie, benvenuto nella capitale archeologica delle Americhe.',
     quickServices: [
-      { icon: '🎫', label: 'Biglietto Turistico', sub: 'Accessi Ufficiali' },
-      { icon: '📜', label: 'Guida Abilitata', sub: 'Ufficiale DIRCETUR' },
-      { icon: '🕯️', label: 'Cerimonie Andine', sub: 'Offerta alla Terra' },
-      { icon: '🏛️', label: 'Templi & Palazzi', sub: 'Architettura Inca' },
-      { icon: '📞', label: 'Assistenza 24/7', sub: 'Orari & Prenotazioni' }
+      { icon: '', label: 'Biglietto Turistico', sub: 'Accessi Ufficiali' },
+      { icon: '', label: 'Guida Abilitata', sub: 'Ufficiale DIRCETUR' },
+      { icon: '', label: 'Cerimonie Andine', sub: 'Offerta alla Terra' },
+      { icon: '', label: 'Templi & Palazzi', sub: 'Architettura Inca' },
+      { icon: '', label: 'Assistenza 24/7', sub: 'Orari & Prenotazioni' }
     ],
     actualites: {
       title: 'Cronache & Patrimonio',
@@ -1308,7 +1308,7 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
         { num: 3, name: 'Qenqo & Puka Pukara', altitude: '3.800 m' },
         { num: 4, name: 'Plaza de Armas & Cattedrale', altitude: 'Punto Zero' }
       ],
-      tip: '💡 Clicca per aprire il percorso diretto nell’applicazione GPS del tuo smartphone.'
+      tip: 'Clicca per aprire il percorso diretto nell’applicazione GPS del tuo smartphone.'
     },
     itinerary: {
       badge: 'Itinerario Ufficiale DIRCETUR',
@@ -1326,25 +1326,25 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       recommended: '✓ Consigliato',
       items: [
         {
-          icon: '👟',
+          icon: '',
           title: 'Calzature con ottima aderenza',
           subtitle: 'Pavimento in pietra & scale inca',
           desc: 'Le lastre di Hatun Rumiyoc e i sentieri di Sacsayhuamán sono levigati dai secoli. Scegli scarpe da trekking o da ginnastica con suola antiscivolo.'
         },
         {
-          icon: '☀️',
+          icon: '',
           title: 'Protezione solare andina',
           subtitle: 'Radiazione UV d’altitudine',
           desc: 'Sotto il cielo limpido delle Ande, i raggi UV sono intensi anche col tempo velato. Cappello a tesa larga, occhiali UV400 e crema solare sono indispensabili.'
         },
         {
-          icon: '💵',
+          icon: '',
           title: 'Contanti in Soles (PEN)',
           subtitle: 'Biglietterie & artigianato',
           desc: 'Alcune biglietterie dei parchi archeologici e le tessitrici tradizionali non dispongono di POS. Consigliamo di portare 100-150 Soles in contanti.'
         },
         {
-          icon: '🧥',
+          icon: '',
           title: 'Abbigliamento a strati',
           subtitle: 'Escursione termica andina',
           desc: 'Il sole scalda a mezzogiorno (20°C), ma dalle 16:30 il vento fresco soffia sulle alture di Sacsayhuamán (10°C). Porta una giacca a vento e un maglione caldo.'
@@ -1366,10 +1366,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-carlos.jpg',
           quote: 'Trasmettere la memoria delle pietre non significa recitare date: è un’immersione viva nella cosmogonia dei nostri antenati. Ogni tempio che varchiamo racconta l’equilibrio sacro tra l’uomo e la Pachamama.',
           specs: [
-            { icon: '🎓', label: 'Laureato presso UNSAAC Cusco' },
-            { icon: '🗣️', label: 'Spagnolo, Inglese e Francese' },
-            { icon: '🏛️', label: '12 anni di attività archeologica' },
-            { icon: '🛡️', label: 'Primo Soccorso & Altitudine' }
+            { icon: '', label: 'Laureato presso UNSAAC Cusco' },
+            { icon: '', label: 'Spagnolo, Inglese e Francese' },
+            { icon: '', label: '12 anni di attività archeologica' },
+            { icon: '', label: 'Primo Soccorso & Altitudine' }
           ],
           directBtn: 'Contatta Carlos Mendoza',
           msgPrefix: 'Buongiorno Carlos Mendoza, desidero informazioni e disponibilità per il tour culturale'
@@ -1383,10 +1383,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-marco.jpg',
           quote: 'L’architettura inca non fu soltanto imponente, ma antisismica e sacra. Analizzare l’incastro dei blocchi ciclopici sul posto permette di cogliere il genio matematico andino.',
           specs: [
-            { icon: '🎓', label: 'Laureato presso UNSAAC Cusco' },
-            { icon: '🗣️', label: 'Spagnolo, Quechua e Francese' },
-            { icon: '🏛️', label: '15 anni nello studio megalitico' },
-            { icon: '🛡️', label: 'Guida d’Alta Montagna DIRCETUR' }
+            { icon: '', label: 'Laureato presso UNSAAC Cusco' },
+            { icon: '', label: 'Spagnolo, Quechua e Francese' },
+            { icon: '', label: '15 anni nello studio megalitico' },
+            { icon: '', label: 'Guida d’Alta Montagna DIRCETUR' }
           ],
           directBtn: 'Contatta Marco Quispe',
           msgPrefix: 'Buongiorno Marco Antonio Quispe, desidero informazioni e disponibilità per il tour culturale'
@@ -1400,10 +1400,10 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
           avatar: '/images/tour-guide-valdivia.jpg',
           quote: 'L’incontro tra i templi inca del Sole e le arcate vicereali del convento di Santo Domingo illustra il dialogo, la resistenza e la sintesi artistica della nostra città imperiale.',
           specs: [
-            { icon: '🎓', label: 'Master Storia dell’Arte (UNSAAC)' },
-            { icon: '🗣️', label: 'Spagnolo, Inglese e Italiano' },
-            { icon: '🏛️', label: '10 anni in musei e complessi sacri' },
-            { icon: '🛡️', label: 'Guida Ufficiale Abilitata' }
+            { icon: '', label: 'Master Storia dell’Arte (UNSAAC)' },
+            { icon: '', label: 'Spagnolo, Inglese e Italiano' },
+            { icon: '', label: '10 anni in musei e complessi sacri' },
+            { icon: '', label: 'Guida Ufficiale Abilitata' }
           ],
           directBtn: 'Contatta Carlos Valdivia',
           msgPrefix: 'Buongiorno Carlos Eduardo Valdivia, desidero informazioni e disponibilità per il tour culturale'
@@ -1423,21 +1423,21 @@ export const CULTURAL_I18N: Record<LanguageType, CulturalI18nTexts> = {
       reviews: [
         {
           name: 'Jean-Luc & Françoise Moreau',
-          origin: '🇫🇷 Lione, Francia',
+          origin: 'Lione, Francia',
           date: 'Visita effettuata il 14 Settembre 2026',
           stars: 5,
           comment: 'Una visita magistrale che supera qualsiasi tour convenzionale. Le spiegazioni sull’ingegneria antisismica di Sacsayhuamán e sulla simbologia del Tempio del Sole sono state di assoluto rigore.'
         },
         {
           name: 'Dra. Elena Santillán',
-          origin: '🇪🇸 Madrid, Spagna',
+          origin: 'Madrid, Spagna',
           date: 'Visita effettuata il 02 Agosto 2026',
           stars: 5,
           comment: 'Come docente di storia dell’arte, cercavo una guida priva di miti inventati. La preparazione accademica della guida e il suo rispetto per le fonti coloniali sono stati straordinari. Dieci e lode.'
         },
         {
           name: 'Michael & Sarah Jenkins',
-          origin: '🇺🇸 Boston, USA',
+          origin: 'Boston, USA',
           date: 'Visita effettuata il 19 Luglio 2026',
           stars: 5,
           comment: 'Il miglior tour che abbiamo fatto in Perù! Piccolo gruppo, nessuna fretta, ricevitori audio chiarissimi e approfondimenti affascinanti sull’astronomia inca che non trovi nei tour commerciali.'

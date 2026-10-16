@@ -139,7 +139,7 @@ const DICTIONARIES = {
     complaintsBook: 'Libro de Reclamaciones Virtual',
     legalTerms: 'Términos, Condiciones & Normativa Legal',
     officialOperator: 'Operador Turístico Autorizado',
-    freeBanner: '⚡ Landing Page creada con el Plan Gratuito de Cusco Creativos. Actualiza a Pro o Advance para habilitar multilingüe, itinerario completo y reservas interactivas.'
+    freeBanner: 'Landing Page creada con el Plan Gratuito de Cusco Creativos. Actualiza a Pro o Advance para habilitar multilingüe, itinerario completo y reservas interactivas.'
   },
   en: {
     brandTag: 'Explore. Dream. Discover.',
@@ -208,7 +208,7 @@ const DICTIONARIES = {
     complaintsBook: 'Virtual Complaints Book',
     legalTerms: 'Terms, Conditions & Legal Policies',
     officialOperator: 'Authorized Tour Operator',
-    freeBanner: '⚡ Landing Page created with Cusco Creativos Free Tier. Upgrade to Pro or Advance for multi-language, full itinerary & interactive bookings.'
+    freeBanner: 'Landing Page created with Cusco Creativos Free Tier. Upgrade to Pro or Advance for multi-language, full itinerary & interactive bookings.'
   },
   pt: {
     brandTag: 'Explore. Sonhe. Descubra.',
@@ -277,7 +277,7 @@ const DICTIONARIES = {
     complaintsBook: 'Livro de Reclamações Virtual',
     legalTerms: 'Termos, Condições & Políticas Legais',
     officialOperator: 'Operador Turístico Autorizado',
-    freeBanner: '⚡ Landing Page criada com o Plano Gratuito Cusco Creativos. Atualize para Pro ou Advance para multilíngue, itinerário completo e reservas interativas.'
+    freeBanner: 'Landing Page criada com o Plano Gratuito Cusco Creativos. Atualize para Pro ou Advance para multilíngue, itinerário completo e reservas interativas.'
   },
   fr: {
     brandTag: 'Explorez. Rêvez. Découvrez.',
@@ -346,7 +346,7 @@ const DICTIONARIES = {
     complaintsBook: 'Livre de Réclamations Virtuel',
     legalTerms: 'Conditions Générales & Mentions Légales',
     officialOperator: 'Opérateur Touristique Agréé',
-    freeBanner: '⚡ Landing Page créée avec l’Offre Gratuite Cusco Creativos. Passez à Pro ou Advance pour le multilingue, l’itinéraire complet et les réservations.'
+    freeBanner: 'Landing Page créée avec l’Offre Gratuite Cusco Creativos. Passez à Pro ou Advance pour le multilingue, l’itinéraire complet et les réservations.'
   },
   it: {
     brandTag: 'Esplora. Sogna. Scopri.',
@@ -415,7 +415,7 @@ const DICTIONARIES = {
     complaintsBook: 'Registro Reclami Virtuale',
     legalTerms: 'Termini, Condizioni & Normativa Legale',
     officialOperator: 'Tour Operator Autorizzato',
-    freeBanner: '⚡ Landing Page creata con il Piano Gratuito Cusco Creativos. Passa a Pro o Advance per multilingua, itinerario completo e prenotazioni interattive.'
+    freeBanner: 'Landing Page creata con il Piano Gratuito Cusco Creativos. Passa a Pro o Advance per multilingua, itinerario completo e prenotazioni interattive.'
   }
 };
 
@@ -883,7 +883,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       }}
     >
       
-      {/* 🌌 SISTEMA DE GRADIENTE AURORA & PROFUNDIDAD */}
+      {/* SISTEMA DE GRADIENTE AURORA & PROFUNDIDAD */}
       <div className="absolute top-0 inset-x-0 h-[1100px] overflow-hidden pointer-events-none z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-[#021219] via-[#031822]/90 to-transparent" />
         <div className="absolute top-[120px] left-1/2 -translate-x-1/2 w-[1200px] sm:w-[1500px] h-[650px] bg-[radial-gradient(ellipse_75%_55%_at_50%_45%,rgba(13,148,136,0.38)_0%,rgba(2,132,199,0.30)_38%,rgba(4,28,36,0.35)_65%,transparent_100%)] blur-[95px]" />
@@ -1015,7 +1015,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                   </span>
                   <div className="grid grid-cols-5 gap-1.5">
                     {activeLanguages.map(lCode => {
-                      const flag = lCode === 'es' ? '🇵🇪' : lCode === 'en' ? '🇺🇸' : lCode === 'pt' ? '🇧🇷' : lCode === 'fr' ? '🇫🇷' : '🇮🇹';
+                      const langLabel = lCode === 'es' ? 'ESP' : lCode === 'en' ? 'ENG' : lCode === 'pt' ? 'POR' : lCode === 'fr' ? 'FRA' : 'ITA';
                       const isSel = currentLang === lCode;
                       return (
                         <button
@@ -1028,8 +1028,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                               : 'bg-white/5 text-emerald-200/80 border-white/10 hover:bg-white/10'
                           }`}
                         >
-                          <span className="text-base leading-none">{flag}</span>
-                          <span className="text-[10px] font-extrabold uppercase">{lCode}</span>
+                          <span className="text-xs font-black tracking-wider uppercase">{langLabel}</span>
+                          <span className="text-[9px] font-medium opacity-80 uppercase">{lCode}</span>
                         </button>
                       );
                     })}
@@ -1917,9 +1917,9 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                       <h4 className="text-base font-black text-white">{step.title}</h4>
                       <p className="text-xs sm:text-sm text-emerald-200/80 leading-relaxed">{step.desc}</p>
                       <div className="flex flex-wrap items-center gap-2 pt-1 text-[11px] text-emerald-300/80">
-                        <span className="bg-white/10 px-2 py-0.5 rounded-md">🏔️ {step.altitude}</span>
-                        <span className="bg-white/10 px-2 py-0.5 rounded-md">⏱️ {step.hikingTime}</span>
-                        <span className="bg-white/10 px-2 py-0.5 rounded-md">🍲 {step.meals}</span>
+                        <span className="bg-white/10 px-2 py-0.5 rounded-md inline-flex items-center gap-1"><Mountain size={11} className="text-emerald-300" /> {step.altitude}</span>
+                        <span className="bg-white/10 px-2 py-0.5 rounded-md inline-flex items-center gap-1"><Clock size={11} className="text-emerald-300" /> {step.hikingTime}</span>
+                        <span className="bg-white/10 px-2 py-0.5 rounded-md inline-flex items-center gap-1"><Utensils size={11} className="text-emerald-300" /> {step.meals}</span>
                       </div>
                     </div>
                   </div>

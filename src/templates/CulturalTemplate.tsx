@@ -6,7 +6,8 @@ import {
   Landmark, Compass, Users, CheckCircle2, MessageCircle, MapPin, Calendar, 
   Star, HelpCircle, FileText, ShieldCheck, XCircle, Backpack, Search, Mail, 
   Phone, ArrowRight, ChevronLeft, ChevronRight, BookOpen, Clock, Sparkles, 
-  Navigation, Eye, Share2, Award, Check, Ticket, GraduationCap, Quote, Sun, Coins, Globe, Lock, Building2
+  Navigation, Eye, Share2, Award, Check, Ticket, GraduationCap, Quote, Sun, Coins, Globe, Lock, Building2,
+  Languages, CreditCard, Footprints, Layers, PhoneCall
 } from 'lucide-react';
 import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
@@ -309,8 +310,12 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 </div>
 
                 {/* Circular Icon with rich red ring, hover scale & rotation */}
-                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-red-50/90 border-2 border-red-300 flex items-center justify-center text-2xl sm:text-3xl mb-2.5 shadow-inner group-hover:scale-120 group-hover:rotate-12 group-hover:bg-red-100 group-hover:border-red-600 group-hover:shadow-md transition-all duration-300">
-                  <span className="transition-transform duration-300 group-hover:scale-110">{item.icon}</span>
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-red-50/90 border-2 border-red-300 flex items-center justify-center text-red-700 mb-2.5 shadow-inner group-hover:scale-120 group-hover:rotate-12 group-hover:bg-red-100 group-hover:border-red-600 group-hover:shadow-md transition-all duration-300">
+                  {idx === 0 && <Ticket size={24} className="text-red-700" />}
+                  {idx === 1 && <Award size={24} className="text-red-700" />}
+                  {idx === 2 && <Sparkles size={24} className="text-red-700" />}
+                  {idx === 3 && <Landmark size={24} className="text-red-700" />}
+                  {idx === 4 && <PhoneCall size={24} className="text-red-700" />}
                 </div>
 
                 <h3 className="font-serif font-black text-xs sm:text-sm text-stone-900 leading-tight group-hover:text-red-700 transition-colors">
@@ -853,8 +858,11 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               className="cultural-card-hover bg-white rounded-3xl p-6 border border-stone-200/80 hover:border-red-400 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group active:scale-95"
             >
               <div className="space-y-3">
-                <div className="w-12 h-12 rounded-2xl bg-red-50 border border-red-200 flex items-center justify-center text-2xl group-hover:scale-115 group-hover:-rotate-6 transition-transform duration-300">
-                  <span>{item.icon}</span>
+                <div className="w-12 h-12 rounded-2xl bg-red-50 border border-red-200 flex items-center justify-center text-red-700 group-hover:scale-115 group-hover:-rotate-6 transition-transform duration-300">
+                  {idx === 0 && <Footprints size={22} className="text-red-700" />}
+                  {idx === 1 && <Sun size={22} className="text-red-700" />}
+                  {idx === 2 && <Coins size={22} className="text-red-700" />}
+                  {idx === 3 && <Layers size={22} className="text-red-700" />}
                 </div>
                 <div>
                   <span className="text-[11px] font-bold text-red-700 uppercase tracking-wider block">
@@ -959,7 +967,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                     <div className="grid grid-cols-2 gap-2 pt-1 text-[11px] text-stone-700">
                       {guide.specs.map((sp, sIdx) => (
                         <div key={sIdx} className="flex items-center gap-1.5 bg-stone-50 p-2 rounded-xl border border-stone-200/80 group-hover:border-red-200 transition-colors">
-                          <span className="text-xs shrink-0">{sp.icon}</span>
+                          {sIdx === 0 && <GraduationCap size={13} className="text-red-700 shrink-0" />}
+                          {sIdx === 1 && <Languages size={13} className="text-red-700 shrink-0" />}
+                          {sIdx === 2 && <Landmark size={13} className="text-red-700 shrink-0" />}
+                          {sIdx === 3 && <ShieldCheck size={13} className="text-red-700 shrink-0" />}
                           <span className="truncate font-medium">{sp.label}</span>
                         </div>
                       ))}
@@ -1250,7 +1261,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-2 font-bold tracking-wider text-stone-500 bg-stone-50 px-3 py-1 rounded-full border border-stone-200">
-            <span className="text-stone-400">💳 {t.footer.paymentsTitle}:</span>
+            <span className="text-stone-400 inline-flex items-center gap-1"><CreditCard size={12} className="text-red-700" /> {t.footer.paymentsTitle}:</span>
             <span>VISA</span>
             <span>•</span>
             <span>MASTERCARD</span>
@@ -1271,7 +1282,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         {/* Banner de Plan Gratuito */}
         {isFree && (
           <div className="bg-stone-900 text-stone-300 py-3 px-4 text-center text-xs font-semibold border-t border-stone-800 rounded-xl mt-4">
-            <p>⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
+            <p>Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
           </div>
         )}
       </footer>

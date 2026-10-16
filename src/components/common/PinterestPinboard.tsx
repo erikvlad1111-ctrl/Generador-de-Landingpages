@@ -10,7 +10,8 @@ import {
   Sparkles, 
   ExternalLink,
   Bookmark,
-  Share2
+  Share2,
+  X
 } from 'lucide-react';
 import { PlanTier, TemplateType, LanguageType } from '@/types/landing';
 import { translateText } from '@/data/translations';
@@ -395,7 +396,7 @@ export default function PinterestPinboard({
                   onClick={() => setActiveModalPin(null)}
                   className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black transition-colors cursor-pointer"
                 >
-                  ✕
+                  <X size={14} />
                 </button>
               </div>
               <div className="p-4 sm:p-6 text-white flex items-center justify-between gap-3">

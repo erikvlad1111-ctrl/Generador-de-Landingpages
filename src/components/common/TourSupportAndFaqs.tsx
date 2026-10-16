@@ -20,7 +20,8 @@ import {
   Eye,
   MessageSquare,
   ArrowLeft,
-  HeartHandshake
+  HeartHandshake,
+  X
 } from 'lucide-react';
 import { FAQItem, PlanTier, TemplateType, LanguageType } from '@/types/landing';
 import { translateText } from '@/data/translations';
@@ -930,8 +931,8 @@ export default function TourSupportAndFaqs({
     forumDesc: lang === 'en' ? 'Post your question and get answers from our administrators, guides, and travelers.' : lang === 'pt' ? 'Publique sua pergunta e receba respostas da equipe oficial, guias e comunidade.' : lang === 'fr' ? 'Posez votre question et recevez les réponses de l’administrateur, des guides et des voyageurs.' : lang === 'it' ? 'Pubblica la tua domanda e ricevi risposte dall’amministratore, dalle guide e dai viaggiatori.' : 'Publica tu pregunta o problema y recibe respuestas del administrador, diseñadores y guías.',
     newQuestionBtn: lang === 'en' ? 'New Question' : lang === 'pt' ? 'Nova Pergunta' : lang === 'fr' ? 'Nouvelle Question' : lang === 'it' ? 'Nuova Domanda' : 'Nueva Pregunta',
     searchPlaceholder: isMobile 
-      ? (lang === 'en' ? '🔎 Search forum...' : lang === 'pt' ? '🔎 Buscar no fórum...' : lang === 'fr' ? '🔎 Chercher sur le forum...' : lang === 'it' ? '🔎 Cerca nel forum...' : '🔎 Buscar en el foro...')
-      : (lang === 'en' ? '🔎 Search forum (e.g. pickup, altitude, cancellation)...' : lang === 'pt' ? '🔎 Buscar no fórum (ex: traslado, altitude, cancelamento)...' : lang === 'fr' ? '🔎 Chercher sur le forum (ex : prise en charge, altitude, report)...' : lang === 'it' ? '🔎 Cerca nel forum (es: prelievo, altitudine, cancellazione)...' : '🔎 Buscar en el foro (ej. imágenes, soroche, cancelaciones)...'),
+      ? (lang === 'en' ? 'Search forum...' : lang === 'pt' ? 'Buscar no fórum...' : lang === 'fr' ? 'Chercher sur le forum...' : lang === 'it' ? 'Cerca nel forum...' : 'Buscar en el foro...')
+      : (lang === 'en' ? 'Search forum (e.g. pickup, altitude, cancellation)...' : lang === 'pt' ? 'Buscar no fórum (ex: traslado, altitude, cancelamento)...' : lang === 'fr' ? 'Chercher sur le forum (ex : prise en charge, altitude, report)...' : lang === 'it' ? 'Cerca nel forum (es: prelievo, altitudine, cancellazione)...' : 'Buscar en el foro (ej. imágenes, soroche, cancelaciones)...'),
     categories: lang === 'en'
       ? ['All', 'Logistics & Hotel Pickup', 'Altitude & Health', 'Booking & Rescheduling', 'Luggage & Gear']
       : lang === 'pt'
@@ -1188,7 +1189,7 @@ export default function TourSupportAndFaqs({
                       onClick={() => setSearchQuery('')}
                       className={`absolute right-3 top-1/2 -translate-y-1/2 text-xs ${isEmerald ? 'text-emerald-300 hover:text-white' : 'text-stone-400 hover:text-stone-700'} cursor-pointer`}
                     >
-                      ✕
+                      <X size={13} />
                     </button>
                   )}
                 </div>
@@ -1224,7 +1225,7 @@ export default function TourSupportAndFaqs({
                     onClick={() => setShowNewQuestionModal(false)}
                     className="text-stone-400 hover:text-stone-700 text-sm cursor-pointer p-1"
                   >
-                    ✕
+                    <X size={14} />
                   </button>
                 </div>
 

@@ -34,7 +34,8 @@ import {
   Mail,
   Calendar,
   Minus,
-  Plus
+  Plus,
+  CreditCard
 } from 'lucide-react';
 import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
@@ -487,62 +488,62 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
       {/* MOBILE QUICK-JUMP CHIP BAR (Horizontal Thumb Navigation) */}
       <div className="lg:hidden sticky top-[53px] z-30 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-stone-200/70 py-2 px-3 overflow-x-auto scrollbar-none flex items-center gap-2">
         <a href="#inicio" className="shrink-0 text-[13px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-          🏠 {currentLang === 'en' ? 'Home' : 'Inicio'}
+          {currentLang === 'en' ? 'Home' : 'Inicio'}
         </a>
         {!isFree ? (
           <a href="#sobre-tour" className="shrink-0 text-[13px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            📖 {t.nav.journal}
+            {t.nav.journal}
           </a>
         ) : (
           <a href="#inicio" className="shrink-0 text-[13px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            📖 {t.nav.journal}
+            {t.nav.journal}
           </a>
         )}
         {!isFree && (
           <a href="#galeria" className="shrink-0 text-[13px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            🖼️ {isBasic ? (currentLang === 'en' ? 'Postcards' : 'Postales') : t.nav.gallery}
+            {isBasic ? (currentLang === 'en' ? 'Postcards' : 'Postales') : t.nav.gallery}
           </a>
         )}
         {(isPro || isAdvance) && (
           <a href="#itinerario" className="shrink-0 text-[14px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            ⏱️ {t.nav.itinerary || 'Itinerario'}
+            {t.nav.itinerary || 'Itinerario'}
           </a>
         )}
         <a href="#tours" className="shrink-0 text-[14px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-          ⭐ {t.nav.tours}
+          {t.nav.tours}
         </a>
         {(isPro || isAdvance) && (
           <a href="#mapa" className="shrink-0 text-[14px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            🗺️ {t.nav.map}
+            {t.nav.map}
           </a>
         )}
         {isAdvance && (
           <a href="#resenas" className="shrink-0 text-[14px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            💬 {t.nav.reviews}
+            {t.nav.reviews}
           </a>
         )}
         {(isPro || isAdvance) && (
           <a href="#guia-campo" className="shrink-0 text-[14px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            📸 {t.nav.fieldGuide}
+            {t.nav.fieldGuide}
           </a>
         )}
         {!isFree && (
           <a href="#mochila" className="shrink-0 text-[14px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            🎒 {t.nav.backpack}
+            {t.nav.backpack}
           </a>
         )}
         {isAdvance && (
           <a href="#soporte-faq" className="shrink-0 text-[14px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            ❓ {t.nav.faq}
+            {t.nav.faq}
           </a>
         )}
         {isFree && (
           <a href="#esencia" className="shrink-0 text-[14px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-            ✨ {currentLang === 'en' ? 'Highlights' : 'Esencia'}
+            {currentLang === 'en' ? 'Highlights' : 'Esencia'}
           </a>
         )}
         <a href="#contacto" className="shrink-0 text-[14px] font-serif font-medium px-3 py-1 rounded-full bg-white border border-stone-200 text-stone-700 shadow-2xs active:bg-[#C86D51] active:text-white transition-colors">
-          ✉️ {currentLang === 'en' ? 'Contact' : 'Contacto'}
+          {currentLang === 'en' ? 'Contact' : 'Contacto'}
         </a>
       </div>
 
@@ -1480,7 +1481,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         <div className="max-w-6xl mx-auto space-y-8 sm:space-y-10">
           <div className="text-center space-y-2 max-w-2xl mx-auto">
             <span className="text-[13px] sm:text-[15px] uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center justify-center gap-1.5">
-              <span>📌</span> {currentLang === 'en' ? 'Curated Andean Expeditions' : currentLang === 'pt' ? 'Expedições Andinas Selecionadas' : currentLang === 'fr' ? 'Expéditions Andines Sélectionnées' : currentLang === 'it' ? 'Spedizioni Andine Selezionate' : 'Bitácora de Rutas & Otras Expediciones'}
+              <Compass size={14} className="text-[#C86D51]" /> {currentLang === 'en' ? 'Curated Andean Expeditions' : currentLang === 'pt' ? 'Expedições Andinas Selecionadas' : currentLang === 'fr' ? 'Expéditions Andines Sélectionnées' : currentLang === 'it' ? 'Spedizioni Andine Selezionate' : 'Bitácora de Rutas & Otras Expediciones'}
             </span>
             <h2 className="text-2xl sm:text-4xl font-serif text-stone-900">
               {currentLang === 'en' ? 'More Routes to Discover in Cusco' : currentLang === 'pt' ? 'Outras Rotas para Explorar em Cusco' : currentLang === 'fr' ? 'Autres Itinéraires à Découvrir à Cusco' : currentLang === 'it' ? 'Altri Itinerari da Scoprire a Cusco' : 'Tours Destacados en Cusco & Perú'}
@@ -1734,7 +1735,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                     activeMochilaTab === 'mochila' ? 'bg-white text-stone-900 shadow-2xs' : 'text-stone-500'
                   }`}
                 >
-                  🎒 {t.mochila.tabBackpack}
+                  <Backpack size={14} className="inline mr-1 text-[#C86D51]" /> {t.mochila.tabBackpack}
                 </button>
               </div>
 
@@ -2056,7 +2057,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-2 text-[14px] font-bold tracking-wider text-stone-400 bg-stone-950/80 px-3.5 py-1.5 rounded-full border border-stone-800">
-            <span className="text-stone-500">💳 {t.footer.paymentsTitle}:</span>
+            <span className="text-stone-500 inline-flex items-center gap-1"><CreditCard size={12} className="text-[#C86D51]" /> {t.footer.paymentsTitle}:</span>
             <span>VISA</span>
             <span>•</span>
             <span>MASTERCARD</span>
@@ -2075,7 +2076,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         {/* Banner de Plan Gratuito */}
         {isFree && (
           <div className="bg-stone-950 text-stone-300 py-3 px-4 text-center text-[15px] font-semibold border-t border-stone-800 mt-4 rounded-xl max-w-xl mx-auto">
-            <p>⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
+            <p>Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
           </div>
         )}
       </footer>

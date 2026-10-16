@@ -377,13 +377,13 @@ export default function PlansPage() {
                 <th className="py-3.5 px-4 text-center text-blue-950 bg-blue-50/80 min-w-[150px] border-r border-slate-200/70">
                   <div className="flex items-center justify-center gap-1.5">
                     <Sparkles size={14} className="text-blue-700" />
-                    <span>Pro (7 Secc. • ⭐)</span>
+                    <span>Pro (7 Secciones)</span>
                   </div>
                 </th>
                 <th className="py-3.5 px-4 text-center text-purple-950 bg-purple-50/80 min-w-[160px]">
                   <div className="flex items-center justify-center gap-1.5">
                     <Crown size={14} className="text-purple-700" />
-                    <span>Advance (9+ Secc. • 👑)</span>
+                    <span>Advance (9+ Secciones)</span>
                   </div>
                 </th>
               </tr>

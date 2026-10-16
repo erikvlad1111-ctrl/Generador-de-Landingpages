@@ -361,7 +361,7 @@ export default function SustainabilityAndSocialProof({
             {/* TripAdvisor Badge */}
             <div className="p-5 sm:p-6 rounded-2xl bg-stone-900 text-white border border-stone-800 shadow-md flex items-center gap-4 hover:border-amber-400 transition-all">
               <div className="w-14 h-14 rounded-2xl bg-[#00AA6C]/20 text-[#00AA6C] flex items-center justify-center font-black text-2xl shrink-0 border border-[#00AA6C]/30">
-                🦉
+                <Award size={26} className="text-[#00AA6C]" />
               </div>
               <div className="space-y-1 min-w-0">
                 <div className="flex items-center gap-1 text-amber-400 text-xs">
@@ -388,8 +388,12 @@ export default function SustainabilityAndSocialProof({
               <div className="space-y-1 min-w-0">
                 <div className="flex items-center gap-1.5">
                   <span className="text-sm font-black text-stone-900">4.9 / 5.0</span>
-                  <div className="flex text-amber-500 text-xs">
-                    {'★★★★★'}
+                  <div className="flex text-amber-500 gap-0.5">
+                    <Star size={13} className="fill-amber-400 text-amber-400" />
+                    <Star size={13} className="fill-amber-400 text-amber-400" />
+                    <Star size={13} className="fill-amber-400 text-amber-400" />
+                    <Star size={13} className="fill-amber-400 text-amber-400" />
+                    <Star size={13} className="fill-amber-400 text-amber-400" />
                   </div>
                 </div>
                 <h4 className="text-sm font-black text-stone-900 truncate">

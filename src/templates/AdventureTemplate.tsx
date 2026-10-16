@@ -7,7 +7,7 @@ import {
   ShieldCheck, XCircle, Backpack, Calendar, ArrowRight, Heart, Flame, 
   Plane, Compass, Users, Sparkles, Navigation, Phone, Check, ChevronRight,
   Send, Mountain, Building2, Mail, BookOpen, Tent, Bus, Utensils, Ticket, HeartPulse, Activity,
-  Menu, X
+  Menu, X, Lock, CreditCard
 } from 'lucide-react';
 import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
@@ -712,7 +712,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
             <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-left">
               {/* Pill Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold shadow-sm">
-                <span className="text-xs">🌐</span>
+                <Compass size={13} className="text-emerald-400" />
                 <span>{translateText(data.hero?.badge || t.hero.badge, currentLang)}</span>
               </div>
 
@@ -850,13 +850,13 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         <section className="border-y border-slate-100 bg-slate-50/70 py-6 px-4 sm:px-8">
           <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-center gap-8 sm:gap-14 opacity-75 grayscale hover:grayscale-0 transition-all text-slate-500 font-bold text-sm sm:text-base">
             <div className="flex items-center gap-1.5 tracking-tight font-black text-slate-700">
-              <span>🦉</span> tripadvisor
+              <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span> tripadvisor
             </div>
             <div className="tracking-tight font-extrabold text-slate-700">
               Expedia
             </div>
             <div className="flex items-center gap-1 tracking-tight font-bold text-slate-700">
-              <span>🔴</span> airbnb
+              <span className="w-2 h-2 rounded-full bg-rose-500 inline-block"></span> airbnb
             </div>
             <div className="tracking-widest font-black italic text-slate-700">
               ORBITZ
@@ -891,7 +891,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       <section id="destinos" className="py-14 sm:py-20 px-4 sm:px-8 max-w-7xl mx-auto text-center">
         <div className="max-w-2xl mx-auto mb-10 sm:mb-14 space-y-3">
           <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight flex items-center justify-center gap-2">
-            {t.searchedSpots.title} <span className="text-amber-500">🔥</span>
+            {t.searchedSpots.title}
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
             {t.searchedSpots.subtitle}
@@ -925,7 +925,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   {spot.name}
                 </h4>
                 <p className="text-[10px] text-slate-400 font-bold truncate">
-                  ➤ {spot.tours}
+                  {spot.tours}
                 </p>
               </div>
 
@@ -944,7 +944,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           
           <div className="max-w-2xl mx-auto text-center mb-10 sm:mb-14 space-y-3">
             <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight flex items-center justify-center gap-2">
-              {t.iconic.title} <span className="text-blue-500">✈️</span>
+              {t.iconic.title}
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 leading-relaxed font-normal">
               {t.iconic.subtitle}
@@ -1134,16 +1134,16 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 {(() => {
                   const categoryLabels: Record<string, string> = {
                     all: currentLang === 'en' ? `All Inclusions (${displayFeatures.length})` : currentLang === 'fr' ? `Tous les Services (${displayFeatures.length})` : currentLang === 'pt' ? `Todos os Serviços (${displayFeatures.length})` : currentLang === 'it' ? `Tutti i Servizi (${displayFeatures.length})` : `Todos los Servicios (${displayFeatures.length})`,
-                    train: currentLang === 'en' ? '🚂 Luxury Train' : currentLang === 'fr' ? '🚂 Train de Luxe' : currentLang === 'pt' ? '🚂 Trem Panorâmico' : currentLang === 'it' ? '🚂 Treno Panoramico' : '🚂 Tren Panorámico',
-                    guide: currentLang === 'en' ? '🧭 Historian Guide' : currentLang === 'fr' ? '🧭 Guide Historien' : currentLang === 'pt' ? '🧭 Guia Historiador' : currentLang === 'it' ? '🧭 Guida Storica' : '🧭 Guía Historiador',
-                    concierge: currentLang === 'en' ? '✨ VIP Concierge' : currentLang === 'fr' ? '✨ Conciergerie VIP' : currentLang === 'pt' ? '✨ Concierge VIP' : currentLang === 'it' ? '✨ Concierge VIP' : '✨ Conserjería VIP',
-                    tickets: currentLang === 'en' ? '🎫 Sanctuary Tickets' : currentLang === 'fr' ? '🎫 Billets Machu Picchu' : currentLang === 'pt' ? '🎫 Ingressos Machu Picchu' : currentLang === 'it' ? '🎫 Biglietti Machu Picchu' : '🎫 Boletos Machu Picchu',
-                    food: currentLang === 'en' ? '👨‍🍳 Gourmet Food' : currentLang === 'fr' ? '👨‍🍳 Gastronomie' : currentLang === 'pt' ? '👨‍🍳 Gastronomia' : currentLang === 'it' ? '👨‍🍳 Gastronomia' : '👨‍🍳 Gastronomía Gourmet',
-                    transport: currentLang === 'en' ? '🚐 Private Transport' : currentLang === 'fr' ? '🚐 Transport Privé' : currentLang === 'pt' ? '🚐 Transporte Privativo' : currentLang === 'it' ? '🚐 Trasporto Privato' : '🚐 Transporte Privado',
-                    camps: currentLang === 'en' ? '⛺ Sky Domes' : currentLang === 'fr' ? '⛺ Dômes Célestes' : currentLang === 'pt' ? '⛺ Domos Térmicos' : currentLang === 'it' ? '⛺ Domi Termici' : '⛺ Domos Térmicos',
-                    health: currentLang === 'en' ? '🩺 Oxygen & Medical' : currentLang === 'fr' ? '🩺 Oxygène & Secours' : currentLang === 'pt' ? '🩺 Oxigênio & Primeiros Socorros' : currentLang === 'it' ? '🩺 Ossigeno & Pronto Soccorso' : '🩺 Oxígeno & Primeros Auxilios',
-                    gear: currentLang === 'en' ? '🎒 Pro Gear' : currentLang === 'fr' ? '🎒 Équipement Pro' : currentLang === 'pt' ? '🎒 Equipamentos Pro' : currentLang === 'it' ? '🎒 Attrezzatura Pro' : '🎒 Equipamiento Pro',
-                    other: currentLang === 'en' ? '🛡️ Official Services' : currentLang === 'fr' ? '🛡️ Services Officiels' : currentLang === 'pt' ? '🛡️ Serviços Oficiais' : currentLang === 'it' ? '🛡️ Servizi Ufficiali' : '🛡️ Servicios Oficiales'
+                    train: currentLang === 'en' ? 'Luxury Train' : currentLang === 'fr' ? 'Train de Luxe' : currentLang === 'pt' ? 'Trem Panorâmico' : currentLang === 'it' ? 'Treno Panoramico' : 'Tren Panorámico',
+                    guide: currentLang === 'en' ? 'Historian Guide' : currentLang === 'fr' ? 'Guide Historien' : currentLang === 'pt' ? 'Guia Historiador' : currentLang === 'it' ? 'Guida Storica' : 'Guía Historiador',
+                    concierge: currentLang === 'en' ? 'VIP Concierge' : currentLang === 'fr' ? 'Conciergerie VIP' : currentLang === 'pt' ? 'Concierge VIP' : currentLang === 'it' ? 'Concierge VIP' : 'Conserjería VIP',
+                    tickets: currentLang === 'en' ? 'Sanctuary Tickets' : currentLang === 'fr' ? 'Billets Machu Picchu' : currentLang === 'pt' ? 'Ingressos Machu Picchu' : currentLang === 'it' ? 'Biglietti Machu Picchu' : 'Boletos Machu Picchu',
+                    food: currentLang === 'en' ? 'Gourmet Food' : currentLang === 'fr' ? 'Gastronomie' : currentLang === 'pt' ? 'Gastronomia' : currentLang === 'it' ? 'Gastronomia' : 'Gastronomía Gourmet',
+                    transport: currentLang === 'en' ? 'Private Transport' : currentLang === 'fr' ? 'Transport Privé' : currentLang === 'pt' ? 'Transporte Privativo' : currentLang === 'it' ? 'Trasporto Privato' : 'Transporte Privado',
+                    camps: currentLang === 'en' ? 'Sky Domes' : currentLang === 'fr' ? 'Dômes Célestes' : currentLang === 'pt' ? 'Domos Térmicos' : currentLang === 'it' ? 'Domi Termici' : 'Domos Térmicos',
+                    health: currentLang === 'en' ? 'Oxygen & Medical' : currentLang === 'fr' ? 'Oxygène & Secours' : currentLang === 'pt' ? 'Oxigênio & Primeiros Socorros' : currentLang === 'it' ? 'Ossigeno & Pronto Soccorso' : 'Oxígeno & Primeros Auxilios',
+                    gear: currentLang === 'en' ? 'Pro Gear' : currentLang === 'fr' ? 'Équipement Pro' : currentLang === 'pt' ? 'Equipamentos Pro' : currentLang === 'it' ? 'Attrezzatura Pro' : 'Equipamiento Pro',
+                    other: currentLang === 'en' ? 'Official Services' : currentLang === 'fr' ? 'Services Officiels' : currentLang === 'pt' ? 'Serviços Oficiais' : currentLang === 'it' ? 'Servizi Ufficiali' : 'Servicios Oficiales'
                   };
 
                   const presentCatIds = new Set<string>();
@@ -1534,13 +1534,13 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           {/* Bottom Trust Indicators */}
           <div className="mt-10 sm:mt-14 pt-8 border-t border-slate-200/60 flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-xs font-bold text-slate-500">
             <span className="flex items-center gap-1.5">
-              <span className="text-emerald-600 text-base">✓</span> {t.testimonials.bottomGuarantees.realReviews}
+              <CheckCircle size={15} className="text-emerald-600" /> {t.testimonials.bottomGuarantees.realReviews}
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="text-blue-600 text-base">🛡️</span> {t.testimonials.bottomGuarantees.dircetur}
+              <ShieldCheck size={16} className="text-blue-600" /> {t.testimonials.bottomGuarantees.dircetur}
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="text-amber-500 text-base">★</span> {t.testimonials.bottomGuarantees.excellence}
+              <Star size={15} className="text-amber-500 fill-amber-500" /> {t.testimonials.bottomGuarantees.excellence}
             </span>
           </div>
 
@@ -1710,7 +1710,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   <span>{t.office.guarantees.verified}</span>
                 </span>
                 <span className="flex items-center gap-1.5">
-                  <span className="text-slate-900">🔐</span>
+                  <Lock size={14} className="text-slate-700" />
                   <span>{t.office.guarantees.lockers}</span>
                 </span>
               </div>
@@ -1923,7 +1923,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
             {/* Payment Methods Badges */}
             <div className="flex items-center gap-2 text-[10px] font-bold tracking-wider text-slate-400 bg-slate-900 px-3 py-1 rounded-full border border-slate-800">
-              <span>💳 VISA</span>
+              <span className="flex items-center gap-1"><CreditCard size={12} className="text-slate-400" /> VISA</span>
               <span>•</span>
               <span>MASTERCARD</span>
               <span>•</span>
@@ -1963,7 +1963,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           {/* Banner de Plan Gratuito */}
           {isFree && (
             <div className="bg-slate-900 text-slate-300 py-3 px-4 text-center text-xs font-semibold border-t border-slate-800 rounded-xl mt-4">
-              <p>⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
+              <p>Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
             </div>
           )}
 

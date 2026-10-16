@@ -330,8 +330,8 @@ export default function AltimetryProfileSection({ lang = 'es' }: AltimetryProps)
               </div>
 
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs bg-slate-800 px-3 py-1 rounded-full text-slate-300 border border-slate-700">
-                  📍 {currentStageData.startAlt} ➔ <strong className="text-white">{currentStageData.maxAlt}</strong> ➔ {currentStageData.endAlt}
+                <span className="text-xs bg-slate-800 px-3 py-1 rounded-full text-slate-300 border border-slate-700 inline-flex items-center gap-1.5">
+                  <MapPin size={12} className="text-emerald-400 shrink-0" /> {currentStageData.startAlt} ➔ <strong className="text-white">{currentStageData.maxAlt}</strong> ➔ {currentStageData.endAlt}
                 </span>
               </div>
             </div>

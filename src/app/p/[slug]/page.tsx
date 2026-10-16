@@ -3,7 +3,7 @@
 import React, { useState, Suspense } from 'react';
 import { useParams, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, MessageCircle, Edit3, LayoutDashboard, Share2, Check, Download } from 'lucide-react';
+import { ArrowLeft, MessageCircle, Edit3, LayoutDashboard, Share2, Check, Download, X } from 'lucide-react';
 import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, INITIAL_LANDINGS, LandingData } from '@/data/landingStore';
@@ -180,10 +180,10 @@ function PublicLandingContent() {
 
               <button
                 onClick={() => setIsBannerVisible(false)}
-                className="text-slate-500 hover:text-slate-300 p-1 text-xs font-bold cursor-pointer ml-0.5"
+                className="text-slate-500 hover:text-slate-300 p-1 text-xs font-bold cursor-pointer ml-0.5 flex items-center justify-center"
                 title="Ocultar barra de prueba"
               >
-                ✕
+                <X size={12} />
               </button>
             </div>
           </div>

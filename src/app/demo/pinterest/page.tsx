@@ -336,7 +336,7 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
         'Polaroid central rotada -2deg con efecto hover que la endereza a 0deg y la eleva',
         'Polaroid decorativa secundaria en segundo plano rotada +6deg con opacidad 0.80',
         'Cinta washi superior rotada 1deg ("w-16 h-3 bg-[#E8DEC8]/90 absolute -top-1.5 left-1/2 -translate-x-1/2 rotate-1")',
-        'Barra sticky móvil horizontal con chips de acceso rápido con emojis (📖 Bitácora, 🖼️ Postales, 🎒 Mochila)',
+        'Barra sticky móvil horizontal con chips de acceso rápido e iconos limpios (Bitácora, Postales, Mochila)',
         'Módulo de equipaje organizado en checklist visual con casillas interactivas'
       ],
       heroStructure: 'Hero dividido en rejilla de 12 columnas: 7 columnas a la izquierda con badge artesanal, titular serif poético, ficha de inversión y doble botón orgánico; 5 columnas a la derecha con el collage asimétrico de dos polaroids superpuestas con cinta washi y badge de corazón.',

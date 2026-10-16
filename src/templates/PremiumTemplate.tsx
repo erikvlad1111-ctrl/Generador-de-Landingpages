@@ -5,7 +5,8 @@ import {
   FileText, Star, Calendar, XCircle, Backpack, Gem, Compass, CheckCircle2,
   ChevronRight, ArrowRight, MapPin, Mountain, Users, Languages, HeartHandshake,
   Coffee, Wifi, ExternalLink, ShieldAlert, Car, Utensils, Check, QrCode,
-  Camera, Sun, Wine, Sparkle, Layers, BookOpen, Lock, Building2, Phone, Mail
+  Camera, Sun, Wine, Sparkle, Layers, BookOpen, Lock, Building2, Phone, Mail,
+  CreditCard
 } from 'lucide-react';
 import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
@@ -2117,7 +2118,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-2 text-[10px] font-bold tracking-wider text-neutral-400 bg-neutral-950 px-3.5 py-1.5 rounded-full border border-neutral-800">
-              <span className="text-neutral-500">💳 {t.footer.paymentsTitle}:</span>
+              <span className="text-neutral-500 inline-flex items-center gap-1"><CreditCard size={12} className="text-amber-400" /> {t.footer.paymentsTitle}:</span>
               <span>AMEX VIP</span>
               <span>•</span>
               <span>VISA INFINITE</span>
@@ -2136,7 +2137,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           {/* Banner de Plan Gratuito */}
           {isFree && (
             <div className="bg-neutral-900 text-stone-300 py-3 px-4 text-center text-xs font-semibold border border-neutral-800 rounded-xl max-w-xl mx-auto">
-              <p>⚡ Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
+              <p>Creado con Cusco Creativos Web — Generador Rápido de Landings Turísticas</p>
             </div>
           )}
 

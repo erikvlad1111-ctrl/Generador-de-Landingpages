@@ -211,7 +211,7 @@ export default function BrochurePrintModal({
 
             <div className="p-4 rounded-2xl bg-white border border-stone-200 space-y-2">
               <span className="text-xs font-black uppercase tracking-wider text-stone-700 block">
-                🎒 Qué Llevar en tu Mochila
+                Qué Llevar en tu Mochila
               </span>
               <ul className="text-[11px] text-stone-600 space-y-1.5">
                 {(data?.whatToBring && data.whatToBring.length > 0 ? data.whatToBring : [

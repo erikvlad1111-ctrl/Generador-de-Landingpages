@@ -12,7 +12,9 @@ import {
   Sparkles, 
   Droplets,
   Clock,
-  Wind
+  Wind,
+  Moon,
+  Users
 } from 'lucide-react';
 import { LanguageType } from '@/types/landing';
 
@@ -393,9 +395,9 @@ export default function AltitudeAndClimateSection({ lang = 'es', isMobile = fals
                 {t.dryDesc}
               </p>
               <div className="pt-2 flex flex-wrap gap-2 text-[10px] text-stone-300">
-                <span className="bg-stone-800 px-2.5 py-1 rounded-lg">☀️ Días: 18°C - 22°C</span>
-                <span className="bg-stone-800 px-2.5 py-1 rounded-lg">🌙 Noches: 0°C - 5°C</span>
-                <span className="bg-stone-800 px-2.5 py-1 rounded-lg">🌧️ Lluvias: Raras</span>
+                <span className="bg-stone-800 px-2.5 py-1 rounded-lg inline-flex items-center gap-1.5"><Sun size={12} className="text-amber-400" /> Días: 18°C - 22°C</span>
+                <span className="bg-stone-800 px-2.5 py-1 rounded-lg inline-flex items-center gap-1.5"><Moon size={12} className="text-blue-300" /> Noches: 0°C - 5°C</span>
+                <span className="bg-stone-800 px-2.5 py-1 rounded-lg inline-flex items-center gap-1.5"><CloudRain size={12} className="text-cyan-400" /> Lluvias: Raras</span>
               </div>
             </div>
 
@@ -416,9 +418,9 @@ export default function AltitudeAndClimateSection({ lang = 'es', isMobile = fals
                 {t.greenDesc}
               </p>
               <div className="pt-2 flex flex-wrap gap-2 text-[10px] text-stone-300">
-                <span className="bg-stone-800 px-2.5 py-1 rounded-lg">🌿 Valles Florecidos</span>
-                <span className="bg-stone-800 px-2.5 py-1 rounded-lg">🌧️ Lluvias: Por las tardes</span>
-                <span className="bg-stone-800 px-2.5 py-1 rounded-lg">🎟️ Menor afluencia</span>
+                <span className="bg-stone-800 px-2.5 py-1 rounded-lg inline-flex items-center gap-1.5"><Sparkles size={12} className="text-emerald-400" /> Valles Florecidos</span>
+                <span className="bg-stone-800 px-2.5 py-1 rounded-lg inline-flex items-center gap-1.5"><CloudRain size={12} className="text-cyan-400" /> Lluvias: Por las tardes</span>
+                <span className="bg-stone-800 px-2.5 py-1 rounded-lg inline-flex items-center gap-1.5"><Users size={12} className="text-amber-400" /> Menor afluencia</span>
               </div>
             </div>
           </div>

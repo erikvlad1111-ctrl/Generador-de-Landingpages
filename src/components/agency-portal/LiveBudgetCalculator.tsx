@@ -505,7 +505,7 @@ export default function LiveBudgetCalculator({
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                   {[
                     { key: 'standard' as const, label: dict.tierStd, tag: 'Económico', mult: 1.0 },
-                    { key: 'vip' as const, label: dict.tierVip, tag: 'Recomendado ★', mult: 1.35 },
+                    { key: 'vip' as const, label: dict.tierVip, tag: 'Recomendado', mult: 1.35 },
                     { key: 'panoramic' as const, label: dict.tierPan, tag: 'Vistadome 360°', mult: 1.60 }
                   ].map((t) => {
                     const isSelected = serviceTier === t.key;
