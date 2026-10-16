@@ -365,7 +365,7 @@ const AVAILABLE_DESIGNS: LandingDesign[] = [
     template: 'adventure',
     recommendedTier: 'pro',
     targetTour: 'Salkantay Trek, Valle Sagrado Cuatrimotos, Ausangate Circuit, Choquequirao, Rutas de Montaña',
-    demoSlug: 'valle-sagrado-aventura',
+    demoSlug: 'salkantay-trek-5-dias',
     likesCount: 2680,
     previewImage: 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop',
     gridSampleImages: [

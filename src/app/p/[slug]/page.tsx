@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ArrowLeft, MessageCircle, Edit3, LayoutDashboard, Share2, Check, Download } from 'lucide-react';
 import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
-import { getStoredLandings, LandingData } from '@/data/landingStore';
+import { getStoredLandings, INITIAL_LANDINGS, LandingData } from '@/data/landingStore';
 import { TemplateType, PlanTier } from '@/types/landing';
 
 function PublicLandingContent() {
@@ -23,9 +23,19 @@ function PublicLandingContent() {
 
   const [landing, setLanding] = useState<LandingData | null>(() => {
     const landings = getStoredLandings();
-    const found = !slug 
-      ? landings[0] 
-      : (landings.find(l => l.slug.toLowerCase() === slug.toLowerCase()) || landings[0]);
+    let found: LandingData | null = null;
+    if (slug) {
+      found = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === slug.toLowerCase()) || null;
+      if (!found) {
+        found = landings.find(l => l.slug.toLowerCase() === slug.toLowerCase()) || null;
+      }
+    }
+    if (!found && templateQuery) {
+      found = INITIAL_LANDINGS.find(l => l.template === templateQuery) || landings.find(l => l.template === templateQuery) || null;
+    }
+    if (!found) {
+      found = INITIAL_LANDINGS[0] || landings[0] || null;
+    }
     if (!found) return null;
     const activeTier: PlanTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery))
       ? tierQuery
@@ -43,9 +53,19 @@ function PublicLandingContent() {
 
   React.useEffect(() => {
     const landings = getStoredLandings();
-    const found = !slug 
-      ? landings[0] 
-      : (landings.find(l => l.slug.toLowerCase() === slug.toLowerCase()) || landings[0]);
+    let found: LandingData | null = null;
+    if (slug) {
+      found = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === slug.toLowerCase()) || null;
+      if (!found) {
+        found = landings.find(l => l.slug.toLowerCase() === slug.toLowerCase()) || null;
+      }
+    }
+    if (!found && templateQuery) {
+      found = INITIAL_LANDINGS.find(l => l.template === templateQuery) || landings.find(l => l.template === templateQuery) || null;
+    }
+    if (!found) {
+      found = INITIAL_LANDINGS[0] || landings[0] || null;
+    }
     if (found) {
       const activeTier: PlanTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery))
         ? tierQuery

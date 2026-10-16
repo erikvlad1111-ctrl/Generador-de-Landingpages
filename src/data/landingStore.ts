@@ -118,128 +118,164 @@ export const INITIAL_LANDINGS: LandingData[] = [
   },
   {
     id: '2',
-    name: 'Valle Sagrado Aventura',
-    slug: 'valle-sagrado-aventura',
-    tier: 'pro',
+    name: 'Salkantay Trek 5 Días a Machu Picchu',
+    slug: 'salkantay-trek-5-dias',
+    tier: 'advance',
     companyName: 'TrekExplorer Perú',
     companyRuc: 'RUC 20549832104',
-    companyTagline: 'Especialistas en Aventura y Alta Montaña',
+    companyTagline: 'Especialistas en Aventura, Domos y Alta Montaña',
     companyEmail: 'aventura@trekexplorerperu.com',
-    guideName: 'Marcos Mendoza',
+    guideName: 'Marco Quispe',
+    guideCert: 'Guía Oficial de Alta Montaña DIRCETUR & Rescatista',
+    guideLanguages: 'Español, Quechua e Inglés Técnico',
     guideAvatar: '/images/tour-guide-marco.jpg',
     whatsapp: '+51984654321',
-    price: '$120 USD',
-    duration: 'Full Day (8:00 - 18:00)',
-    difficulty: 'Moderada',
-    objective: 'whatsapp',
+    price: '$380 USD',
+    duration: '5 Días / 4 Noches',
+    difficulty: 'Exigente - Alta Montaña (4,630 m)',
+    destination: 'Cusco, Salkantay & Machu Picchu',
+    altitude: '1,900 msnm - 4,630 msnm',
+    groupType: 'Grupos Reducidos & Domos Sky VIP',
+    targetAudience: 'Amantes del Trekking, Parejas y Aventureros',
+    objective: 'both',
     template: 'adventure',
     language: 'es',
-    status: 'draft',
+    languages: ['es', 'en', 'pt', 'fr', 'it'],
+    status: 'published',
     date: '2026-09-07',
-    views: '420',
-    heroImage: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop',
+    views: '2,420',
+    heroImage: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
     galleryImages: [
+      'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?q=80&w=2074&auto=format&fit=crop'
     ],
     hero: {
-      badge: 'Aventura en los Andes',
-      title: 'Cuatrimotos y Paisajes en Maras & Moray',
-      subtitle: 'Siente la adrenalina recorriendo los senderos del Valle Sagrado a bordo de modernas cuatrimotos todoterreno.',
-      cta: 'Reservar por WhatsApp'
+      badge: 'Expedición Oficial de Alta Montaña',
+      title: 'Salkantay Trek 5 Días a Machu Picchu',
+      subtitle: 'Desafía el legendario paso Salkantay a 4,630 msnm, duerme bajo las estrellas en domos geodésicos de cristal y culmina en la maravilla inca.',
+      cta: 'Reservar Expedición ($380 USD)'
     },
     about: {
-      title: 'Explora el corazón de los Incas a pura velocidad',
-      content: 'Una ruta alternativa y emocionante por las terrazas circulares de Moray y las impresionantes minas de sal de Maras. Instructores certificados y equipo de seguridad de primer nivel.'
+      title: 'La ruta de trekking más espectacular hacia Machu Picchu',
+      content: 'Elegida entre los 25 mejores trekkings del mundo por National Geographic. Una travesía épica que une glaciares imponentes, campamentos en domos con vista estelar, ceja de selva con plantaciones de café orgánico, baños termales de Cocalmayo y la ciudadela sagrada de Machu Picchu.'
     },
     features: {
-      title: 'Lo más destacado de este tour',
+      title: 'Lo que incluye esta expedición de montaña',
       items: [
-        'Cuatrimotos 450cc Automáticas:Fáciles de manejar, ideales para principiantes y experimentados en trocha andina.',
-        'Guías de Aventura Bilingües:Líderes de ruta capacitados en primeros auxilios y mecánica de campo.',
-        'Fotos y Videos en HD:Capturamos tus mejores saltos y postales andinas durante todo el recorrido.',
-        'Transporte Privado ida y vuelta:Recojo directo en la puerta de tu hotel en Cusco en van turística.',
-        'Equipamiento de Protección Homologado:Cascos integrales, guantes térmicos, rodilleras y gafas contra el polvo.',
-        'Asistencia Mecánica & Botiquín de Emergencia:Vehículo de soporte permanente y monitoreo con botiquín de trauma.'
+        'Noches en Sky Domes Geodésicos de Cristal:Campamentos privados con vista panorámica a la Vía Láctea y a los nevados Humantay y Salkantay.',
+        'Guía de Alta Montaña Certificado DIRCETUR:Líder bilingüe acreditado con balón de oxígeno, botiquín de trauma y pulsioxímetro permanente.',
+        'Chef de Montaña & Pensión Completa Gourmet:Desayunos energéticos, almuerzos buffet calientes, lonches con chocolate cusqueño y cenas nutritivas.',
+        'Transporte Turístico & Caballos de Apoyo:Van privada Cusco - Mollepata y arrieros con mulas para transportar hasta 7 kg de tu equipaje.',
+        'Boletos Oficiales de Tren Panorámico & Machu Picchu:Retorno en tren Expedition/Vistadome y boleto de ingreso oficial al circuito inca garantizado.',
+        'Bastones de Trekking & Bolsas de Dormir Térmicas:Equipamiento profesional de montaña para climas bajo cero homologado para los Andes.'
       ]
     },
+    includedServices: [
+      'Transporte turístico privado ida y vuelta desde tu hotel en Cusco',
+      'Noches de alojamiento en Domos de Cristal Sky Domes y hotel boutique en Aguas Calientes',
+      'Todas las comidas gourmet de montaña preparadas por chef profesional',
+      'Guía oficial colegiado DIRCETUR experto en alta montaña y primeros auxilios',
+      'Caballos de carga y arrieros para equipaje personal (hasta 7 kg por persona)',
+      'Balón de oxígeno medicinal de emergencia y botiquín de primeros auxilios 24/7',
+      'Boletos oficiales de ingreso a Machu Picchu y tren panorámico de retorno a Ollantaytambo'
+    ],
     faqs: [
       {
-        q: '¿Se requiere experiencia previa en cuatrimoto?',
-        a: 'No, antes de partir realizamos una práctica de 20 minutos donde los instructores te enseñan a acelerar, frenar y maniobrar con seguridad.'
+        q: '¿Cuál es el día más exigente de la caminata?',
+        a: 'El Día 2 es el más demandante físicamente: se asciende desde Soraypampa (3,900 m) hasta el paso Salkantay (4,630 m) durante 4 horas y luego se desciende hacia Chaullay (2,900 m). Nuestro guía mantiene un ritmo constante y monitorea la oxigenación de cada viajero.'
       },
       {
-        q: '¿Qué ropa debo llevar?',
-        a: 'Ropa cómoda que se pueda ensuciar con polvo, zapatillas o botines, cortavientos, lentes de sol y bloqueador solar.'
+        q: '¿Se necesita aclimatación previa en Cusco?',
+        a: 'Sí, recomendamos estar en Cusco al menos 2 días antes de iniciar el trek para adaptarse a la altitud y disfrutar la caminata con total confort y seguridad.'
+      },
+      {
+        q: '¿Qué peso puedo llevar en los caballos?',
+        a: 'Te entregamos una bolsa de lona (duffle bag) donde puedes guardar hasta 7 kg de ropa y pertenencias que serán llevadas por los caballos durante los primeros 3 días.'
+      },
+      {
+        q: '¿Cómo son los domos geodésicos en Soraypampa?',
+        a: 'Son domos térmicos privados con techos de cristal templado transparente, camas confortables, sábanas abrigadoras y vista directa a las estrellas y a los glaciares.'
       }
     ],
     testimonials: [
       {
-        name: 'Sofía y Lucas Valdivia',
-        origin: 'Santiago, Chile',
-        comment: '¡Increíble tour de aventura! Las cuatrimotos tienen excelente potencia y los paisajes de las salineras y terrazas de Moray son espectaculares.',
+        name: 'Mathieu & Chloé Dupont',
+        origin: 'París, Francia',
+        comment: '¡La mejor experiencia de nuestras vidas! La noche en los domos mirando las estrellas frente al nevado Salkantay no tiene precio. Marco fue un guía excepcional.',
+        rating: 5
+      },
+      {
+        name: 'Liam & Emma Johnson',
+        origin: 'Vancouver, Canadá',
+        comment: 'Challenging but totally rewarding. The food prepared by the mountain chef was Michelin-level in the middle of the Andes. 10/10!',
+        rating: 5
+      },
+      {
+        name: 'Rodrigo & Mariana Silva',
+        origin: 'São Paulo, Brasil',
+        comment: 'Incrível! Tudo impecável: os domos, a comida quentinha, o cuidado com a altitude e a chegada triunfal em Machu Picchu.',
         rating: 5
       },
       {
         name: 'Carlos & Andrea Mendoza',
         origin: 'Buenos Aires, Argentina',
-        comment: 'Excelente organización, puntualidad y seguridad en todo momento. Los instructores explican cada maniobra con mucha paciencia.',
-        rating: 5
-      },
-      {
-        name: 'David & Sarah Miller',
-        origin: 'Austin, Texas (USA)',
-        comment: 'Such a fun and thrilling day in the Sacred Valley! Riding through the salt mines with stunning Andean peaks in the background was unforgettable.',
-        rating: 5
-      },
-      {
-        name: 'Camila & Laurent Fournier',
-        origin: 'Lyon, Francia',
-        comment: 'Superbe après-midi en quad! Vue magnifique sur les glaciers de la vallée et un encadrement très pro avec matériel au top.',
+        comment: 'Excelente organización, puntualidad y seguridad en todo momento. Los bastones y el equipamiento fueron de primera.',
         rating: 5
       }
     ],
     trustBadges: [
-      'Licencia DIRCETUR Verificada',
-      'Instructores Certificados Primeros Auxilios',
-      'Cascos y Guantes Profesionales',
-      'Seguro SOAT Turístico Vigente'
+      'Licencia DIRCETUR Oficial N° 2026-CUS',
+      'Guías Colegiados de Alta Montaña',
+      'Balón de Oxígeno & Monitoreo 24/7',
+      'Domos de Cristal Certificados',
+      'Sello Safe Travels Internacional'
     ],
     notIncluded: [
-      'Boleto turístico BTG para Moray (S/ 70 PEN parcial)',
-      'Ticket de ingreso a Salineras de Maras (S/ 20 PEN)',
-      'Propinas para mecánicos e instructores',
-      'Almuerzo o bebidas personales'
+      'Bolsa de dormir térmica (disponible para alquiler por $20 USD)',
+      'Ingreso opcional a las aguas termales de Cocalmayo (S/ 10 PEN)',
+      'Almuerzo del día 5 en Aguas Calientes',
+      'Propinas voluntarias para el guía, cocinero y arrieros'
     ],
     whatToBring: [
-      'Documento de identidad o pasaporte original',
-      'Ropa que se pueda ensuciar con polvo y barro',
-      'Lentes de sol o antiparras para el polvo',
-      'Zapatillas cerradas o botines de trekking',
-      'Dinero en efectivo en soles para los boletos de ingreso'
+      'Pasaporte físico original vigente (indispensable para ingresar a Machu Picchu)',
+      'Mochila de ataque de 20 a 30 litros para tus objetos personales de diario',
+      'Botas de trekking con buen agarre y caña media',
+      'Ropa térmica en capas, cortavientos impermeable y guantes de montaña',
+      'Lentes de sol con protección UV, bloqueador solar SPF 50+ y gorro para el frío',
+      'Pastillas para el mal de altura (soroche) y botella de agua reutilizable'
     ],
     itinerary: [
       {
-        step: '08:00 AM',
-        title: 'Recojo en Hotel y Traslado a la Base de Cuatrimotos',
-        desc: 'Viaje en transporte turístico hacia Cruzpata en el Valle Sagrado con vista a los nevados Chicón y Verónica.'
+        step: 'Día 1',
+        title: 'Cusco - Mollepata - Soraypampa & Laguna Humantay',
+        desc: 'Recojo a las 04:30 AM en Cusco. Desayuno en Mollepata y caminata hacia Soraypampa (3,900m). Ascenso por la tarde a la deslumbrante Laguna Humantay (4,200m). Cena andina y noche mágica en domos geodésicos bajo las estrellas.'
       },
       {
-        step: '09:30 AM',
-        title: 'Charla de Seguridad y Práctica de Manejo',
-        desc: 'Equipamiento completo con casco integral, guantes y lentes. 20 minutos de práctica en circuito cerrado para dominar las cuatrimotos.'
+        step: 'Día 2',
+        title: 'Soraypampa - Paso Salkantay (4,630m) - Chaullay',
+        desc: 'Despertar con mate de coca caliente. Ascenso desafiante al punto más alto: el Paso Salkantay (4,630m) frente al glaciar. Ceremonia de pago a la tierra y descenso hacia el bosque nublado de Chaullay.'
       },
       {
-        step: '10:30 AM',
-        title: 'Ruta Off-Road hacia Moray y Salineras de Maras',
-        desc: 'Travesía por senderos andinos descubriendo los laboratorios agrícolas incas de Moray y las más de 3,000 pozas de sal de Maras.'
+        step: 'Día 3',
+        title: 'Chaullay - Collpapampa - La Playa & Termas de Cocalmayo',
+        desc: 'Caminata suave por senderos tropicales cruzando cascadas, plantaciones de café orgánico y orquídeas. Tarde de relajación en las aguas termales naturales de Cocalmayo en Santa Teresa.'
       },
       {
-        step: '01:30 PM',
-        title: 'Retorno y Llegada al Centro Histórico de Cusco',
-        desc: 'Despedida del equipo y traslado de regreso al centro de Cusco cerca a la Plaza de Armas.'
+        step: 'Día 4',
+        title: 'Hidroeléctrica - Vías del Tren - Aguas Calientes',
+        desc: 'Recorrido escénico siguiendo las vías del tren rodeadas de flora subtropical y vistas de Huayna Picchu. Arribo al pueblo de Machu Picchu (Aguas Calientes), acomodación en hotel boutique y cena de coordinación.'
+      },
+      {
+        step: 'Día 5',
+        title: 'Ciudadela Inca de Machu Picchu & Tren a Cusco',
+        desc: 'Ascenso en bus matutino a Machu Picchu. Recorrido guiado de 2.5 horas por los templos, recintos sagrados y mirador clásico. Por la tarde, tren escénico Expedition/Vistadome hacia Ollantaytambo y transfer privado a Cusco.'
       }
-    ]
+    ],
+    officeAddress: 'Portal de Panes N° 123, Plaza de Armas, Centro Histórico, Cusco - Perú',
+    officeHours: 'Lunes a Domingo: 07:00 AM – 09:00 PM (Atención 24/7 en WhatsApp)',
+    mapsUrl: 'https://maps.google.com/?q=Plaza+de+Armas+Cusco+Peru'
   },
   {
     id: '3',
@@ -750,10 +786,18 @@ export function getStoredLandings(): LandingData[] {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
       return migrated;
     }
-    const parsed: LandingData[] = JSON.parse(data);
+    let parsed: LandingData[] = JSON.parse(data);
     if (Array.isArray(parsed)) {
+      // Limpiar automáticamente borradores con textos de prueba o slugs huérfanos
+      const cleaned = parsed.filter(p => 
+        !/FRFRFRFR|FEFRGRG|GGGTGTGT/i.test(p.slug || '') && 
+        !/FRFRFRFR|FEFRGRG|GGGTGTGT/i.test(p.name || '') &&
+        !(p.slug === 'salkantay-trek-5-dias' && p.id !== '2')
+      );
+      let updated = cleaned.length !== parsed.length;
+      parsed = cleaned;
+
       const existingIds = new Set(parsed.map(item => item.id));
-      let updated = false;
       for (const init of INITIAL_LANDINGS) {
         if (!existingIds.has(init.id)) {
           parsed.push(init);
@@ -762,6 +806,9 @@ export function getStoredLandings(): LandingData[] {
           const idx = parsed.findIndex(p => p.id === init.id);
           if (idx >= 0) {
             if (init.id === '6' && (parsed[idx].template !== 'premium' || !parsed[idx].slug.includes('luxury'))) {
+              parsed[idx] = init;
+              updated = true;
+            } else if (init.id === '2' && (parsed[idx].slug !== 'salkantay-trek-5-dias' || parsed[idx].tier !== 'advance' || /FRFR|FEFR|GGGT/i.test(parsed[idx].name || '') || /FRFR|FEFR|GGGT/i.test(parsed[idx].hero?.title || ''))) {
               parsed[idx] = init;
               updated = true;
             } else if (init.features?.items && (!parsed[idx].features?.items || parsed[idx].features.items.length < init.features.items.length)) {
