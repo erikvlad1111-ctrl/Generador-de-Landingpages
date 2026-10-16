@@ -717,7 +717,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               </div>
 
               {/* Main Headline */}
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.1] drop-shadow-md">
+              <h1 className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-black text-white tracking-tight leading-[1.12] drop-shadow-md">
                 {data.hero?.title ? (
                   <span>{translateText(data.hero.title, currentLang)}</span>
                 ) : (
