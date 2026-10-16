@@ -1,4 +1,5 @@
 import { LandingData, ObjectiveType, TemplateType, LanguageType, PlanTier, CatalogTourItem, FAQItem, TestimonialItem } from '@/types/landing';
+import { getSanitizedGuideAvatar } from '@/utils/guideAvatars';
 export type { LandingData };
 
 export const INITIAL_LANDINGS: LandingData[] = [
@@ -125,6 +126,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
     companyTagline: 'Especialistas en Aventura y Alta Montaña',
     companyEmail: 'aventura@trekexplorerperu.com',
     guideName: 'Marcos Mendoza',
+    guideAvatar: '/images/tour-guide-marco.jpg',
     whatsapp: '+51984654321',
     price: '$120 USD',
     duration: 'Full Day (8:00 - 18:00)',
@@ -245,6 +247,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
     slug: 'city-tour-cusco',
     tier: 'basic',
     guideName: 'Lucía Condori',
+    guideAvatar: '/images/tour-guide-lucia.jpg',
     whatsapp: '+51984778899',
     price: 'S/ 70 PEN',
     duration: 'Media Jornada (4 Horas)',
@@ -341,6 +344,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
     slug: 'laguna-humantay-boho',
     tier: 'advance',
     guideName: 'Camila Valdivia',
+    guideAvatar: '/images/tour-guide-camila.jpg',
     whatsapp: '+51984556677',
     price: 'S/ 160 PEN',
     duration: 'Full Day Fotográfico',
@@ -442,6 +446,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
     slug: 'free-walking-tour-cusco',
     tier: 'free',
     guideName: 'Renzo Farfán',
+    guideAvatar: '/images/tour-guide-valdivia.jpg',
     whatsapp: '+51984001122',
     price: 'Gratuito (Propinas)',
     duration: '2.5 Horas',
@@ -1037,7 +1042,7 @@ export function simulateAiGeneration(params: {
     guideName: params.guideName || 'Guía Cusco Creativos',
     guideCert: params.guideCert || 'Guía Oficial Colegiado DIRCETUR',
     guideLanguages: params.guideLanguages || 'Español, Inglés y Francés',
-    guideAvatar: params.guideAvatar,
+    guideAvatar: getSanitizedGuideAvatar(params.guideAvatar, params.guideName),
     destination: params.destination || 'Cusco, Perú',
     altitude: params.altitude || '3,400 msnm',
     groupType: params.groupType || 'Grupo Reducido',

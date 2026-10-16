@@ -17,6 +17,7 @@ import PinterestPinboard from '@/components/common/PinterestPinboard';
 import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
 import { PREMIUM_I18N, PREMIUM_LANGUAGES } from './premiumI18n';
 import { translateText } from '@/data/translations';
+import { getSanitizedGuideAvatar } from '@/utils/guideAvatars';
 
 interface TemplateProps {
   data: LandingData;
@@ -80,9 +81,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
   const heroImg = data.heroImage || 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop';
   const gallery1 = data.galleryImages?.[0] || 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop';
-  const guideAvatarImg = (data.guideAvatar && !data.guideAvatar.includes('photo-1534528741775')) 
-    ? data.guideAvatar 
-    : '/images/tour-guide-carlos.jpg';
+  const guideAvatarImg = getSanitizedGuideAvatar(data.guideAvatar, data.guideName);
 
   const getTourWaUrl = (tourTitle: string) => {
     const msg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, deseo consultar disponibilidad y tarifa VIP para el tour "${tourTitle}".`);

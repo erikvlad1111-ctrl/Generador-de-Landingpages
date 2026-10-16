@@ -131,3 +131,23 @@ Estos campos deben propagarse coherentemente en:
   2. Envolver el nombre comercial en un `span` con `truncate block leading-snug` dentro de un flex container `min-w-0`, y separar la insignia con `shrink-0 whitespace-nowrap hidden sm:inline-flex`.
   3. En `ModernEmeraldTemplate.tsx`, hacer la barra de navegación responsiva: mostrar los 5 enlaces principales en `lg` con espaciado compacto (`gap-0.5 text-[11px] px-2.5 py-1`), habilitar Galería en `xl:` y FAQs en `2xl:`, garantizando al menos 130px de holgura y cero solapamiento en cualquier resolución.
 
+---
+
+### Error 6: Fotos de Guías de Turismo con Modelos Extranjeros en vez de Guías Peruanos
+- **Síntoma / Mensaje:** En el selector de "Foto o Avatar del Guía (Genera Confianza Inmediata)" y en las plantillas de landings, los presets mostraban modelos extranjeros o fotos genéricas de stock de Unsplash (`photo-1534528741775`, `photo-1507003211169`, `photo-1544005313`, `photo-1517841905240`), restando credibilidad a las agencias turísticas de Cusco y Perú.
+- **Causa Raíz:**
+  1. `PRESET_GUIDE_AVATARS` en `/demo/new` y `/demo/preview` utilizaba URLs estáticas de Unsplash de modelos caucásicos.
+  2. Varias plantillas (`ModernEmeraldTemplate.tsx`, `AgencyPortalTemplate.tsx`, etc.) tenían como fallback hardcodeado `https://images.unsplash.com/photo-1534528741775...` o no sanitizaban URLs previas de landings guardadas en `localStorage`.
+- **Comando de Diagnóstico:**
+  `git grep "photo-1507003211169" src/` o verificar las miniaturas en la sección "Foto o Avatar del Guía".
+- **Solución Paso a Paso:**
+  1. Centralizar los presets oficiales en `src/utils/guideAvatars.ts`:
+     - **Carlos Mendoza (Lujo / Machu Picchu Senior):** `/images/tour-guide-carlos.jpg`
+     - **Raúl / Marco Quispe (Aventura / Alta Montaña & Salkantay):** `/images/tour-guide-raul.jpg` y `/images/tour-guide-marco.jpg`
+     - **Lucía Condori (Arqueología / Cultura Andina DIRCETUR):** `/images/tour-guide-lucia.jpg`
+     - **Camila Valdivia (Fotografía / Boho & Viajes Conscientes):** `/images/tour-guide-camila.jpg`
+     - **Mag. Carlos Valdivia (Historia / Arte Virreinal Colonial):** `/images/tour-guide-valdivia.jpg`
+  2. Implementar la función `getSanitizedGuideAvatar(avatarUrl, guideName)` que detecta URLs legacy de Unsplash y las reasigna automáticamente al guía peruano correspondiente según el nombre o rol.
+  3. En `demo/new` y `demo/preview`, renderizar la grilla de 5 presets peruanos oficiales con previsualización en vivo, y actualizar `PRESET_TOURS` con su respectivo `guideAvatar`.
+  4. En todas las plantillas (`PremiumTemplate.tsx`, `ModernEmeraldTemplate.tsx`, `AgencyPortalTemplate.tsx`, `CulturalTemplate.tsx`), resolver el avatar siempre a través de `getSanitizedGuideAvatar`.
+

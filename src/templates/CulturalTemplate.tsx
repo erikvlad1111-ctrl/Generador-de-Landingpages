@@ -18,6 +18,7 @@ import PinterestPinboard from '@/components/common/PinterestPinboard';
 import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
 import { CULTURAL_I18N } from './culturalI18n';
 import { translateText } from '@/data/translations';
+import { getSanitizedGuideAvatar } from '@/utils/guideAvatars';
 
 interface TemplateProps {
   data: LandingData;
@@ -903,7 +904,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               // Permit dynamic overrides for the primary guide if provided in data
               const finalName = (gIdx === 0 && data.guideName) ? data.guideName : guide.name;
               const finalCert = (gIdx === 0 && data.guideCert) ? data.guideCert : guide.cert;
-              const finalAvatar = (gIdx === 0 && data.guideAvatar) ? data.guideAvatar : guide.avatar;
+              const finalAvatar = (gIdx === 0 && data.guideAvatar) ? getSanitizedGuideAvatar(data.guideAvatar, finalName) : guide.avatar;
               const finalMsg = `${guide.msgPrefix} "${data.name || data.hero?.title || 'Tour Cultural'}".`;
 
               return (

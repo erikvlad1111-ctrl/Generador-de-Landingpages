@@ -52,6 +52,7 @@ import BrochurePrintModal from '@/components/agency-portal/BrochurePrintModal';
 import LightboxModal from '@/components/agency-portal/LightboxModal';
 import RecentBookingsToast from '@/components/agency-portal/RecentBookingsToast';
 import { translateText, translateItineraryItem } from '@/data/translations';
+import { getSanitizedGuideAvatar } from '@/utils/guideAvatars';
 
 interface AgencyPortalTemplateProps {
   data?: Partial<LandingData>;
@@ -1594,7 +1595,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               {/* Imagen de Fondo del Guía de Turismo */}
               <div className="absolute inset-0 z-0 pointer-events-none">
                 <img
-                  src={data?.guideAvatar || "/images/tour-guide-carlos.jpg"}
+                  src={getSanitizedGuideAvatar(data?.guideAvatar, guideName)}
                   alt={guideName}
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
@@ -1612,7 +1613,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                 <div className="flex items-center gap-3.5 mb-3.5">
                   <div className="w-14 h-14 rounded-2xl ring-2 ring-emerald-400/70 overflow-hidden shadow-lg shrink-0 relative bg-stone-800">
                     <img
-                      src={data?.guideAvatar || "/images/tour-guide-carlos.jpg"}
+                      src={getSanitizedGuideAvatar(data?.guideAvatar, guideName)}
                       alt={guideName}
                       className="w-full h-full object-cover object-top"
                     />

@@ -58,6 +58,7 @@ import LegalTermsModal from '@/components/common/LegalTermsModal';
 import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
+import { getSanitizedGuideAvatar } from '@/utils/guideAvatars';
 import SustainabilityAndSocialProof from '@/components/agency-portal/SustainabilityAndSocialProof';
 import TrustGuaranteeAndOffice from '@/components/agency-portal/TrustGuaranteeAndOffice';
 import RecentBookingsToast from '@/components/agency-portal/RecentBookingsToast';
@@ -419,10 +420,10 @@ const DICTIONARIES = {
 };
 
 const TESTIMONIAL_AVATARS = [
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=240&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=240&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=240&auto=format&fit=crop',
-  'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=240&auto=format&fit=crop'
+  '/images/travelers/traveler-machu-picchu.jpg',
+  '/images/travelers/traveler-humantay.jpg',
+  '/images/travelers/traveler-vinicunca.jpg',
+  '/images/travelers/traveler-sacred-valley.jpg'
 ];
 
 const POPULAR_DESTINATIONS = [
@@ -584,7 +585,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   const guideName = data.guideName || 'Carlos Mendoza';
   const guideCert = translateText(data.guideCert || 'Guía Oficial DIRCETUR & Operador Autorizado', currentLang);
   const guidePhone = data.whatsapp || '+51984123456';
-  const guideAvatar = data.guideAvatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop';
+  const guideAvatar = getSanitizedGuideAvatar(data.guideAvatar, guideName);
 
   const rawHeroTitle = data.hero?.title || data.name || 'Vive Tu Aventura: Expediciones & Trekking en Cusco';
   const cleanTitleInput = rawHeroTitle.replace(/\s*—\s*/g, ': ').trim();
@@ -2227,10 +2228,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                       <div className="flex items-center gap-1.5">
                         <div className="flex -space-x-2 overflow-hidden">
                           <div className="inline-block h-6 w-6 rounded-full ring-2 ring-[#041716] bg-emerald-800 relative overflow-hidden">
-                            <Image src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop" alt="User" fill className="object-cover" />
+                            <Image src="/images/travelers/traveler-machu-picchu.jpg" alt="User" fill className="object-cover" />
                           </div>
                           <div className="inline-block h-6 w-6 rounded-full ring-2 ring-[#041716] bg-teal-800 relative overflow-hidden">
-                            <Image src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" alt="User" fill className="object-cover" />
+                            <Image src="/images/travelers/traveler-humantay.jpg" alt="User" fill className="object-cover" />
                           </div>
                         </div>
                         <span className="text-[10px] text-emerald-200/70 font-semibold">+230</span>

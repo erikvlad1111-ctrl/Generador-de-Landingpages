@@ -63,6 +63,7 @@ import CatalogToursEditorModal from '@/components/common/CatalogToursEditorModal
 import { SAMPLE_TOUR_IMAGES } from '@/data/sampleImages';
 import { getStoredLandings, saveLandingToStorage, LandingData } from '@/data/landingStore';
 import { TemplateType, PlanTier, LanguageType, ObjectiveType, ItineraryItem, FAQItem, TestimonialItem, CatalogTourItem } from '@/types/landing';
+import { OFFICIAL_PERUVIAN_GUIDE_PRESETS, getSanitizedGuideAvatar } from '@/utils/guideAvatars';
 
 function DemoPreviewContent() {
   const searchParams = useSearchParams();
@@ -168,7 +169,7 @@ function DemoPreviewContent() {
   const [editGuideName, setEditGuideName] = useState(() => landing?.guideName || '');
   const [editGuideCert, setEditGuideCert] = useState(() => landing?.guideCert || '');
   const [editGuideLanguages, setEditGuideLanguages] = useState(() => landing?.guideLanguages || '');
-  const [editGuideAvatar, setEditGuideAvatar] = useState(() => landing?.guideAvatar || '');
+  const [editGuideAvatar, setEditGuideAvatar] = useState(() => getSanitizedGuideAvatar(landing?.guideAvatar, landing?.guideName));
 
   // 5. Inclusiones, Exclusiones, Mochila & Sellos
   const [editFeaturesTitle, setEditFeaturesTitle] = useState(() => landing?.features?.title || '');
@@ -477,7 +478,7 @@ function DemoPreviewContent() {
     setEditGuideName(landing.guideName || '');
     setEditGuideCert(landing.guideCert || '');
     setEditGuideLanguages(landing.guideLanguages || '');
-    setEditGuideAvatar(landing.guideAvatar || '');
+    setEditGuideAvatar(getSanitizedGuideAvatar(landing.guideAvatar, landing.guideName));
 
     setEditFeaturesTitle(landing.features?.title || '');
     setEditFeaturesItems(landing.features?.items?.join('\n') || '');
@@ -1566,16 +1567,62 @@ function DemoPreviewContent() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                        URL Foto o Avatar del Guía
-                      </label>
-                      <input
-                        type="text"
-                        value={editGuideAvatar}
-                        onChange={(e) => setEditGuideAvatar(e.target.value)}
-                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-mono"
-                        placeholder="/images/tour-guide-carlos.jpg"
-                      />
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                          Foto o Avatar del Guía Oficial
+                        </label>
+                        <span className="text-[10px] text-slate-400">Presets de guías peruanos o URL</span>
+                      </div>
+
+                      {/* Presets de Guías Peruanos */}
+                      <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-2.5">
+                        {OFFICIAL_PERUVIAN_GUIDE_PRESETS.map((av, idx) => {
+                          const isSelected = editGuideAvatar === av.url;
+                          return (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={() => {
+                                setEditGuideAvatar(av.url);
+                                const isDefaultPresetName = OFFICIAL_PERUVIAN_GUIDE_PRESETS.some(p => p.fullName === editGuideName);
+                                if (isDefaultPresetName || !editGuideName.trim()) {
+                                  setEditGuideName(av.fullName);
+                                  setEditGuideCert(av.cert);
+                                  setEditGuideLanguages(av.languages);
+                                }
+                              }}
+                              className={`flex items-center gap-2 p-1.5 rounded-xl border text-left transition-all cursor-pointer ${
+                                isSelected
+                                  ? 'border-blue-600 bg-blue-50/80 ring-2 ring-blue-500/20'
+                                  : 'border-slate-200 hover:border-slate-300 bg-white'
+                              }`}
+                            >
+                              <div className="relative w-7 h-7 rounded-full overflow-hidden shrink-0 border border-slate-200 bg-slate-100">
+                                <Image src={av.url} alt={av.name} fill sizes="28px" className="object-cover" />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <span className="text-[10px] font-bold text-slate-800 block truncate">{av.name.split(' ')[0]}</span>
+                                <span className="text-[9px] text-slate-400 block truncate">{av.name.split(' ')[1] || 'Guía'}</span>
+                              </div>
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="text"
+                          value={editGuideAvatar}
+                          onChange={(e) => setEditGuideAvatar(e.target.value)}
+                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-mono"
+                          placeholder="/images/tour-guide-carlos.jpg"
+                        />
+                        {editGuideAvatar && (
+                          <div className="relative w-8 h-8 rounded-full overflow-hidden shrink-0 border border-slate-300 bg-slate-100">
+                            <img src={getSanitizedGuideAvatar(editGuideAvatar, editGuideName)} alt="Guía" className="w-full h-full object-cover" />
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>

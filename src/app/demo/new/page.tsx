@@ -20,6 +20,7 @@ import { SAMPLE_TOUR_IMAGES } from '@/data/sampleImages';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import CatalogToursEditorModal from '@/components/common/CatalogToursEditorModal';
 import { translateText } from '@/data/translations';
+import { OFFICIAL_PERUVIAN_GUIDE_PRESETS, PRESET_GUIDE_AVATARS, getSanitizedGuideAvatar } from '@/utils/guideAvatars';
 
 const DEFAULT_FAQS: FAQItem[] = [
   {
@@ -71,13 +72,6 @@ const HD_CUSCO_PHOTOS = [
   { title: 'Cusco Histórico', url: 'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?q=80&w=1200&auto=format&fit=crop' }
 ];
 
-const PRESET_GUIDE_AVATARS = [
-  { name: 'Carlos (Lujo/Senior)', url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=crop' },
-  { name: 'Raúl (Aventura/Trek)', url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=crop' },
-  { name: 'Lucía (Arqueología/Cultura)', url: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=300&auto=format&fit=crop' },
-  { name: 'Camila (Fotografía/Boho)', url: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=300&auto=format&fit=crop' }
-];
-
 const AVAILABLE_TRUST_BADGES = [
   'Licencia Oficial DIRCETUR Cusco',
   'Sello Internacional Safe Travels',
@@ -105,6 +99,7 @@ const PRESET_TOURS = [
     guideName: 'Carlos Mendoza',
     guideCert: 'Licenciado DIRCETUR & Operador Autorizado',
     guideLanguages: 'Español, Inglés y Portugués',
+    guideAvatar: '/images/tour-guide-carlos.jpg',
     whatsapp: '+51984123456',
     price: '$380 USD',
     duration: 'Catálogo Multidía & Full Days',
@@ -166,6 +161,7 @@ const PRESET_TOURS = [
     guideName: 'Carlos Mendoza',
     guideCert: 'Licenciado DIRCETUR & Explorador Senior',
     guideLanguages: 'Español, Inglés y Francés',
+    guideAvatar: '/images/tour-guide-carlos.jpg',
     whatsapp: '+51984123456',
     price: '$350 USD',
     duration: '4 Días / 3 Noches',
@@ -227,6 +223,7 @@ const PRESET_TOURS = [
     guideName: 'Raúl Quispe',
     guideCert: 'Licenciado en Turismo DIRCETUR (10 años exp.)',
     guideLanguages: 'Español, Inglés y Quechua',
+    guideAvatar: '/images/tour-guide-raul.jpg',
     whatsapp: '+51984112233',
     price: '$350 USD',
     duration: '5 Días / 4 Noches',
@@ -290,6 +287,7 @@ const PRESET_TOURS = [
     guideName: 'Carlos Mendoza',
     guideCert: 'Guía Historiador Senior DIRCETUR',
     guideLanguages: 'Español e Inglés bilingüe nativo',
+    guideAvatar: '/images/tour-guide-carlos.jpg',
     whatsapp: '+51984123456',
     price: '$890 USD',
     duration: 'Full Day Exclusivo',
@@ -353,6 +351,7 @@ const PRESET_TOURS = [
     guideName: 'Lucía Condori',
     guideCert: 'Arqueóloga Colegiada & Guía Oficial',
     guideLanguages: 'Español, Inglés y Francés',
+    guideAvatar: '/images/tour-guide-lucia.jpg',
     whatsapp: '+51984778899',
     price: 'S/ 85 PEN',
     duration: 'Media Jornada (4.5 Horas)',
@@ -416,6 +415,7 @@ const PRESET_TOURS = [
     guideName: 'Marco Antonio Flores',
     guideCert: 'Guía de Alta Montaña Certificado',
     guideLanguages: 'Español, Inglés y Quechua',
+    guideAvatar: '/images/tour-guide-marco.jpg',
     whatsapp: '+51984123456',
     price: 'S/ 130 PEN',
     duration: 'Full Day (13 Horas)',
@@ -477,6 +477,7 @@ const PRESET_TOURS = [
     guideName: 'Camila Valdivia',
     guideCert: 'Guía Especialista en Fotografía Andina',
     guideLanguages: 'Español, Inglés y Francés',
+    guideAvatar: '/images/tour-guide-camila.jpg',
     whatsapp: '+51984556677',
     price: 'S/ 160 PEN',
     duration: 'Full Day Fotográfico',
@@ -538,6 +539,7 @@ const PRESET_TOURS = [
     guideName: 'Renzo Farfán',
     guideCert: 'Guía Local Apasionado DIRCETUR',
     guideLanguages: 'Español e Inglés',
+    guideAvatar: '/images/tour-guide-valdivia.jpg',
     whatsapp: '+51984001122',
     price: 'Gratuito (A base de propinas)',
     duration: '2.5 Horas',
@@ -852,6 +854,9 @@ export default function NewLandingDemo() {
     setGuideName(preset.guideName);
     setGuideCert(preset.guideCert);
     setGuideLanguages(preset.guideLanguages);
+    if ((preset as any).guideAvatar) {
+      setGuideAvatar((preset as any).guideAvatar);
+    }
     setWhatsapp(preset.whatsapp);
     setPrice(preset.price);
     setDuration(preset.duration);
@@ -2464,15 +2469,23 @@ export default function NewLandingDemo() {
                 <span className="text-[10px] text-slate-400">Presets o URL personalizada</span>
               </div>
 
-              {/* Presets Rápidos de Avatar */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                {PRESET_GUIDE_AVATARS.map((av, idx) => {
+              {/* Presets Rápidos de Avatar de Guías Peruanos */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+                {OFFICIAL_PERUVIAN_GUIDE_PRESETS.map((av, idx) => {
                   const isAvSelected = guideAvatar === av.url;
                   return (
                     <button
                       key={idx}
                       type="button"
-                      onClick={() => setGuideAvatar(av.url)}
+                      onClick={() => {
+                        setGuideAvatar(av.url);
+                        const isDefaultPresetName = OFFICIAL_PERUVIAN_GUIDE_PRESETS.some(p => p.fullName === guideName);
+                        if (isDefaultPresetName || !guideName.trim()) {
+                          setGuideName(av.fullName);
+                          setGuideCert(av.cert);
+                          setGuideLanguages(av.languages);
+                        }
+                      }}
                       className={`flex items-center gap-2 p-2 rounded-xl border text-left transition-all cursor-pointer ${
                         isAvSelected
                           ? 'border-blue-600 bg-blue-50/80 ring-2 ring-blue-500/20 shadow-xs'
