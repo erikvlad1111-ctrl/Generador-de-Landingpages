@@ -2510,10 +2510,10 @@ export default function NewLandingDemo() {
 
               <div className="flex items-center gap-2">
                 <input 
-                  type="url"
+                  type="text"
                   value={guideAvatar}
                   onChange={(e) => setGuideAvatar(e.target.value)}
-                  placeholder="O ingresa la URL de la foto del guía (ej. https://... o /images/...)"
+                  placeholder="URL de la foto del guía (ej. https://... o /images/...)"
                   className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-mono"
                 />
                 {guideAvatar && (
