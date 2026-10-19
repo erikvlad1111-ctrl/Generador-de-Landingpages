@@ -697,13 +697,17 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   };
 
   const getLocalizedIncludedServices = (services?: string[]) => {
-    const baseList = (services && services.length > 0) ? services : [
-      'Transporte turístico privado con aire acondicionado',
-      'Boletos de tren panorámico y entradas oficiales',
-      'Guía oficial bilingüe DIRCETUR en todas las excursiones',
-      'Asistencia y monitoreo 24/7 con oxígeno a bordo',
-      'Almuerzo buffet y degustaciones gastronómicas'
-    ];
+    const baseList = (services && services.length > 0) 
+      ? services 
+      : (data?.features?.items && data.features.items.length > 0)
+      ? data.features.items
+      : [
+        'Transporte turístico privado con aire acondicionado',
+        'Boletos de tren panorámico y entradas oficiales',
+        'Guía oficial bilingüe DIRCETUR en todas las excursiones',
+        'Asistencia y monitoreo 24/7 con oxígeno a bordo',
+        'Almuerzo buffet y degustaciones gastronómicas'
+      ];
 
     return baseList.map(srv => translateText(srv, lang));
   };
@@ -757,11 +761,13 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const heroBadge = translateText(data?.hero?.badge || t.seasonBadge, lang);
   const heroImage = data?.heroImage || 'https://images.unsplash.com/photo-1509299349698-dd22323b5963?q=80&w=2070&auto=format&fit=crop';
   
-  const heroCtaLabel = objective === 'quote' 
-    ? t.ctaHeroQuote 
-    : objective === 'both' 
-    ? (lang === 'es' ? 'WhatsApp & Cotizar Online' : lang === 'en' ? 'WhatsApp & Quote' : lang === 'pt' ? 'WhatsApp & Orçamento' : lang === 'fr' ? 'WhatsApp & Devis' : 'WhatsApp & Preventivo')
-    : t.ctaHeroWa;
+  const heroCtaLabel = data?.hero?.cta 
+    ? translateText(data.hero.cta, lang)
+    : (objective === 'quote' 
+      ? t.ctaHeroQuote 
+      : objective === 'both' 
+      ? (lang === 'es' ? 'WhatsApp & Cotizar Online' : lang === 'en' ? 'WhatsApp & Quote' : lang === 'pt' ? 'WhatsApp & Orçamento' : lang === 'fr' ? 'WhatsApp & Devis' : 'WhatsApp & Preventivo')
+      : t.ctaHeroWa);
 
   // -----------------------------------------------------------
   // 6. CATÁLOGO DE TOURS MULTI-IDIOMA
@@ -858,6 +864,14 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   // 8. TESTIMONIOS MULTI-IDIOMA
   // -----------------------------------------------------------
   const getLocalizedTestimonials = () => {
+    if (data?.testimonials && data.testimonials.length > 0) {
+      return data.testimonials.map((rev) => ({
+        name: rev.name,
+        origin: translateText(rev.origin, lang),
+        comment: translateText(rev.comment, lang),
+        rating: rev.rating || 5
+      }));
+    }
     return [
       {
         name: 'Alejandro & Marcela',
@@ -1488,36 +1502,34 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         <div className="max-w-7xl mx-auto px-3 sm:px-6">
 
           {/* Bloque Destacado: Descripción y Narrativa del Tour */}
-          {(data?.about?.title || data?.about?.content) && (
-            <div className="mb-6 sm:mb-8 bg-white rounded-3xl p-5 sm:p-7 border border-stone-200 shadow-xs relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-[#FF5500] to-[#FF8800]" />
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div className="space-y-2 max-w-3xl">
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FF5500]/10 text-[#FF5500] text-[10px] font-black uppercase tracking-wider">
-                    <Sparkles size={12} />
-                    <span>{lang === 'en' ? 'Tour Overview & Description' : lang === 'pt' ? 'Visão Geral & Descrição' : lang === 'fr' ? 'Présentation du Tour' : lang === 'it' ? 'Descrizione del Tour' : 'Descripción & Visión del Tour'}</span>
-                  </div>
-                  <h3 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight leading-snug">
-                    {translateText(data?.about?.title || 'Experiencia Exclusiva en los Andes', lang)}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
-                    {translateText(data?.about?.content || '', lang)}
-                  </p>
+          <div className="mb-6 sm:mb-8 bg-white rounded-3xl p-5 sm:p-7 border border-stone-200 shadow-xs relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-[#FF5500] to-[#FF8800]" />
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div className="space-y-2 max-w-3xl">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#FF5500]/10 text-[#FF5500] text-[10px] font-black uppercase tracking-wider">
+                  <Sparkles size={12} />
+                  <span>{lang === 'en' ? 'Tour Overview & Description' : lang === 'pt' ? 'Visão Geral & Descrição' : lang === 'fr' ? 'Présentation du Tour' : lang === 'it' ? 'Descrizione del Tour' : 'Descripción & Visión del Tour'}</span>
                 </div>
-                <div className="shrink-0 flex items-center gap-2 self-start md:self-center">
-                  <a
-                    href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola, deseo reservar el tour: ' + tourTitle)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-sm cursor-pointer hover:scale-102"
-                  >
-                    <MessageCircle size={14} />
-                    <span>{lang === 'en' ? 'Inquire on WhatsApp' : 'Consultar WhatsApp'}</span>
-                  </a>
-                </div>
+                <h3 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight leading-snug">
+                  {translateText(data?.about?.title || 'Experiencia Exclusiva en los Andes', lang)}
+                </h3>
+                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
+                  {translateText(data?.about?.content || (data as any)?.description || data?.hero?.subtitle || 'Descubre los parajes más impresionantes de la región imperial con atención de primer nivel y guías expertos.', lang)}
+                </p>
+              </div>
+              <div className="shrink-0 flex items-center gap-2 self-start md:self-center">
+                <a
+                  href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola, deseo reservar el tour: ' + tourTitle)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-sm cursor-pointer hover:scale-102"
+                >
+                  <MessageCircle size={14} />
+                  <span>{lang === 'en' ? 'Inquire on WhatsApp' : 'Consultar WhatsApp'}</span>
+                </a>
               </div>
             </div>
-          )}
+          </div>
 
           <div className={`grid ${isMobile ? 'grid-cols-1 gap-4' : 'grid-cols-1 lg:grid-cols-12 gap-6'} items-stretch`}>
             
@@ -1531,12 +1543,17 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   <span className="text-[10px] bg-stone-100 text-stone-700 font-extrabold px-2.5 py-0.5 rounded-full border border-stone-200">
                     {translateText(tourTitle, lang)}
                   </span>
+                  {data?.price && (
+                    <span className="text-[10px] bg-emerald-50 text-emerald-700 font-black px-2.5 py-0.5 rounded-full border border-emerald-200 ml-auto">
+                      {lang === 'en' ? 'Rate' : 'Tarifa'}: {data.price}
+                    </span>
+                  )}
                 </div>
                 <h3 className="text-lg sm:text-2xl font-black text-stone-900 tracking-tight">
                   {t.techSheetTitle}
                 </h3>
                 <p className="text-xs text-stone-500 mt-1 leading-relaxed">
-                  {translateText(data?.about?.content || data?.hero?.subtitle || t.techSheetDesc, lang)}
+                  {translateText(data?.about?.content || (data as any)?.description || data?.hero?.subtitle || t.techSheetDesc, lang)}
                 </p>
               </div>
 

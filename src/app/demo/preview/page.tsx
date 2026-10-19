@@ -80,17 +80,16 @@ function DemoPreviewContent() {
       if (found) selected = found;
     }
     if (!selected && templateQuery) {
-      // Priorizar la plantilla oficial de fábrica para garantizar que siempre se muestre el contenido limpio y profesional
-      const officialTpl = INITIAL_LANDINGS.find(item => item.template === templateQuery);
-      if (officialTpl) {
-        selected = officialTpl;
+      // Priorizar primero las ediciones guardadas por el usuario en localStorage
+      const foundByTpl = list.find(item => item.template === templateQuery);
+      if (foundByTpl) {
+        selected = foundByTpl;
       } else {
-        const foundByTpl = list.find(item => item.template === templateQuery);
-        if (foundByTpl) selected = foundByTpl;
+        selected = INITIAL_LANDINGS.find(item => item.template === templateQuery) || null;
       }
     }
     if (!selected) {
-      selected = INITIAL_LANDINGS[0] || list[0] || null;
+      selected = list[0] || INITIAL_LANDINGS[0] || null;
     }
     if (selected) {
       const activeTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery)) ? tierQuery : selected.tier;
@@ -112,10 +111,10 @@ function DemoPreviewContent() {
       selected = list.find(item => item.slug.toLowerCase() === slugQuery.toLowerCase()) || null;
     }
     if (!selected && templateQuery) {
-      selected = INITIAL_LANDINGS.find(item => item.template === templateQuery) || list.find(item => item.template === templateQuery) || null;
+      selected = list.find(item => item.template === templateQuery) || INITIAL_LANDINGS.find(item => item.template === templateQuery) || null;
     }
     if (!selected) {
-      selected = INITIAL_LANDINGS[0] || list[0] || null;
+      selected = list[0] || INITIAL_LANDINGS[0] || null;
     }
     if (selected) {
       const activeTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery)) ? tierQuery : selected.tier;
@@ -569,6 +568,7 @@ function DemoPreviewContent() {
         title: editFeaturesTitle,
         items: editFeaturesItems.split('\n').map(s => s.trim()).filter(Boolean),
       },
+      includedServices: editFeaturesItems.split('\n').map(s => s.trim()).filter(Boolean),
       notIncluded: editNotIncluded.split('\n').map(s => s.trim()).filter(Boolean),
       whatToBring: editWhatToBring.split('\n').map(s => s.trim()).filter(Boolean),
       trustBadges: editTrustBadges.split('\n').map(s => s.trim()).filter(Boolean),
@@ -1063,6 +1063,26 @@ function DemoPreviewContent() {
                     />
                   </div>
 
+                  {/* Acceso rápido a Descripción desde General */}
+                  <div className="bg-slate-50 border border-slate-200/90 rounded-2xl p-3.5 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5">
+                      <FileText size={16} className="text-blue-600 shrink-0" />
+                      <div>
+                        <p className="text-xs font-bold text-slate-800">Descripción & Narrativa del Tour</p>
+                        <p className="text-[11px] text-slate-500 truncate max-w-sm sm:max-w-md">
+                          {editAboutContent ? editAboutContent.slice(0, 70) + '...' : 'Configura la descripción y propuesta de valor de la ruta'}
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setActiveEditorTab('description')}
+                      className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shrink-0 cursor-pointer transition-colors shadow-2xs"
+                    >
+                      Editar Descripción →
+                    </button>
+                  </div>
+
                   {/* IDENTIDAD CORPORATIVA Y LOGO (MARCA BLANCA) */}
                   <div className="bg-gradient-to-br from-indigo-50/70 via-white to-slate-50 border border-indigo-200/80 rounded-2xl p-4 sm:p-5 space-y-4 shadow-xs">
                     <div className="flex items-center justify-between gap-2 border-b border-indigo-100 pb-3">
@@ -1337,16 +1357,69 @@ function DemoPreviewContent() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                      Subtítulo Persuasivo de Portada
-                    </label>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                        Subtítulo / Descripción Corta de Portada
+                      </label>
+                      <button
+                        type="button"
+                        onClick={() => setActiveEditorTab('description')}
+                        className="text-[11px] font-bold text-blue-600 hover:text-blue-800 underline cursor-pointer"
+                      >
+                        Ir a Descripción Narrativa Completa →
+                      </button>
+                    </div>
                     <textarea
                       rows={3}
                       value={editHeroSubtitle}
                       onChange={(e) => setEditHeroSubtitle(e.target.value)}
-                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed text-slate-900"
                       placeholder="Ej. Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo..."
                     />
+                  </div>
+
+                  {/* EDICIÓN RÁPIDA DE DESCRIPCIÓN NARRATIVA COMPLETA ("ACERCA DEL TOUR") */}
+                  <div className="bg-gradient-to-br from-blue-50/70 via-indigo-50/40 to-white border border-blue-200/90 rounded-2xl p-4 sm:p-5 space-y-3.5 shadow-xs">
+                    <div className="flex items-center justify-between gap-2 border-b border-blue-100 pb-2.5">
+                      <div className="flex items-center gap-2">
+                        <span className="w-6 h-6 rounded-lg bg-blue-600 text-white flex items-center justify-center font-black text-xs">
+                          <FileText size={13} />
+                        </span>
+                        <div>
+                          <h4 className="text-xs sm:text-sm font-black text-slate-900">Descripción Narrativa Completa (&quot;Acerca del Tour&quot;)</h4>
+                          <p className="text-[11px] text-slate-500 font-medium">Se muestra destacada en las 6 plantillas turísticas</p>
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-mono text-slate-400 bg-white px-2 py-0.5 rounded-md border border-slate-200">
+                        {editAboutContent.length} car.
+                      </span>
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">
+                        Título de Sección &quot;Acerca del Tour&quot;
+                      </label>
+                      <input
+                        type="text"
+                        value={editAboutTitle}
+                        onChange={(e) => setEditAboutTitle(e.target.value)}
+                        className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="Ej. Un viaje sagrado diseñado para los más exigentes"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">
+                        Texto de la Descripción Narrativa
+                      </label>
+                      <textarea
+                        rows={4}
+                        value={editAboutContent}
+                        onChange={(e) => setEditAboutContent(e.target.value)}
+                        className="w-full bg-white border border-slate-300 rounded-xl p-3 text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
+                        placeholder="Evita las largas colas y el estrés del turismo masivo. Nuestro servicio VIP te brinda acceso preferente, almuerzo gourmet y asesoría personalizada..."
+                      />
+                    </div>
                   </div>
 
                   <div>
