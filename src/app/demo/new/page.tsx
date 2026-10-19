@@ -395,7 +395,7 @@ const PRESET_TOURS = [
     objective: 'whatsapp' as ObjectiveType,
     template: 'cultural' as TemplateType,
     language: 'es' as LanguageType,
-    tier: 'basic' as PlanTier,
+    tier: 'advance' as PlanTier,
     imageIndex: 1, // Terrazas
     description: 'Descubre los enigmas de la arquitectura megalítica inca en Sacsayhuamán, Q’enqo, Puka Pukara y Tambomachay junto a una arqueóloga experta.'
   },

@@ -279,30 +279,41 @@ export const INITIAL_LANDINGS: LandingData[] = [
   },
   {
     id: '3',
-    name: 'City Tour Cusco & Templos',
+    name: 'City Tour Cusco Ancestral & 4 Ruinas Arqueológicas',
     slug: 'city-tour-cusco',
-    tier: 'basic',
+    tier: 'advance',
+    companyName: 'Cusco Patrimonial Tours',
+    companyTagline: 'Guías Arqueólogos Colegiados DIRCETUR',
+    companyRuc: 'RUC 20604455662',
+    companyEmail: 'reservas@cuscopatrimonial.com',
     guideName: 'Lucía Condori',
+    guideCert: 'Arqueóloga Colegiada & Guía Oficial DIRCETUR',
+    guideLanguages: 'Español, Inglés y Francés',
     guideAvatar: '/images/tour-guide-lucia.jpg',
     whatsapp: '+51984778899',
-    price: 'S/ 70 PEN',
-    duration: 'Media Jornada (4 Horas)',
-    difficulty: 'Fácil',
+    price: 'S/ 85 PEN',
+    duration: 'Media Jornada (4.5 Horas)',
+    difficulty: 'Fácil (Apto para toda la familia)',
+    destination: 'Cusco Histórico & Sacsayhuamán',
+    altitude: '3,400 msnm - 3,700 msnm',
+    groupType: 'Grupo Reducido (Máx. 12 pers.)',
+    targetAudience: 'Familias, historiadores y viajeros culturales',
     objective: 'whatsapp',
     template: 'cultural',
     language: 'es',
+    languages: ['es', 'en', 'pt', 'fr', 'it'],
     status: 'published',
     date: '2026-09-05',
-    views: '842',
+    views: '2,108',
     heroImage: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
     galleryImages: [
       'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?q=80&w=2074&auto=format&fit=crop'
     ],
     hero: {
-      badge: 'Historia Viva del Tahuantinsuyo',
-      title: 'Descubre los Secretos de la Capital Inca',
-      subtitle: 'Un recorrido fascinante por el Qorikancha, Sacsayhuamán, Qenqo y la majestuosa Catedral de Cusco acompañado de una guía cusqueña apasionada.',
+      badge: 'Historia & Arqueología Imperial • DIRCETUR',
+      title: 'City Tour Cusco Ancestral & 4 Ruinas Arqueológicas',
+      subtitle: 'Descubre los enigmas de la arquitectura megalítica inca en Sacsayhuamán, Q’enqo, Puka Pukara y Tambomachay junto a una arqueóloga experta.',
       cta: 'Consultar Horarios por WhatsApp'
     },
     about: {
@@ -318,11 +329,19 @@ export const INITIAL_LANDINGS: LandingData[] = [
         'Degustación Tradicional:Cata de chocolate cusqueño artesanal y hojas sagradas de coca.'
       ]
     },
+    includedServices: [
+      'Transporte turístico privado con aire acondicionado',
+      'Guiado oficial por arqueóloga colegiada DIRCETUR',
+      'Visita guiada al Templo del Sol (Qorikancha)',
+      'Recorrido en Sacsayhuamán, Q’enqo, Puka Pukara y Tambomachay',
+      'Balón de oxígeno y botiquin a bordo'
+    ],
     trustBadges: [
-      'Guía Colegiada Licenciada en Arqueología',
-      'DIRCETUR Cusco Registro N° 4589',
-      'Audio-guías sanitizadas para grupos',
-      'Agencia Formal RUC 20'
+      'Licencia Oficial DIRCETUR Cusco',
+      'Sello Internacional Safe Travels',
+      'Agencia Formal RUC 20 Verificado',
+      'Guía Colegiado Bilïngüe',
+      'Balón de Oxígeno & Botiquin de Altura'
     ],
     notIncluded: [
       'Boleto Turístico del Cusco (BTC circuito arqueológico)',
@@ -363,16 +382,49 @@ export const INITIAL_LANDINGS: LandingData[] = [
       {
         q: '¿Incluye el Boleto Turístico del Cusco (BTC)?',
         a: 'No incluye el BTC general ni la entrada a la Catedral, pero tu guía te asistirá para adquirirlos en la puerta sin filas.'
+      },
+      {
+        q: '¿Cuánto tiempo dura el tour completo?',
+        a: 'El recorrido dura aproximadamente 4.5 horas (13:00 PM – 18:00 PM). Comenzamos en el Qorikancha y terminamos de regreso en la Plaza de Armas.'
+      },
+      {
+        q: '¿Cómo confirmo mi lugar?',
+        a: 'Escíbenos por WhatsApp con tu nombre, fecha deseada y cantidad de personas. Confirmamos en menos de 1 hora.'
+      },
+      {
+        q: '¿El tour es apto para niños y adultos mayores?',
+        a: 'Sí, el recorrido es fácil, a paso tranquilo y apto para todas las edades. Llevamos silla de ruedas y asistencia personalizada si se requiere.'
       }
     ],
     testimonials: [
       {
         name: 'Camila Ríos',
         origin: 'Bogotá, Colombia',
-        comment: 'Lucía sabe muchísimo sobre la cultura inca. Nos resolvió cada duda y nos llevó a los mejores puntos para fotos.',
+        comment: 'Lucía sabe muchísimo sobre la cultura inca. Nos resolvió cada duda y nos llevó a los mejores puntos para fotos. Increíble experiencia.',
+        rating: 5
+      },
+      {
+        name: 'Michael & Laura Thompson',
+        origin: 'London, UK',
+        comment: 'Outstanding guide! Lucia explained everything with such passion. Sacsayhuaman was breathtaking and the group was small enough to feel private.',
+        rating: 5
+      },
+      {
+        name: 'Familia García Pérez',
+        origin: 'Buenos Aires, Argentina',
+        comment: 'Fuimos con los abuelos y los niños. El ritmo fue perfecto, el transporte muy cómodo y la guía explicó de forma que hasta los más chicos entendían todo.',
+        rating: 5
+      },
+      {
+        name: 'Sophie & Marc Dubois',
+        origin: 'Paris, France',
+        comment: 'Magnifique expérience culturelle. Lucia parle français et a su captiver toute notre famille. Sacsayhuaman est grandiose!',
         rating: 5
       }
-    ]
+    ],
+    officeAddress: 'Portal de Panes N° 156, Plaza de Armas, Centro Histórico, Cusco - Perú',
+    officeHours: 'Lunes a Domingo: 08:00 AM – 07:00 PM (Horario Corrido)',
+    mapsUrl: 'https://maps.google.com/?q=Plaza+de+Armas+Cusco+Peru'
   },
   {
     id: '4',
@@ -763,7 +815,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
   }
 ];
 
-const STORAGE_KEY = 'cusco_creativos_landings_v6';
+const STORAGE_KEY = 'cusco_creativos_landings_v7';
 
 export function getStoredLandings(): LandingData[] {
   if (typeof window === 'undefined') return INITIAL_LANDINGS;
@@ -773,7 +825,7 @@ export function getStoredLandings(): LandingData[] {
       // Check if previous versions had custom landings
       let migrated: LandingData[] = [...INITIAL_LANDINGS];
       try {
-        const oldData = localStorage.getItem('cusco_creativos_landings_v5') || localStorage.getItem('cusco_creativos_landings_v4') || localStorage.getItem('cusco_creativos_landings_v3');
+        const oldData = localStorage.getItem('cusco_creativos_landings_v6') || localStorage.getItem('cusco_creativos_landings_v5') || localStorage.getItem('cusco_creativos_landings_v4') || localStorage.getItem('cusco_creativos_landings_v3');
         if (oldData) {
           const oldList: LandingData[] = JSON.parse(oldData);
           if (Array.isArray(oldList)) {
