@@ -362,6 +362,35 @@ git grep -n "La Experiencia Definitiva en Cusco"
 
 ---
 
+## 11. Cambios Editados no se Aplican en Diseño 1 y Pestaña de Edición de Descripción No Visible
+
+### Síntoma
+1. Al editar campos en el modal de edición de `/demo/preview` sobre el Diseño 1 (Portal Oficial de Agencia), los cambios no se reflejan (o se restablecen al recargar la página).
+2. El usuario no encuentra la sección para editar la descripción narrativa del tour, o los cambios en inclusiones, testimonios y botón CTA no impactan la plantilla.
+
+### Causa Raíz
+1. **Sobrescritura por `INITIAL_LANDINGS` en el cargador:** En `src/app/demo/preview/page.tsx`, la lógica de selección priorizaba `INITIAL_LANDINGS.find(item => item.template === templateQuery)` sobre `list` (`localStorage`). Al navegar con `?template=agency-portal`, Next.js volvía a cargar la plantilla estática de fábrica ignorando los datos modificados por el usuario.
+2. **Desconexión entre `features.items` e `includedServices`:** El editor guardaba las inclusiones en `features.items`, pero `AgencyPortalTemplate.tsx` renderizaba `data?.includedServices`, que no se actualizaba en `buildUpdatedLandingData()`.
+3. **Testimonios e Inclusiones Hardcodeados:** En `AgencyPortalTemplate.tsx`, `getLocalizedTestimonials()` devolvía un array estático ignorando `data?.testimonials`, y `heroCtaLabel` ignoraba `data?.hero?.cta`.
+4. **Visibilidad de la Descripción:** En el editor, la descripción estaba separada en la Pestaña 3 ("Descripción"), mientras que en la Pestaña 2 ("Hero") solo figuraba como "Subtítulo Persuasivo de Portada", generando confusión si el usuario buscaba editar la descripción directamente en la portada o en la ficha general.
+
+### Solución Paso a Paso
+1. **Priorizar Ediciones Guardadas en `preview/page.tsx`:**
+   Invertir el orden de búsqueda para consultar primero `list.find(item => item.template === templateQuery)` (`localStorage`) antes de recurrir a `INITIAL_LANDINGS`.
+2. **Sincronizar `includedServices`:**
+   En `buildUpdatedLandingData()`, asignar `includedServices: editFeaturesItems.split('\n').map(s => s.trim()).filter(Boolean)` junto a `features.items`.
+3. **Vincular Datos Dinámicos en `AgencyPortalTemplate.tsx`:**
+   - Hacer que `heroCtaLabel` use `data?.hero?.cta ? translateText(data.hero.cta, lang) : ...`.
+   - Hacer que `getLocalizedIncludedServices` caiga en `data?.features?.items` si `includedServices` está vacío.
+   - En `getLocalizedTestimonials()`, renderizar `data.testimonials` si existen.
+   - En `#experiencia`, mostrar siempre el bloque de descripción narrativa con fallback ordenado: `data?.about?.content || data?.description || data?.hero?.subtitle`.
+   - Mostrar la Tarifa/Precio por persona directamente en la cabecera de la Ficha Técnica para confirmación visual inmediata.
+4. **Edición Accesible y Redundante de la Descripción:**
+   - Añadir en la Pestaña 2 ("Hero") un bloque de edición directa de la Descripción Narrativa Completa ("Acerca del Tour") con acceso directo a la Pestaña 3.
+   - Añadir en la Pestaña 1 ("General") una tarjeta de acceso directo a la Descripción con un clic.
+
+---
+
 ## Lista de Verificación Antes de Desplegar
 - [ ] Ejecutar `npm run lint` y verificar que salga con código 0.
 - [ ] Ejecutar `cmd /c npm run build` localmente y comprobar que todas las rutas se generen sin errores.
