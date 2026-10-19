@@ -670,10 +670,15 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   };
 
   const getLocalizedHeroSubtitle = (originalSubtitle?: string) => {
-    if (!originalSubtitle) {
+    const raw = originalSubtitle?.trim() || data?.hero?.subtitle?.trim();
+    if (!raw) {
       return translateText('Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia.', lang);
     }
-    return translateText(originalSubtitle, lang);
+    // Si el usuario escribió un texto personalizado, respetarlo directamente en su idioma
+    if (lang === (data?.language || 'es')) {
+      return raw;
+    }
+    return translateText(raw, lang);
   };
 
   const getLocalizedDifficulty = (diff?: string) => {

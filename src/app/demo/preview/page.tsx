@@ -1492,6 +1492,28 @@ function DemoPreviewContent() {
                     </div>
                   </div>
 
+                  {/* Subtítulo / Descripción de Portada (Debajo del Título H1) */}
+                  <div className="bg-slate-50 border border-slate-200/90 rounded-2xl p-4 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-800">
+                        Subtítulo / Bajada de Portada (Texto bajo el H1)
+                      </label>
+                      <span className="text-[10px] text-slate-400 font-mono">
+                        {editHeroSubtitle.length} car.
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-500">
+                      Este es el texto que aparece en la portada principal (Hero) justo debajo del título del tour.
+                    </p>
+                    <textarea
+                      rows={3}
+                      value={editHeroSubtitle}
+                      onChange={(e) => setEditHeroSubtitle(e.target.value)}
+                      className="w-full bg-white border border-slate-300 rounded-xl p-3 text-xs sm:text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed font-medium"
+                      placeholder="Ej. Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo..."
+                    />
+                  </div>
+
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
                       Título de Sección "Acerca del Tour / Visión de la Ruta"
