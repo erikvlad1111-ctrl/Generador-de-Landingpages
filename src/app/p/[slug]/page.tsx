@@ -25,16 +25,16 @@ function PublicLandingContent() {
     const landings = getStoredLandings();
     let found: LandingData | null = null;
     if (slug) {
-      found = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === slug.toLowerCase()) || null;
+      found = landings.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
       if (!found) {
-        found = landings.find(l => l.slug.toLowerCase() === slug.toLowerCase()) || null;
+        found = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
       }
     }
     if (!found && templateQuery) {
-      found = INITIAL_LANDINGS.find(l => l.template === templateQuery) || landings.find(l => l.template === templateQuery) || null;
+      found = landings.find(l => l.template === templateQuery) || INITIAL_LANDINGS.find(l => l.template === templateQuery) || null;
     }
     if (!found) {
-      found = INITIAL_LANDINGS[0] || landings[0] || null;
+      found = landings[0] || INITIAL_LANDINGS[0] || null;
     }
     if (!found) return null;
     const activeTier: PlanTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery))
@@ -55,16 +55,16 @@ function PublicLandingContent() {
     const landings = getStoredLandings();
     let found: LandingData | null = null;
     if (slug) {
-      found = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === slug.toLowerCase()) || null;
+      found = landings.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
       if (!found) {
-        found = landings.find(l => l.slug.toLowerCase() === slug.toLowerCase()) || null;
+        found = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
       }
     }
     if (!found && templateQuery) {
-      found = INITIAL_LANDINGS.find(l => l.template === templateQuery) || landings.find(l => l.template === templateQuery) || null;
+      found = landings.find(l => l.template === templateQuery) || INITIAL_LANDINGS.find(l => l.template === templateQuery) || null;
     }
     if (!found) {
-      found = INITIAL_LANDINGS[0] || landings[0] || null;
+      found = landings[0] || INITIAL_LANDINGS[0] || null;
     }
     if (found) {
       const activeTier: PlanTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery))

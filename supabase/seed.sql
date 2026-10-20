@@ -34,5 +34,11 @@ values
         'Naturaleza & Ecoturismo Andino',
         'Estilo visual orgánico y relajado para lagunas, valles sagrados y termalismo.',
         'active'
+    ),
+    (
+        'emerald-explorer',
+        'Emerald Explorer & Trekking NavikX (Diseño 6)',
+        'Diseño de alta gama con paleta esmeralda profunda, siluetas orgánicas, cálculo dinámico de precio y selector de idioma rápido.',
+        'active'
     )
 on conflict (code) do nothing;

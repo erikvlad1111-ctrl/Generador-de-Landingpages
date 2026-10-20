@@ -67,7 +67,8 @@ export default function SustainabilityAndSocialProof({
       feedTitle: '#CuscoTravelers: Fotos en Vivo de Nuestros Pasajeros',
       feedSubtitle: 'Imágenes capturadas por viajeros que recorrieron Machu Picchu, Humantay y Vinicunca con nuestro equipo en los últimos días.',
       feedRealTime: 'Historias actualizadas en tiempo real',
-      verifiedTraveler: 'Viajero Verificado'
+      verifiedTraveler: 'Viajero Verificado',
+      commitmentBadge: 'Compromiso Oficial'
     },
     en: {
       socialBadge: 'Conscious & Ethical Tourism',
@@ -106,7 +107,8 @@ export default function SustainabilityAndSocialProof({
       feedTitle: '#CuscoTravelers: Real Photos from Our Guests',
       feedSubtitle: 'Unfiltered pictures captured by travelers exploring Machu Picchu, Humantay, and Rainbow Mountain with our guides.',
       feedRealTime: 'Real-time live stories',
-      verifiedTraveler: 'Verified Traveler'
+      verifiedTraveler: 'Verified Traveler',
+      commitmentBadge: 'Official Commitment'
     },
     pt: {
       socialBadge: 'Turismo Consciente & Ético',
@@ -145,7 +147,8 @@ export default function SustainabilityAndSocialProof({
       feedTitle: '#CuscoTravelers: Fotos Reais de Viajantes',
       feedSubtitle: 'Imagens tiradas pelos nossos passageiros durante a última semana no Peru.',
       feedRealTime: 'Histórias atualizadas em tempo real',
-      verifiedTraveler: 'Viajante Verificado'
+      verifiedTraveler: 'Viajante Verificado',
+      commitmentBadge: 'Compromisso Oficial'
     },
     fr: {
       socialBadge: 'Tourisme Éthique & Responsable',
@@ -184,7 +187,8 @@ export default function SustainabilityAndSocialProof({
       feedTitle: '#CuscoTravelers: Les Photos de Nos Voyageurs',
       feedSubtitle: 'Photos authentiques partagées par nos clients découvrant les merveilles incas.',
       feedRealTime: 'Histoires en direct',
-      verifiedTraveler: 'Voyageur Vérifié'
+      verifiedTraveler: 'Voyageur Vérifié',
+      commitmentBadge: 'Engagement Officiel'
     },
     it: {
       socialBadge: 'Turismo Etico & Sostenibile',
@@ -223,7 +227,8 @@ export default function SustainabilityAndSocialProof({
       feedTitle: '#CuscoTravelers: Gli Scatti dei Nostri Ospiti',
       feedSubtitle: 'Foto autentiche scattate dai viaggiatori con le nostre guide in questi giorni.',
       feedRealTime: 'Storie in tempo reale',
-      verifiedTraveler: 'Viaggiatore Verificato'
+      verifiedTraveler: 'Viaggiatore Verificato',
+      commitmentBadge: 'Impegno Ufficiale'
     }
   };
 
@@ -337,7 +342,7 @@ export default function SustainabilityAndSocialProof({
                   </p>
                 </div>
                 <div className="pt-3 border-t border-stone-100 flex items-center gap-1.5 text-emerald-700 text-xs font-bold">
-                  <CheckCircle2 size={15} /> Compromiso Oficial {brandName}
+                  <CheckCircle2 size={15} /> {t.commitmentBadge} {brandName}
                 </div>
               </div>
             ))}
