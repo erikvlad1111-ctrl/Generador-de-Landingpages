@@ -342,6 +342,17 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
     return `https://wa.me/${cleanPhone}?text=${msg}`;
   };
 
+  const getLocalizedHeroSubtitle = () => {
+    const raw = data.hero?.subtitle?.trim();
+    if (!raw) {
+      return translateText('Una experiencia curada para viajeros que aprecian los detalles, la fotografía y la autenticidad de los Andes peruanos.', currentLang);
+    }
+    if (currentLang === (data.language || 'es')) {
+      return raw;
+    }
+    return translateText(raw, currentLang);
+  };
+
   const heroImg = data.heroImage || 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop';
   const gallery = data.galleryImages && data.galleryImages.length > 0 
     ? data.galleryImages 
@@ -570,7 +581,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             </h1>
 
             <p className="text-stone-600 text-[15px] sm:text-[19px] leading-relaxed font-sans max-w-xl">
-              {data.hero?.subtitle || 'Una experiencia curada para viajeros que aprecian los detalles, la fotografía y la autenticidad de los Andes peruanos.'}
+              {getLocalizedHeroSubtitle()}
             </p>
 
             {/* Quick Stats Tags */}

@@ -1634,6 +1634,27 @@ export default function NewLandingDemo() {
                 </span>
               </div>
 
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-bold text-slate-700">
+                    Subtítulo / Bajada de Portada (Texto descriptivo del Hero justo bajo el H1):
+                  </label>
+                  <span className="text-[10px] text-slate-400 font-mono">
+                    {heroSubtitle.length} car.
+                  </span>
+                </div>
+                <textarea 
+                  rows={2}
+                  value={heroSubtitle}
+                  onChange={(e) => setHeroSubtitle(e.target.value)}
+                  placeholder="Ej. Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia."
+                  className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed font-medium"
+                />
+                <span className="text-[10px] text-slate-500 mt-0.5 block">
+                  Este texto aparece de forma destacada en la portada principal (Hero) debajo del título del tour en los 6 diseños.
+                </span>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                 <div>
                   <label className="block text-xs font-bold text-slate-700 mb-1">
@@ -3306,7 +3327,7 @@ export default function NewLandingDemo() {
                         {translateText(name || 'Vive Tu Aventura: Expediciones & Trekking en Cusco', language)}
                       </h3>
                       <p className="text-[9px] text-emerald-200/80 line-clamp-2 leading-relaxed">
-                        {translateText(description || 'Explora lugares asombrosos y crea recuerdos inolvidables alrededor del Cusco.', language)}
+                        {translateText(heroSubtitle || description || 'Explora lugares asombrosos y crea recuerdos inolvidables alrededor del Cusco.', language)}
                       </p>
                     </div>
 
@@ -3568,7 +3589,7 @@ export default function NewLandingDemo() {
                         {name || 'Machu Picchu VIP con Tren Panorámico'}
                       </h3>
                       <p className="text-[10px] text-stone-200 line-clamp-1">
-                        {destination || 'Cusco'} • {duration || 'Full Day'} • Guía Historiador
+                        {heroSubtitle || `${destination || 'Cusco'} • ${duration || 'Full Day'} • Guía Historiador`}
                       </p>
 
                       <div className="pt-1">

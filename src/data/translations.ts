@@ -2975,18 +2975,20 @@ export function translateText(text: string | undefined, targetLang: LanguageType
     if (targetLang === 'it') return 'City Tour Cusco Ancestrale & 4 Siti Archeologici';
   }
 
-  // Heurística específica solo para el subtítulo por defecto de Machu Picchu de Lujo
-  if (
-    (lowerTrimmed.includes('maravilla del mundo') && lowerTrimmed.includes('traslados privados')) ||
-    (lowerTrimmed.includes('wonder of the world') && lowerTrimmed.includes('private luxury')) ||
-    (lowerTrimmed.includes('maravilha do mundo') && lowerTrimmed.includes('traslados privados')) ||
-    (lowerTrimmed.includes('merveille du monde') && lowerTrimmed.includes('transferts privés')) ||
-    (lowerTrimmed.includes('meraviglia del mondo') && lowerTrimmed.includes('trasferimenti privati'))
-  ) {
+  // Coincidencia exacta del subtítulo por defecto de Machu Picchu de Lujo (para no secuestrar ediciones personalizadas del usuario)
+  const isDefaultLuxurySubtitle = 
+    lowerTrimmed === 'descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia.' ||
+    lowerTrimmed === 'descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia' ||
+    lowerTrimmed === 'discover the wonder of the world with private luxury transfers, 5-star comfort and an official certified historian guide dedicated exclusively to you and your family.' ||
+    lowerTrimmed === 'descubra a maravilha do mundo com traslados privados, conforto 5 estrelas e um guia oficial exclusivo para você e sua família.' ||
+    lowerTrimmed === 'découvrez la merveille du monde avec transferts privés, confort 5 étoiles et un guide officiel exclusif pour vous et votre famille.' ||
+    lowerTrimmed === 'scopri la meraviglia del mondo con trasferimenti privati, comfort a 5 stelle e una guida ufficiale esclusiva per te e la tua famiglia.';
+
+  if (isDefaultLuxurySubtitle) {
     if (targetLang === 'es') return 'Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia.';
     if (targetLang === 'en') return 'Discover the wonder of the world with private luxury transfers, 5-star comfort and an official certified historian guide dedicated exclusively to you and your family.';
     if (targetLang === 'pt') return 'Descubra a maravilha do mundo com traslados privados, conforto 5 estrelas e um guia oficial exclusivo para você e sua família.';
-    if (targetLang === 'fr') return 'Découvrez la merveille du monde avec transferts privés, confort 5 étoiles et un guide oficial exclusivo pour vous et votre famille.';
+    if (targetLang === 'fr') return 'Découvrez la merveille du monde avec transferts privés, confort 5 étoiles et un guide officiel exclusif pour vous et votre famille.';
     if (targetLang === 'it') return 'Scopri la meraviglia del mondo con trasferimenti privati, comfort a 5 stelle e una guida ufficiale esclusiva per te e la tua famiglia.';
   }
 

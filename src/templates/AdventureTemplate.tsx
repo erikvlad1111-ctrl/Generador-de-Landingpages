@@ -134,6 +134,17 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
     return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(spotMsg)}`;
   };
 
+  const getLocalizedHeroSubtitle = () => {
+    const raw = data.hero?.subtitle?.trim();
+    if (!raw) {
+      return translateText(data.about?.content || t.hero.subtitle, currentLang);
+    }
+    if (currentLang === (data.language || 'es')) {
+      return raw;
+    }
+    return translateText(raw, currentLang);
+  };
+
   // Tours secundarios del catálogo (editables desde el modal o sugeridos)
   const secondaryCatalogTours = React.useMemo(() => {
     const sourceTours = (data?.catalogTours && data.catalogTours.length > 0)
@@ -733,7 +744,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
               {/* Tour Subtitle / Description */}
               <p className="text-sm sm:text-base text-slate-200 leading-relaxed max-w-xl font-normal drop-shadow-sm">
-                {translateText(data.hero?.subtitle || data.about?.content || t.hero.subtitle, currentLang)}
+                {getLocalizedHeroSubtitle()}
               </p>
 
               {/* Buttons Row */}

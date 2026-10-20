@@ -309,6 +309,17 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
     }
   ];
 
+  const getLocalizedHeroSubtitle = () => {
+    const raw = data.hero?.subtitle?.trim();
+    if (!raw) {
+      return t.hero.defaultSubtitle;
+    }
+    if (currentLang === (data.language || 'es')) {
+      return raw;
+    }
+    return translateText(raw, currentLang);
+  };
+
   const FONT_CONFIG: Record<LuxuryFont, { titleFont: string; bodyFont: string; tracking: string }> = {
     montserrat: {
       titleFont: "'Montserrat', sans-serif",
@@ -531,7 +542,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
 
           {/* Subtítulo pulido y acogedor */}
           <p className={`${isMobile ? 'text-xs leading-relaxed mb-8' : 'text-base sm:text-lg md:text-xl mb-10 leading-relaxed'} text-neutral-200 max-w-2xl font-light tracking-wide`}>
-            {data.hero?.subtitle ? translateText(data.hero.subtitle, currentLang) : t.hero.defaultSubtitle}
+            {getLocalizedHeroSubtitle()}
           </p>
 
           {/* CTA & Precio en marco biselado Optimizado */}

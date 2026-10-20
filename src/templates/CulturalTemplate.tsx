@@ -92,6 +92,17 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
     return `https://wa.me/${cleanPhone}?text=${msg}`;
   };
 
+  const getLocalizedHeroSubtitle = () => {
+    const raw = data.hero?.subtitle?.trim();
+    if (!raw) {
+      return t.heroSubtitleDefault;
+    }
+    if (currentLang === (data.language || 'es')) {
+      return raw;
+    }
+    return translateText(raw, currentLang);
+  };
+
   // Tours secundarios del catálogo (editables desde el modal o sugeridos)
   const secondaryCatalogTours = React.useMemo(() => {
     const sourceTours = (data?.catalogTours && data.catalogTours.length > 0)
@@ -218,7 +229,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             {data.hero?.title ? translateText(data.hero.title, currentLang) : (currentLang === 'en' ? 'Imperial Cusco' : currentLang === 'fr' ? 'Cusco Impérial' : currentLang === 'pt' ? 'Cusco Imperial' : currentLang === 'it' ? 'Cusco Imperiale' : 'Cusco Imperial')}
           </h1>
           <p className="text-base sm:text-xl text-red-100 font-serif max-w-2xl mx-auto drop-shadow-md">
-            {data.hero?.subtitle ? translateText(data.hero.subtitle, currentLang) : t.heroSubtitleDefault}
+            {getLocalizedHeroSubtitle()}
           </p>
 
           {/* Price Reference Badge & 3 Quick Action Icons Optimizado */}

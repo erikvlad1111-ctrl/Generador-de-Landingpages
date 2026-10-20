@@ -366,3 +366,18 @@ Guía para diagnosticar y solucionar problemas de traducción, mezcla de idiomas
      - Registrar exhaustivamente todas las frases de Salkantay Trek 5 Días en `PHRASE_MAP` para `es`, `en`, `pt`, `fr`, e `it`.
      - Robustecer la heurística de altitud para formatear rangos numéricos limpios y con las unidades de cada idioma (`m.a.s.l.`, `m d’altitude`, `m de altitude`, `mslm`, `msnm`).
 
+
+
+### Error: Subtítulo de Hero permanece invariable o se sobrescribe en todos los diseños ("Descubre la maravilla del mundo...")
+- **Síntoma / Mensaje de Error:**
+  Al editar el subtítulo / bajada de portada (el texto descriptivo justo bajo el título H1 del Hero y después del logo), el texto editado por el usuario no se reflejaba en las plantillas y seguía mostrando:
+  `Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia.` (en español) o
+  `Descubra a maravilha do mundo com traslados privados, conforto 5 estrelas e um guia oficial exclusivo para você e sua família.` (en portugués).
+- **Causa Raíz:**
+  1. En `src/data/translations.ts`, existía una heurística de palabras clave (`includes('maravilla del mundo') && includes('traslados privados')`) que interceptaba cualquier texto que contuviera esas frases y forzaba el retorno de la cadena por defecto predeterminada, anulando cualquier edición o personalización hecha por el usuario.
+  2. En las plantillas (`ModernEmeraldTemplate`, `AdventureTemplate`, `CulturalTemplate`, `PremiumTemplate`, `BohoTemplate`), el renderizado del subtítulo no contaba con la verificación de idioma base (`currentLang === (data.language || 'es')`), provocando que pasaran innecesariamente por `translateText` o cayeran en textos de fallback fijos.
+  3. En `src/app/demo/new/page.tsx`, en la sección "Titular y Textos de la Sección Hero" (ubicada justo debajo del logo y datos de empresa), existían campos para Título H1, Badge e Insignia, pero faltaba el input/textarea para `heroSubtitle`, impidiendo su edición en el paso de creación.
+- **Solución Paso a Paso:**
+  1. En `src/data/translations.ts`, se reemplazó la heurística por coincidencia estricta (`isDefaultLuxurySubtitle`) de forma que solo aplique cuando el texto sea exactamente la frase por defecto y nunca secuestre textos personalizados del usuario.
+  2. En todas las 6 plantillas turísticas (`AgencyPortalTemplate`, `ModernEmeraldTemplate`, `AdventureTemplate`, `PremiumTemplate`, `CulturalTemplate` y `BohoTemplate`), se implementó la función `getLocalizedHeroSubtitle`: si el idioma actual es el idioma base del tour, se entrega de forma 100% directa el texto editado sin alteración; si se cambia de idioma en el selector, se traduce al idioma seleccionado.
+  3. En `src/app/demo/new/page.tsx`, se integró el campo interactivo de texto para `heroSubtitle` (Subtítulo / Bajada de Portada) justo debajo del H1 y se conectó a las vistas previas interactivas.

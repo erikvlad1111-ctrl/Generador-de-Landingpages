@@ -590,7 +590,17 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   const rawHeroTitle = data.hero?.title || data.name || 'Vive Tu Aventura: Expediciones & Trekking en Cusco';
   const cleanTitleInput = rawHeroTitle.replace(/\s*—\s*/g, ': ').trim();
   const heroTitle = translateText(cleanTitleInput, currentLang).replace(/\s*—\s*/g, ': ').trim();
-  const heroSubtitle = translateText(data.hero?.subtitle || data.about?.content || 'Explora lugares asombrosos y crea recuerdos inolvidables alrededor de los Andes.', currentLang);
+  const getLocalizedHeroSubtitle = (originalSubtitle?: string) => {
+    const raw = originalSubtitle?.trim() || data.hero?.subtitle?.trim();
+    if (!raw) {
+      return translateText(data.about?.content || 'Explora lugares asombrosos y crea recuerdos inolvidables alrededor de los Andes.', currentLang);
+    }
+    if (currentLang === (data.language || 'es')) {
+      return raw;
+    }
+    return translateText(raw, currentLang);
+  };
+  const heroSubtitle = getLocalizedHeroSubtitle(data.hero?.subtitle);
   const heroBadge = translateText(data.hero?.badge || 'NavikX Cusco • Operador Autorizado', currentLang);
   const destinationName = translateText(data.destination || 'Cusco & Machu Picchu', currentLang);
 
