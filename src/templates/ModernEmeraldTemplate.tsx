@@ -1412,9 +1412,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         </div>
       </section>
 
-      {/* 4. FICHA TÉCNICA INTERACTIVA & CRÓNICA DE EXPEDICIÓN (OCULTO EN FREE) */}
-      {!isFree && (
-        <section id="acerca" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+      {/* 4. FICHA TÉCNICA INTERACTIVA & CRÓNICA DE EXPEDICIÓN (DISPONIBLE EN TODOS LOS PLANES) */}
+      <section id="acerca" className="relative py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
           <div className="absolute top-1/2 -left-24 -translate-y-1/2 w-[650px] sm:w-[850px] h-[520px] bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.48)_0%,rgba(6,182,212,0.25)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
           <div className="absolute top-1/2 -right-24 -translate-y-1/2 w-[600px] sm:w-[750px] h-[480px] bg-[radial-gradient(ellipse_at_center,rgba(2,132,199,0.42)_0%,rgba(20,184,166,0.22)_45%,transparent_75%)] blur-3xl pointer-events-none z-0" />
           
@@ -1470,6 +1469,26 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <span className="text-base font-black text-white block">{translateText(data.groupType || 'Grupos Reducidos', currentLang)}</span>
                 <span className="text-[10px] text-amber-200/60 block group-hover:text-amber-300">{translateText('Máx 8 personas ➔', currentLang)}</span>
               </div>
+
+              {/* Destino Principal */}
+              <div className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15 group">
+                <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 text-emerald-300 flex items-center justify-center border border-emerald-400/40">
+                  <MapPin size={20} />
+                </div>
+                <span className="text-[10px] uppercase font-extrabold tracking-wider text-emerald-400 block">{translateText('Destino Principal', currentLang)}</span>
+                <span className="text-xs sm:text-sm font-black text-white block truncate">{translateText(data.destination || 'Cusco & Machu Picchu', currentLang)}</span>
+                <span className="text-[10px] text-emerald-200/60 block">{translateText('Andes & Selva', currentLang)}</span>
+              </div>
+
+              {/* Tarifa por Persona */}
+              <div className="glass-floating-card p-5 rounded-3xl space-y-2 border border-white/15 group">
+                <div className="w-10 h-10 rounded-2xl bg-teal-500/20 text-teal-300 flex items-center justify-center border border-teal-400/40">
+                  <Compass size={20} />
+                </div>
+                <span className="text-[10px] uppercase font-extrabold tracking-wider text-teal-400 block">{translateText('Tarifa por Persona', currentLang)}</span>
+                <span className="text-base font-black text-emerald-300 block">{data.price || '$350 USD'}</span>
+                <span className="text-[10px] text-teal-200/60 block">{translateText('Tarifa oficial', currentLang)}</span>
+              </div>
             </div>
 
             {/* Columna Derecha: Tarjeta Editorial */}
@@ -1478,7 +1497,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <div className="flex flex-wrap items-center gap-2">
                   <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold">
                     <Award size={14} />
-                    <span>{translateText('Filosofía de Expedición', currentLang)}</span>
+                    <span>{translateText('Descripción & Valor Diferencial', currentLang)}</span>
                   </div>
                   {data.targetAudience && (
                     <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-200 text-xs font-semibold">
@@ -1543,7 +1562,6 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           </div>
           </div>
         </section>
-      )}
 
       {/* MODAL CONTEXTUAL DE FICHA TÉCNICA */}
       {activeSpecModal && (

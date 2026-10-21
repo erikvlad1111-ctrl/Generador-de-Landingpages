@@ -7,7 +7,7 @@ import {
   ShieldCheck, XCircle, Backpack, Calendar, ArrowRight, Heart, Flame, 
   Plane, Compass, Users, Sparkles, Navigation, Phone, Check, ChevronRight,
   Send, Mountain, Building2, Mail, BookOpen, Tent, Bus, Utensils, Ticket, HeartPulse, Activity,
-  Menu, X, Lock, CreditCard
+  Menu, X, Lock, CreditCard, Target, DollarSign, Award
 } from 'lucide-react';
 import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
@@ -917,21 +917,60 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </section>
       )}
 
-      {/* 3.5 ABOUT / EXPEDITION OVERVIEW */}
-      {(data.about?.title || data.about?.content) && !isFree && (
-        <section className="py-12 sm:py-16 px-4 sm:px-8 max-w-5xl mx-auto text-center space-y-4">
+      {/* 3.5 ABOUT & FICHA TÉCNICA DE LA AVENTURA (DISPONIBLE EN TODOS LOS PLANES) */}
+      <section className="py-12 sm:py-16 px-4 sm:px-8 max-w-6xl mx-auto space-y-8">
+        <div className="text-center space-y-4 max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-black uppercase tracking-wider">
             <Compass size={13} className="text-blue-600" />
-            <span>{currentLang === 'en' ? 'Expedition Overview' : currentLang === 'fr' ? 'Vue d\'Ensemble' : currentLang === 'pt' ? 'Visão da Expedição' : currentLang === 'it' ? 'Panoramica della Spedizione' : 'Acerca de la Expedición'}</span>
+            <span>{currentLang === 'en' ? 'Tour Overview & Key Differentiator' : currentLang === 'fr' ? 'Présentation & Différenciateur Clé' : currentLang === 'pt' ? 'Visão Geral & Diferencial do Tour' : currentLang === 'it' ? 'Panoramica & Valore Differenziale' : 'Descripción & Valor Diferencial de la Aventura'}</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-            {data.about?.title ? translateText(data.about.title, currentLang) : (currentLang === 'en' ? 'An unforgettable high-altitude adventure' : 'Una aventura de alta montaña inolvidable')}
+            {data.about?.title ? translateText(data.about.title, currentLang) : (data.name ? translateText(data.name, currentLang) : (currentLang === 'en' ? 'An unforgettable high-altitude adventure' : 'Una aventura de alta montaña inolvidable'))}
           </h2>
           <p className="text-sm sm:text-base text-slate-600 max-w-3xl mx-auto leading-relaxed font-normal">
-            {translateText(data.about?.content || '', currentLang)}
+            {translateText(data.about?.content || (data as any)?.description || data.hero?.subtitle || 'Descubre la magia de los Andes peruanos con atención de primer nivel, protocolos de seguridad certificados y guías locales expertos.', currentLang)}
           </p>
-        </section>
-      )}
+        </div>
+
+        {/* Grilla de Ficha Técnica del Tour */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-2">
+          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1">
+            <Mountain size={16} className="text-blue-600 mx-auto" />
+            <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">{currentLang === 'en' ? 'Max Altitude' : 'Altitud'}</span>
+            <strong className="text-xs sm:text-sm font-black text-slate-900 block truncate">{translateText(data.altitude || '4,630 msnm', currentLang)}</strong>
+          </div>
+
+          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1">
+            <Clock size={16} className="text-blue-600 mx-auto" />
+            <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">{currentLang === 'en' ? 'Duration' : 'Duración'}</span>
+            <strong className="text-xs sm:text-sm font-black text-slate-900 block truncate">{translateText(data.duration || '5D / 4N', currentLang)}</strong>
+          </div>
+
+          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1">
+            <Award size={16} className="text-blue-600 mx-auto" />
+            <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">{currentLang === 'en' ? 'Difficulty' : 'Dificultad'}</span>
+            <strong className="text-xs sm:text-sm font-black text-slate-900 block truncate">{translateText(data.difficulty || 'Exigente', currentLang)}</strong>
+          </div>
+
+          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1">
+            <Users size={16} className="text-blue-600 mx-auto" />
+            <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">{currentLang === 'en' ? 'Group Mode' : 'Modalidad'}</span>
+            <strong className="text-xs sm:text-sm font-black text-slate-900 block truncate">{translateText(data.groupType || 'Grupo Reducido', currentLang)}</strong>
+          </div>
+
+          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1">
+            <Target size={16} className="text-blue-600 mx-auto" />
+            <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">{currentLang === 'en' ? 'Target' : 'Público'}</span>
+            <strong className="text-xs sm:text-sm font-black text-slate-900 block truncate">{translateText(data.targetAudience || 'Aventureros', currentLang)}</strong>
+          </div>
+
+          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1">
+            <DollarSign size={16} className="text-emerald-600 mx-auto" />
+            <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">{currentLang === 'en' ? 'Rate' : 'Tarifa'}</span>
+            <strong className="text-xs sm:text-sm font-black text-emerald-600 block truncate">{data.price || '$380 USD'}</strong>
+          </div>
+        </div>
+      </section>
 
       {/* 4. SECTION: EXPLORE TOP SEARCHED SPOTS (DISPONIBLE EN TODOS LOS PLANES) */}
       <section id="destinos" className="py-14 sm:py-20 px-4 sm:px-8 max-w-7xl mx-auto text-center">

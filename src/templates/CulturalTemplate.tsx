@@ -382,7 +382,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
       {/* 2.2 FICHA TÉCNICA PATRIMONIAL (ESPECIFICACIONES EDITABLES) */}
       <section className="py-6 px-4 sm:px-8 max-w-6xl mx-auto">
-        <div className="bg-white rounded-3xl p-4 sm:p-6 border border-stone-200/90 shadow-sm grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 text-left">
+        <div className="bg-white rounded-3xl p-4 sm:p-6 border border-stone-200/90 shadow-sm grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 text-left">
           {/* Duración */}
           <div className="bg-stone-50/80 p-3 sm:p-3.5 rounded-2xl border border-stone-200/60 flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-red-100 text-red-700 flex items-center justify-center shrink-0">
@@ -428,13 +428,24 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           </div>
 
           {/* Público Objetivo */}
-          <div className="bg-stone-50/80 p-3 sm:p-3.5 rounded-2xl border border-stone-200/60 flex items-center gap-2.5 col-span-2 sm:col-span-1">
+          <div className="bg-stone-50/80 p-3 sm:p-3.5 rounded-2xl border border-stone-200/60 flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-red-100 text-red-700 flex items-center justify-center shrink-0">
               <Target size={18} />
             </div>
             <div className="min-w-0">
               <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Ideal For' : currentLang === 'fr' ? 'Idéal Pour' : currentLang === 'pt' ? 'Ideal Para' : currentLang === 'it' ? 'Ideale Per' : 'Público'}</span>
               <strong className="text-xs sm:text-sm text-stone-900 font-serif font-bold truncate block">{translateText(data.targetAudience || 'Familias & Viajeros', currentLang)}</strong>
+            </div>
+          </div>
+
+          {/* Tarifa por Persona */}
+          <div className="bg-stone-50/80 p-3 sm:p-3.5 rounded-2xl border border-stone-200/60 flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center shrink-0">
+              <Compass size={18} className="text-emerald-700" />
+            </div>
+            <div className="min-w-0">
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Rate' : 'Tarifa'}</span>
+              <strong className="text-xs sm:text-sm text-emerald-700 font-serif font-bold truncate block">{data.price || 'S/ 85 PEN'}</strong>
             </div>
           </div>
         </div>
@@ -445,7 +456,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         <section className="py-12 sm:py-16 px-4 sm:px-8 max-w-5xl mx-auto text-center space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-100 text-red-800 text-[11px] font-serif font-black uppercase tracking-widest border border-red-200">
             <Compass size={13} className="text-red-700" />
-            <span>{currentLang === 'en' ? 'About The Journey' : currentLang === 'fr' ? 'À Propos du Circuit' : currentLang === 'pt' ? 'Sobre a Jornada' : currentLang === 'it' ? 'Sul Viaggio' : 'Crónica & Visión del Recorrido'}</span>
+            <span>{currentLang === 'en' ? 'Description & Cultural Differentiator' : currentLang === 'fr' ? 'Présentation & Différenciateur Culturel' : currentLang === 'pt' ? 'Descrição & Diferencial do Tour' : currentLang === 'it' ? 'Descrizione & Valore Differenziale' : 'Descripción & Valor Diferencial del Recorrido'}</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-serif font-black italic text-stone-900 leading-tight">
             {data.about?.title ? translateText(data.about.title, currentLang) : (currentLang === 'en' ? 'An ancestral route created with cultural rigor' : 'Una ruta ancestral diseñada con rigor cultural')}

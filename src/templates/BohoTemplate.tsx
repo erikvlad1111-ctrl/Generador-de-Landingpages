@@ -35,7 +35,9 @@ import {
   Calendar,
   Minus,
   Plus,
-  CreditCard
+  CreditCard,
+  Target,
+  DollarSign
 } from 'lucide-react';
 import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
@@ -837,57 +839,69 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
         </section>
       )}
 
-      {/* About Section - For BASIC, PRO, ADVANCE */}
-      {!isFree && (
-        <section id="sobre-tour" className="py-10 sm:py-16 px-4 sm:px-8 max-w-4xl mx-auto">
-          <div className="bg-white p-5 sm:p-10 rounded-3xl border border-stone-200/90 shadow-xs space-y-4 relative overflow-hidden">
-            {/* Washi tape decoration */}
-            <div className="w-16 sm:w-20 h-3 sm:h-3.5 bg-[#E8DEC8]/90 absolute -top-1 left-6 sm:left-8 rotate-1 shadow-2xs" />
-            
-            <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
-              <span className="text-[13px] sm:text-[15px] uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center gap-1.5">
-                <Bookmark size={14} /> {t.about.badge}
-              </span>
-              <span className="text-[13px] sm:text-sm font-mono text-stone-500 bg-stone-100 px-2.5 py-0.5 rounded-full">
-                {translateText(data.destination || 'Cusco', currentLang)}
-              </span>
+      {/* About Section & Ficha Técnica - DISPONIBLE EN TODOS LOS PLANES */}
+      <section id="sobre-tour" className="py-10 sm:py-16 px-4 sm:px-8 max-w-4xl mx-auto space-y-6">
+        <div className="bg-white p-5 sm:p-10 rounded-3xl border border-stone-200/90 shadow-xs space-y-5 relative overflow-hidden">
+          {/* Washi tape decoration */}
+          <div className="w-16 sm:w-20 h-3 sm:h-3.5 bg-[#E8DEC8]/90 absolute -top-1 left-6 sm:left-8 rotate-1 shadow-2xs" />
+          
+          <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+            <span className="text-[13px] sm:text-[15px] uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center gap-1.5">
+              <Bookmark size={14} /> {currentLang === 'en' ? 'Journal & Key Differentiator' : 'Bitácora & Valor Diferencial'}
+            </span>
+            <span className="text-[13px] sm:text-sm font-mono text-stone-500 bg-stone-100 px-2.5 py-0.5 rounded-full">
+              {translateText(data.destination || 'Cusco & Andes', currentLang)}
+            </span>
+          </div>
+
+          <h2 className="text-xl sm:text-3xl font-serif font-medium text-stone-900 leading-snug">
+            {data.about?.title ? translateText(data.about.title, currentLang) : (data.name ? translateText(data.name, currentLang) : t.about.defaultTitle)}
+          </h2>
+
+          <p className="text-[15px] sm:text-[17px] text-stone-600 leading-relaxed font-sans">
+            {translateText(data.about?.content || (data as any)?.description || data.hero?.subtitle || t.about.defaultContent, currentLang)}
+          </p>
+
+          {/* Grilla Ficha Técnica Boho */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-3 border-t border-stone-100">
+            <div className="p-3 rounded-2xl bg-[#FAF7F2] border border-stone-200/70 text-center space-y-0.5">
+              <Mountain size={15} className="text-[#C86D51] mx-auto" />
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Max Altitude' : 'Altitud'}</span>
+              <strong className="text-xs sm:text-sm font-serif font-bold text-stone-900 block truncate">{translateText(data.altitude || '4,200 msnm', currentLang)}</strong>
             </div>
 
-            <h2 className="text-xl sm:text-3xl font-serif font-medium text-stone-900 leading-snug">
-              {data.about?.title ? translateText(data.about.title, currentLang) : t.about.defaultTitle}
-            </h2>
+            <div className="p-3 rounded-2xl bg-[#FAF7F2] border border-stone-200/70 text-center space-y-0.5">
+              <Clock size={15} className="text-[#588157] mx-auto" />
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Duration' : 'Duración'}</span>
+              <strong className="text-xs sm:text-sm font-serif font-bold text-stone-900 block truncate">{translateText(data.duration || 'Full Day', currentLang)}</strong>
+            </div>
 
-            <p className="text-[15px] sm:text-[17px] text-stone-600 leading-relaxed font-sans">
-              {data.about?.content ? translateText(data.about.content, currentLang) : t.about.defaultContent}
-            </p>
+            <div className="p-3 rounded-2xl bg-[#FAF7F2] border border-stone-200/70 text-center space-y-0.5">
+              <Award size={15} className="text-amber-600 mx-auto" />
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Difficulty' : 'Dificultad'}</span>
+              <strong className="text-xs sm:text-sm font-serif font-bold text-stone-900 block truncate">{translateText(data.difficulty || 'Moderada', currentLang)}</strong>
+            </div>
 
-            {/* Highlights Chips: 3-column on desktop, stacked or compact on mobile */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-2 sm:pt-3 border-t border-stone-100">
-              <div className="flex items-center gap-2.5 text-stone-700 bg-[#FAF7F2] p-2.5 sm:p-3 rounded-2xl border border-stone-200/70">
-                <Camera size={17} className="text-[#C86D51] shrink-0" />
-                <div>
-                  <strong className="block text-stone-900 font-serif text-[13px] sm:text-[15px]">{t.about.goldenHour}</strong>
-                  <span className="text-[13px] text-stone-500">{t.about.goldenHourDesc}</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2.5 text-stone-700 bg-[#FAF7F2] p-2.5 sm:p-3 rounded-2xl border border-stone-200/70">
-                <Compass size={17} className="text-[#588157] shrink-0" />
-                <div>
-                  <strong className="block text-stone-900 font-serif text-[13px] sm:text-[15px]">{t.about.slowPace}</strong>
-                  <span className="text-[13px] text-stone-500">{t.about.slowPaceDesc}</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-2.5 text-stone-700 bg-[#FAF7F2] p-2.5 sm:p-3 rounded-2xl border border-stone-200/70">
-                <ShieldCheck size={17} className="text-amber-600 shrink-0" />
-                <div>
-                  <strong className="block text-stone-900 font-serif text-[13px] sm:text-[15px]">{t.about.safeAcclimatization}</strong>
-                  <span className="text-[13px] text-stone-500">{t.about.safeAcclimatizationDesc}</span>
-                </div>
-              </div>
+            <div className="p-3 rounded-2xl bg-[#FAF7F2] border border-stone-200/70 text-center space-y-0.5">
+              <Users size={15} className="text-[#C86D51] mx-auto" />
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Group Mode' : 'Modalidad'}</span>
+              <strong className="text-xs sm:text-sm font-serif font-bold text-stone-900 block truncate">{translateText(data.groupType || 'Grupo Reducido', currentLang)}</strong>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-[#FAF7F2] border border-stone-200/70 text-center space-y-0.5">
+              <Target size={15} className="text-[#588157] mx-auto" />
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Target' : 'Público'}</span>
+              <strong className="text-xs sm:text-sm font-serif font-bold text-stone-900 block truncate">{translateText(data.targetAudience || 'Fotógrafos & Parejas', currentLang)}</strong>
+            </div>
+
+            <div className="p-3 rounded-2xl bg-[#FAF7F2] border border-stone-200/70 text-center space-y-0.5">
+              <DollarSign size={15} className="text-emerald-700 mx-auto" />
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Rate' : 'Tarifa'}</span>
+              <strong className="text-xs sm:text-sm font-serif font-bold text-emerald-700 block truncate">{data.price || '$180 USD'}</strong>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* Section: Pinterest Pinboard Gallery - FOR BASIC, PRO, ADVANCE */}
       {!isFree && (

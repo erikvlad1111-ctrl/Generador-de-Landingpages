@@ -872,9 +872,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       </section>
       )}
 
-      {/* 8. FICHA TÉCNICA DE ALTA EXPEDICIÓN (BÁSICO, PRO, ADVANCE) */}
-      {!isFree && (
-        <section id="ficha-tecnica" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-amber-500/15`}>
+      {/* 8. FICHA TÉCNICA DE ALTA EXPEDICIÓN (DISPONIBLE EN TODOS LOS PLANES) */}
+      <section id="ficha-tecnica" className={`relative ${isMobile ? 'py-14 px-4' : 'py-24 px-8'} overflow-hidden border-y border-amber-500/15`}>
         {/* Background Image with Deep Vignette */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -1008,19 +1007,17 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           </div>
         </div>
       </section>
-      )}
 
-      {/* 9. ABOUT SECTION - ART GALLERY PASSEPARTOUT PRESENTATION */}
-      {!isFree && (
-        <section id="itinerario" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} max-w-6xl mx-auto relative z-10`}>
-          <div className={`grid ${isMobile ? 'grid-cols-1 gap-8' : 'md:grid-cols-2 gap-16'} items-center`}>
-            <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono">
-                <Gem size={12} className="text-amber-400" />
-                <span>
-                  {currentLang === 'en' ? 'Total Exclusivity & Privacy' : currentLang === 'pt' ? 'Exclusividade & Privacidade Total' : currentLang === 'fr' ? 'Exclusivité & Intimité Totale' : currentLang === 'it' ? 'Esclusività & Privacy Totale' : 'Exclusividad & Privacidad Total'}
-                </span>
-              </div>
+      {/* 9. ABOUT SECTION - ART GALLERY PASSEPARTOUT PRESENTATION (DISPONIBLE EN TODOS LOS PLANES) */}
+      <section id="itinerario" className={`${isMobile ? 'py-12 px-4' : 'py-20 px-8'} max-w-6xl mx-auto relative z-10`}>
+        <div className={`grid ${isMobile ? 'grid-cols-1 gap-8' : 'md:grid-cols-2 gap-16'} items-center`}>
+          <div className="space-y-4">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[10px] uppercase tracking-[0.2em] font-bold font-mono">
+              <Gem size={12} className="text-amber-400" />
+              <span>
+                {currentLang === 'en' ? 'Description & Key Differentiator' : currentLang === 'pt' ? 'Descrição & Diferencial do Tour' : currentLang === 'fr' ? 'Présentation & Différenciateur Clé' : currentLang === 'it' ? 'Descrizione & Valore Differenziale' : 'Descripción & Valor Diferencial VIP'}
+              </span>
+            </div>
               <h2 className={`${isMobile ? 'text-2xl sm:text-3xl' : 'text-3xl sm:text-4xl md:text-5xl'} font-serif font-bold text-neutral-100 leading-tight`}>
                 {data.about?.title ? translateText(data.about.title, currentLang) : t.hero.defaultTitle}
               </h2>
@@ -1074,7 +1071,6 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             </div>
           </div>
         </section>
-      )}
 
       {/* 10. SERVICIOS & AMENIDADES DE ALTA GAMA INCLUIDOS (BÁSICO, PRO, ADVANCE) */}
       {!isFree && (
