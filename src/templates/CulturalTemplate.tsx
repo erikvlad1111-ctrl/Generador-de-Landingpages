@@ -7,7 +7,7 @@ import {
   Star, HelpCircle, FileText, ShieldCheck, XCircle, Backpack, Search, Mail, 
   Phone, ArrowRight, ChevronLeft, ChevronRight, BookOpen, Clock, Sparkles, 
   Navigation, Eye, Share2, Award, Check, Ticket, GraduationCap, Quote, Sun, Coins, Globe, Lock, Building2,
-  Languages, CreditCard, Footprints, Layers, PhoneCall
+  Languages, CreditCard, Footprints, Layers, PhoneCall, Mountain, Target
 } from 'lucide-react';
 import { LandingData, LanguageType, CatalogTourItem } from '@/types/landing';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
@@ -206,7 +206,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-700 via-red-600 to-red-800 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full font-bold text-xs shadow-lg shadow-red-900/40 hover:shadow-red-900/60 transition-all duration-300 flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 <FileText size={14} />
-                <span>{t.cta.quote}</span>
+                <span>{data.hero?.cta ? translateText(data.hero.cta, currentLang) : t.cta.quote}</span>
               </button>
             ) : (
               <a
@@ -216,15 +216,22 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-700 via-red-600 to-red-800 text-white px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full font-bold text-xs shadow-lg shadow-red-900/40 hover:shadow-red-900/60 transition-all duration-300 flex items-center gap-1.5 cursor-pointer shrink-0"
               >
                 <MessageCircle size={14} />
-                <span className="hidden sm:inline">{t.cta.whatsapp}</span>
-                <span className="sm:hidden">{t.cta.reserve}</span>
+                <span className="hidden sm:inline">{data.hero?.cta ? translateText(data.hero.cta, currentLang) : t.cta.whatsapp}</span>
+                <span className="sm:hidden">{data.hero?.cta ? translateText(data.hero.cta, currentLang) : t.cta.reserve}</span>
               </a>
             )}
           </div>
         </nav>
 
         {/* Hero Central Titles & Circular Icons (Animated Entry) */}
-        <div className="relative z-10 max-w-4xl mx-auto px-4 pt-16 sm:pt-24 pb-28 sm:pb-36 text-center space-y-4 sm:space-y-6 animate-fade-in-up">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 pt-14 sm:pt-20 pb-28 sm:pb-36 text-center space-y-4 sm:space-y-6 animate-fade-in-up">
+          
+          {/* Badge Superior del Hero */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-red-400/50 text-red-200 text-[11px] sm:text-xs font-serif tracking-widest uppercase shadow-xl mx-auto">
+            <span className="w-1.5 h-1.5 rounded-full bg-red-400 animate-ping" />
+            <span>{data.hero?.badge ? translateText(data.hero.badge, currentLang) : (currentLang === 'en' ? 'Exclusive Cultural Journey • Peru' : 'Ruta Cultural Exclusiva • Cusco Imperial')}</span>
+          </div>
+
           <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-black tracking-tight drop-shadow-xl text-white italic">
             {data.hero?.title ? translateText(data.hero.title, currentLang) : (currentLang === 'en' ? 'Imperial Cusco' : currentLang === 'fr' ? 'Cusco Impérial' : currentLang === 'pt' ? 'Cusco Imperial' : currentLang === 'it' ? 'Cusco Imperiale' : 'Cusco Imperial')}
           </h1>
@@ -232,8 +239,8 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             {getLocalizedHeroSubtitle()}
           </p>
 
-          {/* Price Reference Badge & 3 Quick Action Icons Optimizado */}
-          <div className="pt-2 flex flex-col items-center justify-center gap-3.5">
+          {/* Price Reference Badge & Primary Hero CTA Button */}
+          <div className="pt-2 flex flex-col items-center justify-center gap-4">
             {data.price && (
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/25 text-white shadow-lg">
                 <span className="text-[11px] text-red-200 font-serif tracking-wider uppercase">
@@ -243,7 +250,32 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               </div>
             )}
 
-            <div className="flex items-center justify-center gap-4">
+            {/* Botón Principal Hero CTA */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md mx-auto">
+              {isQuote ? (
+                <button
+                  type="button"
+                  onClick={() => setIsQuoteOpen(true)}
+                  className="cultural-btn-primary animate-pulse-cta w-full sm:w-auto bg-gradient-to-r from-red-700 via-red-600 to-red-800 hover:from-red-600 hover:to-red-700 text-white font-serif font-black text-sm px-8 py-3.5 rounded-full shadow-2xl shadow-red-950/70 transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer hover:scale-105 active:scale-95 border border-red-400/40"
+                >
+                  <FileText size={16} />
+                  <span>{data.hero?.cta ? translateText(data.hero.cta, currentLang) : t.cta.quote}</span>
+                </button>
+              ) : (
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cultural-btn-primary animate-pulse-cta w-full sm:w-auto bg-gradient-to-r from-red-700 via-red-600 to-red-800 hover:from-red-600 hover:to-red-700 text-white font-serif font-black text-sm px-8 py-3.5 rounded-full shadow-2xl shadow-red-950/70 transition-all duration-300 flex items-center justify-center gap-2.5 cursor-pointer hover:scale-105 active:scale-95 border border-red-400/40"
+                >
+                  <MessageCircle size={16} />
+                  <span>{data.hero?.cta ? translateText(data.hero.cta, currentLang) : t.cta.whatsapp}</span>
+                </a>
+              )}
+            </div>
+
+            {/* Quick Action Icons */}
+            <div className="flex items-center justify-center gap-4 pt-1">
               <a
                 href="#territorio"
                 className="cultural-btn-primary w-11 h-11 rounded-full bg-black/45 hover:bg-red-900/90 backdrop-blur-md border border-white/30 text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-115 hover:-translate-y-1 active:scale-90 cursor-pointer"
@@ -347,6 +379,66 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
       </section>
       )}
+
+      {/* 2.2 FICHA TÉCNICA PATRIMONIAL (ESPECIFICACIONES EDITABLES) */}
+      <section className="py-6 px-4 sm:px-8 max-w-6xl mx-auto">
+        <div className="bg-white rounded-3xl p-4 sm:p-6 border border-stone-200/90 shadow-sm grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 text-left">
+          {/* Duración */}
+          <div className="bg-stone-50/80 p-3 sm:p-3.5 rounded-2xl border border-stone-200/60 flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-red-100 text-red-700 flex items-center justify-center shrink-0">
+              <Clock size={18} />
+            </div>
+            <div className="min-w-0">
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Duration' : currentLang === 'fr' ? 'Durée' : currentLang === 'pt' ? 'Duração' : currentLang === 'it' ? 'Durata' : 'Duración'}</span>
+              <strong className="text-xs sm:text-sm text-stone-900 font-serif font-bold truncate block">{translateText(data.duration || 'Full Day', currentLang)}</strong>
+            </div>
+          </div>
+
+          {/* Altitud Máxima */}
+          <div className="bg-stone-50/80 p-3 sm:p-3.5 rounded-2xl border border-stone-200/60 flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-red-100 text-red-700 flex items-center justify-center shrink-0">
+              <Mountain size={18} />
+            </div>
+            <div className="min-w-0">
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Max Altitude' : currentLang === 'fr' ? 'Altitude Max' : currentLang === 'pt' ? 'Altitude Máx' : currentLang === 'it' ? 'Altitudine Max' : 'Altitud Máx'}</span>
+              <strong className="text-xs sm:text-sm text-stone-900 font-serif font-bold truncate block">{translateText(data.altitude || '3,400 msnm', currentLang)}</strong>
+            </div>
+          </div>
+
+          {/* Dificultad */}
+          <div className="bg-stone-50/80 p-3 sm:p-3.5 rounded-2xl border border-stone-200/60 flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-red-100 text-red-700 flex items-center justify-center shrink-0">
+              <Compass size={18} />
+            </div>
+            <div className="min-w-0">
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Difficulty' : currentLang === 'fr' ? 'Difficulté' : currentLang === 'pt' ? 'Dificuldade' : currentLang === 'it' ? 'Difficoltà' : 'Dificultad'}</span>
+              <strong className="text-xs sm:text-sm text-stone-900 font-serif font-bold truncate block">{translateText(data.difficulty || 'Fácil / Cultural', currentLang)}</strong>
+            </div>
+          </div>
+
+          {/* Modalidad de Grupo */}
+          <div className="bg-stone-50/80 p-3 sm:p-3.5 rounded-2xl border border-stone-200/60 flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl bg-red-100 text-red-700 flex items-center justify-center shrink-0">
+              <Users size={18} />
+            </div>
+            <div className="min-w-0">
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Group Type' : currentLang === 'fr' ? 'Groupe' : currentLang === 'pt' ? 'Grupo' : currentLang === 'it' ? 'Gruppo' : 'Modalidad'}</span>
+              <strong className="text-xs sm:text-sm text-stone-900 font-serif font-bold truncate block">{translateText(data.groupType || 'Grupos Reducidos', currentLang)}</strong>
+            </div>
+          </div>
+
+          {/* Público Objetivo */}
+          <div className="bg-stone-50/80 p-3 sm:p-3.5 rounded-2xl border border-stone-200/60 flex items-center gap-2.5 col-span-2 sm:col-span-1">
+            <div className="w-9 h-9 rounded-xl bg-red-100 text-red-700 flex items-center justify-center shrink-0">
+              <Target size={18} />
+            </div>
+            <div className="min-w-0">
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Ideal For' : currentLang === 'fr' ? 'Idéal Pour' : currentLang === 'pt' ? 'Ideal Para' : currentLang === 'it' ? 'Ideale Per' : 'Público'}</span>
+              <strong className="text-xs sm:text-sm text-stone-900 font-serif font-bold truncate block">{translateText(data.targetAudience || 'Familias & Viajeros', currentLang)}</strong>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* 2.5 SECCIÓN DESCRIPCIÓN & CRÓNICA DEL RECORRIDO */}
       {(data.about?.title || data.about?.content) && (
@@ -842,6 +934,26 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 </div>
               ))}
             </div>
+
+            {/* Lista de No Incluido / Exclusiones */}
+            {data.notIncluded && data.notIncluded.length > 0 && (
+              <div className="mt-8 pt-8 border-t border-stone-200 text-left">
+                <div className="flex items-center gap-2 mb-4 text-stone-800">
+                  <XCircle size={18} className="text-red-700" />
+                  <h3 className="font-serif font-bold text-base sm:text-lg text-stone-900">
+                    {currentLang === 'en' ? 'What Is Not Included in the Fare' : currentLang === 'fr' ? 'Ce qui n’est pas inclus dans le tarif' : currentLang === 'pt' ? 'O que não está incluído na tarifa' : currentLang === 'it' ? 'Cosa non è incluso nella tariffa' : 'Qué NO está incluido en la tarifa'}
+                  </h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {data.notIncluded.map((item, idx) => (
+                    <div key={idx} className="bg-white p-3.5 rounded-xl border border-red-100 flex items-start gap-2.5 text-xs sm:text-sm text-stone-600 shadow-2xs">
+                      <span className="text-red-600 font-black shrink-0">✕</span>
+                      <span>{translateText(item, currentLang)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </section>
       )}
@@ -863,7 +975,14 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
-          {t.conseils.items.map((item, idx) => (
+          {(data.whatToBring && data.whatToBring.length > 0
+            ? data.whatToBring.map((wtbItem, idx) => ({
+                title: translateText(wtbItem, currentLang),
+                subtitle: currentLang === 'en' ? 'Essential Packing' : 'Imprescindible',
+                desc: currentLang === 'en' ? 'Recommended for your comfort during the heritage journey.' : 'Recomendado para tu comodidad durante el recorrido patrimonial.'
+              }))
+            : t.conseils.items
+          ).map((item, idx) => (
             <div
               key={idx}
               className="cultural-card-hover bg-white rounded-3xl p-6 border border-stone-200/80 hover:border-red-400 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group active:scale-95"
@@ -873,7 +992,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                   {idx === 0 && <Footprints size={22} className="text-red-700" />}
                   {idx === 1 && <Sun size={22} className="text-red-700" />}
                   {idx === 2 && <Coins size={22} className="text-red-700" />}
-                  {idx === 3 && <Layers size={22} className="text-red-700" />}
+                  {idx >= 3 && <Layers size={22} className="text-red-700" />}
                 </div>
                 <div>
                   <span className="text-[11px] font-bold text-red-700 uppercase tracking-wider block">
@@ -1103,20 +1222,31 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           </div>
 
           {/* Sello de confianza */}
-          <div className="bg-white rounded-2xl p-4 border border-stone-200 flex flex-wrap items-center justify-center gap-6 text-xs text-stone-600 font-medium">
-            <span className="flex items-center gap-1.5 font-bold text-stone-900">
-              <Award size={16} className="text-red-700 animate-soft-float" />
-              {t.livreDor.certBadge}
-            </span>
-            <span>•</span>
-            <span className="flex items-center gap-1.5">
-              <ShieldCheck size={16} className="text-emerald-600" />
-              {t.livreDor.authenticatedBadge}
-            </span>
-            <span>•</span>
-            <span className="text-stone-500">
-              {t.livreDor.officialRegistry}
-            </span>
+          <div className="bg-white rounded-2xl p-4 border border-stone-200 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-stone-600 font-medium">
+            {(data.trustBadges && data.trustBadges.length > 0) ? (
+              data.trustBadges.map((b, bIdx) => (
+                <span key={bIdx} className="flex items-center gap-1.5 font-bold text-stone-900">
+                  <ShieldCheck size={16} className="text-red-700" />
+                  <span>{translateText(b, currentLang)}</span>
+                </span>
+              ))
+            ) : (
+              <>
+                <span className="flex items-center gap-1.5 font-bold text-stone-900">
+                  <Award size={16} className="text-red-700 animate-soft-float" />
+                  {t.livreDor.certBadge}
+                </span>
+                <span>•</span>
+                <span className="flex items-center gap-1.5">
+                  <ShieldCheck size={16} className="text-emerald-600" />
+                  {t.livreDor.authenticatedBadge}
+                </span>
+                <span>•</span>
+                <span className="text-stone-500">
+                  {t.livreDor.officialRegistry}
+                </span>
+              </>
+            )}
           </div>
         </div>
       </section>
@@ -1184,19 +1314,29 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
 
           {/* Column 4: Contact & Mini Map Illustration */}
           <div className="md:col-span-3 flex items-center justify-between gap-4 border-t md:border-t-0 pt-4 md:pt-0">
-            <div className="space-y-1.5">
+            <div className="space-y-1.5 min-w-0">
               <a
                 href={`tel:${cleanPhone}`}
                 className="flex items-center gap-1.5 text-stone-900 hover:text-red-700 font-black text-xs cursor-pointer transition-colors"
               >
-                <Phone size={13} className="text-red-700" />
+                <Phone size={13} className="text-red-700 shrink-0" />
                 <span>{data.whatsapp || '+51 984 123 456'}</span>
               </a>
+              {data.companyEmail && (
+                <a
+                  href={`mailto:${data.companyEmail}`}
+                  className="flex items-center gap-1.5 text-stone-600 hover:text-red-700 font-medium text-[11px] truncate cursor-pointer transition-colors block"
+                  title={data.companyEmail}
+                >
+                  <Mail size={13} className="text-red-700 shrink-0 inline mr-1" />
+                  <span className="truncate">{data.companyEmail}</span>
+                </a>
+              )}
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="cultural-btn-primary bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white text-[11px] font-bold px-4 py-1.5 rounded-full shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer inline-block"
+                className="cultural-btn-primary bg-gradient-to-r from-red-800 via-red-700 to-red-800 text-white text-[11px] font-bold px-4 py-1.5 rounded-full shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer inline-block mt-1"
               >
                 {t.footer.contactBtn}
               </a>
@@ -1313,7 +1453,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-700 via-red-600 to-red-800 text-white font-black text-xs px-6 py-3 rounded-full shadow-xl flex items-center gap-1.5 cursor-pointer active:scale-95 transition-transform"
               >
                 <FileText size={14} />
-                <span>{t.mobileSticky.quote}</span>
+                <span>{data.hero?.cta ? translateText(data.hero.cta, currentLang) : t.mobileSticky.quote}</span>
               </button>
             ) : (
               <a
@@ -1323,7 +1463,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 className="cultural-btn-primary animate-pulse-cta bg-gradient-to-r from-red-700 via-red-600 to-red-800 text-white font-black text-xs px-6 py-3 rounded-full shadow-xl flex items-center gap-1.5 cursor-pointer active:scale-95 transition-transform"
               >
                 <MessageCircle size={14} />
-                <span>{t.mobileSticky.reserve}</span>
+                <span>{data.hero?.cta ? translateText(data.hero.cta, currentLang) : t.mobileSticky.reserve}</span>
               </a>
             )}
           </div>

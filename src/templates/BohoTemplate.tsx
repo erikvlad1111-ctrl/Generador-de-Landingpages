@@ -567,7 +567,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C86D51]/10 text-[#C86D51] text-[13px] sm:text-[15px] font-semibold uppercase tracking-wider">
               <Sparkles size={14} />
               <span>
-                {data.hero?.badge || (
+                {data.hero?.badge ? translateText(data.hero.badge, currentLang) : (
                   isFree ? 'Edición Travel Journal • Acceso Rápido' :
                   isBasic ? 'Edición Travel Journal • Ficha Esencial' :
                   isPro ? 'Edición Travel Journal • Guía & Itinerario' :
@@ -594,10 +594,28 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 <MapPin size={14} className="text-[#588157]" />
                 {translateText(data.destination || 'Cusco & Valle Sagrado', currentLang)}
               </span>
+              {data.altitude && (
+                <span className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl bg-white border border-stone-200 text-stone-700 text-[13px] sm:text-[15px] flex items-center gap-1.5 shadow-2xs">
+                  <Mountain size={14} className="text-teal-600" />
+                  {translateText(data.altitude, currentLang)}
+                </span>
+              )}
+              {data.difficulty && (
+                <span className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl bg-white border border-stone-200 text-stone-700 text-[13px] sm:text-[15px] flex items-center gap-1.5 shadow-2xs">
+                  <Award size={14} className="text-amber-600" />
+                  {translateText(data.difficulty, currentLang)}
+                </span>
+              )}
               <span className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl bg-white border border-stone-200 text-stone-700 text-[13px] sm:text-[15px] flex items-center gap-1.5 shadow-2xs">
                 <Users size={14} className="text-stone-500" />
                 {translateText(data.groupType || 'Grupos Reducidos', currentLang)}
               </span>
+              {data.targetAudience && (
+                <span className="px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl bg-stone-50 border border-stone-300 text-stone-700 text-[13px] sm:text-[15px] flex items-center gap-1.5 shadow-2xs">
+                  <Bookmark size={14} className="text-[#C86D51]" />
+                  {translateText(data.targetAudience, currentLang)}
+                </span>
+              )}
             </div>
 
             {/* BARRA INTERACTIVA COMPLETA DE RESERVA BOHO */}
@@ -713,7 +731,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                       className="bg-white sm:bg-stone-50 hover:bg-stone-100 text-stone-800 border border-stone-300 py-3.5 px-4 rounded-2xl font-semibold text-xs sm:text-sm transition-all shadow-2xs active:scale-98 flex items-center justify-center gap-2 cursor-pointer"
                     >
                       <FileText size={16} className="text-[#C86D51]" />
-                      <span>{t.cta.quote}</span>
+                      <span>{data.hero?.cta ? translateText(data.hero.cta, currentLang) : t.cta.quote}</span>
                     </button>
                   </>
                 ) : isQuote ? (

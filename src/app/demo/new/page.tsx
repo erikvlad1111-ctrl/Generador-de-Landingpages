@@ -3088,56 +3088,6 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* MÓDULO OPCIONAL: PERSONALIZACIÓN AVANZADA DE COPYS & BOTÓN CTA */}
-          <div className="bg-slate-50 rounded-3xl border border-slate-200/90 p-5 space-y-3">
-            <button
-              type="button"
-              onClick={() => setShowAdvancedCopy(!showAdvancedCopy)}
-              className="w-full flex items-center justify-between text-left text-xs font-bold text-slate-700 hover:text-slate-900 cursor-pointer"
-            >
-              <div className="flex items-center gap-2">
-                <SlidersHorizontal size={15} className="text-blue-600" />
-                <span>Afinamiento Opcional de Copys & Botón Principal (Avanzado)</span>
-              </div>
-              <ChevronDown size={16} className={`text-slate-400 transition-transform ${showAdvancedCopy ? 'rotate-180' : ''}`} />
-            </button>
-
-            {showAdvancedCopy && (
-              <div className="pt-3 border-t border-slate-200/80 space-y-3 animate-in fade-in">
-                <p className="text-[11px] text-slate-500">
-                  Si deseas sobreescribir los textos que la IA redactará para la insignia y el botón de acción principal, indícalos aquí:
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
-                      Insignia Superior de Portada (Hero Badge):
-                    </label>
-                    <input
-                      type="text"
-                      value={heroBadge}
-                      onChange={(e) => setHeroBadge(e.target.value)}
-                      placeholder="Ej. ⭐ Experiencia Más Vendida 2026"
-                      className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-700 mb-1">
-                      Texto del Botón Principal (Hero CTA):
-                    </label>
-                    <input
-                      type="text"
-                      value={heroCta}
-                      onChange={(e) => setHeroCta(e.target.value)}
-                      placeholder="Ej. Reservar Ahora por WhatsApp"
-                      className="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none"
-                    />
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
           </>
           )}
 
@@ -3321,10 +3271,10 @@ export default function NewLandingDemo() {
                     <div className="space-y-1">
                       <div className="inline-flex items-center gap-1.5 bg-white/10 border border-emerald-400/30 px-2 py-0.5 rounded-full text-[8px] font-black text-emerald-300 shadow-xs">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                        {translateText('Explore. Dream. Discover.', language)}
+                        {heroBadge ? translateText(heroBadge, language) : translateText('Explore. Dream. Discover.', language)}
                       </div>
                       <h3 className="text-base font-black text-white leading-tight tracking-tight">
-                        {translateText(name || 'Vive Tu Aventura: Expediciones & Trekking en Cusco', language)}
+                        {heroTitle ? translateText(heroTitle, language) : translateText(name || 'Vive Tu Aventura: Expediciones & Trekking en Cusco', language)}
                       </h3>
                       <p className="text-[9px] text-emerald-200/80 line-clamp-2 leading-relaxed">
                         {translateText(heroSubtitle || description || 'Explora lugares asombrosos y crea recuerdos inolvidables alrededor del Cusco.', language)}
@@ -3358,7 +3308,7 @@ export default function NewLandingDemo() {
                         {/* Bottom Price Tag on Hero (Translúcido Flotante con Levitación) */}
                         <div className="absolute bottom-2 inset-x-2 z-20 flex items-center justify-between p-1 rounded-xl bg-black/50 backdrop-blur-md border border-white/20 shadow-md animate-emerald-float-alt">
                           <span className="text-emerald-100 text-[8px] font-bold px-1.5 truncate">
-                            {translateText(name || 'Vive Tu Aventura', language)}
+                            {translateText(heroTitle || name || 'Vive Tu Aventura', language)}
                           </span>
                           <span className="emerald-shimmer-btn bg-emerald-400 text-slate-950 font-black text-[9px] px-2 py-0.5 rounded-lg shadow-sm">
                             {price || '$350 USD'}
@@ -3379,7 +3329,7 @@ export default function NewLandingDemo() {
                       </div>
                       <div className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 font-black px-2.5 py-1 rounded-xl shrink-0 flex items-center gap-1 shadow-xs">
                         <Search size={9} />
-                        <span>{language === 'en' ? 'Search' : language === 'pt' ? 'Explorar' : language === 'fr' ? 'Explorer' : language === 'it' ? 'Esplora' : 'Buscar'}</span>
+                        <span>{heroCta ? translateText(heroCta, language) : (language === 'en' ? 'Search' : language === 'pt' ? 'Explorar' : language === 'fr' ? 'Explorer' : language === 'it' ? 'Esplora' : 'Buscar')}</span>
                       </div>
                     </div>
 
@@ -3583,18 +3533,18 @@ export default function NewLandingDemo() {
                     {/* Hero Content */}
                     <div className="absolute bottom-3 inset-x-3 space-y-1.5">
                       <span className="inline-flex items-center gap-1 bg-[#FF5500]/90 text-white text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full shadow-xs">
-                        <Zap size={9} className="text-white fill-white" /> Portal Agencia VIP
+                        <Zap size={9} className="text-white fill-white" /> {heroBadge ? translateText(heroBadge, language) : 'Portal Agencia VIP'}
                       </span>
                       <h3 className="text-base font-black leading-tight text-white drop-shadow-md line-clamp-2">
-                        {name || 'Machu Picchu VIP con Tren Panorámico'}
+                        {heroTitle ? translateText(heroTitle, language) : (name || 'Machu Picchu VIP con Tren Panorámico')}
                       </h3>
                       <p className="text-[10px] text-stone-200 line-clamp-1">
-                        {heroSubtitle || `${destination || 'Cusco'} • ${duration || 'Full Day'} • Guía Historiador`}
+                        {heroSubtitle ? translateText(heroSubtitle, language) : `${destination || 'Cusco'} • ${duration || 'Full Day'} • Guía Historiador`}
                       </p>
 
                       <div className="pt-1">
                         <div className="w-full bg-gradient-to-r from-[#FF5500] to-[#FF3000] text-white font-black py-2 px-3 rounded-xl text-center text-[11px] shadow-md shadow-[#FF5500]/40 flex items-center justify-center gap-1.5">
-                          <span>{objective === 'quote' ? 'SOLICITAR COTIZACIÓN' : objective === 'both' ? 'WHATSAPP & COTIZACIÓN' : 'RESERVAR CON GUÍA'}</span>
+                          <span>{heroCta ? translateText(heroCta, language) : (objective === 'quote' ? 'SOLICITAR COTIZACIÓN' : objective === 'both' ? 'WHATSAPP & COTIZACIÓN' : 'RESERVAR CON GUÍA')}</span>
                           <ArrowRight size={13} className="animate-bounce-x" />
                         </div>
                       </div>
@@ -3709,10 +3659,10 @@ export default function NewLandingDemo() {
                         </div>
                       </div>
                       <p className="text-[11px] font-serif font-black text-stone-900 leading-snug line-clamp-1">
-                        {name || 'Laguna Humantay — Bitácora Fotográfica'}
+                        {heroTitle ? translateText(heroTitle, language) : (name || 'Laguna Humantay — Bitácora Fotográfica')}
                       </p>
                       <p className="text-[9px] text-stone-500 italic mt-0.5 line-clamp-1">
-                        &quot;Anotaciones de campo: Luz dorada sobre los nevados.&quot;
+                        {heroSubtitle ? translateText(heroSubtitle, language) : '"Anotaciones de campo: Luz dorada sobre los nevados."'}
                       </p>
                     </div>
 
@@ -3735,7 +3685,7 @@ export default function NewLandingDemo() {
 
                       <div className="w-full bg-[#C86D51] hover:bg-[#b05d43] text-white font-bold py-2.5 px-3 rounded-xl text-center text-xs shadow-md flex items-center justify-center gap-1.5">
                         <Camera size={14} />
-                        <span>{objective === 'quote' ? 'Consultar Cupo' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Reservar por WhatsApp'}</span>
+                        <span>{heroCta ? translateText(heroCta, language) : (objective === 'quote' ? 'Consultar Cupo' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Reservar por WhatsApp')}</span>
                       </div>
 
                       <p className="text-center text-[9px] text-stone-400">
@@ -3849,7 +3799,7 @@ export default function NewLandingDemo() {
                       
                       <div className="absolute top-2 left-2 flex items-center gap-1 bg-amber-500/90 text-stone-950 px-2 py-0.5 rounded-full text-[8px] font-black tracking-wider uppercase shadow-md">
                         <Crown size={9} />
-                        <span>Colección Privada 5★</span>
+                        <span>{heroBadge || 'Colección Privada 5★'}</span>
                       </div>
 
                       <div className="absolute bottom-2.5 left-2.5 right-2.5 space-y-1">
@@ -3857,7 +3807,7 @@ export default function NewLandingDemo() {
                           Servicio Privado Exclusivo
                         </span>
                         <h3 className="text-sm font-black text-white leading-tight line-clamp-2">
-                          {name || 'Cusco Luxury Collection VIP'}
+                          {heroTitle ? translateText(heroTitle, language) : (name || 'Cusco Luxury Collection VIP')}
                         </h3>
                         <div className="flex items-center justify-between pt-1">
                           <span className="text-xs font-black text-amber-400">
@@ -3874,7 +3824,7 @@ export default function NewLandingDemo() {
                     <div className="grid grid-cols-2 gap-2">
                       <div className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-black py-2 px-2 rounded-xl text-center text-[10px] shadow-md flex items-center justify-center gap-1 cursor-pointer">
                         <Crown size={12} className="shrink-0" />
-                        <span className="truncate">{objective === 'quote' ? 'Solicitar VIP' : 'Propuesta VIP'}</span>
+                        <span className="truncate">{heroCta ? translateText(heroCta, language) : (objective === 'quote' ? 'Solicitar VIP' : 'Propuesta VIP')}</span>
                       </div>
                       <div className="bg-stone-900/90 border border-emerald-500/40 text-emerald-300 font-bold py-2 px-2 rounded-xl text-center text-[10px] flex items-center justify-center gap-1">
                         <MessageCircle size={12} className="text-emerald-400 shrink-0" />
@@ -4061,11 +4011,14 @@ export default function NewLandingDemo() {
 
                     {/* Headline Banner */}
                     <div className="relative z-10 space-y-1 mt-6 mb-2">
+                      <div className="inline-flex items-center gap-1 bg-white/20 text-white text-[8px] font-bold px-2 py-0.5 rounded-full backdrop-blur-xs mb-1">
+                        <span>{heroBadge || 'Trekking & Montaña'}</span>
+                      </div>
                       <h3 className="text-sm font-black text-white leading-tight drop-shadow-md">
-                        Travel the Best, It&apos;s a Big World, Go Explore!
+                        {heroTitle ? translateText(heroTitle, language) : 'Travel the Best, It\'s a Big World, Go Explore!'}
                       </h3>
                       <p className="text-[10px] text-slate-200 line-clamp-1">
-                        {name || 'Tour Salkantay Trek Clásico'} • {duration || '5 Días'}
+                        {heroSubtitle ? translateText(heroSubtitle, language) : `${name || 'Tour Salkantay Trek Clásico'} • ${duration || '5 Días'}`}
                       </p>
                     </div>
 
@@ -4106,7 +4059,7 @@ export default function NewLandingDemo() {
                       </div>
                       <div className="w-full bg-slate-900 hover:bg-slate-800 text-white font-black py-2.5 px-3 rounded-full text-center text-xs shadow-md flex items-center justify-center gap-1.5">
                         <ArrowRight size={13} />
-                        <span>{objective === 'quote' ? 'Get Started / Cotizar' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Get Started / Reservar'}</span>
+                        <span>{heroCta ? translateText(heroCta, language) : (objective === 'quote' ? 'Get Started / Cotizar' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Get Started / Reservar')}</span>
                       </div>
                     </div>
                   </div>
@@ -4203,24 +4156,21 @@ export default function NewLandingDemo() {
                       </div>
 
                       {/* Central Grand Serif Title */}
-                      <div className="absolute inset-x-4 top-10 text-center space-y-0.5">
-                        <h3 className="text-xl font-serif font-black italic drop-shadow-md text-white">
-                          {name || 'Qosqo Imperial'}
+                      <div className="absolute inset-x-4 top-8 text-center space-y-0.5">
+                        <span className="inline-block text-[8px] font-serif font-black text-red-200 uppercase tracking-widest bg-black/40 px-2 py-0.5 rounded-full mb-0.5">
+                          {heroBadge ? translateText(heroBadge, language) : 'Ruta Cultural Ancestral'}
+                        </span>
+                        <h3 className="text-lg font-serif font-black italic drop-shadow-md text-white line-clamp-1">
+                          {heroTitle ? translateText(heroTitle, language) : (name || 'Qosqo Imperial')}
                         </h3>
-                        <p className="text-[9px] text-red-100 font-serif italic drop-shadow">
-                          Entre montañas sagradas y tradición milenaria
+                        <p className="text-[8px] text-red-100 font-serif italic drop-shadow line-clamp-1">
+                          {heroSubtitle ? translateText(heroSubtitle, language) : 'Entre montañas sagradas y tradición milenaria'}
                         </p>
 
-                        {/* 3 Circular Mini Action Buttons */}
-                        <div className="pt-1.5 flex items-center justify-center gap-2">
-                          <span className="w-6 h-6 rounded-full bg-black/40 border border-white/30 text-white flex items-center justify-center text-[9px]">
-                            <Search size={11} />
-                          </span>
-                          <span className="w-6 h-6 rounded-full bg-red-700 text-white flex items-center justify-center text-[9px] shadow-sm">
-                            <Mail size={11} />
-                          </span>
-                          <span className="w-6 h-6 rounded-full bg-black/40 border border-white/30 text-white flex items-center justify-center text-[9px]">
-                            <Phone size={11} />
+                        {/* Botón CTA o iconos */}
+                        <div className="pt-1 flex items-center justify-center gap-1.5">
+                          <span className="bg-red-700 text-white font-serif font-bold text-[9px] px-2.5 py-0.5 rounded-full shadow-sm">
+                            {heroCta ? translateText(heroCta, language) : 'Reserva Cultural'}
                           </span>
                         </div>
                       </div>

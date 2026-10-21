@@ -854,20 +854,6 @@ export function getStoredLandings(): LandingData[] {
         if (!existingIds.has(init.id)) {
           parsed.push(init);
           updated = true;
-        } else {
-          const idx = parsed.findIndex(p => p.id === init.id);
-          if (idx >= 0) {
-            if (init.id === '6' && (parsed[idx].template !== 'premium' || !parsed[idx].slug.includes('luxury'))) {
-              parsed[idx] = init;
-              updated = true;
-            } else if (init.id === '2' && (parsed[idx].slug !== 'salkantay-trek-5-dias' || parsed[idx].tier !== 'advance' || /FRFR|FEFR|GGGT/i.test(parsed[idx].name || '') || /FRFR|FEFR|GGGT/i.test(parsed[idx].hero?.title || ''))) {
-              parsed[idx] = init;
-              updated = true;
-            } else if (init.features?.items && (!parsed[idx].features?.items || parsed[idx].features.items.length < init.features.items.length)) {
-              parsed[idx].features = init.features;
-              updated = true;
-            }
-          }
         }
       }
       if (updated) {
@@ -1046,30 +1032,30 @@ export function simulateAiGeneration(params: {
   let heroTitle = params.heroTitle?.trim() || params.name;
   let heroSubtitle = params.heroSubtitle?.trim() || params.description || 'Vive una aventura inolvidable con guías expertos locales y atención de primer nivel.';
   let heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : (params.template === 'agency-portal' ? 'Portal Oficial • Operador Autorizado' : params.template === 'emerald-explorer' ? 'Emerald Explorer • Alta Montaña' : params.template === 'premium' ? 'Experiencia Exclusiva VIP' : params.template === 'cultural' ? 'Historia y Cultura Andina' : 'Aventura y Naturaleza'));
-  let ctaText = isBoth 
+  let ctaText = params.heroCta?.trim() || (isBoth 
     ? 'WhatsApp & Cotizar Online' 
-    : (isWhatsapp ? 'Reservar Directo por WhatsApp' : 'Solicitar Cotización y Disponibilidad');
+    : (isWhatsapp ? 'Reservar Directo por WhatsApp' : 'Solicitar Cotización y Disponibilidad'));
 
   if (isEn) {
     heroTitle = params.heroTitle?.trim() || params.name;
     heroSubtitle = params.heroSubtitle?.trim() || params.description || 'Live an unforgettable Andean adventure with top certified local guides and premium service.';
     heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : 'Official Agency Portal');
-    ctaText = isBoth ? 'WhatsApp & Online Quote' : (isWhatsapp ? 'Book via WhatsApp' : 'Request Instant Quote');
+    ctaText = params.heroCta?.trim() || (isBoth ? 'WhatsApp & Online Quote' : (isWhatsapp ? 'Book via WhatsApp' : 'Request Instant Quote'));
   } else if (isPt) {
     heroTitle = params.heroTitle?.trim() || params.name;
     heroSubtitle = params.heroSubtitle?.trim() || params.description || 'Viva uma aventura andina inesquecível com guias locais certificados e atendimento de primeiro nível.';
     heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : 'Portal Oficial da Agência');
-    ctaText = isBoth ? 'WhatsApp & Orçamento Online' : (isWhatsapp ? 'Reservar pelo WhatsApp' : 'Solicitar Orçamento Grátis');
+    ctaText = params.heroCta?.trim() || (isBoth ? 'WhatsApp & Orçamento Online' : (isWhatsapp ? 'Reservar pelo WhatsApp' : 'Solicitar Orçamento Grátis'));
   } else if (isFr) {
     heroTitle = params.heroTitle?.trim() || params.name;
     heroSubtitle = params.heroSubtitle?.trim() || params.description || 'Vivez une aventure inoubliable avec des guides locaux experts et une assistance sur mesure.';
     heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : "Portail Officiel de l'Agence");
-    ctaText = isBoth ? 'WhatsApp & Devis en Ligne' : (isWhatsapp ? 'Réserver via WhatsApp' : 'Demander un Devis Gratuit');
+    ctaText = params.heroCta?.trim() || (isBoth ? 'WhatsApp & Devis en Ligne' : (isWhatsapp ? 'Réserver via WhatsApp' : 'Demander un Devis Gratuit'));
   } else if (isIt) {
     heroTitle = params.heroTitle?.trim() || params.name;
     heroSubtitle = params.heroSubtitle?.trim() || params.description || "Vivi un'avventura indimenticabile sulle Ande con guide locali certificate e massima assistenza.";
     heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : "Portale Ufficiale dell'Agenzia");
-    ctaText = isBoth ? 'WhatsApp & Preventivo Online' : (isWhatsapp ? 'Prenota su WhatsApp' : 'Richiedi Preventivo Gratuito');
+    ctaText = params.heroCta?.trim() || (isBoth ? 'WhatsApp & Preventivo Online' : (isWhatsapp ? 'Prenota su WhatsApp' : 'Richiedi Preventivo Gratuito'));
   }
 
   const aboutTitle = isEn

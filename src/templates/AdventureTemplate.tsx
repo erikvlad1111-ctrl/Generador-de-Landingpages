@@ -749,7 +749,27 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
               {/* Buttons Row */}
               <div className="pt-2 flex flex-wrap items-center gap-3.5">
-                {isQuote ? (
+                {data.objective === 'both' ? (
+                  <>
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-emerald-600 hover:bg-emerald-500 text-white font-black px-6 py-3.5 rounded-full text-sm shadow-xl shadow-emerald-600/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
+                    >
+                      <MessageCircle size={17} />
+                      <span>{t.hero.ctaWhatsapp || 'WhatsApp'}</span>
+                    </a>
+                    <button
+                      type="button"
+                      onClick={() => setIsQuoteOpen(true)}
+                      className="bg-white hover:bg-slate-100 text-slate-950 font-black px-7 py-3.5 rounded-full text-sm shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 cursor-pointer"
+                    >
+                      <span>{data.hero?.cta ? translateText(data.hero.cta, currentLang) : t.hero.ctaQuote}</span>
+                      <ArrowRight size={16} />
+                    </button>
+                  </>
+                ) : isQuote ? (
                   <button
                     type="button"
                     onClick={() => setIsQuoteOpen(true)}
@@ -823,6 +843,21 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                     </div>
                     <span className="text-[11px] font-mono text-blue-300 font-bold">{translateText(data.duration || '5D / 4N', currentLang)}</span>
                   </div>
+
+                  {(data.groupType || data.targetAudience) && (
+                    <div className="flex items-center justify-between text-xs text-slate-300 pt-2 border-t border-white/10 gap-2">
+                      {data.groupType && (
+                        <span className="truncate text-[11px] text-amber-300 font-semibold">
+                          • {translateText(data.groupType, currentLang)}
+                        </span>
+                      )}
+                      {data.targetAudience && (
+                        <span className="truncate text-[11px] text-teal-300 font-medium">
+                          {translateText(data.targetAudience, currentLang)}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Floating Review Badge */}
@@ -1436,6 +1471,22 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                     </li>
                   ))}
                 </ul>
+              </div>
+            )}
+
+            {/* Sellos de Confianza y Garantías */}
+            {data.trustBadges && data.trustBadges.length > 0 && (
+              <div className="md:col-span-2 bg-slate-900 text-white p-5 rounded-2xl border border-slate-800 flex flex-wrap items-center justify-center gap-3 sm:gap-6 shadow-sm">
+                <span className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                  <ShieldCheck size={16} />
+                  <span>{currentLang === 'en' ? 'Verified Guarantees' : 'Garantías Oficiales'}:</span>
+                </span>
+                {data.trustBadges.map((badge, bIdx) => (
+                  <span key={bIdx} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-slate-200 text-xs font-semibold border border-white/10">
+                    <CheckCircle size={13} className="text-emerald-400" />
+                    <span>{translateText(badge, currentLang)}</span>
+                  </span>
+                ))}
               </div>
             )}
           </div>

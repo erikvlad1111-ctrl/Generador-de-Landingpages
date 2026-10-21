@@ -76,17 +76,13 @@ function DemoPreviewContent() {
     const list = getStoredLandings();
     let selected: LandingData | null = null;
     if (slugQuery) {
-      const found = list.find(item => item.slug.toLowerCase() === slugQuery.toLowerCase());
-      if (found) selected = found;
+      selected = list.find(item => item.slug.toLowerCase() === slugQuery.toLowerCase()) || null;
+      if (!selected) {
+        selected = INITIAL_LANDINGS.find(item => item.slug.toLowerCase() === slugQuery.toLowerCase()) || null;
+      }
     }
     if (!selected && templateQuery) {
-      // Priorizar primero las ediciones guardadas por el usuario en localStorage
-      const foundByTpl = list.find(item => item.template === templateQuery);
-      if (foundByTpl) {
-        selected = foundByTpl;
-      } else {
-        selected = INITIAL_LANDINGS.find(item => item.template === templateQuery) || null;
-      }
+      selected = list.find(item => item.template === templateQuery) || INITIAL_LANDINGS.find(item => item.template === templateQuery) || null;
     }
     if (!selected) {
       selected = list[0] || INITIAL_LANDINGS[0] || null;
@@ -94,10 +90,11 @@ function DemoPreviewContent() {
     if (selected) {
       const activeTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery)) ? tierQuery : selected.tier;
       const isFreeOrBasic = activeTier === 'free' || activeTier === 'basic';
+      const effectiveTemplate = (!slugQuery && templateQuery) ? templateQuery : (selected.template || templateQuery || 'adventure');
       return {
         ...selected,
-        ...(templateQuery ? { template: templateQuery } : {}),
-        ...(tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery) ? { tier: tierQuery } : {}),
+        template: effectiveTemplate,
+        tier: activeTier,
         ...(isFreeOrBasic ? { language: 'es' as LanguageType, languages: ['es' as LanguageType] } : {})
       };
     }
@@ -109,6 +106,9 @@ function DemoPreviewContent() {
     let selected: LandingData | null = null;
     if (slugQuery) {
       selected = list.find(item => item.slug.toLowerCase() === slugQuery.toLowerCase()) || null;
+      if (!selected) {
+        selected = INITIAL_LANDINGS.find(item => item.slug.toLowerCase() === slugQuery.toLowerCase()) || null;
+      }
     }
     if (!selected && templateQuery) {
       selected = list.find(item => item.template === templateQuery) || INITIAL_LANDINGS.find(item => item.template === templateQuery) || null;
@@ -119,10 +119,11 @@ function DemoPreviewContent() {
     if (selected) {
       const activeTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery)) ? tierQuery : selected.tier;
       const isFreeOrBasic = activeTier === 'free' || activeTier === 'basic';
+      const effectiveTemplate = (!slugQuery && templateQuery) ? templateQuery : (selected.template || templateQuery || 'adventure');
       setLanding({
         ...selected,
-        ...(templateQuery ? { template: templateQuery } : {}),
-        ...(tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery) ? { tier: tierQuery } : {}),
+        template: effectiveTemplate,
+        tier: activeTier,
         ...(isFreeOrBasic ? { language: 'es' as LanguageType, languages: ['es' as LanguageType] } : {})
       });
     }
@@ -594,8 +595,16 @@ function DemoPreviewContent() {
     setLanding(updated);
     saveLandingToStorage(updated);
     if (typeof window !== 'undefined') {
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.set('slug', updated.slug);
+        url.searchParams.set('template', updated.template);
+        if (updated.tier) url.searchParams.set('tier', updated.tier);
+        window.history.replaceState({}, '', url.toString());
+      } catch {}
       window.dispatchEvent(new Event('storage'));
     }
+    populateEditorWithLanding(updated);
     setRefreshKey(k => k + 1);
     setLiveSavedToast(true);
     setTimeout(() => setLiveSavedToast(false), 2400);
@@ -608,8 +617,16 @@ function DemoPreviewContent() {
     setLanding(updated);
     saveLandingToStorage(updated);
     if (typeof window !== 'undefined') {
+      try {
+        const url = new URL(window.location.href);
+        url.searchParams.set('slug', updated.slug);
+        url.searchParams.set('template', updated.template);
+        if (updated.tier) url.searchParams.set('tier', updated.tier);
+        window.history.replaceState({}, '', url.toString());
+      } catch {}
       window.dispatchEvent(new Event('storage'));
     }
+    populateEditorWithLanding(updated);
     setIsEditorOpen(false);
     setRefreshKey(k => k + 1);
   };
@@ -1063,36 +1080,16 @@ function DemoPreviewContent() {
                     />
                   </div>
 
-                  {/* Acceso rápido a Descripción desde General */}
-                  <div className="bg-slate-50 border border-slate-200/90 rounded-2xl p-3.5 flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-2.5">
-                      <FileText size={16} className="text-blue-600 shrink-0" />
-                      <div>
-                        <p className="text-xs font-bold text-slate-800">Descripción & Narrativa del Tour</p>
-                        <p className="text-[11px] text-slate-500 truncate max-w-sm sm:max-w-md">
-                          {editAboutContent ? editAboutContent.slice(0, 70) + '...' : 'Configura la descripción y propuesta de valor de la ruta'}
-                        </p>
-                      </div>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setActiveEditorTab('description')}
-                      className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shrink-0 cursor-pointer transition-colors shadow-2xs"
-                    >
-                      Editar Descripción →
-                    </button>
-                  </div>
-
-                  {/* IDENTIDAD CORPORATIVA Y LOGO (MARCA BLANCA) */}
-                  <div className="bg-gradient-to-br from-indigo-50/70 via-white to-slate-50 border border-indigo-200/80 rounded-2xl p-4 sm:p-5 space-y-4 shadow-xs">
+                  {/* EMPRESA, AGENCIA & LOGO (MARCA BLANCA) */}
+                  <div className="bg-gradient-to-br from-indigo-50/70 via-white to-slate-50 border border-indigo-200/90 rounded-2xl p-4 sm:p-5 space-y-4 shadow-xs ring-1 ring-indigo-500/10">
                     <div className="flex items-center justify-between gap-2 border-b border-indigo-100 pb-3">
                       <div className="flex items-center gap-2">
                         <span className="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-black text-xs shadow-xs">
                           <Building2 size={14} className="text-white" />
                         </span>
                         <div>
-                          <h4 className="text-xs sm:text-sm font-black text-slate-900 tracking-tight">Identidad de la Empresa / Agencia (Marca Blanca)</h4>
-                          <p className="text-[11px] text-slate-500 font-medium">Personaliza el logo, nombre y credenciales de la empresa para esta landing.</p>
+                          <h4 className="text-xs sm:text-sm font-black text-slate-900 tracking-tight">Empresa, Agencia & Logo (Marca Blanca)</h4>
+                          <p className="text-[11px] text-slate-500 font-medium">Personaliza para qué empresa o agencia turística se generará esta landing. Puedes cambiar de empresa en cualquier momento:</p>
                         </div>
                       </div>
                       <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-indigo-100 text-indigo-700 border border-indigo-200">
@@ -1102,28 +1099,28 @@ function DemoPreviewContent() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          Nombre Comercial de la Empresa / Agencia
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1.5">
+                          <Building2 size={13} className="text-slate-500" /> Nombre Comercial de la Empresa / Agencia *
                         </label>
                         <input
                           type="text"
                           value={editCompanyName}
                           onChange={(e) => setEditCompanyName(e.target.value)}
-                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none"
-                          placeholder="Ej. Andean Horizon Tours & Expeditions"
+                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold text-slate-900 bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                          placeholder="Ej. Cusco Grand Expeditions"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          RUC / Licencia DIRCETUR
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1.5">
+                          <ShieldCheck size={13} className="text-slate-500" /> RUC / Licencia DIRCETUR
                         </label>
                         <input
                           type="text"
                           value={editCompanyRuc}
                           onChange={(e) => setEditCompanyRuc(e.target.value)}
-                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none"
-                          placeholder="Ej. RUC 20608945231 • Lic. MINCETUR 2026"
+                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-900 bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                          placeholder="Ej. RUC 20608945231 • DIRCETUR Lic. 450"
                         />
                       </div>
                     </div>
@@ -1205,14 +1202,14 @@ function DemoPreviewContent() {
                           onClick={() => setEditLogoUrl('https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=120&auto=format&fit=crop&q=80')}
                           className="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[11px] font-bold border border-indigo-200 cursor-pointer transition-colors"
                         >
-                          Logo Agencia Escudo
+                          Logo Escudo Agencia
                         </button>
                         <button
                           type="button"
                           onClick={() => setEditLogoUrl('https://images.unsplash.com/photo-1516876437184-593fda40c7ce?w=120&auto=format&fit=crop&q=80')}
                           className="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[11px] font-bold border border-indigo-200 cursor-pointer transition-colors"
                         >
-                          Logo Montaña Moderno
+                          Logo Montaña Trek
                         </button>
                         {editLogoUrl && (
                           <button
@@ -1228,28 +1225,28 @@ function DemoPreviewContent() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          Slogan / Tagline de la Marca
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1.5">
+                          <span>✨</span> Slogan / Tagline Corporativo
                         </label>
                         <input
                           type="text"
                           value={editCompanyTagline}
                           onChange={(e) => setEditCompanyTagline(e.target.value)}
-                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none"
+                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-900 bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
                           placeholder="Ej. Operador Oficial Autorizado DIRCETUR Cusco"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          Email Corporativo de Reservas
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center gap-1.5">
+                          <span>✉️</span> Email Corporativo de Reservas
                         </label>
                         <input
                           type="email"
                           value={editCompanyEmail}
                           onChange={(e) => setEditCompanyEmail(e.target.value)}
-                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-indigo-500 outline-none"
-                          placeholder="Ej. reservas@andeanhorizon.com"
+                          className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-900 bg-white focus:ring-2 focus:ring-indigo-500 outline-none"
+                          placeholder="Ej. reservas@cuscograndexpeditions.com"
                         />
                       </div>
                     </div>
@@ -1330,149 +1327,139 @@ function DemoPreviewContent() {
               {/* PESTAÑA 2: HERO & PORTADA */}
               {activeEditorTab === 'hero' && (
                 <div className="space-y-4 animate-in fade-in">
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                      Insignia Superior (Badge)
-                    </label>
-                    <input
-                      type="text"
-                      value={editHeroBadge}
-                      onChange={(e) => setEditHeroBadge(e.target.value)}
-                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
-                      placeholder="Ej. Experiencia Exclusiva VIP • Temporada 2026"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                      Título Principal H1
-                    </label>
-                    <input
-                      type="text"
-                      value={editHeroTitle}
-                      onChange={(e) => setEditHeroTitle(e.target.value)}
-                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
-                      placeholder="Ej. Machu Picchu de Lujo con Tren Panorámico"
-                    />
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-1.5">
-                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                        Subtítulo / Descripción Corta de Portada
-                      </label>
-                      <button
-                        type="button"
-                        onClick={() => setActiveEditorTab('description')}
-                        className="text-[11px] font-bold text-blue-600 hover:text-blue-800 underline cursor-pointer"
-                      >
-                        Ir a Descripción Narrativa Completa →
-                      </button>
-                    </div>
-                    <textarea
-                      rows={3}
-                      value={editHeroSubtitle}
-                      onChange={(e) => setEditHeroSubtitle(e.target.value)}
-                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed text-slate-900"
-                      placeholder="Ej. Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo..."
-                    />
-                  </div>
-
-                  {/* EDICIÓN RÁPIDA DE DESCRIPCIÓN NARRATIVA COMPLETA ("ACERCA DEL TOUR") */}
-                  <div className="bg-gradient-to-br from-blue-50/70 via-indigo-50/40 to-white border border-blue-200/90 rounded-2xl p-4 sm:p-5 space-y-3.5 shadow-xs">
-                    <div className="flex items-center justify-between gap-2 border-b border-blue-100 pb-2.5">
+                  
+                  {/* Header de la sección Hero */}
+                  <div className="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-5 shadow-xs space-y-4">
+                    <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                       <div className="flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-lg bg-blue-600 text-white flex items-center justify-center font-black text-xs">
-                          <FileText size={13} />
+                        <span className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center font-black text-xs shadow-xs">
+                          2
                         </span>
                         <div>
-                          <h4 className="text-xs sm:text-sm font-black text-slate-900">Descripción Narrativa Completa (&quot;Acerca del Tour&quot;)</h4>
-                          <p className="text-[11px] text-slate-500 font-medium">Se muestra destacada en las 6 plantillas turísticas</p>
+                          <h4 className="text-xs sm:text-sm font-black text-slate-900 tracking-tight">Portada Principal (Hero Section) & Título H1</h4>
+                          <p className="text-[11px] text-slate-500 font-medium">Impacto visual y titular</p>
                         </div>
                       </div>
-                      <span className="text-[10px] font-mono text-slate-400 bg-white px-2 py-0.5 rounded-md border border-slate-200">
-                        {editAboutContent.length} car.
+                      <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-100">
+                        Titular & Textos
                       </span>
                     </div>
 
-                    <div>
-                      <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">
-                        Título de Sección &quot;Acerca del Tour&quot;
-                      </label>
+                    <div className="bg-blue-50/60 border border-blue-200/80 rounded-2xl p-4 space-y-3.5">
+                      <div className="flex items-center gap-2">
+                        <Sparkles size={16} className="text-blue-600 shrink-0" />
+                        <h4 className="text-xs font-black text-slate-900 uppercase tracking-wider">Titular y Textos de la Sección Hero</h4>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 mb-1">
+                          Título Principal del Hero (H1):
+                        </label>
+                        <input
+                          type="text"
+                          value={editHeroTitle}
+                          onChange={(e) => setEditHeroTitle(e.target.value)}
+                          className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-extrabold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                          placeholder="Ej. Machu Picchu de Lujo con Tren Panorámico"
+                        />
+                        <span className="text-[10px] text-slate-500 mt-1 block">
+                          Si lo dejas en blanco, la IA redactará un título optimizado según el tour seleccionado.
+                        </span>
+                      </div>
+
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="block text-xs font-bold text-slate-700">
+                            Subtítulo / Bajada de Portada (Texto descriptivo del Hero justo bajo el H1):
+                          </label>
+                          <span className="text-[10px] text-slate-400 font-mono">
+                            {editHeroSubtitle.length} car.
+                          </span>
+                        </div>
+                        <textarea
+                          rows={3}
+                          value={editHeroSubtitle}
+                          onChange={(e) => setEditHeroSubtitle(e.target.value)}
+                          className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed font-medium"
+                          placeholder="Ej. Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia."
+                        />
+                        <span className="text-[10px] text-slate-500 mt-0.5 block">
+                          Este texto aparece de forma destacada en la portada principal (Hero) debajo del título del tour en los 6 diseños.
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                        <div>
+                          <label className="block text-xs font-bold text-slate-700 mb-1">
+                            Insignia Superior (Hero Badge):
+                          </label>
+                          <input
+                            type="text"
+                            value={editHeroBadge}
+                            onChange={(e) => setEditHeroBadge(e.target.value)}
+                            className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                            placeholder="Ej. Cusco, Machu Picchu & Rutas del Perú • Catálogo Multidía & Full Days"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-bold text-slate-700 mb-1">
+                            Texto del Botón Principal (Hero CTA):
+                          </label>
+                          <input
+                            type="text"
+                            value={editHeroCta}
+                            onChange={(e) => setEditHeroCta(e.target.value)}
+                            className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
+                            placeholder="Ej. Solicitar Cotización Privada"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Selector de Fotografía Principal del Hero */}
+                    <div className="space-y-3 pt-2">
+                      <div className="flex items-center justify-between">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                          Fotografía Principal de Portada (Hero Background)
+                        </label>
+                        <span className="text-[10px] text-slate-400 font-normal">Unsplash / Enlace directo</span>
+                      </div>
+
                       <input
-                        type="text"
-                        value={editAboutTitle}
-                        onChange={(e) => setEditAboutTitle(e.target.value)}
-                        className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
-                        placeholder="Ej. Un viaje sagrado diseñado para los más exigentes"
+                        type="url"
+                        value={editHeroImage}
+                        onChange={(e) => setEditHeroImage(e.target.value)}
+                        className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-mono text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none"
+                        placeholder="https://images.unsplash.com/..."
                       />
-                    </div>
 
-                    <div>
-                      <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-700 mb-1">
-                        Texto de la Descripción Narrativa
-                      </label>
-                      <textarea
-                        rows={4}
-                        value={editAboutContent}
-                        onChange={(e) => setEditAboutContent(e.target.value)}
-                        className="w-full bg-white border border-slate-300 rounded-xl p-3 text-xs text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed"
-                        placeholder="Evita las largas colas y el estrés del turismo masivo. Nuestro servicio VIP te brinda acceso preferente, almuerzo gourmet y asesoría personalizada..."
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                      Texto del Botón Principal (CTA)
-                    </label>
-                    <input
-                      type="text"
-                      value={editHeroCta}
-                      onChange={(e) => setEditHeroCta(e.target.value)}
-                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
-                      placeholder="Ej. Solicitar Cotización Privada"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5 flex items-center justify-between">
-                      <span>URL Foto de Portada (Hero Background)</span>
-                      <span className="text-[10px] text-slate-400 font-normal">Unsplash / Enlace directo</span>
-                    </label>
-                    <input
-                      type="url"
-                      value={editHeroImage}
-                      onChange={(e) => setEditHeroImage(e.target.value)}
-                      className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-mono text-slate-800 focus:ring-2 focus:ring-blue-500 outline-none"
-                      placeholder="https://images.unsplash.com/..."
-                    />
-
-                    {/* Selector de fotos rápidas */}
-                    <div className="mt-2.5 space-y-1.5">
-                      <span className="text-[11px] font-bold text-slate-500">Seleccionar foto rápida prediseñada:</span>
-                      <div className="flex items-center gap-2 overflow-x-auto pb-1">
-                        {SAMPLE_TOUR_IMAGES.map((img) => (
-                          <button
-                            key={img.id}
-                            type="button"
-                            onClick={() => setEditHeroImage(img.url)}
-                            className={`relative w-16 h-12 rounded-xl overflow-hidden border shrink-0 transition-transform hover:scale-105 cursor-pointer ${
-                              editHeroImage === img.url ? 'ring-2 ring-blue-600 border-blue-600' : 'border-slate-200'
-                            }`}
-                            title={img.title}
-                          >
-                            <Image src={img.url} alt={img.title} fill className="object-cover" unoptimized />
-                          </button>
-                        ))}
+                      {/* Selector de fotos rápidas */}
+                      <div className="mt-2.5 space-y-1.5">
+                        <span className="text-[11px] font-bold text-slate-500">Seleccionar foto rápida prediseñada:</span>
+                        <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                          {SAMPLE_TOUR_IMAGES.map((img) => (
+                            <button
+                              key={img.id}
+                              type="button"
+                              onClick={() => setEditHeroImage(img.url)}
+                              className={`relative w-16 h-12 rounded-xl overflow-hidden border shrink-0 transition-transform hover:scale-105 cursor-pointer ${
+                                editHeroImage === img.url ? 'ring-2 ring-blue-600 border-blue-600' : 'border-slate-200'
+                              }`}
+                              title={img.title}
+                            >
+                              <Image src={img.url} alt={img.title} fill className="object-cover" unoptimized />
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
 
-                    {editHeroImage && (
-                      <div className="mt-2.5 relative h-32 rounded-xl overflow-hidden border border-slate-200 shadow-xs">
-                        <img src={editHeroImage} alt="Hero preview" className="w-full h-full object-cover" />
-                      </div>
-                    )}
+                      {editHeroImage && (
+                        <div className="mt-2.5 relative h-36 rounded-xl overflow-hidden border border-slate-200 shadow-xs">
+                          <img src={editHeroImage} alt="Hero preview" className="w-full h-full object-cover" />
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               )}

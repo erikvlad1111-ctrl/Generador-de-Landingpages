@@ -577,7 +577,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                   className="w-full sm:flex-1 bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500 hover:from-amber-200 hover:to-amber-400 text-neutral-950 py-3.5 px-6 rounded-full font-extrabold text-sm transition-all shadow-xl shadow-amber-400/35 hover:scale-103 flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <FileText size={18} />
-                  <span>{t.cta.quote}</span>
+                  <span>{data.hero?.cta ? translateText(data.hero.cta, currentLang) : t.cta.quote}</span>
                 </button>
               </div>
             ) : isQuote ? (

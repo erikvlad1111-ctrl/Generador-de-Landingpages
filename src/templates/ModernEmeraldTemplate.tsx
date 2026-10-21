@@ -992,8 +992,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-300 text-[#02181f] font-black text-xs sm:text-sm px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-1.5 sm:gap-2 shrink-0"
             >
               <MessageCircle size={15} />
-              <span className="hidden sm:inline">{isWhatsapp ? t.whatsappBtn : isQuote ? t.quoteBtn : t.planYourTripBtn}</span>
-              <span className="sm:hidden text-[11px] font-black">{isWhatsapp ? 'WhatsApp' : 'Reservar'}</span>
+              <span className="hidden sm:inline">{data.hero?.cta ? translateText(data.hero.cta, currentLang) : (isWhatsapp ? t.whatsappBtn : isQuote ? t.quoteBtn : t.planYourTripBtn)}</span>
+              <span className="sm:hidden text-[11px] font-black">{data.hero?.cta ? translateText(data.hero.cta, currentLang) : (isWhatsapp ? 'WhatsApp' : 'Reservar')}</span>
             </button>
 
             {/* Mobile Menu Toggle con estilo premium */}
@@ -1215,7 +1215,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                   onClick={() => handleOpenAction(data.name)}
                   className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-400 hover:from-emerald-300 hover:to-teal-200 text-[#041716] font-black text-xs sm:text-sm px-5 py-2.5 rounded-2xl transition-all shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2 cursor-pointer hover:scale-102 active:scale-98"
                 >
-                  <span>{t.searchBtn || 'Reservar Tour'}:</span>
+                  <span>{data.hero?.cta ? translateText(data.hero.cta, currentLang) : (t.searchBtn || 'Reservar Tour')}:</span>
                   <span className="font-extrabold text-sm sm:text-base">{formatPrice(basePriceUsd, passengers)}</span>
                   <ArrowRight size={15} />
                 </button>
@@ -1475,9 +1475,17 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             {/* Columna Derecha: Tarjeta Editorial */}
             <div className="lg:col-span-7 relative overflow-hidden p-8 sm:p-10 rounded-[40px] bg-white/[0.06] backdrop-blur-2xl border border-white/15 shadow-[0_30px_70px_rgba(0,0,0,0.5)] space-y-6">
               <div className="relative z-10 space-y-6">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold">
-                  <Award size={14} />
-                  <span>{translateText('Filosofía de Expedición', currentLang)}</span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold">
+                    <Award size={14} />
+                    <span>{translateText('Filosofía de Expedición', currentLang)}</span>
+                  </div>
+                  {data.targetAudience && (
+                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-200 text-xs font-semibold">
+                      <Target size={13} className="text-teal-300" />
+                      <span>{translateText(data.targetAudience, currentLang)}</span>
+                    </div>
+                  )}
                 </div>
 
                 <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight leading-tight">
@@ -2408,7 +2416,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         <TrustGuaranteeAndOffice
           lang={currentLang}
           whatsapp={guidePhone}
-          brandName="NavikX Cusco Expeditions"
+          brandName={data.companyName?.trim() || 'NavikX Cusco Expeditions'}
           isMobile={isMobile}
           officeAddress={data.officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
           officeHours={translateText(data.officeHours || 'Lunes a Domingo: 07:00 - 21:00', currentLang)}
@@ -2459,7 +2467,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             className="emerald-shimmer-btn w-full md:w-auto bg-gradient-to-r from-orange-500 via-amber-500 to-orange-500 hover:from-orange-400 hover:to-amber-400 text-slate-950 font-black text-xs sm:text-sm px-8 py-3.5 rounded-full shadow-[0_10px_25px_rgba(249,115,22,0.4)] transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 shrink-0"
           >
             <Compass size={16} />
-            <span>{t.planYourTripBtn} ({formatPrice(basePriceUsd, passengers)})</span>
+            <span>{data.hero?.cta ? translateText(data.hero.cta, currentLang) : t.planYourTripBtn} ({formatPrice(basePriceUsd, passengers)})</span>
           </button>
         </div>
       </div>
@@ -2489,6 +2497,12 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
               <p className="text-[11px] text-emerald-300/70">
                 {data.companyTagline ? `${data.companyTagline} • ` : ''}{data.companyRuc ? `${data.companyRuc} • ` : ''}{t.footerRights}
               </p>
+              {data.companyEmail && (
+                <a href={`mailto:${data.companyEmail}`} className="inline-flex items-center gap-1.5 text-[11px] text-emerald-400 hover:text-emerald-300 transition-colors mt-0.5" title={data.companyEmail}>
+                  <Mail size={12} className="shrink-0" />
+                  <span className="truncate">{data.companyEmail}</span>
+                </a>
+              )}
             </div>
           </div>
 

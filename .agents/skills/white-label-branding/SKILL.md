@@ -175,3 +175,58 @@ Estos campos deben propagarse coherentemente en:
      ```
   3. Añadir botón con icono `RotateCcw` "Restablecer Fábrica" en la barra de herramientas superior y en el pie del modal de edición de `/demo/preview`.
   4. Añadir botón "Restablecer Fábrica" en el panel `/demo` con confirmación y toast de notificación para limpiar cualquier borrador de prueba del navegador con 1 solo clic.
+
+---
+
+### Error 8: Campos de Empresa/Marca Blanca y Portada Hero (H1, Subtítulo, Badge, Hero CTA) Incompletos o No Reflejados
+- **Síntoma / Mensaje de Error:** Al configurar o editar la empresa ("Cusco Grand Expeditions", RUC, Logo, Slogan, Email) y la Portada Principal Hero (Título H1, Subtítulo descriptivo, Insignia Hero Badge y Texto del Botón Hero CTA como "Solicitar Cotización Privada"), los campos no aparecían ordenados o completos para editar en el modal de `/demo/preview`, y en la landing generada o en el preview del smartphone no se reflejaban fielmente.
+- **Causa Raíz:**
+  1. En el modal editor (`/demo/preview`), la pestaña "Hero & Portada" contenía una caja intrusiva de edición de "Acerca del Tour" incrustada en el centro que empujaba hacia abajo el Botón Principal (Hero CTA) y la Foto de Portada, desordenando la edición del Hero.
+  2. En `/demo/new`, existía un acordeón duplicado al final del formulario que repetía `heroBadge` y `heroCta`, lo cual generaba inconsistencias, y el mockup del smartphone en vivo tenía textos quemados en lugar de reflejar `heroBadge`, `heroTitle` y `heroCta`.
+  3. En `src/data/landingStore.ts`, `simulateAiGeneration` asignaba valores predeterminados de traducción a `ctaText` en inglés, portugués, francés e italiano, ignorando `params.heroCta` personalizado por el usuario.
+  4. En varias plantillas (`ModernEmeraldTemplate.tsx`, `CulturalTemplate.tsx`, `BohoTemplate.tsx`, `PremiumTemplate.tsx`), el Hero CTA o la insignia superior no se leían en ciertos modos de objetivo comercial (`both` o `search`).
+- **Comando de Diagnóstico:**
+  `git grep "data.hero?.cta" src/templates/` y verificar si el texto personalizado aparece en todas las combinaciones de `objective`.
+- **Solución Paso a Paso:**
+  1. En `src/app/demo/preview/page.tsx`:
+     - Pestaña 1 (General): Ordenar la sección con el título exacto "Empresa, Agencia & Logo (Marca Blanca)", con nombre comercial, RUC, logo (subir archivo / URL / presets de muestra), slogan y email de reservas.
+     - Pestaña 2 (Hero & Portada): Limpiar el Hero para presentar ordenadamente: Título Principal H1, Subtítulo / Bajada de Portada con contador de caracteres, Insignia Superior (Hero Badge), Texto del Botón Principal (Hero CTA) y Fotografía Principal con selector rápido y previsualización. Mover la narrativa del tour exclusivamente a la Pestaña 3 (Descripción).
+  2. En `src/app/demo/new/page.tsx`:
+     - Eliminar el acordeón duplicado de afinamiento de copys al pie del formulario.
+     - En el mockup interactivo de smartphone, vincular reactivamente `heroBadge`, `heroTitle`, `heroSubtitle` y `heroCta` en todas las plantillas.
+  3. En `src/data/landingStore.ts`:
+     - Priorizar `params.heroCta?.trim()` en `simulateAiGeneration` para todos los idiomas (`es`, `en`, `pt`, `fr`, `it`).
+  4. En las plantillas (`ModernEmeraldTemplate.tsx`, `CulturalTemplate.tsx`, `BohoTemplate.tsx`, `AdventureTemplate.tsx`, `PremiumTemplate.tsx`, `AgencyPortalTemplate.tsx`):
+     - Garantizar que los botones CTA y badges consuman prioritariamente `data.hero?.cta` y `data.hero?.badge`.
+
+---
+
+### Error 9: Cambios Editados No Se Aplicaban (Sobrescritura en LocalStorage) y Campos Editables Omitidos en Diseños Generados
+- **Síntoma / Mensaje de Error:** Al guardar cambios en el modal editor o crear una landing (empresa, email de reservas, exclusiones, qué llevar, insignias de confianza, público objetivo, etc.), el usuario reporta: "sigue igual no se aplican los cambios y algunas partes que son editables no aparecen en los diseños generados".
+- **Causa Raíz:**
+  1. **Sobrescritura destructiva en `landingStore.ts`:** En `getStoredLandings()`, existía una condición que verificaba si `parsed[idx].features.items.length < init.features.items.length`, y en tal caso ejecutaba `parsed[idx].features = init.features;`. Si el usuario eliminaba o editaba características, el store las pisaba con los datos iniciales de fábrica en cada recarga. Además, existían resets forzados para los IDs 2 y 6.
+  2. **Desincronización de Parámetros URL en `/demo/preview`:** Al guardar cambios o cambiar de plantilla, la URL (`?template=...`) no se sincronizaba con la landing guardada, y `templateQuery` sobreescribía la plantilla almacenada en `selected.template`.
+  3. **Campos editables omitidos en los componentes de plantilla:**
+     - `CulturalTemplate.tsx`: No renderizaba la ficha técnica (`altitude`, `difficulty`, `groupType`, `targetAudience`), no mostraba la lista de exclusiones (`notIncluded`), tenía la lista de "Qué llevar" fija a un preset en lugar de vincularla a `data.whatToBring`, no mostraba `trustBadges` y omitía el correo `companyEmail` en el pie de página.
+     - `ModernEmeraldTemplate.tsx`: No mostraba `companyEmail` en el pie de página de marca ni la píldora de `targetAudience` en el bloque de filosofía editorial.
+     - `AdventureTemplate.tsx`: Carecía de renderizado para `trustBadges` y `targetAudience`.
+     - `BohoTemplate.tsx`: En las estadísticas rápidas del hero omitía `altitude`, `difficulty` y `targetAudience`.
+- **Comando de Diagnóstico:**
+  1. Verificar si `data.whatToBring`, `data.notIncluded`, `data.trustBadges` o `data.companyEmail` se consumen en las plantillas:
+     `git grep -n "data.companyEmail" src/templates/`
+     `git grep -n "data.whatToBring" src/templates/`
+  2. Verificar la lógica de `getStoredLandings` en `src/data/landingStore.ts`.
+- **Solución Paso a Paso:**
+  1. En `src/data/landingStore.ts`:
+     - Eliminar la condición destructiva que reescribía `parsed[idx].features = init.features;`.
+     - Eliminar las condiciones de reseteo forzado de plantillas para IDs 2 y 6.
+  2. En `src/app/demo/preview/page.tsx`:
+     - Evitar que `templateQuery` sustituya la propiedad `selected.template` guardada en la landing.
+     - En `handleApplyLive` y `handleSaveEdits`, sincronizar la URL activa con `window.history.replaceState` reflejando el slug, template y tier reales.
+     - Repoblar inmediatamente el estado del modal con `populateEditorWithLanding(updated)` al guardar.
+  3. En las plantillas:
+     - `CulturalTemplate.tsx`: Incorporar la Sección 2.2 con la Ficha Técnica (`duration`, `altitude`, `difficulty`, `groupType`, `targetAudience`), la lista de exclusiones (`notIncluded`) en Sección 7, checklist dinámico de mochila (`whatToBring`) en Sección 8, insignias de confianza dinámicas (`trustBadges`) en Sección 11, y correo de reservas con enlace `mailto:` en Sección 13.
+     - `ModernEmeraldTemplate.tsx`: Agregar píldora de `targetAudience` y correo de reservas `companyEmail` en el footer.
+     - `AdventureTemplate.tsx`: Agregar estadísticas de `groupType` y `targetAudience` en el Hero flotante y bloque de `trustBadges` en la sección 9.
+     - `BohoTemplate.tsx`: Añadir badges de `altitude`, `difficulty` y `targetAudience` en los quick stats tags bajo el título del hero.
+

@@ -1392,7 +1392,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   className="shimmer-btn w-full sm:w-auto bg-gradient-to-r from-[#FF5500] via-[#FF6611] to-[#FF3000] hover:from-[#E04500] hover:to-[#FF5500] text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-black text-xs sm:text-sm tracking-wide uppercase transition-all duration-300 shadow-lg shadow-[#FF5500]/40 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-2 group ring-2 ring-white/25"
                 >
                   <FileText size={16} />
-                  <span>{t.ctaBothQuote}</span>
+                  <span>{data?.hero?.cta ? translateText(data.hero.cta, lang) : t.ctaBothQuote}</span>
                 </button>
               </>
             ) : (
