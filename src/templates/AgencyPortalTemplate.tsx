@@ -1516,7 +1516,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   <span>{lang === 'en' ? 'Tour Overview & Description' : lang === 'pt' ? 'Visão Geral & Descrição' : lang === 'fr' ? 'Présentation du Tour' : lang === 'it' ? 'Descrizione del Tour' : 'Descripción & Visión del Tour'}</span>
                 </div>
                 <h3 className="text-xl sm:text-2xl font-black text-stone-900 tracking-tight leading-snug">
-                  {translateText(data?.about?.title || 'Experiencia Exclusiva en los Andes', lang)}
+                  {translateText(data?.about?.title || data?.name || 'Experiencia Exclusiva en los Andes', lang)}
                 </h3>
                 <p className="text-xs sm:text-sm text-stone-600 leading-relaxed font-normal">
                   {translateText(data?.about?.content || (data as any)?.description || data?.hero?.subtitle || 'Descubre los parajes más impresionantes de la región imperial con atención de primer nivel y guías expertos.', lang)}
@@ -1546,7 +1546,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     <Compass size={12} /> {t.techSheetBadge}
                   </span>
                   <span className="text-[10px] bg-stone-100 text-stone-700 font-extrabold px-2.5 py-0.5 rounded-full border border-stone-200">
-                    {translateText(tourTitle, lang)}
+                    {translateText(data?.name || tourTitle, lang)}
                   </span>
                   {data?.price && (
                     <span className="text-[10px] bg-emerald-50 text-emerald-700 font-black px-2.5 py-0.5 rounded-full border border-emerald-200 ml-auto">

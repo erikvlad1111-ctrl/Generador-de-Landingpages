@@ -5,15 +5,21 @@ export type { LandingData };
 export const INITIAL_LANDINGS: LandingData[] = [
   {
     id: '1',
-    name: 'Machu Picchu VIP & Valle Sagrado',
+    name: 'Machu Picchu VIP & Valle Sagrado Multidía',
     slug: 'machu-picchu-vip',
     tier: 'advance',
     guideName: 'Carlos Mendoza',
+    guideCert: 'Licenciado DIRCETUR & Operador Autorizado',
+    guideLanguages: 'Español, Inglés y Portugués',
     guideAvatar: '/images/tour-guide-carlos.jpg',
     whatsapp: '+51984123456',
-    price: '$450 USD',
-    duration: '2 Días / 1 Noche',
-    difficulty: 'Fácil - Confort',
+    price: '$380 USD',
+    duration: 'Catálogo Multidía & Full Days',
+    difficulty: 'Fácil (Familiar / Sin esfuerzo)',
+    destination: 'Cusco, Machu Picchu & Rutas del Perú',
+    altitude: '2,430 msnm - 5,036 msnm',
+    groupType: 'Tours Privados & Compartidos VIP',
+    targetAudience: 'Viajeros Internacionales, Parejas y Familias',
     objective: 'quote',
     template: 'agency-portal',
     language: 'es',
@@ -26,14 +32,14 @@ export const INITIAL_LANDINGS: LandingData[] = [
       'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop'
     ],
     hero: {
-      badge: 'Experiencia Exclusiva VIP',
+      badge: 'Cusco, Machu Picchu & Rutas del Perú • Catálogo Multidía & Full Days',
       title: 'Machu Picchu de Lujo con Tren Panorámico',
       subtitle: 'Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia.',
       cta: 'Solicitar Cotización Privada'
     },
     about: {
-      title: 'Un viaje sagrado diseñado para los más exigentes',
-      content: 'Evita las largas colas y el estrés del turismo masivo. Nuestro servicio VIP te brinda acceso preferente, almuerzo gourmet en Belmond Sanctuary Lodge y asesoría personalizada de puerta a puerta.'
+      title: 'Portal Oficial de Agencia & Operador Autorizado',
+      content: 'Portal completo de agencia turística con catálogo de excursiones, métricas de satisfacción, itinerarios multidía y atención personalizada.'
     },
     features: {
       title: 'Privilegios de la Experiencia VIP',
@@ -849,11 +855,36 @@ export function getStoredLandings(): LandingData[] {
       let updated = cleaned.length !== parsed.length;
       parsed = cleaned;
 
-      const existingIds = new Set(parsed.map(item => item.id));
       for (const init of INITIAL_LANDINGS) {
-        if (!existingIds.has(init.id)) {
+        const idx = parsed.findIndex(item => item.id === init.id);
+        if (idx === -1) {
           parsed.push(init);
           updated = true;
+        } else {
+          if (!parsed[idx].destination && init.destination) {
+            parsed[idx].destination = init.destination;
+            updated = true;
+          }
+          if (!parsed[idx].altitude && init.altitude) {
+            parsed[idx].altitude = init.altitude;
+            updated = true;
+          }
+          if (!parsed[idx].groupType && init.groupType) {
+            parsed[idx].groupType = init.groupType;
+            updated = true;
+          }
+          if (!parsed[idx].targetAudience && init.targetAudience) {
+            parsed[idx].targetAudience = init.targetAudience;
+            updated = true;
+          }
+          if (init.id === '1' && parsed[idx].slug === 'machu-picchu-vip' && (!parsed[idx].duration || parsed[idx].duration === '2 Días / 1 Noche')) {
+            parsed[idx].duration = init.duration;
+            parsed[idx].price = init.price;
+            parsed[idx].name = init.name;
+            parsed[idx].difficulty = init.difficulty;
+            parsed[idx].about = init.about;
+            updated = true;
+          }
         }
       }
       if (updated) {
