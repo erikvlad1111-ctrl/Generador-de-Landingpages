@@ -230,3 +230,36 @@ Estos campos deben propagarse coherentemente en:
      - `AdventureTemplate.tsx`: Agregar estadísticas de `groupType` y `targetAudience` en el Hero flotante y bloque de `trustBadges` en la sección 9.
      - `BohoTemplate.tsx`: Añadir badges de `altitude`, `difficulty` y `targetAudience` en los quick stats tags bajo el título del hero.
 
+---
+
+### Error 10: Texto de Prueba Residual ("GGTGTGTGFFRFRF") en Diseños Oficiales y Desfase de Slugs en Demos en Vivo
+- **Síntoma / Mensaje de Error:** Al acceder a los 6 diseños oficiales desde el panel `/demo`, los primeros diseños mostraban texto de prueba residual como `GGTGTGTGFFRFRF` o strings basura en los títulos y portadas, en lugar de los textos oficiales limpios por defecto.
+- **Causa Raíz:**
+  1. **Persistencia de texto de prueba en LocalStorage:** El usuario o testers habían editado o probado la plataforma ingresando caracteres aleatorios (`GGTGTGTGFFRFRF`) que quedaron almacenados bajo la clave de `localStorage`.
+  2. **Filtro de saneamiento insuficiente:** La regex de detección de basura solo evaluaba nombres o slugs (`p.name`, `p.slug`), pero no inspeccionaba todo el objeto JSON de la landing, permitiendo que campos anidados como `hero.title` o `hero.subtitle` mantuvieran la basura.
+  3. **Desfase de slugs en los accesos de demos en vivo:** En `src/app/demo/page.tsx`, los botones de los 6 demos apuntaban a slugs modificados (ej. `laguna-humantay-bitacora-fotografica-paisajismo` en vez del slug oficial `laguna-humantay-boho`, y `city-tour-cusco-ancestral` en vez de `city-tour-cusco`), lo que provocaba que la ruta pública `/p/[slug]` cargara landings residuales editadas en lugar del registro maestro de `INITIAL_LANDINGS`.
+  4. **Falta de prioridad de bypass para demos oficiales:** La ruta `/p/[slug]` consultaba primero `localStorage` sin comprobar si la solicitud provenía de los botones de demo oficiales del panel.
+- **Comando de Diagnóstico:**
+  1. Buscar cadenas de prueba residuales en el almacenamiento o código:
+     `git grep -n "GGTGT" src/`
+  2. Verificar los slugs de `INITIAL_LANDINGS` vs las tarjetas de `/demo/page.tsx`:
+     `git grep -n "href=\"/p/" src/app/demo/page.tsx`
+- **Solución Paso a Paso:**
+  1. En `src/data/landingStore.ts`:
+     - Incrementar la versión del almacenamiento a `STORAGE_KEY = 'cusco_creativos_landings_v8'`, purgando automáticamente la clave antigua contaminada `v7`.
+     - Implementar la función `isTestJunk(obj)` que serializa el objeto a JSON e inspecciona patrones de prueba (`/GGTGT|GTGTG|FFRFR|FRFRF|FEFRG|GGGTG|TTTTG|BBBBV|ZZZZ|AAAAA|ASDFGH/i`).
+     - En `getStoredLandings()`, si alguna plantilla oficial contiene texto basura, restaurarla de inmediato con `{ ...init }` desde `INITIAL_LANDINGS`.
+     - En `resetAllLandingsToDefault()`, eliminar explícitamente todas las claves históricas `v7`, `v6`, `v5`, `v4`.
+  2. En `src/app/demo/page.tsx`:
+     - Corregir los slugs de los 6 botones oficiales para que coincidan exactamente con `INITIAL_LANDINGS` y agregar el parámetro `&demo=official`:
+       - Diseño 1: `/p/machu-picchu-vip?template=agency-portal&tier=advance&demo=official`
+       - Diseño 2: `/p/laguna-humantay-boho?template=boho-nature&tier=advance&demo=official`
+       - Diseño 3: `/p/cusco-luxury-collection?template=premium&tier=advance&demo=official`
+       - Diseño 4: `/p/salkantay-trek-5-dias?template=adventure&tier=advance&demo=official`
+       - Diseño 5: `/p/city-tour-cusco?template=cultural&tier=advance&demo=official`
+       - Diseño 6: `/p/vive-tu-aventura-expediciones-trekking-cusco?template=emerald-explorer&tier=advance&demo=official`
+     - Agregar un botón visible "Restablecer Demos" con feedback toast en la cabecera de las 6 plantillas.
+  3. En `src/app/p/[slug]/page.tsx` y `src/app/demo/preview/page.tsx`:
+     - Si `demo=official` está presente o si `isTestJunk(found)` es positivo, cargar prioritariamente y de forma directa el registro inmaculado desde `INITIAL_LANDINGS`.
+
+

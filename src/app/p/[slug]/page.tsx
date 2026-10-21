@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ArrowLeft, MessageCircle, Edit3, LayoutDashboard, Share2, Check, Download, X } from 'lucide-react';
 import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
-import { getStoredLandings, INITIAL_LANDINGS, LandingData } from '@/data/landingStore';
+import { getStoredLandings, INITIAL_LANDINGS, isTestJunk, LandingData } from '@/data/landingStore';
 import { TemplateType, PlanTier } from '@/types/landing';
 
 function PublicLandingContent() {
@@ -16,25 +16,42 @@ function PublicLandingContent() {
   const isEmbed = searchParams.get('embed') === 'true';
   const templateQuery = searchParams.get('template') as TemplateType | null;
   const tierQuery = searchParams.get('tier') as PlanTier | null;
+  const isOfficialDemo = searchParams.get('demo') === 'official';
 
   const [copied, setCopied] = useState(false);
   const [isBannerVisible, setIsBannerVisible] = useState(true);
   const [isDeployModalOpen, setIsDeployModalOpen] = useState(false);
 
   const [landing, setLanding] = useState<LandingData | null>(() => {
-    const landings = getStoredLandings();
     let found: LandingData | null = null;
-    if (slug) {
-      found = landings.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
-      if (!found) {
+    if (isOfficialDemo) {
+      if (slug) {
         found = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
       }
-    }
-    if (!found && templateQuery) {
-      found = landings.find(l => l.template === templateQuery) || INITIAL_LANDINGS.find(l => l.template === templateQuery) || null;
-    }
-    if (!found) {
-      found = landings[0] || INITIAL_LANDINGS[0] || null;
+      if (!found && templateQuery) {
+        found = INITIAL_LANDINGS.find(l => l.template === templateQuery) || null;
+      }
+      if (!found) {
+        found = INITIAL_LANDINGS[0];
+      }
+    } else {
+      const landings = getStoredLandings();
+      if (slug) {
+        found = landings.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
+        if (!found) {
+          found = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
+        }
+      }
+      if (!found && templateQuery) {
+        found = landings.find(l => l.template === templateQuery) || INITIAL_LANDINGS.find(l => l.template === templateQuery) || null;
+      }
+      if (!found) {
+        found = landings[0] || INITIAL_LANDINGS[0] || null;
+      }
+      if (found && isTestJunk(found)) {
+        const clean = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === found?.slug.toLowerCase() || l.id === found?.id || l.template === found?.template);
+        if (clean) found = { ...clean };
+      }
     }
     if (!found) return null;
     const activeTier: PlanTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery))
@@ -52,19 +69,35 @@ function PublicLandingContent() {
   });
 
   React.useEffect(() => {
-    const landings = getStoredLandings();
     let found: LandingData | null = null;
-    if (slug) {
-      found = landings.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
-      if (!found) {
+    if (isOfficialDemo) {
+      if (slug) {
         found = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
       }
-    }
-    if (!found && templateQuery) {
-      found = landings.find(l => l.template === templateQuery) || INITIAL_LANDINGS.find(l => l.template === templateQuery) || null;
-    }
-    if (!found) {
-      found = landings[0] || INITIAL_LANDINGS[0] || null;
+      if (!found && templateQuery) {
+        found = INITIAL_LANDINGS.find(l => l.template === templateQuery) || null;
+      }
+      if (!found) {
+        found = INITIAL_LANDINGS[0];
+      }
+    } else {
+      const landings = getStoredLandings();
+      if (slug) {
+        found = landings.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
+        if (!found) {
+          found = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
+        }
+      }
+      if (!found && templateQuery) {
+        found = landings.find(l => l.template === templateQuery) || INITIAL_LANDINGS.find(l => l.template === templateQuery) || null;
+      }
+      if (!found) {
+        found = landings[0] || INITIAL_LANDINGS[0] || null;
+      }
+      if (found && isTestJunk(found)) {
+        const clean = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === found?.slug.toLowerCase() || l.id === found?.id || l.template === found?.template);
+        if (clean) found = { ...clean };
+      }
     }
     if (found) {
       const activeTier: PlanTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery))
@@ -78,7 +111,7 @@ function PublicLandingContent() {
         ...(isFreeOrBasic ? { language: 'es' as const, languages: ['es' as const] } : {}),
       });
     }
-  }, [slug, templateQuery, tierQuery]);
+  }, [slug, templateQuery, tierQuery, isOfficialDemo]);
 
   if (!landing) {
     return (

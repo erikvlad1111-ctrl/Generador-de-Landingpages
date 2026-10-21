@@ -62,7 +62,7 @@ import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import CatalogToursEditorModal from '@/components/common/CatalogToursEditorModal';
 import { SAMPLE_TOUR_IMAGES } from '@/data/sampleImages';
-import { getStoredLandings, saveLandingToStorage, resetCurrentLanding, resetAllLandingsToDefault, INITIAL_LANDINGS, LandingData } from '@/data/landingStore';
+import { getStoredLandings, saveLandingToStorage, resetCurrentLanding, resetAllLandingsToDefault, INITIAL_LANDINGS, isTestJunk, LandingData } from '@/data/landingStore';
 import { TemplateType, PlanTier, LanguageType, ObjectiveType, ItineraryItem, FAQItem, TestimonialItem, CatalogTourItem } from '@/types/landing';
 import { OFFICIAL_PERUVIAN_GUIDE_PRESETS, getSanitizedGuideAvatar } from '@/utils/guideAvatars';
 
@@ -86,6 +86,10 @@ function DemoPreviewContent() {
     }
     if (!selected) {
       selected = list[0] || INITIAL_LANDINGS[0] || null;
+    }
+    if (selected && isTestJunk(selected)) {
+      const clean = INITIAL_LANDINGS.find(item => item.slug.toLowerCase() === selected?.slug.toLowerCase() || item.id === selected?.id || item.template === selected?.template);
+      if (clean) selected = { ...clean };
     }
     if (selected) {
       const activeTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery)) ? tierQuery : selected.tier;
@@ -115,6 +119,10 @@ function DemoPreviewContent() {
     }
     if (!selected) {
       selected = list[0] || INITIAL_LANDINGS[0] || null;
+    }
+    if (selected && isTestJunk(selected)) {
+      const clean = INITIAL_LANDINGS.find(item => item.slug.toLowerCase() === selected?.slug.toLowerCase() || item.id === selected?.id || item.template === selected?.template);
+      if (clean) selected = { ...clean };
     }
     if (selected) {
       const activeTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery)) ? tierQuery : selected.tier;

@@ -200,15 +200,31 @@ export default function DemoDashboard() {
             <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500/30 to-purple-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center shrink-0 shadow-inner">
               <LayoutTemplate size={22} />
             </div>
-            <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-sm sm:text-base font-extrabold text-white block">Demos en Vivo de los 6 Diseños Oficiales</span>
-                <span className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs flex items-center gap-1">
-                  <Sparkles size={11} className="text-yellow-300 animate-pulse" />
-                  <span>100% Plan Avanzado</span>
-                </span>
+            <div className="flex-1">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-sm sm:text-base font-extrabold text-white block">Demos en Vivo de los 6 Diseños Oficiales</span>
+                  <span className="bg-gradient-to-r from-purple-500 to-indigo-600 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs flex items-center gap-1">
+                    <Sparkles size={11} className="text-yellow-300 animate-pulse" />
+                    <span>100% Plan Avanzado</span>
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleResetAllDemos}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold transition-all hover:scale-102 active:scale-98 cursor-pointer shadow-xs"
+                  title="Restablece las 6 plantillas a sus valores limpios oficiales de fábrica"
+                >
+                  <RotateCcw size={13} className="text-amber-400" />
+                  <span>Restablecer Demos</span>
+                </button>
               </div>
               <span className="text-xs text-slate-300 font-medium">Abre cada diseño con todas sus bondades al máximo: 5 idiomas, cotizador VIP, tours secundarios y amenidades</span>
+              {resetDemosToast && (
+                <div className="mt-2 text-xs font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-lg inline-flex items-center gap-1.5 animate-in fade-in">
+                  <Check size={14} /> ¡Demos y plantillas restauradas a sus datos oficiales de fábrica!
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -217,7 +233,7 @@ export default function DemoDashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3.5 pt-1">
           {/* Diseño 1: Portal Agencia */}
           <a
-            href="/p/machu-picchu-vip?template=agency-portal&tier=advance"
+            href="/p/machu-picchu-vip?template=agency-portal&tier=advance&demo=official"
             target="_blank"
             className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-b from-slate-800/95 to-slate-850 hover:from-slate-750 hover:to-slate-800 text-white border border-amber-500/40 hover:border-amber-400 shadow-md hover:shadow-amber-500/15 transition-all flex items-center justify-between gap-3 group hover:scale-[1.03] active:scale-95 cursor-pointer"
             title="Ver Diseño 1: Portal de Agencia (Plan Avanzado Completo)"
@@ -237,7 +253,7 @@ export default function DemoDashboard() {
 
           {/* Diseño 2: Boho & Naturaleza */}
           <a
-            href="/p/laguna-humantay-bitacora-fotografica-paisajismo?template=boho-nature&tier=advance"
+            href="/p/laguna-humantay-boho?template=boho-nature&tier=advance&demo=official"
             target="_blank"
             className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-b from-slate-800/95 to-slate-850 hover:from-slate-750 hover:to-slate-800 text-white border border-orange-500/40 hover:border-orange-400 shadow-md hover:shadow-orange-500/15 transition-all flex items-center justify-between gap-3 group hover:scale-[1.03] active:scale-95 cursor-pointer"
             title="Ver Diseño 2: Boho & Naturaleza (Plan Avanzado Completo)"
@@ -257,7 +273,7 @@ export default function DemoDashboard() {
 
           {/* Diseño 3: VIP Luxury */}
           <a
-            href="/p/cusco-luxury-collection?template=premium&tier=advance"
+            href="/p/cusco-luxury-collection?template=premium&tier=advance&demo=official"
             target="_blank"
             className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-b from-slate-800/95 to-slate-850 hover:from-slate-750 hover:to-slate-800 text-white border border-yellow-500/50 hover:border-yellow-400 shadow-md hover:shadow-yellow-500/20 transition-all flex items-center justify-between gap-3 group hover:scale-[1.03] active:scale-95 cursor-pointer ring-1 ring-amber-400/20"
             title="Ver Diseño 3: Cusco Luxury Collection VIP (Plan Avanzado Completo)"
@@ -277,7 +293,7 @@ export default function DemoDashboard() {
 
           {/* Diseño 4: TrekExplorer Aventura */}
           <a
-            href="/p/salkantay-trek-5-dias?template=adventure&tier=advance"
+            href="/p/salkantay-trek-5-dias?template=adventure&tier=advance&demo=official"
             target="_blank"
             className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-b from-slate-800/95 to-slate-850 hover:from-slate-750 hover:to-slate-800 text-white border border-blue-500/40 hover:border-blue-400 shadow-md hover:shadow-blue-500/15 transition-all flex items-center justify-between gap-3 group hover:scale-[1.03] active:scale-95 cursor-pointer"
             title="Ver Diseño 4: TrekExplorer Aventura (Plan Avanzado Completo)"
@@ -297,7 +313,7 @@ export default function DemoDashboard() {
 
           {/* Diseño 5: Cusco Cultural */}
           <a
-            href="/p/city-tour-cusco-ancestral?template=cultural&tier=advance"
+            href="/p/city-tour-cusco?template=cultural&tier=advance&demo=official"
             target="_blank"
             className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-b from-slate-800/95 to-slate-850 hover:from-slate-750 hover:to-slate-800 text-white border border-rose-500/40 hover:border-rose-400 shadow-md hover:shadow-rose-500/15 transition-all flex items-center justify-between gap-3 group hover:scale-[1.03] active:scale-95 cursor-pointer"
             title="Ver Diseño 5: Cusco Patrimonial Cultural (Plan Avanzado Completo)"
@@ -317,7 +333,7 @@ export default function DemoDashboard() {
 
           {/* Diseño 6: Emerald Explorer */}
           <a
-            href="/p/vive-tu-aventura-expediciones-trekking-cusco?template=emerald-explorer&tier=advance"
+            href="/p/vive-tu-aventura-expediciones-trekking-cusco?template=emerald-explorer&tier=advance&demo=official"
             target="_blank"
             className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-b from-slate-800/95 to-slate-850 hover:from-slate-750 hover:to-slate-800 text-white border border-emerald-500/40 hover:border-emerald-400 shadow-md hover:shadow-emerald-500/15 transition-all flex items-center justify-between gap-3 group hover:scale-[1.03] active:scale-95 cursor-pointer ring-1 ring-emerald-500/20"
             title="Ver Diseño 6: Emerald Explorer & Deep Forest Teal (Plan Avanzado Completo)"

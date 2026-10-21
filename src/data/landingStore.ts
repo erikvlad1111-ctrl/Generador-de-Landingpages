@@ -821,7 +821,13 @@ export const INITIAL_LANDINGS: LandingData[] = [
   }
 ];
 
-const STORAGE_KEY = 'cusco_creativos_landings_v7';
+const STORAGE_KEY = 'cusco_creativos_landings_v8';
+
+export function isTestJunk(obj: any): boolean {
+  if (!obj) return false;
+  const str = typeof obj === 'string' ? obj : JSON.stringify(obj);
+  return /GGTGT|GTGTG|FFRFR|FRFRF|FEFRG|GGGTG|TTTTG|BBBBV|ZZZZ|AAAAA|ASDFGH/i.test(str);
+}
 
 export function getStoredLandings(): LandingData[] {
   if (typeof window === 'undefined') return INITIAL_LANDINGS;
@@ -831,36 +837,66 @@ export function getStoredLandings(): LandingData[] {
       // Check if previous versions had custom landings
       let migrated: LandingData[] = [...INITIAL_LANDINGS];
       try {
-        const oldData = localStorage.getItem('cusco_creativos_landings_v6') || localStorage.getItem('cusco_creativos_landings_v5') || localStorage.getItem('cusco_creativos_landings_v4') || localStorage.getItem('cusco_creativos_landings_v3');
+        const oldData = localStorage.getItem('cusco_creativos_landings_v7') || localStorage.getItem('cusco_creativos_landings_v6') || localStorage.getItem('cusco_creativos_landings_v5') || localStorage.getItem('cusco_creativos_landings_v4');
         if (oldData) {
           const oldList: LandingData[] = JSON.parse(oldData);
           if (Array.isArray(oldList)) {
             const initialIds = new Set(INITIAL_LANDINGS.map(l => l.id));
-            const customItems = oldList.filter(l => !initialIds.has(l.id));
+            const initialSlugs = new Set(INITIAL_LANDINGS.map(l => (l.slug || '').toLowerCase()));
+            const customItems = oldList.filter(l => 
+              !initialIds.has(l.id) && 
+              !initialSlugs.has((l.slug || '').toLowerCase()) && 
+              !isTestJunk(l)
+            );
             migrated = [...INITIAL_LANDINGS, ...customItems];
           }
         }
       } catch {}
+      try { localStorage.removeItem('cusco_creativos_landings_v7'); } catch {}
       localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
       return migrated;
     }
     let parsed: LandingData[] = JSON.parse(data);
     if (Array.isArray(parsed)) {
-      // Limpiar automáticamente borradores con textos de prueba o slugs huérfanos
-      const cleaned = parsed.filter(p => 
-        !/FRFRFRFR|FEFRGRG|GGGTGTGT/i.test(p.slug || '') && 
-        !/FRFRFRFR|FEFRGRG|GGGTGTGT/i.test(p.name || '') &&
-        !(p.slug === 'salkantay-trek-5-dias' && p.id !== '2')
-      );
-      let updated = cleaned.length !== parsed.length;
-      parsed = cleaned;
+      const initialMap = new Map(INITIAL_LANDINGS.map(l => [l.id, l]));
+      const initialSlugMap = new Map(INITIAL_LANDINGS.map(l => [(l.slug || '').toLowerCase(), l]));
+      let updated = false;
+
+      // 1. Filtrar borradores huérfanos o que contengan basura de prueba y no sean oficiales
+      const filtered = parsed.filter(p => {
+        const isOfficial = initialMap.has(p.id) || initialSlugMap.has((p.slug || '').toLowerCase());
+        if (!isOfficial && isTestJunk(p)) {
+          updated = true;
+          return false;
+        }
+        if (p.slug === 'salkantay-trek-5-dias' && p.id !== '2') {
+          updated = true;
+          return false;
+        }
+        return true;
+      });
+
+      // 2. Para cada plantilla oficial, si tiene texto de prueba o sobrante editado, restaurarla al estado de fábrica
+      parsed = filtered.map(item => {
+        const init = initialMap.get(item.id) || initialSlugMap.get((item.slug || '').toLowerCase());
+        if (init && isTestJunk(item)) {
+          updated = true;
+          return { ...init };
+        }
+        return item;
+      });
 
       for (const init of INITIAL_LANDINGS) {
-        const idx = parsed.findIndex(item => item.id === init.id);
+        const idx = parsed.findIndex(item => item.id === init.id || (item.slug && item.slug.toLowerCase() === init.slug.toLowerCase()));
         if (idx === -1) {
           parsed.push(init);
           updated = true;
         } else {
+          if (isTestJunk(parsed[idx])) {
+            parsed[idx] = { ...init };
+            updated = true;
+            continue;
+          }
           if (!parsed[idx].destination && init.destination) {
             parsed[idx].destination = init.destination;
             updated = true;
@@ -950,6 +986,9 @@ export function deleteLandingFromStorage(id: string): LandingData[] {
 export function resetAllLandingsToDefault(): LandingData[] {
   if (typeof window === 'undefined') return INITIAL_LANDINGS;
   try {
+    ['cusco_creativos_landings_v7', 'cusco_creativos_landings_v6', 'cusco_creativos_landings_v5', 'cusco_creativos_landings_v4'].forEach(k => {
+      try { localStorage.removeItem(k); } catch {}
+    });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_LANDINGS));
     return [...INITIAL_LANDINGS];
   } catch {
