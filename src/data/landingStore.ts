@@ -1101,9 +1101,10 @@ export function simulateAiGeneration(params: {
   const isWhatsapp = params.objective === 'whatsapp';
   const isBoth = params.objective === 'both';
 
+  const shortDest = params.destination ? params.destination.split('&')[0].split(',')[0].trim() : 'Cusco';
   let heroTitle = params.heroTitle?.trim() || params.name;
   let heroSubtitle = params.heroSubtitle?.trim() || params.description || 'Vive una aventura inolvidable con guías expertos locales y atención de primer nivel.';
-  let heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : (params.template === 'agency-portal' ? 'Portal Oficial • Operador Autorizado' : params.template === 'emerald-explorer' ? 'Emerald Explorer • Alta Montaña' : params.template === 'premium' ? 'Experiencia Exclusiva VIP' : params.template === 'cultural' ? 'Historia y Cultura Andina' : 'Aventura y Naturaleza'));
+  let heroBadge = params.heroBadge?.trim() || (shortDest ? `${shortDest} • ${params.duration || 'Temporada 2026'}` : (params.template === 'agency-portal' ? 'Portal Oficial • Operador Autorizado' : params.template === 'emerald-explorer' ? 'Emerald Explorer • Alta Montaña' : params.template === 'premium' ? 'Experiencia Exclusiva VIP' : params.template === 'cultural' ? 'Historia y Cultura Andina' : 'Aventura y Naturaleza'));
   let ctaText = params.heroCta?.trim() || (isBoth 
     ? 'WhatsApp & Cotizar Online' 
     : (isWhatsapp ? 'Reservar Directo por WhatsApp' : 'Solicitar Cotización y Disponibilidad'));
@@ -1111,22 +1112,22 @@ export function simulateAiGeneration(params: {
   if (isEn) {
     heroTitle = params.heroTitle?.trim() || params.name;
     heroSubtitle = params.heroSubtitle?.trim() || params.description || 'Live an unforgettable Andean adventure with top certified local guides and premium service.';
-    heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : 'Official Agency Portal');
+    heroBadge = params.heroBadge?.trim() || (shortDest ? `${shortDest} • ${params.duration || '2026 Season'}` : 'Official Agency Portal');
     ctaText = params.heroCta?.trim() || (isBoth ? 'WhatsApp & Online Quote' : (isWhatsapp ? 'Book via WhatsApp' : 'Request Instant Quote'));
   } else if (isPt) {
     heroTitle = params.heroTitle?.trim() || params.name;
     heroSubtitle = params.heroSubtitle?.trim() || params.description || 'Viva uma aventura andina inesquecível com guias locais certificados e atendimento de primeiro nível.';
-    heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : 'Portal Oficial da Agência');
+    heroBadge = params.heroBadge?.trim() || (shortDest ? `${shortDest} • ${params.duration || 'Temporada 2026'}` : 'Portal Oficial da Agência');
     ctaText = params.heroCta?.trim() || (isBoth ? 'WhatsApp & Orçamento Online' : (isWhatsapp ? 'Reservar pelo WhatsApp' : 'Solicitar Orçamento Grátis'));
   } else if (isFr) {
     heroTitle = params.heroTitle?.trim() || params.name;
     heroSubtitle = params.heroSubtitle?.trim() || params.description || 'Vivez une aventure inoubliable avec des guides locaux experts et une assistance sur mesure.';
-    heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : "Portail Officiel de l'Agence");
+    heroBadge = params.heroBadge?.trim() || (shortDest ? `${shortDest} • ${params.duration || 'Saison 2026'}` : "Portail Officiel de l'Agence");
     ctaText = params.heroCta?.trim() || (isBoth ? 'WhatsApp & Devis en Ligne' : (isWhatsapp ? 'Réserver via WhatsApp' : 'Demander un Devis Gratuit'));
   } else if (isIt) {
     heroTitle = params.heroTitle?.trim() || params.name;
     heroSubtitle = params.heroSubtitle?.trim() || params.description || "Vivi un'avventura indimenticabile sulle Ande con guide locali certificate e massima assistenza.";
-    heroBadge = params.heroBadge?.trim() || (params.destination ? `${params.destination} • ${params.duration || 'Cusco'}` : "Portale Ufficiale dell'Agenzia");
+    heroBadge = params.heroBadge?.trim() || (shortDest ? `${shortDest} • ${params.duration || 'Stagione 2026'}` : "Portale Ufficiale dell'Agenzia");
     ctaText = params.heroCta?.trim() || (isBoth ? 'WhatsApp & Preventivo Online' : (isWhatsapp ? 'Prenota su WhatsApp' : 'Richiedi Preventivo Gratuito'));
   }
 

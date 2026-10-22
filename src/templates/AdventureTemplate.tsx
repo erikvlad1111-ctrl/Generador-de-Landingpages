@@ -703,7 +703,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       </nav>
 
       {/* 2. HERO SECTION CON IMAGEN DE FONDO COMPLETO */}
-      <section id="inicio" className="relative w-full overflow-hidden min-h-[580px] sm:min-h-[660px] lg:min-h-[720px] flex items-center">
+      <section id="inicio" className="relative w-full overflow-hidden min-h-[500px] sm:min-h-[560px] lg:min-h-[600px] flex items-center">
         {/* Full Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -720,11 +720,11 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 py-16 sm:py-24">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
             
             {/* Left Column: Copy & CTAs */}
-            <div className="lg:col-span-7 space-y-5 sm:space-y-6 text-left">
+            <div className="lg:col-span-7 space-y-3.5 sm:space-y-4 text-left">
               {/* Pill Badge */}
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold shadow-sm">
                 <Compass size={13} className="text-emerald-400" />

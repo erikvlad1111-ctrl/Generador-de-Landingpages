@@ -1125,11 +1125,11 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       </header>
 
       {/* 2. HERO PRINCIPAL */}
-      <section id="inicio" className="relative z-10 pt-6 sm:pt-14 pb-14 sm:pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+      <section id="inicio" className="relative z-10 pt-4 sm:pt-8 pb-10 sm:pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
           {/* Columna Izquierda */}
-          <div className="lg:col-span-6 space-y-5 sm:space-y-8">
+          <div className="lg:col-span-6 space-y-4 sm:space-y-6">
             <div className="inline-flex items-center gap-2 px-3.5 sm:px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-emerald-400/30 text-emerald-300 text-xs font-bold shadow-lg shadow-emerald-950/40 animate-float-badge">
               <Sparkles size={14} className="text-emerald-400 shrink-0" />
               <span className="truncate">{heroBadge}</span>

@@ -504,7 +504,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
     </header>
 
       {/* 3. WARM SUNLIT CINEMATIC HERO SECTION */}
-      <section id="inicio" className={`relative ${isMobile ? 'py-14 min-h-[540px]' : 'py-26 min-h-[90vh]'} flex items-center justify-center overflow-hidden z-10`}>
+      <section id="inicio" className={`relative ${isMobile ? 'py-10 min-h-[460px]' : 'py-12 sm:py-16 min-h-[76vh] sm:min-h-[80vh]'} flex items-center justify-center overflow-hidden z-10`}>
         {/* Warmer Vignette Layers */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a080e] via-[#0a080e]/65 to-[#0a080e]/30 z-10" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_10%,_#0a080e_85%)] z-10 opacity-75" />
@@ -521,7 +521,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         <div className={`relative z-20 text-center text-white ${isMobile ? 'px-4' : 'px-6'} max-w-5xl mx-auto flex flex-col items-center`}>
           
           {/* Badge VIP con resplandor dorado cálido */}
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-200 text-[11px] tracking-[0.25em] uppercase font-bold mb-5 backdrop-blur-md shadow-[0_0_25px_rgba(245,158,11,0.35)]">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-400/40 text-amber-200 text-[11px] tracking-[0.25em] uppercase font-bold mb-3.5 backdrop-blur-md shadow-[0_0_25px_rgba(245,158,11,0.35)]">
             <Sparkles size={14} className="text-amber-300 animate-pulse" />
             <span>{data.hero?.badge ? translateText(data.hero.badge, currentLang) : t.hero.badge}</span>
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
@@ -530,7 +530,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           {/* Título en Oro Champagne Editorial */}
           <h1 
             style={{ fontFamily: FONT_CONFIG[luxuryFontVariant].titleFont }}
-            className={`${isMobile ? 'text-2xl sm:text-3xl leading-tight mb-4' : 'text-4xl sm:text-6xl md:text-7xl leading-[1.12] mb-6'} tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-100 to-amber-300 drop-shadow-md font-medium`}
+            className={`${isMobile ? 'text-2xl sm:text-3xl leading-tight mb-3' : 'text-4xl sm:text-6xl md:text-7xl leading-[1.12] mb-4'} tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-100 to-amber-300 drop-shadow-md font-medium`}
           >
             {data.hero?.title ? translateText(data.hero.title, currentLang) : t.hero.defaultTitle}
           </h1>

@@ -685,204 +685,161 @@ function DemoPreviewContent() {
   return (
     <div className="w-full bg-slate-950 min-h-screen flex flex-col relative text-slate-100 selection:bg-blue-600 selection:text-white">
       
-      {/* Top Professional Control Bar (Clean Toolbar + Dedicated Tour Info Sub-Bar) */}
-      <div className="sticky top-0 z-40 select-none shadow-xl shadow-slate-950/70 shrink-0">
-        
-        {/* Row 1: Actions Toolbar (Fluid Horizontal Track) */}
-        <header className="bg-slate-900/95 backdrop-blur-xl h-14 sm:h-16 px-3 sm:px-6 border-b border-slate-800/80 w-full max-w-full overflow-x-auto no-scrollbar touch-pan-x">
-          <div className="flex items-center justify-between gap-2 sm:gap-4 min-w-max w-full h-full">
-            
-            {/* Left: Back Navigation */}
-            <div className="flex items-center gap-2 shrink-0">
-              <Link 
-                href="/demo" 
-                className="group text-slate-300 hover:text-white transition-all px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 flex items-center gap-1.5 sm:gap-2 text-xs font-bold border border-slate-700/70 hover:border-slate-600 shadow-xs shrink-0 cursor-pointer"
-                title="Volver al panel principal"
-              >
-                <ArrowLeft size={15} className="group-hover:-translate-x-0.5 transition-transform shrink-0" />
-                <span className="hidden sm:inline">Panel</span>
-              </Link>
-            </div>
+      {/* Top Professional Control Bar (Single Sleek Unified Bar - 54px High) */}
+      <div className="sticky top-0 z-40 select-none shadow-xl shadow-slate-950/70 shrink-0 bg-slate-900/98 backdrop-blur-xl border-b border-slate-800/90">
+        <header className="h-13 sm:h-14 px-3 sm:px-5 flex items-center justify-between gap-2.5 sm:gap-4 w-full max-w-full overflow-x-auto no-scrollbar touch-pan-x">
+          
+          {/* Left: Back Navigation + Tour Identity Badges */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0 min-w-0">
+            <Link 
+              href="/demo" 
+              className="group text-slate-300 hover:text-white transition-all px-2.5 py-1.5 rounded-xl bg-slate-800/90 hover:bg-slate-800 flex items-center gap-1.5 text-xs font-bold border border-slate-700/80 hover:border-slate-600 shadow-xs shrink-0 cursor-pointer"
+              title="Volver al panel principal"
+            >
+              <ArrowLeft size={14} className="group-hover:-translate-x-0.5 transition-transform shrink-0" />
+              <span className="hidden sm:inline">Panel</span>
+            </Link>
 
-            {/* Center: Device Viewport Switcher */}
-            <div className="flex items-center bg-slate-950/90 p-1 rounded-xl sm:rounded-2xl border border-slate-800/90 shadow-inner shadow-black/60 shrink-0">
-              <button
-                onClick={() => setViewMode('desktop')}
-                className={`px-2.5 sm:px-3.5 py-1.5 rounded-lg sm:rounded-xl text-xs flex items-center gap-1.5 sm:gap-2 font-extrabold transition-all cursor-pointer ${
-                  viewMode === 'desktop' 
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
-                    : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
-                }`}
-                title="Vista Computadora / Pantalla Completa"
-              >
-                <Monitor size={15} /> 
-                <span className="hidden md:inline">Desktop</span>
-              </button>
-              <button
-                onClick={() => setViewMode('tablet')}
-                className={`px-2.5 sm:px-3.5 py-1.5 rounded-lg sm:rounded-xl text-xs flex items-center gap-1.5 sm:gap-2 font-extrabold transition-all cursor-pointer ${
-                  viewMode === 'tablet' 
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
-                    : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
-                }`}
-                title="Vista Tablet / iPad"
-              >
-                <Tablet size={15} /> 
-                <span className="hidden md:inline">Tablet</span>
-              </button>
-              <button
-                onClick={() => setViewMode('mobile')}
-                className={`px-2.5 sm:px-3.5 py-1.5 rounded-lg sm:rounded-xl text-xs flex items-center gap-1.5 sm:gap-2 font-extrabold transition-all cursor-pointer ${
-                  viewMode === 'mobile' 
-                    ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25 scale-[1.02] border border-blue-400/20' 
-                    : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
-                }`}
-                title="Vista Móvil / Smartphone"
-              >
-                <Smartphone size={15} /> 
-                <span className="hidden md:inline">Móvil</span>
-              </button>
-            </div>
+            <div className="h-4 w-px bg-slate-800 hidden sm:block shrink-0" />
 
-            {/* Right: Rich Action Controls */}
-            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-              
-              {/* Primary Action: Edit Landing (Highly Prominent & Vibrant) */}
-              <button
-                onClick={openEditorWithCurrentData}
-                className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-600 text-white font-extrabold text-xs sm:text-sm rounded-xl transition-all shadow-lg shadow-blue-600/35 hover:shadow-blue-500/55 border border-blue-400/40 hover:scale-105 active:scale-95 cursor-pointer shrink-0"
-                title="Editar todas las opciones de la landing (textos, precios, fotos, qué incluye y logística)"
-              >
-                <Edit3 size={15} className="text-white shrink-0" />
-                <span>Editar Landing</span>
-              </button>
-
-              {/* Reset to Factory Original Values */}
-              <button
-                type="button"
-                onClick={handleResetToOfficial}
-                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-slate-800/80 hover:bg-rose-950/40 text-slate-300 hover:text-rose-300 font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-rose-500/50 cursor-pointer shadow-xs shrink-0"
-                title="Restablecer textos, títulos y logística al diseño oficial original de fábrica (limpia textos de prueba guardados)"
-              >
-                <RotateCcw size={14} className="text-slate-400 group-hover:text-rose-400 shrink-0" />
-                <span className="hidden xl:inline">Restablecer Fábrica</span>
-              </button>
-
-              {/* QR Code */}
-              <button
-                onClick={() => setIsQrOpen(true)}
-                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-indigo-500/40 cursor-pointer shadow-xs shrink-0"
-                title="Escanear con tu smartphone para ver cómo le llega al turista"
-              >
-                <QrCode size={15} className="text-indigo-400 shrink-0" />
-                <span className="hidden md:inline">QR</span>
-              </button>
-
-              {/* Export & Download Hub */}
-              <button
-                onClick={() => setIsDeployModalOpen(true)}
-                className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-gradient-to-r from-amber-500/15 via-amber-600/10 to-amber-500/15 hover:from-amber-500/25 hover:to-amber-600/25 text-amber-300 hover:text-amber-200 border border-amber-500/40 hover:border-amber-400/60 font-bold text-xs rounded-xl transition-all shadow-xs cursor-pointer shrink-0"
-                title="Descargar paquete ZIP autónomo o ver instrucciones de dominio propio en Vercel"
-              >
-                <Download size={15} className="text-amber-400 shrink-0" />
-                <span className="hidden sm:inline">Exportar</span>
-              </button>
-
-              {/* Copy Public Link */}
-              <button
-                onClick={handleCopyLink}
-                className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 font-bold text-xs rounded-xl transition-all border cursor-pointer shrink-0 ${
-                  copied 
-                    ? 'bg-emerald-600 text-white border-emerald-500 shadow-md shadow-emerald-600/30' 
-                    : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white border-slate-700/80 hover:border-slate-600 shadow-xs'
-                }`}
-                title="Copiar enlace para compartir con el cliente por WhatsApp"
-              >
-                {copied ? <Check size={15} className="text-emerald-200 shrink-0" /> : <Copy size={15} className="shrink-0" />}
-                <span className="hidden md:inline">{copied ? '¡Copiado!' : 'Copiar'}</span>
-              </button>
-
-              {/* Primary CTA: Open Live Web (Always Visible & Accessible) */}
-              <a
-                href={`/p/${landing.slug}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-500 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl font-black text-xs transition-all shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 border border-blue-400/30 hover:scale-102 active:scale-98 cursor-pointer shrink-0"
-                title="Abrir versión web real en una nueva pestaña"
-              >
-                <Globe size={15} className="shrink-0" />
-                <span>Ver Web</span>
-                <ExternalLink size={13} className="opacity-80 shrink-0 hidden xs:inline" />
-              </a>
-            </div>
-          </div>
-        </header>
-
-        {/* Row 2: Dedicated Tour Identity Bar */}
-        <div className="bg-slate-950/95 backdrop-blur-md px-3 sm:px-6 py-2 border-b border-slate-800/70 flex items-center justify-between gap-3 text-xs overflow-x-auto">
-          <div className="flex items-center gap-2.5 min-w-0">
-            <span className="text-slate-500 font-medium text-[11px] shrink-0">Landing:</span>
-            <h2 className="font-bold text-white text-xs sm:text-sm truncate drop-shadow-xs">
-              {landing.name}
-            </h2>
-            {landing.status === 'published' ? (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 shrink-0">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            {/* Tour Title & Status Badge */}
+            <div className="flex items-center gap-2 min-w-0">
+              <h2 className="font-extrabold text-white text-xs sm:text-sm truncate max-w-[130px] xs:max-w-[190px] sm:max-w-xs md:max-w-sm drop-shadow-xs" title={landing.name}>
+                {landing.name}
+              </h2>
+              {landing.status === 'published' ? (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 shrink-0">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span className="hidden xs:inline">Publicado</span>
                 </span>
-                Publicado
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-500/15 text-amber-300 border border-amber-500/30 shrink-0">
-                <span className="h-1.5 w-1.5 rounded-full bg-amber-400"></span>
-                Borrador
-              </span>
-            )}
-            <span className="text-slate-700 hidden sm:inline">•</span>
-            <div className="hidden sm:flex items-center gap-1.5 text-slate-400 shrink-0">
-              <span className="text-[11px]">Plantilla:</span>
-              <span className="px-2 py-0.5 rounded-md bg-slate-900 text-blue-400 font-semibold text-[10px] uppercase tracking-wide border border-slate-800">
+              ) : (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-wider bg-amber-500/15 text-amber-300 border border-amber-500/30 shrink-0">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                  <span className="hidden xs:inline">Borrador</span>
+                </span>
+              )}
+              <span className="px-1.5 py-0.5 rounded-md bg-slate-800 text-blue-300 font-bold text-[9px] uppercase tracking-wide border border-slate-700/80 shrink-0 hidden lg:inline">
                 {landing.template}
               </span>
             </div>
-            <span className="text-slate-700 hidden sm:inline">•</span>
-            <div className="hidden sm:flex items-center gap-1.5 shrink-0">
-              <span className="text-[11px] text-slate-400">Nivel:</span>
-              <span className={`px-2 py-0.5 rounded-md font-extrabold text-[10px] uppercase tracking-wide border ${
-                (landing.tier || 'advance') === 'advance'
-                  ? 'bg-purple-500/15 text-purple-300 border-purple-500/30'
-                  : (landing.tier || 'advance') === 'pro'
-                  ? 'bg-blue-500/15 text-blue-300 border-blue-500/30'
-                  : (landing.tier || 'advance') === 'basic'
-                  ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
-                  : 'bg-stone-500/15 text-stone-300 border-stone-500/30'
-              }`}>
-                {landing.tier || 'advance'}
-              </span>
-            </div>
-            {landing.guideName && (
-              <>
-                <span className="text-slate-700 hidden md:inline">•</span>
-                <span className="text-slate-400 text-[11px] truncate hidden md:inline">
-                  Guía: <strong className="text-slate-200 font-medium">{landing.guideName}</strong>
-                </span>
-              </>
-            )}
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
-            <span className="font-mono text-[11px] text-slate-500 bg-slate-900/80 px-2 py-0.5 rounded-md border border-slate-800/80">
-              /p/{landing.slug}
-            </span>
+          {/* Center: Device Viewport Switcher */}
+          <div className="flex items-center bg-slate-950/90 p-0.5 rounded-xl border border-slate-800/90 shadow-inner shadow-black/60 shrink-0">
+            <button
+              onClick={() => setViewMode('desktop')}
+              className={`px-2.5 sm:px-3 py-1 rounded-lg text-xs flex items-center gap-1.5 font-extrabold transition-all cursor-pointer ${
+                viewMode === 'desktop' 
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 border border-blue-400/20' 
+                  : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
+              }`}
+              title="Vista Computadora / Pantalla Completa"
+            >
+              <Monitor size={14} /> 
+              <span className="hidden md:inline">Desktop</span>
+            </button>
+            <button
+              onClick={() => setViewMode('tablet')}
+              className={`px-2.5 sm:px-3 py-1 rounded-lg text-xs flex items-center gap-1.5 font-extrabold transition-all cursor-pointer ${
+                viewMode === 'tablet' 
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 border border-blue-400/20' 
+                  : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
+              }`}
+              title="Vista Tablet / iPad"
+            >
+              <Tablet size={14} /> 
+              <span className="hidden md:inline">Tablet</span>
+            </button>
+            <button
+              onClick={() => setViewMode('mobile')}
+              className={`px-2.5 sm:px-3 py-1 rounded-lg text-xs flex items-center gap-1.5 font-extrabold transition-all cursor-pointer ${
+                viewMode === 'mobile' 
+                  ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md shadow-blue-500/25 border border-blue-400/20' 
+                  : 'text-slate-400 hover:text-white hover:bg-slate-900/80'
+              }`}
+              title="Vista Móvil / Smartphone"
+            >
+              <Smartphone size={14} /> 
+              <span className="hidden md:inline">Móvil</span>
+            </button>
           </div>
-        </div>
 
+          {/* Right: Rich Action Controls */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            
+            {/* Primary Action: Edit Landing */}
+            <button
+              onClick={openEditorWithCurrentData}
+              className="flex items-center gap-1.5 px-3 sm:px-3.5 py-1.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-600 text-white font-extrabold text-xs rounded-xl transition-all shadow-md shadow-blue-600/30 hover:shadow-blue-500/50 border border-blue-400/40 hover:scale-103 active:scale-97 cursor-pointer shrink-0"
+              title="Editar todas las opciones de la landing"
+            >
+              <Edit3 size={14} className="text-white shrink-0" />
+              <span>Editar</span>
+            </button>
+
+            {/* Primary CTA: Open Live Web */}
+            <a
+              href={`/p/${landing.slug}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 sm:gap-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-2.5 sm:px-3.5 py-1.5 rounded-xl font-black text-xs transition-all shadow-md shadow-emerald-600/25 border border-emerald-400/30 hover:scale-103 active:scale-97 cursor-pointer shrink-0"
+              title="Abrir versión web real en una nueva pestaña"
+            >
+              <Globe size={14} className="shrink-0" />
+              <span>Ver Web</span>
+              <ExternalLink size={12} className="opacity-80 shrink-0 hidden xs:inline" />
+            </a>
+
+            {/* Reset to Factory Original Values */}
+            <button
+              type="button"
+              onClick={handleResetToOfficial}
+              className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 bg-slate-800/80 hover:bg-rose-950/40 text-slate-300 hover:text-rose-300 font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-rose-500/50 cursor-pointer shadow-xs shrink-0"
+              title="Restablecer textos al diseño oficial original de fábrica"
+            >
+              <RotateCcw size={13} className="text-slate-400 group-hover:text-rose-400 shrink-0" />
+              <span className="hidden 2xl:inline">Restablecer</span>
+            </button>
+
+            {/* QR Code */}
+            <button
+              onClick={() => setIsQrOpen(true)}
+              className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-xs rounded-xl transition-all border border-slate-700/80 hover:border-indigo-500/40 cursor-pointer shadow-xs shrink-0"
+              title="Escanear con tu smartphone"
+            >
+              <QrCode size={14} className="text-indigo-400 shrink-0" />
+              <span className="hidden xl:inline">QR</span>
+            </button>
+
+            {/* Export & Download Hub */}
+            <button
+              onClick={() => setIsDeployModalOpen(true)}
+              className="flex items-center gap-1 px-2 sm:px-2.5 py-1.5 bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 hover:text-amber-200 border border-amber-500/40 font-bold text-xs rounded-xl transition-all shadow-xs cursor-pointer shrink-0"
+              title="Descargar paquete ZIP autónomo o dominio propio"
+            >
+              <Download size={14} className="text-amber-400 shrink-0" />
+              <span className="hidden sm:inline">Exportar</span>
+            </button>
+
+            {/* Copy Public Link */}
+            <button
+              onClick={handleCopyLink}
+              className={`flex items-center gap-1 px-2 sm:px-2.5 py-1.5 font-bold text-xs rounded-xl transition-all border cursor-pointer shrink-0 ${
+                copied 
+                  ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm' 
+                  : 'bg-slate-800/80 hover:bg-slate-800 text-slate-200 hover:text-white border-slate-700/80'
+              }`}
+              title="Copiar enlace público"
+            >
+              {copied ? <Check size={14} className="text-emerald-200 shrink-0" /> : <Copy size={14} className="shrink-0" />}
+            </button>
+          </div>
+        </header>
       </div>
 
       {/* Instant Notification Toast */}
       {publishToast && (
-        <div className="fixed top-24 right-6 z-50 bg-emerald-600 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-in slide-in-from-top-3 duration-300">
+        <div className="fixed top-16 right-6 z-50 bg-emerald-600 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-in slide-in-from-top-3 duration-300">
           <CheckCircle size={20} />
           <div>
             <p className="font-bold text-xs">¡Landing Publicada Exitosamente!</p>
@@ -893,7 +850,7 @@ function DemoPreviewContent() {
 
       {/* Reset to Factory Toast */}
       {resetToast && (
-        <div className="fixed top-24 right-6 z-50 bg-emerald-600 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-in slide-in-from-top-3 duration-300 border border-emerald-400/40">
+        <div className="fixed top-16 right-6 z-50 bg-emerald-600 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-in slide-in-from-top-3 duration-300 border border-emerald-400/40">
           <CheckCircle size={20} />
           <div>
             <p className="font-bold text-xs">¡Diseño Restablecido al Original!</p>
@@ -902,15 +859,15 @@ function DemoPreviewContent() {
         </div>
       )}
 
-      {/* Preview Canvas Area */}
-      <main className="flex-1 overflow-auto bg-slate-950 p-2 sm:p-4 md:p-8 flex justify-center items-start min-h-[calc(100vh-5rem)]">
+      {/* Preview Canvas Area (Seamless Full-Width in Desktop Mode Without Artificial Offset) */}
+      <main className={`flex-1 overflow-auto bg-slate-950 ${viewMode === 'desktop' ? 'p-0 w-full' : 'p-2 sm:p-4 md:p-6 flex justify-center items-start min-h-[calc(100vh-3.5rem)]'}`}>
         <div 
           className={`bg-white shadow-2xl transition-all duration-300 relative [transform:translateZ(0)] ${
             viewMode === 'mobile' 
-              ? 'w-full max-w-[390px] h-[min(844px,calc(100vh-7rem))] sm:h-[844px] rounded-[36px] sm:rounded-[48px] ring-4 sm:ring-8 ring-slate-800 border-2 sm:border-4 border-slate-900 overflow-hidden my-2 sm:my-4 shadow-2xl shadow-black/80' 
+              ? 'w-full max-w-[390px] h-[min(844px,calc(100vh-6rem))] sm:h-[844px] rounded-[36px] sm:rounded-[48px] ring-4 sm:ring-8 ring-slate-800 border-2 sm:border-4 border-slate-900 overflow-hidden my-2 sm:my-4 shadow-2xl shadow-black/80' 
               : viewMode === 'tablet'
-              ? 'w-full max-w-[768px] h-[min(900px,calc(100vh-7rem))] sm:h-[900px] rounded-[24px] sm:rounded-[32px] ring-4 sm:ring-8 ring-slate-800 border-2 sm:border-4 border-slate-900 overflow-hidden my-2 sm:my-4 shadow-2xl shadow-black/80'
-              : 'w-full max-w-[1440px] min-h-[min(850px,calc(100vh-7rem))] rounded-2xl overflow-hidden border border-slate-800 shadow-2xl'
+              ? 'w-full max-w-[768px] h-[min(900px,calc(100vh-6rem))] sm:h-[900px] rounded-[24px] sm:rounded-[32px] ring-4 sm:ring-8 ring-slate-800 border-2 sm:border-4 border-slate-900 overflow-hidden my-2 sm:my-4 shadow-2xl shadow-black/80' 
+              : 'w-full max-w-full min-h-[calc(100vh-3.5rem)] rounded-none border-0'
           }`}
           style={{ transform: 'translateZ(0)' }}
         >

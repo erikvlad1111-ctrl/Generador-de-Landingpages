@@ -1324,7 +1324,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       </header>
 
       {/* 3. HERO SECTION (PASO 2: FOTOGRAFÍA DE PORTADA & OBJETIVO COMERCIAL) */}
-      <section id="inicio" className={`relative ${isMobile ? 'min-h-[380px] py-8 px-3' : 'min-h-[420px] sm:min-h-[520px] lg:min-h-[600px] py-10 sm:py-16 px-4 sm:px-6'} flex items-center justify-center overflow-hidden w-full max-w-full`}>
+      <section id="inicio" className={`relative ${isMobile ? 'min-h-[350px] py-6 px-3' : 'min-h-[400px] sm:min-h-[460px] lg:min-h-[500px] py-6 sm:py-10 px-4 sm:px-6'} flex items-center justify-center overflow-hidden w-full max-w-full`}>
         <div className="absolute inset-0 z-0 overflow-hidden">
           <Image
             src={heroImage}
@@ -1362,7 +1362,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           </>
         )}
 
-        <div className="relative z-10 max-w-4xl mx-auto text-center text-white space-y-4 sm:space-y-6 w-full">
+        <div className="relative z-10 max-w-4xl mx-auto text-center text-white space-y-3 sm:space-y-4 w-full">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-4 sm:py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[10px] sm:text-xs font-extrabold uppercase tracking-widest border border-white/30 shadow-lg">
             <Sparkles size={12} className="text-[#FF8844]" />
             <span>{heroBadge}</span>
@@ -1376,39 +1376,39 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           </p>
 
           {/* Barra Destacada de Datos del Tour (Tarifa, Duración, Destino, Altitud, Dificultad, Modalidad) */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 max-w-3xl mx-auto py-1 px-2">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 max-w-3xl mx-auto py-0.5 px-2">
             {data?.price && (
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#FF5500] to-[#FF3500] text-white text-xs sm:text-sm font-black shadow-lg border border-white/20">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-gradient-to-r from-[#FF5500] to-[#FF3500] text-white text-xs sm:text-sm font-black shadow-lg border border-white/20">
                 <span className="text-[10px] sm:text-xs font-bold uppercase opacity-90">{lang === 'en' ? 'From' : 'Tarifa'}:</span>
                 <span>{data.price}</span>
               </div>
             )}
             {data?.duration && (
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
                 <Clock size={13} className="text-[#FF8844]" />
                 <span>{getLocalizedDuration(data.duration)}</span>
               </div>
             )}
             {destination && (
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
                 <MapPin size={13} className="text-[#FF8844]" />
                 <span>{destination}</span>
               </div>
             )}
             {data?.altitude && (
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
                 <Mountain size={13} className="text-[#FF8844]" />
                 <span>{data.altitude}</span>
               </div>
             )}
             {data?.difficulty && (
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
                 <Compass size={13} className="text-[#FF8844]" />
                 <span>{getLocalizedDifficulty(data.difficulty)}</span>
               </div>
             )}
             {data?.groupType && (
-              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
                 <Users size={13} className="text-[#FF8844]" />
                 <span>{getLocalizedGroupType(data.groupType)}</span>
               </div>

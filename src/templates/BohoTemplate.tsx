@@ -563,11 +563,11 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
       </div>
 
       {/* Hero Section: Editorial Cover with Pinterest Moodboard vibe */}
-      <section id="inicio" className="relative px-4 sm:px-8 pt-5 sm:pt-8 pb-10 sm:pb-16 max-w-6xl mx-auto overflow-hidden">
+      <section id="inicio" className="relative px-4 sm:px-8 pt-3 sm:pt-5 pb-8 sm:pb-12 max-w-6xl mx-auto overflow-hidden">
         <div className="grid md:grid-cols-12 gap-6 sm:gap-8 items-center">
           
           {/* Left Hero Content */}
-          <div className="md:col-span-7 space-y-4 sm:space-y-5">
+          <div className="md:col-span-7 space-y-3.5 sm:space-y-4">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C86D51]/10 text-[#C86D51] text-[13px] sm:text-[15px] font-semibold uppercase tracking-wider">
               <Sparkles size={14} />
               <span>

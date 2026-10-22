@@ -226,7 +226,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         </nav>
 
         {/* Hero Central Titles & Circular Icons (Animated Entry) */}
-        <div className="relative z-10 max-w-4xl mx-auto px-4 pt-14 sm:pt-20 pb-28 sm:pb-36 text-center space-y-4 sm:space-y-6 animate-fade-in-up">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 pt-8 sm:pt-12 pb-20 sm:pb-28 text-center space-y-3 sm:space-y-4 animate-fade-in-up">
           
           {/* Badge Superior del Hero */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-red-400/50 text-red-200 text-[11px] sm:text-xs font-serif tracking-widest uppercase shadow-xl mx-auto">
