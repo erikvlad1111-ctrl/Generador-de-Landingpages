@@ -88,3 +88,15 @@ Esta guía documenta la disponibilidad de buscadores, calculadoras y filtros int
   4. En `src/app/demo/new/page.tsx`, sincronizar dinámicamente `name` -> `heroTitle` y `description` -> `heroSubtitle` y respetar `finalHeroTitle` y `finalHeroSubtitle` en `handleGenerate`.
   5. En `AgencyPortalTemplate.tsx`, `CulturalTemplate.tsx` y `PremiumTemplate.tsx`, añadir la barra destacada de píldoras de datos del tour en el Hero (tarifa destacada, duración, destino, altitud, dificultad y modalidad de grupo).
 
+### Error 3: Desplazamiento Vertical del Título H1 en Páginas Editadas vs Páginas de Muestra
+- **Síntoma / Mensaje de Error:** El usuario observa que "en las páginas editadas el título está más abajo que en las páginas de muestra del panel principal".
+- **Causa Raíz:**
+  1. **Doble barra de control en `/demo/preview`:** El visor de edición (`/demo/preview`) renderizaba dos barras pegadas al tope (Barra de acciones de 64px + Barra de identidad del tour de 40px) más un padding superior en el contenedor `main` de 32px (`md:p-8`). Esto empujaba hacia abajo toda la landing en más de 136px comparado con abrir `/p/[slug]` en pantalla completa.
+  2. **Padding excesivo en Hero de plantillas:** Secciones como `AgencyPortalTemplate` (`py-16`), `CulturalTemplate` (`pt-20 pb-36`) y `PremiumTemplate` (`py-26`) acumulaban márgenes y paddings verticales elevados que, sumados a las barras de píldoras añadidas, centraban el bloque de títulos en la mitad inferior de la pantalla.
+  3. **Badges de Hero extensos:** Al autogenerar datos, el `heroBadge` incluía destinos largos con conjunciones ("&") provocando saltos de 2 a 3 líneas que empujaban el `H1`.
+- **Solución Paso a Paso:**
+  1. En `src/app/demo/preview/page.tsx`, unificar las dos filas en una sola barra compacta ultrafina de 54px (`h-14`) que integra navegación, título truncado, estado, selector de dispositivos y botones de acción ("Editar", "Ver Web", QR y Exportar).
+  2. En modo Desktop de `/demo/preview`, eliminar el gap artificial (`p-0 w-full rounded-none border-0`) para que la landing llene la pantalla exactamente igual que en la web real.
+  3. Calibrar los paddings del Hero en las 6 plantillas (`py-8 sm:py-10`, `pt-8 sm:pt-12`, `py-12 sm:py-16`) y reducir `space-y` a `space-y-3 sm:space-y-4` para que el `H1` se posicione en el tercio superior visual (a nivel de ojos del viajero).
+  4. En `src/data/landingStore.ts`, depurar `shortDest` para que el `heroBadge` generado sea conciso y no genere saltos de línea innecesarios.
+
