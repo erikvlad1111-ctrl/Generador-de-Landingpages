@@ -30,7 +30,7 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
   const isPreview = pathname.startsWith('/demo/preview');
 
   let pageTitle = 'Panel Principal';
-  if (isNewLanding) pageTitle = 'Generador de Landings';
+  if (isNewLanding) pageTitle = 'Generador de Landing';
   else if (isPinterest) pageTitle = 'Diseños Disponibles Landing Pages';
   else if (isPlans) pageTitle = 'Guía de Estructura de Páginas';
   else if (isSettings) pageTitle = 'Configuración';

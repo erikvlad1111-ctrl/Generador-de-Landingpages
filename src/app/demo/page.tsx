@@ -187,7 +187,7 @@ export default function DemoDashboard() {
               className="w-full lg:w-auto inline-flex items-center justify-center gap-2.5 bg-blue-600 hover:bg-blue-500 text-white px-7 py-3.5 rounded-2xl font-extrabold transition-all shadow-lg shadow-blue-600/30 hover:scale-102 active:scale-98 text-sm"
             >
               <Sparkles size={18} />
-              <span>Generador de Landing con IA</span>
+              <span>Generador de Landing</span>
             </Link>
           </div>
         </div>
