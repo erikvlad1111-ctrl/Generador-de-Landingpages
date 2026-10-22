@@ -100,3 +100,16 @@ Esta guía documenta la disponibilidad de buscadores, calculadoras y filtros int
   3. Calibrar los paddings del Hero en las 6 plantillas (`py-8 sm:py-10`, `pt-8 sm:pt-12`, `py-12 sm:py-16`) y reducir `space-y` a `space-y-3 sm:space-y-4` para que el `H1` se posicione en el tercio superior visual (a nivel de ojos del viajero).
   4. En `src/data/landingStore.ts`, depurar `shortDest` para que el `heroBadge` generado sea conciso y no genere saltos de línea innecesarios.
 
+### Error 4: Espacio Vacío Muerto Encima del Título y Badge del Hero en Plantilla Trek Aventura
+- **Síntoma / Mensaje de Error:** En la plantilla de Aventura (`AdventureTemplate.tsx`), el usuario reporta una franja oscura desmesurada de más de 200px entre el navbar y el título/badge del Hero (`GTGTGTGTGTG`), haciendo que el contenido quede hundido en la mitad inferior.
+- **Causa Raíz:**
+  1. **Centrado vertical `items-center` con columnas asimétricas:** La sección `#inicio` tenía `min-h-[600px] flex items-center` y su contenedor interno `grid grid-cols-1 lg:grid-cols-12 ... items-center`.
+  2. En la columna derecha se ubica `AdventureBookingCard` junto con el bloque flotante de salidas diarias y altitud, sumando una altura superior a 560px.
+  3. Cuando el usuario ingresa un título de prueba corto (`GTGTGTGTGTG`) o textos concisos, la columna izquierda mide solo ~220px. Al aplicar `items-center` sobre columnas con 340px de diferencia de altura, el motor CSS añade automáticamente un margen superior de `(560px - 220px) / 2 = 170px` para centrar el texto respecto a la tarjeta derecha.
+  4. Sumado al padding `py-10 sm:py-14` (56px), se acumulaban más de 226px de espacio negro vacío encima del badge y el título.
+- **Solución Paso a Paso:**
+  1. En `src/templates/AdventureTemplate.tsx`, cambiar la alineación del grid a `items-start lg:items-center` para que el bloque de texto izquierdo comience en su posición natural sin forzar un desfase vertical.
+  2. Calibrar el padding del contenedor a `py-6 sm:py-8 lg:py-10` y el `min-h` de la sección a `min-h-[440px] sm:min-h-[480px] lg:min-h-[520px]`.
+  3. Resultado: El badge de destino y el título quedan anclados de forma fluida y elegante en la parte superior del Hero, perfectamente alineados tanto con títulos cortos como con títulos de varias líneas.
+
+
