@@ -2313,16 +2313,22 @@ export default function NewLandingDemo() {
                 </div>
               </div>
 
-              {/* Ficha Técnica del Tour & Catálogo */}
-              {/* PASO 6: FICHA TÉCNICA DEL TOUR & DESTINO (MÁS DATOS PARA RELLENAR) */}
+              {/* Ficha Técnica del Tour Principal */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-3 border-b border-slate-100 gap-1.5">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">6</span>
-                Ficha Técnica del Tour & Destino
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
+                  <Compass size={13} />
+                </span>
+                Tour Principal de esta Landing (Tour Estrella)
               </label>
-              <span className="text-[11px] font-semibold text-slate-400">Datos para enriquecer los textos de la IA</span>
+              <span className="text-[11px] font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">
+                Protagonista de la Portada, Hero y Precios
+              </span>
             </div>
+            <p className="text-xs text-slate-500 leading-relaxed -mt-2">
+              Ingresa los datos del tour específico que vas a vender con esta página (nombre comercial, destino, tarifa y duración). Toda la portada, el título y la ficha técnica se adaptarán a esta información:
+            </p>
 
             {/* Name and Destination */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -2491,7 +2497,7 @@ export default function NewLandingDemo() {
                       </span>
                     </div>
                     <p className="text-xs mt-1 leading-relaxed text-slate-300">
-                      Los campos de arriba configuran tu <strong>Tour Estrella principal</strong> (Hero, Ficha e Itinerario). Tu landing incluye además la sección de <strong>6 tours recomendados</strong> en la vitrina de las 5 plantillas (listos con valores por defecto o personalizables/importables desde otras landings).
+                      Tu landing page está 100% enfocada en el <strong>Tour Principal</strong> que configuraste arriba. Además, en la parte inferior de la página se incluye una vitrina de <strong>cross-selling con otros tours sugeridos</strong> (ya vienen precargados con valores estándar listos para usar, pero puedes personalizarlos si deseas).
                     </p>
                   </div>
                 </div>
