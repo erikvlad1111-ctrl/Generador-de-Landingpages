@@ -1236,6 +1236,7 @@ export function simulateAiGeneration(params: {
   return {
     id: Date.now().toString(),
     name: params.name,
+    description: params.description || undefined,
     slug: slug || 'tour-nuevo',
     tier,
     guideName: params.guideName || 'Guía Cusco Creativos',

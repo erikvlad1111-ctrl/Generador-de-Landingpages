@@ -241,16 +241,43 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             {getLocalizedHeroSubtitle()}
           </p>
 
-          {/* Price Reference Badge & Primary Hero CTA Button */}
-          <div className="pt-2 flex flex-col items-center justify-center gap-4">
+          {/* Tour Specs Pills Bar (Price, Duration, Destination, Altitude, Group) */}
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-2 max-w-2xl mx-auto">
             {data.price && (
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/25 text-white shadow-lg">
-                <span className="text-[11px] text-red-200 font-serif tracking-wider uppercase">
-                  {currentLang === 'en' ? 'From' : currentLang === 'pt' ? 'A partir de' : currentLang === 'fr' ? 'À partir de' : currentLang === 'it' ? 'A partire da' : 'Tarifa desde'}:
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-amber-400/50 text-white shadow-lg">
+                <span className="text-[10px] text-amber-200 font-serif tracking-wider uppercase">
+                  {currentLang === 'en' ? 'From' : currentLang === 'pt' ? 'A partir de' : currentLang === 'fr' ? 'À partir de' : currentLang === 'it' ? 'A partire da' : 'Tarifa'}:
                 </span>
-                <span className="text-sm sm:text-base font-serif font-black text-amber-300">{data.price}</span>
+                <span className="text-xs sm:text-sm font-serif font-black text-amber-300">{data.price}</span>
               </div>
             )}
+            {data.duration && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-xs font-serif shadow-md">
+                <Clock size={13} className="text-amber-300" />
+                <span>{translateText(data.duration, currentLang)}</span>
+              </div>
+            )}
+            {data.destination && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-xs font-serif shadow-md">
+                <MapPin size={13} className="text-amber-300" />
+                <span>{translateText(data.destination, currentLang)}</span>
+              </div>
+            )}
+            {data.altitude && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-xs font-serif shadow-md">
+                <Mountain size={13} className="text-amber-300" />
+                <span>{data.altitude}</span>
+              </div>
+            )}
+            {data.groupType && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-xs font-serif shadow-md">
+                <Users size={13} className="text-amber-300" />
+                <span>{translateText(data.groupType, currentLang)}</span>
+              </div>
+            )}
+          </div>
+
+          <div className="pt-2 flex flex-col items-center justify-center gap-4">
 
             {/* Botón Principal Hero CTA */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-md mx-auto">

@@ -38,6 +38,7 @@ export interface CatalogTourItem {
 export interface LandingData {
   id: string;
   name: string;
+  description?: string;
   slug: string;
   tier?: PlanTier;
   guideName: string;

@@ -1375,6 +1375,46 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             {heroSubtitle}
           </p>
 
+          {/* Barra Destacada de Datos del Tour (Tarifa, Duración, Destino, Altitud, Dificultad, Modalidad) */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 max-w-3xl mx-auto py-1 px-2">
+            {data?.price && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#FF5500] to-[#FF3500] text-white text-xs sm:text-sm font-black shadow-lg border border-white/20">
+                <span className="text-[10px] sm:text-xs font-bold uppercase opacity-90">{lang === 'en' ? 'From' : 'Tarifa'}:</span>
+                <span>{data.price}</span>
+              </div>
+            )}
+            {data?.duration && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
+                <Clock size={13} className="text-[#FF8844]" />
+                <span>{getLocalizedDuration(data.duration)}</span>
+              </div>
+            )}
+            {destination && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
+                <MapPin size={13} className="text-[#FF8844]" />
+                <span>{destination}</span>
+              </div>
+            )}
+            {data?.altitude && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
+                <Mountain size={13} className="text-[#FF8844]" />
+                <span>{data.altitude}</span>
+              </div>
+            )}
+            {data?.difficulty && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
+                <Compass size={13} className="text-[#FF8844]" />
+                <span>{getLocalizedDifficulty(data.difficulty)}</span>
+              </div>
+            )}
+            {data?.groupType && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
+                <Users size={13} className="text-[#FF8844]" />
+                <span>{getLocalizedGroupType(data.groupType)}</span>
+              </div>
+            )}
+          </div>
+
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-4 max-w-md mx-auto sm:max-w-none w-full">
             {objective === 'both' ? (
               <>

@@ -543,9 +543,37 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
           </div>
 
           {/* Subtítulo pulido y acogedor */}
-          <p className={`${isMobile ? 'text-xs leading-relaxed mb-8' : 'text-base sm:text-lg md:text-xl mb-10 leading-relaxed'} text-neutral-200 max-w-2xl font-light tracking-wide`}>
+          <p className={`${isMobile ? 'text-xs leading-relaxed mb-6' : 'text-base sm:text-lg md:text-xl mb-6 leading-relaxed'} text-neutral-200 max-w-2xl font-light tracking-wide`}>
             {getLocalizedHeroSubtitle()}
           </p>
+
+          {/* Tour Specs Pills Bar (Duración, Destino, Altitud, Modalidad) */}
+          <div className="flex flex-wrap items-center justify-center gap-2 max-w-2xl mx-auto mb-6">
+            {data.duration && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-900/80 backdrop-blur-md border border-amber-500/30 text-amber-200 text-xs font-mono shadow-md">
+                <Clock size={12} className="text-amber-400" />
+                <span>{translateText(data.duration, currentLang)}</span>
+              </div>
+            )}
+            {data.destination && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-900/80 backdrop-blur-md border border-amber-500/30 text-amber-200 text-xs font-mono shadow-md">
+                <MapPin size={12} className="text-amber-400" />
+                <span>{translateText(data.destination, currentLang)}</span>
+              </div>
+            )}
+            {data.altitude && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-900/80 backdrop-blur-md border border-amber-500/30 text-amber-200 text-xs font-mono shadow-md">
+                <Mountain size={12} className="text-amber-400" />
+                <span>{data.altitude}</span>
+              </div>
+            )}
+            {data.groupType && (
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-900/80 backdrop-blur-md border border-amber-500/30 text-amber-200 text-xs font-mono shadow-md">
+                <Users size={12} className="text-amber-400" />
+                <span>{translateText(data.groupType, currentLang)}</span>
+              </div>
+            )}
+          </div>
 
           {/* CTA & Precio en marco biselado Optimizado */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 w-full max-w-2xl mx-auto">

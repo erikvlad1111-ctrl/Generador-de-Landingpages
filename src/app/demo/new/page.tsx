@@ -687,7 +687,7 @@ export default function NewLandingDemo() {
   const [isHeroSubtitleCustomized, setIsHeroSubtitleCustomized] = useState(false);
 
   // Selector de Navegación UX por Pestañas
-  const [activeTab, setActiveTab] = useState<'tour' | 'design' | 'agency' | 'content'>('tour');
+  const [activeTab, setActiveTab] = useState<'design' | 'agency' | 'tour' | 'content'>('design');
   const [showAllSteps, setShowAllSteps] = useState(false);
 
   useEffect(() => {
@@ -1044,7 +1044,14 @@ export default function NewLandingDemo() {
           ? (selectedLanguages.filter(l => l === 'es' || l === 'en').length > 0 ? selectedLanguages.filter(l => l === 'es' || l === 'en') : ['es', 'en'])
           : selectedLanguages;
 
-        const generated = simulateAiGeneration({
+          const finalHeroTitle = (isHeroTitleCustomized && heroTitle.trim())
+            ? heroTitle.trim()
+            : (name.trim() || heroTitle.trim() || undefined);
+          const finalHeroSubtitle = (isHeroSubtitleCustomized && heroSubtitle.trim())
+            ? heroSubtitle.trim()
+            : (description.trim() || heroSubtitle.trim() || undefined);
+
+          const generated = simulateAiGeneration({
           name,
           guideName,
           guideCert,
@@ -1078,8 +1085,8 @@ export default function NewLandingDemo() {
           catalogTours: catalogTours,
           faqs: faqs.length > 0 ? faqs : undefined,
           testimonials: testimonials.length > 0 ? testimonials : undefined,
-          heroTitle: heroTitle.trim() || name.trim() || undefined,
-          heroSubtitle: heroSubtitle.trim() || description.trim() || undefined,
+          heroTitle: finalHeroTitle,
+          heroSubtitle: finalHeroSubtitle,
           heroBadge: heroBadge.trim() || undefined,
           heroCta: heroCta.trim() || undefined,
           companyName: companyName.trim() || undefined,
@@ -1200,16 +1207,8 @@ export default function NewLandingDemo() {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
             {[
               {
-                id: 'tour' as const,
-                step: '1',
-                title: 'Datos del Tour',
-                desc: 'Nombre, precio y destino',
-                icon: Compass,
-                color: 'blue'
-              },
-              {
                 id: 'design' as const,
-                step: '2',
+                step: '1',
                 title: 'Diseño & Portada',
                 desc: 'Plantilla, hero e idiomas',
                 icon: Layers,
@@ -1217,11 +1216,19 @@ export default function NewLandingDemo() {
               },
               {
                 id: 'agency' as const,
-                step: '3',
+                step: '2',
                 title: 'Tu Agencia & Marca',
                 desc: 'Logo, WhatsApp y oficina',
                 icon: Building2,
                 color: 'indigo'
+              },
+              {
+                id: 'tour' as const,
+                step: '3',
+                title: 'Datos del Tour',
+                desc: 'Nombre, precio y destino',
+                icon: Compass,
+                color: 'blue'
               },
               {
                 id: 'content' as const,
@@ -1294,290 +1301,20 @@ export default function NewLandingDemo() {
         <form onSubmit={handleGenerate} className="lg:col-span-7 space-y-6">
           
           {/* ========================================================= */}
-          {/* TAB 1: DATOS DEL TOUR & DESTINO PRINCIPAL */}
-          {/* ========================================================= */}
-          {(activeTab === 'tour' || showAllSteps) && (
-            <div className="space-y-6 animate-in fade-in duration-300">
-              <div className="flex items-center justify-between pb-1">
-                <div className="flex items-center gap-2.5">
-                  <span className="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">1</span>
-                  <div>
-                    <h3 className="text-sm font-black text-slate-900 uppercase tracking-tight">Paso 1: Datos del Tour & Destino Principal</h3>
-                    <p className="text-xs text-slate-500">¿Qué experiencia turística vas a promocionar?</p>
-                  </div>
-                </div>
-                <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
-                  Paso 1 de 4 • Esencial
-                </span>
-              </div>
-
-              {/* Presets Rápidos Opcionales */}
-              <div className="bg-slate-50/80 border border-slate-200/60 p-3.5 rounded-2xl space-y-2">
-                <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                  <Sparkles size={14} className="text-blue-600" /> ¿Deseas autocompletar con un tour de ejemplo preconfigurado?
-                </span>
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  {PRESET_TOURS.map(p => (
-                    <button
-                      key={p.id}
-                      type="button"
-                      onClick={() => {
-                        setTemplate(p.template);
-                        handleApplyPreset(p);
-                      }}
-                      className="px-3 py-1.5 rounded-xl text-[11px] font-bold bg-white hover:bg-blue-600 hover:text-white text-slate-700 border border-slate-200/80 hover:border-blue-600 transition-all cursor-pointer shadow-2xs"
-                    >
-                      {p.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Ficha Técnica del Tour & Catálogo */}
-              {/* PASO 6: FICHA TÉCNICA DEL TOUR & DESTINO (MÁS DATOS PARA RELLENAR) */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">6</span>
-                Ficha Técnica del Tour & Destino
-              </label>
-              <span className="text-[11px] font-semibold text-slate-400">Datos para enriquecer los textos de la IA</span>
-            </div>
-
-            {/* Name and Destination */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Compass size={14} className="text-blue-500" /> Nombre Comercial del Tour *
-                </label>
-                <input 
-                  type="text" 
-                  required
-                  value={name}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    setName(val);
-                    if (!isHeroTitleCustomized) {
-                      setHeroTitle(val);
-                    }
-                  }}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
-                  placeholder="Ej. Salkantay Trek Clásico hacia Machu Picchu"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <MapPin size={14} className="text-blue-500" /> Destino Principal / Región *
-                </label>
-                <input 
-                  type="text" 
-                  required
-                  value={destination}
-                  onChange={(e) => setDestination(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
-                  placeholder="Ej. Machu Picchu & Cordillera Vilcabamba"
-                />
-              </div>
-            </div>
-
-            {/* Price, Duration, Altitude, Difficulty */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <DollarSign size={14} className="text-emerald-600" /> Tarifa por Persona *
-                </label>
-                <input 
-                  type="text" 
-                  required
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-bold text-emerald-700"
-                  placeholder="Ej. $350 USD"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Clock size={14} className="text-slate-500" /> Duración *
-                </label>
-                <input 
-                  type="text" 
-                  required
-                  value={duration}
-                  onChange={(e) => setDuration(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
-                  placeholder="Ej. 5 Días / 4 Noches"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Mountain size={14} className="text-slate-500" /> Altitud Máxima
-                </label>
-                <input 
-                  type="text" 
-                  value={altitude}
-                  onChange={(e) => setAltitude(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
-                  placeholder="Ej. 4,630 msnm"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Award size={14} className="text-slate-500" /> Dificultad Física
-                </label>
-                <select 
-                  value={difficulty}
-                  onChange={(e) => setDifficulty(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs bg-white font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
-                >
-                  <option value="Fácil (Familiar)">Fácil (Familiar / Sin esfuerzo)</option>
-                  <option value="Moderada">Moderada (Caminata ligera)</option>
-                  <option value="Moderada - Alta">Moderada - Alta (Trekking continuo)</option>
-                  <option value="Exigente / Alta Montaña">Exigente (Alta Montaña)</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Group Type & Target Audience */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Users size={14} className="text-slate-500" /> Modalidad / Tamaño de Grupo
-                </label>
-                <input 
-                  type="text" 
-                  value={groupType}
-                  onChange={(e) => setGroupType(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
-                  placeholder="Ej. Grupo Reducido (Máx. 8 pers.) o Tour Privado"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <User size={14} className="text-slate-500" /> Público Ideal / Perfil de Viajero
-                </label>
-                <input 
-                  type="text" 
-                  value={targetAudience}
-                  onChange={(e) => setTargetAudience(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
-                  placeholder="Ej. Parejas, Lunas de Miel, Amantes del Trekking"
-                />
-              </div>
-            </div>
-
-            {/* Description / Highlights */}
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">
-                Descripción, Itinerario Clave & Valor Diferencial *
-              </label>
-              <textarea 
-                rows={3}
-                required
-                value={description}
-                onChange={(e) => {
-                  const val = e.target.value;
-                  setDescription(val);
-                  if (!isHeroSubtitleCustomized) {
-                    setHeroSubtitle(val);
-                  }
-                }}
-                className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed font-normal"
-                placeholder="Describe la ruta, paisajes, qué hace única a esta experiencia..."
-              />
-            </div>
-
-            {/* BLOQUE DE CATÁLOGO DE TOURS (DEBAJO DEL TOUR ESTRELLA - ACTIVO PARA LAS 5 PLANTILLAS) */}
-            <div className="mt-2 p-5 rounded-2xl border transition-all bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white border-orange-500/40 shadow-lg">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-start gap-3">
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 bg-orange-500/20 text-orange-400 border border-orange-500/30 shadow-inner">
-                    <Layers size={22} />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="text-sm font-black text-white">
-                        Catálogo de Tours Complementarios
-                      </h4>
-                      <span className="text-[10px] bg-orange-500/25 text-orange-300 font-extrabold px-2.5 py-0.5 rounded-full border border-orange-400/30">
-                        {catalogTours.length} Tours en Vitrina
-                      </span>
-                      <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2.5 py-0.5 rounded-full border border-emerald-500/30">
-                        Activo en las 5 Plantillas
-                      </span>
-                    </div>
-                    <p className="text-xs mt-1 leading-relaxed text-slate-300">
-                      Los campos de arriba configuran tu <strong>Tour Estrella principal</strong> (Hero, Ficha e Itinerario). Tu landing incluye además la sección de <strong>6 tours recomendados</strong> en la vitrina de las 5 plantillas (listos con valores por defecto o personalizables/importables desde otras landings).
-                    </p>
-                  </div>
-                </div>
-
-                <div className="shrink-0 flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setIsCatalogModalOpen(true)}
-                    className="inline-flex items-center justify-center gap-2 bg-[#FF5500] hover:bg-[#e04b00] text-white px-5 py-3 rounded-xl font-black text-xs transition-all shadow-md shadow-orange-500/25 cursor-pointer hover:scale-102 active:scale-98"
-                  >
-                    <Layers size={16} />
-                    <span>Editar Tours del Catálogo</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="pt-3 mt-3 border-t border-white/10 flex flex-wrap items-center gap-2">
-                <span className="text-[11px] text-slate-400 font-bold shrink-0">Tours en catálogo:</span>
-                {catalogTours.map((ct, idx) => (
-                  <span
-                    key={ct.id || idx}
-                    className="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/15 px-3 py-1 rounded-lg text-xs text-slate-200 border border-white/10 transition-colors"
-                  >
-                    <span className="text-orange-400 font-bold">#{idx + 1}</span>
-                    <span className="truncate max-w-[130px] font-medium">{ct.title}</span>
-                    <span className="text-emerald-400 font-bold text-[11px]">({ct.price})</span>
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-
-              {/* Navegación al pie del Paso 1 */}
-              {!showAllSteps && (
-                <div className="flex items-center justify-end pt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setActiveTab('design');
-                      window.scrollTo({ top: 200, behavior: 'smooth' });
-                    }}
-                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3.5 rounded-2xl font-bold text-xs transition-all shadow-md shadow-blue-500/20 cursor-pointer hover:scale-102"
-                  >
-                    <span>Continuar a Paso 2: Diseño & Portada</span>
-                    <ArrowRight size={16} />
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* ========================================================= */}
-          {/* TAB 2: DISEÑO VISUAL, PORTADA (HERO) & NIVEL */}
+          {/* TAB 1: DISEÑO VISUAL, PORTADA (HERO) & NIVEL */}
           {/* ========================================================= */}
           {(activeTab === 'design' || showAllSteps) && (
             <div className="space-y-6 animate-in fade-in duration-300">
               <div className="flex items-center justify-between pb-1">
                 <div className="flex items-center gap-2.5">
-                  <span className="w-7 h-7 rounded-xl bg-purple-600 text-white flex items-center justify-center text-xs font-black shadow-sm">2</span>
+                  <span className="w-7 h-7 rounded-xl bg-purple-600 text-white flex items-center justify-center text-xs font-black shadow-sm">1</span>
                   <div>
-                    <h3 className="text-sm font-black text-slate-900 uppercase tracking-tight">Paso 2: Diseño Visual, Portada (Hero) & Nivel</h3>
+                    <h3 className="text-sm font-black text-slate-900 uppercase tracking-tight">Paso 1: Diseño Visual, Portada (Hero) & Nivel</h3>
                     <p className="text-xs text-slate-500">Selecciona la plantilla interactiva, fotografía principal y configuración técnica.</p>
                   </div>
                 </div>
                 <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 border border-purple-200">
-                  Paso 2 de 4 • Estilo
+                  Paso 1 de 4 • Estilo
                 </span>
               </div>
 
@@ -2173,21 +1910,9 @@ export default function NewLandingDemo() {
             )}
           </div>
 
-              {/* Navegación al pie del Paso 2 */}
+              {/* Navegación al pie del Paso 1 */}
               {!showAllSteps && (
-                <div className="flex items-center justify-between pt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setActiveTab('tour');
-                      window.scrollTo({ top: 200, behavior: 'smooth' });
-                    }}
-                    className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-5 py-3.5 rounded-2xl font-bold text-xs transition-all cursor-pointer"
-                  >
-                    <ArrowLeft size={16} />
-                    <span>Volver a Datos del Tour</span>
-                  </button>
-
+                <div className="flex items-center justify-end pt-2">
                   <button
                     type="button"
                     onClick={() => {
@@ -2196,7 +1921,7 @@ export default function NewLandingDemo() {
                     }}
                     className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3.5 rounded-2xl font-bold text-xs transition-all shadow-md shadow-blue-500/20 cursor-pointer hover:scale-102"
                   >
-                    <span>Continuar a Paso 3: Tu Agencia & Marca</span>
+                    <span>Continuar a Paso 2: Tu Agencia & Marca</span>
                     <ArrowRight size={16} />
                   </button>
                 </div>
@@ -2204,21 +1929,22 @@ export default function NewLandingDemo() {
             </div>
           )}
 
+          
           {/* ========================================================= */}
-          {/* TAB 3: TU AGENCIA, MARCA BLANCA & CONTACTO */}
+          {/* TAB 2: TU AGENCIA, MARCA BLANCA & CONTACTO */}
           {/* ========================================================= */}
           {(activeTab === 'agency' || showAllSteps) && (
             <div className="space-y-6 animate-in fade-in duration-300">
               <div className="flex items-center justify-between pb-1">
                 <div className="flex items-center gap-2.5">
-                  <span className="w-7 h-7 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-black shadow-sm">3</span>
+                  <span className="w-7 h-7 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-black shadow-sm">2</span>
                   <div>
-                    <h3 className="text-sm font-black text-slate-900 uppercase tracking-tight">Paso 3: Tu Agencia, Marca Blanca & Contacto</h3>
+                    <h3 className="text-sm font-black text-slate-900 uppercase tracking-tight">Paso 2: Tu Agencia, Marca Blanca & Contacto</h3>
                     <p className="text-xs text-slate-500">Logo, nombre de tu empresa, WhatsApp de reservas y oficina física.</p>
                   </div>
                 </div>
                 <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200">
-                  Paso 3 de 4 • Marca Blanca
+                  Paso 2 de 4 • Marca Blanca
                 </span>
               </div>
 
@@ -2515,7 +2241,7 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-              {/* Navegación al pie del Paso 3 */}
+              {/* Navegación al pie del Paso 2 */}
               {!showAllSteps && (
                 <div className="flex items-center justify-between pt-2">
                   <button
@@ -2527,7 +2253,290 @@ export default function NewLandingDemo() {
                     className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-5 py-3.5 rounded-2xl font-bold text-xs transition-all cursor-pointer"
                   >
                     <ArrowLeft size={16} />
-                    <span>Volver a Diseño & Portada</span>
+                    <span>Volver a Paso 1: Diseño & Portada</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveTab('tour');
+                      window.scrollTo({ top: 200, behavior: 'smooth' });
+                    }}
+                    className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3.5 rounded-2xl font-bold text-xs transition-all shadow-md shadow-blue-500/20 cursor-pointer hover:scale-102"
+                  >
+                    <span>Continuar a Paso 3: Datos del Tour</span>
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+
+          
+          {/* ========================================================= */}
+          {/* TAB 3: DATOS DEL TOUR & DESTINO PRINCIPAL (PENÚLTIMO) */}
+          {/* ========================================================= */}
+          {(activeTab === 'tour' || showAllSteps) && (
+            <div className="space-y-6 animate-in fade-in duration-300">
+              <div className="flex items-center justify-between pb-1">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">3</span>
+                  <div>
+                    <h3 className="text-sm font-black text-slate-900 uppercase tracking-tight">Paso 3: Datos del Tour & Destino Principal</h3>
+                    <p className="text-xs text-slate-500">¿Qué experiencia turística vas a promocionar?</p>
+                  </div>
+                </div>
+                <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                  Paso 3 de 4 • Penúltimo
+                </span>
+              </div>
+
+              {/* Presets Rápidos Opcionales */}
+              <div className="bg-slate-50/80 border border-slate-200/60 p-3.5 rounded-2xl space-y-2">
+                <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                  <Sparkles size={14} className="text-blue-600" /> ¿Deseas autocompletar con un tour de ejemplo preconfigurado?
+                </span>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {PRESET_TOURS.map(p => (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => {
+                        setTemplate(p.template);
+                        handleApplyPreset(p);
+                      }}
+                      className="px-3 py-1.5 rounded-xl text-[11px] font-bold bg-white hover:bg-blue-600 hover:text-white text-slate-700 border border-slate-200/80 hover:border-blue-600 transition-all cursor-pointer shadow-2xs"
+                    >
+                      {p.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Ficha Técnica del Tour & Catálogo */}
+              {/* PASO 6: FICHA TÉCNICA DEL TOUR & DESTINO (MÁS DATOS PARA RELLENAR) */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">6</span>
+                Ficha Técnica del Tour & Destino
+              </label>
+              <span className="text-[11px] font-semibold text-slate-400">Datos para enriquecer los textos de la IA</span>
+            </div>
+
+            {/* Name and Destination */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Compass size={14} className="text-blue-500" /> Nombre Comercial del Tour *
+                </label>
+                <input 
+                  type="text" 
+                  required
+                  value={name}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setName(val);
+                    if (!isHeroTitleCustomized) {
+                      setHeroTitle(val);
+                    }
+                  }}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. Salkantay Trek Clásico hacia Machu Picchu"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <MapPin size={14} className="text-blue-500" /> Destino Principal / Región *
+                </label>
+                <input 
+                  type="text" 
+                  required
+                  value={destination}
+                  onChange={(e) => setDestination(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. Machu Picchu & Cordillera Vilcabamba"
+                />
+              </div>
+            </div>
+
+            {/* Price, Duration, Altitude, Difficulty */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <DollarSign size={14} className="text-emerald-600" /> Tarifa por Persona *
+                </label>
+                <input 
+                  type="text" 
+                  required
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-bold text-emerald-700"
+                  placeholder="Ej. $350 USD"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Clock size={14} className="text-slate-500" /> Duración *
+                </label>
+                <input 
+                  type="text" 
+                  required
+                  value={duration}
+                  onChange={(e) => setDuration(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. 5 Días / 4 Noches"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Mountain size={14} className="text-slate-500" /> Altitud Máxima
+                </label>
+                <input 
+                  type="text" 
+                  value={altitude}
+                  onChange={(e) => setAltitude(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. 4,630 msnm"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Award size={14} className="text-slate-500" /> Dificultad Física
+                </label>
+                <select 
+                  value={difficulty}
+                  onChange={(e) => setDifficulty(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-2.5 py-2 text-xs bg-white font-semibold focus:ring-2 focus:ring-blue-500 outline-none"
+                >
+                  <option value="Fácil (Familiar)">Fácil (Familiar / Sin esfuerzo)</option>
+                  <option value="Moderada">Moderada (Caminata ligera)</option>
+                  <option value="Moderada - Alta">Moderada - Alta (Trekking continuo)</option>
+                  <option value="Exigente / Alta Montaña">Exigente (Alta Montaña)</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Group Type & Target Audience */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Users size={14} className="text-slate-500" /> Modalidad / Tamaño de Grupo
+                </label>
+                <input 
+                  type="text" 
+                  value={groupType}
+                  onChange={(e) => setGroupType(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. Grupo Reducido (Máx. 8 pers.) o Tour Privado"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <User size={14} className="text-slate-500" /> Público Ideal / Perfil de Viajero
+                </label>
+                <input 
+                  type="text" 
+                  value={targetAudience}
+                  onChange={(e) => setTargetAudience(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                  placeholder="Ej. Parejas, Lunas de Miel, Amantes del Trekking"
+                />
+              </div>
+            </div>
+
+            {/* Description / Highlights */}
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                Descripción, Itinerario Clave & Valor Diferencial *
+              </label>
+              <textarea 
+                rows={3}
+                required
+                value={description}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setDescription(val);
+                  if (!isHeroSubtitleCustomized) {
+                    setHeroSubtitle(val);
+                  }
+                }}
+                className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed font-normal"
+                placeholder="Describe la ruta, paisajes, qué hace única a esta experiencia..."
+              />
+            </div>
+
+            {/* BLOQUE DE CATÁLOGO DE TOURS (DEBAJO DEL TOUR ESTRELLA - ACTIVO PARA LAS 5 PLANTILLAS) */}
+            <div className="mt-2 p-5 rounded-2xl border transition-all bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white border-orange-500/40 shadow-lg">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 bg-orange-500/20 text-orange-400 border border-orange-500/30 shadow-inner">
+                    <Layers size={22} />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h4 className="text-sm font-black text-white">
+                        Catálogo de Tours Complementarios
+                      </h4>
+                      <span className="text-[10px] bg-orange-500/25 text-orange-300 font-extrabold px-2.5 py-0.5 rounded-full border border-orange-400/30">
+                        {catalogTours.length} Tours en Vitrina
+                      </span>
+                      <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2.5 py-0.5 rounded-full border border-emerald-500/30">
+                        Activo en las 5 Plantillas
+                      </span>
+                    </div>
+                    <p className="text-xs mt-1 leading-relaxed text-slate-300">
+                      Los campos de arriba configuran tu <strong>Tour Estrella principal</strong> (Hero, Ficha e Itinerario). Tu landing incluye además la sección de <strong>6 tours recomendados</strong> en la vitrina de las 5 plantillas (listos con valores por defecto o personalizables/importables desde otras landings).
+                    </p>
+                  </div>
+                </div>
+
+                <div className="shrink-0 flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsCatalogModalOpen(true)}
+                    className="inline-flex items-center justify-center gap-2 bg-[#FF5500] hover:bg-[#e04b00] text-white px-5 py-3 rounded-xl font-black text-xs transition-all shadow-md shadow-orange-500/25 cursor-pointer hover:scale-102 active:scale-98"
+                  >
+                    <Layers size={16} />
+                    <span>Editar Tours del Catálogo</span>
+                  </button>
+                </div>
+              </div>
+
+              <div className="pt-3 mt-3 border-t border-white/10 flex flex-wrap items-center gap-2">
+                <span className="text-[11px] text-slate-400 font-bold shrink-0">Tours en catálogo:</span>
+                {catalogTours.map((ct, idx) => (
+                  <span
+                    key={ct.id || idx}
+                    className="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/15 px-3 py-1 rounded-lg text-xs text-slate-200 border border-white/10 transition-colors"
+                  >
+                    <span className="text-orange-400 font-bold">#{idx + 1}</span>
+                    <span className="truncate max-w-[130px] font-medium">{ct.title}</span>
+                    <span className="text-emerald-400 font-bold text-[11px]">({ct.price})</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+              {/* Navegación al pie del Paso 3 (Penúltimo) */}
+              {!showAllSteps && (
+                <div className="flex items-center justify-between pt-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setActiveTab('agency');
+                      window.scrollTo({ top: 200, behavior: 'smooth' });
+                    }}
+                    className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-5 py-3.5 rounded-2xl font-bold text-xs transition-all cursor-pointer"
+                  >
+                    <ArrowLeft size={16} />
+                    <span>Volver a Paso 2: Tu Agencia & Marca</span>
                   </button>
 
                   <button
@@ -2546,6 +2555,7 @@ export default function NewLandingDemo() {
             </div>
           )}
 
+          
           {/* ========================================================= */}
           {/* TAB 4: ITINERARIO, GUÍA, FAQS & TESTIMONIOS */}
           {/* ========================================================= */}
@@ -3242,13 +3252,13 @@ export default function NewLandingDemo() {
                   <button
                     type="button"
                     onClick={() => {
-                      setActiveTab('agency');
+                      setActiveTab('tour');
                       window.scrollTo({ top: 200, behavior: 'smooth' });
                     }}
                     className="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-5 py-3.5 rounded-2xl font-bold text-xs transition-all cursor-pointer"
                   >
                     <ArrowLeft size={16} />
-                    <span>Volver a Tu Agencia & Marca</span>
+                    <span>Volver a Paso 3: Datos del Tour</span>
                   </button>
 
                   <button

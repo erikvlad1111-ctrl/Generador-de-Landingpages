@@ -70,3 +70,21 @@ Esta guía documenta la disponibilidad de buscadores, calculadoras y filtros int
      - **Fila Inferior:** Barra con separador superior fino, mostrando la etiqueta y selector de divisa a la izquierda y el botón de acción principal con tarifa en tiempo real calculada a la derecha.
   2. Resultado: Cero desborde, máxima claridad táctil en móviles y orden visual impecable en cualquier resolución.
 
+### Error 2: Datos del Tour Desfasados / No Visibles en Landings y Orden de Pasos en Generador
+- **Síntoma / Mensaje de Error:** Al crear landings en `/demo/new`, el usuario reportaba que "los datos del tour no aparecen en las landings generadas" y solicitaba que "datos de los tours debe ser penúltimo".
+- **Causa Raíz:**
+  1. En `NewLandingDemo` (`/demo/new`), el orden guiado anterior era Tour (1) -> Diseño (2) -> Agencia (3) -> Ficha (4). Se requería que la parametrización de la experiencia ("Datos del Tour") sea el penúltimo paso (Paso 3 de 4).
+  2. En `handleGenerate`, `heroTitle` se asignaba como `heroTitle.trim() || name.trim()`. Si un preset había precargado `heroTitle`, cuando el usuario editaba el nombre del tour `name` en el formulario, `heroTitle` no se actualizaba y prevalecía el título anterior de muestra ("Machu Picchu de Lujo..."), eclipsando el tour ingresado.
+  3. En `simulateAiGeneration` (`landingStore.ts`), el campo `description` no se guardaba como propiedad directa en el objeto `LandingData`.
+  4. En `AgencyPortalTemplate.tsx` (Diseño 1), el Hero principal carecía de barra de píldoras para los datos esenciales (`price`, `duration`, `destination`, `altitude`, `difficulty`, `groupType`), impidiendo al usuario ver inmediatamente los datos que configuró al abrir la landing.
+- **Solución Paso a Paso:**
+  1. Reordenar el Stepper y el formulario en `/demo/new` a:
+     - **Paso 1:** `design` (Diseño & Portada).
+     - **Paso 2:** `agency` (Tu Agencia & Marca).
+     - **Paso 3:** `tour` (Datos del Tour - *PENÚLTIMO*).
+     - **Paso 4:** `content` (Itinerario & Ficha - *ÚLTIMO*).
+  2. En `src/types/landing.ts`, añadir `description?: string;` a `LandingData`.
+  3. En `src/data/landingStore.ts`, asignar `description: params.description || undefined`.
+  4. En `src/app/demo/new/page.tsx`, sincronizar dinámicamente `name` -> `heroTitle` y `description` -> `heroSubtitle` y respetar `finalHeroTitle` y `finalHeroSubtitle` en `handleGenerate`.
+  5. En `AgencyPortalTemplate.tsx`, `CulturalTemplate.tsx` y `PremiumTemplate.tsx`, añadir la barra destacada de píldoras de datos del tour en el Hero (tarifa destacada, duración, destino, altitud, dificultad y modalidad de grupo).
+
