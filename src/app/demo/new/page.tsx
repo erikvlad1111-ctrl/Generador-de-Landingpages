@@ -4566,36 +4566,38 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* Card Flotante de Acción Rápida bajo el Mockup */}
-          <div className="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-lg space-y-3.5">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <span className="text-xs font-black text-slate-800 uppercase tracking-tight flex items-center gap-1.5">
-                <Sparkles size={14} className="text-blue-600" /> Resumen de la Landing
-              </span>
-              <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
-                {price || '$350 USD'}
-              </span>
-            </div>
+          {/* Card Flotante de Acción Rápida bajo el Mockup: Solo visible en la parte final antes de generar (Paso 4 o modo continuo) */}
+          {(activeTab === 'content' || showAllSteps) && (
+            <div className="bg-white rounded-3xl p-5 border border-slate-200/90 shadow-lg space-y-3.5 animate-in fade-in duration-300">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                <span className="text-xs font-black text-slate-800 uppercase tracking-tight flex items-center gap-1.5">
+                  <Sparkles size={14} className="text-blue-600" /> Resumen de la Landing
+                </span>
+                <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+                  {price || '$350 USD'}
+                </span>
+              </div>
 
-            <div className="text-xs space-y-1">
-              <p className="font-bold text-slate-900 truncate">{name || 'Tour sin nombre'}</p>
-              <p className="text-[11px] text-slate-500 truncate flex items-center gap-1">
-                <MapPin size={12} className="text-slate-400 shrink-0" />
-                <span>{destination || 'Cusco, Perú'}</span>
-                <span>•</span>
-                <span className="font-semibold text-blue-600 uppercase">{template}</span>
-              </p>
-            </div>
+              <div className="text-xs space-y-1">
+                <p className="font-bold text-slate-900 truncate">{name || 'Tour sin nombre'}</p>
+                <p className="text-[11px] text-slate-500 truncate flex items-center gap-1">
+                  <MapPin size={12} className="text-slate-400 shrink-0" />
+                  <span>{destination || 'Cusco, Perú'}</span>
+                  <span>•</span>
+                  <span className="font-semibold text-blue-600 uppercase">{template}</span>
+                </p>
+              </div>
 
-            <button
-              type="submit"
-              onClick={handleGenerate}
-              className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-600 hover:from-blue-500 hover:to-emerald-500 text-white py-3.5 px-4 rounded-2xl font-black text-xs transition-all shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
-            >
-              <Sparkles size={16} />
-              <span>🚀 Generar Landing y Ver Demo</span>
-            </button>
-          </div>
+              <button
+                type="submit"
+                onClick={handleGenerate}
+                className="w-full bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-600 hover:from-blue-500 hover:to-emerald-500 text-white py-3.5 px-4 rounded-2xl font-black text-xs transition-all shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.02] active:scale-[0.98]"
+              >
+                <Sparkles size={16} />
+                <span>🚀 Generar Landing y Ver Demo</span>
+              </button>
+            </div>
+          )}
 
         </div>
 
