@@ -2477,36 +2477,36 @@ export default function NewLandingDemo() {
               />
             </div>
 
-            {/* BLOQUE DE CATÁLOGO DE TOURS (DEBAJO DEL TOUR ESTRELLA - ACTIVO PARA LAS 5 PLANTILLAS) */}
-            <div className="mt-2 p-5 rounded-2xl border transition-all bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white border-orange-500/40 shadow-lg">
+            {/* BLOQUE DE CATÁLOGO DE TOURS COMPLEMENTARIOS (DISEÑO LIMPIO & AMIGABLE) */}
+            <div className="mt-2 p-5 sm:p-6 rounded-3xl border border-slate-200/90 bg-gradient-to-br from-slate-50 via-white to-blue-50/40 shadow-xs space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-start gap-3">
-                  <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 bg-orange-500/20 text-orange-400 border border-orange-500/30 shadow-inner">
+                <div className="flex items-start gap-3.5">
+                  <div className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 bg-blue-50 text-blue-600 border border-blue-200/60 shadow-2xs">
                     <Layers size={22} />
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="text-sm font-black text-white">
+                      <h4 className="text-sm font-black text-slate-900">
                         Catálogo de Tours Complementarios
                       </h4>
-                      <span className="text-[10px] bg-orange-500/25 text-orange-300 font-extrabold px-2.5 py-0.5 rounded-full border border-orange-400/30">
+                      <span className="text-[10px] bg-slate-100 text-slate-700 font-bold px-2.5 py-0.5 rounded-full border border-slate-200">
                         {catalogTours.length} Tours en Vitrina
                       </span>
-                      <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2.5 py-0.5 rounded-full border border-emerald-500/30">
+                      <span className="text-[10px] bg-emerald-50 text-emerald-700 font-bold px-2.5 py-0.5 rounded-full border border-emerald-200">
                         Activo en las 5 Plantillas
                       </span>
                     </div>
-                    <p className="text-xs mt-1 leading-relaxed text-slate-300">
-                      Tu landing page está 100% enfocada en el <strong>Tour Principal</strong> que configuraste arriba. Además, en la parte inferior de la página se incluye una vitrina de <strong>cross-selling con otros tours sugeridos</strong> (ya vienen precargados con valores estándar listos para usar, pero puedes personalizarlos si deseas).
+                    <p className="text-xs mt-1.5 leading-relaxed text-slate-500 max-w-xl">
+                      Tu landing page está 100% enfocada en el <strong>Tour Principal</strong> configurado arriba. Además, en la parte inferior se muestra una vitrina de <strong>cross-selling con otros tours sugeridos</strong> (vienen listos con valores estándar, pero puedes editarlos con un clic).
                     </p>
                   </div>
                 </div>
 
-                <div className="shrink-0 flex items-center gap-2">
+                <div className="shrink-0 flex items-center">
                   <button
                     type="button"
                     onClick={() => setIsCatalogModalOpen(true)}
-                    className="inline-flex items-center justify-center gap-2 bg-[#FF5500] hover:bg-[#e04b00] text-white px-5 py-3 rounded-xl font-black text-xs transition-all shadow-md shadow-orange-500/25 cursor-pointer hover:scale-102 active:scale-98"
+                    className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 rounded-2xl font-bold text-xs transition-all shadow-md shadow-blue-500/20 cursor-pointer hover:scale-102 active:scale-98"
                   >
                     <Layers size={16} />
                     <span>Editar Tours del Catálogo</span>
@@ -2514,18 +2514,36 @@ export default function NewLandingDemo() {
                 </div>
               </div>
 
-              <div className="pt-3 mt-3 border-t border-white/10 flex flex-wrap items-center gap-2">
-                <span className="text-[11px] text-slate-400 font-bold shrink-0">Tours en catálogo:</span>
-                {catalogTours.map((ct, idx) => (
-                  <span
-                    key={ct.id || idx}
-                    className="inline-flex items-center gap-1.5 bg-white/10 hover:bg-white/15 px-3 py-1 rounded-lg text-xs text-slate-200 border border-white/10 transition-colors"
-                  >
-                    <span className="text-orange-400 font-bold">#{idx + 1}</span>
-                    <span className="truncate max-w-[130px] font-medium">{ct.title}</span>
-                    <span className="text-emerald-400 font-bold text-[11px]">({ct.price})</span>
+              {/* Lista limpia de los 6 tours del catálogo */}
+              <div className="pt-3.5 border-t border-slate-200/70">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[11px] text-slate-500 font-bold uppercase tracking-wider">
+                    Tours precargados en la vitrina inferior:
                   </span>
-                ))}
+                  <button
+                    type="button"
+                    onClick={() => setIsCatalogModalOpen(true)}
+                    className="text-[11px] font-bold text-blue-600 hover:text-blue-800 underline transition-colors cursor-pointer"
+                  >
+                    Personalizar lista
+                  </button>
+                </div>
+                <div className="flex flex-wrap items-center gap-2">
+                  {catalogTours.map((ct, idx) => (
+                    <span
+                      key={ct.id || idx}
+                      className="inline-flex items-center gap-2 bg-white hover:bg-slate-50 px-3 py-1.5 rounded-xl text-xs text-slate-700 border border-slate-200 shadow-2xs transition-colors"
+                    >
+                      <span className="w-4 h-4 rounded-full bg-slate-100 text-slate-600 text-[10px] font-black flex items-center justify-center">
+                        {idx + 1}
+                      </span>
+                      <span className="truncate max-w-[140px] font-bold text-slate-800">{ct.title}</span>
+                      <span className="text-emerald-700 font-black text-[11px] bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-100">
+                        {ct.price}
+                      </span>
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
