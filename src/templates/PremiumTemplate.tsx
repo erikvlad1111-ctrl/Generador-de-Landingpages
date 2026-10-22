@@ -19,6 +19,7 @@ import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
 import { PREMIUM_I18N, PREMIUM_LANGUAGES } from './premiumI18n';
 import { translateText } from '@/data/translations';
 import { getSanitizedGuideAvatar } from '@/utils/guideAvatars';
+import { getCleanBrandName } from '@/utils/brandUtils';
 
 interface TemplateProps {
   data: LandingData;
@@ -67,6 +68,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
   }, [data.language, isFree, isBasic, isPro]);
 
   const t = PREMIUM_I18N[currentLang] || PREMIUM_I18N.es;
+  const brandName = getCleanBrandName(data.companyName, data.name, 'Cusco Luxury Collection');
 
   // Language filtering according to Guía de Niveles:
   // Free / Basic: Sin selector de idiomas
@@ -401,10 +403,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       {/* 2. ULTRA LUXURY TOP HEADER */}
       <header className="sticky top-0 w-full z-40 bg-[#0a080e]/95 backdrop-blur-xl border-b border-amber-500/20 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.6)]">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex justify-between items-center gap-2 sm:gap-4 w-full min-w-0">
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0 max-w-[190px] xs:max-w-[230px] sm:max-w-[280px] md:max-w-[340px] lg:max-w-[250px] xl:max-w-[340px] shrink">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[420px] 2xl:max-w-[500px] shrink-0">
             {data.logoUrl ? (
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl overflow-hidden bg-white/90 p-1 border border-amber-400/50 flex items-center justify-center shrink-0 shadow-[0_0_18px_rgba(245,158,11,0.3)]">
-                <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
+              <div className="h-8 sm:h-10 max-w-[130px] sm:max-w-[170px] rounded-xl overflow-hidden bg-white/95 p-1 border border-amber-400/50 flex items-center justify-center shrink-0 shadow-[0_0_18px_rgba(245,158,11,0.3)]">
+                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
               </div>
             ) : (
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400/30 via-amber-500/15 to-transparent border border-amber-400/50 flex items-center justify-center text-amber-300 shrink-0 shadow-[0_0_18px_rgba(245,158,11,0.3)]">
@@ -416,9 +418,9 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 style={{ fontFamily: FONT_CONFIG[luxuryFontVariant].titleFont }}
                 className="text-xs sm:text-sm md:text-base tracking-wider uppercase font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 leading-snug truncate block"
               >
-                {(data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'Cusco Luxury Collection').toUpperCase()}
+                {brandName.toUpperCase()}
               </span>
-              <span className="text-[8px] sm:text-[9px] uppercase tracking-wider text-amber-400/80 font-medium leading-none truncate block mt-0.5">
+              <span className="text-[8px] sm:text-[9px] uppercase tracking-wider text-amber-400/80 font-medium leading-none truncate block mt-0.5 hidden xs:block">
                 {data.companyTagline || (data.companyRuc ? `${data.companyRuc}` : t.hero.privateConciergeBadge)}
               </span>
             </div>
@@ -1956,17 +1958,17 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             <div className="lg:col-span-4 space-y-3.5">
               <div className="flex items-center gap-3">
                 {data.logoUrl ? (
-                  <div className="w-10 h-10 rounded-2xl overflow-hidden bg-white p-1 border border-amber-500/30 flex items-center justify-center shadow-md shrink-0">
-                    <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
+                  <div className="h-10 max-w-[140px] rounded-2xl overflow-hidden bg-white p-1 border border-amber-500/30 flex items-center justify-center shadow-md shrink-0">
+                    <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
                   </div>
                 ) : (
-                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500/20 to-neutral-900 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md">
+                  <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500/20 to-neutral-900 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md shrink-0">
                     <Crown size={20} />
                   </div>
                 )}
                 <div>
                   <span className="font-serif font-black text-white text-base tracking-wide block">
-                    {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'Cusco Luxury Collection'}
+                    {brandName}
                   </span>
                   <span className="text-[10px] text-amber-400/90 tracking-widest uppercase font-bold block">
                     {data.companyTagline || (data.companyRuc ? `${data.companyRuc}` : t.hero.privateConciergeBadge)}

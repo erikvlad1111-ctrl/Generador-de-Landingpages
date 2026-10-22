@@ -49,6 +49,7 @@ import PinterestPinboard from '@/components/common/PinterestPinboard';
 import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
 import { BOHO_I18N, BOHO_LANGUAGES } from './bohoI18n';
 import { translateText, translateItineraryItem } from '@/data/translations';
+import { getCleanBrandName } from '@/utils/brandUtils';
 
 interface TemplateProps {
   data: LandingData;
@@ -313,6 +314,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
   const formattedTotalPrice = `${currencySymbol}${totalCalculatedPrice} ${currencyCode}`;
 
   const cleanPhone = (data.whatsapp || '+51984123456').replace(/[^0-9]/g, '');
+  const brandName = getCleanBrandName(data.companyName, data.name, 'Boho Travel Journal');
   const rawTourTitle = data.name || data.hero?.title || 'Tour en Cusco';
   const localizedTourTitle = translateText(rawTourTitle, currentLang);
   const encodedMsg = encodeURIComponent(
@@ -396,21 +398,21 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
       {/* Editorial Header / Navigation */}
       <header className="sticky top-0 w-full z-40 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-stone-200/80 shadow-2xs">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 w-full flex justify-between items-center gap-2 sm:gap-3 min-w-0">
-          <div className="flex items-center gap-2 min-w-0 max-w-[170px] xs:max-w-[210px] sm:max-w-[260px] md:max-w-[320px] lg:max-w-[250px] xl:max-w-[320px] shrink">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[420px] 2xl:max-w-[500px] shrink-0">
             {data.logoUrl ? (
-              <div className="w-8 h-8 rounded-full overflow-hidden bg-white p-0.5 border border-stone-200 shadow-xs shrink-0 flex items-center justify-center">
-                <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain rounded-full" />
+              <div className="h-8 sm:h-10 max-w-[130px] sm:max-w-[170px] rounded-xl overflow-hidden bg-white p-0.5 border border-stone-200 shadow-xs shrink-0 flex items-center justify-center">
+                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
               </div>
             ) : (
-              <div className="w-8 h-8 rounded-full bg-[#C86D51]/15 text-[#C86D51] flex items-center justify-center font-serif text-sm font-bold shadow-xs shrink-0">
-                <Camera size={16} />
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-[#C86D51]/15 text-[#C86D51] flex items-center justify-center font-serif text-sm font-bold shadow-xs shrink-0">
+                <Camera size={18} />
               </div>
             )}
             <div className="flex flex-col min-w-0 justify-center">
               <span className="font-serif tracking-wider uppercase text-xs sm:text-base font-bold text-stone-800 truncate leading-snug block">
-                {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'Boho Travel Journal'}
+                {brandName}
               </span>
-              <span className="text-[11px] sm:text-xs text-stone-500 font-sans tracking-tight truncate leading-none mt-0.5 block">
+              <span className="text-[10px] sm:text-xs text-stone-500 font-sans tracking-tight truncate leading-none mt-0.5 hidden xs:block">
                 {data.companyTagline || (currentLang === 'en' ? 'Curated Travel Journal • Cusco' : 'Diario de Viajes Curado • Cusco')}
               </span>
             </div>
@@ -1936,8 +1938,8 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
           <div className="lg:col-span-4 space-y-3">
             <div className="flex items-center gap-2.5">
               {data.logoUrl ? (
-                <div className="w-10 h-10 rounded-xl overflow-hidden bg-white p-1 border border-stone-200 shadow-sm flex items-center justify-center shrink-0">
-                  <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain rounded-lg" />
+                <div className="h-10 max-w-[140px] rounded-xl overflow-hidden bg-white p-1 border border-stone-200 shadow-sm flex items-center justify-center shrink-0">
+                  <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
                 </div>
               ) : (
                 <div className="w-9 h-9 rounded-xl bg-[#C86D51]/15 border border-[#C86D51]/30 flex items-center justify-center text-[#C86D51] shrink-0">
@@ -1946,7 +1948,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               )}
               <div>
                 <span className="font-serif font-bold text-[17px] text-white tracking-wide block">
-                  {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'Boho Travel Journal'}
+                  {brandName}
                 </span>
                 <span className="text-[13px] text-stone-400 font-sans tracking-wider block">
                   {data.companyTagline || t.footer.dircetur}

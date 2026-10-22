@@ -20,6 +20,7 @@ import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
 import { CULTURAL_I18N } from './culturalI18n';
 import { translateText } from '@/data/translations';
 import { getSanitizedGuideAvatar } from '@/utils/guideAvatars';
+import { getCleanBrandName } from '@/utils/brandUtils';
 
 interface TemplateProps {
   data: LandingData;
@@ -71,6 +72,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
   }, [data.language, isFree, isBasic, isPro]);
 
   const t = CULTURAL_I18N[currentLang] || CULTURAL_I18N.es;
+  const brandName = getCleanBrandName(data.companyName, data.name, 'Cusco Patrimonial');
 
   // Filtrado de idiomas según nivel de plan (Guía de Niveles)
   // Free / Basic: Sin selector de idiomas
@@ -138,10 +140,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         {/* Municipal / Heritage Navigation Bar */}
         <nav className="relative z-50 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-4 flex items-center justify-between border-b border-white/15 w-full min-w-0 gap-2">
           {/* Official Emblem / Coat of arms */}
-          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 max-w-[170px] xs:max-w-[210px] sm:max-w-[260px] md:max-w-[320px] lg:max-w-[250px] xl:max-w-[320px] shrink">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[420px] 2xl:max-w-[500px] shrink-0">
             {data.logoUrl ? (
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden bg-white/90 p-1 flex items-center justify-center shadow-md shrink-0 border border-white/30">
-                <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
+              <div className="h-9 sm:h-11 max-w-[130px] sm:max-w-[170px] rounded-xl overflow-hidden bg-white/95 p-1 flex items-center justify-center shadow-md shrink-0 border border-white/30">
+                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
               </div>
             ) : (
               <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-red-600/30 backdrop-blur-md border border-red-400/50 flex items-center justify-center text-red-200 shadow-md shrink-0 animate-soft-float">
@@ -150,9 +152,9 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             )}
             <div className="flex flex-col min-w-0 justify-center">
               <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-red-200 truncate leading-snug">
-                {(data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || t.emblemTitle).toUpperCase()}
+                {brandName.toUpperCase()}
               </span>
-              <span className="text-[10px] sm:text-[11px] text-stone-300 tracking-wider font-sans block truncate leading-none mt-0.5">
+              <span className="text-[10px] sm:text-[11px] text-stone-300 tracking-wider font-sans block truncate leading-none mt-0.5 hidden xs:block">
                 {data.companyTagline || (data.companyRuc ? `${data.companyRuc}` : t.emblemSub)}
               </span>
             </div>
@@ -1285,17 +1287,17 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           {/* Column 1: Emblem & Town Name */}
           <div className="md:col-span-3 flex items-center gap-3">
             {data.logoUrl ? (
-              <div className="w-12 h-12 rounded-xl overflow-hidden bg-white p-1 border border-stone-200 shadow-sm flex items-center justify-center shrink-0">
-                <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain rounded-lg" />
+              <div className="h-11 max-w-[140px] rounded-xl overflow-hidden bg-white p-1 border border-stone-200 shadow-sm flex items-center justify-center shrink-0">
+                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
               </div>
             ) : (
-              <div className="w-12 h-12 rounded-xl bg-red-100 border border-red-300 text-red-800 flex items-center justify-center shrink-0 animate-soft-float">
+              <div className="w-11 h-11 rounded-xl bg-red-100 border border-red-300 text-red-800 flex items-center justify-center shrink-0 animate-soft-float">
                 <Landmark size={24} />
               </div>
             )}
             <div>
               <span className="font-serif font-black text-sm uppercase text-stone-900 block">
-                {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || t.footer.townName}
+                {brandName}
               </span>
               <span className="text-[11px] text-stone-500 uppercase tracking-widest block font-bold">
                 {data.companyTagline || (data.companyRuc ? `${data.companyRuc}` : t.footer.regionalDir)}

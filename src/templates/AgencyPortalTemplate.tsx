@@ -55,6 +55,7 @@ import LightboxModal from '@/components/agency-portal/LightboxModal';
 import RecentBookingsToast from '@/components/agency-portal/RecentBookingsToast';
 import { translateText, translateItineraryItem } from '@/data/translations';
 import { getSanitizedGuideAvatar } from '@/utils/guideAvatars';
+import { getCleanBrandName } from '@/utils/brandUtils';
 
 interface AgencyPortalTemplateProps {
   data?: Partial<LandingData>;
@@ -606,10 +607,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
   const [lightboxIndex, setLightboxIndex] = useState<number>(0);
 
   // 3. Parámetros y datos dinámicos con saneamiento de presets mock
-  const rawBrand = (data?.companyName?.trim() || data?.name?.trim() || '')
-    .replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '')
-    .trim();
-  const brandName = rawBrand || 'Cusco Grand Expeditions';
+  const brandName = getCleanBrandName(data?.companyName, data?.name, 'Cusco Grand Expeditions');
 
   const rawTourTitle = (data?.hero?.title?.trim() || data?.name?.trim() || '')
     .replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '')
@@ -1069,10 +1067,10 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         <div className="max-w-7xl mx-auto px-2.5 sm:px-6 h-14 sm:h-20 flex items-center justify-between gap-2 sm:gap-3">
           
           {/* Brand Logo & Name */}
-          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 max-w-[170px] xs:max-w-[210px] sm:max-w-[260px] md:max-w-[320px] lg:max-w-[250px] xl:max-w-[320px] shrink">
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[420px] 2xl:max-w-[500px] shrink-0">
             {data?.logoUrl ? (
-              <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-white border border-stone-200/80 p-1 flex items-center justify-center shadow-md shadow-stone-200/50 shrink-0">
-                <img src={data.logoUrl} alt={brandName} className="w-full h-full object-contain" />
+              <div className="h-8 sm:h-11 max-w-[130px] sm:max-w-[170px] rounded-xl bg-white border border-stone-200/80 p-1 flex items-center justify-center shadow-md shadow-stone-200/50 shrink-0">
+                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
               </div>
             ) : (
               <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-[#FF5500] to-[#FF8800] flex items-center justify-center text-white font-black shadow-md shadow-[#FF5500]/30 shrink-0">
@@ -1080,10 +1078,10 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </div>
             )}
             <div className="flex flex-col justify-center min-w-0">
-              <span className="font-extrabold text-[11px] sm:text-base md:text-lg tracking-tight text-stone-900 block leading-snug truncate">
+              <span className="font-extrabold text-xs sm:text-base md:text-lg tracking-tight text-stone-900 block leading-snug truncate">
                 {brandName.toUpperCase()}
               </span>
-              <span className="text-[8px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block truncate leading-none mt-0.5">
+              <span className="text-[8px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block truncate leading-none mt-0.5 hidden xs:block">
                 {data?.companyTagline || (data?.companyRuc ? `${data.companyRuc}` : t.officialOperator)}
               </span>
             </div>
@@ -2307,8 +2305,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             <div className="lg:col-span-4 space-y-3.5">
               <div className="flex items-center gap-3">
                 {data?.logoUrl ? (
-                  <div className="w-10 h-10 rounded-2xl overflow-hidden bg-white p-1 border border-stone-700/60 flex items-center justify-center shadow-xs shrink-0">
-                    <img src={data.logoUrl} alt={brandName} className="w-full h-full object-contain" />
+                  <div className="h-10 max-w-[140px] rounded-2xl overflow-hidden bg-white p-1 border border-stone-700/60 flex items-center justify-center shadow-xs shrink-0">
+                    <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
                   </div>
                 ) : (
                   <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 shrink-0">

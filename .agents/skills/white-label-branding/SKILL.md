@@ -262,4 +262,17 @@ Estos campos deben propagarse coherentemente en:
   3. En `src/app/p/[slug]/page.tsx` y `src/app/demo/preview/page.tsx`:
      - Si `demo=official` está presente o si `isTestJunk(found)` es positivo, cargar prioritariamente y de forma directa el registro inmaculado desde `INITIAL_LANDINGS`.
 
+---
 
+### Error 11: Titulo de Marca y Logotipo Truncados o Recortados (Vi..., etc.) en Desktop y Movil
+- **Sintoma:** El nombre de la empresa se corta con puntos suspensivos mostrando solo un par de letras (ej. Vi... en vez de Vive Tu Aventura), o el logotipo rectangular se achica dentro de una caja cuadrada rigida.
+- **Causa Raiz:**
+  1. Asimetria de Flexbox (shrink vs shrink-0): El contenedor del logo/marca tenia shrink y max-w-[250px] o max-w-[170px] mientras que nav y CTA tenian shrink-0.
+  2. Insignia lateral consumiendo 90px con shrink-0 en la misma fila horizontal.
+  3. data.name con sufijos como (Diseno 6 Esmeralda) no eran limpiados.
+- **Solucion:**
+  1. Centralizar getCleanBrandName() en src/utils/brandUtils.ts.
+  2. Asignar shrink-0 y max-w-[calc(100vw-130px)] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[420px] 2xl:max-w-[500px].
+  3. Soportar logotipos rectangulares (h-8 sm:h-11 max-w-[130px] sm:max-w-[170px] w-auto object-contain).
+  4. Ocultar insignias secundarias en lg/xl (hidden 2xl:inline-flex).
+  5. Poblar companyName en INITIAL_LANDINGS y actualizar storage a v9.

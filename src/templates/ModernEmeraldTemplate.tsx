@@ -59,6 +59,7 @@ import HeaderLanguageSelector from '@/components/common/HeaderLanguageSelector';
 import PinterestPinboard from '@/components/common/PinterestPinboard';
 import TourSupportAndFaqs from '@/components/common/TourSupportAndFaqs';
 import { getSanitizedGuideAvatar } from '@/utils/guideAvatars';
+import { getCleanBrandName } from '@/utils/brandUtils';
 import SustainabilityAndSocialProof from '@/components/agency-portal/SustainabilityAndSocialProof';
 import TrustGuaranteeAndOffice from '@/components/agency-portal/TrustGuaranteeAndOffice';
 import RecentBookingsToast from '@/components/agency-portal/RecentBookingsToast';
@@ -586,6 +587,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
   const guideCert = translateText(data.guideCert || 'Guía Oficial DIRCETUR & Operador Autorizado', currentLang);
   const guidePhone = data.whatsapp || '+51984123456';
   const guideAvatar = getSanitizedGuideAvatar(data.guideAvatar, guideName);
+  const brandName = getCleanBrandName(data.companyName, data.name, 'Vive Tu Aventura');
 
   const rawHeroTitle = data.hero?.title || data.name || 'Vive Tu Aventura: Expediciones & Trekking en Cusco';
   const cleanTitleInput = rawHeroTitle.replace(/\s*—\s*/g, ': ').trim();
@@ -905,27 +907,29 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       <header className="relative z-30 border-b border-white/10 bg-[#021219]/90 backdrop-blur-2xl sticky top-0 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.45)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-4">
           
-          {/* Logo y Marca con protección contra textos largos */}
-          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 max-w-[200px] xs:max-w-[240px] sm:max-w-[290px] md:max-w-[340px] lg:max-w-[250px] xl:max-w-[340px] 2xl:max-w-[400px] shrink">
+          {/* Logo y Marca Responsivo (Optimizado para Desktop y Móvil) */}
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] xs:max-w-[calc(100vw-150px)] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[420px] 2xl:max-w-[500px] shrink-0">
             {data.logoUrl ? (
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl overflow-hidden bg-white/90 p-1 flex items-center justify-center shadow-lg shadow-emerald-500/20 shrink-0">
-                <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
+              <div className="h-9 sm:h-11 max-w-[130px] sm:max-w-[170px] rounded-xl overflow-hidden bg-white/95 p-1 flex items-center justify-center shadow-lg shadow-emerald-500/20 shrink-0">
+                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
               </div>
             ) : (
-              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-400 flex items-center justify-center text-[#02181f] shadow-lg shadow-emerald-500/30 shrink-0">
-                <Compass size={20} className="stroke-[2.5]" />
+              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-400 flex items-center justify-center text-[#02181f] shadow-lg shadow-emerald-500/30 shrink-0">
+                <Compass size={22} className="stroke-[2.5]" />
               </div>
             )}
             <div className="min-w-0 flex flex-col justify-center">
               <div className="flex items-center gap-1.5 min-w-0">
                 <span className="font-black text-sm sm:text-base lg:text-sm xl:text-base tracking-tight text-white truncate block leading-snug">
-                  {data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'NavikX Cusco'}
+                  {brandName}
                 </span>
-                <span className="text-emerald-300 font-medium text-[9px] sm:text-[10px] bg-emerald-500/20 px-1.5 py-0.5 rounded-full border border-emerald-400/40 shrink-0 whitespace-nowrap hidden sm:inline-flex">
-                  {data.companyRuc ? 'RUC' : (data.destination ? data.destination.split(',')[0] : 'Cusco')}
-                </span>
+                {(data.companyRuc || data.destination) && (
+                  <span className="text-emerald-300 font-medium text-[9px] sm:text-[10px] bg-emerald-500/20 px-1.5 py-0.5 rounded-full border border-emerald-400/40 shrink-0 whitespace-nowrap hidden 2xl:inline-flex">
+                    {data.companyRuc ? 'RUC' : (data.destination ? data.destination.split(',')[0] : 'Cusco')}
+                  </span>
+                )}
               </div>
-              <p className="text-[10px] text-emerald-200/70 font-medium tracking-wide leading-none mt-0.5 truncate hidden sm:block">
+              <p className="text-[10px] sm:text-[11px] text-emerald-200/80 font-medium tracking-wide leading-none mt-0.5 truncate hidden xs:block">
                 {data.companyTagline || t.brandTag}
               </p>
             </div>
@@ -945,7 +949,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             <a href="#itinerario" className="px-2 xl:px-3 py-1 xl:py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navItinerary}
             </a>
-            <a href="#incluye" className="px-2 xl:px-3 py-1 xl:py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
+            <a href="#incluye" className="hidden xl:inline-block px-2 xl:px-3 py-1 xl:py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
               {t.navServices}
             </a>
             <a href="#galeria" className="hidden xl:inline-block px-3 py-1.5 rounded-full hover:text-white hover:bg-white/10 transition-colors">
@@ -989,10 +993,11 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             {/* Botón CTA Header */}
             <button
               onClick={() => handleOpenAction(data.name)}
-              className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-300 text-[#02181f] font-black text-xs sm:text-sm px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-1.5 sm:gap-2 shrink-0"
+              className="emerald-shimmer-btn bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-300 hover:from-emerald-300 hover:to-teal-300 text-[#02181f] font-black text-xs sm:text-sm px-3.5 sm:px-4 xl:px-5 py-2 sm:py-2.5 rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all transform hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-1.5 sm:gap-2 shrink-0"
             >
               <MessageCircle size={15} />
-              <span className="hidden sm:inline">{data.hero?.cta ? translateText(data.hero.cta, currentLang) : (isWhatsapp ? t.whatsappBtn : isQuote ? t.quoteBtn : t.planYourTripBtn)}</span>
+              <span className="hidden xl:inline">{data.hero?.cta ? translateText(data.hero.cta, currentLang) : (isWhatsapp ? t.whatsappBtn : isQuote ? t.quoteBtn : t.planYourTripBtn)}</span>
+              <span className="hidden sm:inline xl:hidden">{data.hero?.cta ? translateText(data.hero.cta, currentLang) : (isWhatsapp ? 'WhatsApp' : 'Cotizar')}</span>
               <span className="sm:hidden text-[11px] font-black">{data.hero?.cta ? translateText(data.hero.cta, currentLang) : (isWhatsapp ? 'WhatsApp' : 'Reservar')}</span>
             </button>
 
@@ -2502,16 +2507,16 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             {data.logoUrl ? (
-              <div className="w-9 h-9 rounded-xl overflow-hidden bg-white/95 p-1 flex items-center justify-center border border-emerald-400/40 shadow-xs shrink-0">
-                <img src={data.logoUrl} alt={data.companyName || 'Logo'} className="w-full h-full object-contain" />
+              <div className="h-9 sm:h-10 max-w-[130px] rounded-xl overflow-hidden bg-white/95 p-1 flex items-center justify-center border border-emerald-400/40 shadow-xs shrink-0">
+                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
               </div>
             ) : (
-              <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
                 <Compass size={16} />
               </div>
             )}
             <div>
-              <span className="font-bold text-white text-sm">{data.companyName?.trim() || data.name?.replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim() || 'NavikX Cusco'}</span>
+              <span className="font-bold text-white text-sm">{brandName}</span>
               <p className="text-[11px] text-emerald-300/70">
                 {data.companyTagline ? `${data.companyTagline} • ` : ''}{data.companyRuc ? `${data.companyRuc} • ` : ''}{t.footerRights}
               </p>

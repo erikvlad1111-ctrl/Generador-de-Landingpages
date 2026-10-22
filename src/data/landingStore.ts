@@ -437,6 +437,10 @@ export const INITIAL_LANDINGS: LandingData[] = [
     name: 'Laguna Humantay Boho Journal',
     slug: 'laguna-humantay-boho',
     tier: 'advance',
+    companyName: 'Boho Travel Journal',
+    companyTagline: 'Curated Travel Journal • Cusco',
+    companyRuc: 'RUC 20607831942',
+    companyEmail: 'hola@bohotraveljournal.com',
     guideName: 'Camila Valdivia',
     guideAvatar: '/images/tour-guide-camila.jpg',
     whatsapp: '+51984556677',
@@ -578,6 +582,10 @@ export const INITIAL_LANDINGS: LandingData[] = [
     name: 'Cusco Luxury Collection VIP',
     slug: 'cusco-luxury-collection',
     tier: 'advance',
+    companyName: 'Cusco Luxury Collection',
+    companyTagline: 'Concierge Privado 24/7 & Trenes Panorámicos',
+    companyRuc: 'RUC 20608945123',
+    companyEmail: 'concierge@cuscoluxury.pe',
     guideName: 'Lic. Mateo Quispe & Concierge',
     guideCert: 'Guía Oficial Colegiado DIRCETUR Cusco — Carné N° 4812',
     guideLanguages: 'Español, English & Français',
@@ -698,6 +706,10 @@ export const INITIAL_LANDINGS: LandingData[] = [
     name: 'Vive Tu Aventura (Diseño 6 Esmeralda)',
     slug: 'vive-tu-aventura-expediciones-trekking-cusco',
     tier: 'advance',
+    companyName: 'Vive Tu Aventura',
+    companyTagline: 'Explore. Dream. Discover.',
+    companyRuc: 'RUC 20609482145',
+    companyEmail: 'reservas@vivetuaventura.pe',
     guideName: 'Carlos Mendoza',
     guideCert: 'Licenciado DIRCETUR & Explorador Senior',
     guideLanguages: 'Español, Inglés y Francés',
@@ -821,7 +833,7 @@ export const INITIAL_LANDINGS: LandingData[] = [
   }
 ];
 
-const STORAGE_KEY = 'cusco_creativos_landings_v8';
+const STORAGE_KEY = 'cusco_creativos_landings_v9';
 
 export function isTestJunk(obj: any): boolean {
   if (!obj) return false;
