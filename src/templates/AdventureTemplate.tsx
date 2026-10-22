@@ -703,7 +703,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       </nav>
 
       {/* 2. HERO SECTION CON IMAGEN DE FONDO COMPLETO */}
-      <section id="inicio" className="relative w-full overflow-hidden min-h-[500px] sm:min-h-[560px] lg:min-h-[600px] flex items-center">
+      <section id="inicio" className="relative w-full overflow-hidden min-h-[440px] sm:min-h-[480px] lg:min-h-[520px] flex items-center">
         {/* Full Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
@@ -720,8 +720,8 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 py-10 sm:py-14">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 py-6 sm:py-8 lg:py-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start lg:items-center">
             
             {/* Left Column: Copy & CTAs */}
             <div className="lg:col-span-7 space-y-3.5 sm:space-y-4 text-left">
