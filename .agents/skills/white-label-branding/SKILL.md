@@ -276,3 +276,19 @@ Estos campos deben propagarse coherentemente en:
   3. Soportar logotipos rectangulares (h-8 sm:h-11 max-w-[130px] sm:max-w-[170px] w-auto object-contain).
   4. Ocultar insignias secundarias en lg/xl (hidden 2xl:inline-flex).
   5. Poblar companyName en INITIAL_LANDINGS y actualizar storage a v9.
+
+---
+
+### Error 12: Cambios de Usuario No Se Aplican al Crear Landings Nuevas en `/demo/new`
+- **Síntoma:** Al crear una nueva landing page en `/demo/new`, los datos ingresados por el usuario (nombre del tour, precio, descripción, guía) no se aplican o se restablecen a los valores de las plantillas por defecto.
+- **Causa Raíz:**
+  1. **Sobreescritura destructiva al seleccionar plantilla:** Los botones de selección de plantilla en el Paso 1 y las pastillas del mockup llamaban a `handleApplyPreset()` si el nombre coincidía con algún preset o estaba vacío, reseteando silenciosamente todo lo que el usuario había escrito.
+  2. **Desincronización de `heroTitle` y `heroSubtitle`:** `heroTitle` se mantenía con el valor fijado por el preset y no se actualizaba cuando el usuario editaba `name` (Nombre Comercial del Tour), provocando que la IA y las plantillas siguieran mostrando el titular del preset anterior.
+  3. **Omisión de `v8` en la migración de LocalStorage:** Al migrar a `v9`, la función `getStoredLandings()` solo buscaba `v7`, `v6`, `v5`, `v4`, perdiendo las landings creadas previamente en `v8`.
+  4. **Colisión de Slugs con Demos de Fábrica:** Si el tour compartía slug con una de las 6 plantillas oficiales, `INITIAL_LANDINGS` sobreescribía la landing personalizada.
+- **Solución Paso a Paso:**
+  1. Desacoplar la selección de plantilla de la carga de presets: al hacer clic en una plantilla solo se ejecuta `setTemplate()`. Se agregó una barra explícita con botones opcionales para autocompletar con ejemplos preconfigurados únicamente cuando el usuario lo solicite voluntariamente.
+  2. Añadir flags de estado `isHeroTitleCustomized` e `isHeroSubtitleCustomized`. Mientras el usuario no edite manualmente el H1 o subtítulo en la sección avanzada, estos campos se sincronizan reactivamente en tiempo real con `name` y `description`.
+  3. Incorporar `cusco_creativos_landings_v8` en la cadena de migración de `getStoredLandings()` y en `resetAllLandingsToDefault()`.
+  4. En `simulateAiGeneration()`, si el slug base coincide con una plantilla oficial de fábrica, anexar automáticamente un sufijo numérico único (`${rawBaseSlug}-${Date.now().toString().slice(-4)}`) para blindar la landing personalizada.
+  5. En `src/utils/brandUtils.ts`, asegurar que `getCleanBrandName()` no recorte palabras clave legítimas del tour como "expediciones", "machu picchu" o "bitácora".

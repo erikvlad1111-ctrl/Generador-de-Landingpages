@@ -683,6 +683,8 @@ export default function NewLandingDemo() {
   const [heroSubtitle, setHeroSubtitle] = useState('');
   const [heroBadge, setHeroBadge] = useState('');
   const [heroCta, setHeroCta] = useState('');
+  const [isHeroTitleCustomized, setIsHeroTitleCustomized] = useState(false);
+  const [isHeroSubtitleCustomized, setIsHeroSubtitleCustomized] = useState(false);
 
   // Selector de Modo: Express con IA vs Modo Completo Manual
   const [creationMode, setCreationMode] = useState<'express' | 'full'>('full');
@@ -876,8 +878,14 @@ export default function NewLandingDemo() {
       if ((preset as any).companyRuc) setCompanyRuc((preset as any).companyRuc);
       if ((preset as any).companyEmail) setCompanyEmail((preset as any).companyEmail);
     }
-    if ((preset as any).heroTitle) setHeroTitle((preset as any).heroTitle);
-    if ((preset as any).heroSubtitle) setHeroSubtitle((preset as any).heroSubtitle);
+    if ((preset as any).heroTitle) {
+      setHeroTitle((preset as any).heroTitle);
+      setIsHeroTitleCustomized(false);
+    }
+    if ((preset as any).heroSubtitle) {
+      setHeroSubtitle((preset as any).heroSubtitle);
+      setIsHeroSubtitleCustomized(false);
+    }
     if ((preset as any).heroBadge) setHeroBadge((preset as any).heroBadge);
     if ((preset as any).heroCta) setHeroCta((preset as any).heroCta);
     if (preset.tier) {
@@ -1060,8 +1068,8 @@ export default function NewLandingDemo() {
           catalogTours: catalogTours,
           faqs: faqs.length > 0 ? faqs : undefined,
           testimonials: testimonials.length > 0 ? testimonials : undefined,
-          heroTitle: heroTitle.trim() || undefined,
-          heroSubtitle: heroSubtitle.trim() || undefined,
+          heroTitle: heroTitle.trim() || name.trim() || undefined,
+          heroSubtitle: heroSubtitle.trim() || description.trim() || undefined,
           heroBadge: heroBadge.trim() || undefined,
           heroCta: heroCta.trim() || undefined,
           companyName: companyName.trim() || undefined,
@@ -1307,6 +1315,28 @@ export default function NewLandingDemo() {
               Selecciona el estilo visual con el que la IA estructurará y presentará el contenido de tu tour:
             </p>
 
+            {/* Presets Rápidos Opcionales */}
+            <div className="bg-slate-50/80 border border-slate-200/60 p-2.5 rounded-xl space-y-1.5">
+              <span className="text-[11px] font-bold text-slate-700 flex items-center gap-1.5">
+                <Sparkles size={13} className="text-blue-600" /> ¿Deseas autocompletar con un tour de ejemplo preconfigurado?
+              </span>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                {PRESET_TOURS.map(p => (
+                  <button
+                    key={p.id}
+                    type="button"
+                    onClick={() => {
+                      setTemplate(p.template);
+                      handleApplyPreset(p);
+                    }}
+                    className="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-white hover:bg-blue-600 hover:text-white text-slate-700 border border-slate-200/80 hover:border-blue-600 transition-all cursor-pointer shadow-2xs"
+                  >
+                    {p.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {[
                 { 
@@ -1359,11 +1389,6 @@ export default function NewLandingDemo() {
                     type="button"
                     onClick={() => {
                       setTemplate(t.id as TemplateType);
-                      const matchingPreset = PRESET_TOURS.find(p => p.template === t.id);
-                      const isDefaultOrPreset = !name || PRESET_TOURS.some(p => p.name === name);
-                      if (matchingPreset && isDefaultOrPreset) {
-                        handleApplyPreset(matchingPreset);
-                      }
                     }}
                     className={`relative p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                       isSelected 
@@ -1625,12 +1650,15 @@ export default function NewLandingDemo() {
                 <input 
                   type="text" 
                   value={heroTitle}
-                  onChange={(e) => setHeroTitle(e.target.value)}
+                  onChange={(e) => {
+                    setHeroTitle(e.target.value);
+                    setIsHeroTitleCustomized(true);
+                  }}
                   placeholder="Ej. Machu Picchu de Lujo con Tren Panorámico (o deja en blanco para IA)"
                   className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-sm font-extrabold text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none"
                 />
                 <span className="text-[10px] text-slate-500 mt-1 block">
-                  Si lo dejas en blanco, la IA redactará un título optimizado según el tour seleccionado.
+                  Si lo dejas en blanco, se utilizará automáticamente el nombre comercial del tour.
                 </span>
               </div>
 
@@ -1646,7 +1674,10 @@ export default function NewLandingDemo() {
                 <textarea 
                   rows={2}
                   value={heroSubtitle}
-                  onChange={(e) => setHeroSubtitle(e.target.value)}
+                  onChange={(e) => {
+                    setHeroSubtitle(e.target.value);
+                    setIsHeroSubtitleCustomized(true);
+                  }}
                   placeholder="Ej. Descubre la maravilla del mundo con traslados privados, hoteles 5 estrellas y un guía oficial exclusivo para ti y tu familia."
                   className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-900 focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed font-medium"
                 />
@@ -2173,7 +2204,13 @@ export default function NewLandingDemo() {
                   type="text" 
                   required
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setName(val);
+                    if (!isHeroTitleCustomized) {
+                      setHeroTitle(val);
+                    }
+                  }}
                   className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-medium"
                   placeholder="Ej. Salkantay Trek Clásico hacia Machu Picchu"
                 />
@@ -2292,7 +2329,13 @@ export default function NewLandingDemo() {
                 rows={3}
                 required
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setDescription(val);
+                  if (!isHeroSubtitleCustomized) {
+                    setHeroSubtitle(val);
+                  }
+                }}
                 className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm focus:ring-2 focus:ring-blue-500 outline-none resize-none leading-relaxed font-normal"
                 placeholder="Describe la ruta, paisajes, qué hace única a esta experiencia..."
               />
@@ -3158,11 +3201,6 @@ export default function NewLandingDemo() {
                 type="button"
                 onClick={() => {
                   setTemplate(t.id as TemplateType);
-                  const matchingPreset = PRESET_TOURS.find(p => p.template === t.id);
-                  const isDefaultOrPreset = !name || PRESET_TOURS.some(p => p.name === name);
-                  if (matchingPreset && isDefaultOrPreset) {
-                    handleApplyPreset(matchingPreset);
-                  }
                 }}
                 className={`px-2.5 py-1 rounded-xl font-bold transition-all shrink-0 cursor-pointer flex items-center gap-1.5 border ${
                   template === t.id
@@ -4015,7 +4053,7 @@ export default function NewLandingDemo() {
                         <span>{heroBadge || 'Trekking & Montaña'}</span>
                       </div>
                       <h3 className="text-sm font-black text-white leading-tight drop-shadow-md">
-                        {heroTitle ? translateText(heroTitle, language) : 'Travel the Best, It\'s a Big World, Go Explore!'}
+                        {heroTitle ? translateText(heroTitle, language) : (name ? translateText(name, language) : 'Travel the Best, It\'s a Big World, Go Explore!')}
                       </h3>
                       <p className="text-[10px] text-slate-200 line-clamp-1">
                         {heroSubtitle ? translateText(heroSubtitle, language) : `${name || 'Tour Salkantay Trek Clásico'} • ${duration || '5 Días'}`}

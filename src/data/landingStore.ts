@@ -838,7 +838,7 @@ const STORAGE_KEY = 'cusco_creativos_landings_v9';
 export function isTestJunk(obj: any): boolean {
   if (!obj) return false;
   const str = typeof obj === 'string' ? obj : JSON.stringify(obj);
-  return /GGTGT|GTGTG|FFRFR|FRFRF|FEFRG|GGGTG|TTTTG|BBBBV|ZZZZ|AAAAA|ASDFGH/i.test(str);
+  return /FRFRFRFR|FEFRGRG|GGGTGTGT|TTTTGGGG|BBBBVVVV/i.test(str);
 }
 
 export function getStoredLandings(): LandingData[] {
@@ -849,7 +849,11 @@ export function getStoredLandings(): LandingData[] {
       // Check if previous versions had custom landings
       let migrated: LandingData[] = [...INITIAL_LANDINGS];
       try {
-        const oldData = localStorage.getItem('cusco_creativos_landings_v7') || localStorage.getItem('cusco_creativos_landings_v6') || localStorage.getItem('cusco_creativos_landings_v5') || localStorage.getItem('cusco_creativos_landings_v4');
+        const oldData = localStorage.getItem('cusco_creativos_landings_v8') ||
+                        localStorage.getItem('cusco_creativos_landings_v7') ||
+                        localStorage.getItem('cusco_creativos_landings_v6') ||
+                        localStorage.getItem('cusco_creativos_landings_v5') ||
+                        localStorage.getItem('cusco_creativos_landings_v4');
         if (oldData) {
           const oldList: LandingData[] = JSON.parse(oldData);
           if (Array.isArray(oldList)) {
@@ -864,6 +868,7 @@ export function getStoredLandings(): LandingData[] {
           }
         }
       } catch {}
+      try { localStorage.removeItem('cusco_creativos_landings_v8'); } catch {}
       try { localStorage.removeItem('cusco_creativos_landings_v7'); } catch {}
       localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
       return migrated;
@@ -871,26 +876,21 @@ export function getStoredLandings(): LandingData[] {
     let parsed: LandingData[] = JSON.parse(data);
     if (Array.isArray(parsed)) {
       const initialMap = new Map(INITIAL_LANDINGS.map(l => [l.id, l]));
-      const initialSlugMap = new Map(INITIAL_LANDINGS.map(l => [(l.slug || '').toLowerCase(), l]));
       let updated = false;
 
-      // 1. Filtrar borradores huérfanos o que contengan basura de prueba y no sean oficiales
+      // 1. Filtrar borradores que contengan basura de prueba y no sean oficiales
       const filtered = parsed.filter(p => {
-        const isOfficial = initialMap.has(p.id) || initialSlugMap.has((p.slug || '').toLowerCase());
+        const isOfficial = initialMap.has(p.id);
         if (!isOfficial && isTestJunk(p)) {
-          updated = true;
-          return false;
-        }
-        if (p.slug === 'salkantay-trek-5-dias' && p.id !== '2') {
           updated = true;
           return false;
         }
         return true;
       });
 
-      // 2. Para cada plantilla oficial, si tiene texto de prueba o sobrante editado, restaurarla al estado de fábrica
+      // 2. Para cada plantilla oficial, si tiene texto de prueba, restaurarla al estado de fábrica
       parsed = filtered.map(item => {
-        const init = initialMap.get(item.id) || initialSlugMap.get((item.slug || '').toLowerCase());
+        const init = initialMap.get(item.id);
         if (init && isTestJunk(item)) {
           updated = true;
           return { ...init };
@@ -899,16 +899,11 @@ export function getStoredLandings(): LandingData[] {
       });
 
       for (const init of INITIAL_LANDINGS) {
-        const idx = parsed.findIndex(item => item.id === init.id || (item.slug && item.slug.toLowerCase() === init.slug.toLowerCase()));
+        const idx = parsed.findIndex(item => item.id === init.id);
         if (idx === -1) {
           parsed.push(init);
           updated = true;
         } else {
-          if (isTestJunk(parsed[idx])) {
-            parsed[idx] = { ...init };
-            updated = true;
-            continue;
-          }
           if (!parsed[idx].destination && init.destination) {
             parsed[idx].destination = init.destination;
             updated = true;
@@ -923,14 +918,6 @@ export function getStoredLandings(): LandingData[] {
           }
           if (!parsed[idx].targetAudience && init.targetAudience) {
             parsed[idx].targetAudience = init.targetAudience;
-            updated = true;
-          }
-          if (init.id === '1' && parsed[idx].slug === 'machu-picchu-vip' && (!parsed[idx].duration || parsed[idx].duration === '2 Días / 1 Noche')) {
-            parsed[idx].duration = init.duration;
-            parsed[idx].price = init.price;
-            parsed[idx].name = init.name;
-            parsed[idx].difficulty = init.difficulty;
-            parsed[idx].about = init.about;
             updated = true;
           }
         }
@@ -998,7 +985,7 @@ export function deleteLandingFromStorage(id: string): LandingData[] {
 export function resetAllLandingsToDefault(): LandingData[] {
   if (typeof window === 'undefined') return INITIAL_LANDINGS;
   try {
-    ['cusco_creativos_landings_v7', 'cusco_creativos_landings_v6', 'cusco_creativos_landings_v5', 'cusco_creativos_landings_v4'].forEach(k => {
+    ['cusco_creativos_landings_v8', 'cusco_creativos_landings_v7', 'cusco_creativos_landings_v6', 'cusco_creativos_landings_v5', 'cusco_creativos_landings_v4'].forEach(k => {
       try { localStorage.removeItem(k); } catch {}
     });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_LANDINGS));
@@ -1093,12 +1080,15 @@ export function simulateAiGeneration(params: {
     tripadvisor?: string;
   };
 }): LandingData {
-  const slug = params.name
+  const rawBaseSlug = params.name
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)+/g, "");
+    .replace(/(^-|-$)+/g, "") || 'tour-nuevo';
+
+  const isOfficialSlug = INITIAL_LANDINGS.some(init => (init.slug || '').toLowerCase() === rawBaseSlug.toLowerCase());
+  const slug = isOfficialSlug ? `${rawBaseSlug}-${Date.now().toString().slice(-4)}` : rawBaseSlug;
 
   const tier = params.tier || 'advance';
   const isFreeOrBasic = tier === 'free' || tier === 'basic';
