@@ -117,9 +117,7 @@ Esta guía documenta la disponibilidad de buscadores, calculadoras y filtros int
   1. Se utilizó un único botón `toggle` con texto imperativo vs descriptivo confuso para gobernar un cambio de modo de vista (Layout View Mode), en vez de un **Control Segmentado (Segmented Control)** estándar. Al estar en "Paso a paso", el botón decía "Paso a Paso" con fondo gris, induciendo a error al usuario sobre si ya estaba activado o requería activarse.
   2. El botón de autocompletado con IA contenía el ícono `<Sparkles />` de Lucide y adicionalmente el carácter emoji `✨` dentro del `<span>`, provocando una duplicación visual desagradable.
 - **Solución Paso a Paso:**
-  1. En `src/app/demo/new/page.tsx`, sustituir el botón toggle por un **Control Segmentado (Pill Switch)** con fondo `bg-slate-100` y dos opciones explícitas lado a lado:
-     - `[ Layers ] Paso a Paso` (resaltado con fondo blanco, texto azul y sombra sutil cuando está activo).
-     - `[ SlidersHorizontal ] Ver Todo` (resaltado idénticamente cuando se activa la vista corrida).
-  2. En el botón de IA, retirar el emoji duplicado y asignar el ícono `<Sparkles size={14} className="text-amber-300" />` con estilos de hover, active y `disabled:opacity-75`.
-  3. Resultado: Comprensión inmediata de los dos modos de vista disponibles, indicación inequívoca del modo activo y una barra de herramientas con jerarquía visual profesional.
+  1. En `src/app/demo/new/page.tsx`, eliminar por completo el control switch redundante de la cabecera. La página ya cuenta justo debajo con las 4 tarjetas de navegación interactiva por pasos (`Paso 1: Diseño`, `Paso 2: Agencia`, `Paso 3: Tour`, `Paso 4: Itinerario`), por lo que un selector de vista superior sólo agregaba ruido y sobrecarga cognitiva.
+  2. Conservar en la cabecera exclusivamente la acción principal: el botón **"Autocompletar con IA"**, limpio, con ícono ámbar `<Sparkles size={15} />` sin caracteres emoji duplicados.
+  3. Resultado: Cabecera minimalista, limpia e intuitiva al primer vistazo, con foco al 100% en los 4 pasos claros de configuración.
 
