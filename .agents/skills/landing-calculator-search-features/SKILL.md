@@ -109,7 +109,17 @@ Esta guía documenta la disponibilidad de buscadores, calculadoras y filtros int
   4. Sumado al padding `py-10 sm:py-14` (56px), se acumulaban más de 226px de espacio negro vacío encima del badge y el título.
 - **Solución Paso a Paso:**
   1. En `src/templates/AdventureTemplate.tsx`, cambiar la alineación del grid a `items-start lg:items-center` para que el bloque de texto izquierdo comience en su posición natural sin forzar un desfase vertical.
-  2. Calibrar el padding del contenedor a `py-6 sm:py-8 lg:py-10` y el `min-h` de la sección a `min-h-[440px] sm:min-h-[480px] lg:min-h-[520px]`.
-  3. Resultado: El badge de destino y el título quedan anclados de forma fluida y elegante en la parte superior del Hero, perfectamente alineados tanto con títulos cortos como con títulos de varias líneas.
-
+### Error 5: Ambigüedad en Toggle de Visualización de Formulario y Duplicación de Íconos en Asistente IA
+- **Síntoma / Mensaje de Error:** En el generador de landings (`/demo/new`), el usuario reporta que los controles superiores de la cabecera son incomprensibles ("no se entiende"):
+  1. Un botón azul que alternaba entre etiquetas ambiguas `📜 Viendo Todo Continuo` y `Paso a Paso` sin dejar claro qué modo estaba activo ni qué ocurriría al hacer clic.
+  2. Un botón con doble ícono `✨ ✨ Autocompletar con IA` visualmente redundante y sin jerarquía clara entre acción e interfaz de visualización.
+- **Causa Raíz:**
+  1. Se utilizó un único botón `toggle` con texto imperativo vs descriptivo confuso para gobernar un cambio de modo de vista (Layout View Mode), en vez de un **Control Segmentado (Segmented Control)** estándar. Al estar en "Paso a paso", el botón decía "Paso a Paso" con fondo gris, induciendo a error al usuario sobre si ya estaba activado o requería activarse.
+  2. El botón de autocompletado con IA contenía el ícono `<Sparkles />` de Lucide y adicionalmente el carácter emoji `✨` dentro del `<span>`, provocando una duplicación visual desagradable.
+- **Solución Paso a Paso:**
+  1. En `src/app/demo/new/page.tsx`, sustituir el botón toggle por un **Control Segmentado (Pill Switch)** con fondo `bg-slate-100` y dos opciones explícitas lado a lado:
+     - `[ Layers ] Paso a Paso` (resaltado con fondo blanco, texto azul y sombra sutil cuando está activo).
+     - `[ SlidersHorizontal ] Ver Todo` (resaltado idénticamente cuando se activa la vista corrida).
+  2. En el botón de IA, retirar el emoji duplicado y asignar el ícono `<Sparkles size={14} className="text-amber-300" />` con estilos de hover, active y `disabled:opacity-75`.
+  3. Resultado: Comprensión inmediata de los dos modos de vista disponibles, indicación inequívoca del modo activo y una barra de herramientas con jerarquía visual profesional.
 
