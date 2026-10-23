@@ -922,58 +922,185 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       )}
 
       {/* 3.5 ABOUT & FICHA TÉCNICA DE LA AVENTURA (DISPONIBLE EN TODOS LOS PLANES) */}
-      <section className="py-12 sm:py-16 px-4 sm:px-8 max-w-6xl mx-auto space-y-8">
-        <div className="text-center space-y-4 max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-black uppercase tracking-wider">
-            <Compass size={13} className="text-blue-600" />
-            <span>{currentLang === 'en' ? 'Tour Overview & Key Differentiator' : currentLang === 'fr' ? 'Présentation & Différenciateur Clé' : currentLang === 'pt' ? 'Visão Geral & Diferencial do Tour' : currentLang === 'it' ? 'Panoramica & Valore Differenziale' : 'Descripción & Valor Diferencial de la Aventura'}</span>
-          </div>
-          <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-            {data.about?.title ? translateText(data.about.title, currentLang) : (data.name ? translateText(data.name, currentLang) : (currentLang === 'en' ? 'An unforgettable high-altitude adventure' : 'Una aventura de alta montaña inolvidable'))}
-          </h2>
-          <p className="text-sm sm:text-base text-slate-600 max-w-3xl mx-auto leading-relaxed font-normal">
-            {translateText(data.about?.content || (data as any)?.description || data.hero?.subtitle || 'Descubre la magia de los Andes peruanos con atención de primer nivel, protocolos de seguridad certificados y guías locales expertos.', currentLang)}
-          </p>
-        </div>
+      <section className="py-14 sm:py-20 px-4 sm:px-8 max-w-6xl mx-auto space-y-10">
+        {(() => {
+          const specsContent = {
+            es: {
+              badge: 'Lo Esencial de la Expedición',
+              altitude: { label: 'Altitud Máxima', hint: 'Paso Salkantay con aclimatación guiada' },
+              duration: { label: 'Duración del Trek', hint: 'Recorrido escénico paso a paso' },
+              difficulty: { label: 'Exigencia Física', hint: 'Ideal para amantes del senderismo activo' },
+              group: { label: 'Tamaño del Grupo', hint: 'Atención personalizada y ritmo flexible' },
+              camp: { label: 'Alojamiento en Ruta', hint: 'Domos térmicos con camas confortables' },
+              rate: { label: 'Tarifa Oficial', hint: 'Todo incluido sin costos ocultos' }
+            },
+            en: {
+              badge: 'Essential Expedition Facts',
+              altitude: { label: 'Max Altitude', hint: 'Salkantay Pass with guided acclimatization' },
+              duration: { label: 'Trek Duration', hint: 'Scenic day-by-day expedition' },
+              difficulty: { label: 'Physical Demand', hint: 'Ideal for active outdoor enthusiasts' },
+              group: { label: 'Group Size', hint: 'Personalized attention & flexible pace' },
+              camp: { label: 'Trail Lodging', hint: 'Thermal sky domes with real cozy beds' },
+              rate: { label: 'Official Rate', hint: 'All-inclusive with no hidden fees' }
+            },
+            fr: {
+              badge: 'L’Essentiel de l’Expédition',
+              altitude: { label: 'Altitude Maximale', hint: 'Col du Salkantay avec acclimatation guidée' },
+              duration: { label: 'Durée du Trek', hint: 'Itinéraire panoramique au jour le jour' },
+              difficulty: { label: 'Exigence Physique', hint: 'Idéal pour randonneurs actifs' },
+              group: { label: 'Taille du Groupe', hint: 'Attention personnalisée et rythme adaptable' },
+              camp: { label: 'Hébergement en Route', hint: 'Dômes thermiques et lits confortables' },
+              rate: { label: 'Tarif Officiel', hint: 'Tout inclus sans frais cachés' }
+            },
+            pt: {
+              badge: 'O Essencial da Expedição',
+              altitude: { label: 'Altitude Máxima', hint: 'Passo Salkantay com aclimatação guiada' },
+              duration: { label: 'Duração da Trilha', hint: 'Percurso panorâmico dia a dia' },
+              difficulty: { label: 'Exigência Física', hint: 'Ideal para praticantes de trilhas ativas' },
+              group: { label: 'Tamanho do Grupo', hint: 'Atenção dedicada e ritmo flexível' },
+              camp: { label: 'Pernoite na Trilha', hint: 'Domos térmicos com camas confortáveis' },
+              rate: { label: 'Tarifa Oficial', hint: 'Tudo incluso sem taxas ocultas' }
+            },
+            it: {
+              badge: 'L’Essenziale della Spedizione',
+              altitude: { label: 'Altitudine Massima', hint: 'Passo Salkantay con acclimatamento guidato' },
+              duration: { label: 'Durata del Trekking', hint: 'Spedizione panoramica giorno per giorno' },
+              difficulty: { label: 'Impegno Fisico', hint: 'Ideale per amanti del trekking attivo' },
+              group: { label: 'Dimensione Gruppo', hint: 'Attenzione personalizzata e passo rilassato' },
+              camp: { label: 'Pernottamento in Quota', hint: 'Domi termici con letti accoglienti' },
+              rate: { label: 'Tariffa Ufficiale', hint: 'Tutto compreso senza costi a sorpresa' }
+            }
+          };
+          const specs = specsContent[currentLang] || specsContent.es;
 
-        {/* Grilla de Ficha Técnica del Tour */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-2">
-          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1">
-            <Mountain size={16} className="text-blue-600 mx-auto" />
-            <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">{currentLang === 'en' ? 'Max Altitude' : 'Altitud'}</span>
-            <strong className="text-xs sm:text-sm font-black text-slate-900 block truncate">{translateText(data.altitude || '4,630 msnm', currentLang)}</strong>
-          </div>
+          return (
+            <>
+              <div className="text-center space-y-4 max-w-4xl mx-auto">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-black uppercase tracking-wider">
+                  <Compass size={13} className="text-blue-600" />
+                  <span>{specs.badge}</span>
+                </div>
+                <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
+                  {data.about?.title ? translateText(data.about.title, currentLang) : (data.name ? translateText(data.name, currentLang) : (currentLang === 'en' ? 'An unforgettable high-altitude adventure' : 'Una aventura de alta montaña inolvidable'))}
+                </h2>
+                <p className="text-sm sm:text-base text-slate-600 max-w-3xl mx-auto leading-relaxed font-normal">
+                  {translateText(data.about?.content || (data as any)?.description || data.hero?.subtitle || 'Descubre la magia de los Andes peruanos con atención de primer nivel, protocolos de seguridad certificados y guías locales expertos.', currentLang)}
+                </p>
+              </div>
 
-          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1">
-            <Clock size={16} className="text-blue-600 mx-auto" />
-            <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">{currentLang === 'en' ? 'Duration' : 'Duración'}</span>
-            <strong className="text-xs sm:text-sm font-black text-slate-900 block truncate">{translateText(data.duration || '5D / 4N', currentLang)}</strong>
-          </div>
+              {/* Grilla de Ficha Técnica del Tour (3 columnas amplias, legible y sin truncamientos) */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 pt-2">
+                {/* 1. Altitud */}
+                <div className="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md hover:border-slate-300 transition-all text-left flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200/80 text-blue-600 flex items-center justify-center shrink-0">
+                    <Mountain size={20} />
+                  </div>
+                  <div className="min-w-0 flex-1 space-y-0.5">
+                    <span className="text-[11px] uppercase font-bold text-slate-400 block tracking-wider">
+                      {specs.altitude.label}
+                    </span>
+                    <strong className="text-sm sm:text-base font-black text-slate-900 block">
+                      {translateText(data.altitude || '4,630 msnm', currentLang)}
+                    </strong>
+                    <span className="text-[11px] text-slate-500 block leading-tight">
+                      {specs.altitude.hint}
+                    </span>
+                  </div>
+                </div>
 
-          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1">
-            <Award size={16} className="text-blue-600 mx-auto" />
-            <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">{currentLang === 'en' ? 'Difficulty' : 'Dificultad'}</span>
-            <strong className="text-xs sm:text-sm font-black text-slate-900 block truncate">{translateText(data.difficulty || 'Exigente', currentLang)}</strong>
-          </div>
+                {/* 2. Duración */}
+                <div className="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md hover:border-slate-300 transition-all text-left flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-indigo-50 border border-indigo-200/80 text-indigo-600 flex items-center justify-center shrink-0">
+                    <Clock size={20} />
+                  </div>
+                  <div className="min-w-0 flex-1 space-y-0.5">
+                    <span className="text-[11px] uppercase font-bold text-slate-400 block tracking-wider">
+                      {specs.duration.label}
+                    </span>
+                    <strong className="text-sm sm:text-base font-black text-slate-900 block">
+                      {translateText(data.duration || '5 Días / 4 Noches', currentLang)}
+                    </strong>
+                    <span className="text-[11px] text-slate-500 block leading-tight">
+                      {specs.duration.hint}
+                    </span>
+                  </div>
+                </div>
 
-          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1">
-            <Users size={16} className="text-blue-600 mx-auto" />
-            <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">{currentLang === 'en' ? 'Group Mode' : 'Modalidad'}</span>
-            <strong className="text-xs sm:text-sm font-black text-slate-900 block truncate">{translateText(data.groupType || 'Grupo Reducido', currentLang)}</strong>
-          </div>
+                {/* 3. Dificultad */}
+                <div className="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md hover:border-slate-300 transition-all text-left flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200/80 text-amber-600 flex items-center justify-center shrink-0">
+                    <Activity size={20} />
+                  </div>
+                  <div className="min-w-0 flex-1 space-y-0.5">
+                    <span className="text-[11px] uppercase font-bold text-slate-400 block tracking-wider">
+                      {specs.difficulty.label}
+                    </span>
+                    <strong className="text-sm sm:text-base font-black text-slate-900 block">
+                      {translateText(data.difficulty || 'Moderada a Exigente', currentLang)}
+                    </strong>
+                    <span className="text-[11px] text-slate-500 block leading-tight">
+                      {specs.difficulty.hint}
+                    </span>
+                  </div>
+                </div>
 
-          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1">
-            <Target size={16} className="text-blue-600 mx-auto" />
-            <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">{currentLang === 'en' ? 'Target' : 'Público'}</span>
-            <strong className="text-xs sm:text-sm font-black text-slate-900 block truncate">{translateText(data.targetAudience || 'Aventureros', currentLang)}</strong>
-          </div>
+                {/* 4. Tamaño del Grupo */}
+                <div className="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md hover:border-slate-300 transition-all text-left flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-purple-50 border border-purple-200/80 text-purple-600 flex items-center justify-center shrink-0">
+                    <Users size={20} />
+                  </div>
+                  <div className="min-w-0 flex-1 space-y-0.5">
+                    <span className="text-[11px] uppercase font-bold text-slate-400 block tracking-wider">
+                      {specs.group.label}
+                    </span>
+                    <strong className="text-sm sm:text-base font-black text-slate-900 block">
+                      {translateText(data.groupType || 'Grupo Reducido (Máx. 10)', currentLang)}
+                    </strong>
+                    <span className="text-[11px] text-slate-500 block leading-tight">
+                      {specs.group.hint}
+                    </span>
+                  </div>
+                </div>
 
-          <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-1">
-            <DollarSign size={16} className="text-emerald-600 mx-auto" />
-            <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">{currentLang === 'en' ? 'Rate' : 'Tarifa'}</span>
-            <strong className="text-xs sm:text-sm font-black text-emerald-600 block truncate">{data.price || '$380 USD'}</strong>
-          </div>
-        </div>
+                {/* 5. Alojamiento / Domos */}
+                <div className="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/80 shadow-xs hover:shadow-md hover:border-slate-300 transition-all text-left flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-teal-50 border border-teal-200/80 text-teal-600 flex items-center justify-center shrink-0">
+                    <Tent size={20} />
+                  </div>
+                  <div className="min-w-0 flex-1 space-y-0.5">
+                    <span className="text-[11px] uppercase font-bold text-slate-400 block tracking-wider">
+                      {specs.camp.label}
+                    </span>
+                    <strong className="text-sm sm:text-base font-black text-slate-900 block">
+                      {translateText(data.targetAudience?.includes('Domo') ? data.targetAudience : 'Domos Geodésicos Sky VIP', currentLang)}
+                    </strong>
+                    <span className="text-[11px] text-slate-500 block leading-tight">
+                      {specs.camp.hint}
+                    </span>
+                  </div>
+                </div>
+
+                {/* 6. Tarifa Oficial */}
+                <div className="p-4 sm:p-5 rounded-2xl bg-white border border-emerald-200/80 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all text-left flex items-start gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/80 text-emerald-600 flex items-center justify-center shrink-0">
+                    <DollarSign size={20} />
+                  </div>
+                  <div className="min-w-0 flex-1 space-y-0.5">
+                    <span className="text-[11px] uppercase font-bold text-emerald-600 block tracking-wider">
+                      {specs.rate.label}
+                    </span>
+                    <strong className="text-sm sm:text-base font-black text-emerald-600 block">
+                      {data.price || '$380 USD'}
+                    </strong>
+                    <span className="text-[11px] text-slate-500 block leading-tight">
+                      {specs.rate.hint}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </>
+          );
+        })()}
       </section>
 
       {/* 4. SECTION: EXPLORE TOP SEARCHED SPOTS (DISPONIBLE EN TODOS LOS PLANES) */}
