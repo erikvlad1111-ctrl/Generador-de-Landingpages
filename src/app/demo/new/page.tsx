@@ -1173,31 +1173,49 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* Botón Mágico de Autocompletado con IA & Toggle Ver Todo */}
-          <div className="flex items-center gap-2.5 flex-wrap shrink-0">
+          {/* Controles de Vista y Asistente IA */}
+          <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap shrink-0">
+            {/* Selector Segmentado de Modo de Vista (Paso a Paso vs Ver Todo) */}
+            <div className="inline-flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200/90 text-xs shadow-inner">
+              <button
+                type="button"
+                onClick={() => setShowAllSteps(false)}
+                className={`px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                  !showAllSteps
+                    ? 'bg-white text-blue-700 shadow-xs'
+                    : 'text-slate-500 hover:text-slate-800'
+                }`}
+                title="Flujo guiado paso a paso (recomendado)"
+              >
+                <Layers size={13} className={!showAllSteps ? "text-blue-600" : "text-slate-400"} />
+                <span>Paso a Paso</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setShowAllSteps(true)}
+                className={`px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                  showAllSteps
+                    ? 'bg-white text-blue-700 shadow-xs'
+                    : 'text-slate-500 hover:text-slate-800'
+                }`}
+                title="Muestra todas las secciones del formulario en una sola vista continua"
+              >
+                <SlidersHorizontal size={13} className={showAllSteps ? "text-blue-600" : "text-slate-400"} />
+                <span>Ver Todo</span>
+              </button>
+            </div>
+
+            {/* Botón Asistente con IA */}
             <button
               type="button"
               onClick={handleMagicAiAutocomplete}
               disabled={isAutocompleting}
-              className="bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white px-4 sm:px-5 py-2.5 rounded-2xl font-black text-xs transition-all shadow-md shadow-purple-500/20 hover:scale-102 active:scale-98 cursor-pointer flex items-center gap-2"
+              className="bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white px-4 sm:px-5 py-2.5 rounded-2xl font-black text-xs transition-all shadow-md shadow-purple-500/20 hover:scale-102 active:scale-98 cursor-pointer flex items-center gap-2 disabled:opacity-75 disabled:cursor-not-allowed"
               title="Analiza el tour actual y autocompleta descripción, itinerario, FAQs y testimonios con IA"
             >
-              <Sparkles size={15} className={isAutocompleting ? "animate-spin" : ""} />
-              <span>{isAutocompleting ? 'Autocompletando...' : '✨ Autocompletar con IA'}</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setShowAllSteps(!showAllSteps)}
-              className={`px-3.5 py-2.5 rounded-2xl font-bold text-xs border transition-all cursor-pointer flex items-center gap-1.5 ${
-                showAllSteps
-                  ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
-                  : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200'
-              }`}
-              title="Muestra todas las secciones de corrido en lugar de ir paso a paso"
-            >
-              <SlidersHorizontal size={14} />
-              <span>{showAllSteps ? '📜 Viendo Todo Continuo' : 'Paso a Paso'}</span>
+              <Sparkles size={14} className={isAutocompleting ? "animate-spin text-amber-300" : "text-amber-300"} />
+              <span>{isAutocompleting ? 'Autocompletando...' : 'Autocompletar con IA'}</span>
             </button>
           </div>
         </div>
