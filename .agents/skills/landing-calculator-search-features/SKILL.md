@@ -121,3 +121,21 @@ Esta guía documenta la disponibilidad de buscadores, calculadoras y filtros int
   2. Conservar en la cabecera exclusivamente la acción principal: el botón **"Autocompletar con IA"**, limpio, con ícono ámbar `<Sparkles size={15} />` sin caracteres emoji duplicados.
   3. Resultado: Cabecera minimalista, limpia e intuitiva al primer vistazo, con foco al 100% en los 4 pasos claros de configuración.
 
+### Error 6: Textos Cortados e Ininteligibles en la Ficha Técnica de la Plantilla Adventure
+- **Síntoma / Mensaje de Error:** En la plantilla de Aventura (`AdventureTemplate.tsx`), la sección de resumen técnico del tour resultaba incomprensible y poco amigable para el viajero:
+  1. El badge decía "Descripción & Valor Diferencial de la Aventura" (jerga técnica de marketing corporativo).
+  2. Los 6 parámetros (`Altitud`, `Duración`, `Dificultad`, `Modalidad`, `Público`, `Tarifa`) se mostraban en 6 columnas comprimidas (`lg:grid-cols-6`) con la clase CSS `truncate`, cortando las palabras por la mitad (ej. `Grupos Reducidos & Dom...`, `Amantes del Trek...`).
+- **Causa Raíz:**
+  1. Distribuir 6 bloques de texto en una sola fila forzaba un ancho disponible inferior a 150px por tarjeta.
+  2. El uso de conceptos internos de marketing ("Público objetivo", "Valor diferencial") en vez de conceptos orientados a la experiencia del viajero ("¿Quién puede hacer este trek?", "Alojamiento en domos").
+- **Solución Paso a Paso:**
+  1. En `src/templates/AdventureTemplate.tsx`, rediseñar la grilla a **3 columnas amplias y confortables** (`grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5`).
+  2. Eliminar completamente la clase `truncate` para que todos los textos se lean fluidos y completos.
+  3. Sustituir los términos técnicos por etiquetas naturales y explicativas:
+     - `Altitud Máxima`: con subtítulo explicativo de paso y aclimatación.
+     - `Duración del Trek`: con subtítulo de recorrido escénico.
+     - `Exigencia Física`: describiendo condición física requerida.
+     - `Tamaño del Grupo`: destacando atención personalizada y ritmo flexible.
+     - `Alojamiento en Ruta`: destacando domos térmicos bajo las estrellas.
+     - `Tarifa Oficial`: clara, por persona y sin costos ocultos.
+  4. Agregar soporte multilenguaje completo (`es`, `en`, `fr`, `pt`, `it`) y badges con iconos temáticos de 20px en pods de color.
