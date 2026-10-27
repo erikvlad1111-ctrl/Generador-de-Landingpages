@@ -21,7 +21,9 @@ import {
   MessageSquare,
   ArrowLeft,
   HeartHandshake,
-  X
+  X,
+  Trash2,
+  ShieldAlert
 } from 'lucide-react';
 import { FAQItem, PlanTier, TemplateType, LanguageType } from '@/types/landing';
 import { translateText } from '@/data/translations';
@@ -48,6 +50,9 @@ interface ForumQuestion {
 }
 
 interface TourSupportAndFaqsProps {
+  landingId?: string;
+  enableForum?: boolean;
+  isAdmin?: boolean;
   faqs?: FAQItem[];
   tourName: string;
   whatsapp: string;
@@ -582,6 +587,9 @@ const getInitialForumQuestions = (
 };
 
 export default function TourSupportAndFaqs({
+  landingId,
+  enableForum = true,
+  isAdmin = false,
   faqs = [],
   tourName,
   whatsapp,
@@ -593,6 +601,7 @@ export default function TourSupportAndFaqs({
   lang = 'es'
 }: TourSupportAndFaqsProps) {
   const isEn = lang === 'en';
+  const isForumEnabled = enableForum !== false;
 
   const isBoho = theme === 'boho-nature';
   const isPremium = theme === 'premium';
@@ -603,10 +612,20 @@ export default function TourSupportAndFaqs({
   const isPro = tier === 'pro';
 
   // Navigation Tabs: 'forum' (Comunidad) | 'faq' (Preguntas Frecuentes) | 'ticket' (Mesa Privada)
-  // For basic or pro tier, default to 'faq'
+  // For basic or pro tier, or if forum is disabled, default to 'faq'
   const [activeTab, setActiveTab] = useState<'forum' | 'faq' | 'ticket'>(
-    (isBasic || isPro) ? 'faq' : 'forum'
+    (!isForumEnabled || isBasic || isPro) ? 'faq' : 'forum'
   );
+
+  // Moderation / Owner Mode State
+  const [isOwnerMode, setIsOwnerMode] = useState(isAdmin);
+  const [replyAsAdmin, setReplyAsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (!isForumEnabled && activeTab === 'forum') {
+      setActiveTab('faq');
+    }
+  }, [isForumEnabled, activeTab]);
 
   // Theme-aware visual tokens
   const themeTitleClass = isEmerald ? 'font-black tracking-tight text-white' : isBoho ? 'font-serif font-medium text-stone-900' : isCultural ? 'font-serif font-black text-stone-900' : 'font-black tracking-tight text-stone-900';
@@ -663,10 +682,13 @@ export default function TourSupportAndFaqs({
   const [mathAnswer, setMathAnswer] = useState('');
   const [spamError, setSpamError] = useState<string | null>(null);
 
-  // Load forum threads from localStorage with theme and lang isolation
+  // Unique scoped storageKey per landing and language
+  const scopedId = landingId || tourName.toLowerCase().replace(/[^a-z0-9]/g, '-').slice(0, 32) || theme;
+  const storageKey = `cusco_forum_${scopedId}_${lang}`;
+
+  // Load forum threads from localStorage with landing ID and lang isolation
   useEffect(() => {
     try {
-      const storageKey = `cusco_creativos_forum_threads_v4_${theme}_${lang}`;
       const saved = localStorage.getItem(storageKey);
       if (saved) {
         const parsed = JSON.parse(saved);
@@ -679,13 +701,12 @@ export default function TourSupportAndFaqs({
       // ignore
     }
     setForumQuestions(defaultQuestions);
-  }, [tourName, destination, guideName, lang, theme]);
+  }, [storageKey, tourName, destination, guideName, lang, theme]);
 
   // Save forum threads to localStorage
   const saveQuestions = (updated: ForumQuestion[]) => {
     setForumQuestions(updated);
     try {
-      const storageKey = `cusco_creativos_forum_threads_v4_${theme}_${lang}`;
       localStorage.setItem(storageKey, JSON.stringify(updated));
     } catch {
       // ignore
@@ -882,15 +903,16 @@ export default function TourSupportAndFaqs({
     setActiveQuestionId(newQuestion.id);
   };
 
-  // Handler for Adding a Reply to Active Question
+  // Handler for Adding a Reply to Active Question (with Owner / Admin badge support)
   const handleAddReply = (questionId: string) => {
     if (!replyContent.trim()) return;
 
     const newReply: ForumReply = {
       id: `r-${Date.now()}`,
-      author: replyAuthor.trim() || 'Viajero de la Comunidad',
-      role: 'user',
-      roleLabel: 'Comunidad',
+      author: replyAuthor.trim() || (replyAsAdmin ? (guideName || 'Equipo Oficial') : 'Viajero de la Comunidad'),
+      role: replyAsAdmin ? 'admin' : 'user',
+      roleLabel: replyAsAdmin ? (guideName ? `${guideName} (Equipo Oficial)` : 'Equipo Oficial') : 'Comunidad',
+      avatarBg: replyAsAdmin ? themeAdminAvatar : undefined,
       timeAgo: 'Justo ahora',
       content: replyContent.trim()
     };
@@ -908,6 +930,33 @@ export default function TourSupportAndFaqs({
 
     saveQuestions(updated);
     setReplyContent('');
+  };
+
+  // Moderation Handlers for Owner
+  const handleDeleteQuestion = (questionId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (window.confirm(lang === 'en' ? 'Delete this question from forum?' : '¿Deseas eliminar esta consulta del foro?')) {
+      const updated = forumQuestions.filter(q => q.id !== questionId);
+      saveQuestions(updated);
+      if (activeQuestionId === questionId) {
+        setActiveQuestionId(null);
+      }
+    }
+  };
+
+  const handleDeleteReply = (questionId: string, replyId: string) => {
+    if (window.confirm(lang === 'en' ? 'Delete this reply?' : '¿Deseas eliminar esta respuesta?')) {
+      const updated = forumQuestions.map(q => {
+        if (q.id === questionId) {
+          return {
+            ...q,
+            replies: q.replies.filter(r => r.id !== replyId)
+          };
+        }
+        return q;
+      });
+      saveQuestions(updated);
+    }
   };
 
   const st = {
@@ -1095,23 +1144,25 @@ export default function TourSupportAndFaqs({
           </p>
         </div>
 
-        {/* Navigation Tabs Bar: Mobile first 3 balanced columns */}
-        <div className={`${isEmerald ? 'bg-white/[0.08] border border-white/10 backdrop-blur-xl' : 'bg-stone-200/70'} rounded-2xl max-w-2xl mx-auto p-1 sm:p-1.5 grid grid-cols-3 gap-1 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-3`}>
-          <button
-            type="button"
-            onClick={() => { setActiveTab('forum'); setActiveQuestionId(null); }}
-            className={`flex items-center justify-center gap-1 sm:gap-2 px-1.5 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs flex-col sm:flex-row text-center rounded-xl font-bold transition-all cursor-pointer min-h-[44px] ${
-              activeTab === 'forum'
-                ? (isEmerald ? 'bg-emerald-400 text-slate-950 font-black shadow-lg scale-102' : 'bg-white text-stone-900 shadow-md scale-102')
-                : (isEmerald ? 'text-emerald-200/70 hover:text-white' : 'text-stone-600 hover:text-stone-900')
-            }`}
-          >
-            <MessageSquare size={14} className={activeTab === 'forum' ? (isEmerald ? 'text-slate-950' : themeAccentText) : ''} />
-            <span className="truncate max-w-full">{st.tabForum}</span>
-            <span className={`hidden sm:inline ${themeTabBadge} text-[9px] px-1.5 py-0.2 rounded-full font-bold`}>
-              {forumQuestions.length}
-            </span>
-          </button>
+        {/* Navigation Tabs Bar: Mobile first 3 or 2 balanced columns depending on enableForum */}
+        <div className={`${isEmerald ? 'bg-white/[0.08] border border-white/10 backdrop-blur-xl' : 'bg-stone-200/70'} rounded-2xl max-w-2xl mx-auto p-1 sm:p-1.5 ${isForumEnabled ? 'grid grid-cols-3' : 'grid-cols-2'} gap-1 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-3`}>
+          {isForumEnabled && (
+            <button
+              type="button"
+              onClick={() => { setActiveTab('forum'); setActiveQuestionId(null); }}
+              className={`flex items-center justify-center gap-1 sm:gap-2 px-1.5 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-xs flex-col sm:flex-row text-center rounded-xl font-bold transition-all cursor-pointer min-h-[44px] ${
+                activeTab === 'forum'
+                  ? (isEmerald ? 'bg-emerald-400 text-slate-950 font-black shadow-lg scale-102' : 'bg-white text-stone-900 shadow-md scale-102')
+                  : (isEmerald ? 'text-emerald-200/70 hover:text-white' : 'text-stone-600 hover:text-stone-900')
+              }`}
+            >
+              <MessageSquare size={14} className={activeTab === 'forum' ? (isEmerald ? 'text-slate-950' : themeAccentText) : ''} />
+              <span className="truncate max-w-full">{st.tabForum}</span>
+              <span className={`hidden sm:inline ${themeTabBadge} text-[9px] px-1.5 py-0.2 rounded-full font-bold`}>
+                {forumQuestions.length}
+              </span>
+            </button>
+          )}
 
           <button
             type="button"
@@ -1159,6 +1210,26 @@ export default function TourSupportAndFaqs({
                   <p className={`text-xs sm:text-sm ${isEmerald ? 'text-emerald-100/70' : 'text-stone-500'} leading-relaxed`}>
                     {st.forumDesc}
                   </p>
+                  <div className="pt-1.5 flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsOwnerMode(!isOwnerMode)}
+                      className={`text-[10px] px-2.5 py-0.5 rounded-full border transition-all cursor-pointer inline-flex items-center gap-1 ${
+                        isOwnerMode
+                          ? 'bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-400/40 font-bold'
+                          : isEmerald ? 'bg-white/5 text-emerald-200/60 border-white/10 hover:text-white' : 'bg-stone-100 text-stone-500 border-stone-200 hover:text-stone-800'
+                      }`}
+                      title="Panel de moderación para el dueño de la página"
+                    >
+                      <ShieldAlert size={11} />
+                      <span>{isOwnerMode ? 'Modo Dueño: Moderación Activa' : 'Gestionar Foro (Dueño)'}</span>
+                    </button>
+                    {isOwnerMode && (
+                      <span className="text-[10px] text-amber-600 font-medium">
+                        (Puedes eliminar spam y responder con insignia oficial)
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <button
@@ -1397,7 +1468,19 @@ export default function TourSupportAndFaqs({
                               </div>
                             </div>
 
-                            <span className="text-[9px] sm:text-[10px] text-stone-400">{reply.timeAgo}</span>
+                            <div className="flex items-center gap-2">
+                              <span className="text-[9px] sm:text-[10px] text-stone-400">{reply.timeAgo}</span>
+                              {isOwnerMode && (
+                                <button
+                                  type="button"
+                                  onClick={() => handleDeleteReply(activeQuestion.id, reply.id)}
+                                  className="text-stone-400 hover:text-rose-600 p-0.5 rounded transition-colors cursor-pointer"
+                                  title="Eliminar respuesta"
+                                >
+                                  <Trash2 size={12} />
+                                </button>
+                              )}
+                            </div>
                           </div>
 
                           <p className="text-xs sm:text-sm text-stone-700 leading-relaxed pl-8 sm:pl-9">
@@ -1441,6 +1524,21 @@ export default function TourSupportAndFaqs({
                       />
                     </div>
                   </div>
+
+                  {isOwnerMode && (
+                    <label className="flex items-center gap-2 text-xs font-bold text-stone-700 cursor-pointer pt-1">
+                      <input
+                        type="checkbox"
+                        checked={replyAsAdmin}
+                        onChange={(e) => setReplyAsAdmin(e.target.checked)}
+                        className="rounded text-amber-600 focus:ring-amber-500 cursor-pointer"
+                      />
+                      <span className="flex items-center gap-1 text-[11px] text-emerald-700">
+                        <CheckCircle2 size={13} className="text-emerald-600" />
+                        Responder con verificación oficial: <strong>{guideName || 'Equipo Oficial'}</strong>
+                      </span>
+                    </label>
+                  )}
 
                   <div className="flex justify-end">
                     <button
@@ -1490,9 +1588,21 @@ export default function TourSupportAndFaqs({
                           <span>{q.timeAgo}</span>
                         </div>
 
-                        <span className={`text-[10px] ${isEmerald ? 'text-emerald-300/60' : 'text-stone-400'} flex items-center gap-1`}>
-                          <Eye size={12} /> {q.views} {st.views}
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className={`text-[10px] ${isEmerald ? 'text-emerald-300/60' : 'text-stone-400'} flex items-center gap-1`}>
+                            <Eye size={12} /> {q.views} {st.views}
+                          </span>
+                          {isOwnerMode && (
+                            <button
+                              type="button"
+                              onClick={(e) => handleDeleteQuestion(q.id, e)}
+                              className="text-stone-400 hover:text-rose-600 p-1 rounded-md hover:bg-rose-50 transition-colors cursor-pointer"
+                              title="Eliminar pregunta"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          )}
+                        </div>
                       </div>
 
                       <h4 className={`font-bold text-sm sm:text-base ${isEmerald ? 'text-white group-hover:text-emerald-300' : 'text-stone-900 group-hover:' + themeAccentText} transition-colors leading-snug ${isBoho ? 'font-serif' : ''}`}>

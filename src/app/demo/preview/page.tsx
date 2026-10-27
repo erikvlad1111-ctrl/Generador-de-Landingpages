@@ -199,6 +199,7 @@ function DemoPreviewContent() {
 
   // 7. FAQs & Testimonios
   const [editFaqs, setEditFaqs] = useState<FAQItem[]>(() => landing?.faqs || []);
+  const [editEnableForum, setEditEnableForum] = useState<boolean>(() => landing?.enableForum !== false);
   const [editTestimonials, setEditTestimonials] = useState<TestimonialItem[]>(() => landing?.testimonials || []);
 
   // 8. Galería, Oficina & Catálogo
@@ -505,6 +506,7 @@ function DemoPreviewContent() {
 
     setEditItinerary(l.itinerary || []);
     setEditFaqs(l.faqs || []);
+    setEditEnableForum(l.enableForum !== false);
     setEditTestimonials(l.testimonials || []);
 
     setEditGalleryImages(l.galleryImages?.join('\n') || '');
@@ -583,6 +585,7 @@ function DemoPreviewContent() {
       trustBadges: editTrustBadges.split('\n').map(s => s.trim()).filter(Boolean),
       itinerary: editItinerary,
       faqs: editFaqs,
+      enableForum: editEnableForum,
       testimonials: editTestimonials,
       galleryImages: editGalleryImages.split('\n').map(s => s.trim()).filter(Boolean),
       catalogTours: catalogTours.length > 0 ? catalogTours : landing.catalogTours,
@@ -2039,6 +2042,37 @@ function DemoPreviewContent() {
                       </button>
                     </div>
                   )}
+
+                  {/* Control del Foro Comunitario & Identificador Único de la Landing */}
+                  <div className="p-3.5 bg-white border border-slate-200 rounded-2xl shadow-xs space-y-2">
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="space-y-0.5">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-bold text-slate-900">Foro de Consultas Comunitarias</span>
+                          <span className="text-[10px] font-mono bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full border border-blue-200 font-bold">
+                            ID: {landing?.slug || landing?.id || 'tour-forum'}
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-slate-500">
+                          Permite a los viajeros hacer preguntas y recibir respuestas verificadas de tu equipo.
+                        </p>
+                      </div>
+                      <label className="relative inline-flex items-center cursor-pointer shrink-0">
+                        <input
+                          type="checkbox"
+                          checked={editEnableForum}
+                          onChange={(e) => setEditEnableForum(e.target.checked)}
+                          className="sr-only peer"
+                        />
+                        <div className="w-10 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                      </label>
+                    </div>
+                    {!editEnableForum && (
+                      <p className="text-[11px] text-amber-700 bg-amber-50 p-2 rounded-xl border border-amber-200 leading-relaxed">
+                        ℹ️ El foro está desactivado para esta página. Tu web solo mostrará las preguntas frecuentes fijas y el botón a WhatsApp.
+                      </p>
+                    )}
+                  </div>
 
                   {/* SECCIÓN PREGUNTAS FRECUENTES */}
                   <div className="space-y-3">

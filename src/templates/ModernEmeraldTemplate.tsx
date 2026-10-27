@@ -2420,6 +2420,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           
           <div className="relative z-10">
             <TourSupportAndFaqs
+              landingId={data.id || data.slug}
+              enableForum={data.enableForum !== false}
               faqs={data.faqs}
               tourName={heroTitle}
               whatsapp={guidePhone}

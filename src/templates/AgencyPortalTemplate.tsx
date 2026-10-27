@@ -2253,6 +2253,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
       {/* 10. FORO DE SOPORTE & FAQ (ADVANCE ONLY) */}
       {isAdvance && (
         <TourSupportAndFaqs
+          landingId={data?.id || data?.slug}
+          enableForum={data?.enableForum !== false}
           faqs={data?.faqs}
           tourName={translateText(tourTitle, lang)}
           whatsapp={whatsappNumber}

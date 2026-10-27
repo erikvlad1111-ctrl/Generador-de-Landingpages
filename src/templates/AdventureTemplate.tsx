@@ -1957,6 +1957,8 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
       {/* 12. TOUR SUPPORT & FAQS (ADVANCE ONLY) */}
       {isAdvance && (
         <TourSupportAndFaqs
+          landingId={data.id || data.slug}
+          enableForum={data.enableForum !== false}
           faqs={data.faqs}
           tourName={data.name || data.hero?.title || 'Tour de Aventura'}
           whatsapp={data.whatsapp}

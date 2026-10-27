@@ -1895,6 +1895,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       {/* 19. TOUR SUPPORT & FAQS (ADVANCE ONLY) */}
       {isAdvance && (
         <TourSupportAndFaqs
+          landingId={data.id || data.slug}
+          enableForum={data.enableForum !== false}
           faqs={data.faqs}
           tourName={translateText(data.name || data.hero?.title || 'Experiencia VIP', currentLang)}
           whatsapp={data.whatsapp}

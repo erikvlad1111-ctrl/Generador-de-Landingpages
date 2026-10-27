@@ -84,6 +84,7 @@ export interface LandingData {
   whatToBring?: string[];
   trustBadges?: string[];
   faqs?: FAQItem[];
+  enableForum?: boolean;
   testimonials?: TestimonialItem[];
   officeAddress?: string;
   officeHours?: string;

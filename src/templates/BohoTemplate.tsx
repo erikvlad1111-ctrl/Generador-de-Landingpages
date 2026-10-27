@@ -1871,6 +1871,8 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
       {/* Tour Support & FAQs - ADVANCE ONLY */}
       {isAdvance && (
         <TourSupportAndFaqs
+          landingId={data.id || data.slug}
+          enableForum={data.enableForum !== false}
           faqs={data.faqs}
           tourName={localizedTourTitle}
           whatsapp={data.whatsapp}
