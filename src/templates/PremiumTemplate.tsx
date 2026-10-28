@@ -983,7 +983,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 </div>
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.2em] text-amber-400/80 font-mono font-bold">{t.specs.altitudeLabel}</p>
-                  <h3 className="font-serif font-bold text-neutral-100 text-base">{translateText(data.altitude || '3,400 msnm', currentLang)}</h3>
+                  <h3 className="font-serif font-bold text-neutral-100 text-base tabular-nums">{translateText(data.altitude || '3,400 msnm', currentLang)}</h3>
                 </div>
               </div>
               <p className="text-xs text-neutral-400 font-light leading-relaxed pl-1 flex items-center gap-1.5">
@@ -1295,7 +1295,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                       className="bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer hover:scale-102"
                     >
                       <MessageCircle size={13} />
-                      <span>{currentLang === 'en' ? 'Inquire' : 'Consultar'}</span>
+                      <span>{currentLang === 'en' ? 'Inquire' : currentLang === 'fr' ? 'Consulter' : currentLang === 'it' ? 'Consultare' : 'Consultar'}</span>
                     </a>
                   )}
                 </div>

@@ -851,7 +851,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
           
           <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
             <span className="text-[13px] sm:text-[15px] uppercase tracking-widest font-serif font-bold text-[#C86D51] flex items-center gap-1.5">
-              <Bookmark size={14} /> {currentLang === 'en' ? 'Journal & Key Differentiator' : 'Bitácora & Valor Diferencial'}
+              <Bookmark size={14} /> {currentLang === 'en' ? 'Journal & Key Differentiator' : currentLang === 'fr' ? 'Journal & Valeur Différentielle' : currentLang === 'pt' ? 'Diário & Diferencial Exclusivo' : currentLang === 'it' ? 'Diario & Valore Differenziale' : 'Bitácora & Valor Diferencial'}
             </span>
             <span className="text-[13px] sm:text-sm font-mono text-stone-500 bg-stone-100 px-2.5 py-0.5 rounded-full">
               {translateText(data.destination || 'Cusco & Andes', currentLang)}
@@ -870,37 +870,37 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 pt-3 border-t border-stone-100">
             <div className="p-3 rounded-2xl bg-[#FAF7F2] border border-stone-200/70 text-center space-y-0.5">
               <Mountain size={15} className="text-[#C86D51] mx-auto" />
-              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Max Altitude' : 'Altitud'}</span>
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Max Altitude' : currentLang === 'fr' ? 'Altitude Max.' : currentLang === 'pt' ? 'Altitude Máx.' : currentLang === 'it' ? 'Altitudine Max.' : 'Altitud'}</span>
               <strong className="text-xs sm:text-sm font-serif font-bold text-stone-900 block truncate">{translateText(data.altitude || '4,200 msnm', currentLang)}</strong>
             </div>
 
             <div className="p-3 rounded-2xl bg-[#FAF7F2] border border-stone-200/70 text-center space-y-0.5">
               <Clock size={15} className="text-[#588157] mx-auto" />
-              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Duration' : 'Duración'}</span>
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Duration' : currentLang === 'fr' ? 'Durée' : currentLang === 'pt' ? 'Duração' : currentLang === 'it' ? 'Durata' : 'Duración'}</span>
               <strong className="text-xs sm:text-sm font-serif font-bold text-stone-900 block truncate">{translateText(data.duration || 'Full Day', currentLang)}</strong>
             </div>
 
             <div className="p-3 rounded-2xl bg-[#FAF7F2] border border-stone-200/70 text-center space-y-0.5">
               <Award size={15} className="text-amber-600 mx-auto" />
-              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Difficulty' : 'Dificultad'}</span>
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Difficulty' : currentLang === 'fr' ? 'Difficulté' : currentLang === 'pt' ? 'Dificuldade' : currentLang === 'it' ? 'Difficoltà' : 'Dificultad'}</span>
               <strong className="text-xs sm:text-sm font-serif font-bold text-stone-900 block truncate">{translateText(data.difficulty || 'Moderada', currentLang)}</strong>
             </div>
 
             <div className="p-3 rounded-2xl bg-[#FAF7F2] border border-stone-200/70 text-center space-y-0.5">
               <Users size={15} className="text-[#C86D51] mx-auto" />
-              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Group Mode' : 'Modalidad'}</span>
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Group Mode' : currentLang === 'fr' ? 'Modalité' : currentLang === 'pt' ? 'Modalidade' : currentLang === 'it' ? 'Modalità' : 'Modalidad'}</span>
               <strong className="text-xs sm:text-sm font-serif font-bold text-stone-900 block truncate">{translateText(data.groupType || 'Grupo Reducido', currentLang)}</strong>
             </div>
 
             <div className="p-3 rounded-2xl bg-[#FAF7F2] border border-stone-200/70 text-center space-y-0.5">
               <Target size={15} className="text-[#588157] mx-auto" />
-              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Target' : 'Público'}</span>
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Target' : currentLang === 'fr' ? 'Public' : currentLang === 'pt' ? 'Público' : currentLang === 'it' ? 'Destinatari' : 'Público'}</span>
               <strong className="text-xs sm:text-sm font-serif font-bold text-stone-900 block truncate">{translateText(data.targetAudience || 'Fotógrafos & Parejas', currentLang)}</strong>
             </div>
 
             <div className="p-3 rounded-2xl bg-[#FAF7F2] border border-stone-200/70 text-center space-y-0.5">
               <DollarSign size={15} className="text-emerald-700 mx-auto" />
-              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Rate' : 'Tarifa'}</span>
+              <span className="text-[10px] uppercase font-bold text-stone-400 block tracking-wider">{currentLang === 'en' ? 'Rate' : currentLang === 'fr' ? 'Tarif' : currentLang === 'pt' ? 'Tarifa' : currentLang === 'it' ? 'Tariffa' : 'Tarifa'}</span>
               <strong className="text-xs sm:text-sm font-serif font-bold text-emerald-700 block truncate">{data.price || '$180 USD'}</strong>
             </div>
           </div>
@@ -979,10 +979,10 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 <MapPin size={14} /> Coordenadas de Campo & Elevación
               </span>
               <h2 className="text-xl sm:text-4xl font-serif text-stone-900">
-                Mapa de Ruta & Puntos Escénicos
+                {translateText('Mapa de Ruta & Puntos Escénicos', currentLang)}
               </h2>
               <p className="text-[15px] sm:text-[17px] text-stone-600 leading-relaxed">
-                Conoce el perfil geográfico del recorrido desde el Centro Histórico del Cusco hasta los miradores andinos.
+                {translateText('Conoce el perfil geográfico del recorrido desde el Centro Histórico del Cusco hasta los miradores andinos.', currentLang)}
               </p>
             </div>
 
@@ -991,12 +991,12 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-stone-100 pb-3">
                 <div className="flex items-center gap-1.5 text-[13px] sm:text-[15px] font-serif font-bold text-stone-800">
                   <Mountain size={16} className="text-[#C86D51]" />
-                  <span>Perfil de Altitud & Escala del Recorrido</span>
+                  <span>{translateText('Perfil de Altitud & Escala del Recorrido', currentLang)}</span>
                 </div>
                 <div className="flex items-center gap-2 text-[13px] sm:text-sm text-stone-500 font-mono">
-                  <span>Partida: 3,400m</span>
+                  <span>{translateText('Partida: 3,400m', currentLang)}</span>
                   <span>•</span>
-                  <span className="text-[#C86D51] font-bold">Cumbre: 4,200m</span>
+                  <span className="text-[#C86D51] font-bold">{translateText('Cumbre: 4,200m', currentLang)}</span>
                 </div>
               </div>
 
@@ -1079,37 +1079,37 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 <div className="space-y-3 sm:space-y-4">
                   <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#588157]/10 text-[#588157] text-[13px] sm:text-[15px] font-serif font-semibold">
                     <Navigation size={13} />
-                    <span>Navegación GPS Verificada</span>
+                    <span>{translateText('Navegación GPS Verificada', currentLang)}</span>
                   </div>
 
                   <h3 className="font-serif font-bold text-lg sm:text-2xl text-stone-900 leading-tight">
-                    Acceso Guiado y Traslado Puerta a Puerta
+                    {translateText('Acceso Guiado y Traslado Puerta a Puerta', currentLang)}
                   </h3>
 
                   <p className="text-[15px] sm:text-[17px] text-stone-600 leading-relaxed font-sans">
-                    Nuestras unidades turísticas cuentan con permiso del MTC, SOAT turístico vigente y monitoreo GPS durante todo el trayecto desde el centro de Cusco hasta el sendero.
+                    {translateText('Nuestras unidades turísticas cuentan con permiso del MTC, SOAT turístico vigente y monitoreo GPS durante todo el trayecto desde el centro de Cusco hasta el sendero.', currentLang)}
                   </p>
 
                   <div className="space-y-2 pt-2 border-t border-stone-100 text-[15px] text-stone-700">
                     <div className="flex items-start gap-2">
                       <MapPin size={15} className="text-[#C86D51] shrink-0 mt-0.5" />
                       <div>
-                        <strong className="block text-stone-900 font-serif text-[15px]">Punto de Recojo:</strong>
-                        <span className="text-stone-500 text-[13px] sm:text-sm">Tu hotel o Airbnb en el Centro Histórico de Cusco</span>
+                        <strong className="block text-stone-900 font-serif text-[15px]">{translateText('Punto de Recojo:', currentLang)}</strong>
+                        <span className="text-stone-500 text-[13px] sm:text-sm">{translateText('Tu hotel o Airbnb en el Centro Histórico de Cusco', currentLang)}</span>
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
                       <Clock size={15} className="text-[#588157] shrink-0 mt-0.5" />
                       <div>
-                        <strong className="block text-stone-900 font-serif text-[15px]">Tiempo de Traslado:</strong>
-                        <span className="text-stone-500 text-[13px] sm:text-sm">Aprox. 2h 45m de viaje panorámico por tramo</span>
+                        <strong className="block text-stone-900 font-serif text-[15px]">{translateText('Tiempo de Traslado:', currentLang)}</strong>
+                        <span className="text-stone-500 text-[13px] sm:text-sm">{translateText('Aprox. 2h 45m de viaje panorámico por tramo', currentLang)}</span>
                       </div>
                     </div>
                     <div className="flex items-start gap-2">
                       <ShieldCheck size={15} className="text-amber-600 shrink-0 mt-0.5" />
                       <div>
-                        <strong className="block text-stone-900 font-serif text-[15px]">Seguridad en Ruta:</strong>
-                        <span className="text-stone-500 text-[13px] sm:text-sm">Choferes experimentados en carreteras de montaña</span>
+                        <strong className="block text-stone-900 font-serif text-[15px]">{translateText('Seguridad en Ruta:', currentLang)}</strong>
+                        <span className="text-stone-500 text-[13px] sm:text-sm">{translateText('Choferes experimentados en carreteras de montaña', currentLang)}</span>
                       </div>
                     </div>
                   </div>
@@ -1321,7 +1321,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                       className="bg-[#588157] hover:bg-[#466645] text-white px-3.5 py-2 rounded-xl text-[15px] font-serif font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                     >
                       <MessageCircle size={14} />
-                      <span>{currentLang === 'en' ? 'Inquire' : 'Consultar'}</span>
+                      <span>{currentLang === 'en' ? 'Inquire' : currentLang === 'fr' ? 'Consulter' : currentLang === 'it' ? 'Consultare' : 'Consultar'}</span>
                     </a>
                   )}
                 </div>

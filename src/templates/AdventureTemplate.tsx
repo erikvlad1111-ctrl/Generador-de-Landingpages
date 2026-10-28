@@ -983,7 +983,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                   <span>{specs.badge}</span>
                 </div>
                 <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-                  {data.about?.title ? translateText(data.about.title, currentLang) : (data.name ? translateText(data.name, currentLang) : (currentLang === 'en' ? 'An unforgettable high-altitude adventure' : 'Una aventura de alta montaña inolvidable'))}
+                  {data.about?.title ? translateText(data.about.title, currentLang) : (data.name ? translateText(data.name, currentLang) : (currentLang === 'en' ? 'An unforgettable high-altitude adventure' : currentLang === 'fr' ? 'Une aventure inoubliable de haute montagne' : currentLang === 'pt' ? 'Uma aventura inesquecível de alta montanha' : currentLang === 'it' ? 'Un’avventura indimenticabile di alta montagna' : 'Una aventura de alta montaña inolvidable'))}
                 </h2>
                 <p className="text-sm sm:text-base text-slate-600 max-w-3xl mx-auto leading-relaxed font-normal">
                   {translateText(data.about?.content || (data as any)?.description || data.hero?.subtitle || 'Descubre la magia de los Andes peruanos con atención de primer nivel, protocolos de seguridad certificados y guías locales expertos.', currentLang)}
@@ -1651,7 +1651,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
               <div className="md:col-span-2 bg-slate-900 text-white p-5 rounded-2xl border border-slate-800 flex flex-wrap items-center justify-center gap-3 sm:gap-6 shadow-sm">
                 <span className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
                   <ShieldCheck size={16} />
-                  <span>{currentLang === 'en' ? 'Verified Guarantees' : 'Garantías Oficiales'}:</span>
+                  <span>{currentLang === 'en' ? 'Verified Guarantees' : currentLang === 'fr' ? 'Garanties Vérifiées' : currentLang === 'pt' ? 'Garantias Verificadas' : currentLang === 'it' ? 'Garanzie Verificate' : 'Garantías Oficiales'}:</span>
                 </span>
                 {data.trustBadges.map((badge, bIdx) => (
                   <span key={bIdx} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-slate-200 text-xs font-semibold border border-white/10">

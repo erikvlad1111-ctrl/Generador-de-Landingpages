@@ -2,7 +2,510 @@ import { LanguageType, ItineraryItem, FAQItem } from '@/types/landing';
 
 // Mapeo exhaustivo de frases, títulos, descripciones y términos turísticos a los 5 idiomas
 const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
-  // --- TÍTULOS DE TOURS Y HERO ---
+  "Anotaciones de campo: Luz dorada sobre los nevados.": {
+    es: "Anotaciones de campo: Luz dorada sobre los nevados.",
+    en: "Field notes: Golden hour light over snow-capped peaks.",
+    pt: "Anotações de campo: Luz dourada sobre os picos nevados.",
+    fr: "Notes de terrain : Lumière dorée sur les sommets enneigés.",
+    it: "Note di campo: Luce dorata sulle cime innevate."
+  },
+  "Travel the Best, It is a Big World, Go Explore!": {
+    es: "Viaja a lo Grande, ¡el Mundo es Inmenso!",
+    en: "Travel the Best, It is a Big World, Go Explore!",
+    pt: "Viaje em Grande Estilo, o Mundo é Enorme!",
+    fr: "Voyagez en Grand, le Monde est Immense !",
+    it: "Viaggia alla Grande, il Mondo è Immenso!"
+  },
+  "Tour Estrella": {
+    es: "Tour Estrella",
+    en: "Signature Tour",
+    pt: "Tour Destaque",
+    fr: "Tour Vedette",
+    it: "Tour di Punta"
+  },
+  "Una experiencia curada para viajeros que aprecian los detalles, la fotografía y la autenticidad de los Andes peruanos.": {
+    es: "Una experiencia curada para viajeros que aprecian los detalles, la fotografía y la autenticidad de los Andes peruanos.",
+    en: "A curated experience for travelers who appreciate details, photography, and the authenticity of the Peruvian Andes.",
+    pt: "Uma experiência com curadoria para viajantes que apreciam detalhes, fotografia e a autenticidade dos Andes peruanos.",
+    fr: "Une expérience soignée pour les voyageurs qui apprécient les détails, la photographie et l’authenticité des Andes péruviennes.",
+    it: "Un’esperienza curata per viaggiatori che apprezzano i dettagli, la fotografia e l’autenticità delle Ande peruviane."
+  },
+  "Idioma del Tour:": {
+    es: "Idioma del Tour:",
+    en: "Tour Language:",
+    pt: "Idioma do Tour:",
+    fr: "Langue du Tour :",
+    it: "Lingua del Tour:"
+  },
+  "Moneda:": {
+    es: "Moneda:",
+    en: "Currency:",
+    pt: "Moeda:",
+    fr: "Devise :",
+    it: "Valuta:"
+  },
+  "Tarifa en:": {
+    es: "Tarifa en:",
+    en: "Rate in:",
+    pt: "Tarifa em:",
+    fr: "Tarif en :",
+    it: "Tariffa in:"
+  },
+  "Reservar Tour": {
+    es: "Reservar Tour",
+    en: "Book Tour",
+    pt: "Reservar Tour",
+    fr: "Réserver le Tour",
+    it: "Prenota Tour"
+  },
+  "Destino Principal": {
+    es: "Destino Principal",
+    en: "Main Destination",
+    pt: "Destino Principal",
+    fr: "Destination Principale",
+    it: "Destinazione Principale"
+  },
+  "Andes & Selva": {
+    es: "Andes & Selva",
+    en: "Andes & Cloud Forest",
+    pt: "Andes & Floresta",
+    fr: "Andes & Forêt Nuageuse",
+    it: "Ande & Foresta"
+  },
+  "Tarifa por Persona": {
+    es: "Tarifa por Persona",
+    en: "Rate per Person",
+    pt: "Tarifa por Pessoa",
+    fr: "Tarif par Personne",
+    it: "Tariffa a Persona"
+  },
+  "Tarifa oficial": {
+    es: "Tarifa oficial",
+    en: "Official Rate",
+    pt: "Tarifa oficial",
+    fr: "Tarif officiel",
+    it: "Tariffa ufficiale"
+  },
+  "Descripción & Valor Diferencial": {
+    es: "Descripción & Valor Diferencial",
+    en: "Overview & Distinctive Value",
+    pt: "Descrição & Valor Diferencial",
+    fr: "Description & Valeur Différentielle",
+    it: "Descrizione & Valore Differenziale"
+  },
+  "Detalles de Duración & Ritmo": {
+    es: "Detalles de Duración & Ritmo",
+    en: "Duration & Pace Details",
+    pt: "Detalhes de Duração & Ritmo",
+    fr: "Détails de Durée & Rythme",
+    it: "Dettagli di Durata & Ritmo"
+  },
+  "Protocolo de Altitud & Oxígeno": {
+    es: "Protocolo de Altitud & Oxígeno",
+    en: "Altitude & Oxygen Protocol",
+    pt: "Protocolo de Altitude & Oxigênio",
+    fr: "Protocole d’Altitude & Oxygène",
+    it: "Protocollo di Altitudine & Ossigeno"
+  },
+  "Evaluación de Condición Física": {
+    es: "Evaluación de Condición Física",
+    en: "Physical Fitness Assessment",
+    pt: "Avaliação de Condicionamento Físico",
+    fr: "Évaluation de la Condition Physique",
+    it: "Valutazione della Forma Fisica"
+  },
+  "Modalidad & Ratio de Guías": {
+    es: "Modalidad & Ratio de Guías",
+    en: "Tour Modality & Guide Ratio",
+    pt: "Modalidade & Proporção de Guias",
+    fr: "Modalité & Ratio de Guides",
+    it: "Modalità & Rapporto Guide"
+  },
+  "El itinerario contempla caminatas de 5 a 6 horas diarias con paradas programadas de hidratación cada 90 minutos y almuerzos gourmet calientes servidos en parajes escénicos.": {
+    es: "El itinerario contempla caminatas de 5 a 6 horas diarias con paradas programadas de hidratación cada 90 minutos y almuerzos gourmet calientes servidos en parajes escénicos.",
+    en: "The itinerary includes 5 to 6 hours of daily hiking with scheduled hydration stops every 90 minutes and hot gourmet lunches served in scenic locations.",
+    pt: "O roteiro contempla caminhadas de 5 a 6 horas diárias com paradas programadas de hidratação a cada 90 minutos e almoços gourmet quentes servidos em locais panorâmicos.",
+    fr: "L’itinéraire comprend 5 à 6 heures de marche par jour avec des haltes d’hydratation programmées toutes les 90 minutes et des déjeuners gourmets chauds servis dans des décors scéniques.",
+    it: "L’itinerario prevede camminate di 5-6 ore al giorno con pause di idratazione programmate ogni 90 minuti e pranzi gourmet caldi serviti in luoghi panoramici."
+  },
+  "Nuestros guías llevan oxímetro digital para medir tu saturación tres veces al día, balón de oxígeno medicinal de emergencia y botiquín de primeros auxilios avalado por Wilderness First Responder.": {
+    es: "Nuestros guías llevan oxímetro digital para medir tu saturación tres veces al día, balón de oxígeno medicinal de emergencia y botiquín de primeros auxilios avalado por Wilderness First Responder.",
+    en: "Our guides carry a digital pulse oximeter to monitor oxygen saturation three times daily, an emergency medical oxygen tank, and a first-aid kit certified by Wilderness First Responder.",
+    pt: "Nossos guias levam oxímetro digital para medir sua saturação três vezes ao dia, cilindro de oxigênio medicinal de emergência e kit de primeiros socorros certificado pela Wilderness First Responder.",
+    fr: "Nos guides disposent d’un oxymètre numérique pour mesurer votre saturation trois fois par jour, d’une bouteille d’oxygène médical d’urgence et d’une trousse de premiers secours certifiée Wilderness First Responder.",
+    it: "Le nostre guide portano un saturimetro digitale per monitorare la saturazione tre volte al giorno, una bombola di ossigeno medicale di emergenza e un kit di pronto soccorso certificato Wilderness First Responder."
+  },
+  "Clasificación de esfuerzo moderado a exigente. No se requiere experiencia en escalada técnica, únicamente calzado adecuado y buena disposición física.": {
+    es: "Clasificación de esfuerzo moderado a exigente. No se requiere experiencia en escalada técnica, únicamente calzado adecuado y buena disposición física.",
+    en: "Moderate to demanding effort rating. No technical climbing experience required, only suitable footwear and good physical disposition.",
+    pt: "Classificação de esforço de moderado a exigente. Não é necessária experiência em escalada técnica, apenas calçado adequado e boa disposição física.",
+    fr: "Niveau d’effort modéré à exigeant. Aucune expérience d’escalade technique requise, seulement des chaussures adaptées et une bonne forme physique.",
+    it: "Livello di sforzo da moderato a impegnativo. Non è richiesta esperienza di arrampicata tecnica, solo calzature adeguate e buona disposizione fisica."
+  },
+  "Grupos reducidos de máximo 8 a 10 personas para garantizar seguridad total, atención personalizada y respeto por el entorno natural de la cordillera.": {
+    es: "Grupos reducidos de máximo 8 a 10 personas para garantizar seguridad total, atención personalizada y respeto por el entorno natural de la cordillera.",
+    en: "Small groups of maximum 8 to 10 travelers to ensure complete safety, personalized attention, and respect for the natural alpine environment.",
+    pt: "Pequenos grupos de no máximo 8 a 10 pessoas para garantir segurança total, atendimento personalizado e respeito pelo ambiente natural da cordilheira.",
+    fr: "Petits groupes de 8 à 10 personnes maximum pour garantir une sécurité totale, une attention personnalisée et le respect de l’environnement montagnard.",
+    it: "Piccoli gruppi di massimo 8-10 persone per garantire totale sicurezza, attenzione personalizzata e rispetto per l’ambiente montano della cordigliera."
+  },
+  "Todos": {
+    es: "Todos",
+    en: "All",
+    pt: "Todos",
+    fr: "Tous",
+    it: "Tutti"
+  },
+  "Explore. Dream. Discover.": {
+    es: "Explora. Sueña. Descubre.",
+    en: "Explore. Dream. Discover.",
+    pt: "Explore. Sonhe. Descubra.",
+    fr: "Explorez. Rêvez. Découvrez.",
+    it: "Esplora. Sogna. Scopri."
+  },
+  "Local Experts": {
+    es: "Expertos Locales",
+    en: "Local Experts",
+    pt: "Especialistas Locais",
+    fr: "Experts Locaux",
+    it: "Esperti Locali"
+  },
+  "Authentic experiences": {
+    es: "Experiencias auténticas",
+    en: "Authentic experiences",
+    pt: "Experiências autênticas",
+    fr: "Expériences authentiques",
+    it: "Esperienze autentiche"
+  },
+  "Guías Expertos": {
+    es: "Guías Expertos",
+    en: "Expert Guides",
+    pt: "Guias Especialistas",
+    fr: "Guides Experts",
+    it: "Guide Esperte"
+  },
+  "Conocimiento local y tips auténticos": {
+    es: "Conocimiento local y tips auténticos",
+    en: "Local expertise and authentic tips",
+    pt: "Conhecimento local e dicas autênticas",
+    fr: "Expertise locale et conseils authentiques",
+    it: "Conoscenza locale e consigli autentici"
+  },
+  "Rutas a Medida": {
+    es: "Rutas a Medida",
+    en: "Tailor-Made Routes",
+    pt: "Roteiros Sob Medida",
+    fr: "Itinéraires Sur Mesure",
+    it: "Itinerari Su Misura"
+  },
+  "Planes flexibles para cada viajero": {
+    es: "Planes flexibles para cada viajero",
+    en: "Flexible plans for every traveler",
+    pt: "Planos flexíveis para cada viajante",
+    fr: "Plans flexibles pour chaque voyageur",
+    it: "Piani flessibili per ogni viaggiatore"
+  },
+  "Mejor Precio Garantizado": {
+    es: "Mejor Precio Garantizado",
+    en: "Best Price Guaranteed",
+    pt: "Melhor Preço Garantido",
+    fr: "Meilleur Prix Garanti",
+    it: "Miglior Prezzo Garantito"
+  },
+  "Tarifas directas sin intermediarios": {
+    es: "Tarifas directas sin intermediarios",
+    en: "Direct rates with no intermediaries",
+    pt: "Tarifas diretas sem intermediários",
+    fr: "Tarifs directs sans intermédiaires",
+    it: "Tariffe dirette senza intermediari"
+  },
+  "Destinos Populares": {
+    es: "Destinos Populares",
+    en: "Popular Destinations",
+    pt: "Destinos Populares",
+    fr: "Destinations Populaires",
+    it: "Destinazioni Popolari"
+  },
+  "Viajeros Felices": {
+    es: "Viajeros Felices",
+    en: "Happy Travelers",
+    pt: "Viajantes Felizes",
+    fr: "Voyageurs Heureux",
+    it: "Viaggiatori Soddisfatti"
+  },
+  "Reseñas Positivas": {
+    es: "Reseñas Positivas",
+    en: "Positive Reviews",
+    pt: "Avaliações Positivas",
+    fr: "Avis Positifs",
+    it: "Recensioni Positive"
+  },
+  "Guía Colegiado Bilingüe DIRCETUR": {
+    es: "Guía Colegiado Bilingüe DIRCETUR",
+    en: "DIRCETUR Bilingual Certified Guide",
+    pt: "Guia Credenciado Bilíngue DIRCETUR",
+    fr: "Guide Bilingue Agréé DIRCETUR",
+    it: "Guida Abilitata Bilingue DIRCETUR"
+  },
+  "Plan Your Trip": {
+    es: "Planifica Tu Viaje",
+    en: "Plan Your Trip",
+    pt: "Planeje Sua Viagem",
+    fr: "Planifiez Votre Voyage",
+    it: "Pianifica Il Tuo Viaggio"
+  },
+  "Reservar por WhatsApp": {
+    es: "Reservar por WhatsApp",
+    en: "Book via WhatsApp",
+    pt: "Reservar pelo WhatsApp",
+    fr: "Réserver par WhatsApp",
+    it: "Prenota su WhatsApp"
+  },
+  "Portal Agencia VIP": {
+    es: "Portal Agencia VIP",
+    en: "VIP Agency Portal",
+    pt: "Portal Agência VIP",
+    fr: "Portail Agence VIP",
+    it: "Portale Agenzia VIP"
+  },
+  "Guía Historiador": {
+    es: "Guía Historiador",
+    en: "Historian Guide",
+    pt: "Guia Historiador",
+    fr: "Guide Historien",
+    it: "Guida Storica"
+  },
+  "4,200 msnm": {
+    es: "4,200 msnm",
+    en: "4,200 m.a.s.l.",
+    pt: "4.200 m altitude",
+    fr: "4 200 m d’altitude",
+    it: "4.200 m s.l.m."
+  },
+  "WhatsApp & Cotizar": {
+    es: "WhatsApp & Cotizar",
+    en: "WhatsApp & Quote",
+    pt: "WhatsApp & Orçamento",
+    fr: "WhatsApp & Devis",
+    it: "WhatsApp & Preventivo"
+  },
+  "Laguna Humantay Boho": {
+    es: "Laguna Humantay Boho",
+    en: "Humantay Lake Boho",
+    pt: "Lagoa Humantay Boho",
+    fr: "Lagune Humantay Boho",
+    it: "Laguna Humantay Boho"
+  },
+  "Cusco": {
+    es: "Cusco",
+    en: "Cusco",
+    pt: "Cusco",
+    fr: "Cusco",
+    it: "Cusco"
+  },
+  "Machu Picchu Hiram Bingham": {
+    es: "Machu Picchu Hiram Bingham",
+    en: "Machu Picchu Hiram Bingham",
+    pt: "Machu Picchu Hiram Bingham",
+    fr: "Machu Picchu Hiram Bingham",
+    it: "Machu Picchu Hiram Bingham"
+  },
+  "Ver": {
+    es: "Ver",
+    en: "View",
+    pt: "Ver",
+    fr: "Voir",
+    it: "Vedi"
+  },
+  "Valle Sagrado & Hacienda": {
+    es: "Valle Sagrado & Hacienda",
+    en: "Sacred Valley & Hacienda",
+    pt: "Vale Sagrado & Fazenda",
+    fr: "Vallée Sacrée & Hacienda",
+    it: "Valle Sacra & Tenuta"
+  },
+  "Privado": {
+    es: "Privado",
+    en: "Private",
+    pt: "Privado",
+    fr: "Privé",
+    it: "Privato"
+  },
+  "Humantay Glamping Dome": {
+    es: "Humantay Glamping Dome",
+    en: "Humantay Glamping Dome",
+    pt: "Humantay Glamping Dome",
+    fr: "Humantay Glamping Dôme",
+    it: "Humantay Glamping Dome"
+  },
+  "Domo Geodésico": {
+    es: "Domo Geodésico",
+    en: "Geodesic Dome",
+    pt: "Domo Geodésico",
+    fr: "Dôme Géodésique",
+    it: "Cupola Geodetica"
+  },
+  "4,630 msnm": {
+    es: "4,630 msnm",
+    en: "4,630 m.a.s.l.",
+    pt: "4.630 m altitude",
+    fr: "4 630 m d’altitude",
+    it: "4.630 m s.l.m."
+  },
+  "Travel the Best, It's a Big World, Go Explore!": {
+    es: "Viaja a lo Grande, ¡el Mundo es Inmenso!",
+    en: "Travel the Best, It's a Big World, Go Explore!",
+    pt: "Viaje em Grande Estilo, o Mundo é Enorme!",
+    fr: "Voyagez en Grand, le Monde est Immense !",
+    it: "Viaggia alla Grande, il Mondo è Immenso!"
+  },
+  "Tour Salkantay Trek Clásico": {
+    es: "Tour Salkantay Trek Clásico",
+    en: "Classic Salkantay Trek Tour",
+    pt: "Tour Salkantay Trek Clássico",
+    fr: "Tour Salkantay Trek Classique",
+    it: "Tour Salkantay Trek Classico"
+  },
+  "5 Días": {
+    es: "5 Días",
+    en: "5 Days",
+    pt: "5 Dias",
+    fr: "5 Jours",
+    it: "5 Giorni"
+  },
+  "Salkantay Trek": {
+    es: "Salkantay Trek",
+    en: "Salkantay Trek",
+    pt: "Salkantay Trek",
+    fr: "Salkantay Trek",
+    it: "Salkantay Trek"
+  },
+  "Camino Inca": {
+    es: "Camino Inca",
+    en: "Inca Trail",
+    pt: "Trilha Inca",
+    fr: "Chemin de l’Inca",
+    it: "Cammino Inca"
+  },
+  "Salkantay Trek Clásico": {
+    es: "Salkantay Trek Clásico",
+    en: "Classic Salkantay Trek",
+    pt: "Salkantay Trek Clássico",
+    fr: "Salkantay Trek Classique",
+    it: "Salkantay Trek Classico"
+  },
+  "Eventos": {
+    es: "Eventos",
+    en: "Events",
+    pt: "Eventos",
+    fr: "Événements",
+    it: "Eventi"
+  },
+  "reseñas verificadas": {
+    es: "reseñas verificadas",
+    en: "verified reviews",
+    pt: "avaliações verificadas",
+    fr: "avis vérifiés",
+    it: "recensioni verificate"
+  },
+  "Mapa de Ruta & Puntos Escénicos": {
+    es: "Mapa de Ruta & Puntos Escénicos",
+    en: "Route Map & Scenic Viewpoints",
+    pt: "Mapa de Rota & Pontos Cênicos",
+    fr: "Carte de l’Itinéraire & Points Panoramiques",
+    it: "Mappa del Percorso & Punti Panoramici"
+  },
+  "Conoce el perfil geográfico del recorrido desde el Centro Histórico del Cusco hasta los miradores andinos.": {
+    es: "Conoce el perfil geográfico del recorrido desde el Centro Histórico del Cusco hasta los miradores andinos.",
+    en: "Explore the geographic profile of the journey from Cusco’s Historic Center to alpine viewpoints.",
+    pt: "Conheça o perfil geográfico do percurso desde o Centro Histórico de Cusco até os mirantes andinos.",
+    fr: "Découvrez le profil géographique du parcours depuis le Centre Historique de Cusco jusqu’aux belvédères andins.",
+    it: "Scopri il profilo geografico del percorso dal Centro Storico di Cusco fino ai punti panoramici andini."
+  },
+  "Perfil de Altitud & Escala del Recorrido": {
+    es: "Perfil de Altitud & Escala del Recorrido",
+    en: "Elevation Profile & Journey Scale",
+    pt: "Perfil de Altitude & Escala do Percurso",
+    fr: "Profil d’Altitude & Échelle du Parcours",
+    it: "Profilo di Altitudine & Scala del Percorso"
+  },
+  "Partida: 3,400m": {
+    es: "Partida: 3,400m",
+    en: "Departure: 3,400m",
+    pt: "Partida: 3.400m",
+    fr: "Départ : 3 400m",
+    it: "Partenza: 3.400m"
+  },
+  "Cumbre: 4,200m": {
+    es: "Cumbre: 4,200m",
+    en: "Summit: 4,200m",
+    pt: "Cume: 4.200m",
+    fr: "Sommet : 4 200m",
+    it: "Vetta: 4.200m"
+  },
+  "Navegación GPS Verificada": {
+    es: "Navegación GPS Verificada",
+    en: "Verified GPS Navigation",
+    pt: "Navegação GPS Verificada",
+    fr: "Navigation GPS Vérifiée",
+    it: "Navigazione GPS Verificata"
+  },
+  "Acceso Guiado y Traslado Puerta a Puerta": {
+    es: "Acceso Guiado y Traslado Puerta a Puerta",
+    en: "Guided Access & Door-to-Door Transfer",
+    pt: "Acesso Guiado e Traslado Porta a Porta",
+    fr: "Accès Guidé et Transfert Porte-à-Porte",
+    it: "Accesso Guidato e Trasferimento Porta a Porta"
+  },
+  "Nuestras unidades turísticas cuentan con permiso del MTC, SOAT turístico vigente y monitoreo GPS durante todo el trayecto desde el centro de Cusco hasta el sendero.": {
+    es: "Nuestras unidades turísticas cuentan con permiso del MTC, SOAT turístico vigente y monitoreo GPS durante todo el trayecto desde el centro de Cusco hasta el sendero.",
+    en: "Our tourism vehicles are authorized by the MTC, feature active tourist SOAT insurance, and 24/7 GPS monitoring from Cusco city center to the trailhead.",
+    pt: "Nossos veículos turísticos possuem autorização do MTC, seguro SOAT turístico vigente e monitoramento GPS durante todo o trajeto desde o centro de Cusco.",
+    fr: "Nos véhicules touristiques disposent de l’autorisation du MTC, d’une assurance touristique SOAT valide et d’un suivi GPS sur tout le trajet depuis Cusco.",
+    it: "I nostri veicoli turistici dispongono di autorizzazione del MTC, assicurazione SOAT turistica valida e monitoraggio GPS durante tutto il tragitto da Cusco."
+  },
+  "Punto de Recojo:": {
+    es: "Punto de Recojo:",
+    en: "Pick-up Point:",
+    pt: "Ponto de Encontro / Recolha:",
+    fr: "Point de Prise en Charge :",
+    it: "Punto di Ritrovo:"
+  },
+  "Tu hotel o Airbnb en el Centro Histórico de Cusco": {
+    es: "Tu hotel o Airbnb en el Centro Histórico de Cusco",
+    en: "Your hotel or Airbnb in Cusco Historic Center",
+    pt: "Seu hotel ou Airbnb no Centro Histórico de Cusco",
+    fr: "Votre hôtel ou Airbnb dans le Centre Historique de Cusco",
+    it: "Il tuo hotel o Airbnb nel Centro Storico di Cusco"
+  },
+  "Tiempo de Traslado:": {
+    es: "Tiempo de Traslado:",
+    en: "Transfer Time:",
+    pt: "Tempo de Traslado:",
+    fr: "Temps de Trajet :",
+    it: "Tempo di Trasferimento:"
+  },
+  "Aprox. 2h 45m de viaje panorámico por tramo": {
+    es: "Aprox. 2h 45m de viaje panorámico por tramo",
+    en: "Approx. 2h 45m scenic drive each way",
+    pt: "Aprox. 2h 45m de viagem panorâmica por trecho",
+    fr: "Env. 2h 45m de trajet panoramique par tronçon",
+    it: "Circa 2h 45m di viaggio panoramico a tratta"
+  },
+  "Seguridad en Ruta:": {
+    es: "Seguridad en Ruta:",
+    en: "Road Safety:",
+    pt: "Segurança na Rota:",
+    fr: "Sécurité sur Route :",
+    it: "Sicurezza sulla Strada:"
+  },
+  "Choferes experimentados en carreteras de montaña": {
+    es: "Choferes experimentados en carreteras de montaña",
+    en: "Experienced mountain road drivers",
+    pt: "Motoristas experientes em estradas de montanha",
+    fr: "Chauffeurs expérimentés sur routes de montagne",
+    it: "Autisti esperti su strade di montagna"
+  },
   'Salkantay Trek 5 Días a Machu Picchu': {
     es: 'Salkantay Trek 5 Días a Machu Picchu',
     en: 'Salkantay Trek 5 Days to Machu Picchu',
@@ -471,13 +974,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     pt: 'Lagoa Humantay — Diário Fotográfico',
     fr: 'Lagune Humantay — Carnet Photographique',
     it: 'Laguna Humantay — Diario Fotografico'
-  },
-  '"Anotaciones de campo: Luz dorada sobre los nevados."': {
-    es: '"Anotaciones de campo: Luz dorada sobre los nevados."',
-    en: '"Field notes: Golden hour light over the glaciers."',
-    pt: '"Anotações de campo: Luz dourada sobre os nevados."',
-    fr: '"Notes de terrain : Lumière dorée sur les sommets enneigés."',
-    it: '"Note di campo: Luce dorata sulle vette innevate."'
   },
   'Qosqo Imperial': {
     es: 'Qosqo Imperial',
@@ -1305,8 +1801,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Oasis de Huacachina & Îles Ballestas',
     it: 'Oasi di Huacachina & Isole Ballestas'
   },
-
-  // --- DURACIONES DE TOURS ---
   'Full Day': {
     es: 'Día Completo',
     en: 'Full Day',
@@ -1391,8 +1885,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Espagnol, Anglais et Français',
     it: 'Spagnolo, Inglese e Francese'
   },
-
-  // --- CATEGORÍAS DEL CATÁLOGO DE TOURS ---
   'Aventura & Trekking': {
     es: 'Aventura & Trekking',
     en: 'Adventure & Trekking',
@@ -1435,8 +1927,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Côte & Désert',
     it: 'Costa & Deserto'
   },
-
-  // --- UBICACIONES DEL CATÁLOGO ---
   'Cusipata - Vinicunca': {
     es: 'Cusipata - Vinicunca',
     en: 'Cusipata - Rainbow Mountain',
@@ -1479,8 +1969,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Ica & Paracas',
     it: 'Ica & Paracas'
   },
-
-  // --- ETIQUETAS Y BADGES CORTOS DE TOURS ---
   'Maravilla del Mundo': {
     es: 'Maravilla del Mundo',
     en: 'World Wonder',
@@ -1558,8 +2046,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Sélectionné',
     it: 'Selezionato'
   },
-
-  // --- SUBTÍTULOS Y DESCRIPCIONES ---
   'La Experiencia Definitiva en Cusco': {
     es: 'La Experiencia Definitiva en Cusco',
     en: 'The Ultimate Cusco Experience',
@@ -1630,8 +2116,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Vivez une aventure inoubliable avec des guides locaux experts et un service d’excellence.',
     it: 'Vivi un’avventura indimenticabile con guide locali esperte e assistenza di primo livello.'
   },
-
-  // --- SECCIÓN SOBRE NOSOTROS (ABOUT) ---
   'Sobre Nosotros': {
     es: 'Sobre Nosotros',
     en: 'About Us',
@@ -1646,8 +2130,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Opérateur touristique officiel et agréé à Cusco avec excellence reconnue.',
     it: 'Operatore turistico ufficiale e autorizzato a Cusco con comprovata eccellenza.'
   },
-
-  // --- DESTINOS ---
   'Cusco, Machu Picchu & Rutas del Perú': {
     es: 'Cusco, Machu Picchu & Rutas del Perú',
     en: 'Cusco, Machu Picchu & Scenic Peru Routes',
@@ -1676,8 +2158,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Cusco, Pérou',
     it: 'Cusco, Perù'
   },
-
-  // --- FICHA TÉCNICA VALORES ---
   'Viajeros Internacionales, Parejas y Familias': {
     es: 'Viajeros Internacionales, Parejas y Familias',
     en: 'International Travelers, Couples & Families',
@@ -1762,8 +2242,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Demi-Journée (4.5 Heures)',
     it: 'Mezza Giornata (4.5 Ore)'
   },
-
-  // --- PERFIL DEL GUÍA ---
   'Licenciado DIRCETUR & Operador Autorizado': {
     es: 'Licenciado DIRCETUR & Operador Autorizado',
     en: 'Licensed by DIRCETUR & Authorized Operator',
@@ -1827,8 +2305,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Espagnol, Anglais et Français',
     it: 'Spagnolo, Inglese e Francese'
   },
-
-  // --- SERVICIOS INCLUIDOS ---
   'Transporte turístico privado con aire acondicionado': {
     es: 'Transporte turístico privado con aire acondicionado',
     en: 'Private scenic tourist transportation with climate control',
@@ -2018,8 +2494,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Parcours guidé à Sacsayhuamán, Q’enqo, Puka Pukara et Tambomachay',
     it: 'Percorso guidato a Sacsayhuamán, Q’enqo, Puka Pukara e Tambomachay'
   },
-
-  // --- QUÉ NO INCLUYE (EXCLUSIONES) ---
   'Vuelos internacionales o nacionales': {
     es: 'Vuelos internacionales o nacionales',
     en: 'International or domestic airfares to Cusco',
@@ -2132,8 +2606,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Boissons alcoolisées haut de gamme hors menu inclus',
     it: 'Bevande alcoliche premium fuori dal menu stabilito'
   },
-
-  // --- QUÉ LLEVAR (CHECKLIST DE MOCHILA) ---
   'Pasaporte original físico vigente': {
     es: 'Pasaporte original físico vigente',
     en: 'Valid original physical passport (Strictly required for train & citadel)',
@@ -2232,8 +2704,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Billet touristique physique ou espèces en Soles pour l’acheter sur place',
     it: 'Biglietto turistico fisico o contanti in Soles per acquistarlo sul posto'
   },
-
-  // --- DISTINTIVOS Y SELLOS ---
   'Licencia Oficial DIRCETUR Cusco': {
     es: 'Licencia Oficial DIRCETUR Cusco',
     en: 'Official DIRCETUR Cusco License',
@@ -2304,7 +2774,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Assurance Transport Touristique SOAT',
     it: 'Assicurazione Trasporto Turistico SOAT'
   },
-  // --- TÍTULOS SIN EM-DASH (—) ---
   'Live Your Adventure: Expediciones & Trekking en Cusco: La Experiencia Definitiva en Cusco': {
     es: 'Vive Tu Aventura: Expediciones & Trekking en Cusco: La Experiencia Definitiva en Cusco',
     en: 'Live Your Adventure: Expeditions & Trekking in Cusco: The Ultimate Cusco Experience',
@@ -2347,8 +2816,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Vivez Votre Aventure: Expéditions & Trekking à Cusco',
     it: 'Vivi La Tua Avventura: Spedizioni & Trekking a Cusco'
   },
-
-  // --- CATEGORÍAS ADICIONALES Y FILTROS ---
   'Clásicos & Cultura': {
     es: 'Clásicos & Cultura',
     en: 'Classics & Culture',
@@ -2363,8 +2830,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Départs Garantis 2025 - 2026',
     it: 'Partenze Garantite 2025 - 2026'
   },
-
-  // --- DESTINOS POPULARES ---
   'Machu Picchu Santuario': {
     es: 'Machu Picchu Santuario',
     en: 'Machu Picchu Sanctuary',
@@ -2526,8 +2991,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Climat doux de canyon andin (12°C - 25°C)',
     it: 'Clima mite di canyon andino (12°C - 25°C)'
   },
-
-  // --- ESPECIFICACIONES TÉCNICAS, CRÓNICA & MODALES ---
   'Duración': {
     es: 'Duración',
     en: 'Duration',
@@ -2752,8 +3215,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Compris',
     it: 'Ho capito'
   },
-
-  // --- CLIMA, ESPECIFICACIONES & ITINERARIO EMERALD ---
   'Clima': {
     es: 'Clima',
     en: 'Climate',
@@ -2796,8 +3257,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Du Lundi au Dimanche : 07h00 - 21h00',
     it: 'Da Lunedì a Domenica: 07:00 - 21:00'
   },
-
-  // --- DÍAS DE ITINERARIO POR DEFECTO EMERALD ---
   'Cusco Imperial, Miradores del Valle Sagrado & Aclimatación': {
     es: 'Cusco Imperial, Miradores del Valle Sagrado & Aclimatación',
     en: 'Imperial Cusco, Sacred Valley Viewpoints & Acclimatization',
@@ -2833,7 +3292,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Hôtel Boutique Vallée Sacrée',
     it: 'Hotel Boutique Valle Sacra'
   },
-
   'Ascenso Escénico, Paso de Alta Montaña & Lagunas Glaciares': {
     es: 'Ascenso Escénico, Paso de Alta Montaña & Lagunas Glaciares',
     en: 'Scenic Ascent, High Mountain Pass & Glacier Lagoons',
@@ -2876,7 +3334,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Dôme Glamping Vue sur les Étoiles',
     it: 'Cupola Glamping con Vista sulle Stelle'
   },
-
   'Descenso a Ceja de Selva, Plantaciones de Café & Aguas Termales': {
     es: 'Descenso a Ceja de Selva, Plantaciones de Café & Aguas Termales',
     en: 'Descent into Cloud Forest, Coffee Plantations & Thermal Springs',
@@ -2919,7 +3376,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Écolodge en Lisière de Forêt',
     it: 'Eco-Lodge nella Foresta Pluviale'
   },
-
   'Amanecer en la Ciudadela Sagrada de Machu Picchu & Retorno VIP': {
     es: 'Amanecer en la Ciudadela Sagrada de Machu Picchu & Retorno VIP',
     en: 'Sunrise at Sacred Citadel of Machu Picchu & VIP Return',
@@ -2962,8 +3418,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Retour à l’Hôtel à Cusco',
     it: 'Rientro in Hotel a Cusco'
   },
-
-  // --- SERVICIOS INCLUIDOS EMERALD ---
   'Transporte turístico privado 4x4 climatizado ida y retorno': {
     es: 'Transporte turístico privado 4x4 climatizado ida y retorno',
     en: 'Round-trip private air-conditioned 4x4 tourist transport',
@@ -3006,8 +3460,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Bâtons de trekking télescopiques en aluminium professionnel',
     it: 'Bastoncini da trekking telescopici in alluminio professionale'
   },
-
-  // --- SERVICIOS NO INCLUIDOS EMERALD ---
   'Vuelos comerciales nacionales o internacionales hacia Cusco': {
     es: 'Vuelos comerciales nacionales o internacionales hacia Cusco',
     en: 'Domestic or international commercial flights to Cusco',
@@ -3029,8 +3481,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Assurance voyage internationale personnelle (recommandée)',
     it: 'Assicurazione di viaggio internazionale personale (consigliata)'
   },
-
-  // --- CHECKLIST DE MOCHILA (QUÉ LLEVAR) ---
   'Documento de identidad / Pasaporte original vigente': {
     es: 'Documento de identidad / Pasaporte original vigente',
     en: 'Valid original ID / Passport',
@@ -3073,8 +3523,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Gourde ou thermos réutilisable pour recharge d’eau',
     it: 'Borraccia o thermos riutilizzabile per ricariche'
   },
-
-  // --- TRUST BADGES (ACREDITACIONES) ---
   'Licencia Oficial DIRCETUR Cusco N° 2024-EXP-089': {
     es: 'Licencia Oficial DIRCETUR Cusco N° 2024-EXP-089',
     en: 'DIRCETUR Cusco Official License No. 2024-EXP-089',
@@ -3117,8 +3565,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Police d’Assurance Touristique Accidents',
     it: 'Polizza Assicurativa Turistica Infortuni'
   },
-
-  // --- TESTIMONIOS EMERALD ---
   'La mejor experiencia que hemos vivido en Perú. La atención personalizada de Carlos y el cuidado con el oxígeno en la montaña nos permitieron disfrutar de Machu Picchu sin ninguna preocupación.': {
     es: 'La mejor experiencia que hemos vivido en Perú. La atención personalizada de Carlos y el cuidado con el oxígeno en la montaña nos permitieron disfrutar de Machu Picchu sin ninguna preocupación.',
     en: 'The greatest travel experience we have ever had in Peru. Carlos’s personal care and constant oxygen safety in the mountains let us fully enjoy Machu Picchu with peace of mind.',
@@ -3126,8 +3572,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'La plus belle expérience vécue au Pérou. L’attention personnalisée de Carlos et la surveillance à l’oxygène en montagne nous ont permis de vivre Machu Picchu en toute sérénité.',
     it: 'La migliore esperienza vissuta in Perù. Le attenzioni di Carlos e la cura con l’ossigeno in montagna ci hanno permesso di vivere Machu Picchu senza pensieri.'
   },
-
-  // --- PRESET EMERALD & ESPECIFICACIONES ADICIONALES ---
   '4 Días / 3 Noches': {
     es: '4 Días / 3 Noches',
     en: '4 Days / 3 Nights',
@@ -3479,6 +3923,7 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     it: 'Pianifica La Mia Spedizione Su Misura'
   }
 };
+
 
 // --- TRADUCTOR INTELIGENTE DE TEXTO LIBRE ---
 export function translateText(text: string | undefined, targetLang: LanguageType): string {

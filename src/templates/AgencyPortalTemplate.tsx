@@ -1090,12 +1090,12 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           {/* Desktop Navigation Links - Max 6 clean links */}
           {!isMobile && (
             <nav className="hidden lg:flex items-center gap-2.5 xl:gap-4 2xl:gap-5 text-xs xl:text-[13px] font-bold text-stone-700 tracking-wide uppercase whitespace-nowrap">
-              <a href="#inicio" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Home' : 'Inicio'}</a>
-              <a href="#experiencia" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'The Tour' : 'El Tour'}</a>
-              {!isFree && <a href="#incluye" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Included' : 'Qué Incluye'}</a>}
+              <a href="#inicio" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Home' : lang === 'fr' ? 'Accueil' : lang === 'pt' ? 'Início' : lang === 'it' ? 'Home' : 'Inicio'}</a>
+              <a href="#experiencia" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'The Tour' : lang === 'fr' ? 'Le Tour' : lang === 'pt' ? 'O Tour' : lang === 'it' ? 'Il Tour' : 'El Tour'}</a>
+              {!isFree && <a href="#incluye" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Included' : lang === 'fr' ? 'Inclus' : lang === 'pt' ? 'Inclui' : lang === 'it' ? 'Incluso' : 'Qué Incluye'}</a>}
               <a href="#tours" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navTours}</a>
               {isAdvance && <a href="#resenas" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{t.navReviews}</a>}
-              <a href="#contacto" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Contact' : 'Contacto'}</a>
+              <a href="#contacto" className="whitespace-nowrap hover:text-[#FF5500] transition-colors py-1">{lang === 'en' ? 'Contact' : lang === 'fr' ? 'Contact' : lang === 'pt' ? 'Contato' : lang === 'it' ? 'Contatto' : 'Contacto'}</a>
             </nav>
           )}
 
@@ -1160,7 +1160,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
                 >
                   <Compass size={15} className="text-[#FF5500] shrink-0" />
-                  <span>{lang === 'en' ? 'Home' : 'Inicio'}</span>
+                  <span>{lang === 'en' ? 'Home' : lang === 'fr' ? 'Accueil' : lang === 'pt' ? 'Início' : lang === 'it' ? 'Home' : 'Inicio'}</span>
                 </a>
                 <a
                   href="#experiencia"
@@ -1168,7 +1168,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
                 >
                   <Mountain size={15} className="text-[#FF5500] shrink-0" />
-                  <span>{lang === 'en' ? 'The Tour' : 'El Tour'}</span>
+                  <span>{lang === 'en' ? 'The Tour' : lang === 'fr' ? 'Le Tour' : lang === 'pt' ? 'O Tour' : lang === 'it' ? 'Il Tour' : 'El Tour'}</span>
                 </a>
                 {!isFree && (
                   <a
@@ -1177,7 +1177,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
                   >
                     <CheckCircle2 size={15} className="text-[#FF5500] shrink-0" />
-                    <span>{lang === 'en' ? 'Included' : 'Qué Incluye'}</span>
+                    <span>{lang === 'en' ? 'Included' : lang === 'fr' ? 'Inclus' : lang === 'pt' ? 'Inclui' : lang === 'it' ? 'Incluso' : 'Qué Incluye'}</span>
                   </a>
                 )}
                 {(isPro || isAdvance) && (
@@ -1187,7 +1187,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
                   >
                     <Calendar size={15} className="text-[#FF5500] shrink-0" />
-                    <span>{lang === 'en' ? 'Itinerary' : 'Itinerario'}</span>
+                    <span>{lang === 'en' ? 'Itinerary' : lang === 'fr' ? 'Itinéraire' : lang === 'pt' ? 'Roteiro' : lang === 'it' ? 'Itinerario' : 'Itinerario'}</span>
                   </a>
                 )}
                 <a
@@ -1214,7 +1214,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                     className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
                   >
                     <Pin size={15} className="text-[#FF5500] shrink-0" />
-                    <span>{lang === 'en' ? 'Destinations' : 'Destinos'}</span>
+                    <span>{lang === 'en' ? 'Destinations' : lang === 'fr' ? 'Destinations' : lang === 'pt' ? 'Destinos' : lang === 'it' ? 'Destinazioni' : 'Destinos'}</span>
                   </a>
                 )}
                 {isAdvance && (
@@ -1263,7 +1263,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
                 >
                   <MessageCircle size={15} className="text-[#FF5500] shrink-0" />
-                  <span>{lang === 'en' ? 'Contact' : 'Contacto'}</span>
+                  <span>{lang === 'en' ? 'Contact' : lang === 'fr' ? 'Contact' : lang === 'pt' ? 'Contato' : lang === 'it' ? 'Contatto' : 'Contacto'}</span>
                 </a>
               </div>
 
@@ -1516,25 +1516,25 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50/80 sm:bg-transparent space-y-0.5 sm:space-y-1 border border-stone-100 sm:border-0">
               <span className="text-lg sm:text-4xl font-black text-stone-900 tracking-tight block animate-number-glow">+10,000</span>
               <span className="text-[11px] sm:text-sm font-bold text-stone-700 block">{t.statTravelers}</span>
-              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{lang === 'en' ? 'In Cusco & Peru' : 'En Cusco y Perú'}</span>
+              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{lang === 'en' ? 'In Cusco & Peru' : lang === 'fr' ? 'À Cusco & au Pérou' : lang === 'pt' ? 'Em Cusco e Peru' : lang === 'it' ? 'A Cusco e Perù' : 'En Cusco y Perú'}</span>
             </div>
 
             <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50/80 sm:bg-transparent space-y-0.5 sm:space-y-1 border border-stone-100 sm:border-0">
               <span className="text-lg sm:text-4xl font-black text-[#FF5500] tracking-tight block animate-pulse-subtle">10+</span>
               <span className="text-[11px] sm:text-sm font-bold text-stone-700 block">{t.statExperience}</span>
-              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{lang === 'en' ? 'Local Operator' : 'Operador Local'}</span>
+              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{lang === 'en' ? 'Local Operator' : lang === 'fr' ? 'Opérateur Local' : lang === 'pt' ? 'Operador Local' : lang === 'it' ? 'Operatore Locale' : 'Operador Local'}</span>
             </div>
 
             <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50/80 sm:bg-transparent space-y-0.5 sm:space-y-1 border border-stone-100 sm:border-0">
               <span className="text-lg sm:text-4xl font-black text-stone-900 tracking-tight block animate-number-glow">50+</span>
               <span className="text-[11px] sm:text-sm font-bold text-stone-700 block">{t.statRoutes}</span>
-              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{lang === 'en' ? 'Peru & Andes' : 'Perú y Andes'}</span>
+              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{lang === 'en' ? 'Peru & Andes' : lang === 'fr' ? 'Pérou & Andes' : lang === 'pt' ? 'Peru e Andes' : lang === 'it' ? 'Perù e Ande' : 'Perú y Andes'}</span>
             </div>
 
             <div className="p-2.5 sm:p-3 rounded-2xl bg-stone-50/80 sm:bg-transparent space-y-0.5 sm:space-y-1 border border-stone-100 sm:border-0">
               <span className="text-lg sm:text-4xl font-black text-[#FF5500] tracking-tight block animate-pulse-subtle">4.9 ★</span>
               <span className="text-[11px] sm:text-sm font-bold text-stone-700 block">{t.statRating}</span>
-              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{lang === 'en' ? 'Google Reviews' : 'Reseñas en Google'}</span>
+              <span className="text-[9px] sm:text-[11px] text-stone-400 block truncate">{lang === 'en' ? 'Google Reviews' : lang === 'fr' ? 'Avis Google' : lang === 'pt' ? 'Avaliações Google' : lang === 'it' ? 'Recensioni Google' : 'Reseñas en Google'}</span>
             </div>
           </div>
         </div>

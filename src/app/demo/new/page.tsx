@@ -3846,7 +3846,7 @@ export default function NewLandingDemo() {
                         {heroTitle ? translateText(heroTitle, language) : (name ? translateText(name, language) : translateText('Laguna Humantay — Bitácora Fotográfica', language))}
                       </p>
                       <p className="text-[9px] text-stone-500 italic mt-0.5 line-clamp-1">
-                        {heroSubtitle ? translateText(heroSubtitle, language) : translateText('"Anotaciones de campo: Luz dorada sobre los nevados."', language)}
+                        {heroSubtitle ? translateText(heroSubtitle, language) : `"${translateText('Anotaciones de campo: Luz dorada sobre los nevados.', language)}"`}
                       </p>
                     </div>
 
@@ -4199,7 +4199,7 @@ export default function NewLandingDemo() {
                         <span>{heroBadge ? translateText(heroBadge, language) : translateText('Trekking & Montaña', language)}</span>
                       </div>
                       <h3 className="text-sm font-black text-white leading-tight drop-shadow-md">
-                        {heroTitle ? translateText(heroTitle, language) : (name ? translateText(name, language) : translateText('Travel the Best, It\'s a Big World, Go Explore!', language))}
+                        {heroTitle ? translateText(heroTitle, language) : (name ? translateText(name, language) : translateText('Travel the Best, It is a Big World, Go Explore!', language))}
                       </h3>
                       <p className="text-[10px] text-slate-200 line-clamp-1">
                         {heroSubtitle ? translateText(heroSubtitle, language) : `${name ? translateText(name, language) : translateText('Tour Salkantay Trek Clásico', language)} • ${duration ? translateText(duration, language) : translateText('5 Días', language)}`}
