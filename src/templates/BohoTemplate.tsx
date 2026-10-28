@@ -1874,19 +1874,21 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
       {/* Tour Support & FAQs - ADVANCE ONLY */}
       {isAdvance && (
-        <TourSupportAndFaqs
-          landingId={data.id || data.slug}
-          enableForum={data.enableForum !== false}
-          faqs={data.faqs}
-          tourName={localizedTourTitle}
-          whatsapp={data.whatsapp}
-          guideName={data.guideName}
-          destination={translateText(data.destination || 'Cusco', currentLang)}
-          tier={tier}
-          theme="boho-nature"
-          isMobile={isMobile}
-          lang={currentLang}
-        />
+        <div id="soporte-faq">
+          <TourSupportAndFaqs
+            landingId={data.id || data.slug}
+            enableForum={data.enableForum !== false}
+            faqs={data.faqs}
+            tourName={localizedTourTitle}
+            whatsapp={data.whatsapp}
+            guideName={data.guideName}
+            destination={translateText(data.destination || 'Cusco', currentLang)}
+            tier={tier}
+            theme="boho-nature"
+            isMobile={isMobile}
+            lang={currentLang}
+          />
+        </div>
       )}
 
       {/* Bottom CTA Banner & Regulatory Footer */}
@@ -1989,25 +1991,25 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
             </h4>
             <ul className="space-y-2 text-stone-400">
               <li>
-                <a href="#tours-destacados" className="hover:text-white transition-colors flex items-center gap-1.5">
+                <a href="#tours" className="hover:text-white transition-colors flex items-center gap-1.5">
                   <span className="text-[#C86D51]">›</span>
                   <span>Laguna Humantay Mística</span>
                 </a>
               </li>
               <li>
-                <a href="#tours-destacados" className="hover:text-white transition-colors flex items-center gap-1.5">
+                <a href="#tours" className="hover:text-white transition-colors flex items-center gap-1.5">
                   <span className="text-[#C86D51]">›</span>
                   <span>Ausangate & 7 Lagunas Turquesas</span>
                 </a>
               </li>
               <li>
-                <a href="#tours-destacados" className="hover:text-white transition-colors flex items-center gap-1.5">
+                <a href="#tours" className="hover:text-white transition-colors flex items-center gap-1.5">
                   <span className="text-[#C86D51]">›</span>
                   <span>Valle Sagrado & Salineras de Maras</span>
                 </a>
               </li>
               <li>
-                <a href="#journal" className="hover:text-white transition-colors flex items-center gap-1.5">
+                <a href="#itinerario" className="hover:text-white transition-colors flex items-center gap-1.5">
                   <span className="text-[#C86D51]">›</span>
                   <span>{t.nav.journal}</span>
                 </a>

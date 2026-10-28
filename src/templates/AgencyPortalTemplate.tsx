@@ -1209,7 +1209,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                   </a>
                 ) : (
                   <a
-                    href="#destinos"
+                    href="#tours"
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center gap-2 p-2.5 rounded-xl bg-stone-50 hover:bg-[#FF5500]/10 text-stone-800 hover:text-[#FF5500] font-bold text-xs transition-colors"
                   >
@@ -1941,15 +1941,17 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
       {/* 5.5 TABLERO DE PINES DE INSPIRACIÓN & GALERÍA PINTEREST (PUNTO 1 Y ESTÉTICA PINTEREST) */}
       {!isFree && (
-        <PinterestPinboard
-          images={data?.galleryImages && data.galleryImages.length > 0 ? data.galleryImages : [heroImage]}
-          destination={translateText(destination, lang)}
-          tourName={translateText(tourTitle, lang)}
-          tier={planTier}
-          theme="agency-portal"
-          isMobile={isMobile}
-          lang={lang}
-        />
+        <div id="galeria">
+          <PinterestPinboard
+            images={data?.galleryImages && data.galleryImages.length > 0 ? data.galleryImages : [heroImage]}
+            destination={translateText(destination, lang)}
+            tourName={translateText(tourTitle, lang)}
+            tier={planTier}
+            theme="agency-portal"
+            isMobile={isMobile}
+            lang={lang}
+          />
+        </div>
       )}
 
       {/* 6. ITINERARIO DÍA A DÍA DETALLADO (PRO & ADVANCE ONLY) */}
@@ -2262,19 +2264,21 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
 
       {/* 10. FORO DE SOPORTE & FAQ (ADVANCE ONLY) */}
       {isAdvance && (
-        <TourSupportAndFaqs
-          landingId={data?.id || data?.slug}
-          enableForum={data?.enableForum !== false}
-          faqs={data?.faqs}
-          tourName={translateText(tourTitle, lang)}
-          whatsapp={whatsappNumber}
-          guideName={guideName}
-          destination={translateText(destination, lang)}
-          tier={planTier}
-          theme="agency-portal"
-          isMobile={isMobile}
-          lang={lang}
-        />
+        <div id="soporte-faq">
+          <TourSupportAndFaqs
+            landingId={data?.id || data?.slug}
+            enableForum={data?.enableForum !== false}
+            faqs={data?.faqs}
+            tourName={translateText(tourTitle, lang)}
+            whatsapp={whatsappNumber}
+            guideName={guideName}
+            destination={translateText(destination, lang)}
+            tier={planTier}
+            theme="agency-portal"
+            isMobile={isMobile}
+            lang={lang}
+          />
+        </div>
       )}
 
       {/* 10.5 GARANTÍA DE FLEXIBILIDAD Y OFICINA FÍSICA EN CUSCO (PRO & ADVANCE) */}
@@ -2407,31 +2411,31 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </h4>
               <ul className="space-y-2 text-xs">
                 <li>
-                  <a href="#tours-catalogo" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
+                  <a href="#tours" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
                     <span className="text-amber-500">›</span>
                     <span>Machu Picchu Clásico & Vistadome</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#tours-catalogo" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
+                  <a href="#tours" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
                     <span className="text-amber-500">›</span>
                     <span>Valle Sagrado & Ollantaytambo</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#tours-catalogo" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
+                  <a href="#tours" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
                     <span className="text-amber-500">›</span>
                     <span>Montaña 7 Colores (Vinicunca)</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#tours-catalogo" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
+                  <a href="#tours" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
                     <span className="text-amber-500">›</span>
                     <span>Laguna Humantay Turquesa</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#ficha-tecnica" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
+                  <a href="#experiencia" className="text-stone-400 hover:text-white transition-colors flex items-center gap-1.5">
                     <span className="text-amber-500">›</span>
                     <span>{t.techSheetBadge}</span>
                   </a>

@@ -23,12 +23,15 @@ export function generateStandaloneHtml(data: LandingData): string {
   const isPremium = data.template === 'premium';
   const isCultural = data.template === 'cultural';
   const isBoho = data.template === 'boho-nature';
+  const isEmerald = data.template === 'emerald-explorer';
+  const isAdventure = data.template === 'adventure';
+  const isAgency = data.template === 'agency-portal';
 
   // Theme accents
-  const primaryColor = isPremium ? 'amber-500' : isCultural ? 'red-700' : isBoho ? '[#C86D51]' : 'emerald-600';
-  const primaryHover = isPremium ? 'amber-600' : isCultural ? 'red-800' : isBoho ? '[#b05d43]' : 'emerald-700';
-  const bgTheme = isPremium ? 'bg-slate-950 text-slate-100' : isCultural ? 'bg-[#FFFDF9] text-stone-900' : isBoho ? 'bg-[#FAF7F2] text-stone-800' : 'bg-stone-50 text-stone-900';
-  const cardBg = isPremium ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-stone-200 text-stone-900';
+  const primaryColor = isPremium ? 'amber-500' : isCultural ? 'red-700' : isBoho ? '[#C86D51]' : isEmerald ? 'emerald-500' : isAdventure ? 'blue-600' : 'orange-600';
+  const primaryHover = isPremium ? 'amber-600' : isCultural ? 'red-800' : isBoho ? '[#b05d43]' : isEmerald ? 'emerald-400' : isAdventure ? 'blue-700' : 'orange-700';
+  const bgTheme = isPremium ? 'bg-slate-950 text-slate-100' : isCultural ? 'bg-[#FFFDF9] text-stone-900' : isBoho ? 'bg-[#FAF7F2] text-stone-800' : isEmerald ? 'bg-[#02181f] text-emerald-100' : isAdventure ? 'bg-slate-950 text-white' : 'bg-stone-50 text-stone-900';
+  const cardBg = isPremium ? 'bg-neutral-900/90 border-amber-500/30 text-white' : isEmerald ? 'bg-white/[0.06] border-emerald-500/25 text-white' : isAdventure ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-stone-200 text-stone-900';
 
   return `<!DOCTYPE html>
 <html lang="${data.language || 'es'}" class="scroll-smooth">

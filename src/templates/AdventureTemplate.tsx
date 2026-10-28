@@ -1308,12 +1308,16 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
       {/* 6.5 PERFIL ALTIMÉTRICO Y DESNIVEL TÉCNICO (PRO & ADVANCE) */}
       {(isPro || isAdvance) && (
-        <AltimetryProfileSection lang={currentLang} />
+        <div id="altimetria">
+          <AltimetryProfileSection lang={currentLang} />
+        </div>
       )}
 
       {/* 6.6 GLAMPING & DOMOS GLACIARES (PRO & ADVANCE) */}
       {(isPro || isAdvance) && (
-        <GlampingDomesSection lang={currentLang} />
+        <div id="campamentos">
+          <GlampingDomesSection lang={currentLang} />
+        </div>
       )}
 
       {/* 7. FEATURES & INCLUDED SERVICES (Con imágenes suaves, filtros y estándares de alta montaña) */}
@@ -1667,7 +1671,9 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
       {/* 9.5 GUÍA DE PREPARACIÓN FÍSICA, ACLIMATACIÓN & CLIMA (PRO & ADVANCE) */}
       {(isPro || isAdvance) && (
-        <TrekPreparationSection lang={currentLang} />
+        <div id="preparacion">
+          <TrekPreparationSection lang={currentLang} />
+        </div>
       )}
 
       {/* 9.6 TABLERO DE POSTALES & MOMENTOS INSPIRACIONALES (PRO & ADVANCE) */}
@@ -1958,19 +1964,21 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
 
       {/* 12. TOUR SUPPORT & FAQS (ADVANCE ONLY) */}
       {isAdvance && (
-        <TourSupportAndFaqs
-          landingId={data.id || data.slug}
-          enableForum={data.enableForum !== false}
-          faqs={data.faqs}
-          tourName={data.name || data.hero?.title || 'Tour de Aventura'}
-          whatsapp={data.whatsapp}
-          guideName={data.guideName}
-          destination={data.destination || 'Cusco'}
-          tier={tier}
-          theme="adventure"
-          isMobile={isMobile}
-          lang={currentLang}
-        />
+        <div id="soporte-faq">
+          <TourSupportAndFaqs
+            landingId={data.id || data.slug}
+            enableForum={data.enableForum !== false}
+            faqs={data.faqs}
+            tourName={data.name || data.hero?.title || 'Tour de Aventura'}
+            whatsapp={data.whatsapp}
+            guideName={data.guideName}
+            destination={data.destination || 'Cusco'}
+            tier={tier}
+            theme="adventure"
+            isMobile={isMobile}
+            lang={currentLang}
+          />
+        </div>
       )}
 
       {/* 13. FOOTER COMPLETO DE ALTA AUTORIDAD & CONVERSIÓN */}

@@ -2062,31 +2062,31 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
               </h4>
               <ul className="space-y-2 text-neutral-400 text-xs">
                 <li>
-                  <a href="#experiencias" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                  <a href="#tours" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
                     <span className="text-amber-500">›</span>
                     <span>Machu Picchu Signature & Hiram Bingham</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#experiencias" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                  <a href="#tours" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
                     <span className="text-amber-500">›</span>
                     <span>Valle Sagrado & Almuerzo Gourmet</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#experiencias" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                  <a href="#tours" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
                     <span className="text-amber-500">›</span>
                     <span>Montaña 7 Colores en Van Executive</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#amenities" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                  <a href="#amenidades" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
                     <span className="text-amber-500">›</span>
                     <span>{t.amenities.badge}</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#lounge" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                  <a href="#lounge-vip" className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
                     <span className="text-amber-500">›</span>
                     <span>{t.lounge.badge}</span>
                   </a>
