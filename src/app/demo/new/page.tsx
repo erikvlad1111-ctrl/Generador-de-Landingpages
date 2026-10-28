@@ -3625,21 +3625,21 @@ export default function NewLandingDemo() {
                     <div className="bg-white/[0.04] backdrop-blur-md border border-white/10 p-3 rounded-2xl space-y-2">
                       <div className="flex items-center justify-between">
                         <span className="text-[8px] font-black uppercase text-emerald-400 tracking-wider">
-                          Logística Integral Advance
+                          {translateText('Logística Integral Advance', language)}
                         </span>
                         <span className="text-[7px] text-emerald-300 bg-emerald-500/20 px-1.5 py-0.5 rounded-full border border-emerald-400/30">
-                          100% Incluido
+                          {translateText('100% Incluido', language)}
                         </span>
                       </div>
                       <div className="space-y-1 text-[8px] text-emerald-100/90">
                         <div className="flex items-center gap-1.5">
-                          <span className="text-emerald-400 font-bold">✓</span> Transporte 4x4 + Boletos Oficiales
+                          <span className="text-emerald-400 font-bold">✓</span> {translateText('Transporte 4x4 + Boletos Oficiales', language)}
                         </div>
                         <div className="flex items-center gap-1.5">
-                          <span className="text-emerald-400 font-bold">✓</span> Balón Oxígeno & Monitoreo Médico
+                          <span className="text-emerald-400 font-bold">✓</span> {translateText('Balón Oxígeno & Monitoreo Médico', language)}
                         </div>
                         <div className="flex items-center gap-1.5">
-                          <span className="text-emerald-400 font-bold">✓</span> Guía Colegiado Bilingüe DIRCETUR
+                          <span className="text-emerald-400 font-bold">✓</span> {translateText('Guía Colegiado Bilingüe DIRCETUR', language)}
                         </div>
                       </div>
                     </div>
@@ -3655,7 +3655,7 @@ export default function NewLandingDemo() {
                     </div>
 
                     <div className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-black px-3.5 py-2 rounded-xl shadow-md flex items-center gap-1 text-[9px] shrink-0">
-                      <span>{objective === 'quote' ? 'Plan Your Trip' : 'Reservar por WhatsApp'}</span>
+                      <span>{heroCta ? translateText(heroCta, language) : (objective === 'quote' ? translateText('Plan Your Trip', language) : translateText('Reservar por WhatsApp', language))}</span>
                       <ArrowRight size={10} />
                     </div>
                   </div>

@@ -521,6 +521,27 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Inti Raymi : La Fête du Soleil',
     it: 'Inti Raymi: La Festa del Sole'
   },
+  'Logística Integral Advance': {
+    es: 'Logística Integral Advance',
+    en: 'Advance Comprehensive Logistics',
+    pt: 'Logística Integral Advance',
+    fr: 'Logistique Complète Advance',
+    it: 'Logistica Completa Advance'
+  },
+  'Transporte 4x4 + Boletos Oficiales': {
+    es: 'Transporte 4x4 + Boletos Oficiales',
+    en: '4x4 Transport + Official Tickets',
+    pt: 'Transporte 4x4 + Ingressos Oficiais',
+    fr: 'Transport 4x4 + Billets Officiels',
+    it: 'Trasporto 4x4 + Biglietti Ufficiali'
+  },
+  'Balón Oxígeno & Monitoreo Médico': {
+    es: 'Balón Oxígeno & Monitoreo Médico',
+    en: 'Oxygen Tank & Medical Monitoring',
+    pt: 'Balão de Oxigênio & Monitoramento Médico',
+    fr: 'Bouteille d’Oxygène & Suivi Médical',
+    it: 'Bombola d’Ossigeno & Monitoraggio Medico'
+  },
   'Viajeros': {
     es: 'Viajeros',
     en: 'Travelers',
