@@ -31,6 +31,629 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Défiez le col mythique de Salkantay à 4 630 m d’altitude, dormez sous les étoiles dans des dômes géodésiques de verre et terminez en apothéose au Machu Picchu.',
     it: 'Sfida il leggendario passo Salkantay a 4.630 m s.l.m., dormi sotto le stelle in cupole geodetiche di vetro e culmina nella meraviglia inca.'
   },
+  'Machu Picchu VIP & Tren Hiram Bingham': {
+    es: 'Machu Picchu VIP & Tren Hiram Bingham',
+    en: 'Machu Picchu VIP & Hiram Bingham Luxury Train',
+    pt: 'Machu Picchu VIP & Trem Hiram Bingham',
+    fr: 'Machu Picchu VIP & Train Hiram Bingham',
+    it: 'Machu Picchu VIP & Treno Hiram Bingham'
+  },
+  'Cusco Luxury Collection VIP': {
+    es: 'Cusco Luxury Collection VIP',
+    en: 'Cusco Luxury Collection VIP',
+    pt: 'Cusco Luxury Collection VIP',
+    fr: 'Cusco Luxury Collection VIP',
+    it: 'Cusco Luxury Collection VIP'
+  },
+  'Descubre la maravilla del mundo con traslados en Mercedes Benz, tren con coche observatorio de lujo y un guía historiador colegiado exclusivo para ti.': {
+    es: 'Descubre la maravilla del mundo con traslados en Mercedes Benz, tren con coche observatorio de lujo y un guía historiador colegiado exclusivo para ti.',
+    en: 'Discover the wonder of the world with Mercedes Benz transfers, a luxury observatory train car, and an exclusive certified historian guide dedicated to you.',
+    pt: 'Descubra a maravilha do mundo com traslados em Mercedes Benz, trem com vagão observatório de luxo e um guia historiador credenciado exclusivo para você.',
+    fr: 'Découvrez la merveille du monde avec transferts en Mercedes Benz, train avec voiture panoramique de luxe et un guide historien agréé exclusif pour vous.',
+    it: 'Scopri la meraviglia del mondo con trasferimenti in Mercedes Benz, treno con carrozza panoramica di lusso e una guida storica abilitata esclusiva per te.'
+  },
+  'Descubre los enigmas de la arquitectura megalítica inca en Sacsayhuamán, Q’enqo, Puka Pukara y Tambomachay junto a una arqueóloga experta.': {
+    es: 'Descubre los enigmas de la arquitectura megalítica inca en Sacsayhuamán, Q’enqo, Puka Pukara y Tambomachay junto a una arqueóloga experta.',
+    en: 'Discover the enigmas of megalithic Inca architecture at Sacsayhuamán, Q’enqo, Puka Pukara, and Tambomachay alongside an expert archaeologist.',
+    pt: 'Descubra os enigmas da arquitetura megalítica inca em Sacsayhuamán, Q’enqo, Puka Pukara e Tambomachay junto com uma arqueóloga especialista.',
+    fr: 'Découvrez les énigmes de l’architecture mégalithique inca à Sacsayhuamán, Q’enqo, Puka Pukara et Tambomachay aux côtés d’une archéologue experte.',
+    it: 'Scopri gli enigmi dell’architettura megalitica inca a Sacsayhuamán, Q’enqo, Puka Pukara e Tambomachay insieme a un’archeologa esperta.'
+  },
+  'Una expedición pausada hacia las aguas turquesas del nevado Humantay, diseñada para amantes de la fotografía, el paisajismo y los viajes auténticos.': {
+    es: 'Una expedición pausada hacia las aguas turquesas del nevado Humantay, diseñada para amantes de la fotografía, el paisajismo y los viajes auténticos.',
+    en: 'A serene expedition toward the turquoise waters of Humantay glacier, designed for photography lovers, landscapes, and authentic travel.',
+    pt: 'Uma expedição tranquila até as águas turquesas do nevado Humantay, projetada para amantes da fotografia, paisagens e viagens autênticas.',
+    fr: 'Une expédition sereine vers les eaux turquoise du glacier Humantay, conçue pour les amateurs de photographie, de paysages et de voyages authentiques.',
+    it: 'Una spedizione rilassata verso le acque turchesi del ghiacciaio Humantay, pensata per gli amanti della fotografia, dei paesaggi e dei viaggi autentici.'
+  },
+  'Solicitar Cotización Privada': {
+    es: 'Solicitar Cotización Privada',
+    en: 'Request Private Quote',
+    pt: 'Solicitar Cotação Privada',
+    fr: 'Demander un Devis Privé',
+    it: 'Richiedi Preventivo Privato'
+  },
+  'Solicitar Cotización': {
+    es: 'Solicitar Cotización',
+    en: 'Request a Quote',
+    pt: 'Pedir Orçamento',
+    fr: 'Demander un Devis',
+    it: 'Richiedi Preventivo'
+  },
+  'SOLICITAR COTIZACIÓN': {
+    es: 'SOLICITAR COTIZACIÓN',
+    en: 'REQUEST A QUOTE',
+    pt: 'PEDIR ORÇAMENTO',
+    fr: 'DEMANDER UN DEVIS',
+    it: 'RICHIEDI PREVENTIVO'
+  },
+  'Consultar Horarios por WhatsApp': {
+    es: 'Consultar Horarios por WhatsApp',
+    en: 'Inquire Schedules via WhatsApp',
+    pt: 'Consultar Horários no WhatsApp',
+    fr: 'Consulter les Horaires sur WhatsApp',
+    it: 'Consulta Orari su WhatsApp'
+  },
+  'Consultar Fechas por WhatsApp': {
+    es: 'Consultar Fechas por WhatsApp',
+    en: 'Check Dates on WhatsApp',
+    pt: 'Consultar Datas no WhatsApp',
+    fr: 'Consulter les Dates sur WhatsApp',
+    it: 'Verifica Date su WhatsApp'
+  },
+  'Consultar WhatsApp': {
+    es: 'Consultar WhatsApp',
+    en: 'Inquire on WhatsApp',
+    pt: 'Consultar no WhatsApp',
+    fr: 'Consulter sur WhatsApp',
+    it: 'Consulta su WhatsApp'
+  },
+  'Reserva VIP': {
+    es: 'Reserva VIP',
+    en: 'VIP Booking',
+    pt: 'Reserva VIP',
+    fr: 'Réservation VIP',
+    it: 'Prenotazione VIP'
+  },
+  'Reserva Cultural': {
+    es: 'Reserva Cultural',
+    en: 'Cultural Booking',
+    pt: 'Reserva Cultural',
+    fr: 'Réservation Culturelle',
+    it: 'Prenotazione Culturale'
+  },
+  'Consultar Cupo': {
+    es: 'Consultar Cupo',
+    en: 'Check Availability',
+    pt: 'Consultar Vagas',
+    fr: 'Vérifier Disponibilité',
+    it: 'Verifica Posti'
+  },
+  'Solicitar VIP': {
+    es: 'Solicitar VIP',
+    en: 'Request VIP',
+    pt: 'Solicitar VIP',
+    fr: 'Demander VIP',
+    it: 'Richiedi VIP'
+  },
+  'Propuesta VIP': {
+    es: 'Propuesta VIP',
+    en: 'VIP Proposal',
+    pt: 'Proposta VIP',
+    fr: 'Proposition VIP',
+    it: 'Proposta VIP'
+  },
+  '100% Privado Exclusivo': {
+    es: '100% Privado Exclusivo',
+    en: '100% Private & Exclusive',
+    pt: '100% Privado Exclusivo',
+    fr: '100% Privé Exclusif',
+    it: '100% Privato Esclusivo'
+  },
+  '100% Privado': {
+    es: '100% Privado',
+    en: '100% Private',
+    pt: '100% Privado',
+    fr: '100% Privé',
+    it: '100% Privato'
+  },
+  'Tours Privados & Compartidos VIP': {
+    es: 'Tours Privados & Compartidos VIP',
+    en: 'VIP Private & Shared Tours',
+    pt: 'Passeios Privativos & Compartilhados VIP',
+    fr: 'Circuits Privés & Partagés VIP',
+    it: 'Tour Privati & Condivisi VIP'
+  },
+  'Grupos Reducidos & Privados VIP': {
+    es: 'Grupos Reducidos & Privados VIP',
+    en: 'Small Groups & VIP Private Tours',
+    pt: 'Grupos Reduzidos & Privativos VIP',
+    fr: 'Petits Groupes & Circuits Privés VIP',
+    it: 'Piccoli Gruppi & Tour Privati VIP'
+  },
+  'Grupo Reducido (Máx. 12 pers.)': {
+    es: 'Grupo Reducido (Máx. 12 pers.)',
+    en: 'Small Group (Max. 12 guests)',
+    pt: 'Grupo Reduzido (Máx. 12 pessoas)',
+    fr: 'Petit Groupe (Max. 12 personnes)',
+    it: 'Piccolo Gruppo (Max. 12 persone)'
+  },
+  'SUV Privada Climatizada': {
+    es: 'SUV Privada Climatizada',
+    en: 'Private Climate-Controlled SUV',
+    pt: 'SUV Privativo Climatizado',
+    fr: 'SUV Privé Climatisé',
+    it: 'SUV Privato Climatizzato'
+  },
+  'Campamento Domos VIP': {
+    es: 'Campamento Domos VIP',
+    en: 'VIP Sky Domes Camp',
+    pt: 'Acampamento Domos VIP',
+    fr: 'Camp de Dômes VIP',
+    it: 'Campo Cupole VIP'
+  },
+  'Salida Anticipada VIP': {
+    es: 'Salida Anticipada VIP',
+    en: 'Early Access VIP Departure',
+    pt: 'Saída Antecipada VIP',
+    fr: 'Départ Matinal VIP',
+    it: 'Partenza Anticipata VIP'
+  },
+  'Tren Pullman Histórico': {
+    es: 'Tren Pullman Histórico',
+    en: 'Historic Pullman Train',
+    pt: 'Trem Pullman Histórico',
+    fr: 'Train Pullman Historique',
+    it: 'Treno Pullman Storico'
+  },
+  'Paso Peatonal Privado': {
+    es: 'Paso Peatonal Privado',
+    en: 'Private Pedestrian Access',
+    pt: 'Acesso Pedonal Privativo',
+    fr: 'Accès Piéton Privé',
+    it: 'Accesso Pedonale Privato'
+  },
+  'Confortable / Moderada': {
+    es: 'Confortable / Moderada',
+    en: 'Comfortable / Moderate',
+    pt: 'Confortável / Moderada',
+    fr: 'Confortable / Modérée',
+    it: 'Confortevole / Moderata'
+  },
+  'Fácil (Apto para toda la familia)': {
+    es: 'Fácil (Apto para toda la familia)',
+    en: 'Easy (Suitable for all ages)',
+    pt: 'Fácil (Adequado para toda a família)',
+    fr: 'Facile (Accessible à toute la famille)',
+    it: 'Facile (Adatto a tutta la famiglia)'
+  },
+  'Fácil (Familiar / Sin esfuerzo)': {
+    es: 'Fácil (Familiar / Sin esfuerzo)',
+    en: 'Easy (Family-friendly / Effortless)',
+    pt: 'Fácil (Familiar / Sem esforço)',
+    fr: 'Facile (Familial / Sans effort)',
+    it: 'Facile (Familiare / Senza sforzo)'
+  },
+  'Familias, Parejas VIP y Exploradores Exigentes': {
+    es: 'Familias, Parejas VIP y Exploradores Exigentes',
+    en: 'Families, VIP Couples & Discerning Explorers',
+    pt: 'Famílias, Casais VIP e Exploradores Exigentes',
+    fr: 'Familles, Couples VIP et Explorateurs Exigeants',
+    it: 'Famiglie, Coppie VIP ed Esploratori Esigenti'
+  },
+  'Familias, historiadores y viajeros culturales': {
+    es: 'Familias, historiadores y viajeros culturales',
+    en: 'Families, Historians & Cultural Travelers',
+    pt: 'Famílias, Historiadores e Viajantes Culturais',
+    fr: 'Familles, Historiens et Voyageurs Culturels',
+    it: 'Famiglie, Storici e Viaggiatori Culturali'
+  },
+  'Spots Fotográficos': {
+    es: 'Spots Fotográficos',
+    en: 'Photo Spots',
+    pt: 'Pontos Fotográficos',
+    fr: 'Spots Photos',
+    it: 'Punti Fotografici'
+  },
+  'Tarifa Especial:': {
+    es: 'Tarifa Especial:',
+    en: 'Special Rate:',
+    pt: 'Tarifa Especial:',
+    fr: 'Tarif Spécial :',
+    it: 'Tariffa Speciale:'
+  },
+  'Guía Fotográfica:': {
+    es: 'Guía Fotográfica:',
+    en: 'Photo Guide:',
+    pt: 'Guia Fotográfico:',
+    fr: 'Guide Photographique :',
+    it: 'Guida Fotografica:'
+  },
+  'Salidas Diarias 2026': {
+    es: 'Salidas Diarias 2026',
+    en: 'Daily Departures 2026',
+    pt: 'Saídas Diárias 2026',
+    fr: 'Départs Quotidiens 2026',
+    it: 'Partenze Giornaliere 2026'
+  },
+  'Colección Privada 5★': {
+    es: 'Colección Privada 5★',
+    en: '5★ Private Collection',
+    pt: 'Coleção Privada 5★',
+    fr: 'Collection Privée 5★',
+    it: 'Collezione Privata 5★'
+  },
+  'Servicio Privado Exclusivo': {
+    es: 'Servicio Privado Exclusivo',
+    en: 'Exclusive Private Service',
+    pt: 'Serviço Privado Exclusivo',
+    fr: 'Service Privé Exclusif',
+    it: 'Servizio Privato Esclusivo'
+  },
+  'Vivencias Sensoriales': {
+    es: 'Vivencias Sensoriales',
+    en: 'Sensory Experiences',
+    pt: 'Vivências Sensoriais',
+    fr: 'Expériences Sensorielles',
+    it: 'Esperienze Sensoriali'
+  },
+  '100% Incluido': {
+    es: '100% Incluido',
+    en: '100% All-Inclusive',
+    pt: '100% Tudo Incluído',
+    fr: '100% Tout Inclus',
+    it: '100% Tutto Incluso'
+  },
+  'SUV Privada': {
+    es: 'SUV Privada',
+    en: 'Private SUV',
+    pt: 'SUV Privativo',
+    fr: 'SUV Privé',
+    it: 'SUV Privato'
+  },
+  'Tours & Paquetes Privados': {
+    es: 'Tours & Paquetes Privados',
+    en: 'Tours & Private Packages',
+    pt: 'Passeios & Pacotes Privativos',
+    fr: 'Circuits & Forfaits Privés',
+    it: 'Tour & Pacchetti Privati'
+  },
+  'Garantía Luxury': {
+    es: 'Garantía Luxury',
+    en: 'Luxury Guarantee',
+    pt: 'Garantia Luxury',
+    fr: 'Garantie Prestige',
+    it: 'Garanzia Luxury'
+  },
+  'Guía Asignado:': {
+    es: 'Guía Asignado:',
+    en: 'Assigned Guide:',
+    pt: 'Guia Designado:',
+    fr: 'Guide Attitré :',
+    it: 'Guida Assegnata:'
+  },
+  'Seguridad:': {
+    es: 'Seguridad:',
+    en: 'Safety & Health:',
+    pt: 'Segurança & Saúde:',
+    fr: 'Sécurité & Santé :',
+    it: 'Sicurezza & Salute:'
+  },
+  'Oxígeno & Médico': {
+    es: 'Oxígeno & Médico',
+    en: 'Oxygen & Medical Kit',
+    pt: 'Oxigênio & Kit Médico',
+    fr: 'Oxygène & Kit Médical',
+    it: 'Ossigeno & Kit Medico'
+  },
+  'Salón VIP Plaza de Armas:': {
+    es: 'Salón VIP Plaza de Armas:',
+    en: 'VIP Lounge Main Square:',
+    pt: 'Salão VIP Praça de Armas:',
+    fr: 'Salon VIP Place d\'Armes :',
+    it: 'Sala VIP Piazza d\'Armi:'
+  },
+  'Café de Especialidad': {
+    es: 'Café de Especialidad',
+    en: 'Specialty Coffee',
+    pt: 'Café Especial',
+    fr: 'Café de Spécialité',
+    it: 'Caffè Speciale'
+  },
+  'Trekking & Montaña': {
+    es: 'Trekking & Montaña',
+    en: 'Trekking & Mountain',
+    pt: 'Trekking & Montanha',
+    fr: 'Trekking & Montagne',
+    it: 'Trekking & Montagna'
+  },
+  'Tarifa Todo Incluido:': {
+    es: 'Tarifa Todo Incluido:',
+    en: 'All-Inclusive Rate:',
+    pt: 'Tarifa Tudo Incluído:',
+    fr: 'Tarif Tout Inclus :',
+    it: 'Tariffa Tutto Incluso:'
+  },
+  'Ruta Cultural Ancestral': {
+    es: 'Ruta Cultural Ancestral',
+    en: 'Ancestral Cultural Route',
+    pt: 'Rota Cultural Ancestral',
+    fr: 'Itinéraire Culturel Ancestral',
+    it: 'Percorso Culturale Ancestrale'
+  },
+  'Entre montañas sagradas y tradición milenaria': {
+    es: 'Entre montañas sagradas y tradición milenaria',
+    en: 'Between sacred peaks and thousand-year traditions',
+    pt: 'Entre montanhas sagradas e tradição milenar',
+    fr: 'Entre sommets sacrés et tradition millénaire',
+    it: 'Tra montagne sacre e tradizione millenaria'
+  },
+  'Boleto': {
+    es: 'Boleto',
+    en: 'Ticket',
+    pt: 'Ingresso',
+    fr: 'Billet',
+    it: 'Biglietto'
+  },
+  'Ritual': {
+    es: 'Ritual',
+    en: 'Ceremony',
+    pt: 'Ritual',
+    fr: 'Rituel',
+    it: 'Rituale'
+  },
+  'Templos': {
+    es: 'Templos',
+    en: 'Temples',
+    pt: 'Templos',
+    fr: 'Temples',
+    it: 'Templi'
+  },
+  'Crónicas & Actualidad': {
+    es: 'Crónicas & Actualidad',
+    en: 'Chronicles & News',
+    pt: 'Crônicas & Notícias',
+    fr: 'Chroniques & Actualités',
+    it: 'Cronache & Notizie'
+  },
+  'Agenda & Eventos': {
+    es: 'Agenda & Eventos',
+    en: 'Events Schedule',
+    pt: 'Agenda & Eventos',
+    fr: 'Agenda & Événements',
+    it: 'Agenda & Eventi'
+  },
+  'Territorio & Mapa': {
+    es: 'Territorio & Mapa',
+    en: 'Territory & Map',
+    pt: 'Território & Mapa',
+    fr: 'Territoire & Carte',
+    it: 'Territorio & Mappa'
+  },
+  'Cartografía GPS': {
+    es: 'Cartografía GPS',
+    en: 'GPS Mapping',
+    pt: 'Cartografia GPS',
+    fr: 'Cartographie GPS',
+    it: 'Cartografia GPS'
+  },
+  'Mochila del Historiador:': {
+    es: 'Mochila del Historiador:',
+    en: 'Historian\'s Gear:',
+    pt: 'Mochila do Historiador:',
+    fr: 'Sac de l\'Historien :',
+    it: 'Zaino dello Storico:'
+  },
+  'Calzado con tracción • UV400': {
+    es: 'Calzado con tracción • UV400',
+    en: 'Traction shoes • UV400',
+    pt: 'Calçado com tração • UV400',
+    fr: 'Chaussures à crampons • UV400',
+    it: 'Scarpe con aderenza • UV400'
+  },
+  'Tarifa Cultural:': {
+    es: 'Tarifa Cultural:',
+    en: 'Cultural Rate:',
+    pt: 'Tarifa Cultural:',
+    fr: 'Tarif Culturel :',
+    it: 'Tariffa Culturale:'
+  },
+  'Arqueología & Historia': {
+    es: 'Arqueología & Historia',
+    en: 'Archaeology & History',
+    pt: 'Arqueologia & História',
+    fr: 'Archéologie & Histoire',
+    it: 'Archeologia & Storia'
+  },
+  'Laguna Humantay — Bitácora Fotográfica': {
+    es: 'Laguna Humantay — Bitácora Fotográfica',
+    en: 'Humantay Lake — Photographic Journal',
+    pt: 'Lagoa Humantay — Diário Fotográfico',
+    fr: 'Lagune Humantay — Carnet Photographique',
+    it: 'Laguna Humantay — Diario Fotografico'
+  },
+  '"Anotaciones de campo: Luz dorada sobre los nevados."': {
+    es: '"Anotaciones de campo: Luz dorada sobre los nevados."',
+    en: '"Field notes: Golden hour light over the glaciers."',
+    pt: '"Anotações de campo: Luz dourada sobre os nevados."',
+    fr: '"Notes de terrain : Lumière dorée sur les sommets enneigés."',
+    it: '"Note di campo: Luce dorata sulle vette innevate."'
+  },
+  'Qosqo Imperial': {
+    es: 'Qosqo Imperial',
+    en: 'Imperial Qosqo',
+    pt: 'Qosqo Imperial',
+    fr: 'Qosqo Impérial',
+    it: 'Qosqo Imperiale'
+  },
+  'Temporada 2026': {
+    es: 'Temporada 2026',
+    en: '2026 Season',
+    pt: 'Temporada 2026',
+    fr: 'Saison 2026',
+    it: 'Stagione 2026'
+  },
+  'Nuevo sendero señalizado por los templos y miradores incas': {
+    es: 'Nuevo sendero señalizado por los templos y miradores incas',
+    en: 'New signaled trail through Inca temples and viewpoints',
+    pt: 'Nova trilha sinalizada pelos templos e mirantes incas',
+    fr: 'Nouveau sentier balisé à travers les temples et belvédères incas',
+    it: 'Nuovo sentiero segnalato attraverso templi e belvederi inca'
+  },
+  'Guiado histórico con arqueólogos colegiados DIRCETUR.': {
+    es: 'Guiado histórico con arqueólogos colegiados DIRCETUR.',
+    en: 'Historical guiding by licensed DIRCETUR archaeologists.',
+    pt: 'Guia histórico com arqueólogos credenciados DIRCETUR.',
+    fr: 'Visite guidée historique par des archéologues agréés DIRCETUR.',
+    it: 'Visita storica guidata da archeologi abilitati DIRCETUR.'
+  },
+  '24 Junio - Solsticio': {
+    es: '24 Junio - Solsticio',
+    en: 'June 24 - Solstice',
+    pt: '24 de Junho - Solstício',
+    fr: '24 Juin - Solstice',
+    it: '24 Giugno - Solstizio'
+  },
+  'Inti Raymi: La Fiesta del Sol': {
+    es: 'Inti Raymi: La Fiesta del Sol',
+    en: 'Inti Raymi: The Festival of the Sun',
+    pt: 'Inti Raymi: A Festa do Sol',
+    fr: 'Inti Raymi : La Fête du Soleil',
+    it: 'Inti Raymi: La Festa del Sole'
+  },
+  'Viajeros': {
+    es: 'Viajeros',
+    en: 'Travelers',
+    pt: 'Viajantes',
+    fr: 'Voyageurs',
+    it: 'Viaggiatori'
+  },
+  'Experiencia': {
+    es: 'Experiencia',
+    en: 'Experience',
+    pt: 'Experiência',
+    fr: 'Expérience',
+    it: 'Esperienza'
+  },
+  'Reseñas': {
+    es: 'Reseñas',
+    en: 'Reviews',
+    pt: 'Avaliações',
+    fr: 'Avis',
+    it: 'Recensioni'
+  },
+  'Catálogo de Tours Exclusivos': {
+    es: 'Catálogo de Tours Exclusivos',
+    en: 'Exclusive Tours Catalog',
+    pt: 'Catálogo de Passeios Exclusivos',
+    fr: 'Catalogue de Circuits Exclusifs',
+    it: 'Catalogo dei Tour Esclusivi'
+  },
+  'Ver todos': {
+    es: 'Ver todos',
+    en: 'View all',
+    pt: 'Ver todos',
+    fr: 'Voir tout',
+    it: 'Vedi tutti'
+  },
+  'Oficina Física en Cusco:': {
+    es: 'Oficina Física en Cusco:',
+    en: 'Physical Office in Cusco:',
+    pt: 'Escritório Físico em Cusco:',
+    fr: 'Bureau Physique à Cusco :',
+    it: 'Ufficio Fisico a Cusco:'
+  },
+  'Maps Conectado': {
+    es: 'Maps Conectado',
+    en: 'Maps Connected',
+    pt: 'Maps Conectado',
+    fr: 'Maps Connecté',
+    it: 'Maps Connesso'
+  },
+  'Reservar con Guía': {
+    es: 'Reservar con Guía',
+    en: 'Book with Guide',
+    pt: 'Reservar com Guia',
+    fr: 'Réserver avec Guide',
+    it: 'Prenota con Guida'
+  },
+  'Guía': {
+    es: 'Guía',
+    en: 'Guide',
+    pt: 'Guia',
+    fr: 'Guide',
+    it: 'Guida'
+  },
+  'Reserva': {
+    es: 'Reserva',
+    en: 'Booking',
+    pt: 'Reserva',
+    fr: 'Réservation',
+    it: 'Prenota'
+  },
+  'Cusco, Valle Sagrado & Machu Picchu': {
+    es: 'Cusco, Valle Sagrado & Machu Picchu',
+    en: 'Cusco, Sacred Valley & Machu Picchu',
+    pt: 'Cusco, Vale Sagrado & Machu Picchu',
+    fr: 'Cusco, Vallée Sacrée & Machu Picchu',
+    it: 'Cusco, Valle Sacra & Machu Picchu'
+  },
+  'Cusco Histórico & Sacsayhuamán': {
+    es: 'Cusco Histórico & Sacsayhuamán',
+    en: 'Historic Cusco & Sacsayhuamán',
+    pt: 'Cusco Histórico & Sacsayhuamán',
+    fr: 'Cusco Historique & Sacsayhuamán',
+    it: 'Cusco Storico & Sacsayhuamán'
+  },
+  'Cusco, Salkantay & Machu Picchu': {
+    es: 'Cusco, Salkantay & Machu Picchu',
+    en: 'Cusco, Salkantay & Machu Picchu',
+    pt: 'Cusco, Salkantay & Machu Picchu',
+    fr: 'Cusco, Salkantay & Machu Picchu',
+    it: 'Cusco, Salkantay & Machu Picchu'
+  },
+  'Un viaje sagrado diseñado para los más exigentes': {
+    es: 'Un viaje sagrado diseñado para los más exigentes',
+    en: 'A Sacred Journey Designed for Discerning Travelers',
+    pt: 'Uma Viagem Sagrada Projetada para os Mais Exigentes',
+    fr: 'Un Voyage Sacré Conçu pour les Plus Exigeants',
+    it: 'Un Viaggio Sacro Progettato per i Più Esigenti'
+  },
+  'Evita las largas colas y el estrés del turismo masivo. Nuestro servicio VIP te brinda acceso preferente, almuerzo gourmet en Belmond Sanctuary Lodge y asesoría personalizada de puerta a puerta.': {
+    es: 'Evita las largas colas y el estrés del turismo masivo. Nuestro servicio VIP te brinda acceso preferente, almuerzo gourmet en Belmond Sanctuary Lodge y asesoría personalizada de puerta a puerta.',
+    en: 'Avoid long lines and mass tourism stress. Our VIP service grants preferred access, gourmet dining at Belmond Sanctuary Lodge, and door-to-door personalized concierge.',
+    pt: 'Evite filas longas e o estresse do turismo massivo. Nosso serviço VIP oferece acesso preferencial, almoço gourmet no Belmond Sanctuary Lodge e assistência personalizada de porta a porta.',
+    fr: 'Évitez les longues files d’attente et le stress du tourisme de masse. Notre service VIP vous offre un accès préférentiel, un déjeuner gastronomique au Belmond Sanctuary Lodge et un concierge porte-à-porte.',
+    it: 'Evita le lunghe code e lo stress del turismo di massa. Il nostro servizio VIP ti offre accesso preferenziale, pranzo gourmet al Belmond Sanctuary Lodge e assistenza personalizzata porta a porta.'
+  },
+  'Privilegios de la Experiencia Presidencial': {
+    es: 'Privilegios de la Experiencia Presidencial',
+    en: 'Presidential Experience Privileges',
+    pt: 'Privilégios da Experiência Presidencial',
+    fr: 'Privilèges de l’Expérience Présidentielle',
+    it: 'Privilegi dell’Esperienza Presidenziale'
+  },
+  'Privilegios de la Experiencia VIP': {
+    es: 'Privilegios de la Experiencia VIP',
+    en: 'VIP Experience Privileges',
+    pt: 'Privilégios da Experiência VIP',
+    fr: 'Privilèges de l’Expérience VIP',
+    it: 'Privilegi dell’Esperienza VIP'
+  },
+  '¿Por qué elegir este recorrido cultural?': {
+    es: '¿Por qué elegir este recorrido cultural?',
+    en: 'Why Choose This Cultural Journey?',
+    pt: 'Por Que Escolher Este Roteiro Cultural?',
+    fr: 'Pourquoi Choisir Ce Circuit Culturel ?',
+    it: 'Perché Scegliere Questo Percorso Culturale?'
+  },
+  'Portal Oficial de Agencia & Operador Autorizado': {
+    es: 'Portal Oficial de Agencia & Operador Autorizado',
+    en: 'Official Agency Portal & Licensed Operator',
+    pt: 'Portal Oficial de Agência & Operador Autorizado',
+    fr: 'Portail Officiel d’Agence & Opérateur Agréé',
+    it: 'Portale Ufficiale di Agenzia & Operatore Autorizzato'
+  },
   'Reservar Expedición ($380 USD)': {
     es: 'Reservar Expedición ($380 USD)',
     en: 'Book Expedition ($380 USD)',
@@ -979,13 +1602,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Expérience cinq étoiles conçue pour ceux qui recherchent l’intimité, la gastronomie andine signature et un accès VIP coupe-file.',
     it: 'Esperienza a cinque stelle pensata per chi desidera totale privacy, gastronomia andina d’autore e accesso VIP senza code.'
   },
-  'Descubre los enigmas de la arquitectura megalítica inca en Sacsayhuamán, Q’enqo, Puka Pukara y Tambomachay junto a una arqueóloga experta.': {
-    es: 'Descubre los enigmas de la arquitectura megalítica inca en Sacsayhuamán, Q’enqo, Puka Pukara y Tambomachay junto a una arqueóloga experta.',
-    en: 'Discover the mysteries of megalithic Inca architecture at Sacsayhuamán, Q’enqo, Puka Pukara and Tambomachay alongside an expert archaeologist.',
-    pt: 'Descubra os mistérios da arquitetura megalítica inca em Sacsayhuamán, Q’enqo, Puka Pukara e Tambomachay com uma arqueóloga especialista.',
-    fr: 'Découvrez les mystères de l’architecture mégalithique inca à Sacsayhuamán, Q’enqo, Puka Pukara et Tambomachay aux côtés d’une archéologue experte.',
-    it: 'Scopri i misteri dell’architettura megalitica inca a Sacsayhuamán, Q’enqo, Puka Pukara e Tambomachay insieme a un’archeologa esperta.'
-  },
   'Vive una aventura inolvidable con guías expertos locales y atención de primer nivel.': {
     es: 'Vive una aventura inolvidable con guías expertos locales y atención de primer nivel.',
     en: 'Experience an unforgettable Andean adventure with certified local guides and premier 5-star service.',
@@ -995,13 +1611,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
   },
 
   // --- SECCIÓN SOBRE NOSOTROS (ABOUT) ---
-  'Un viaje sagrado diseñado para los más exigentes': {
-    es: 'Un viaje sagrado diseñado para los más exigentes',
-    en: 'A Sacred Journey Tailored for the Most Discerning Travelers',
-    pt: 'Uma Viagem Sagrada Feita para os Mais Exigentes',
-    fr: 'Un Voyage Sacré Conçu pour les Voyageurs les Plus Exigeants',
-    it: 'Un Viaggio Sacro Disegnato per i Viaggiatori Più Esigenti'
-  },
   'Sobre Nosotros': {
     es: 'Sobre Nosotros',
     en: 'About Us',
@@ -1015,13 +1624,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     pt: 'Operador turístico oficial e registrado em Cusco com excelência comprovada.',
     fr: 'Opérateur touristique officiel et agréé à Cusco avec excellence reconnue.',
     it: 'Operatore turistico ufficiale e autorizzato a Cusco con comprovata eccellenza.'
-  },
-  'Evita las largas colas y el estrés del turismo masivo. Nuestro servicio VIP te brinda acceso preferente, almuerzo gourmet en Belmond Sanctuary Lodge y asesoría personalizada de puerta a puerta.': {
-    es: 'Evita las largas colas y el estrés del turismo masivo. Nuestro servicio VIP te brinda acceso preferente, almuerzo gourmet en Belmond Sanctuary Lodge y asesoría personalizada de puerta a puerta.',
-    en: 'Skip the long lines and mass tourism stress. Our VIP service grants priority entry, gourmet buffet lunch at Belmond Sanctuary Lodge, and personalized door-to-door concierge.',
-    pt: 'Evite as longas filas e o estresse do turismo massivo. Nosso serviço VIP oferece acesso preferencial, almoço gourmet no Belmond Sanctuary Lodge e assessoria personalizada de porta a porta.',
-    fr: 'Évitez les longues files d’attente et le stress du tourisme de masse. Notre service VIP vous offre un accès prioritaire, un déjeuner gastronomique au Belmond Sanctuary Lodge et une conciergerie personnalisée porte-à-porte.',
-    it: 'Evita le lunghe code e lo stress del turismo di massa. Il nostro servizio VIP garantisce accesso prioritario, pranzo gourmet al Belmond Sanctuary Lodge e assistenza personalizzata porta a porta.'
   },
 
   // --- DESTINOS ---
@@ -1045,13 +1647,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     pt: 'Santuário Histórico de Machu Picchu',
     fr: 'Sanctuaire Historique du Machu Picchu',
     it: 'Santuario Storico di Machu Picchu'
-  },
-  'Cusco Histórico & Sacsayhuamán': {
-    es: 'Cusco Histórico & Sacsayhuamán',
-    en: 'Historic Cusco & Sacsayhuamán',
-    pt: 'Cusco Histórico & Sacsayhuamán',
-    fr: 'Cusco Historique & Sacsayhuamán',
-    it: 'Cusco Storico & Sacsayhuamán'
   },
   'Cusco, Perú': {
     es: 'Cusco, Perú',
@@ -1083,20 +1678,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Couples, Lunes de Miel et Voyageurs Confort',
     it: 'Coppie, Lune di Miele e Viaggiatori Comfort'
   },
-  'Familias, historiadores y viajeros culturales': {
-    es: 'Familias, historiadores y viajeros culturales',
-    en: 'Families, Historians & Cultural Travelers',
-    pt: 'Famílias, Historiadores e Viajantes Culturais',
-    fr: 'Familles, Historiens et Voyageurs Culturels',
-    it: 'Famiglie, Storici e Viaggiatori Culturali'
-  },
-  'Tours Privados & Compartidos VIP': {
-    es: 'Tours Privados & Compartidos VIP',
-    en: 'Private VIP & Premium Small Group Tours',
-    pt: 'Tours Privados & Grupos Reduzidos VIP',
-    fr: 'Visites Privées VIP & Petits Groupes',
-    it: 'Tour Privati VIP & Piccoli Gruppi'
-  },
   'Grupo Reducido (Máx. 8 pers.)': {
     es: 'Grupo Reducido (Máx. 8 pers.)',
     en: 'Small Group (Max 8 travelers)',
@@ -1110,13 +1691,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     pt: 'Tour Privado Exclusivo',
     fr: 'Visite Privée Exclusive',
     it: 'Tour Privato Esclusivo'
-  },
-  'Grupo Reducido (Máx. 12 pers.)': {
-    es: 'Grupo Reducido (Máx. 12 pers.)',
-    en: 'Small Group (Max 12 travelers)',
-    pt: 'Grupo Reduzido (Máx. 12 pessoas)',
-    fr: 'Petit Groupe (Max 12 personnes)',
-    it: 'Piccolo Gruppo (Max 12 persone)'
   },
   'Fácil - Moderada': {
     es: 'Fácil - Moderada',
@@ -1138,13 +1712,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     pt: 'Fácil (Conforto Familiar)',
     fr: 'Facile (Confort Familial)',
     it: 'Facile (Comfort Familiare)'
-  },
-  'Fácil (Apto para toda la familia)': {
-    es: 'Fácil (Apto para toda la familia)',
-    en: 'Easy (Suitable for all ages)',
-    pt: 'Fácil (Apropriado para toda a família)',
-    fr: 'Facile (Adapté à toute la famille)',
-    it: 'Facile (Adatto a tutta la famiglia)'
   },
   'Catálogo Multidía & Full Days': {
     es: 'Catálogo Multidía & Full Days',
@@ -1761,13 +2328,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
   },
 
   // --- CATEGORÍAS ADICIONALES Y FILTROS ---
-  'Trekking & Montaña': {
-    es: 'Trekking & Montaña',
-    en: 'Trekking & Mountain',
-    pt: 'Trekking & Montanha',
-    fr: 'Trekking & Montagne',
-    it: 'Trekking & Montagna'
-  },
   'Clásicos & Cultura': {
     es: 'Clásicos & Cultura',
     en: 'Classics & Culture',
@@ -2561,13 +3121,6 @@ const PHRASE_MAP: Record<string, Record<LanguageType, string>> = {
     fr: 'Modérée',
     it: 'Moderata'
   },
-  'Grupos Reducidos & Privados VIP': {
-    es: 'Grupos Reducidos & Privados VIP',
-    en: 'Small Groups & Private VIP',
-    pt: 'Grupos Reduzidos & Privativos VIP',
-    fr: 'Petits Groupes & Privé VIP',
-    it: 'Piccoli Gruppi & Privati VIP'
-  },
   'Licenciado DIRCETUR & Explorador Senior': {
     es: 'Licenciado DIRCETUR & Explorador Senior',
     en: 'Licensed DIRCETUR & Senior Explorer',
@@ -2992,6 +3545,42 @@ export function translateText(text: string | undefined, targetLang: LanguageType
     if (targetLang === 'it') return 'Scopri la meraviglia del mondo con trasferimenti privati, comfort a 5 stelle e una guida ufficiale esclusiva per te e la tua famiglia.';
   }
 
+  // Heurística para el subtítulo de Cusco Luxury Collection VIP (Mercedes Benz & tren con coche observatorio)
+  const isDefaultMercedesSubtitle =
+    lowerTrimmed.includes('mercedes benz') && (lowerTrimmed.includes('observatorio') || lowerTrimmed.includes('historiador') || lowerTrimmed.includes('colegiado') || lowerTrimmed.includes('credenciado'));
+
+  if (isDefaultMercedesSubtitle) {
+    if (targetLang === 'es') return 'Descubre la maravilla del mundo con traslados en Mercedes Benz, tren con coche observatorio de lujo y un guía historiador colegiado exclusivo para ti.';
+    if (targetLang === 'en') return 'Discover the wonder of the world with Mercedes Benz transfers, a luxury observatory train car, and an exclusive certified historian guide dedicated to you.';
+    if (targetLang === 'pt') return 'Descubra a maravilha do mundo com traslados em Mercedes Benz, trem com vagão observatório de luxo e um guia historiador credenciado exclusivo para você.';
+    if (targetLang === 'fr') return 'Découvrez la merveille du monde avec transferts en Mercedes Benz, train avec voiture panoramique de luxe et un guide historien agréé exclusif pour vous.';
+    if (targetLang === 'it') return 'Scopri la meraviglia del mondo con trasferimenti in Mercedes Benz, treno con carrozza panoramica di lusso e una guida storica abilitata esclusiva per te.';
+  }
+
+  // Heurística para el subtítulo del City Tour Cusco Patrimonial (Sacsayhuamán & arquitectura megalítica)
+  const isDefaultCulturalSubtitle =
+    lowerTrimmed.includes('sacsayhuam') || (lowerTrimmed.includes('arquitectura') && (lowerTrimmed.includes('megalítica') || lowerTrimmed.includes('megalitica') || lowerTrimmed.includes('megalithic')));
+
+  if (isDefaultCulturalSubtitle) {
+    if (targetLang === 'es') return 'Descubre los enigmas de la arquitectura megalítica inca en Sacsayhuamán, Q’enqo, Puka Pukara y Tambomachay junto a una arqueóloga experta.';
+    if (targetLang === 'en') return 'Discover the enigmas of megalithic Inca architecture at Sacsayhuamán, Q’enqo, Puka Pukara, and Tambomachay alongside an expert archaeologist.';
+    if (targetLang === 'pt') return 'Descubra os enigmas da arquitetura megalítica inca em Sacsayhuamán, Q’enqo, Puka Pukara e Tambomachay junto com uma arqueóloga especialista.';
+    if (targetLang === 'fr') return 'Découvrez les énigmes de l’architecture mégalithique inca à Sacsayhuamán, Q’enqo, Puka Pukara et Tambomachay aux côtés d’une archéologue experte.';
+    if (targetLang === 'it') return 'Scopri gli enigmi dell’architettura megalitica inca a Sacsayhuamán, Q’enqo, Puka Pukara e Tambomachay insieme a un’archeologa esperta.';
+  }
+
+  // Heurística para el subtítulo de Boho Journal (Aguas turquesas del nevado Humantay)
+  const isDefaultBohoSubtitle =
+    lowerTrimmed.includes('aguas turquesas') && lowerTrimmed.includes('humantay');
+
+  if (isDefaultBohoSubtitle) {
+    if (targetLang === 'es') return 'Una expedición pausada hacia las aguas turquesas del nevado Humantay, diseñada para amantes de la fotografía, el paisajismo y los viajes auténticos.';
+    if (targetLang === 'en') return 'A serene expedition toward the turquoise waters of Humantay glacier, designed for photography lovers, landscapes, and authentic travel.';
+    if (targetLang === 'pt') return 'Uma expedição tranquila até as águas turquesas do nevado Humantay, projetada para amantes da fotografia, paisagens e viagens autênticas.';
+    if (targetLang === 'fr') return 'Une expédition sereine vers les eaux turquoise du glacier Humantay, conçue pour les amateurs de photographie, de paysages et de voyages authentiques.';
+    if (targetLang === 'it') return 'Una spedizione rilassata verso le acque turchesi del ghiacciaio Humantay, pensata per gli amanti della fotografia, dei paesaggi e dei viaggi autentici.';
+  }
+
   if (lowerTrimmed.length > 25 && (lowerTrimmed.includes('magia de los andes') || lowerTrimmed.includes('magia dos andes') || lowerTrimmed.includes('magic of the andes') || lowerTrimmed.includes('salidas diarias') || lowerTrimmed.includes('saídas diárias') || lowerTrimmed.includes('daily departures'))) {
     if (targetLang === 'es') return 'Montaña de 7 Colores & Valle Rojo • Vive la magia de los Andes con operadores colegiados y salidas diarias.';
     if (targetLang === 'en') return 'Experience the magic of the Peruvian Andes with official accredited tour operators and guaranteed daily departures.';
@@ -3014,7 +3603,7 @@ export function translateText(text: string | undefined, targetLang: LanguageType
     if (targetLang === 'en') return 'What Makes This Experience Unforgettable?';
     if (targetLang === 'pt') return 'O Que Torna Esta Experiência Inesquecível?';
     if (targetLang === 'fr') return 'Qu’est-ce qui rend cette expérience inoubliable ?';
-    if (targetLang === 'it') return 'Cosa rende questa esperienza indimenticabile?';
+    if (targetLang === 'it') return 'Cosa rende questa experiencia indimenticabile?';
   }
 
   // Heurística para descripción estándar de servicios incluidos ("Servicio 100% coordinado...")
@@ -3026,16 +3615,22 @@ export function translateText(text: string | undefined, targetLang: LanguageType
     if (targetLang === 'it') return 'Servizio coordinato e garantito al 100% con standard ufficiali di sicurezza turistica.';
   }
 
-  // Heurísticas para Especificaciones Técnicas (Soporte de rangos y valores simples)
+  // Heurísticas para Especificaciones Técnicas (Soporte de rangos y valores simples con formato localizado)
   if (lowerTrimmed.includes('msnm') || lowerTrimmed.includes('m.a.s.l.') || lowerTrimmed.includes('metros') || lowerTrimmed.includes('mslm')) {
     const unit = targetLang === 'en' ? 'm.a.s.l.' : targetLang === 'fr' ? 'm d’altitude' : targetLang === 'pt' ? 'm de altitude' : targetLang === 'it' ? 'mslm' : 'msnm';
+    const formatNumber = (n: number) => {
+      if (isNaN(n)) return '';
+      if (targetLang === 'en') return n.toLocaleString('en-US');
+      if (targetLang === 'fr') return n.toLocaleString('fr-FR');
+      return n.toLocaleString('es-ES');
+    };
     if (text.includes('-') || text.includes(' a ')) {
       const separator = text.includes('-') ? '-' : ' a ';
       const parts = text.split(separator).map(p => {
         const digits = p.replace(/[^0-9]/g, '');
         if (!digits) return '';
         const n = parseInt(digits, 10);
-        return isNaN(n) ? '' : n.toLocaleString('en-US');
+        return formatNumber(n);
       }).filter(Boolean);
       if (parts.length >= 2) {
         return `${parts[0]} - ${parts[1]} ${unit}`;
@@ -3043,7 +3638,7 @@ export function translateText(text: string | undefined, targetLang: LanguageType
     }
     const digits = text.replace(/[^0-9]/g, '');
     const n = digits ? parseInt(digits, 10) : NaN;
-    const num = isNaN(n) ? text.replace(/[^0-9,.]/g, '').replace(/[,.]*$/, '') : n.toLocaleString('en-US');
+    const num = isNaN(n) ? text.replace(/[^0-9,.]/g, '').replace(/[,.]*$/, '') : formatNumber(n);
     return `${num} ${unit}`;
   }
 

@@ -853,15 +853,35 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
       setIsQuoteOpen(true);
     } else {
       const cleanPhone = guidePhone.replace(/\D/g, '');
-      const msg = encodeURIComponent(`Hola ${guideName}, deseo consultar disponibilidad para ${passengers} personas en el tour: ${tourTitle || data.name || 'Machu Picchu'} (${formatPrice(basePriceUsd, passengers)} en ${currency}).`);
-      window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
+      const localizedTargetTour = translateText(tourTitle || data.name || 'Machu Picchu', currentLang);
+      const paxNoun = currentLang === 'en' ? (passengers === 1 ? 'person' : 'people') : currentLang === 'pt' ? (passengers === 1 ? 'pessoa' : 'pessoas') : currentLang === 'fr' ? (passengers === 1 ? 'personne' : 'personnes') : currentLang === 'it' ? (passengers === 1 ? 'persona' : 'persone') : (passengers === 1 ? 'persona' : 'personas');
+      const actionMsg = currentLang === 'en'
+        ? `Hello ${guideName}, I would like to check availability for ${passengers} ${paxNoun} for the tour: ${localizedTargetTour} (${formatPrice(basePriceUsd, passengers)} in ${currency}).`
+        : currentLang === 'pt'
+        ? `Olá ${guideName}, gostaria de consultar disponibilidade para ${passengers} ${paxNoun} no passeio: ${localizedTargetTour} (${formatPrice(basePriceUsd, passengers)} em ${currency}).`
+        : currentLang === 'fr'
+        ? `Bonjour ${guideName}, je souhaite vérifier les disponibilités pour ${passengers} ${paxNoun} sur le circuit : ${localizedTargetTour} (${formatPrice(basePriceUsd, passengers)} en ${currency}).`
+        : currentLang === 'it'
+        ? `Ciao ${guideName}, vorrei consultare disponibilità per ${passengers} ${paxNoun} per il tour: ${localizedTargetTour} (${formatPrice(basePriceUsd, passengers)} in ${currency}).`
+        : `Hola ${guideName}, deseo consultar disponibilidad para ${passengers} personas en el tour: ${tourTitle || data.name || 'Machu Picchu'} (${formatPrice(basePriceUsd, passengers)} en ${currency}).`;
+      window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(actionMsg)}`, '_blank');
     }
   };
 
   const handleWhatsappDirect = (tourTitle?: string) => {
     const cleanPhone = guidePhone.replace(/\D/g, '');
-    const msg = encodeURIComponent(`Hola ${guideName}, deseo consultar sobre ${tourTitle || data.name || 'Machu Picchu'} para ${passengers} personas por WhatsApp.`);
-    window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
+    const localizedTargetTour = translateText(tourTitle || data.name || 'Machu Picchu', currentLang);
+    const paxNoun = currentLang === 'en' ? (passengers === 1 ? 'person' : 'people') : currentLang === 'pt' ? (passengers === 1 ? 'pessoa' : 'pessoas') : currentLang === 'fr' ? (passengers === 1 ? 'personne' : 'personnes') : currentLang === 'it' ? (passengers === 1 ? 'persona' : 'persone') : (passengers === 1 ? 'persona' : 'personas');
+    const directMsg = currentLang === 'en'
+      ? `Hello ${guideName}, I would like to inquire about ${localizedTargetTour} for ${passengers} ${paxNoun} via WhatsApp.`
+      : currentLang === 'pt'
+      ? `Olá ${guideName}, gostaria de informações sobre ${localizedTargetTour} para ${passengers} ${paxNoun} pelo WhatsApp.`
+      : currentLang === 'fr'
+      ? `Bonjour ${guideName}, je souhaite des informations sur ${localizedTargetTour} pour ${passengers} ${paxNoun} par WhatsApp.`
+      : currentLang === 'it'
+      ? `Ciao ${guideName}, vorrei informazioni su ${localizedTargetTour} per ${passengers} ${paxNoun} tramite WhatsApp.`
+      : `Hola ${guideName}, deseo consultar sobre ${tourTitle || data.name || 'Machu Picchu'} para ${passengers} personas por WhatsApp.`;
+    window.open(`https://wa.me/${cleanPhone}?text=${encodeURIComponent(directMsg)}`, '_blank');
   };
 
   const openLightbox = (imgUrl: string) => {

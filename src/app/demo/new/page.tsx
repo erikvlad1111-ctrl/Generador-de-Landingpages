@@ -3717,18 +3717,18 @@ export default function NewLandingDemo() {
                     {/* Hero Content */}
                     <div className="absolute bottom-3 inset-x-3 space-y-1.5">
                       <span className="inline-flex items-center gap-1 bg-[#FF5500]/90 text-white text-[9px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full shadow-xs">
-                        <Zap size={9} className="text-white fill-white" /> {heroBadge ? translateText(heroBadge, language) : 'Portal Agencia VIP'}
+                        <Zap size={9} className="text-white fill-white" /> {heroBadge ? translateText(heroBadge, language) : translateText('Portal Agencia VIP', language)}
                       </span>
                       <h3 className="text-base font-black leading-tight text-white drop-shadow-md line-clamp-2">
-                        {heroTitle ? translateText(heroTitle, language) : (name || 'Machu Picchu VIP con Tren Panorámico')}
+                        {heroTitle ? translateText(heroTitle, language) : translateText(name || 'Machu Picchu VIP con Tren Panorámico', language)}
                       </h3>
                       <p className="text-[10px] text-stone-200 line-clamp-1">
-                        {heroSubtitle ? translateText(heroSubtitle, language) : `${destination || 'Cusco'} • ${duration || 'Full Day'} • Guía Historiador`}
+                        {heroSubtitle ? translateText(heroSubtitle, language) : `${translateText(destination || 'Cusco', language)} • ${translateText(duration || 'Full Day', language)} • ${translateText('Guía Historiador', language)}`}
                       </p>
 
                       <div className="pt-1">
                         <div className="w-full bg-gradient-to-r from-[#FF5500] to-[#FF3000] text-white font-black py-2 px-3 rounded-xl text-center text-[11px] shadow-md shadow-[#FF5500]/40 flex items-center justify-center gap-1.5">
-                          <span>{heroCta ? translateText(heroCta, language) : (objective === 'quote' ? 'SOLICITAR COTIZACIÓN' : objective === 'both' ? 'WHATSAPP & COTIZACIÓN' : 'RESERVAR CON GUÍA')}</span>
+                          <span>{heroCta ? translateText(heroCta, language) : translateText(objective === 'quote' ? 'SOLICITAR COTIZACIÓN' : objective === 'both' ? 'WHATSAPP & COTIZACIÓN' : 'RESERVAR CON GUÍA', language)}</span>
                           <ArrowRight size={13} className="animate-bounce-x" />
                         </div>
                       </div>
@@ -3740,15 +3740,15 @@ export default function NewLandingDemo() {
                     <div className="grid grid-cols-3 gap-1 text-center">
                       <div className="p-1 rounded-lg bg-stone-50">
                         <span className="text-xs font-black block text-stone-900 animate-number-glow">+10,000</span>
-                        <span className="text-[8px] text-stone-500 font-bold block">Viajeros</span>
+                        <span className="text-[8px] text-stone-500 font-bold block">{translateText('Viajeros', language)}</span>
                       </div>
                       <div className="p-1 rounded-lg bg-stone-50">
                         <span className="text-xs font-black block text-[#FF5500] animate-pulse-subtle">10+ Años</span>
-                        <span className="text-[8px] text-stone-500 font-bold block">Experiencia</span>
+                        <span className="text-[8px] text-stone-500 font-bold block">{translateText('Experiencia', language)}</span>
                       </div>
                       <div className="p-1 rounded-lg bg-stone-50">
                         <span className="text-xs font-black block text-[#FF5500] animate-pulse-subtle">4.9 ★</span>
-                        <span className="text-[8px] text-stone-500 font-bold block">Reviews</span>
+                        <span className="text-[8px] text-stone-500 font-bold block">{translateText('Reseñas', language)}</span>
                       </div>
                     </div>
                   </div>
@@ -3756,8 +3756,8 @@ export default function NewLandingDemo() {
                   {/* Mini Tour Catalog Section */}
                   <div className="p-3 bg-stone-950 space-y-2 flex-1">
                     <div className="flex items-center justify-between text-[10px]">
-                      <span className="font-extrabold text-stone-300">Catálogo de Tours Exclusivos</span>
-                      <span className="text-[#FF5500] font-bold text-[9px]">Ver todos (6)</span>
+                      <span className="font-extrabold text-stone-300">{translateText('Catálogo de Tours Exclusivos', language)}</span>
+                      <span className="text-[#FF5500] font-bold text-[9px]">{translateText('Ver todos', language)} (6)</span>
                     </div>
 
                     <div className="bg-stone-900 rounded-xl p-2 border border-stone-800 flex items-center gap-2.5">
@@ -3765,8 +3765,8 @@ export default function NewLandingDemo() {
                         <Image src={activeHeroImg} alt="Tour" fill sizes="80px" className="object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-[11px] font-black text-white truncate">{name || 'Machu Picchu VIP'}</h4>
-                        <p className="text-[9px] text-stone-400">{duration || 'Full Day'} • {destination || 'Cusco'}</p>
+                        <h4 className="text-[11px] font-black text-white truncate">{name ? translateText(name, language) : translateText('Machu Picchu VIP', language)}</h4>
+                        <p className="text-[9px] text-stone-400">{duration ? translateText(duration, language) : translateText('Full Day', language)} • {destination ? translateText(destination, language) : 'Cusco'}</p>
                         <span className="text-xs font-black text-[#FF5500]">{price || '$380 USD'}</span>
                       </div>
                     </div>
@@ -3775,7 +3775,7 @@ export default function NewLandingDemo() {
                     <div className="p-2.5 bg-stone-900/95 rounded-xl border border-stone-800 space-y-1 text-[9px]">
                       <div className="flex items-center gap-1.5 text-amber-400 font-bold">
                         <MapPin size={11} className="text-[#FF5500] shrink-0" />
-                        <span>Oficina Física en Cusco:</span>
+                        <span>{translateText('Oficina Física en Cusco:', language)}</span>
                       </div>
                       <p className="text-stone-300 line-clamp-1 text-[8px] pl-4">
                         {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
@@ -3783,7 +3783,7 @@ export default function NewLandingDemo() {
                       <div className="flex items-center justify-between pt-1 pl-4 text-[8px]">
                         <span className="text-emerald-400 font-semibold">{officeHours || 'Lun-Dom: 8am - 8pm'}</span>
                         <span className="text-blue-400 font-bold flex items-center gap-0.5">
-                          <Navigation size={8} /> Maps Conectado
+                          <Navigation size={8} /> {translateText('Maps Conectado', language)}
                         </span>
                       </div>
                     </div>
@@ -3839,14 +3839,14 @@ export default function NewLandingDemo() {
                       <div className="relative h-44 w-full rounded-lg overflow-hidden bg-stone-100 mb-2">
                         <Image src={activeHeroImg} alt="Polaroid" fill sizes="400px" className="object-cover" />
                         <div className="absolute bottom-2 left-2 bg-black/60 text-white text-[9px] font-bold px-2 py-0.5 rounded-md backdrop-blur-xs">
-                          {altitude || '4,200 msnm'}
+                          {altitude ? translateText(altitude, language) : translateText('4,200 msnm', language)}
                         </div>
                       </div>
                       <p className="text-[11px] font-serif font-black text-stone-900 leading-snug line-clamp-1">
-                        {heroTitle ? translateText(heroTitle, language) : (name || 'Laguna Humantay — Bitácora Fotográfica')}
+                        {heroTitle ? translateText(heroTitle, language) : (name ? translateText(name, language) : translateText('Laguna Humantay — Bitácora Fotográfica', language))}
                       </p>
                       <p className="text-[9px] text-stone-500 italic mt-0.5 line-clamp-1">
-                        {heroSubtitle ? translateText(heroSubtitle, language) : '"Anotaciones de campo: Luz dorada sobre los nevados."'}
+                        {heroSubtitle ? translateText(heroSubtitle, language) : translateText('"Anotaciones de campo: Luz dorada sobre los nevados."', language)}
                       </p>
                     </div>
 
@@ -3856,24 +3856,24 @@ export default function NewLandingDemo() {
                         <Star size={11} className="text-amber-500 fill-amber-500 shrink-0" /> 4.9 (340+ reviews)
                       </div>
                       <div className="bg-[#F0EAE1] p-1.5 rounded-lg text-stone-700 font-bold flex items-center gap-1">
-                        <Camera size={11} className="text-stone-700 shrink-0" /> Spots Fotográficos
+                        <Camera size={11} className="text-stone-700 shrink-0" /> {translateText('Spots Fotográficos', language)}
                       </div>
                     </div>
 
                     {/* Details & CTA */}
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-xs font-bold text-stone-800">
-                        <span>Tarifa Especial:</span>
+                        <span>{translateText('Tarifa Especial:', language)}</span>
                         <span className="text-[#C86D51] font-black text-sm">{price || 'S/ 160 PEN'}</span>
                       </div>
 
                       <div className="w-full bg-[#C86D51] hover:bg-[#b05d43] text-white font-bold py-2.5 px-3 rounded-xl text-center text-xs shadow-md flex items-center justify-center gap-1.5">
                         <Camera size={14} />
-                        <span>{heroCta ? translateText(heroCta, language) : (objective === 'quote' ? 'Consultar Cupo' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Reservar por WhatsApp')}</span>
+                        <span>{heroCta ? translateText(heroCta, language) : (objective === 'quote' ? translateText('Consultar Cupo', language) : objective === 'both' ? translateText('WhatsApp & Cotizar', language) : translateText('Reservar por WhatsApp', language))}</span>
                       </div>
 
                       <p className="text-center text-[9px] text-stone-400">
-                        Guía Fotográfica: <strong>{guideName || 'Camila Valdivia'}</strong>
+                        {translateText('Guía Fotográfica:', language)} <strong>{guideName || 'Camila Valdivia'}</strong>
                       </p>
                     </div>
                   </div>
@@ -3881,8 +3881,8 @@ export default function NewLandingDemo() {
                   {/* Mini Tour Catalog Section */}
                   <div className="p-3 bg-[#F4EFEA] border-t border-stone-200/80 space-y-2 flex-1">
                     <div className="flex items-center justify-between text-[10px]">
-                      <span className="font-extrabold text-stone-800">Catálogo de Tours Exclusivos</span>
-                      <span className="text-[#C86D51] font-bold text-[9px]">Ver todos (6)</span>
+                      <span className="font-extrabold text-stone-800">{translateText('Catálogo de Tours Exclusivos', language)}</span>
+                      <span className="text-[#C86D51] font-bold text-[9px]">{translateText('Ver todos', language)} (6)</span>
                     </div>
 
                     <div className="bg-white rounded-xl p-2 border border-stone-200 shadow-xs flex items-center gap-2.5">
@@ -3890,8 +3890,8 @@ export default function NewLandingDemo() {
                         <Image src={activeHeroImg} alt="Tour" fill sizes="80px" className="object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-[11px] font-black text-stone-900 truncate">{name || 'Laguna Humantay Boho'}</h4>
-                        <p className="text-[9px] text-stone-500">{duration || 'Full Day'} • {destination || 'Cusco'}</p>
+                        <h4 className="text-[11px] font-black text-stone-900 truncate">{name ? translateText(name, language) : translateText('Laguna Humantay Boho', language)}</h4>
+                        <p className="text-[9px] text-stone-500">{duration ? translateText(duration, language) : translateText('Full Day', language)} • {destination ? translateText(destination, language) : translateText('Cusco', language)}</p>
                         <span className="text-xs font-black text-[#C86D51]">{price || 'S/ 160 PEN'}</span>
                       </div>
                     </div>
@@ -3900,7 +3900,7 @@ export default function NewLandingDemo() {
                     <div className="p-2.5 bg-white rounded-xl border border-stone-200 space-y-1 text-[9px] shadow-xs">
                       <div className="flex items-center gap-1.5 text-[#C86D51] font-bold">
                         <MapPin size={11} className="text-[#C86D51] shrink-0" />
-                        <span>Oficina Física en Cusco:</span>
+                        <span>{translateText('Oficina Física en Cusco:', language)}</span>
                       </div>
                       <p className="text-stone-700 line-clamp-1 text-[8px] pl-4">
                         {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
@@ -3908,7 +3908,7 @@ export default function NewLandingDemo() {
                       <div className="flex items-center justify-between pt-1 pl-4 text-[8px]">
                         <span className="text-emerald-700 font-semibold">{officeHours || 'Lun-Dom: 8am - 8pm'}</span>
                         <span className="text-blue-600 font-bold flex items-center gap-0.5">
-                          <Navigation size={8} /> Maps Conectado
+                          <Navigation size={8} /> {translateText('Maps Conectado', language)}
                         </span>
                       </div>
                     </div>
@@ -3946,7 +3946,7 @@ export default function NewLandingDemo() {
                   <div className="bg-gradient-to-r from-amber-950/80 via-black to-amber-950/80 border-b border-amber-500/20 px-3 py-1.5 flex items-center justify-between text-[8px] text-amber-300 font-bold">
                     <span className="flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                      Salidas Diarias 2026
+                      {translateText('Salidas Diarias 2026', language)}
                     </span>
                     <span className="text-amber-200 flex items-center gap-1">
                       <Star size={9} className="text-amber-400 fill-amber-400" />
@@ -3983,22 +3983,22 @@ export default function NewLandingDemo() {
                       
                       <div className="absolute top-2 left-2 flex items-center gap-1 bg-amber-500/90 text-stone-950 px-2 py-0.5 rounded-full text-[8px] font-black tracking-wider uppercase shadow-md">
                         <Crown size={9} />
-                        <span>{heroBadge || 'Colección Privada 5★'}</span>
+                        <span>{heroBadge ? translateText(heroBadge, language) : translateText('Colección Privada 5★', language)}</span>
                       </div>
 
                       <div className="absolute bottom-2.5 left-2.5 right-2.5 space-y-1">
                         <span className="text-[9px] text-amber-300 font-bold uppercase tracking-wider block">
-                          Servicio Privado Exclusivo
+                          {translateText('Servicio Privado Exclusivo', language)}
                         </span>
                         <h3 className="text-sm font-black text-white leading-tight line-clamp-2">
-                          {heroTitle ? translateText(heroTitle, language) : (name || 'Cusco Luxury Collection VIP')}
+                          {heroTitle ? translateText(heroTitle, language) : (name ? translateText(name, language) : translateText('Cusco Luxury Collection VIP', language))}
                         </h3>
                         <div className="flex items-center justify-between pt-1">
                           <span className="text-xs font-black text-amber-400">
-                            {price || '$890 USD'} <span className="text-[8px] font-normal text-stone-300">/ persona</span>
+                            {price || '$890 USD'} <span className="text-[8px] font-normal text-stone-300">{' / ' + (language === 'en' ? 'person' : language === 'pt' ? 'pessoa' : language === 'fr' ? 'personne' : language === 'it' ? 'persona' : 'persona')}</span>
                           </span>
                           <span className="text-[8px] text-stone-300 bg-stone-900/80 px-2 py-0.5 rounded-md border border-stone-700">
-                            {duration || '2 Días / 1 Noche'}
+                            {duration ? translateText(duration, language) : translateText('2 Días / 1 Noche', language)}
                           </span>
                         </div>
                       </div>
@@ -4008,7 +4008,7 @@ export default function NewLandingDemo() {
                     <div className="grid grid-cols-2 gap-2">
                       <div className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 font-black py-2 px-2 rounded-xl text-center text-[10px] shadow-md flex items-center justify-center gap-1 cursor-pointer">
                         <Crown size={12} className="shrink-0" />
-                        <span className="truncate">{heroCta ? translateText(heroCta, language) : (objective === 'quote' ? 'Solicitar VIP' : 'Propuesta VIP')}</span>
+                        <span className="truncate">{heroCta ? translateText(heroCta, language) : (objective === 'quote' ? translateText('Solicitar VIP', language) : translateText('Propuesta VIP', language))}</span>
                       </div>
                       <div className="bg-stone-900/90 border border-emerald-500/40 text-emerald-300 font-bold py-2 px-2 rounded-xl text-center text-[10px] flex items-center justify-center gap-1">
                         <MessageCircle size={12} className="text-emerald-400 shrink-0" />
@@ -4020,9 +4020,9 @@ export default function NewLandingDemo() {
                     <div className="bg-gradient-to-br from-amber-950/30 to-stone-950 p-2.5 rounded-xl border border-amber-500/20 space-y-2">
                       <div className="flex items-center justify-between text-[10px]">
                         <span className="font-extrabold text-amber-300 flex items-center gap-1">
-                          <Sparkles size={11} className="text-amber-400" /> Vivencias Sensoriales
+                          <Sparkles size={11} className="text-amber-400" /> {translateText('Vivencias Sensoriales', language)}
                         </span>
-                        <span className="text-stone-400 text-[8px]">100% Incluido</span>
+                        <span className="text-stone-400 text-[8px]">{translateText('100% Incluido', language)}</span>
                       </div>
                       <div className="grid grid-cols-3 gap-1.5 text-center text-[8px]">
                         <div className="p-1.5 rounded-lg bg-stone-900/80 border border-amber-500/10 flex flex-col items-center">
@@ -4035,7 +4035,7 @@ export default function NewLandingDemo() {
                         </div>
                         <div className="p-1.5 rounded-lg bg-stone-900/80 border border-amber-500/10 flex flex-col items-center">
                           <ShieldCheck size={12} className="text-amber-400 mb-0.5" />
-                          <span className="font-bold text-stone-200 line-clamp-1">SUV Privada</span>
+                          <span className="font-bold text-stone-200 line-clamp-1">{translateText('SUV Privada', language)}</span>
                         </div>
                       </div>
                     </div>
@@ -4044,7 +4044,7 @@ export default function NewLandingDemo() {
                     <div className="space-y-2 pt-1">
                       <div className="flex items-center justify-between text-[10px]">
                         <span className="font-extrabold text-white flex items-center gap-1">
-                          <Landmark size={11} className="text-amber-400" /> Tours & Paquetes Privados
+                          <Landmark size={11} className="text-amber-400" /> {translateText('Tours & Paquetes Privados', language)}
                         </span>
                         <span className="text-amber-400 font-bold text-[8px] bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/20">6 VIP</span>
                       </div>
@@ -4055,12 +4055,12 @@ export default function NewLandingDemo() {
                           <Image src="https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=300&auto=format&fit=crop" alt="Hiram Bingham" fill sizes="80px" className="object-cover" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-[10px] font-black text-white truncate">Machu Picchu Hiram Bingham</h4>
-                          <p className="text-[8px] text-stone-400">Full Day • Belmond Lodge</p>
+                          <h4 className="text-[10px] font-black text-white truncate">{translateText('Machu Picchu Hiram Bingham', language)}</h4>
+                          <p className="text-[8px] text-stone-400">{translateText('Full Day', language)} • Belmond Lodge</p>
                           <span className="text-[10px] font-black text-amber-400">$890 USD</span>
                         </div>
                         <span className="text-[8px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-1 rounded-md shrink-0">
-                          Ver
+                          {translateText('Ver', language)}
                         </span>
                       </div>
 
@@ -4070,12 +4070,12 @@ export default function NewLandingDemo() {
                           <Image src="https://images.unsplash.com/photo-1589308078059-be1415eab4c3?q=80&w=300&auto=format&fit=crop" alt="Valle Sagrado VIP" fill sizes="80px" className="object-cover" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-[10px] font-black text-white truncate">Valle Sagrado & Hacienda</h4>
-                          <p className="text-[8px] text-stone-400">Huayoccari • Privado</p>
+                          <h4 className="text-[10px] font-black text-white truncate">{translateText('Valle Sagrado & Hacienda', language)}</h4>
+                          <p className="text-[8px] text-stone-400">Huayoccari • {translateText('Privado', language)}</p>
                           <span className="text-[10px] font-black text-amber-400">$290 USD</span>
                         </div>
                         <span className="text-[8px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-1 rounded-md shrink-0">
-                          Ver
+                          {translateText('Ver', language)}
                         </span>
                       </div>
 
@@ -4085,12 +4085,12 @@ export default function NewLandingDemo() {
                           <Image src="https://images.unsplash.com/photo-1544644181-1484b3fdfc62?q=80&w=300&auto=format&fit=crop" alt="Humantay Glamping" fill sizes="80px" className="object-cover" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="text-[10px] font-black text-white truncate">Humantay Glamping Dome</h4>
-                          <p className="text-[8px] text-stone-400">Domo Geodésico • Chef</p>
+                          <h4 className="text-[10px] font-black text-white truncate">{translateText('Humantay Glamping Dome', language)}</h4>
+                          <p className="text-[8px] text-stone-400">{translateText('Domo Geodésico', language)} • Chef</p>
                           <span className="text-[10px] font-black text-amber-400">$320 USD</span>
                         </div>
                         <span className="text-[8px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-1 rounded-md shrink-0">
-                          Ver
+                          {translateText('Ver', language)}
                         </span>
                       </div>
                     </div>
@@ -4100,18 +4100,18 @@ export default function NewLandingDemo() {
                       <div className="flex items-center justify-between text-amber-300 font-bold">
                         <span className="flex items-center gap-1">
                           <ShieldCheck size={11} className="text-amber-400" />
-                          Garantía Luxury
+                          {translateText('Garantía Luxury', language)}
                         </span>
-                        <span className="text-emerald-400 text-[8px]">100% Privado</span>
+                        <span className="text-emerald-400 text-[8px]">{translateText('100% Privado', language)}</span>
                       </div>
                       <div className="grid grid-cols-2 gap-1 text-[8px] text-stone-300 pt-0.5">
                         <div className="bg-black/40 p-1.5 rounded border border-stone-800">
-                          <span className="text-amber-400/80 block">Guía Asignado:</span>
+                          <span className="text-amber-400/80 block">{translateText('Guía Asignado:', language)}</span>
                           <span className="font-bold text-white">{guideName || 'Carlos Mendoza'}</span>
                         </div>
                         <div className="bg-black/40 p-1.5 rounded border border-stone-800">
-                          <span className="text-amber-400/80 block">Seguridad:</span>
-                          <span className="font-bold text-white">Oxígeno & Médico</span>
+                          <span className="text-amber-400/80 block">{translateText('Seguridad:', language)}</span>
+                          <span className="font-bold text-white">{translateText('Oxígeno & Médico', language)}</span>
                         </div>
                       </div>
                     </div>
@@ -4121,10 +4121,10 @@ export default function NewLandingDemo() {
                       <div className="flex items-center justify-between text-amber-400 font-bold">
                         <span className="flex items-center gap-1">
                           <MapPin size={11} className="text-amber-400 shrink-0" />
-                          Salón VIP Plaza de Armas:
+                          {translateText('Salón VIP Plaza de Armas:', language)}
                         </span>
                         <span className="text-blue-400 font-bold text-[8px] flex items-center gap-0.5">
-                          <Navigation size={8} /> Maps Conectado
+                          <Navigation size={8} /> {translateText('Maps Conectado', language)}
                         </span>
                       </div>
                       <p className="text-stone-300 text-[8px] pl-3.5">
@@ -4132,7 +4132,7 @@ export default function NewLandingDemo() {
                       </p>
                       <div className="flex items-center justify-between pt-0.5 pl-3.5 text-[8px]">
                         <span className="text-emerald-400 font-semibold">{officeHours || 'Lun-Dom: 07:00 AM - 09:00 PM'}</span>
-                        <span className="text-amber-300 font-medium">Café de Especialidad</span>
+                        <span className="text-amber-300 font-medium">{translateText('Café de Especialidad', language)}</span>
                       </div>
                     </div>
 
@@ -4189,26 +4189,26 @@ export default function NewLandingDemo() {
                         <span className="truncate">{companyName || 'Discover the World'}</span>
                       </span>
                       <span className="bg-black/40 backdrop-blur-md text-white font-bold text-[9px] px-2 py-0.5 rounded-full border border-white/20 shrink-0">
-                        {companyRuc || altitude || '4,630 msnm'}
+                        {companyRuc || (altitude ? translateText(altitude, language) : translateText('4,630 msnm', language))}
                       </span>
                     </div>
 
                     {/* Headline Banner */}
                     <div className="relative z-10 space-y-1 mt-6 mb-2">
                       <div className="inline-flex items-center gap-1 bg-white/20 text-white text-[8px] font-bold px-2 py-0.5 rounded-full backdrop-blur-xs mb-1">
-                        <span>{heroBadge || 'Trekking & Montaña'}</span>
+                        <span>{heroBadge ? translateText(heroBadge, language) : translateText('Trekking & Montaña', language)}</span>
                       </div>
                       <h3 className="text-sm font-black text-white leading-tight drop-shadow-md">
-                        {heroTitle ? translateText(heroTitle, language) : (name ? translateText(name, language) : 'Travel the Best, It\'s a Big World, Go Explore!')}
+                        {heroTitle ? translateText(heroTitle, language) : (name ? translateText(name, language) : translateText('Travel the Best, It\'s a Big World, Go Explore!', language))}
                       </h3>
                       <p className="text-[10px] text-slate-200 line-clamp-1">
-                        {heroSubtitle ? translateText(heroSubtitle, language) : `${name || 'Tour Salkantay Trek Clásico'} • ${duration || '5 Días'}`}
+                        {heroSubtitle ? translateText(heroSubtitle, language) : `${name ? translateText(name, language) : translateText('Tour Salkantay Trek Clásico', language)} • ${duration ? translateText(duration, language) : translateText('5 Días', language)}`}
                       </p>
                     </div>
 
                     {/* Floating Review Badge */}
                     <div className="relative z-10 bg-white/95 backdrop-blur-md px-2.5 py-1.5 rounded-full shadow-md flex items-center justify-between text-[9px]">
-                      <span className="font-bold text-slate-900">Our Happy Customers</span>
+                      <span className="font-bold text-slate-900">{translateText('Viajeros Felices', language)}</span>
                       <div className="flex items-center gap-1 font-black text-slate-900">
                         <span className="text-amber-500">★</span>
                         <span>4.9 (10.2k)</span>
@@ -4221,15 +4221,15 @@ export default function NewLandingDemo() {
                     {/* Quick Searched Spots Pills (Mini) */}
                     <div className="space-y-1">
                       <span className="text-[10px] font-black text-slate-800 block">
-                        Explore Top Searched Spots
+                        {translateText('Destinos Populares', language)}
                       </span>
                       <div className="grid grid-cols-2 gap-1.5 text-[9px]">
                         <div className="bg-slate-50 border border-slate-200/80 p-1.5 rounded-xl font-bold flex items-center justify-between">
-                          <span className="truncate">Salkantay Trek</span>
+                          <span className="truncate">{translateText('Salkantay Trek', language)}</span>
                           <span className="text-slate-400">450</span>
                         </div>
                         <div className="bg-slate-50 border border-slate-200/80 p-1.5 rounded-xl font-bold flex items-center justify-between">
-                          <span className="truncate">Camino Inca</span>
+                          <span className="truncate">{translateText('Camino Inca', language)}</span>
                           <span className="text-slate-400">380</span>
                         </div>
                       </div>
@@ -4238,12 +4238,12 @@ export default function NewLandingDemo() {
                     {/* Pricing & CTA */}
                     <div className="space-y-2 pt-1">
                       <div className="flex items-baseline justify-between text-xs">
-                        <span className="text-slate-400 font-bold">Tarifa Todo Incluido:</span>
+                        <span className="text-slate-400 font-bold">{translateText('Tarifa Todo Incluido:', language)}</span>
                         <span className="text-base font-black text-slate-900">{price || '$350 USD'}</span>
                       </div>
                       <div className="w-full bg-slate-900 hover:bg-slate-800 text-white font-black py-2.5 px-3 rounded-full text-center text-xs shadow-md flex items-center justify-center gap-1.5">
                         <ArrowRight size={13} />
-                        <span>{heroCta ? translateText(heroCta, language) : (objective === 'quote' ? 'Get Started / Cotizar' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Get Started / Reservar')}</span>
+                        <span>{heroCta ? translateText(heroCta, language) : (objective === 'quote' ? translateText('Solicitar Cotización Privada', language) : objective === 'both' ? translateText('WhatsApp & Cotizar', language) : translateText('Reserva VIP', language))}</span>
                       </div>
                     </div>
                   </div>
@@ -4251,8 +4251,8 @@ export default function NewLandingDemo() {
                   {/* Mini Tour Catalog Section */}
                   <div className="p-3 bg-slate-50 border-t border-slate-200 space-y-2 flex-1">
                     <div className="flex items-center justify-between text-[10px]">
-                      <span className="font-extrabold text-slate-800">Catálogo de Tours Exclusivos</span>
-                      <span className="text-blue-600 font-bold text-[9px]">Ver todos (6)</span>
+                      <span className="font-extrabold text-slate-800">{translateText('Catálogo de Tours Exclusivos', language)}</span>
+                      <span className="text-blue-600 font-bold text-[9px]">{translateText('Ver todos', language)} (6)</span>
                     </div>
 
                     <div className="bg-white rounded-xl p-2 border border-slate-200 shadow-2xs flex items-center gap-2.5">
@@ -4260,8 +4260,8 @@ export default function NewLandingDemo() {
                         <Image src={activeHeroImg} alt="Tour" fill sizes="80px" className="object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="text-[11px] font-black text-slate-900 truncate">{name || 'Salkantay Trek Clásico'}</h4>
-                        <p className="text-[9px] text-slate-500">{duration || '5 Días'} • {destination || 'Cusco'}</p>
+                        <h4 className="text-[11px] font-black text-slate-900 truncate">{name ? translateText(name, language) : translateText('Salkantay Trek Clásico', language)}</h4>
+                        <p className="text-[9px] text-slate-500">{duration ? translateText(duration, language) : translateText('5 Días', language)} • {destination ? translateText(destination, language) : translateText('Cusco', language)}</p>
                         <span className="text-xs font-black text-slate-900">{price || '$350 USD'}</span>
                       </div>
                     </div>
@@ -4270,7 +4270,7 @@ export default function NewLandingDemo() {
                     <div className="p-2.5 bg-white rounded-xl border border-slate-200 shadow-2xs space-y-1 text-[9px]">
                       <div className="flex items-center gap-1.5 text-blue-600 font-bold">
                         <MapPin size={11} className="text-blue-600 shrink-0" />
-                        <span>Oficina Física en Cusco:</span>
+                        <span>{translateText('Oficina Física en Cusco:', language)}</span>
                       </div>
                       <p className="text-slate-600 line-clamp-1 text-[8px] pl-4">
                         {officeAddress || 'Portal de Panes N° 123, Plaza de Armas, Cusco'}
@@ -4278,7 +4278,7 @@ export default function NewLandingDemo() {
                       <div className="flex items-center justify-between pt-1 pl-4 text-[8px]">
                         <span className="text-emerald-700 font-semibold">{officeHours || 'Lun-Dom: 8am - 8pm'}</span>
                         <span className="text-blue-600 font-bold flex items-center gap-0.5">
-                          <Navigation size={8} /> Maps Conectado
+                          <Navigation size={8} /> {translateText('Maps Conectado', language)}
                         </span>
                       </div>
                     </div>
@@ -4321,7 +4321,7 @@ export default function NewLandingDemo() {
                         fill 
                         sizes="400px" 
                         className="object-cover brightness-90" 
-                      />
+                        />
                       <div className="absolute inset-0 bg-gradient-to-b from-stone-950/60 via-stone-900/30 to-red-950/70" />
                       
                       {/* Top Header */}
@@ -4342,19 +4342,19 @@ export default function NewLandingDemo() {
                       {/* Central Grand Serif Title */}
                       <div className="absolute inset-x-4 top-8 text-center space-y-0.5">
                         <span className="inline-block text-[8px] font-serif font-black text-red-200 uppercase tracking-widest bg-black/40 px-2 py-0.5 rounded-full mb-0.5">
-                          {heroBadge ? translateText(heroBadge, language) : 'Ruta Cultural Ancestral'}
+                          {heroBadge ? translateText(heroBadge, language) : translateText('Ruta Cultural Ancestral', language)}
                         </span>
                         <h3 className="text-lg font-serif font-black italic drop-shadow-md text-white line-clamp-1">
-                          {heroTitle ? translateText(heroTitle, language) : (name || 'Qosqo Imperial')}
+                          {heroTitle ? translateText(heroTitle, language) : (name ? translateText(name, language) : translateText('Qosqo Imperial', language))}
                         </h3>
                         <p className="text-[8px] text-red-100 font-serif italic drop-shadow line-clamp-1">
-                          {heroSubtitle ? translateText(heroSubtitle, language) : 'Entre montañas sagradas y tradición milenaria'}
+                          {heroSubtitle ? translateText(heroSubtitle, language) : translateText('Entre montañas sagradas y tradición milenaria', language)}
                         </p>
 
                         {/* Botón CTA o iconos */}
                         <div className="pt-1 flex items-center justify-center gap-1.5">
                           <span className="bg-red-700 text-white font-serif font-bold text-[9px] px-2.5 py-0.5 rounded-full shadow-sm">
-                            {heroCta ? translateText(heroCta, language) : 'Reserva Cultural'}
+                            {heroCta ? translateText(heroCta, language) : translateText('Reserva Cultural', language)}
                           </span>
                         </div>
                       </div>
@@ -4373,11 +4373,11 @@ export default function NewLandingDemo() {
                     {/* 5 Circular Quick Access Badges (Matching reference image) */}
                     <div className="grid grid-cols-5 gap-1 text-center -mt-3 relative z-10">
                       {[
-                        { label: 'Boleto' },
-                        { label: 'Guía' },
-                        { label: 'Ritual' },
-                        { label: 'Templos' },
-                        { label: 'Reserva' }
+                        { label: translateText('Boleto', language) },
+                        { label: translateText('Guía', language) },
+                        { label: translateText('Ritual', language) },
+                        { label: translateText('Templos', language) },
+                        { label: translateText('Reserva', language) }
                       ].map((item, idx) => (
                         <div key={idx} className="bg-white rounded-2xl p-1.5 border border-stone-200 hover:border-red-300 shadow-xs flex flex-col items-center">
                           <span className="text-red-700 flex items-center justify-center h-4">
@@ -4398,22 +4398,22 @@ export default function NewLandingDemo() {
                     <div className="space-y-1.5 text-left">
                       <div className="flex items-baseline justify-between">
                         <span className="font-serif font-black italic text-xs text-stone-900">
-                          Actualités
+                          {translateText('Crónicas & Actualidad', language)}
                         </span>
                         <span className="text-[8px] font-bold bg-red-700 text-white px-2 py-0.5 rounded-full">
-                          Toute l&apos;actualité
+                          {translateText('Ver todos', language)}
                         </span>
                       </div>
 
                       <div className="bg-white rounded-xl p-2 border border-stone-200 shadow-2xs space-y-1">
                         <span className="text-[8px] font-black uppercase text-red-700 bg-red-50 px-1.5 py-0.5 rounded border border-red-100">
-                          Temporada 2026
+                          {translateText('Temporada 2026', language)}
                         </span>
                         <h4 className="text-[10px] font-serif font-black text-stone-900 leading-snug line-clamp-1">
-                          Nuevo sendero señalizado por los templos y miradores incas
+                          {translateText('Nuevo sendero señalizado por los templos y miradores incas', language)}
                         </h4>
                         <p className="text-[8px] text-stone-500 line-clamp-1">
-                          Guiado histórico con arqueólogos colegiados DIRCETUR.
+                          {translateText('Guiado histórico con arqueólogos colegiados DIRCETUR.', language)}
                         </p>
                       </div>
                     </div>
@@ -4422,10 +4422,10 @@ export default function NewLandingDemo() {
                     <div className="space-y-1.5 text-left">
                       <div className="flex items-baseline justify-between">
                         <span className="font-serif font-black italic text-xs text-stone-900">
-                          Agenda
+                          {translateText('Agenda & Eventos', language)}
                         </span>
                         <span className="text-[8px] text-red-700 font-bold">
-                          Événements (2)
+                          {translateText('Eventos', language)} (2)
                         </span>
                       </div>
 
@@ -4435,10 +4435,10 @@ export default function NewLandingDemo() {
                         </div>
                         <div className="min-w-0 flex-1">
                           <span className="text-[8px] font-black text-white bg-red-700 px-1.5 py-0.2 rounded">
-                            24 Junio - Solsticio
+                            {translateText('24 Junio - Solsticio', language)}
                           </span>
                           <h5 className="text-[9px] font-serif font-black text-stone-900 truncate">
-                            Inti Raymi: La Fiesta del Sol
+                            {translateText('Inti Raymi: La Fiesta del Sol', language)}
                           </h5>
                         </div>
                       </div>
@@ -4448,10 +4448,10 @@ export default function NewLandingDemo() {
                     <div className="bg-stone-900 text-white rounded-xl p-2.5 space-y-1.5 text-left border border-red-900/40">
                       <div className="flex items-center justify-between">
                         <span className="font-serif font-black italic text-xs text-red-200">
-                          Le territoire
+                          {translateText('Territorio & Mapa', language)}
                         </span>
                         <span className="text-[8px] text-red-300 font-bold">
-                          Cartographie GPS
+                          {translateText('Cartografía GPS', language)}
                         </span>
                       </div>
                       <p className="text-[8px] text-stone-300 line-clamp-1">
@@ -4476,7 +4476,7 @@ export default function NewLandingDemo() {
                         <h5 className="text-[9px] font-serif font-black text-stone-900 truncate">
                           Lic. Lucía Condori & Equipo
                         </h5>
-                        <p className="text-[7px] text-stone-500 truncate">UNSAAC • Arqueología & Historia</p>
+                        <p className="text-[7px] text-stone-500 truncate">UNSAAC • {translateText('Arqueología & Historia', language)}</p>
                       </div>
                     </div>
 
@@ -4488,7 +4488,7 @@ export default function NewLandingDemo() {
                           <span className="text-[8px] font-bold text-stone-900 ml-1">4.9/5</span>
                         </div>
                         <span className="text-[7px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded">
-                          184 avis vérifiés
+                          184 {translateText('reseñas verificadas', language)}
                         </span>
                       </div>
                       <p className="text-[8px] font-serif italic text-stone-600 line-clamp-1">
@@ -4498,19 +4498,19 @@ export default function NewLandingDemo() {
 
                     {/* Conseils Mochila Chip */}
                     <div className="p-1.5 rounded-lg bg-stone-100 border border-stone-200 text-left text-[7px] flex items-center justify-between">
-                      <span className="font-bold text-stone-800">Mochila del Historiador:</span>
-                      <span className="text-stone-500">Calzado con tracción • UV400</span>
+                      <span className="font-bold text-stone-800">{translateText('Mochila del Historiador:', language)}</span>
+                      <span className="text-stone-500">{translateText('Calzado con tracción • UV400', language)}</span>
                     </div>
 
                     {/* Pricing & CTA */}
                     <div className="space-y-2 pt-1">
                       <div className="flex items-baseline justify-between text-xs">
-                        <span className="text-stone-500 font-serif">Tarifa Cultural:</span>
+                        <span className="text-stone-500 font-serif">{translateText('Tarifa Cultural:', language)}</span>
                         <span className="text-base font-serif font-black text-red-800">{price || 'S/ 85 PEN'}</span>
                       </div>
                       <div className="w-full bg-red-700 hover:bg-red-800 text-white font-bold py-2.5 px-3 rounded-full text-center text-xs shadow-md flex items-center justify-center gap-1.5 transition-colors">
                         <Compass size={13} />
-                        <span>{objective === 'quote' ? 'Demander un devis' : objective === 'both' ? 'WhatsApp & Cotizar' : 'Réserver par WhatsApp'}</span>
+                        <span>{heroCta ? translateText(heroCta, language) : (objective === 'quote' ? translateText('Solicitar Cotización Privada', language) : objective === 'both' ? translateText('WhatsApp & Cotizar', language) : translateText('Reserva Cultural', language))}</span>
                       </div>
                     </div>
                   </div>

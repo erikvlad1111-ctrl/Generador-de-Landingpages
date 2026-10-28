@@ -57,19 +57,21 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const brandName = getCleanBrandName(data.companyName, data.name, 'TrekExplorer Perú');
 
+  const prevLangPropRef = React.useRef(data.language);
   React.useEffect(() => {
     if (isFree || isBasic) {
       if (currentLang !== 'es') setCurrentLang('es');
     } else if (isPro) {
-      if (data.language && ['es', 'en'].includes(data.language) && data.language !== currentLang) {
+      if (prevLangPropRef.current !== data.language && data.language && ['es', 'en'].includes(data.language)) {
         setCurrentLang(data.language);
       } else if (!['es', 'en'].includes(currentLang)) {
         setCurrentLang('es');
       }
-    } else if (data.language && data.language !== currentLang) {
+    } else if (prevLangPropRef.current !== data.language && data.language) {
       setCurrentLang(data.language);
     }
-  }, [data.language, isFree, isBasic, isPro]);
+    prevLangPropRef.current = data.language;
+  }, [data.language, isFree, isBasic, isPro, currentLang]);
 
   const t = ADVENTURE_I18N[currentLang] || ADVENTURE_I18N.es;
 

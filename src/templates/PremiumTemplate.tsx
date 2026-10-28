@@ -53,19 +53,21 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
   type LuxuryFont = 'montserrat' | 'outfit' | 'syne' | 'cormorant' | 'cinzel';
   const [luxuryFontVariant, setLuxuryFontVariant] = useState<LuxuryFont>('outfit');
 
+  const prevLangPropRef = React.useRef(data.language);
   React.useEffect(() => {
     if (isFree || isBasic) {
       if (currentLang !== 'es') setCurrentLang('es');
     } else if (isPro) {
-      if (data.language && ['es', 'en'].includes(data.language) && data.language !== currentLang) {
+      if (prevLangPropRef.current !== data.language && data.language && ['es', 'en'].includes(data.language)) {
         setCurrentLang(data.language);
       } else if (!['es', 'en'].includes(currentLang)) {
         setCurrentLang('es');
       }
-    } else if (data.language && data.language !== currentLang) {
+    } else if (prevLangPropRef.current !== data.language && data.language) {
       setCurrentLang(data.language);
     }
-  }, [data.language, isFree, isBasic, isPro]);
+    prevLangPropRef.current = data.language;
+  }, [data.language, isFree, isBasic, isPro, currentLang]);
 
   const t = PREMIUM_I18N[currentLang] || PREMIUM_I18N.es;
   const brandName = getCleanBrandName(data.companyName, data.name, 'Cusco Luxury Collection');
@@ -79,7 +81,20 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
     : isPro
     ? PREMIUM_LANGUAGES.filter(l => l.code === 'es' || l.code === 'en')
     : PREMIUM_LANGUAGES;
-  const encodedMsg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, estoy interesado en la experiencia VIP "${data.name}". ¿Podrían brindarme disponibilidad?`);
+
+  const localizedTourName = translateText(data.name || data.hero?.title || 'Cusco Luxury Collection VIP', currentLang);
+  const localizedConciergeTitle = currentLang === 'en' ? 'VIP Concierge' : currentLang === 'pt' ? 'Concierge VIP' : currentLang === 'fr' ? 'Concierge VIP' : currentLang === 'it' ? 'Concierge VIP' : 'Lic. Mateo Quispe & Concierge';
+  const heroWhatsAppText = currentLang === 'en'
+    ? `Hello ${data.guideName || localizedConciergeTitle}, I am interested in the VIP experience "${localizedTourName}". Could you please check availability and pricing?`
+    : currentLang === 'pt'
+    ? `Olá ${data.guideName || localizedConciergeTitle}, tenho interesse na experiência VIP "${localizedTourName}". Vocês poderiam me informar a disponibilidade e tarifas?`
+    : currentLang === 'fr'
+    ? `Bonjour ${data.guideName || localizedConciergeTitle}, je suis intéressé(e) par l'expérience VIP "${localizedTourName}". Pourriez-vous me confirmer les disponibilités et tarifs ?`
+    : currentLang === 'it'
+    ? `Buongiorno ${data.guideName || localizedConciergeTitle}, sono interessato all'esperienza VIP "${localizedTourName}". Potreste confermarmi disponibilità e tariffe?`
+    : `Hola ${data.guideName || localizedConciergeTitle}, estoy interesado en la experiencia VIP "${data.name || data.hero?.title || 'Cusco Luxury Collection VIP'}". ¿Podrían brindarme disponibilidad?`;
+
+  const encodedMsg = encodeURIComponent(heroWhatsAppText);
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
   const heroImg = data.heroImage || 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop';
@@ -87,8 +102,17 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
   const guideAvatarImg = getSanitizedGuideAvatar(data.guideAvatar, data.guideName);
 
   const getTourWaUrl = (tourTitle: string) => {
-    const msg = encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, deseo consultar disponibilidad y tarifa VIP para el tour "${tourTitle}".`);
-    return `https://wa.me/${cleanPhone}?text=${msg}`;
+    const translatedTourTitle = translateText(tourTitle, currentLang);
+    const msgText = currentLang === 'en'
+      ? `Hello ${data.guideName || localizedConciergeTitle}, I would like to inquire about availability and VIP rates for "${translatedTourTitle}".`
+      : currentLang === 'pt'
+      ? `Olá ${data.guideName || localizedConciergeTitle}, gostaria de consultar a disponibilidade e tarifa VIP para o passeio "${translatedTourTitle}".`
+      : currentLang === 'fr'
+      ? `Bonjour ${data.guideName || localizedConciergeTitle}, je souhaite vérifier la disponibilité et le tarif VIP pour le circuit "${translatedTourTitle}".`
+      : currentLang === 'it'
+      ? `Buongiorno ${data.guideName || localizedConciergeTitle}, desidero consultare disponibilità e tariffa VIP per il tour "${translatedTourTitle}".`
+      : `Hola ${data.guideName || localizedConciergeTitle}, deseo consultar disponibilidad y tarifa VIP para el tour "${tourTitle}".`;
+    return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msgText)}`;
   };
 
   const secondaryCatalogTours = React.useMemo(() => {
@@ -564,7 +588,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             {data.altitude && (
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-900/80 backdrop-blur-md border border-amber-500/30 text-amber-200 text-xs font-mono shadow-md">
                 <Mountain size={12} className="text-amber-400" />
-                <span>{data.altitude}</span>
+                <span>{translateText(data.altitude, currentLang)}</span>
               </div>
             )}
             {data.groupType && (

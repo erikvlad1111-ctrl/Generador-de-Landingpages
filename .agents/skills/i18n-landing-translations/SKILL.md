@@ -381,3 +381,30 @@ Guía para diagnosticar y solucionar problemas de traducción, mezcla de idiomas
   1. En `src/data/translations.ts`, se reemplazó la heurística por coincidencia estricta (`isDefaultLuxurySubtitle`) de forma que solo aplique cuando el texto sea exactamente la frase por defecto y nunca secuestre textos personalizados del usuario.
   2. En todas las 6 plantillas turísticas (`AgencyPortalTemplate`, `ModernEmeraldTemplate`, `AdventureTemplate`, `PremiumTemplate`, `CulturalTemplate` y `BohoTemplate`), se implementó la función `getLocalizedHeroSubtitle`: si el idioma actual es el idioma base del tour, se entrega de forma 100% directa el texto editado sin alteración; si se cambia de idioma en el selector, se traduce al idioma seleccionado.
   3. En `src/app/demo/new/page.tsx`, se integró el campo interactivo de texto para `heroSubtitle` (Subtítulo / Bajada de Portada) justo debajo del H1 y se conectó a las vistas previas interactivas.
+
+### Error: Fugas de Español en Títulos, Subtítulos, Especificaciones Técnicas, CTAs y Mensajes de WhatsApp en Diseños del Generador y Plantillas Luxury/Cultural/Boho/Adventure
+- **Síntoma / Mensaje de Error:**
+  Al generar o visualizar landings en idiomas extranjeros (Português, Français, English, Italiano):
+  1. Título traducido a Portugués (`Machu Picchu de Luxo com Trem Panorâmico`), pero la bajada descriptiva permanecía en español: `Descubre la maravilla del mundo con traslados en Mercedes Benz, tren con coche observatorio de lujo y un guía historiador colegiado exclusivo para ti.`.
+  2. Los chips técnicos y especificaciones mostraban español o unidades no localizadas: `3,400 msnm` (en vez de `3.400 m de altitude` en PT, `3 400 m d’altitude` en FR o `3,400 m.a.s.l.` en EN), `100% Privado Exclusivo`, `Tours Privados & Compartidos VIP`, `SUV Privada Climatizada`, `Campamento Domos VIP`.
+  3. Los botones de reserva y enlaces de WhatsApp contenían mensajes precargados fijos en español: `Hola Lic. Mateo Quispe & Concierge, estoy interesado en la experiencia VIP... ¿Podrían brindarme disponibilidad?` y CTAs como `Solicitar Cotización Privada`, `Consultar Horarios por WhatsApp`, `Reserva VIP`, `Reserva Cultural`.
+  4. En el generador (`/demo/new`), los mockups de vista previa interactiva (Diseño 1 Portal, Diseño 2 Boho, Diseño 3 Premium, Diseño 4 Adventure, Diseño 5 Cultural) mantenían etiquetas hardcodeadas en español (`Catálogo de Tours Exclusivos`, `Ver todos (6)`, `Oficina Física en Cusco:`, `Maps Conectado`, `Vivencias Sensoriales`, `100% Incluido`, `Guía Fotográfica:`, `Spots Fotográficos`, etc.) a pesar de haber seleccionado inglés, portugués o francés en el selector de idioma.
+  5. En `PremiumTemplate.tsx`, `CulturalTemplate.tsx`, `AdventureTemplate.tsx` y `BohoTemplate.tsx`, al seleccionar manualmente un idioma en el dropdown de la landing, un `useEffect` sin control de cambio de prop reseteaba inmediatamente el idioma al idioma inicial del backend al re-renderizar.
+
+- **Causa Raíz:**
+  1. La variante de subtítulo de lujo con Mercedes Benz y guía historiador carecía de entrada exacta en `PHRASE_MAP` y de heurística semántica en `src/data/translations.ts`.
+  2. Los enlaces de WhatsApp en `PremiumTemplate.tsx`, `CulturalTemplate.tsx`, `BohoTemplate.tsx`, `AgencyPortalTemplate.tsx` y `ModernEmeraldTemplate.tsx` tenían template strings estáticos en español sin detectar el idioma activo del usuario ni localizar el título del guía o el saludo.
+  3. En las plantillas, el `useEffect` para sincronizar `data.language` no almacenaba la prop previa mediante `prevLangPropRef = useRef(data.language)`. Cuando React disparaba un re-render por cualquier cambio de estado, la condición `if (data.language && data.language !== currentLang) setCurrentLang(data.language)` sobreescribía la selección deliberada del usuario.
+  4. Los mockups de vista previa del generador (`src/app/demo/new/page.tsx`) tenían textos fijos en castellano en lugar de evaluar `translateText(..., language)`.
+
+- **Solución Paso a Paso:**
+  1. En [translations.ts](file:///c:/Users/copyw/.gemini/antigravity-ide/scratch/cusco-creativos-web/src/data/translations.ts):
+     - Se registraron en `PHRASE_MAP` todas las frases y variaciones de los 6 diseños para `es`, `en`, `pt`, `fr`, e `it`.
+     - Se implementó la heurística semántica `isDefaultMercedesSubtitle` para traducir automáticamente subtítulos de lujo con Mercedes Benz e historiador.
+     - Se blindó la deduplicación de claves para prevenir el error `TS1117: An object literal cannot have multiple properties with the same name`.
+  2. En las plantillas ([PremiumTemplate.tsx](file:///c:/Users/copyw/.gemini/antigravity-ide/scratch/cusco-creativos-web/src/templates/PremiumTemplate.tsx), [CulturalTemplate.tsx](file:///c:/Users/copyw/.gemini/antigravity-ide/scratch/cusco-creativos-web/src/templates/CulturalTemplate.tsx), [AdventureTemplate.tsx](file:///c:/Users/copyw/.gemini/antigravity-ide/scratch/cusco-creativos-web/src/templates/AdventureTemplate.tsx), [BohoTemplate.tsx](file:///c:/Users/copyw/.gemini/antigravity-ide/scratch/cusco-creativos-web/src/templates/BohoTemplate.tsx)):
+     - Se integró `prevLangPropRef` en el `useEffect` de lenguaje para que el selector manual nunca sea revertido.
+     - Se construyó el generador de URLs y textos de WhatsApp (`heroWhatsAppText`, `encodedMsg`, `getTourWaUrl`, `createWhatsAppLink`) con mensajes 100% localizados en los 5 idiomas.
+  3. En [src/app/demo/new/page.tsx](file:///c:/Users/copyw/.gemini/antigravity-ide/scratch/cusco-creativos-web/src/app/demo/new/page.tsx):
+     - Se envolvieron todos los títulos, subtítulos, badges, especificaciones, catálogos, direcciones de oficinas y botones CTA de los 5 diseños con `translateText(..., language)` respetando el idioma seleccionado en el formulario.
+

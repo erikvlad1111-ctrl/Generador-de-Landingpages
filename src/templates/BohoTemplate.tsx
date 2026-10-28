@@ -253,19 +253,21 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
   const [currentLang, setCurrentLang] = useState<LanguageType>(defaultLang);
 
+  const prevLangPropRef = React.useRef(data.language);
   React.useEffect(() => {
     if (isFree || isBasic) {
       if (currentLang !== 'es') setCurrentLang('es');
     } else if (isPro) {
-      if (data.language && ['es', 'en'].includes(data.language) && data.language !== currentLang) {
+      if (prevLangPropRef.current !== data.language && data.language && ['es', 'en'].includes(data.language)) {
         setCurrentLang(data.language);
       } else if (!['es', 'en'].includes(currentLang)) {
         setCurrentLang('es');
       }
-    } else if (data.language && data.language !== currentLang) {
+    } else if (prevLangPropRef.current !== data.language && data.language) {
       setCurrentLang(data.language);
     }
-  }, [data.language, isFree, isBasic, isPro]);
+    prevLangPropRef.current = data.language;
+  }, [data.language, isFree, isBasic, isPro, currentLang]);
 
   const t = BOHO_I18N[currentLang] || BOHO_I18N.es;
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
@@ -1570,17 +1572,19 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
 
                 <div className="pt-3 mt-3 border-t border-stone-100 flex items-center justify-between">
                   <div>
-                    <span className="text-[13px] text-stone-400 block font-sans">Tarifa estimada:</span>
+                    <span className="text-[13px] text-stone-400 block font-sans">
+                      {currentLang === 'en' ? 'Estimated Rate:' : currentLang === 'pt' ? 'Tarifa Estimada:' : currentLang === 'fr' ? 'Tarif Estimé :' : currentLang === 'it' ? 'Tariffa Stimata:' : 'Tarifa estimada:'}
+                    </span>
                     <span className="font-serif font-black text-[19px] text-[#C86D51]">{tour.price}</span>
                   </div>
                   <a
-                    href={`https://wa.me/${cleanPhone}?text=${encodeURIComponent(`Hola ${data.guideName || 'Cusco Creativos'}, vi su catálogo de tours y me interesa información sobre "${tour.title}".`)}`}
+                    href={getTourWaUrl(tour.title)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-[#588157] hover:bg-[#476846] text-white px-3.5 py-2 rounded-xl text-[15px] font-bold transition-all shadow-2xs hover:scale-102 flex items-center gap-1.5 cursor-pointer"
                   >
                     <MessageCircle size={14} />
-                    <span>Reservar</span>
+                    <span>{currentLang === 'en' ? 'Book' : currentLang === 'pt' ? 'Reservar' : currentLang === 'fr' ? 'Réserver' : currentLang === 'it' ? 'Prenota' : 'Reservar'}</span>
                   </a>
                 </div>
               </div>

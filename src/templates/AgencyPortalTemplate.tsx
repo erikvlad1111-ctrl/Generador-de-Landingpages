@@ -1398,7 +1398,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             {data?.altitude && (
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-black/45 backdrop-blur-md text-white text-xs sm:text-sm font-semibold border border-white/20 shadow-md">
                 <Mountain size={13} className="text-[#FF8844]" />
-                <span>{data.altitude}</span>
+                <span>{translateText(data.altitude, lang)}</span>
               </div>
             )}
             {data?.difficulty && (
@@ -1562,13 +1562,23 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </div>
               <div className="shrink-0 flex items-center gap-2 self-start md:self-center">
                 <a
-                  href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent('Hola, deseo reservar el tour: ' + tourTitle)}`}
+                  href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+                    lang === 'en'
+                      ? `Hello, I would like to book the tour: ${tourTitle}`
+                      : lang === 'pt'
+                      ? `Olá, gostaria de reservar o passeio: ${tourTitle}`
+                      : lang === 'fr'
+                      ? `Bonjour, je souhaite réserver le circuit : ${tourTitle}`
+                      : lang === 'it'
+                      ? `Ciao, vorrei prenotare il tour: ${tourTitle}`
+                      : `Hola, deseo reservar el tour: ${tourTitle}`
+                  )}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-sm cursor-pointer hover:scale-102"
                 >
                   <MessageCircle size={14} />
-                  <span>{lang === 'en' ? 'Inquire on WhatsApp' : 'Consultar WhatsApp'}</span>
+                  <span>{lang === 'en' ? 'Inquire on WhatsApp' : lang === 'pt' ? 'Consultar no WhatsApp' : lang === 'fr' ? 'Consulter sur WhatsApp' : lang === 'it' ? 'Consulta su WhatsApp' : 'Consultar WhatsApp'}</span>
                 </a>
               </div>
             </div>

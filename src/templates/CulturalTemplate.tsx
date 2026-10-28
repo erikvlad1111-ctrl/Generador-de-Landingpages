@@ -57,19 +57,21 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
   const [legalTab, setLegalTab] = useState<'terms' | 'cancellation' | 'privacy' | 'license'>('terms');
   const [activeEventIndex, setActiveEventIndex] = useState(0);
 
+  const prevLangPropRef = React.useRef(data.language);
   React.useEffect(() => {
     if (isFree || isBasic) {
       if (currentLang !== 'es') setCurrentLang('es');
     } else if (isPro) {
-      if (data.language && ['es', 'en'].includes(data.language) && data.language !== currentLang) {
+      if (prevLangPropRef.current !== data.language && data.language && ['es', 'en'].includes(data.language)) {
         setCurrentLang(data.language);
       } else if (!['es', 'en'].includes(currentLang)) {
         setCurrentLang('es');
       }
-    } else if (data.language && data.language !== currentLang) {
+    } else if (prevLangPropRef.current !== data.language && data.language) {
       setCurrentLang(data.language);
     }
-  }, [data.language, isFree, isBasic, isPro]);
+    prevLangPropRef.current = data.language;
+  }, [data.language, isFree, isBasic, isPro, currentLang]);
 
   const t = CULTURAL_I18N[currentLang] || CULTURAL_I18N.es;
   const brandName = getCleanBrandName(data.companyName, data.name, 'Cusco Patrimonial');
@@ -84,14 +86,33 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
     ? ['es', 'en']
     : ['es', 'en', 'pt', 'fr', 'it'];
 
-  const encodedMsg = encodeURIComponent(
-    `Hola ${data.guideName || 'Guía Historiador'}, deseo información y disponibilidad para el tour cultural "${data.name || data.hero?.title || 'Cusco Ancestral'}".`
-  );
+  const localizedTourTitle = translateText(data.name || data.hero?.title || 'Cusco Ancestral', currentLang);
+  const localizedGuideTitle = currentLang === 'en' ? 'Historian Guide' : currentLang === 'pt' ? 'Guia Historiador' : currentLang === 'fr' ? 'Guide Historien' : currentLang === 'it' ? 'Guida Storica' : 'Guía Historiador';
+  const heroWhatsAppText = currentLang === 'en'
+    ? `Hello ${data.guideName || localizedGuideTitle}, I would like information and availability for the cultural tour "${localizedTourTitle}".`
+    : currentLang === 'pt'
+    ? `Olá ${data.guideName || localizedGuideTitle}, gostaria de informações e disponibilidade para o tour cultural "${localizedTourTitle}".`
+    : currentLang === 'fr'
+    ? `Bonjour ${data.guideName || localizedGuideTitle}, je souhaite obtenir des informations et les disponibilités pour le circuit culturel "${localizedTourTitle}".`
+    : currentLang === 'it'
+    ? `Buongiorno ${data.guideName || localizedGuideTitle}, desidero informazioni e disponibilità per il tour culturale "${localizedTourTitle}".`
+    : `Hola ${data.guideName || localizedGuideTitle}, deseo información y disponibilidad para el tour cultural "${localizedTourTitle}".`;
+
+  const encodedMsg = encodeURIComponent(heroWhatsAppText);
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
   const createWhatsAppLink = (customText: string) => {
-    const msg = encodeURIComponent(`Hola ${data.guideName || 'Guía'}, me interesa: "${customText}". ¿Qué horarios tienen disponibles?`);
-    return `https://wa.me/${cleanPhone}?text=${msg}`;
+    const translatedText = translateText(customText, currentLang);
+    const msg = currentLang === 'en'
+      ? `Hello ${data.guideName || localizedGuideTitle}, I am interested in: "${translatedText}". What schedules do you have available?`
+      : currentLang === 'pt'
+      ? `Olá ${data.guideName || localizedGuideTitle}, tenho interesse em: "${translatedText}". Quais horários estão disponíveis?`
+      : currentLang === 'fr'
+      ? `Bonjour ${data.guideName || localizedGuideTitle}, je suis intéressé(e) par : "${translatedText}". Quels sont les créneaux disponibles ?`
+      : currentLang === 'it'
+      ? `Buongiorno ${data.guideName || localizedGuideTitle}, sono interessato a: "${translatedText}". Quali orari avete a disposizione?`
+      : `Hola ${data.guideName || localizedGuideTitle}, me interesa: "${customText}". ¿Qué horarios tienen disponibles?`;
+    return `https://wa.me/${cleanPhone}?text=${encodeURIComponent(msg)}`;
   };
 
   const getLocalizedHeroSubtitle = () => {
@@ -266,7 +287,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
             {data.altitude && (
               <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-md border border-white/20 text-white text-xs font-serif shadow-md">
                 <Mountain size={13} className="text-amber-300" />
-                <span>{data.altitude}</span>
+                <span>{translateText(data.altitude, currentLang)}</span>
               </div>
             )}
             {data.groupType && (
