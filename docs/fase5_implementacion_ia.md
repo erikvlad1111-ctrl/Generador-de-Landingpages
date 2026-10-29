@@ -1,4 +1,4 @@
-# 🤖 FASE 5 — IMPLEMENTACIÓN DE OPENAI E INTEGRACIÓN CON REACT Y SUPABASE
+﻿# 🤖 FASE 5 — IMPLEMENTACIÓN DE OPENAI E INTEGRACIÓN CON REACT Y SUPABASE
 
 ## 5.1. Objetivo de esta fase
 Implementar la integración de Inteligencia Artificial (IA) para generar contenido textual para las landing pages turísticas a partir de la información registrada por el empleado.
@@ -41,7 +41,7 @@ La IA podrá generar: Títulos, Subtítulos, Descripciones, Beneficios, CTA, FAQ
              ┌────────────────────┐
              │      OPENAI        │
              │                    │
-             │ GPT-5.6 Luna       │
+             │ Modelo económico   │
              └─────────┬──────────┘
                        │
                        │ JSON estructurado
@@ -76,7 +76,7 @@ El frontend (React/Next.js) solo tendrá:
 Al presionar el botón de generación, el frontend hace un POST a la Edge Function enviando un JSON con las instrucciones (ID de landing, idioma, tono, secciones solicitadas), sin enviar nunca la API Key.
 
 ## 5.8. y 5.9. ¿Cómo obtiene la IA los datos de la empresa?
-No existe una "tabla de IA". La Edge Function extrae la información real directamente desde `PostgreSQL` (`businesses`, `landings`, `sections`). Luego reúne esa información y construye un contexto en el prompt para asegurar que la IA trabaje sobre datos verdaderos.
+No existe una "tabla de IA". La función de servidor extrae la información real desde `PostgreSQL` (`agency_settings`, `landings.data`). Luego reúne esa información y construye un contexto en el prompt para asegurar que la IA trabaje sobre datos verdaderos.
 
 ## 5.10. Prompt de OpenAI
 El prompt se compone de:
@@ -86,7 +86,7 @@ El prompt se compone de:
 **Reglas**: No inventar precios, fechas, teléfonos. Usar tono y formato solicitado.
 
 ## 5.11. ¿Qué modelo usaremos?
-Utilizaremos `GPT-5.6 Luna` mediante la Responses API de OpenAI, optimizado para cargas de trabajo a volumen sensibles al costo.
+Se usará un modelo económico (por defecto `gpt-4o-mini` o equivalente), configurable por variable de entorno `AI_MODEL`. El proveedor es intercambiable mediante una capa `generateLandingContent()`. Verificar precios vigentes en la web del proveedor.
 
 ## 5.12. Respuesta estructurada
 Queremos un JSON exacto que coincida con nuestros `types` en React, por ejemplo:
@@ -112,13 +112,13 @@ Mediante el campo `type` de la sección. Si `type = hero`, React renderizará `H
 La IA **no genera gráficos ni inventa estadísticas**. Si se muestran cifras (+10 años, +5000 clientes), los números vienen de la base de datos y la interfaz se encarga de presentarlos de forma visual. La IA solo genera el texto descriptivo asociado a esos números.
 
 ## 5.17. Guardado de la respuesta
-Una vez que OpenAI devuelve el JSON, la Edge Function lo valida y lo guarda en la base de datos, específicamente en la columna `content` de tipo JSONB de la tabla `sections`.
+Una vez que OpenAI devuelve el JSON, el servidor lo valida contra el tipo `LandingData` y lo guarda en la columna `data` (JSONB) de la tabla `landings`.
 
 ## 5.18. Historial de generaciones
 Cada vez que se llama a la IA, la operación queda registrada en la tabla `ai_generations` para efectos de auditoría y análisis, no como una base de conocimiento activa.
 
 ## 5.23. Control del consumo
-La generación no es automática al abrir una página. Es una acción explícita disparada por un botón. Esto ayuda a controlar los costos de OpenAI.
+La generación no es automática al abrir una página. Es una acción explícita disparada por un botón. Controles adicionales: login obligatorio, `max_tokens` limitado, rate limit por usuario, saldo prepago sin recarga automática, límite mensual en el panel del proveedor y registro de tokens/costo en `ai_generations`.
 
 ## 5.24. Resultado final de la integración
 El sistema es **semi-automático**. La IA propone contenido; el empleado revisa, modifica y aprueba.

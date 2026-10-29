@@ -1,15 +1,17 @@
 ---
 name: wordpress-headless-architecture
-description: Guía y arquitectura de transición de backend desde Supabase hacia WordPress Headless para Cusco Creativos Web / Landing Generador.
+description: PLAN B (solo si Jefatura lo solicita). Guía de migración del backend desde Supabase hacia WordPress Headless para Cusco Creativos Web / Landing Generador. El backend oficial actual es Supabase (ver skill supabase-backend).
 ---
 
-# Transición a WordPress Headless (Siguiente Paso Oficial)
+# Transición a WordPress Headless (PLAN B — solo bajo pedido de Jefatura)
+
+> **Estado:** El backend **oficial** del proyecto es **Supabase + Vercel** (ver `supabase-backend`). Este documento se conserva únicamente por si Jefatura solicita migrar a WordPress Headless.
 
 ## Contexto de Negocio
-A solicitud expresa de Jefatura / Dirección de la Agencia Cusco Creativos:
+Escenario alternativo:
 - **Frontend y UI:** Se mantiene en **Next.js (App Router)** alojado en Vercel.
-- **Backend Anterior:** Supabase (PostgreSQL y Edge Functions).
-- **Nuevo Backend Oficial:** **WordPress Headless** comunicándose mediante **WP REST API**.
+- **Backend Oficial Actual:** Supabase (PostgreSQL, Auth, Storage).
+- **Backend Alternativo (Plan B):** **WordPress Headless** comunicándose mediante **WP REST API**.
 - **Motor de Contenido:** **OpenAI** (genera el JSON estructurado con los datos del tour, itinerarios y FAQs).
 
 ## Flujo de Trabajo

@@ -55,11 +55,10 @@ La IA devuelve un JSON estructurado basado en la información del proyecto y el 
 
 ## 6. Separación de responsabilidades
 - **Frontend (Next.js / React)**: Muestra la UI del administrador, el generador IA, el editor en vivo y las plantillas predefinidas.
-- **Backend Actual / En Transición**:
-  - *Fase Previa:* Supabase PostgreSQL y Edge Functions.
-  - *Siguiente Paso Oficial (Jefatura):* **WordPress Headless (WP REST API)** para almacenamiento de landings (Custom Post Type), gestión de imágenes en la mediateca nativa y compatibilidad directa con el panel de administración familiar para la agencia. Ver detalles completos en [`docs/fase_wordpress_headless.md`](./fase_wordpress_headless.md).
+- **Backend Oficial**: **Supabase** (PostgreSQL + Auth + Storage + RLS) con el frontend desplegado en **Vercel**. Las landings se guardan en `landings.data` (JSONB).
+  - *Plan B (solo si Jefatura lo solicita):* **WordPress Headless (WP REST API)**. Ver [`docs/fase_wordpress_headless.md`](./fase_wordpress_headless.md).
 - **Inteligencia Artificial (OpenAI)**: Genera y estructura el contenido persuasivo en formato JSON para inyectarlo en las plantillas.
 
 ## Resumen para la tesis:
-> *"El sistema utiliza plantillas web predefinidas como estructuras de presentación y emplea inteligencia artificial para generar y adaptar el contenido de acuerdo con los datos proporcionados por el administrador, permitiendo posteriormente revisar, editar y publicar la landing page generada, con soporte de backend desacoplado (Headless CMS en WordPress) para facilitar la administración por parte del equipo turístico."*
+> *"El sistema utiliza plantillas web predefinidas como estructuras de presentación y emplea inteligencia artificial para generar y adaptar el contenido de acuerdo con los datos proporcionados por el administrador, permitiendo posteriormente revisar, editar y publicar la landing page generada, con un backend gestionado (Supabase) que ofrece autenticación, base de datos y almacenamiento de imágenes para el equipo turístico."*
 

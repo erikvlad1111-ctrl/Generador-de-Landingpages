@@ -145,10 +145,26 @@ Este documento es la **referencia oficial de seguridad** para el despliegue y op
 - [x] **Next.js:** Implementar técnica de campo Honeypot invisible en `ComplaintsBookModal.tsx`.
 - [x] **Next.js:** Implementar técnica de campo Honeypot en `QuoteModal.tsx`.
 - [x] **Next.js:** Módulo de sanitización y limpieza anti-XSS (`src/lib/sanitize.ts`).
+- [x] **Next.js:** Eliminado el campo "API Key" del cliente (`/demo/settings`); la clave vive solo en el servidor.
+- [x] **Next.js:** Override `?tier=` en `/p/[slug]` solo se respeta con `?demo=official` (el editor interno `/demo/preview` lo mantiene).
+- [x] **Next.js:** `*.supabase.co` (`/storage/v1/object/public/**`) en `images.remotePatterns` + CSP sin nonces en `next.config.ts`.
+- [x] **Export HTML:** `exportLandingHtml.ts` pasa toda URL de imagen por `safeUrl()` (solo `http(s)`, rutas relativas o `data:image/(png|jpeg|webp|gif|avif)`; bloquea `javascript:`, `data:image/svg+xml`, etc.) y escapa `lang` y `rating`.
 
-### Pendiente al Integrar WordPress y Dominio (Fase Backend & Cloudflare):
+### Pendiente al integrar Supabase (backend oficial):
+- [ ] **Git:** Revocar el token `ghp_...` en GitHub y limpiar la URL del remoto (`git remote set-url origin https://github.com/<org>/<repo>.git`).
+- [ ] **Supabase Auth:** Desactivar registro público (Dashboard → Authentication → Sign In / Providers → desmarcar "Allow new users to sign up") y crear usuarios del personal manualmente.
+- [ ] **Supabase RLS:** Verificar políticas tras la migración `00002` (lectura anónima solo de `published`).
+- [ ] **Next.js:** Ruta de servidor para generación con IA: login obligatorio, `max_tokens`, rate limit por usuario.
+- [ ] **Next.js:** Proteger `/demo/*` con login (proxy + Supabase SSR).
+- [ ] **Formularios públicos:** Enviar tickets/cotizaciones por ruta de servidor con honeypot y rate limit.
+- [ ] **Cloudflare (opcional):** Configurar proxy DNS y activar Bot Fight Mode si hay dominio propio.
+
+> Nota: el código actual usa `X-Frame-Options: SAMEORIGIN` y `frame-ancestors 'self'` (no `DENY`/`'none'`) porque el editor muestra la landing embebida en un iframe del mismo origen.
+>
+> Nota CSP: `img-src` permite `https:` porque las agencias pegan URLs de imágenes de cualquier host. Si se añade un servicio externo nuevo (analytics, video embebido, etc.) hay que agregar su dominio a `script-src`/`connect-src`/`frame-src` o el navegador lo bloqueará (ver consola: "Refused to ... because it violates the following Content Security Policy directive").
+
+### Solo si se activa el Plan B (WordPress Headless):
 - [ ] **WordPress:** Crear snippet o plugin MU para bloquear `/wp/v2/users` anónimos.
 - [ ] **WordPress:** Bloquear acceso a `xmlrpc.php` en `.htaccess`.
 - [ ] **WordPress:** Configurar regla CORS autorizando únicamente el dominio de Vercel.
 - [ ] **WordPress:** Crear usuario de servicio con rol de Editor y generar Application Password.
-- [ ] **Cloudflare:** Configurar proxy DNS y activar Bot Fight Mode.

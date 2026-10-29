@@ -9,7 +9,7 @@ Plataforma especializada en la creación ultra-rápida de landing pages de alta 
 
 ## 🚀 Los 10 Puntos Clave del Generador Integrados
 
-1. **Plantilla Visual:** 5 estilos disponibles (Diseño 1 - Portal Agencia, Boho Travel Journal, Lujo VIP, Aventura & Trekking, Cultural & Ancestral).
+1. **Plantilla Visual:** 6 estilos disponibles (Portal Agencia, Boho Travel Journal, Lujo VIP, Aventura & Trekking, Cultural & Ancestral, Esmeralda Explorer).
 2. **Fotografía de Portada (Hero):** Selección fotográfica en alta resolución, insignias flotantes y llamadas a la acción directas.
 3. **Nivel de Servicio (Tiers):** Planes *Free*, *Basic*, *Pro* y *Advance* con renderizado dinámico según el perfil del cliente.
 4. **Selector Multi-Idioma Dinámico (5 Idiomas):**
@@ -33,7 +33,11 @@ Plataforma especializada en la creación ultra-rápida de landing pages de alta 
 - **Framework:** Next.js 16 (App Router + Turbopack)
 - **Lenguaje:** TypeScript
 - **Estilos:** Tailwind CSS + Lucide React
+- **Backend:** Supabase (PostgreSQL, Auth, Storage, RLS)
+- **IA:** OpenAI u otro proveedor (solo desde el servidor)
 - **Despliegue:** Vercel
+
+> Las migraciones SQL están en `supabase/migrations/`. Copia `.env.example` a `.env.local` y completa las variables.
 
 ---
 

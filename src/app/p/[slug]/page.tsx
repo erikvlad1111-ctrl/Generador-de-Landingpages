@@ -15,8 +15,10 @@ function PublicLandingContent() {
   const slug = (params?.slug as string) || '';
   const isEmbed = searchParams.get('embed') === 'true';
   const templateQuery = searchParams.get('template') as TemplateType | null;
-  const tierQuery = searchParams.get('tier') as PlanTier | null;
   const isOfficialDemo = searchParams.get('demo') === 'official';
+  // Seguridad: ?tier= solo se respeta en el modo vitrina oficial (?demo=official).
+  // En landings reales de clientes manda el tier guardado, no la URL.
+  const tierQuery = isOfficialDemo ? (searchParams.get('tier') as PlanTier | null) : null;
 
   const [copied, setCopied] = useState(false);
   const [isBannerVisible, setIsBannerVisible] = useState(true);

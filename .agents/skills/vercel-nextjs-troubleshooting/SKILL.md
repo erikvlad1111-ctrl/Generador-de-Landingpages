@@ -327,6 +327,11 @@ Get-ExecutionPolicy
    ```powershell
    powershell -ExecutionPolicy Bypass -Command "npm run build"
    ```
+3. O llamar directamente al shim `.cmd` (funciona en PowerShell sin cambiar la política):
+   ```powershell
+   npx.cmd tsc --noEmit
+   npm.cmd run build
+   ```
 
 ## 11. Título Mock de Desarrollador ("Diseño X...") o Sufijo Forzado en Navbar y Hero H1
 
@@ -388,6 +393,33 @@ git grep -n "La Experiencia Definitiva en Cusco"
 4. **Edición Accesible y Redundante de la Descripción:**
    - Añadir en la Pestaña 2 ("Hero") un bloque de edición directa de la Descripción Narrativa Completa ("Acerca del Tour") con acceso directo a la Pestaña 3.
    - Añadir en la Pestaña 1 ("General") una tarjeta de acceso directo a la Descripción con un clic.
+
+---
+
+## 12. Recursos Bloqueados por la Content Security Policy (CSP)
+
+### Síntoma / Mensaje de Error
+Una imagen, fuente, mapa, script o llamada a API deja de cargar en producción/dev y en la consola aparece:
+```text
+Refused to load the script 'https://...' because it violates the following Content Security Policy directive: "script-src 'self' 'unsafe-inline'".
+Refused to connect to 'https://xxxx.supabase.co/...' because it violates ... "connect-src ...".
+Refused to frame 'https://www.youtube.com/' because it violates ... "frame-src ...".
+```
+
+### Causa Raíz
+`next.config.ts` define una CSP (variante sin nonces) con una lista blanca de orígenes. Cualquier servicio externo nuevo (analytics, YouTube, otro proyecto Supabase, CDN) queda bloqueado hasta añadirlo a la directiva correspondiente. `connect-src` toma el origen de `NEXT_PUBLIC_SUPABASE_URL`; si la variable no existe en el build usa `https://*.supabase.co`.
+
+### Comando de Diagnóstico
+```bash
+curl -sI http://localhost:3000/ | findstr /i content-security-policy
+```
+Y revisar la consola del navegador (pestaña Console / Issues) para ver la directiva exacta que bloquea.
+
+### Solución Paso a Paso
+1. Identificar la directiva del mensaje (`script-src`, `connect-src`, `frame-src`, `img-src`, `font-src`, `style-src`).
+2. Añadir solo el origen necesario a esa directiva en `cspHeader` de `next.config.ts` (nunca `*`).
+3. Reiniciar `npm run dev` (los headers de `next.config.ts` no se recargan en caliente) o redesplegar.
+4. Si cambia el proyecto de Supabase, actualizar `NEXT_PUBLIC_SUPABASE_URL` en Vercel y redesplegar para que `connect-src` se regenere.
 
 ---
 

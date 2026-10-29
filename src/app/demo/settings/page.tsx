@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Building2, Phone, Mail, Key, Users, CheckCircle2, Save } from 'lucide-react';
+import { ArrowLeft, Building2, Phone, Mail, ShieldCheck, Users, CheckCircle2, Save } from 'lucide-react';
 
 export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
@@ -11,7 +11,6 @@ export default function SettingsPage() {
   const [centralWhatsapp, setCentralWhatsapp] = useState('+51984123456');
   const [adminEmail, setAdminEmail] = useState('admin@cuscocreativos.com');
   const [address, setAddress] = useState('Calle Triunfo 392, Cercado Histórico, Cusco');
-  const [apiKey, setApiKey] = useState('sk-proj-••••••••••••••••••••••••••••••••');
 
   const [guides, setGuides] = useState([
     { id: '1', name: 'Carlos Mendoza', role: 'Guía Alta Montaña (Salkantay / Ausangate)', phone: '+51 984 123 456' },
@@ -137,26 +136,15 @@ export default function SettingsPage() {
           />
         </div>
 
-        {/* AI Integration settings */}
-        <div className="pt-6 border-t border-slate-100 space-y-4">
+        {/* AI Integration info (la API key vive SOLO en el servidor / Vercel env) */}
+        <div className="pt-6 border-t border-slate-100 space-y-2">
           <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
-            <Key size={18} className="text-blue-600" />
-            Integración de IA (OpenAI / Generador de Copy)
+            <ShieldCheck size={18} className="text-blue-600" />
+            Integración de IA
           </h2>
           <p className="text-xs text-slate-500">
-            En esta versión de demostración, el motor inteligente opera con un simulador predictivo de alta precisión para tours de Cusco.
+            La clave del proveedor de IA se gestiona de forma segura en el servidor (variables de entorno de Vercel) y nunca se expone en el navegador.
           </p>
-          <div className="max-w-lg">
-            <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-              API Key (Simulada / Producción)
-            </label>
-            <input
-              type="password"
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-mono focus:ring-2 focus:ring-blue-500 outline-none text-slate-600"
-            />
-          </div>
         </div>
 
         <div className="pt-4 flex justify-end">

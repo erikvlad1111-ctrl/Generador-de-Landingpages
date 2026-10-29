@@ -10,15 +10,16 @@ export function generateStandaloneHtml(data: LandingData): string {
   );
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
-  const heroImg =
+  const heroImg = safeUrl(
     data.heroImage ||
-    'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop';
-  const galleryImages = data.galleryImages && data.galleryImages.length > 0
+    'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=2070&auto=format&fit=crop'
+  );
+  const galleryImages = (data.galleryImages && data.galleryImages.length > 0
     ? data.galleryImages
     : [
         'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=2076&auto=format&fit=crop',
         'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=2070&auto=format&fit=crop'
-      ];
+      ]).map(safeUrl).filter(Boolean);
 
   const isPremium = data.template === 'premium';
   const isCultural = data.template === 'cultural';
@@ -34,7 +35,7 @@ export function generateStandaloneHtml(data: LandingData): string {
   const cardBg = isPremium ? 'bg-neutral-900/90 border-amber-500/30 text-white' : isEmerald ? 'bg-white/[0.06] border-emerald-500/25 text-white' : isAdventure ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-stone-200 text-stone-900';
 
   return `<!DOCTYPE html>
-<html lang="${data.language || 'es'}" class="scroll-smooth">
+<html lang="${escapeHtml(data.language || 'es')}" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -228,7 +229,7 @@ export function generateStandaloneHtml(data: LandingData): string {
         ${data.testimonials.map(t => `
           <div class="${cardBg} p-6 rounded-2xl border shadow-sm space-y-3">
             <div class="flex items-center gap-1 text-amber-400">
-              ${'★'.repeat(t.rating || 5)}
+              ${'★'.repeat(Math.min(5, Math.max(1, Math.floor(Number(t.rating) || 5))))}
             </div>
             <p class="text-xs sm:text-sm italic opacity-90">"${escapeHtml(t.comment)}"</p>
             <div class="pt-2 text-xs">
@@ -293,8 +294,32 @@ export function generateStandaloneHtml(data: LandingData): string {
 </html>`;
 }
 
+/**
+ * Permite solo URLs http(s) o rutas relativas y las escapa para usarlas
+ * dentro de atributos HTML. Bloquea javascript:, data:, vbscript:, etc.
+ */
+function safeUrl(url: string | undefined | null): string {
+  if (!url) return '';
+  const trimmed = String(url).trim();
+  // Imágenes subidas localmente (flujo actual antes de Supabase Storage). SVG excluido.
+  if (/^data:image\/(png|jpe?g|webp|gif|avif);base64,[a-z0-9+/=\s]+$/i.test(trimmed)) {
+    return trimmed;
+  }
+  const isRelative = trimmed.startsWith('/') && !trimmed.startsWith('//');
+  if (!isRelative) {
+    try {
+      const parsed = new URL(trimmed);
+      if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') return '';
+    } catch {
+      return '';
+    }
+  }
+  return escapeHtml(trimmed);
+}
+
 function escapeHtml(str: string): string {
   if (!str) return '';
+  str = String(str);
   return str
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
