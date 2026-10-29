@@ -27,6 +27,27 @@ Cada vez que se realicen cambios solicitados por el usuario:
    powershell -ExecutionPolicy Bypass -Command "git status"
    ```
 
+## Errores Resueltos
+
+### `fatal: not a git repository (or any of the parent directories): .git`
+- **Causa raíz:** el comando se ejecutó fuera de la carpeta del proyecto (ej. en `C:\Users\copyw`).
+- **Diagnóstico:** `Get-Location` / `Test-Path .git`.
+- **Solución:** entrar a la carpeta del repo o usar `git -C`:
+  ```powershell
+  git -C "C:\Users\copyw\.gemini\antigravity-ide\scratch\cusco-creativos-web - copia -vercel-supabase" status
+  ```
+
+### Token personal (`ghp_...`) incrustado en la URL del remoto
+- **Causa raíz:** el remoto se configuró como `https://usuario:ghp_xxx@github.com/...`, dejando el token en `.git/config` en texto plano.
+- **Diagnóstico:** `git remote -v` (si aparece `ghp_` tras `https://usuario:`, está expuesto).
+- **Solución:**
+  1. Revocar el token en GitHub → Settings → Developer settings → Personal access tokens.
+  2. Limpiar el remoto en **cada copia local** (original y `- copia -vercel-supabase`):
+     ```powershell
+     git -C "<ruta-del-repo>" remote set-url origin https://github.com/erikvlad1111-ctrl/Generador-de-Landingpages.git
+     ```
+  3. En el siguiente `git push`, Git Credential Manager abrirá el navegador para autenticarse (las credenciales quedan en el gestor de Windows, no en el repo).
+
 ## Estructura de Plantillas Guardadas
 - **AgencyPortalTemplate:** `src/templates/AgencyPortalTemplate.tsx` (Diseño 1 de alta conversión con hero Vinicunca, acentos naranja, barra de métricas y sellos DIRCETUR).
 - **AdventureTemplate:** `src/templates/AdventureTemplate.tsx`
