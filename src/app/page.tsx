@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Compass, Lock, Mail, ArrowRight, Sparkles, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { signInWithCredentials, getStoredUser } from '@/lib/auth';
 
 export default function Home() {
   const router = useRouter();
@@ -11,19 +12,31 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleLogin = (e: React.FormEvent) => {
+  useEffect(() => {
+    const existing = getStoredUser();
+    if (existing) {
+      router.replace('/demo');
+    }
+  }, [router]);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    setTimeout(() => {
-      if (email && password) {
-        router.push('/demo');
-      } else {
-        setError('Por favor ingresa credenciales válidas');
+    try {
+      const res = await signInWithCredentials(email, password);
+      if (res.error) {
+        setError(res.error);
         setLoading(false);
+        return;
       }
-    }, 600);
+      router.push('/demo');
+      router.refresh();
+    } catch (err: any) {
+      setError(err?.message || 'Error al iniciar sesión');
+      setLoading(false);
+    }
   };
 
   return (

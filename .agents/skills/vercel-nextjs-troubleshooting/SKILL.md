@@ -423,6 +423,31 @@ Y revisar la consola del navegador (pestaña Console / Issues) para ver la direc
 
 ---
 
+## 10. Convención de Middleware en Next.js 16 (`proxy.ts` vs `middleware.ts`)
+
+### Síntoma / Mensaje de Error
+Aviso de deprecación o error de compilación al usar `middleware.ts` en Next.js 16:
+```text
+The middleware.js file convention has been deprecated in Next.js 16 and renamed to proxy.js.
+```
+
+### Causa Raíz
+En Next.js 16, la convención `middleware.ts` fue deprecada y renombrada a `proxy.ts` (con la exportación `export function proxy(request)` o default export). Se ubica en `src/proxy.ts` cuando se utiliza la estructura `src/`.
+
+### Comando de Diagnóstico
+Verificar versión de Next.js y convención:
+```bash
+cmd /c npm list next
+```
+
+### Solución Paso a Paso
+1. Crear el archivo `src/proxy.ts` (al mismo nivel que `src/app`).
+2. Exportar la función nombrada `export function proxy(request: NextRequest)`.
+3. Exportar el objeto `export const config = { matcher: ['/demo/:path*', '/login'] }`.
+4. Ejecutar `cmd /c npm run build` y comprobar que en la tabla de rutas figure `ƒ Proxy (Middleware)`.
+
+---
+
 ## Lista de Verificación Antes de Desplegar
 - [ ] Ejecutar `npm run lint` y verificar que salga con código 0.
 - [ ] Ejecutar `cmd /c npm run build` localmente y comprobar que todas las rutas se generen sin errores.

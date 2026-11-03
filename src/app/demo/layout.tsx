@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   LayoutDashboard, 
   FilePlus2, 
@@ -13,14 +13,41 @@ import {
   Compass,
   Layers,
   Pin,
-  LayoutTemplate
+  LayoutTemplate,
+  Loader2
 } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { getCurrentUser, signOutUser, UserSession } from '@/lib/auth';
 
 export default function DemoLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<UserSession | null>(null);
+  const [authChecking, setAuthChecking] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+    getCurrentUser().then((currentUser) => {
+      if (!mounted) return;
+      if (!currentUser) {
+        router.replace(`/login?next=${encodeURIComponent(pathname)}`);
+      } else {
+        setUser(currentUser);
+        setAuthChecking(false);
+      }
+    });
+    return () => {
+      mounted = false;
+    };
+  }, [pathname, router]);
+
+  const handleLogout = async () => {
+    await signOutUser();
+    router.replace('/login');
+    router.refresh();
+  };
 
   const isDashboard = pathname === '/demo';
   const isNewLanding = pathname === '/demo/new';
@@ -35,6 +62,22 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
   else if (isPlans) pageTitle = 'Guía de Estructura de Páginas';
   else if (isSettings) pageTitle = 'Configuración';
   else if (isPreview) pageTitle = 'Previsualizador';
+
+  if (authChecking) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex flex-col items-center justify-center text-slate-300 gap-3">
+        <Loader2 size={32} className="animate-spin text-blue-500" />
+        <span className="text-xs font-semibold tracking-wider uppercase text-slate-400">
+          Verificando sesión segura...
+        </span>
+      </div>
+    );
+  }
+
+  const userInitials = user?.email
+    ? user.email.substring(0, 2).toUpperCase()
+    : 'CC';
+  const userRoleLabel = user?.role === 'admin' ? 'Administrador' : 'Empleado';
 
   return (
     <div className="flex min-h-screen bg-slate-50 text-slate-900 flex-col md:flex-row">
@@ -135,13 +178,13 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
             </Link>
           </div>
 
-          <Link 
-            href="/" 
-            className="flex items-center gap-2.5 px-3 py-2 text-slate-400 hover:text-white hover:bg-slate-900 rounded-xl transition-colors text-xs font-medium"
+          <button 
+            onClick={handleLogout}
+            className="w-full flex items-center gap-2.5 px-3 py-2 text-slate-400 hover:text-red-400 hover:bg-slate-900 rounded-xl transition-colors text-xs font-medium cursor-pointer"
           >
             <LogOut size={16} />
             <span>Cerrar Sesión</span>
-          </Link>
+          </button>
         </div>
       </aside>
 
@@ -242,14 +285,16 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
                 <span>Configuración</span>
               </Link>
 
-              <Link
-                href="/"
-                onClick={() => setMobileMenuOpen(false)}
-                className="p-3 rounded-xl flex items-center gap-2.5 text-xs font-bold bg-slate-900 text-slate-400 hover:bg-slate-800"
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  handleLogout();
+                }}
+                className="p-3 rounded-xl flex items-center gap-2.5 text-xs font-bold bg-slate-900 text-slate-400 hover:text-red-400 hover:bg-slate-800 cursor-pointer text-left"
               >
                 <LogOut size={18} />
                 <span>Cerrar Sesión</span>
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -266,12 +311,19 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
             </div>
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm">
-                AD
+                {userInitials}
               </div>
               <div className="hidden sm:block text-left">
-                <span className="text-xs font-bold text-slate-800 block leading-tight">Admin Demo</span>
-                <span className="text-[10px] text-slate-400">admin@cuscocreativos.com</span>
+                <span className="text-xs font-bold text-slate-800 block leading-tight">{userRoleLabel}</span>
+                <span className="text-[10px] text-slate-400">{user?.email || 'admin@cuscocreativos.com'}</span>
               </div>
+              <button
+                onClick={handleLogout}
+                title="Cerrar sesión"
+                className="p-1.5 ml-1 text-slate-400 hover:text-red-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+              >
+                <LogOut size={16} />
+              </button>
             </div>
           </header>
         )}
