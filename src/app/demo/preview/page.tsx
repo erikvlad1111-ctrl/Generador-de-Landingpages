@@ -139,6 +139,16 @@ function DemoPreviewContent() {
 
   const [viewMode, setViewMode] = useState<'desktop' | 'tablet' | 'mobile'>('desktop');
   const [isEditorOpen, setIsEditorOpen] = useState(false);
+
+  // Auto-detectar si el usuario entra desde un celular o tablet real
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (window.innerWidth < 640) {
+      setViewMode('mobile');
+    } else if (window.innerWidth < 1024) {
+      setViewMode('tablet');
+    }
+  }, []);
   const [isQrOpen, setIsQrOpen] = useState(false);
   const [isDeployModalOpen, setIsDeployModalOpen] = useState(false);
   const [publishToast, setPublishToast] = useState(false);
@@ -449,11 +459,71 @@ function DemoPreviewContent() {
     );
   }
 
-  const publicUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}/p/${landing.slug}`
+  const buildShareablePublicUrl = () => {
+    const base = typeof window !== 'undefined'
+      ? `${window.location.origin}/p/${landing.slug}`
+      : `/p/${landing.slug}`;
+    try {
+      const compactSnapshot = {
+        id: landing.id,
+        slug: landing.slug,
+        name: landing.name,
+        companyName: landing.companyName,
+        companyRuc: landing.companyRuc,
+        companyTagline: landing.companyTagline,
+        companyEmail: landing.companyEmail,
+        logoUrl: landing.logoUrl && !landing.logoUrl.startsWith('data:') ? landing.logoUrl : undefined,
+        template: landing.template,
+        tier: landing.tier,
+        objective: landing.objective,
+        language: landing.language,
+        languages: landing.languages,
+        price: landing.price,
+        duration: landing.duration,
+        difficulty: landing.difficulty,
+        destination: landing.destination,
+        altitude: landing.altitude,
+        groupType: landing.groupType,
+        targetAudience: landing.targetAudience,
+        whatsapp: landing.whatsapp,
+        guideName: landing.guideName,
+        guideCert: landing.guideCert,
+        guideLanguages: landing.guideLanguages,
+        guideAvatar: landing.guideAvatar && !landing.guideAvatar.startsWith('data:') ? landing.guideAvatar : undefined,
+        heroImage: landing.heroImage && !landing.heroImage.startsWith('data:') ? landing.heroImage : undefined,
+        hero: landing.hero,
+        about: landing.about,
+        features: landing.features,
+        includedServices: landing.includedServices,
+        notIncluded: landing.notIncluded,
+        whatToBring: landing.whatToBring,
+        trustBadges: landing.trustBadges,
+        itinerary: landing.itinerary?.slice(0, 6),
+        faqs: landing.faqs?.slice(0, 6),
+        testimonials: landing.testimonials?.slice(0, 4),
+        officeAddress: landing.officeAddress,
+        officeHours: landing.officeHours,
+        mapsUrl: landing.mapsUrl,
+      };
+      const encoded = typeof window !== 'undefined'
+        ? window.btoa(unescape(encodeURIComponent(JSON.stringify(compactSnapshot))))
+        : '';
+      if (encoded && encoded.length < 1800) {
+        return `${base}?d=${encodeURIComponent(encoded)}`;
+      }
+      return `${base}?template=${encodeURIComponent(landing.template)}&tier=${encodeURIComponent(landing.tier || 'advance')}`;
+    } catch {
+      return base;
+    }
+  };
+
+  const publicUrl = buildShareablePublicUrl();
+
+  const qrBaseUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}/p/${landing.slug}?template=${encodeURIComponent(landing.template)}&tier=${encodeURIComponent(landing.tier || 'advance')}&name=${encodeURIComponent(landing.name || '')}&price=${encodeURIComponent(landing.price || '')}&company=${encodeURIComponent(landing.companyName || '')}&wa=${encodeURIComponent(landing.whatsapp || '')}&guide=${encodeURIComponent(landing.guideName || '')}&dest=${encodeURIComponent(landing.destination || '')}`
     : `/p/${landing.slug}`;
 
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(publicUrl)}`;
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(qrBaseUrl)}`;
 
   const populateEditorWithLanding = (l: LandingData) => {
     const rawName = (l.name || '').replace(/^dise[ñn]o\s*\d+\s*[-–:]\s*/i, '').trim();
@@ -782,7 +852,7 @@ function DemoPreviewContent() {
 
             {/* Primary CTA: Open Live Web */}
             <a
-              href={`/p/${landing.slug}`}
+              href={publicUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-1 sm:gap-1.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white px-2.5 sm:px-3.5 py-1.5 rounded-xl font-black text-xs transition-all shadow-md shadow-emerald-600/25 border border-emerald-400/30 hover:scale-103 active:scale-97 cursor-pointer shrink-0"
@@ -862,39 +932,59 @@ function DemoPreviewContent() {
         </div>
       )}
 
-      {/* Preview Canvas Area (Seamless Full-Width in Desktop Mode Without Artificial Offset) */}
-      <main className={`flex-1 overflow-auto bg-slate-950 ${viewMode === 'desktop' ? 'p-0 w-full' : 'p-2 sm:p-4 md:p-6 flex justify-center items-start min-h-[calc(100vh-3.5rem)]'}`}>
+      {/* Preview Canvas Area (Option 1: Simulated Phone on PC + Option 2: Native Full-Bleed on Real Mobile) */}
+      <main className={`flex-1 overflow-auto bg-slate-950 ${viewMode === 'desktop' ? 'p-0 w-full' : 'p-0 sm:p-4 md:p-6 flex justify-center items-start min-h-[calc(100vh-3.5rem)]'}`}>
         <div 
           className={`bg-white shadow-2xl transition-all duration-300 relative [transform:translateZ(0)] ${
             viewMode === 'mobile' 
-              ? 'w-full max-w-[390px] h-[min(844px,calc(100vh-6rem))] sm:h-[844px] rounded-[36px] sm:rounded-[48px] ring-4 sm:ring-8 ring-slate-800 border-2 sm:border-4 border-slate-900 overflow-hidden my-2 sm:my-4 shadow-2xl shadow-black/80' 
+              ? 'w-full sm:w-[390px] sm:max-w-[390px] min-h-[calc(100vh-3.5rem)] sm:min-h-0 sm:h-[min(844px,calc(100vh-5rem))] rounded-none sm:rounded-[48px] ring-0 sm:ring-8 ring-slate-800 border-0 sm:border-4 border-slate-900 overflow-hidden my-0 sm:my-3 shadow-2xl shadow-black/80' 
               : viewMode === 'tablet'
-              ? 'w-full max-w-[768px] h-[min(900px,calc(100vh-6rem))] sm:h-[900px] rounded-[24px] sm:rounded-[32px] ring-4 sm:ring-8 ring-slate-800 border-2 sm:border-4 border-slate-900 overflow-hidden my-2 sm:my-4 shadow-2xl shadow-black/80' 
+              ? 'w-full md:w-[768px] md:max-w-[768px] min-h-[calc(100vh-3.5rem)] md:min-h-0 md:h-[min(900px,calc(100vh-5rem))] rounded-none md:rounded-[32px] ring-0 md:ring-8 ring-slate-800 border-0 md:border-4 border-slate-900 overflow-hidden my-0 md:my-3 shadow-2xl shadow-black/80' 
               : 'w-full max-w-full min-h-[calc(100vh-3.5rem)] rounded-none border-0'
           }`}
           style={{ transform: 'translateZ(0)' }}
         >
-          {/* Dynamic Island / Camera Notch on Mobile View */}
+          {/* Dynamic Island / Camera Notch on Simulated Mobile View (PC/Tablet only) */}
           {viewMode === 'mobile' && (
-            <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-24 h-4 bg-slate-950 rounded-full z-50 pointer-events-none flex items-center justify-end px-2 border border-slate-800/80 shadow-md">
+            <div className="hidden sm:flex absolute top-2.5 left-1/2 -translate-x-1/2 w-24 h-4 bg-slate-950 rounded-full z-50 pointer-events-none items-center justify-end px-2 border border-slate-800/80 shadow-md">
               <div className="w-1.5 h-1.5 rounded-full bg-slate-900 border border-slate-700/60"></div>
             </div>
           )}
 
-          {/* Camera Dot on Tablet View */}
+          {/* Camera Dot on Simulated Tablet View (PC only) */}
           {viewMode === 'tablet' && (
-            <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-950 rounded-full z-50 pointer-events-none border border-slate-800"></div>
+            <div className="hidden md:block absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-950 rounded-full z-50 pointer-events-none border border-slate-800"></div>
           )}
 
-          {/* Scrollable Frame Content: Isolated viewport for mobile/tablet */}
+          {/* Scrollable Frame Content: Uses iframe in PC mobile/tablet simulator for 100% real CSS media-query breakpoints */}
           <div className="w-full h-full relative isolate">
-            <div className="w-full h-full overflow-y-auto overflow-x-hidden relative isolate table-scrollbar overscroll-x-none touch-pan-y">
-              <TemplateRenderer 
-                key={`${landing.id}-${landing.slug}-${landing.template}-${viewMode}-${refreshKey}`} 
-                data={landing} 
-                viewMode={viewMode} 
-              />
-            </div>
+            {(viewMode === 'mobile' || viewMode === 'tablet') ? (
+              <>
+                {/* PC Simulator (iframe with exact 390px or 768px viewport so Tailwind sm:/md:/lg: mobile layouts activate genuinely) */}
+                <iframe
+                  key={`iframe-${landing.id}-${landing.slug}-${landing.template}-${viewMode}-${refreshKey}`}
+                  src={`/p/${landing.slug}?embed=true&mode=${viewMode}&template=${encodeURIComponent(landing.template)}&tier=${encodeURIComponent(landing.tier || 'advance')}`}
+                  title={`Vista ${viewMode} de ${landing.name}`}
+                  className="hidden sm:block w-full h-full border-0 bg-white"
+                />
+                {/* Real Mobile Device Direct Render (no nested iframe scroll when already on a phone) */}
+                <div className="sm:hidden w-full h-full overflow-y-auto overflow-x-hidden relative isolate table-scrollbar overscroll-x-none touch-pan-y">
+                  <TemplateRenderer 
+                    key={`direct-${landing.id}-${landing.slug}-${landing.template}-${viewMode}-${refreshKey}`} 
+                    data={landing} 
+                    viewMode="mobile" 
+                  />
+                </div>
+              </>
+            ) : (
+              <div className="w-full h-full overflow-y-auto overflow-x-hidden relative isolate table-scrollbar overscroll-x-none touch-pan-y">
+                <TemplateRenderer 
+                  key={`${landing.id}-${landing.slug}-${landing.template}-${viewMode}-${refreshKey}`} 
+                  data={landing} 
+                  viewMode={viewMode} 
+                />
+              </div>
+            )}
           </div>
         </div>
       </main>
@@ -2516,7 +2606,7 @@ function DemoPreviewContent() {
               </div>
             </div>
             <a
-              href={`/p/${landing.slug}`}
+              href={publicUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 px-4 rounded-xl text-xs transition-colors"

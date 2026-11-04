@@ -16,15 +16,70 @@ function PublicLandingContent() {
   const isEmbed = searchParams.get('embed') === 'true';
   const templateQuery = searchParams.get('template') as TemplateType | null;
   const isOfficialDemo = searchParams.get('demo') === 'official';
-  // Seguridad: ?tier= solo se respeta en el modo vitrina oficial (?demo=official).
-  // En landings reales de clientes manda el tier guardado, no la URL.
-  const tierQuery = isOfficialDemo ? (searchParams.get('tier') as PlanTier | null) : null;
+  const encodedSnapshot = searchParams.get('d');
+  const qrNameQuery = searchParams.get('name');
+  const qrPriceQuery = searchParams.get('price');
+  const qrCompanyQuery = searchParams.get('company');
+  const qrWaQuery = searchParams.get('wa');
+  const qrGuideQuery = searchParams.get('guide');
+  const qrDestQuery = searchParams.get('dest');
+
+  // Seguridad: ?tier= se respeta en modo vitrina oficial (?demo=official), en embed del previsualizador (?embed=true) o en enlaces QR con parámetros explícitos.
+  const rawTierParam = searchParams.get('tier') as PlanTier | null;
+  const tierQuery = (isOfficialDemo || isEmbed || Boolean(qrNameQuery)) ? rawTierParam : null;
 
   const [copied, setCopied] = useState(false);
   const [isBannerVisible, setIsBannerVisible] = useState(true);
   const [isDeployModalOpen, setIsDeployModalOpen] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
 
-  const [landing, setLanding] = useState<LandingData | null>(() => {
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const checkViewport = () => setIsMobileViewport(window.innerWidth < 640);
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+    return () => window.removeEventListener('resize', checkViewport);
+  }, []);
+
+  const resolveLandingData = React.useCallback((): LandingData | null => {
+    // 1. Si viene un snapshot codificado en ?d= (enlace compartido / celular real sin Supabase aún)
+    if (encodedSnapshot && typeof window !== 'undefined') {
+      try {
+        const jsonStr = decodeURIComponent(escape(window.atob(encodedSnapshot)));
+        const parsed = JSON.parse(jsonStr) as Partial<LandingData>;
+        const baseTemplate = (parsed.template || templateQuery || 'adventure') as TemplateType;
+        const fallbackBase = INITIAL_LANDINGS.find(l => l.template === baseTemplate) || INITIAL_LANDINGS[0];
+        const merged: LandingData = {
+          ...fallbackBase,
+          ...parsed,
+          id: parsed.id || fallbackBase.id,
+          slug: parsed.slug || slug || fallbackBase.slug,
+          template: baseTemplate,
+          tier: (parsed.tier || 'advance') as PlanTier,
+          hero: {
+            ...fallbackBase.hero,
+            ...(parsed.hero || {}),
+            title: parsed.hero?.title || parsed.name || fallbackBase.hero.title,
+          },
+          about: {
+            ...fallbackBase.about,
+            ...(parsed.about || {}),
+          },
+          features: {
+            ...fallbackBase.features,
+            ...(parsed.features || {}),
+          },
+        };
+        const isFreeOrBasic = merged.tier === 'free' || merged.tier === 'basic';
+        return {
+          ...merged,
+          ...(isFreeOrBasic ? { language: 'es' as const, languages: ['es' as const] } : {}),
+        };
+      } catch {
+        // Continúa al flujo normal si falla la decodificación
+      }
+    }
+
     let found: LandingData | null = null;
     if (isOfficialDemo) {
       if (slug) {
@@ -56,64 +111,42 @@ function PublicLandingContent() {
       }
     }
     if (!found) return null;
+
     const activeTier: PlanTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery))
       ? tierQuery
       : (found.tier || 'advance');
 
     const isFreeOrBasic = activeTier === 'free' || activeTier === 'basic';
 
+    // Si se abrió desde un QR en un celular externo y vienen parámetros ligeros en la URL, aplicarlos sobre la plantilla base
+    const hasQrOverrides = Boolean(qrNameQuery || qrPriceQuery || qrCompanyQuery || qrWaQuery || qrGuideQuery || qrDestQuery);
+
     return {
       ...found,
       ...(templateQuery ? { template: templateQuery } : {}),
+      ...(qrNameQuery ? { name: qrNameQuery } : {}),
+      ...(qrPriceQuery ? { price: qrPriceQuery } : {}),
+      ...(qrCompanyQuery ? { companyName: qrCompanyQuery } : {}),
+      ...(qrWaQuery ? { whatsapp: qrWaQuery } : {}),
+      ...(qrGuideQuery ? { guideName: qrGuideQuery } : {}),
+      ...(qrDestQuery ? { destination: qrDestQuery } : {}),
+      ...(hasQrOverrides && qrNameQuery ? {
+        hero: {
+          ...found.hero,
+          title: qrNameQuery,
+        }
+      } : {}),
       tier: activeTier,
       ...(isFreeOrBasic ? { language: 'es' as const, languages: ['es' as const] } : {}),
     };
-  });
+  }, [slug, templateQuery, tierQuery, isOfficialDemo, encodedSnapshot, qrNameQuery, qrPriceQuery, qrCompanyQuery, qrWaQuery, qrGuideQuery, qrDestQuery]);
+
+  const [landing, setLanding] = useState<LandingData | null>(() => resolveLandingData());
 
   React.useEffect(() => {
-    let found: LandingData | null = null;
-    if (isOfficialDemo) {
-      if (slug) {
-        found = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
-      }
-      if (!found && templateQuery) {
-        found = INITIAL_LANDINGS.find(l => l.template === templateQuery) || null;
-      }
-      if (!found) {
-        found = INITIAL_LANDINGS[0];
-      }
-    } else {
-      const landings = getStoredLandings();
-      if (slug) {
-        found = landings.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
-        if (!found) {
-          found = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === slug.toLowerCase() || l.id === slug) || null;
-        }
-      }
-      if (!found && templateQuery) {
-        found = landings.find(l => l.template === templateQuery) || INITIAL_LANDINGS.find(l => l.template === templateQuery) || null;
-      }
-      if (!found) {
-        found = landings[0] || INITIAL_LANDINGS[0] || null;
-      }
-      if (found && isTestJunk(found)) {
-        const clean = INITIAL_LANDINGS.find(l => l.slug.toLowerCase() === found?.slug.toLowerCase() || l.id === found?.id || l.template === found?.template);
-        if (clean) found = { ...clean };
-      }
-    }
-    if (found) {
-      const activeTier: PlanTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery))
-        ? tierQuery
-        : (found.tier || 'advance');
-      const isFreeOrBasic = activeTier === 'free' || activeTier === 'basic';
-      setLanding({
-        ...found,
-        ...(templateQuery ? { template: templateQuery } : {}),
-        tier: activeTier,
-        ...(isFreeOrBasic ? { language: 'es' as const, languages: ['es' as const] } : {}),
-      });
-    }
-  }, [slug, templateQuery, tierQuery, isOfficialDemo]);
+    const resolved = resolveLandingData();
+    if (resolved) setLanding(resolved);
+  }, [resolveLandingData]);
 
   if (!landing) {
     return (
@@ -226,7 +259,11 @@ function PublicLandingContent() {
       )}
 
       {/* Visual Public Landing Content */}
-      <TemplateRenderer data={landing} isLive={true} viewMode={(searchParams.get('mode') as 'desktop' | 'tablet' | 'mobile') || (isEmbed ? 'mobile' : 'desktop')} />
+      <TemplateRenderer
+        data={landing}
+        isLive={true}
+        viewMode={(searchParams.get('mode') as 'desktop' | 'tablet' | 'mobile') || (isEmbed || isMobileViewport ? 'mobile' : 'desktop')}
+      />
 
       {/* Floating WhatsApp Button for templates without built-in interactive floating button */}
       {landing.template !== 'agency-portal' && (

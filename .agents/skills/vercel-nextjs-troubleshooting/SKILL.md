@@ -492,6 +492,30 @@ git diff src/app/page.tsx src/app/login/page.tsx
 
 ---
 
+## 15. Vista Móvil en PC (`viewMode === 'mobile'`) Muestra Layout de Escritorio Comprimido o Falla al Abrir en un Celular Real vía QR
+
+### Síntoma / Mensaje de Error
+1. **En PC (Simulador Móvil en `/demo/preview`):** Al pulsar el botón **"Móvil"**, las plantillas siguen mostrando su menú horizontal de escritorio (`lg:flex`) y grillas de 2 o 3 columnas (`sm:grid-cols-2`, `lg:grid-cols-12`) apretadas dentro de los 390px en lugar del menú hamburguesa móvil y diseño de 1 columna.
+2. **Desde un Celular Real (vía QR o enlace compartido):**
+   - Si el usuario abre `/demo/preview` desde su celular, ve un marco de teléfono falso dentro de la pantalla de su propio teléfono.
+   - Si escanea el código QR de una landing recién creada en su PC (guardada aún solo en el `localStorage` de la PC), el celular abre `/p/[slug]` pero como el celular tiene su propio `localStorage`, carga la plantilla por defecto en vez de los datos recién generados.
+
+### Causa Raíz
+1. En `src/app/demo/preview/page.tsx`, `<TemplateRenderer>` se estaba renderizando directamente dentro de un `<div className="max-w-[390px]">`. Como las media queries de Tailwind (`sm:`, `md:`, `lg:`) evalúan el ancho de la ventana del navegador (`window.innerWidth = 1920px` en PC) y no el del `div`, todas las clases de escritorio seguían activas.
+2. El enlace del QR y de "Copiar enlace" apuntaba únicamente a `/p/${landing.slug}` sin incluir un snapshot portátil (`?d=` o parámetros de query) para dispositivos externos cuando aún no se persiste en Supabase.
+
+### Comando de Diagnóstico
+```bash
+grep -n "iframe" src/app/demo/preview/page.tsx
+```
+
+### Solución Paso a Paso
+1. **En PC (`sm:block`):** Renderizar un `<iframe src="/p/${landing.slug}?embed=true&mode=mobile..." />` dentro del marco de 390px en `src/app/demo/preview/page.tsx` para que el navegador cree un viewport real de `390px` donde todas las media queries `sm:`, `md:` y `lg:` de Tailwind activen el diseño móvil auténtico (menú hamburguesa, 1 columna, botones táctiles).
+2. **En Celular Real (`sm:hidden` y auto-detección `window.innerWidth < 640`):** Quitar bordes/marcos simulados (`rounded-none ring-0 border-0`) y renderizar la landing a pantalla completa sin `iframe` anidado.
+3. **Sincronización QR y Enlace Compartido Entre Dispositivos:** Incluir un snapshot ligero codificado en la URL (`?d=...` y parámetros QR en `/p/[slug]/page.tsx`) para que al escanear el QR con un teléfono real se visualicen inmediatamente el nombre del tour, precio, empresa, guía, WhatsApp y plantilla recién generados.
+
+---
+
 ## Lista de Verificación Antes de Desplegar
 - [ ] Ejecutar `npm run lint` y verificar que salga con código 0.
 - [ ] Ejecutar `cmd /c npm run build` localmente y comprobar que todas las rutas se generen sin errores.
