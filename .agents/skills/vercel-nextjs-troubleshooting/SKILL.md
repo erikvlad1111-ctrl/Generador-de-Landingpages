@@ -517,13 +517,13 @@ grep -n "iframe" src/app/demo/preview/page.tsx
 ---
 
 ## Lista de Verificación Antes de Desplegar
-- [ ] Ejecutar `npm run lint` y verificar que salga con código 0.
-- [ ] Ejecutar `cmd /c npm run build` localmente y comprobar que todas las rutas se generen sin errores.
-- [ ] Confirmar que el repositorio remoto en `main` esté actualizado (`git status` limpio).
-- [ ] Verificar que el Framework Preset en Vercel sea `Next.js`.
-- [ ] Validar que en celular (375px) `document.documentElement.scrollWidth === document.documentElement.clientWidth`.
-- [ ] Validar que el botón "Móvil" en `/demo/preview` muestre la réplica exacta de 390px sin desbordes de escritorio.
-- [ ] Validar que los halos luminosos y gradientes decorativos se ubiquen en `z-0` y el contenido en `z-10` para garantizar su visibilidad en todo el scroll.
+- [x] Ejecutar `npx tsc --noEmit` / `npm run lint` y verificar que salga con código 0.
+- [x] Ejecutar `cmd /c npm run build` localmente y comprobar que todas las rutas se generen sin errores.
+- [x] Confirmar que el repositorio remoto en `main` esté actualizado (`git status` limpio).
+- [x] Verificar que el Framework Preset en Vercel sea `Next.js`.
+- [x] Validar que en celular (375px) `document.documentElement.scrollWidth === document.documentElement.clientWidth`.
+- [x] Validar que el botón "Móvil" en `/demo/preview` muestre la réplica exacta de 390px sin desbordes de escritorio (vía iframe con viewport de 390px en PC y vista nativa en smartphone real).
+- [x] Validar que los halos luminosos y gradientes decorativos se ubiquen en `z-0` y el contenido en `z-10` para garantizar su visibilidad en todo el scroll.
 
 
 

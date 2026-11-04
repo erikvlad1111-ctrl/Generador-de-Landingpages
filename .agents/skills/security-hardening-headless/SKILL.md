@@ -149,14 +149,14 @@ Este documento es la **referencia oficial de seguridad** para el despliegue y op
 - [x] **Next.js:** Override `?tier=` en `/p/[slug]` solo se respeta con `?demo=official` (el editor interno `/demo/preview` lo mantiene).
 - [x] **Next.js:** `*.supabase.co` (`/storage/v1/object/public/**`) en `images.remotePatterns` + CSP sin nonces en `next.config.ts`.
 - [x] **Export HTML:** `exportLandingHtml.ts` pasa toda URL de imagen por `safeUrl()` (solo `http(s)`, rutas relativas o `data:image/(png|jpeg|webp|gif|avif)`; bloquea `javascript:`, `data:image/svg+xml`, etc.) y escapa `lang` y `rating`.
+- [x] **Next.js:** Ruta de servidor para generación con IA (`POST /api/ai/generate`): login obligatorio (`cc_auth`), `max_tokens`, rate limit por usuario/IP.
+- [x] **Next.js:** Proteger `/demo/*` con login (`src/proxy.ts` + `src/lib/auth.ts` con resolución de roles desde `public.profiles`, `onAuthStateChange` y fallback híbrido seguro).
+- [x] **Formularios públicos:** Enviar tickets/cotizaciones por ruta de servidor (`POST /api/support` y `POST /api/quote`) con honeypot, time-gate (2.5s) y rate limit (3/10 min).
+- [x] **Git:** URL del remoto limpia sin tokens expuestos (`https://erikvlad1111-ctrl@github.com/erikvlad1111-ctrl/Generador-de-Landingpages.git`).
 
-### Pendiente al integrar Supabase (backend oficial):
-- [ ] **Git:** Revocar el token `ghp_...` en GitHub y limpiar la URL del remoto (`git remote set-url origin https://github.com/<org>/<repo>.git`).
-- [ ] **Supabase Auth:** Desactivar registro público (Dashboard → Authentication → Sign In / Providers → desmarcar "Allow new users to sign up") y crear usuarios del personal manualmente.
-- [ ] **Supabase RLS:** Verificar políticas tras la migración `00002` (lectura anónima solo de `published`).
-- [ ] **Next.js:** Ruta de servidor para generación con IA: login obligatorio, `max_tokens`, rate limit por usuario.
-- [ ] **Next.js:** Proteger `/demo/*` con login (proxy + Supabase SSR).
-- [ ] **Formularios públicos:** Enviar tickets/cotizaciones por ruta de servidor con honeypot y rate limit.
+### Pendiente al integrar Supabase en la nube (backend oficial):
+- [ ] **Supabase Auth (Dashboard):** Desactivar registro público (Dashboard → Authentication → Sign In / Providers → desmarcar "Allow new users to sign up") y crear los 2 usuarios del personal manualmente.
+- [ ] **Supabase RLS (SQL Editor):** Ejecutar y verificar políticas de las migraciones `00000`, `00001` y `00002` (lectura anónima solo de `published`).
 - [ ] **Cloudflare (opcional):** Configurar proxy DNS y activar Bot Fight Mode si hay dominio propio.
 
 > Nota: el código actual usa `X-Frame-Options: SAMEORIGIN` y `frame-ancestors 'self'` (no `DENY`/`'none'`) porque el editor muestra la landing embebida en un iframe del mismo origen.

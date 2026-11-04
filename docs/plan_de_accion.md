@@ -14,41 +14,46 @@
 - [ ] `/p/[slug]` lee desde Supabase (solo landings `published` para visitantes).
 
 ## Fase B — Login y roles
-- [x] Página `/login` con Supabase Auth y fallback demo seguro (registro público desactivado).
+- [x] Página `/login` con Supabase Auth, fallback híbrido interno seguro y registro público desactivado.
 - [x] Proteger `/demo/*` para usuarios con sesión mediante `src/proxy.ts` (convención Next.js 16) y guard cliente.
-- [x] Roles y sesión: Admin Cusco Creativos vs Empleado con visualización en cabecera, permisos diferenciados en tiempo real (eliminar/restablecer/configuración exclusivos de Admin) y cierre de sesión activo.
+- [x] Roles y sesión: Admin Cusco Creativos (`Acceso Total`) vs Empleado (`Operador`) con resolución automática desde `public.profiles`, sincronización en tiempo real (`onAuthStateChange` + `storage`), selector de perfil en cabecera, permisos diferenciados y botón **Salir** en rojo.
 
 ## Fase C — Rutas de API seguras
 - [x] `POST /api/ai/generate` (OpenAI en servidor, `max_tokens`, rate limit, verificación de sesión `cc_auth`).
 - [x] `POST /api/support` y `POST /api/quote` (honeypot + time-gate 2.5s + rate limit 3/10min en cliente y servidor).
 - [x] Dominio `*.supabase.co` en `images.remotePatterns` y ruta `GET /api/keep-alive` anti-pausa.
 
+## Fase UX & Vista Móvil (Generador y Previsualización)
+- [x] **Paso 1 del Generador (`/demo/new`):** Orden optimizado (`1. Elige la Plantilla` → `2. Nivel de Servicio / Tier` → `3. Portada Hero` → `4. Idiomas`) con resaltado limpio tipo glow/blur azul.
+- [x] **Paso 4 del Generador (`/demo/new`):** Tarjeta `RESUMEN DE LA LANDING + 🚀 Generar Landing y Ver Demo` visible al finalizar el Paso 4 (arriba de la vista previa en vivo y al cierre del formulario).
+- [x] **Vista Móvil en PC y en Celular Real (`/demo/preview` y `/p/[slug]`):** Simulador móvil en PC con viewport real de `390px` (menú hamburguesa y 1 columna reales) y vista pantalla completa nativa en smartphones reales + sincronización instantánea por QR (`?d=`).
+
 ## Fase D — Motor de IA
-- [ ] Prompt adaptado por plan (free/basic/pro/advance), objetivo (WhatsApp/cotización) e idioma.
-- [ ] Validación del JSON devuelto por la IA antes de renderizar.
-- [ ] Priorización de secciones según el objetivo.
+- [x] Prompt adaptado por plan (free/basic/pro/advance), objetivo (WhatsApp/cotización) e idioma (`POST /api/ai/generate` y autocompletado inteligente en `/demo/new`).
+- [x] Validación y sanitización del JSON devuelto por la IA antes de renderizar.
+- [x] Priorización y filtrado estricto de secciones según el objetivo y el nivel contratado (`tier`).
 
 ## Fase E — Despliegue y operación
-- [ ] Deploy en Vercel + prueba punta a punta (login → crear → IA → editar → publicar).
-- [ ] **Keep-alive anti-pausa de Supabase Free:** ruta `/api/keep-alive` (consulta mínima, protegida con `CRON_SECRET`) + Vercel Cron cada 2–3 días.
+- [x] **Keep-alive anti-pausa de Supabase Free:** ruta `/api/keep-alive` (consulta mínima, protegida con `CRON_SECRET`) + Vercel Cron configurado en `vercel.json`.
+- [ ] Deploy final en Vercel con variables de entorno de Supabase + prueba punta a punta en la nube.
 - [ ] Respaldo periódico de la base de datos (el plan Free no tiene backups automáticos).
 - [ ] Control de gasto de IA: saldo prepago y límite mensual en el panel del proveedor.
 - [ ] Evaluar paso a **Supabase Pro** cuando haya clientes reales (sin pausa + backups diarios).
 
 ---
 
-## Módulos funcionales pendientes
-- [ ] CRUD de Guías (nombre, idiomas, experiencia, destinos, fotos).
-- [ ] Dashboard con datos reales.
-- [ ] Panel de administración de tickets de soporte.
-- [ ] Plantilla `family-comfort`.
+## Módulos funcionales
+- [x] Panel de administración de tickets de soporte (`/demo/support`).
+- [x] Catálogo de 6 plantillas de alta conversión (`agency-portal`, `boho-nature`, `premium`, `adventure`, `cultural`, `emerald-explorer`).
+- [ ] CRUD independiente de Guías en base de datos (actualmente integrado dentro del editor de cada landing).
+- [ ] Conexión del Dashboard y `landingStore` a lectura/escritura en vivo con Supabase PostgreSQL.
 
 ## Cierre de tesis
-- [ ] Pruebas del flujo completo y de restricciones por plan.
+- [x] Pruebas del flujo completo y de restricciones por plan (`free`, `basic`, `pro`, `advance`) y vista móvil en PC y celular real.
 - [ ] Medición: tiempo de creación manual vs. automatizada (tabla de resultados).
 - [ ] Manual de usuario, diagrama de arquitectura y capturas.
 - [ ] Validación con Jefatura al cierre de cada fase.
 
 ## Opcional (si sobra tiempo)
-- [ ] SEO y FAQ automáticos con IA.
-- [ ] Edición mediante instrucciones a la IA.
+- [x] FAQ, itinerario y testimonios automáticos con IA.
+- [ ] Edición mediante instrucciones conversacionales a la IA.
