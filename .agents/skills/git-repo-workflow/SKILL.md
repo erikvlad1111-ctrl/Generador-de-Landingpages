@@ -42,11 +42,26 @@ Cada vez que se realicen cambios solicitados por el usuario:
 - **Diagnóstico:** `git remote -v` (si aparece `ghp_` tras `https://usuario:`, está expuesto).
 - **Solución:**
   1. Revocar el token en GitHub → Settings → Developer settings → Personal access tokens.
-  2. Limpiar el remoto en **cada copia local** (original y `- copia -vercel-supabase`):
+  2. Limpiar el remoto en **cada copia local** (original y `- copia -vercel-supabase`) manteniendo **solo el usuario** (sin token):
      ```powershell
-     git -C "<ruta-del-repo>" remote set-url origin https://github.com/erikvlad1111-ctrl/Generador-de-Landingpages.git
+     git -C "<ruta-del-repo>" remote set-url origin https://erikvlad1111-ctrl@github.com/erikvlad1111-ctrl/Generador-de-Landingpages.git
+     git -C "<ruta-del-repo>" config credential.https://github.com.username erikvlad1111-ctrl
      ```
-  3. En el siguiente `git push`, Git Credential Manager abrirá el navegador para autenticarse (las credenciales quedan en el gestor de Windows, no en el repo).
+  3. En el siguiente `git push`, Git Credential Manager usará automáticamente la credencial almacenada de `erikvlad1111-ctrl` en el gestor de Windows sin exponer el token en `.git/config`.
+
+### `git push origin main` se queda colgado o falla con `fatal: Cannot prompt because user interactivity has been disabled`
+- **Síntoma:** Al ejecutar `git push origin main` desde una terminal en segundo plano, el comando se queda esperando indefinidamente.
+- **Causa raíz:** En el Administrador de Credenciales de Windows (`cmdkey /list`) existen múltiples cuentas de GitHub (`git:https://github.com` asociada a `erik1111111` y `git:https://erikvlad1111-ctrl@github.com` asociada a `erikvlad1111-ctrl`). Si la URL remota no especifica el usuario (`https://github.com/...`), Git Credential Manager intenta usar la credencial genérica (`erik1111111`), falla por permisos y abre un diálogo interactivo que bloquea el proceso.
+- **Comando de Diagnóstico:**
+  ```powershell
+  cmdkey /list | Select-String -Pattern "git|github" -Context 1,2
+  ```
+- **Solución Paso a Paso:**
+  ```powershell
+  git config credential.https://github.com.username erikvlad1111-ctrl
+  git remote set-url origin https://erikvlad1111-ctrl@github.com/erikvlad1111-ctrl/Generador-de-Landingpages.git
+  git push origin main
+  ```
 
 ## Estructura de Plantillas Guardadas
 - **AgencyPortalTemplate:** `src/templates/AgencyPortalTemplate.tsx` (Diseño 1 de alta conversión con hero Vinicunca, acentos naranja, barra de métricas y sellos DIRCETUR).
