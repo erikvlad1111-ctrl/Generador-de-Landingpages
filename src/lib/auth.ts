@@ -93,7 +93,6 @@ function resetFailedAttempts(): void {
 
 function setAuthCookie(rememberMe = true) {
   if (typeof document === 'undefined') return;
-  // Expira en 7 días si rememberMe está activo, o 1 día por defecto
   const maxAge = rememberMe ? 60 * 60 * 24 * 7 : 60 * 60 * 24;
   const secure = window.location.protocol === 'https:' ? '; Secure' : '';
   document.cookie = `${COOKIE_NAME}=1; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
@@ -129,7 +128,7 @@ export function setStoredUser(user: UserSession | null): void {
   }
 }
 
-// Cuentas internas autorizadas por Jefatura (cuando opera en modo Demo/Tesis sin variables cloud)
+// Cuentas internas autorizadas por Jefatura (fallback local/híbrido)
 const AUTHORIZED_INTERNAL_USERS: Record<
   string,
   { password: string; role: 'admin' | 'employee'; name: string; id: string }
@@ -148,11 +147,73 @@ const AUTHORIZED_INTERNAL_USERS: Record<
   },
 };
 
+/**
+ * 1. Resolución automática de Perfil y Rol en Supabase:
+ *    - Primero intenta leer `role` y `full_name` desde la tabla `public.profiles`
+ *    - Si la tabla `profiles` aún no existe o no tiene fila, usa `user_metadata`
+ *    - Si tampoco hay metadata, deduce el rol según el correo (`empleado*` -> 'employee', resto -> 'admin')
+ */
+async function resolveSupabaseUserProfile(supaUser: {
+  id: string;
+  email?: string;
+  user_metadata?: Record<string, unknown>;
+}): Promise<{ role: 'admin' | 'employee'; name: string }> {
+  const emailLower = (supaUser.email || '').trim().toLowerCase();
+  const metaRole = supaUser.user_metadata?.role as 'admin' | 'employee' | undefined;
+  const metaName = (supaUser.user_metadata?.name || supaUser.user_metadata?.full_name) as string | undefined;
+
+  try {
+    const { data: profileRow, error } = await supabase
+      .from('profiles')
+      .select('role, full_name, name')
+      .eq('id', supaUser.id)
+      .maybeSingle();
+
+    if (!error && profileRow) {
+      const dbRole =
+        profileRow.role === 'employee' || profileRow.role === 'admin'
+          ? (profileRow.role as 'admin' | 'employee')
+          : undefined;
+      const dbName = (profileRow.full_name || profileRow.name) as string | undefined;
+
+      if (dbRole || dbName) {
+        return {
+          role: dbRole || metaRole || (emailLower.startsWith('empleado') ? 'employee' : 'admin'),
+          name:
+            dbName ||
+            metaName ||
+            (emailLower.startsWith('empleado') ? 'Ejecutivo de Ventas & Tours' : 'Administrador General'),
+        };
+      }
+    }
+  } catch {
+    // Si la tabla profiles aún no fue migrada en Supabase, continúa con user_metadata o inferencia por email
+  }
+
+  const inferredRole: 'admin' | 'employee' =
+    metaRole === 'employee' || metaRole === 'admin'
+      ? metaRole
+      : emailLower.startsWith('empleado') || emailLower.includes('ventas') || emailLower.includes('operador')
+      ? 'employee'
+      : 'admin';
+
+  const inferredName =
+    metaName ||
+    AUTHORIZED_INTERNAL_USERS[emailLower]?.name ||
+    (inferredRole === 'employee' ? 'Ejecutivo de Ventas & Tours' : 'Administrador General');
+
+  return { role: inferredRole, name: inferredName };
+}
+
 export async function signInWithCredentials(
   email: string,
   password: string,
   options?: { honeypot?: string; rememberMe?: boolean }
-): Promise<{ user?: UserSession; error?: string; rateLimit?: { locked: boolean; remainingSeconds: number; attemptsLeft: number } }> {
+): Promise<{
+  user?: UserSession;
+  error?: string;
+  rateLimit?: { locked: boolean; remainingSeconds: number; attemptsLeft: number };
+}> {
   // Capa 1: Honeypot Anti-Bot
   if (options?.honeypot && options.honeypot.trim().length > 0) {
     return { error: 'Solicitud bloqueada por el filtro de seguridad Anti-Bot.' };
@@ -169,30 +230,25 @@ export async function signInWithCredentials(
 
   const configured = isSupabaseConfigured();
   const rememberMe = options?.rememberMe ?? true;
+  const trimmedEmail = email.trim().toLowerCase();
+  const trimmedPass = password.trim();
 
   // Capa 3A: Autenticación en la nube con Supabase Auth (si las variables están configuradas)
   if (configured) {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
-        password: password.trim(),
+        email: trimmedEmail,
+        password: trimmedPass,
       });
 
-      if (error) {
-        const updatedLimit = registerFailedAttempt();
-        return {
-          error: `Credenciales rechazadas por Supabase Auth (${error.message}). Intentos restantes: ${updatedLimit.attemptsLeft}.`,
-          rateLimit: updatedLimit,
-        };
-      }
-
-      if (data?.user) {
+      if (!error && data?.user) {
         resetFailedAttempts();
+        const profile = await resolveSupabaseUserProfile(data.user);
         const userSession: UserSession = {
           id: data.user.id,
-          email: data.user.email || email.trim(),
-          name: (data.user.user_metadata?.name as string) || 'Personal Autorizado',
-          role: (data.user.user_metadata?.role as 'admin' | 'employee') || 'admin',
+          email: data.user.email || trimmedEmail,
+          name: profile.name,
+          role: profile.role,
           isDemo: false,
           loginAt: new Date().toISOString(),
         };
@@ -201,15 +257,40 @@ export async function signInWithCredentials(
         setStoredUser(userSession);
         return { user: userSession };
       }
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Error de conexión con Supabase Auth';
-      return { error: message };
+
+      // 3. Fallback Híbrido Seguro:
+      // Si Supabase ya está conectado en .env pero el usuario aún no creó las 2 cuentas oficiales en Supabase Auth,
+      // permite entrar con las cuentas oficiales autorizadas sin bloquear al equipo fuera del panel.
+      const matchedInternal = AUTHORIZED_INTERNAL_USERS[trimmedEmail];
+      if (matchedInternal && matchedInternal.password === trimmedPass) {
+        resetFailedAttempts();
+        const hybridUser: UserSession = {
+          id: matchedInternal.id,
+          email: trimmedEmail,
+          name: matchedInternal.name,
+          role: matchedInternal.role,
+          isDemo: true,
+          loginAt: new Date().toISOString(),
+        };
+
+        setAuthCookie(rememberMe);
+        setStoredUser(hybridUser);
+        return { user: hybridUser };
+      }
+
+      if (error) {
+        const updatedLimit = registerFailedAttempt();
+        return {
+          error: `Credenciales inválidas (${error.message}). Intentos restantes: ${updatedLimit.attemptsLeft}.`,
+          rateLimit: updatedLimit,
+        };
+      }
+    } catch {
+      // Si hay caída temporal de red hacia Supabase, permite fallback a las cuentas internas autorizadas
     }
   }
 
   // Capa 3B: Autenticación Interna Controlada (Cuentas autorizadas por Jefatura)
-  const trimmedEmail = email.trim().toLowerCase();
-  const trimmedPass = password.trim();
   const matchedAccount = AUTHORIZED_INTERNAL_USERS[trimmedEmail];
 
   if (matchedAccount && matchedAccount.password === trimmedPass) {
@@ -254,11 +335,12 @@ export async function getCurrentUser(): Promise<UserSession | null> {
     try {
       const { data } = await supabase.auth.getUser();
       if (data?.user) {
+        const profile = await resolveSupabaseUserProfile(data.user);
         const session: UserSession = {
           id: data.user.id,
           email: data.user.email || '',
-          name: (data.user.user_metadata?.name as string) || 'Personal Autorizado',
-          role: (data.user.user_metadata?.role as 'admin' | 'employee') || 'admin',
+          name: profile.name,
+          role: profile.role,
           isDemo: false,
         };
         setAuthCookie();
@@ -270,4 +352,75 @@ export async function getCurrentUser(): Promise<UserSession | null> {
     }
   }
   return getStoredUser();
+}
+
+/**
+ * 2. Sincronización en tiempo real de la sesión de Supabase (`onAuthStateChange`)
+ *    Mantiene sincronizados el token JWT de Supabase, la cookie `cc_auth` y el estado de React en todas las pestañas.
+ */
+export function subscribeToAuthChanges(
+  onSessionUpdate: (user: UserSession | null) => void
+): () => void {
+  if (typeof window === 'undefined') return () => {};
+
+  const handleCustomStorageEvent = (e: Event) => {
+    const customEvent = e as CustomEvent<UserSession | null>;
+    onSessionUpdate(customEvent.detail ?? getStoredUser());
+  };
+
+  const handleStorageSync = (e: StorageEvent) => {
+    if (e.key === AUTH_STORAGE_KEY) {
+      const updated = getStoredUser();
+      if (!updated) clearAuthCookie();
+      onSessionUpdate(updated);
+    }
+  };
+
+  window.addEventListener('cc-auth-changed', handleCustomStorageEvent);
+  window.addEventListener('storage', handleStorageSync);
+
+  let unsubscribeSupabase: (() => void) | null = null;
+
+  if (isSupabaseConfigured()) {
+    const { data: listener } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_OUT') {
+        const currentLocal = getStoredUser();
+        // Solo limpiar si no está usando una sesión híbrida local de respaldo
+        if (!currentLocal?.isDemo) {
+          clearAuthCookie();
+          setStoredUser(null);
+          onSessionUpdate(null);
+        }
+        return;
+      }
+
+      if (
+        (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED' || event === 'USER_UPDATED') &&
+        session?.user
+      ) {
+        const profile = await resolveSupabaseUserProfile(session.user);
+        const syncedUser: UserSession = {
+          id: session.user.id,
+          email: session.user.email || '',
+          name: profile.name,
+          role: profile.role,
+          isDemo: false,
+          loginAt: new Date().toISOString(),
+        };
+        setAuthCookie();
+        setStoredUser(syncedUser);
+        onSessionUpdate(syncedUser);
+      }
+    });
+
+    unsubscribeSupabase = () => {
+      listener.subscription.unsubscribe();
+    };
+  }
+
+  return () => {
+    window.removeEventListener('cc-auth-changed', handleCustomStorageEvent);
+    window.removeEventListener('storage', handleStorageSync);
+    if (unsubscribeSupabase) unsubscribeSupabase();
+  };
 }

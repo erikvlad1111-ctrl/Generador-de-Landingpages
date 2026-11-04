@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { getCurrentUser, signOutUser, setStoredUser, UserSession } from '@/lib/auth';
+import { getCurrentUser, signOutUser, setStoredUser, subscribeToAuthChanges, UserSession } from '@/lib/auth';
 
 export default function DemoLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -41,8 +41,19 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
         setAuthChecking(false);
       }
     });
+
+    const unsubscribe = subscribeToAuthChanges((updatedUser) => {
+      if (!mounted) return;
+      if (!updatedUser) {
+        router.replace('/login');
+      } else {
+        setUser(updatedUser);
+      }
+    });
+
     return () => {
       mounted = false;
+      unsubscribe();
     };
   }, [pathname, router]);
 
