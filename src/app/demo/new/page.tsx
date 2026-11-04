@@ -1337,7 +1337,7 @@ export default function NewLandingDemo() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
               {[
                 { 
                   id: 'agency-portal', 
@@ -1390,15 +1390,17 @@ export default function NewLandingDemo() {
                     onClick={() => {
                       setTemplate(t.id as TemplateType);
                     }}
-                    className={`relative p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
+                    className={`relative p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                       isSelected 
-                        ? 'border-blue-600 bg-blue-50/70 shadow-md ring-2 ring-blue-500/20 scale-[1.01]' 
-                        : 'border-slate-200 hover:border-slate-300 bg-white hover:shadow-xs'
+                        ? 'border-blue-600 bg-gradient-to-br from-blue-50 via-indigo-50/50 to-blue-50/90 shadow-md shadow-blue-600/10 ring-2 ring-blue-500/25 scale-[1.01]' 
+                        : 'border-slate-300/90 hover:border-blue-400 bg-slate-50/75 hover:bg-white shadow-xs hover:shadow-md'
                     }`}
                   >
                     <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="p-1 rounded-lg bg-slate-100 flex items-center justify-center">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className={`p-1.5 rounded-xl flex items-center justify-center border shadow-2xs ${
+                          isSelected ? 'bg-white border-blue-200' : 'bg-white border-slate-200/90'
+                        }`}>
                           {t.id === 'agency-portal' && <Zap size={18} className="text-[#FF5500]" />}
                           {t.id === 'boho-nature' && <Camera size={18} className="text-amber-600" />}
                           {t.id === 'premium' && <Crown size={18} className="text-amber-500" />}
@@ -1406,20 +1408,28 @@ export default function NewLandingDemo() {
                           {t.id === 'cultural' && <Landmark size={18} className="text-amber-700" />}
                           {t.id === 'emerald-explorer' && <Compass size={18} className="text-emerald-600" />}
                         </span>
-                        <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md ${t.badgeClass}`}>
+                        <span className={`text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-md shadow-2xs ${t.badgeClass}`}>
                           {t.badge}
                         </span>
                       </div>
-                      <span className="text-xs font-black text-slate-900 block">{t.name}</span>
-                      <span className="text-[11px] text-slate-500 font-normal mt-1 block leading-snug">{t.desc}</span>
+                      <span className="text-xs sm:text-[13px] font-black text-slate-900 block">{t.name}</span>
+                      <span className="text-[11px] text-slate-600 font-medium mt-1 block leading-snug">{t.desc}</span>
                     </div>
 
-                    {isSelected && (
-                      <div className="mt-2.5 pt-2 border-t border-blue-200/80 flex items-center justify-between text-blue-700 text-[10px] font-bold">
-                        <span>Plantilla Activa</span>
-                        <Check size={14} className="text-blue-600" />
-                      </div>
-                    )}
+                    <div className={`mt-3 pt-2 border-t flex items-center justify-between text-[10px] font-bold ${
+                      isSelected
+                        ? 'border-blue-200 text-blue-700'
+                        : 'border-slate-200/80 text-slate-400'
+                    }`}>
+                      <span>{isSelected ? 'Plantilla Activa' : 'Clic para elegir'}</span>
+                      {isSelected ? (
+                        <span className="w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center">
+                          <Check size={11} strokeWidth={3} />
+                        </span>
+                      ) : (
+                        <span className="w-4 h-4 rounded-full border border-slate-300 bg-white" />
+                      )}
+                    </div>
                   </button>
                 );
               })}
@@ -1427,7 +1437,7 @@ export default function NewLandingDemo() {
           </div>
 
               {/* PASO 2: NIVEL DE SERVICIO / VERSIÓN DE LA LANDING (TIER) */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5 ring-2 ring-blue-500/10">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                 <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
@@ -1453,19 +1463,28 @@ export default function NewLandingDemo() {
                   setLanguage('es');
                   setSelectedLanguages(['es']);
                 }}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                   tier === 'free'
-                    ? 'border-stone-700 bg-stone-50 shadow-sm ring-2 ring-stone-400/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                    ? 'border-stone-800 bg-gradient-to-br from-stone-100 to-stone-50 shadow-md ring-2 ring-stone-500/25 scale-[1.01]'
+                    : 'border-slate-300/90 hover:border-stone-400 bg-slate-50/75 hover:bg-white shadow-xs hover:shadow-md'
                 }`}
               >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-black text-stone-900 uppercase tracking-wider">Gratuito</span>
-                  <span className="text-[10px] bg-stone-200 text-stone-800 font-extrabold px-2 py-0.5 rounded-md">HERO + TOURS</span>
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs sm:text-[13px] font-black text-stone-900 uppercase tracking-wider flex items-center gap-1.5">
+                      Gratuito
+                      {tier === 'free' && (
+                        <span className="w-4 h-4 rounded-full bg-stone-800 text-white inline-flex items-center justify-center">
+                          <Check size={10} strokeWidth={3} />
+                        </span>
+                      )}
+                    </span>
+                    <span className="text-[10px] bg-stone-200 text-stone-800 font-extrabold px-2.5 py-0.5 rounded-md border border-stone-300/80">HERO + TOURS</span>
+                  </div>
+                  <p className="text-xs text-slate-600 font-medium leading-relaxed">
+                    Hero de alto impacto + sección de tours destacados + WhatsApp directo. Idioma único: Español.
+                  </p>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Hero de alto impacto + sección de tours destacados + WhatsApp directo. Idioma único: Español.
-                </p>
               </button>
 
               {/* Básico */}
@@ -1476,19 +1495,28 @@ export default function NewLandingDemo() {
                   setLanguage('es');
                   setSelectedLanguages(['es']);
                 }}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                   tier === 'basic'
-                    ? 'border-emerald-600 bg-emerald-50/80 shadow-sm ring-2 ring-emerald-500/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                    ? 'border-emerald-600 bg-gradient-to-br from-emerald-50 to-teal-50/60 shadow-md shadow-emerald-600/10 ring-2 ring-emerald-500/25 scale-[1.01]'
+                    : 'border-slate-300/90 hover:border-emerald-400 bg-slate-50/75 hover:bg-white shadow-xs hover:shadow-md'
                 }`}
               >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-black text-emerald-900 uppercase tracking-wider">Básico</span>
-                  <span className="text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-2 py-0.5 rounded-md">ESTÁNDAR</span>
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs sm:text-[13px] font-black text-emerald-950 uppercase tracking-wider flex items-center gap-1.5">
+                      Básico
+                      {tier === 'basic' && (
+                        <span className="w-4 h-4 rounded-full bg-emerald-600 text-white inline-flex items-center justify-center">
+                          <Check size={10} strokeWidth={3} />
+                        </span>
+                      )}
+                    </span>
+                    <span className="text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-2.5 py-0.5 rounded-md border border-emerald-200">ESTÁNDAR</span>
+                  </div>
+                  <p className="text-xs text-slate-600 font-medium leading-relaxed">
+                    Hero + Ficha + Acerca de + Qué incluye + Catálogo de tours. Idioma único: Español.
+                  </p>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Hero + Ficha + Acerca de + Qué incluye + Catálogo de tours. Idioma único: Español.
-                </p>
               </button>
 
               {/* Pro */}
@@ -1501,38 +1529,56 @@ export default function NewLandingDemo() {
                     setLanguage('es');
                   }
                 }}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                   tier === 'pro'
-                    ? 'border-blue-600 bg-blue-50/80 shadow-sm ring-2 ring-blue-500/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                    ? 'border-blue-600 bg-gradient-to-br from-blue-50 to-indigo-50/60 shadow-md shadow-blue-600/10 ring-2 ring-blue-500/25 scale-[1.01]'
+                    : 'border-slate-300/90 hover:border-blue-400 bg-slate-50/75 hover:bg-white shadow-xs hover:shadow-md'
                 }`}
               >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-black text-blue-900 uppercase tracking-wider">Pro</span>
-                  <span className="text-[10px] bg-blue-100 text-blue-800 font-extrabold px-2 py-0.5 rounded-md">RECOMENDADO</span>
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs sm:text-[13px] font-black text-blue-950 uppercase tracking-wider flex items-center gap-1.5">
+                      Pro
+                      {tier === 'pro' && (
+                        <span className="w-4 h-4 rounded-full bg-blue-600 text-white inline-flex items-center justify-center">
+                          <Check size={10} strokeWidth={3} />
+                        </span>
+                      )}
+                    </span>
+                    <span className="text-[10px] bg-blue-100 text-blue-800 font-extrabold px-2.5 py-0.5 rounded-md border border-blue-200">RECOMENDADO</span>
+                  </div>
+                  <p className="text-xs text-slate-600 font-medium leading-relaxed">
+                    Todo en Básico + Itinerario + Mochila + Sellos. Hasta 2 idiomas (ES / EN).
+                  </p>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Todo en Básico + Itinerario + Mochila + Sellos. Hasta 2 idiomas (ES / EN).
-                </p>
               </button>
 
               {/* Advance */}
               <button
                 type="button"
                 onClick={() => setTier('advance')}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                   tier === 'advance'
-                    ? 'border-purple-600 bg-purple-50/80 shadow-sm ring-2 ring-purple-500/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                    ? 'border-purple-600 bg-gradient-to-br from-purple-50 to-indigo-50/70 shadow-md shadow-purple-600/10 ring-2 ring-purple-500/25 scale-[1.01]'
+                    : 'border-slate-300/90 hover:border-purple-400 bg-slate-50/75 hover:bg-white shadow-xs hover:shadow-md'
                 }`}
               >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-black text-purple-900 uppercase tracking-wider">Advance</span>
-                  <span className="text-[10px] bg-purple-100 text-purple-800 font-extrabold px-2 py-0.5 rounded-md">ALTA CONVERSIÓN</span>
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs sm:text-[13px] font-black text-purple-950 uppercase tracking-wider flex items-center gap-1.5">
+                      Advance
+                      {tier === 'advance' && (
+                        <span className="w-4 h-4 rounded-full bg-purple-600 text-white inline-flex items-center justify-center">
+                          <Check size={10} strokeWidth={3} />
+                        </span>
+                      )}
+                    </span>
+                    <span className="text-[10px] bg-purple-100 text-purple-800 font-extrabold px-2.5 py-0.5 rounded-md border border-purple-200">ALTA CONVERSIÓN</span>
+                  </div>
+                  <p className="text-xs text-slate-600 font-medium leading-relaxed">
+                    Todo en Pro + Galería + FAQs + Testimonios + Catálogo. Hasta 5 idiomas.
+                  </p>
                 </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Todo en Pro + Galería + FAQs + Testimonios + Catálogo. Hasta 5 idiomas.
-                </p>
               </button>
             </div>
           </div>
