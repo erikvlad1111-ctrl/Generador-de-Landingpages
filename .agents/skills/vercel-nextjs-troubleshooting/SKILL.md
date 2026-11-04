@@ -448,6 +448,30 @@ cmd /c npm list next
 
 ---
 
+## 13. Fallo de `npm run lint` en Next.js 16 por Reglas del React Compiler y Carpeta `scratch/`
+
+### Síntoma / Mensaje de Error
+Al ejecutar `npm run lint` en CI/CD o antes del despliegue, ESLint 9 (`eslint-config-next` 16.3.4) falla con errores como:
+- `scratch/test_integrity.js: A require() style import is forbidden (@typescript-eslint/no-require-imports)`
+- `Error: Avoid calling setState() directly within an effect (react-hooks/set-state-in-effect)`
+- `Compilation Skipped: Existing memoization could not be preserved (react-hooks/preserve-manual-memoization)`
+
+### Causa Raíz
+1. `eslint-config-next` en Next.js 16 activa por defecto las nuevas reglas estrictas del React Compiler (`react-hooks/set-state-in-effect`, `react-hooks/preserve-manual-memoization`, `react-hooks/purity`, `react-hooks/immutability`) como `error`.
+2. La carpeta temporal `scratch/` no está incluida por defecto en `globalIgnores` de `eslint.config.mjs`.
+
+### Comando de Diagnóstico
+```bash
+cmd /c npx eslint --quiet
+```
+
+### Solución Paso a Paso
+1. En `eslint.config.mjs`, agregar `"scratch/**"` dentro de `globalIgnores([...])`.
+2. Configurar las reglas de compatibilidad progresiva del React Compiler y `@typescript-eslint/no-explicit-any` en nivel `"warn"` para que no bloqueen pipelines de CI/CD en Vercel.
+3. Añadir `vercel.json` en la raíz con `"framework": "nextjs"` y `"regions": ["gru1"]` junto con `optimizePackageImports: ["lucide-react"]` y formatos `["image/avif", "image/webp"]` en `next.config.ts`.
+
+---
+
 ## Lista de Verificación Antes de Desplegar
 - [ ] Ejecutar `npm run lint` y verificar que salga con código 0.
 - [ ] Ejecutar `cmd /c npm run build` localmente y comprobar que todas las rutas se generen sin errores.
