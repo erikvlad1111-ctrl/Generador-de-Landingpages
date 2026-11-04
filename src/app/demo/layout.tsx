@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   LayoutDashboard, 
   FilePlus2, 
@@ -12,20 +12,27 @@ import {
   X,
   Compass,
   Layers,
-  Pin,
   LayoutTemplate,
-  Loader2
+  Loader2,
+  ShieldCheck,
+  ChevronDown,
+  UserCheck,
+  RefreshCw,
+  CheckCircle2,
+  ChevronRight
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { getCurrentUser, signOutUser, UserSession } from '@/lib/auth';
+import { getCurrentUser, signOutUser, setStoredUser, UserSession } from '@/lib/auth';
 
 export default function DemoLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const [user, setUser] = useState<UserSession | null>(null);
   const [authChecking, setAuthChecking] = useState(true);
+  const profileDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let mounted = true;
@@ -43,10 +50,45 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
     };
   }, [pathname, router]);
 
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (profileDropdownRef.current && !profileDropdownRef.current.contains(e.target as Node)) {
+        setProfileMenuOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   const handleLogout = async () => {
+    setProfileMenuOpen(false);
     await signOutUser();
     router.replace('/login');
     router.refresh();
+  };
+
+  const handleQuickSwitchRole = (targetRole: 'admin' | 'employee') => {
+    const newSession: UserSession =
+      targetRole === 'admin'
+        ? {
+            id: 'cc-admin-01',
+            email: 'admin@cuscocreativos.com',
+            name: 'Administrador General',
+            role: 'admin',
+            isDemo: true,
+            loginAt: new Date().toISOString(),
+          }
+        : {
+            id: 'cc-emp-02',
+            email: 'empleado@cuscocreativos.com',
+            name: 'Ejecutivo de Ventas & Tours',
+            role: 'employee',
+            isDemo: true,
+            loginAt: new Date().toISOString(),
+          };
+    setStoredUser(newSession);
+    setUser(newSession);
+    setProfileMenuOpen(false);
   };
 
   const isDashboard = pathname === '/demo';
@@ -57,11 +99,30 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
   const isPreview = pathname.startsWith('/demo/preview');
 
   let pageTitle = 'Panel Principal';
-  if (isNewLanding) pageTitle = 'Generador de Landing';
-  else if (isPinterest) pageTitle = 'Diseños Disponibles Landing Pages';
-  else if (isPlans) pageTitle = 'Guía de Estructura de Páginas';
-  else if (isSettings) pageTitle = 'Configuración';
-  else if (isPreview) pageTitle = 'Previsualizador';
+  let pageSubtitle = 'Gestión de páginas de aterrizaje, métricas y estado de publicación';
+  let PageIcon = LayoutDashboard;
+
+  if (isNewLanding) {
+    pageTitle = 'Generador de Landing';
+    pageSubtitle = 'Creación asistida por IA y plantillas de alta conversión';
+    PageIcon = FilePlus2;
+  } else if (isPinterest) {
+    pageTitle = 'Diseños Disponibles Landing Pages';
+    pageSubtitle = 'Catálogo de 6 plantillas especializadas para agencias de viajes';
+    PageIcon = LayoutTemplate;
+  } else if (isPlans) {
+    pageTitle = 'Guía de Estructura de Páginas';
+    pageSubtitle = 'Comparativa de módulos y alcances por nivel (Free, Básico, Pro, Advance)';
+    PageIcon = Layers;
+  } else if (isSettings) {
+    pageTitle = 'Configuración de Agencia';
+    pageSubtitle = 'Marca blanca, RUC, WhatsApp oficial y preferencias del sistema';
+    PageIcon = Settings;
+  } else if (isPreview) {
+    pageTitle = 'Previsualizador';
+    pageSubtitle = 'Edición en vivo y simulador multi-dispositivo';
+    PageIcon = Eye;
+  }
 
   if (authChecking) {
     return (
@@ -74,15 +135,15 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
     );
   }
 
-  const userInitials = user?.email
-    ? user.email.substring(0, 2).toUpperCase()
-    : 'CC';
-  const userRoleLabel = user?.role === 'admin' ? 'Administrador' : 'Empleado';
+  const isAdmin = user?.role === 'admin';
+  const userInitials = isAdmin ? 'AD' : 'EM';
+  const userRoleLabel = isAdmin ? 'Administrador' : 'Empleado';
+  const userDisplayName = user?.name || (isAdmin ? 'Administrador General' : 'Ejecutivo de Ventas & Tours');
 
   return (
     <div className="flex min-h-screen bg-slate-50 text-slate-900 flex-col md:flex-row">
       
-      {/* 1. DESKTOP SIDEBAR (Visible ONLY on md and up - slightly slimmer for wider table view) */}
+      {/* 1. DESKTOP SIDEBAR (Visible ONLY on md and up) */}
       <aside className="hidden md:flex w-56 bg-slate-950 text-slate-300 flex-col shrink-0 border-r border-slate-800/80 select-none">
         <div className="p-4.5 border-b border-slate-800/80">
           <div className="flex items-center gap-2.5">
@@ -172,7 +233,7 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
             <span className="font-bold text-slate-200 block mb-0.5 flex items-center gap-1.5">
               <Sparkles size={12} className="text-amber-400" /> Plan Pro Agencia
             </span>
-            <span>4 Plantillas activadas (incl. Boho Pinterest).</span>
+            <span>6 Plantillas activadas (incl. Esmeralda & Boho).</span>
             <Link href="/demo/plans" className="text-blue-400 hover:text-blue-300 font-semibold block mt-1.5 transition-colors">
               Ver todos los planes →
             </Link>
@@ -223,7 +284,15 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xs flex flex-col justify-end md:hidden animate-in fade-in">
           <div className="bg-slate-950 text-white rounded-t-3xl p-6 border-t border-slate-800 space-y-4 animate-in slide-in-from-bottom duration-300">
             <div className="flex justify-between items-center pb-2 border-b border-slate-800">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Navegación Móvil</span>
+              <div className="flex items-center gap-2">
+                <span className="w-6 h-6 rounded-full bg-blue-600 text-[10px] font-bold flex items-center justify-center">
+                  {userInitials}
+                </span>
+                <div>
+                  <span className="text-xs font-bold text-white block leading-none">{userDisplayName}</span>
+                  <span className="text-[10px] text-slate-400">{user?.email}</span>
+                </div>
+              </div>
               <button onClick={() => setMobileMenuOpen(false)} className="text-slate-400 hover:text-white p-1">
                 <X size={18} />
               </button>
@@ -290,7 +359,7 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
                   setMobileMenuOpen(false);
                   handleLogout();
                 }}
-                className="p-3 rounded-xl flex items-center gap-2.5 text-xs font-bold bg-slate-900 text-slate-400 hover:text-red-400 hover:bg-slate-800 cursor-pointer text-left"
+                className="p-3 rounded-xl flex items-center gap-2.5 text-xs font-bold bg-red-950/40 border border-red-900/50 text-red-300 hover:bg-red-900/50 cursor-pointer text-left"
               >
                 <LogOut size={18} />
                 <span>Cerrar Sesión</span>
@@ -303,26 +372,179 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
       {/* 4. MAIN CONTENT WRAPPER */}
       <main className="flex-1 flex flex-col min-w-0 bg-slate-50 pb-20 md:pb-0">
         
-        {/* Desktop Header */}
+        {/* Desktop Header Mejorado */}
         {!isPreview && (
-          <header className="hidden md:flex bg-white h-16 border-b border-slate-200/80 items-center px-8 shadow-xs justify-between shrink-0">
-            <div className="flex items-center gap-2">
-              <h2 className="font-bold text-slate-800 text-sm">{pageTitle}</h2>
+          <header className="hidden md:flex bg-white/95 backdrop-blur-md h-18 border-b border-slate-200/90 items-center px-6 lg:px-8 shadow-2xs justify-between shrink-0 sticky top-0 z-30">
+            {/* Lado Izquierdo: Icono + Breadcrumb + Título + Subtítulo */}
+            <div className="flex items-center gap-3.5 min-w-0">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200/70 flex items-center justify-center text-blue-600 shadow-2xs shrink-0">
+                <PageIcon size={20} />
+              </div>
+              <div className="min-w-0">
+                <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                  <span>Cusco Creativos</span>
+                  <ChevronRight size={11} className="text-slate-300" />
+                  <span className="text-blue-600">Panel Interno</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <h2 className="font-extrabold text-slate-900 text-base tracking-tight truncate">
+                    {pageTitle}
+                  </h2>
+                  <span className="hidden xl:inline-block text-xs text-slate-400 font-normal truncate">
+                    • {pageSubtitle}
+                  </span>
+                </div>
+              </div>
             </div>
+
+            {/* Lado Derecho: Estado de Seguridad + Tarjeta de Usuario con Menú + Botón Salir */}
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xs shadow-sm">
-                {userInitials}
+              {/* Pill de Seguridad Activa */}
+              <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50/90 border border-emerald-200/80 text-emerald-800 text-[11px] font-semibold">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <ShieldCheck size={14} className="text-emerald-600" />
+                <span>Sesión Protegida</span>
               </div>
-              <div className="hidden sm:block text-left">
-                <span className="text-xs font-bold text-slate-800 block leading-tight">{userRoleLabel}</span>
-                <span className="text-[10px] text-slate-400">{user?.email || 'admin@cuscocreativos.com'}</span>
+
+              {/* Contenedor de Perfil con Dropdown */}
+              <div className="relative" ref={profileDropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setProfileMenuOpen((prev) => !prev)}
+                  className="flex items-center gap-3 pl-2 pr-3 py-1.5 rounded-2xl bg-slate-50 hover:bg-slate-100/90 border border-slate-200/90 transition-all cursor-pointer group"
+                  title="Ver detalles de cuenta o cambiar de rol"
+                >
+                  {/* Avatar con indicador en línea */}
+                  <div className="relative">
+                    <div
+                      className={`w-9 h-9 rounded-xl flex items-center justify-center text-white font-extrabold text-xs shadow-sm ${
+                        isAdmin
+                          ? 'bg-gradient-to-br from-blue-600 to-indigo-700 shadow-blue-600/20'
+                          : 'bg-gradient-to-br from-teal-600 to-emerald-600 shadow-emerald-600/20'
+                      }`}
+                    >
+                      {userInitials}
+                    </div>
+                    <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
+                  </div>
+
+                  {/* Información del Usuario */}
+                  <div className="text-left">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-xs font-extrabold text-slate-900 leading-none">
+                        {userDisplayName}
+                      </span>
+                      <span
+                        className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md border ${
+                          isAdmin
+                            ? 'bg-blue-100/80 text-blue-800 border-blue-200'
+                            : 'bg-emerald-100/80 text-emerald-800 border-emerald-200'
+                        }`}
+                      >
+                        {userRoleLabel}
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-mono text-slate-500 block mt-0.5 leading-none">
+                      {user?.email || 'admin@cuscocreativos.com'}
+                    </span>
+                  </div>
+
+                  <ChevronDown
+                    size={15}
+                    className={`text-slate-400 group-hover:text-slate-600 transition-transform duration-200 ${
+                      profileMenuOpen ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+
+                {/* Menú Desplegable del Perfil */}
+                {profileMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-3 z-50 space-y-2.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                          Sesión Verificada
+                        </span>
+                        <span className="text-[10px] font-semibold text-emerald-600 flex items-center gap-1">
+                          <CheckCircle2 size={12} /> Activa
+                        </span>
+                      </div>
+                      <p className="text-xs font-bold text-slate-800 truncate">{userDisplayName}</p>
+                      <p className="text-[11px] font-mono text-slate-500 truncate">{user?.email}</p>
+                    </div>
+
+                    {/* Cambio rápido de Rol para pruebas */}
+                    <div className="space-y-1">
+                      <span className="px-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
+                        <RefreshCw size={10} /> Cambiar Vista de Rol (1 Clic)
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleQuickSwitchRole('admin')}
+                        className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+                          isAdmin
+                            ? 'bg-blue-50 text-blue-700 border border-blue-200/70'
+                            : 'text-slate-700 hover:bg-slate-100'
+                        }`}
+                      >
+                        <span className="flex items-center gap-2">
+                          <UserCheck size={14} className={isAdmin ? 'text-blue-600' : 'text-slate-400'} />
+                          Administrador General
+                        </span>
+                        {isAdmin && <span className="text-[10px] font-bold text-blue-600">Actual</span>}
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleQuickSwitchRole('employee')}
+                        className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+                          !isAdmin
+                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/70'
+                            : 'text-slate-700 hover:bg-slate-100'
+                        }`}
+                      >
+                        <span className="flex items-center gap-2">
+                          <UserCheck size={14} className={!isAdmin ? 'text-emerald-600' : 'text-slate-400'} />
+                          Empleado Operador
+                        </span>
+                        {!isAdmin && <span className="text-[10px] font-bold text-emerald-600">Actual</span>}
+                      </button>
+                    </div>
+
+                    <div className="pt-2 border-t border-slate-100 flex flex-col gap-1">
+                      <Link
+                        href="/demo/settings"
+                        onClick={() => setProfileMenuOpen(false)}
+                        className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors"
+                      >
+                        <Settings size={14} className="text-slate-400" />
+                        <span>Configuración de Agencia</span>
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+                      >
+                        <LogOut size={14} />
+                        <span>Cerrar Sesión Segura</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
               </div>
+
+              {/* Botón Directo de Salir */}
               <button
+                type="button"
                 onClick={handleLogout}
-                title="Cerrar sesión"
-                className="p-1.5 ml-1 text-slate-400 hover:text-red-600 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                title="Cerrar sesión y volver al Login"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 hover:border-red-200 bg-white hover:bg-red-50 text-slate-600 hover:text-red-600 text-xs font-bold transition-all cursor-pointer shadow-2xs"
               >
-                <LogOut size={16} />
+                <LogOut size={15} />
+                <span className="hidden xl:inline">Salir</span>
               </button>
             </div>
           </header>
