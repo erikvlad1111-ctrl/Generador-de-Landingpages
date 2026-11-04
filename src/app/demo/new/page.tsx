@@ -1426,11 +1426,122 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-              {/* PASO 2: FOTOGRAFÍA DE PORTADA & TÍTULO DEL HERO */}
+              {/* PASO 2: NIVEL DE SERVICIO / VERSIÓN DE LA LANDING (TIER) */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">2</span>
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
+                  2
+                </span>
+                Nivel de Servicio / Versión de Landing (Tier)
+              </label>
+              <span className="text-[11px] font-semibold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-100">
+                Define las secciones que se activarán
+              </span>
+            </div>
+
+            <p className="text-xs text-slate-500">
+              Selecciona el nivel de página que generarás para este cliente o tour turístico:
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {/* Gratuito */}
+              <button
+                type="button"
+                onClick={() => {
+                  setTier('free');
+                  setLanguage('es');
+                  setSelectedLanguages(['es']);
+                }}
+                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                  tier === 'free'
+                    ? 'border-stone-700 bg-stone-50 shadow-sm ring-2 ring-stone-400/20'
+                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-xs font-black text-stone-900 uppercase tracking-wider">Gratuito</span>
+                  <span className="text-[10px] bg-stone-200 text-stone-800 font-extrabold px-2 py-0.5 rounded-md">HERO + TOURS</span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Hero de alto impacto + sección de tours destacados + WhatsApp directo. Idioma único: Español.
+                </p>
+              </button>
+
+              {/* Básico */}
+              <button
+                type="button"
+                onClick={() => {
+                  setTier('basic');
+                  setLanguage('es');
+                  setSelectedLanguages(['es']);
+                }}
+                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                  tier === 'basic'
+                    ? 'border-emerald-600 bg-emerald-50/80 shadow-sm ring-2 ring-emerald-500/20'
+                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-xs font-black text-emerald-900 uppercase tracking-wider">Básico</span>
+                  <span className="text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-2 py-0.5 rounded-md">ESTÁNDAR</span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Hero + Ficha + Acerca de + Qué incluye + Catálogo de tours. Idioma único: Español.
+                </p>
+              </button>
+
+              {/* Pro */}
+              <button
+                type="button"
+                onClick={() => {
+                  setTier('pro');
+                  if (!selectedLanguages.includes('es') || selectedLanguages.some(l => l !== 'es' && l !== 'en')) {
+                    setSelectedLanguages(['es', 'en']);
+                    setLanguage('es');
+                  }
+                }}
+                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                  tier === 'pro'
+                    ? 'border-blue-600 bg-blue-50/80 shadow-sm ring-2 ring-blue-500/20'
+                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-xs font-black text-blue-900 uppercase tracking-wider">Pro</span>
+                  <span className="text-[10px] bg-blue-100 text-blue-800 font-extrabold px-2 py-0.5 rounded-md">RECOMENDADO</span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Todo en Básico + Itinerario + Mochila + Sellos. Hasta 2 idiomas (ES / EN).
+                </p>
+              </button>
+
+              {/* Advance */}
+              <button
+                type="button"
+                onClick={() => setTier('advance')}
+                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
+                  tier === 'advance'
+                    ? 'border-purple-600 bg-purple-50/80 shadow-sm ring-2 ring-purple-500/20'
+                    : 'border-slate-200 hover:border-slate-300 bg-white'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="text-xs font-black text-purple-900 uppercase tracking-wider">Advance</span>
+                  <span className="text-[10px] bg-purple-100 text-purple-800 font-extrabold px-2 py-0.5 rounded-md">ALTA CONVERSIÓN</span>
+                </div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Todo en Pro + Galería + FAQs + Testimonios + Catálogo. Hasta 5 idiomas.
+                </p>
+              </button>
+            </div>
+          </div>
+
+              {/* PASO 3: FOTOGRAFÍA DE PORTADA & TÍTULO DEL HERO */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">3</span>
                 Portada Principal (Hero Section) & Título H1
               </label>
               <span className="text-[11px] font-semibold text-slate-400">Impacto visual y titular</span>
@@ -1565,117 +1676,6 @@ export default function NewLandingDemo() {
                   className="w-full border border-slate-300 rounded-xl px-3.5 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none"
                 />
               </div>
-            </div>
-          </div>
-
-              {/* PASO 3: NIVEL DE SERVICIO / VERSIÓN DE LA LANDING (TIER) */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
-            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
-                  3
-                </span>
-                Nivel de Servicio / Versión de Landing (Tier)
-              </label>
-              <span className="text-[11px] font-semibold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-100">
-                Define las secciones que se activarán
-              </span>
-            </div>
-
-            <p className="text-xs text-slate-500">
-              Selecciona el nivel de página que generarás para este cliente o tour turístico:
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-              {/* Gratuito */}
-              <button
-                type="button"
-                onClick={() => {
-                  setTier('free');
-                  setLanguage('es');
-                  setSelectedLanguages(['es']);
-                }}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
-                  tier === 'free'
-                    ? 'border-stone-700 bg-stone-50 shadow-sm ring-2 ring-stone-400/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-black text-stone-900 uppercase tracking-wider">Gratuito</span>
-                  <span className="text-[10px] bg-stone-200 text-stone-800 font-extrabold px-2 py-0.5 rounded-md">HERO + TOURS</span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Hero de alto impacto + sección de tours destacados + WhatsApp directo. Idioma único: Español.
-                </p>
-              </button>
-
-              {/* Básico */}
-              <button
-                type="button"
-                onClick={() => {
-                  setTier('basic');
-                  setLanguage('es');
-                  setSelectedLanguages(['es']);
-                }}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
-                  tier === 'basic'
-                    ? 'border-emerald-600 bg-emerald-50/80 shadow-sm ring-2 ring-emerald-500/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-black text-emerald-900 uppercase tracking-wider">Básico</span>
-                  <span className="text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-2 py-0.5 rounded-md">ESTÁNDAR</span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Hero + Ficha + Acerca de + Qué incluye + Catálogo de tours. Idioma único: Español.
-                </p>
-              </button>
-
-              {/* Pro */}
-              <button
-                type="button"
-                onClick={() => {
-                  setTier('pro');
-                  if (!selectedLanguages.includes('es') || selectedLanguages.some(l => l !== 'es' && l !== 'en')) {
-                    setSelectedLanguages(['es', 'en']);
-                    setLanguage('es');
-                  }
-                }}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
-                  tier === 'pro'
-                    ? 'border-blue-600 bg-blue-50/80 shadow-sm ring-2 ring-blue-500/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-black text-blue-900 uppercase tracking-wider">Pro</span>
-                  <span className="text-[10px] bg-blue-100 text-blue-800 font-extrabold px-2 py-0.5 rounded-md">RECOMENDADO</span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Todo en Básico + Itinerario + Mochila + Sellos. Hasta 2 idiomas (ES / EN).
-                </p>
-              </button>
-
-              {/* Advance */}
-              <button
-                type="button"
-                onClick={() => setTier('advance')}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer ${
-                  tier === 'advance'
-                    ? 'border-purple-600 bg-purple-50/80 shadow-sm ring-2 ring-purple-500/20'
-                    : 'border-slate-200 hover:border-slate-300 bg-white'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-black text-purple-900 uppercase tracking-wider">Advance</span>
-                  <span className="text-[10px] bg-purple-100 text-purple-800 font-extrabold px-2 py-0.5 rounded-md">ALTA CONVERSIÓN</span>
-                </div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Todo en Pro + Galería + FAQs + Testimonios + Catálogo. Hasta 5 idiomas.
-                </p>
-              </button>
             </div>
           </div>
 
