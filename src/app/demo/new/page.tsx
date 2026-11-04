@@ -3347,6 +3347,39 @@ export default function NewLandingDemo() {
 
         {/* Realtime Live Preview Column (Sticky on Desktop) */}
         <div className="lg:col-span-5 sticky top-6 space-y-4">
+          {/* Card de Resumen y Acción Rápida ARRIBA del Mockup (solo en el paso final: Paso 4) */}
+          {(activeTab === 'content' || showAllSteps) && (
+            <div className="bg-white rounded-3xl p-4 sm:p-5 border border-blue-200/80 shadow-lg shadow-blue-950/5 space-y-3 animate-in fade-in duration-300">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                <span className="text-xs font-black text-slate-800 uppercase tracking-tight flex items-center gap-1.5">
+                  <Sparkles size={14} className="text-blue-600" /> Resumen de la Landing
+                </span>
+                <span className="text-[11px] font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-200">
+                  {price || '$350 USD'}
+                </span>
+              </div>
+
+              <div className="text-xs space-y-1">
+                <p className="font-bold text-slate-900 truncate text-sm">{name || 'Tour sin nombre'}</p>
+                <p className="text-[11px] text-slate-500 truncate flex items-center gap-1">
+                  <MapPin size={12} className="text-blue-500 shrink-0" />
+                  <span>{destination || 'Cusco, Perú'}</span>
+                  <span>•</span>
+                  <span className="font-semibold text-blue-600 uppercase">{template}</span>
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleGenerate}
+                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3.5 px-4 rounded-2xl font-black text-xs sm:text-sm transition-all shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
+              >
+                <Sparkles size={16} />
+                <span>🚀 Generar Landing y Ver Demo</span>
+              </button>
+            </div>
+          )}
+
           {/* Preview Bar Header */}
           <div className="flex items-center justify-between px-1">
             <div className="flex items-center gap-2">
@@ -4592,39 +4625,6 @@ export default function NewLandingDemo() {
 
             </div>
           </div>
-
-          {/* Card de Resumen y Acción Rápida debajo del Mockup (solo en el paso final) */}
-          {(activeTab === 'content' || showAllSteps) && (
-            <div className="bg-white rounded-3xl p-4 sm:p-5 border border-blue-200/80 shadow-lg shadow-blue-950/5 space-y-3">
-              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                <span className="text-xs font-black text-slate-800 uppercase tracking-tight flex items-center gap-1.5">
-                  <Sparkles size={14} className="text-blue-600" /> Resumen de la Landing
-                </span>
-                <span className="text-[11px] font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-200">
-                  {price || '$350 USD'}
-                </span>
-              </div>
-
-              <div className="text-xs space-y-1">
-                <p className="font-bold text-slate-900 truncate text-sm">{name || 'Tour sin nombre'}</p>
-                <p className="text-[11px] text-slate-500 truncate flex items-center gap-1">
-                  <MapPin size={12} className="text-blue-500 shrink-0" />
-                  <span>{destination || 'Cusco, Perú'}</span>
-                  <span>•</span>
-                  <span className="font-semibold text-blue-600 uppercase">{template}</span>
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={handleGenerate}
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3.5 px-4 rounded-2xl font-black text-xs sm:text-sm transition-all shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
-              >
-                <Sparkles size={16} />
-                <span>🚀 Generar Landing y Ver Demo</span>
-              </button>
-            </div>
-          )}
 
         </div>
 
