@@ -14,12 +14,8 @@ import {
   Layers,
   LayoutTemplate,
   Loader2,
-  ShieldCheck,
   ChevronDown,
-  UserCheck,
-  RefreshCw,
-  CheckCircle2,
-  ChevronRight
+  UserCheck
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
@@ -372,166 +368,86 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
       {/* 4. MAIN CONTENT WRAPPER */}
       <main className="flex-1 flex flex-col min-w-0 bg-slate-50 pb-20 md:pb-0">
         
-        {/* Desktop Header Mejorado */}
+        {/* Desktop Header Limpio y Directo */}
         {!isPreview && (
-          <header className="hidden md:flex bg-white/95 backdrop-blur-md h-18 border-b border-slate-200/90 items-center px-6 lg:px-8 shadow-2xs justify-between shrink-0 sticky top-0 z-30">
-            {/* Lado Izquierdo: Icono + Breadcrumb + Título + Subtítulo */}
-            <div className="flex items-center gap-3.5 min-w-0">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200/70 flex items-center justify-center text-blue-600 shadow-2xs shrink-0">
-                <PageIcon size={20} />
+          <header className="hidden md:flex bg-white h-16 border-b border-slate-200/90 items-center px-6 lg:px-8 justify-between shrink-0 sticky top-0 z-30">
+            {/* Lado Izquierdo: Icono + Título limpio */}
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="w-9 h-9 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 shrink-0">
+                <PageIcon size={18} />
               </div>
-              <div className="min-w-0">
-                <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
-                  <span>Cusco Creativos</span>
-                  <ChevronRight size={11} className="text-slate-300" />
-                  <span className="text-blue-600">Panel Interno</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <h2 className="font-extrabold text-slate-900 text-base tracking-tight truncate">
-                    {pageTitle}
-                  </h2>
-                  <span className="hidden xl:inline-block text-xs text-slate-400 font-normal truncate">
-                    • {pageSubtitle}
-                  </span>
-                </div>
-              </div>
+              <h2 className="font-bold text-slate-900 text-base tracking-tight truncate">
+                {pageTitle}
+              </h2>
             </div>
 
-            {/* Lado Derecho: Estado de Seguridad + Tarjeta de Usuario con Menú + Botón Salir */}
-            <div className="flex items-center gap-3">
-              {/* Pill de Seguridad Activa en Azul del Proyecto */}
-              <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50/90 border border-blue-200/80 text-blue-800 text-[11px] font-semibold">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
-                </span>
-                <ShieldCheck size={14} className="text-blue-600" />
-                <span>Sesión Protegida</span>
-              </div>
-
-              {/* Contenedor de Perfil con Dropdown */}
+            {/* Lado Derecho: Selector de Usuario Limpio + Botón Salir */}
+            <div className="flex items-center gap-2.5">
               <div className="relative" ref={profileDropdownRef}>
                 <button
                   type="button"
                   onClick={() => setProfileMenuOpen((prev) => !prev)}
-                  className="flex items-center gap-3 pl-2 pr-3 py-1.5 rounded-2xl bg-slate-50 hover:bg-blue-50/60 border border-slate-200/90 hover:border-blue-200 transition-all cursor-pointer group"
-                  title="Ver detalles de cuenta o cambiar de rol"
+                  className="flex items-center gap-2.5 pl-2 pr-3 py-1.5 rounded-xl bg-slate-50 hover:bg-blue-50/60 border border-slate-200/90 hover:border-blue-200 transition-all cursor-pointer group"
+                  title="Cambiar entre Administrador y Empleado"
                 >
-                  {/* Avatar con indicador en línea en Azul Corporativo */}
-                  <div className="relative">
-                    <div
-                      className={`w-9 h-9 rounded-xl flex items-center justify-center text-white font-extrabold text-xs shadow-sm ${
-                        isAdmin
-                          ? 'bg-gradient-to-br from-blue-600 to-indigo-700 shadow-blue-600/20'
-                          : 'bg-gradient-to-br from-blue-500 to-indigo-600 shadow-blue-500/20'
-                      }`}
-                    >
-                      {userInitials}
-                    </div>
-                    <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-blue-500 ring-2 ring-white" />
+                  <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-xs shadow-xs">
+                    {userInitials}
                   </div>
 
-                  {/* Información del Usuario */}
                   <div className="text-left">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-xs font-extrabold text-slate-900 leading-none">
-                        {userDisplayName}
-                      </span>
-                      <span
-                        className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md border ${
-                          isAdmin
-                            ? 'bg-blue-100/90 text-blue-800 border-blue-200'
-                            : 'bg-indigo-50 text-indigo-700 border-indigo-200'
-                        }`}
-                      >
-                        {userRoleLabel}
-                      </span>
-                    </div>
-                    <span className="text-[11px] font-mono text-slate-500 block mt-0.5 leading-none">
+                    <span className="text-xs font-bold text-slate-900 block leading-tight">
+                      {userRoleLabel}
+                    </span>
+                    <span className="text-[11px] text-slate-500 block leading-tight">
                       {user?.email || 'admin@cuscocreativos.com'}
                     </span>
                   </div>
 
                   <ChevronDown
-                    size={15}
+                    size={14}
                     className={`text-slate-400 group-hover:text-blue-600 transition-transform duration-200 ${
                       profileMenuOpen ? 'rotate-180 text-blue-600' : ''
                     }`}
                   />
                 </button>
 
-                {/* Menú Desplegable del Perfil */}
+                {/* Menú Desplegable Simple para Cambiar Rol */}
                 {profileMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-3 z-50 space-y-2.5 animate-in fade-in slide-in-from-top-1 duration-150">
-                    <div className="p-2.5 rounded-xl bg-blue-50/60 border border-blue-100 space-y-1">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">
-                          Sesión Verificada
-                        </span>
-                        <span className="text-[10px] font-semibold text-blue-700 flex items-center gap-1">
-                          <CheckCircle2 size={12} /> Activa
-                        </span>
-                      </div>
-                      <p className="text-xs font-bold text-slate-900 truncate">{userDisplayName}</p>
-                      <p className="text-[11px] font-mono text-slate-500 truncate">{user?.email}</p>
+                  <div className="absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-2 z-50 space-y-1 animate-in fade-in slide-in-from-top-1 duration-150">
+                    <div className="px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                      Cambiar cuenta activa
                     </div>
-
-                    {/* Cambio rápido de Rol para pruebas */}
-                    <div className="space-y-1">
-                      <span className="px-2 text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
-                        <RefreshCw size={10} /> Cambiar Vista de Rol (1 Clic)
+                    <button
+                      type="button"
+                      onClick={() => handleQuickSwitchRole('admin')}
+                      className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+                        isAdmin
+                          ? 'bg-blue-50 text-blue-700'
+                          : 'text-slate-700 hover:bg-slate-100'
+                      }`}
+                    >
+                      <span className="flex items-center gap-2">
+                        <UserCheck size={14} className={isAdmin ? 'text-blue-600' : 'text-slate-400'} />
+                        Administrador
                       </span>
-                      <button
-                        type="button"
-                        onClick={() => handleQuickSwitchRole('admin')}
-                        className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
-                          isAdmin
-                            ? 'bg-blue-50 text-blue-700 border border-blue-200/80'
-                            : 'text-slate-700 hover:bg-slate-100'
-                        }`}
-                      >
-                        <span className="flex items-center gap-2">
-                          <UserCheck size={14} className={isAdmin ? 'text-blue-600' : 'text-slate-400'} />
-                          Administrador General
-                        </span>
-                        {isAdmin && <span className="text-[10px] font-bold text-blue-600">Actual</span>}
-                      </button>
+                      {isAdmin && <span className="text-[10px] font-bold text-blue-600">Activo</span>}
+                    </button>
 
-                      <button
-                        type="button"
-                        onClick={() => handleQuickSwitchRole('employee')}
-                        className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
-                          !isAdmin
-                            ? 'bg-blue-50 text-blue-700 border border-blue-200/80'
-                            : 'text-slate-700 hover:bg-slate-100'
-                        }`}
-                      >
-                        <span className="flex items-center gap-2">
-                          <UserCheck size={14} className={!isAdmin ? 'text-blue-600' : 'text-slate-400'} />
-                          Empleado Operador
-                        </span>
-                        {!isAdmin && <span className="text-[10px] font-bold text-blue-600">Actual</span>}
-                      </button>
-                    </div>
-
-                    <div className="pt-2 border-t border-slate-100 flex flex-col gap-1">
-                      <Link
-                        href="/demo/settings"
-                        onClick={() => setProfileMenuOpen(false)}
-                        className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100 transition-colors"
-                      >
-                        <Settings size={14} className="text-slate-400" />
-                        <span>Configuración de Agencia</span>
-                      </Link>
-                      <button
-                        type="button"
-                        onClick={handleLogout}
-                        className="w-full flex items-center gap-2 px-2.5 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
-                      >
-                        <LogOut size={14} />
-                        <span>Cerrar Sesión Segura</span>
-                      </button>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleQuickSwitchRole('employee')}
+                      className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
+                        !isAdmin
+                          ? 'bg-blue-50 text-blue-700'
+                          : 'text-slate-700 hover:bg-slate-100'
+                      }`}
+                    >
+                      <span className="flex items-center gap-2">
+                        <UserCheck size={14} className={!isAdmin ? 'text-blue-600' : 'text-slate-400'} />
+                        Empleado
+                      </span>
+                      {!isAdmin && <span className="text-[10px] font-bold text-blue-600">Activo</span>}
+                    </button>
                   </div>
                 )}
               </div>
@@ -540,11 +456,11 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
               <button
                 type="button"
                 onClick={handleLogout}
-                title="Cerrar sesión y volver al Login"
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 hover:border-red-200 bg-white hover:bg-red-50 text-slate-600 hover:text-red-600 text-xs font-bold transition-all cursor-pointer shadow-2xs"
+                title="Cerrar sesión"
+                className="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 hover:border-red-200 bg-white hover:bg-red-50 text-slate-600 hover:text-red-600 text-xs font-semibold transition-all cursor-pointer"
               >
                 <LogOut size={15} />
-                <span className="hidden xl:inline">Salir</span>
+                <span>Salir</span>
               </button>
             </div>
           </header>

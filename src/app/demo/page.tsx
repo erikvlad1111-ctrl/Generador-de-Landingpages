@@ -140,42 +140,37 @@ export default function DemoDashboard() {
   return (
     <div className="w-full max-w-[1600px] mx-auto space-y-7 animate-in fade-in slide-in-from-bottom-3 duration-500">
       
-      {/* 1. TOP HERO HEADER WITH WORKFLOW EXPLANATION & CTA (UX Upgrade: Located at the very top) */}
-      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 p-7 sm:p-8 rounded-3xl shadow-xl border border-slate-800 text-white relative overflow-hidden">
+      {/* 1. TOP HERO HEADER WITH WORKFLOW EXPLANATION & CTA */}
+      <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-indigo-950 p-6 sm:p-8 rounded-3xl shadow-xl border border-slate-800 text-white relative overflow-hidden">
         {/* Background decorative glow */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
-        <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+        <div className="absolute bottom-0 left-1/3 w-64 h-64 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="relative z-10 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
           <div className="space-y-3 max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-bold border border-blue-500/30">
-              <Sparkles size={14} className="text-blue-400" />
-              <span>Generador de Landing Pages • Agencia Cusco Creativos</span>
-            </div>
-
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight text-white">
-              Gestor de Landings de Alto Rendimiento
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-tight text-white">
+              Crea y Publica tus Landing Pages Turísticas
             </h1>
 
             <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
-              Crea páginas web para guías de turismo en 3 minutos con Inteligencia Artificial. Comparte el enlace en vivo para aprobación inmediata por WhatsApp y exporta con dominio propio o en archivo ZIP.
+              Genera páginas de ventas para tus tours en pocos minutos, edita el contenido en vivo y comparte el enlace directo con tus clientes por WhatsApp.
             </p>
 
-            {/* 3 Step Workflow Badges */}
+            {/* 3 Pasos claros en Azul del Proyecto */}
             <div className="pt-1 flex flex-wrap items-center gap-2 text-xs">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700/80 text-slate-300 font-semibold shadow-xs">
-                <span className="w-5 h-5 rounded-lg bg-blue-500/20 text-blue-400 font-bold flex items-center justify-center text-[11px]">1</span>
-                <span>Genera datos con IA</span>
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-blue-500/30 text-slate-200 font-semibold">
+                <span className="w-5 h-5 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center text-[11px]">1</span>
+                <span>Ingresa los datos del tour</span>
               </span>
-              <span className="text-slate-600">→</span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700/80 text-slate-300 font-semibold shadow-xs">
-                <span className="w-5 h-5 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-[11px]">2</span>
-                <span>Previsualiza y aprueba en vivo</span>
+              <span className="text-blue-400/60 font-bold">→</span>
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-blue-500/30 text-slate-200 font-semibold">
+                <span className="w-5 h-5 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center text-[11px]">2</span>
+                <span>Elige diseño y edita en vivo</span>
               </span>
-              <span className="text-slate-600">→</span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/90 border border-slate-700/80 text-slate-300 font-semibold shadow-xs">
-                <span className="w-5 h-5 rounded-lg bg-amber-500/20 text-amber-400 font-bold flex items-center justify-center text-[11px]">3</span>
-                <span>Vercel (Dominio) o ZIP</span>
+              <span className="text-blue-400/60 font-bold">→</span>
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-900/90 border border-blue-500/30 text-slate-200 font-semibold">
+                <span className="w-5 h-5 rounded-lg bg-blue-600 text-white font-bold flex items-center justify-center text-[11px]">3</span>
+                <span>Publica y comparte el enlace</span>
               </span>
             </div>
           </div>
@@ -184,10 +179,10 @@ export default function DemoDashboard() {
           <div className="shrink-0 w-full lg:w-auto">
             <Link 
               href="/demo/new" 
-              className="w-full lg:w-auto inline-flex items-center justify-center gap-2.5 bg-blue-600 hover:bg-blue-500 text-white px-7 py-3.5 rounded-2xl font-extrabold transition-all shadow-lg shadow-blue-600/30 hover:scale-102 active:scale-98 text-sm"
+              className="w-full lg:w-auto inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-3.5 rounded-2xl font-bold transition-all shadow-lg shadow-blue-600/30 hover:scale-102 active:scale-98 text-sm"
             >
               <Sparkles size={18} />
-              <span>Generador de Landing</span>
+              <span>Crear Nueva Landing</span>
             </Link>
           </div>
         </div>
