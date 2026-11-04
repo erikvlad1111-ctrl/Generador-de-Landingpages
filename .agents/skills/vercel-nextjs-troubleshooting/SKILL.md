@@ -472,6 +472,26 @@ cmd /c npx eslint --quiet
 
 ---
 
+## 14. Pantalla de Login Nueva No Visible en `/` o Saltada Automáticamente por Sesión Previa
+
+### Síntoma / Mensaje de Error
+El usuario ingresa a la URL principal de Vercel (`/`) o a `/login` y ve el formulario antiguo de login o es redirigido directamente a `/demo` sin poder ver la nueva pantalla de autenticación con sus capas de seguridad y pasos.
+
+### Causa Raíz
+1. **Desfase entre `/` y `/login`:** `src/app/page.tsx` mantenía una copia antigua del formulario de login independiente de `src/app/login/page.tsx`.
+2. **Redirección silenciosa por sesión guardada:** `src/proxy.ts` y el `useEffect` de `/login` redirigían inmediatamente a `/demo` cuando existía la cookie `cc_auth` o `cc_auth_user_v1` en `localStorage`, impidiendo visualizar la interfaz de login o cambiar de rol.
+
+### Comando de Diagnóstico
+```bash
+git diff src/app/page.tsx src/app/login/page.tsx
+```
+
+### Solución Paso a Paso
+1. Unificar `src/app/page.tsx` para que renderice directamente el componente `<LoginPortalView />` de `src/app/login/page.tsx`.
+2. En lugar de redirigir silenciosamente cuando existe sesión previa, mostrar un banner de **"Sesión Activa Detectada"** con botones para **"Ir al Panel Ahora"** o **"Salir / Cambiar de cuenta"**.
+
+---
+
 ## Lista de Verificación Antes de Desplegar
 - [ ] Ejecutar `npm run lint` y verificar que salga con código 0.
 - [ ] Ejecutar `cmd /c npm run build` localmente y comprobar que todas las rutas se generen sin errores.
