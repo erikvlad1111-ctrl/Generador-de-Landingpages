@@ -399,13 +399,13 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
 
             {/* Lado Derecho: Estado de Seguridad + Tarjeta de Usuario con Menú + Botón Salir */}
             <div className="flex items-center gap-3">
-              {/* Pill de Seguridad Activa */}
-              <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50/90 border border-emerald-200/80 text-emerald-800 text-[11px] font-semibold">
+              {/* Pill de Seguridad Activa en Azul del Proyecto */}
+              <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50/90 border border-blue-200/80 text-blue-800 text-[11px] font-semibold">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-600"></span>
                 </span>
-                <ShieldCheck size={14} className="text-emerald-600" />
+                <ShieldCheck size={14} className="text-blue-600" />
                 <span>Sesión Protegida</span>
               </div>
 
@@ -414,21 +414,21 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
                 <button
                   type="button"
                   onClick={() => setProfileMenuOpen((prev) => !prev)}
-                  className="flex items-center gap-3 pl-2 pr-3 py-1.5 rounded-2xl bg-slate-50 hover:bg-slate-100/90 border border-slate-200/90 transition-all cursor-pointer group"
+                  className="flex items-center gap-3 pl-2 pr-3 py-1.5 rounded-2xl bg-slate-50 hover:bg-blue-50/60 border border-slate-200/90 hover:border-blue-200 transition-all cursor-pointer group"
                   title="Ver detalles de cuenta o cambiar de rol"
                 >
-                  {/* Avatar con indicador en línea */}
+                  {/* Avatar con indicador en línea en Azul Corporativo */}
                   <div className="relative">
                     <div
                       className={`w-9 h-9 rounded-xl flex items-center justify-center text-white font-extrabold text-xs shadow-sm ${
                         isAdmin
                           ? 'bg-gradient-to-br from-blue-600 to-indigo-700 shadow-blue-600/20'
-                          : 'bg-gradient-to-br from-teal-600 to-emerald-600 shadow-emerald-600/20'
+                          : 'bg-gradient-to-br from-blue-500 to-indigo-600 shadow-blue-500/20'
                       }`}
                     >
                       {userInitials}
                     </div>
-                    <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white" />
+                    <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-blue-500 ring-2 ring-white" />
                   </div>
 
                   {/* Información del Usuario */}
@@ -440,8 +440,8 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
                       <span
                         className={`text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md border ${
                           isAdmin
-                            ? 'bg-blue-100/80 text-blue-800 border-blue-200'
-                            : 'bg-emerald-100/80 text-emerald-800 border-emerald-200'
+                            ? 'bg-blue-100/90 text-blue-800 border-blue-200'
+                            : 'bg-indigo-50 text-indigo-700 border-indigo-200'
                         }`}
                       >
                         {userRoleLabel}
@@ -454,8 +454,8 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
 
                   <ChevronDown
                     size={15}
-                    className={`text-slate-400 group-hover:text-slate-600 transition-transform duration-200 ${
-                      profileMenuOpen ? 'rotate-180' : ''
+                    className={`text-slate-400 group-hover:text-blue-600 transition-transform duration-200 ${
+                      profileMenuOpen ? 'rotate-180 text-blue-600' : ''
                     }`}
                   />
                 </button>
@@ -463,16 +463,16 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
                 {/* Menú Desplegable del Perfil */}
                 {profileMenuOpen && (
                   <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-200/90 p-3 z-50 space-y-2.5 animate-in fade-in slide-in-from-top-1 duration-150">
-                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+                    <div className="p-2.5 rounded-xl bg-blue-50/60 border border-blue-100 space-y-1">
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600">
                           Sesión Verificada
                         </span>
-                        <span className="text-[10px] font-semibold text-emerald-600 flex items-center gap-1">
+                        <span className="text-[10px] font-semibold text-blue-700 flex items-center gap-1">
                           <CheckCircle2 size={12} /> Activa
                         </span>
                       </div>
-                      <p className="text-xs font-bold text-slate-800 truncate">{userDisplayName}</p>
+                      <p className="text-xs font-bold text-slate-900 truncate">{userDisplayName}</p>
                       <p className="text-[11px] font-mono text-slate-500 truncate">{user?.email}</p>
                     </div>
 
@@ -486,7 +486,7 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
                         onClick={() => handleQuickSwitchRole('admin')}
                         className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
                           isAdmin
-                            ? 'bg-blue-50 text-blue-700 border border-blue-200/70'
+                            ? 'bg-blue-50 text-blue-700 border border-blue-200/80'
                             : 'text-slate-700 hover:bg-slate-100'
                         }`}
                       >
@@ -502,15 +502,15 @@ export default function DemoLayout({ children }: { children: React.ReactNode }) 
                         onClick={() => handleQuickSwitchRole('employee')}
                         className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold transition-colors cursor-pointer ${
                           !isAdmin
-                            ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/70'
+                            ? 'bg-blue-50 text-blue-700 border border-blue-200/80'
                             : 'text-slate-700 hover:bg-slate-100'
                         }`}
                       >
                         <span className="flex items-center gap-2">
-                          <UserCheck size={14} className={!isAdmin ? 'text-emerald-600' : 'text-slate-400'} />
+                          <UserCheck size={14} className={!isAdmin ? 'text-blue-600' : 'text-slate-400'} />
                           Empleado Operador
                         </span>
-                        {!isAdmin && <span className="text-[10px] font-bold text-emerald-600">Actual</span>}
+                        {!isAdmin && <span className="text-[10px] font-bold text-blue-600">Actual</span>}
                       </button>
                     </div>
 
