@@ -1337,49 +1337,55 @@ export default function NewLandingDemo() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
                 { 
                   id: 'agency-portal', 
                   name: 'Diseño 1', 
                   desc: 'Naranja viral, métricas +10k, catálogo de tours, FAQ y WhatsApp con radar.', 
                   badge: 'Diseño 1',
-                  badgeClass: 'bg-[#FF5500] text-white'
+                  badgeClass: 'bg-[#FF5500] text-white',
+                  unselectedClass: 'border-orange-300/90 bg-orange-50/35 hover:border-orange-500 hover:bg-orange-50/60'
                 },
                 { 
                   id: 'boho-nature', 
                   name: 'Boho Travel Journal', 
                   desc: 'Estilo Pinterest con fotos polaroid inclinadas, cinta washi y notas de campo.', 
                   badge: 'Pinterest Aesthetic',
-                  badgeClass: 'bg-amber-600 text-white'
+                  badgeClass: 'bg-amber-600 text-white',
+                  unselectedClass: 'border-amber-300/90 bg-amber-50/35 hover:border-amber-500 hover:bg-amber-50/60'
                 },
                 { 
                   id: 'premium', 
                   name: 'Lujo & Exclusivo (VIP)', 
                   desc: 'Dorado y negro profundo. Ideal para experiencias Hiram Bingham y 5 estrellas.', 
                   badge: 'High-End VIP',
-                  badgeClass: 'bg-stone-900 text-amber-300'
+                  badgeClass: 'bg-stone-900 text-amber-300',
+                  unselectedClass: 'border-stone-400/80 bg-stone-100/70 hover:border-stone-600 hover:bg-stone-100'
                 },
                 { 
                   id: 'adventure', 
                   name: 'Aventura & Trekking', 
                   desc: 'Tonos esmeralda y montaña. Diseñado para rutas de alta dificultad y caminatas.', 
                   badge: 'Trekking & Outdoor',
-                  badgeClass: 'bg-emerald-600 text-white'
+                  badgeClass: 'bg-emerald-600 text-white',
+                  unselectedClass: 'border-emerald-300/90 bg-emerald-50/35 hover:border-emerald-500 hover:bg-emerald-50/60'
                 },
                 { 
                   id: 'cultural', 
                   name: 'Cultural & Ancestral', 
                   desc: 'Piedra incaica y ámbar cálido. Para City Tours, Sacsayhuamán y arqueología.', 
                   badge: 'Heritage & History',
-                  badgeClass: 'bg-amber-700 text-white'
+                  badgeClass: 'bg-amber-700 text-white',
+                  unselectedClass: 'border-amber-400/80 bg-amber-50/40 hover:border-amber-600 hover:bg-amber-50/70'
                 },
                 { 
                   id: 'emerald-explorer', 
                   name: 'Diseño 6 (Emerald Explorer)', 
                   desc: 'Deep Teal oscuro con Bento Grid, buscador flotante tipo píldora, métricas y glow esmeralda.', 
                   badge: 'NavikX Tech Style',
-                  badgeClass: 'bg-emerald-600 text-white'
+                  badgeClass: 'bg-teal-700 text-white',
+                  unselectedClass: 'border-teal-300/90 bg-teal-50/40 hover:border-teal-500 hover:bg-teal-50/70'
                 }
               ].map((t) => {
                 const isSelected = template === t.id;
@@ -1392,42 +1398,44 @@ export default function NewLandingDemo() {
                     }}
                     className={`relative p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                       isSelected 
-                        ? 'border-blue-600 bg-gradient-to-br from-blue-50 via-indigo-50/50 to-blue-50/90 shadow-md shadow-blue-600/10 ring-2 ring-blue-500/25 scale-[1.01]' 
-                        : 'border-slate-300/90 hover:border-blue-400 bg-slate-50/75 hover:bg-white shadow-xs hover:shadow-md'
+                        ? 'border-blue-600 bg-gradient-to-br from-blue-50 via-indigo-50/80 to-blue-100/70 shadow-lg shadow-blue-600/15 ring-4 ring-blue-500/25 scale-[1.02]' 
+                        : `${t.unselectedClass} shadow-sm hover:shadow-md`
                     }`}
                   >
                     <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className={`p-1.5 rounded-xl flex items-center justify-center border shadow-2xs ${
-                          isSelected ? 'bg-white border-blue-200' : 'bg-white border-slate-200/90'
+                      <div className="flex items-center justify-between mb-2.5">
+                        <span className={`p-2 rounded-xl flex items-center justify-center border shadow-xs ${
+                          isSelected ? 'bg-blue-600 border-blue-600 text-white' : 'bg-white border-slate-200'
                         }`}>
-                          {t.id === 'agency-portal' && <Zap size={18} className="text-[#FF5500]" />}
-                          {t.id === 'boho-nature' && <Camera size={18} className="text-amber-600" />}
-                          {t.id === 'premium' && <Crown size={18} className="text-amber-500" />}
-                          {t.id === 'adventure' && <Mountain size={18} className="text-emerald-600" />}
-                          {t.id === 'cultural' && <Landmark size={18} className="text-amber-700" />}
-                          {t.id === 'emerald-explorer' && <Compass size={18} className="text-emerald-600" />}
+                          {t.id === 'agency-portal' && <Zap size={18} className={isSelected ? 'text-white' : 'text-[#FF5500]'} />}
+                          {t.id === 'boho-nature' && <Camera size={18} className={isSelected ? 'text-white' : 'text-amber-600'} />}
+                          {t.id === 'premium' && <Crown size={18} className={isSelected ? 'text-amber-300' : 'text-amber-500'} />}
+                          {t.id === 'adventure' && <Mountain size={18} className={isSelected ? 'text-white' : 'text-emerald-600'} />}
+                          {t.id === 'cultural' && <Landmark size={18} className={isSelected ? 'text-white' : 'text-amber-700'} />}
+                          {t.id === 'emerald-explorer' && <Compass size={18} className={isSelected ? 'text-white' : 'text-teal-600'} />}
                         </span>
-                        <span className={`text-[9px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-md shadow-2xs ${t.badgeClass}`}>
+                        <span className={`text-[9px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-xs ${t.badgeClass}`}>
                           {t.badge}
                         </span>
                       </div>
-                      <span className="text-xs sm:text-[13px] font-black text-slate-900 block">{t.name}</span>
-                      <span className="text-[11px] text-slate-600 font-medium mt-1 block leading-snug">{t.desc}</span>
+                      <span className="text-xs sm:text-sm font-black text-slate-900 block">{t.name}</span>
+                      <span className="text-[11px] text-slate-700 font-medium mt-1 block leading-snug">{t.desc}</span>
                     </div>
 
-                    <div className={`mt-3 pt-2 border-t flex items-center justify-between text-[10px] font-bold ${
+                    <div className={`mt-3.5 pt-2.5 border-t flex items-center justify-between text-[10px] font-extrabold ${
                       isSelected
-                        ? 'border-blue-200 text-blue-700'
-                        : 'border-slate-200/80 text-slate-400'
+                        ? 'border-blue-300/80 text-blue-700'
+                        : 'border-slate-300/70 text-slate-600'
                     }`}>
-                      <span>{isSelected ? 'Plantilla Activa' : 'Clic para elegir'}</span>
+                      <span className={isSelected ? 'bg-blue-600 text-white px-2.5 py-0.5 rounded-md shadow-2xs' : ''}>
+                        {isSelected ? '✓ Plantilla Activa' : 'Seleccionar diseño'}
+                      </span>
                       {isSelected ? (
-                        <span className="w-4 h-4 rounded-full bg-blue-600 text-white flex items-center justify-center">
-                          <Check size={11} strokeWidth={3} />
+                        <span className="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-xs">
+                          <Check size={12} strokeWidth={3} />
                         </span>
                       ) : (
-                        <span className="w-4 h-4 rounded-full border border-slate-300 bg-white" />
+                        <span className="w-4 h-4 rounded-full border-2 border-slate-400 bg-white" />
                       )}
                     </div>
                   </button>
@@ -1454,7 +1462,7 @@ export default function NewLandingDemo() {
               Selecciona el nivel de página que generarás para este cliente o tour turístico:
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Gratuito */}
               <button
                 type="button"
@@ -1463,25 +1471,25 @@ export default function NewLandingDemo() {
                   setLanguage('es');
                   setSelectedLanguages(['es']);
                 }}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
+                className={`p-4 sm:p-5 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                   tier === 'free'
-                    ? 'border-stone-800 bg-gradient-to-br from-stone-100 to-stone-50 shadow-md ring-2 ring-stone-500/25 scale-[1.01]'
-                    : 'border-slate-300/90 hover:border-stone-400 bg-slate-50/75 hover:bg-white shadow-xs hover:shadow-md'
+                    ? 'border-stone-800 bg-gradient-to-br from-stone-100 via-stone-100 to-stone-200/70 shadow-lg ring-4 ring-stone-500/25 scale-[1.02]'
+                    : 'border-stone-300 bg-stone-50/90 hover:border-stone-500 hover:bg-stone-100/80 shadow-sm hover:shadow-md'
                 }`}
               >
                 <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs sm:text-[13px] font-black text-stone-900 uppercase tracking-wider flex items-center gap-1.5">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs sm:text-sm font-black text-stone-900 uppercase tracking-wider flex items-center gap-2">
+                      <span className={`w-4 h-4 rounded-full flex items-center justify-center border-2 ${
+                        tier === 'free' ? 'bg-stone-800 border-stone-800 text-white' : 'border-stone-400 bg-white'
+                      }`}>
+                        {tier === 'free' && <Check size={10} strokeWidth={3} />}
+                      </span>
                       Gratuito
-                      {tier === 'free' && (
-                        <span className="w-4 h-4 rounded-full bg-stone-800 text-white inline-flex items-center justify-center">
-                          <Check size={10} strokeWidth={3} />
-                        </span>
-                      )}
                     </span>
-                    <span className="text-[10px] bg-stone-200 text-stone-800 font-extrabold px-2.5 py-0.5 rounded-md border border-stone-300/80">HERO + TOURS</span>
+                    <span className="text-[10px] bg-stone-800 text-white font-extrabold px-2.5 py-0.5 rounded-md shadow-2xs">HERO + TOURS</span>
                   </div>
-                  <p className="text-xs text-slate-600 font-medium leading-relaxed">
+                  <p className="text-xs text-slate-700 font-medium leading-relaxed">
                     Hero de alto impacto + sección de tours destacados + WhatsApp directo. Idioma único: Español.
                   </p>
                 </div>
@@ -1495,25 +1503,25 @@ export default function NewLandingDemo() {
                   setLanguage('es');
                   setSelectedLanguages(['es']);
                 }}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
+                className={`p-4 sm:p-5 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                   tier === 'basic'
-                    ? 'border-emerald-600 bg-gradient-to-br from-emerald-50 to-teal-50/60 shadow-md shadow-emerald-600/10 ring-2 ring-emerald-500/25 scale-[1.01]'
-                    : 'border-slate-300/90 hover:border-emerald-400 bg-slate-50/75 hover:bg-white shadow-xs hover:shadow-md'
+                    ? 'border-emerald-600 bg-gradient-to-br from-emerald-50 via-emerald-100/60 to-teal-50 shadow-lg shadow-emerald-600/15 ring-4 ring-emerald-500/25 scale-[1.02]'
+                    : 'border-emerald-300 bg-emerald-50/55 hover:border-emerald-500 hover:bg-emerald-50/90 shadow-sm hover:shadow-md'
                 }`}
               >
                 <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs sm:text-[13px] font-black text-emerald-950 uppercase tracking-wider flex items-center gap-1.5">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs sm:text-sm font-black text-emerald-950 uppercase tracking-wider flex items-center gap-2">
+                      <span className={`w-4 h-4 rounded-full flex items-center justify-center border-2 ${
+                        tier === 'basic' ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-emerald-400 bg-white'
+                      }`}>
+                        {tier === 'basic' && <Check size={10} strokeWidth={3} />}
+                      </span>
                       Básico
-                      {tier === 'basic' && (
-                        <span className="w-4 h-4 rounded-full bg-emerald-600 text-white inline-flex items-center justify-center">
-                          <Check size={10} strokeWidth={3} />
-                        </span>
-                      )}
                     </span>
-                    <span className="text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-2.5 py-0.5 rounded-md border border-emerald-200">ESTÁNDAR</span>
+                    <span className="text-[10px] bg-emerald-600 text-white font-extrabold px-2.5 py-0.5 rounded-md shadow-2xs">ESTÁNDAR</span>
                   </div>
-                  <p className="text-xs text-slate-600 font-medium leading-relaxed">
+                  <p className="text-xs text-slate-700 font-medium leading-relaxed">
                     Hero + Ficha + Acerca de + Qué incluye + Catálogo de tours. Idioma único: Español.
                   </p>
                 </div>
@@ -1529,25 +1537,25 @@ export default function NewLandingDemo() {
                     setLanguage('es');
                   }
                 }}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
+                className={`p-4 sm:p-5 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                   tier === 'pro'
-                    ? 'border-blue-600 bg-gradient-to-br from-blue-50 to-indigo-50/60 shadow-md shadow-blue-600/10 ring-2 ring-blue-500/25 scale-[1.01]'
-                    : 'border-slate-300/90 hover:border-blue-400 bg-slate-50/75 hover:bg-white shadow-xs hover:shadow-md'
+                    ? 'border-blue-600 bg-gradient-to-br from-blue-50 via-blue-100/60 to-indigo-50 shadow-lg shadow-blue-600/15 ring-4 ring-blue-500/25 scale-[1.02]'
+                    : 'border-blue-300 bg-blue-50/55 hover:border-blue-500 hover:bg-blue-50/90 shadow-sm hover:shadow-md'
                 }`}
               >
                 <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs sm:text-[13px] font-black text-blue-950 uppercase tracking-wider flex items-center gap-1.5">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs sm:text-sm font-black text-blue-950 uppercase tracking-wider flex items-center gap-2">
+                      <span className={`w-4 h-4 rounded-full flex items-center justify-center border-2 ${
+                        tier === 'pro' ? 'bg-blue-600 border-blue-600 text-white' : 'border-blue-400 bg-white'
+                      }`}>
+                        {tier === 'pro' && <Check size={10} strokeWidth={3} />}
+                      </span>
                       Pro
-                      {tier === 'pro' && (
-                        <span className="w-4 h-4 rounded-full bg-blue-600 text-white inline-flex items-center justify-center">
-                          <Check size={10} strokeWidth={3} />
-                        </span>
-                      )}
                     </span>
-                    <span className="text-[10px] bg-blue-100 text-blue-800 font-extrabold px-2.5 py-0.5 rounded-md border border-blue-200">RECOMENDADO</span>
+                    <span className="text-[10px] bg-blue-600 text-white font-extrabold px-2.5 py-0.5 rounded-md shadow-2xs">RECOMENDADO</span>
                   </div>
-                  <p className="text-xs text-slate-600 font-medium leading-relaxed">
+                  <p className="text-xs text-slate-700 font-medium leading-relaxed">
                     Todo en Básico + Itinerario + Mochila + Sellos. Hasta 2 idiomas (ES / EN).
                   </p>
                 </div>
@@ -1557,25 +1565,25 @@ export default function NewLandingDemo() {
               <button
                 type="button"
                 onClick={() => setTier('advance')}
-                className={`p-4 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
+                className={`p-4 sm:p-5 rounded-2xl border-2 text-left transition-all cursor-pointer flex flex-col justify-between ${
                   tier === 'advance'
-                    ? 'border-purple-600 bg-gradient-to-br from-purple-50 to-indigo-50/70 shadow-md shadow-purple-600/10 ring-2 ring-purple-500/25 scale-[1.01]'
-                    : 'border-slate-300/90 hover:border-purple-400 bg-slate-50/75 hover:bg-white shadow-xs hover:shadow-md'
+                    ? 'border-purple-600 bg-gradient-to-br from-purple-50 via-purple-100/60 to-indigo-50 shadow-lg shadow-purple-600/15 ring-4 ring-purple-500/25 scale-[1.02]'
+                    : 'border-purple-300 bg-purple-50/55 hover:border-purple-500 hover:bg-purple-50/90 shadow-sm hover:shadow-md'
                 }`}
               >
                 <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs sm:text-[13px] font-black text-purple-950 uppercase tracking-wider flex items-center gap-1.5">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs sm:text-sm font-black text-purple-950 uppercase tracking-wider flex items-center gap-2">
+                      <span className={`w-4 h-4 rounded-full flex items-center justify-center border-2 ${
+                        tier === 'advance' ? 'bg-purple-600 border-purple-600 text-white' : 'border-purple-400 bg-white'
+                      }`}>
+                        {tier === 'advance' && <Check size={10} strokeWidth={3} />}
+                      </span>
                       Advance
-                      {tier === 'advance' && (
-                        <span className="w-4 h-4 rounded-full bg-purple-600 text-white inline-flex items-center justify-center">
-                          <Check size={10} strokeWidth={3} />
-                        </span>
-                      )}
                     </span>
-                    <span className="text-[10px] bg-purple-100 text-purple-800 font-extrabold px-2.5 py-0.5 rounded-md border border-purple-200">ALTA CONVERSIÓN</span>
+                    <span className="text-[10px] bg-purple-600 text-white font-extrabold px-2.5 py-0.5 rounded-md shadow-2xs">ALTA CONVERSIÓN</span>
                   </div>
-                  <p className="text-xs text-slate-600 font-medium leading-relaxed">
+                  <p className="text-xs text-slate-700 font-medium leading-relaxed">
                     Todo en Pro + Galería + FAQs + Testimonios + Catálogo. Hasta 5 idiomas.
                   </p>
                 </div>
