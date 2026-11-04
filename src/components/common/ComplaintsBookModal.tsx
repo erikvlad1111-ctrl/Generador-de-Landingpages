@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   X, 
   BookOpen, 
@@ -19,6 +19,7 @@ import {
 } from 'lucide-react';
 import { LanguageType } from '@/types/landing';
 import { sanitizeObject } from '@/lib/sanitize';
+import { validateFormAntiSpam } from '@/lib/antiSpam';
 
 interface ComplaintsBookModalProps {
   isOpen: boolean;
@@ -271,16 +272,37 @@ export default function ComplaintsBookModal({
   const [submittedSheet, setSubmittedSheet] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [honeypot, setHoneypot] = useState('');
+  const [spamError, setSpamError] = useState<string | null>(null);
+  const formLoadedAtRef = useRef<number>(Date.now());
+
+  useEffect(() => {
+    if (isOpen) {
+      formLoadedAtRef.current = Date.now();
+      setSpamError(null);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setSpamError(null);
+
+    const security = validateFormAntiSpam({
+      honeypot,
+      formLoadedAt: formLoadedAtRef.current,
+      actionKey: 'complaint',
+    });
 
     // Detección silenciosa de Bot (Honeypot)
-    if (honeypot) {
+    if (security.silentDrop) {
       setIsSubmitting(false);
       setSubmittedSheet('REC-2026-0000');
+      return;
+    }
+
+    if (!security.allowed) {
+      setSpamError(security.error || 'Por seguridad, intenta nuevamente en unos momentos.');
       return;
     }
 
@@ -412,6 +434,13 @@ export default function ComplaintsBookModal({
               <p className="text-stone-500 dark:text-stone-400 text-xs leading-relaxed">
                 {t.subtitle}
               </p>
+
+              {spamError && (
+                <div className="p-3 rounded-xl bg-red-50 text-red-700 text-xs font-medium border border-red-200 flex items-start gap-2">
+                  <AlertCircle size={15} className="text-red-500 shrink-0 mt-0.5" />
+                  <span>{spamError}</span>
+                </div>
+              )}
 
               {/* 1. Datos del Proveedor */}
               <div className="p-4 rounded-2xl bg-stone-50 dark:bg-stone-800/60 border border-stone-200 dark:border-stone-700/80 space-y-3">

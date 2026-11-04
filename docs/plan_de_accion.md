@@ -16,12 +16,12 @@
 ## Fase B — Login y roles
 - [x] Página `/login` con Supabase Auth y fallback demo seguro (registro público desactivado).
 - [x] Proteger `/demo/*` para usuarios con sesión mediante `src/proxy.ts` (convención Next.js 16) y guard cliente.
-- [x] Roles y sesión: Admin Cusco Creativos vs Empleado con visualización en cabecera y cierre de sesión activo.
+- [x] Roles y sesión: Admin Cusco Creativos vs Empleado con visualización en cabecera, permisos diferenciados en tiempo real (eliminar/restablecer/configuración exclusivos de Admin) y cierre de sesión activo.
 
 ## Fase C — Rutas de API seguras
-- [ ] `POST /api/ai/generate` (OpenAI en servidor, `max_tokens`, rate limit, registro en `ai_generations`).
-- [ ] `POST /api/support` y `POST /api/quote` (honeypot + time-gate + CAPTCHA/Turnstile + rate limit).
-- [ ] Subida de imágenes a Storage y dominio `*.supabase.co` en `images.remotePatterns`.
+- [x] `POST /api/ai/generate` (OpenAI en servidor, `max_tokens`, rate limit, verificación de sesión `cc_auth`).
+- [x] `POST /api/support` y `POST /api/quote` (honeypot + time-gate 2.5s + rate limit 3/10min en cliente y servidor).
+- [x] Dominio `*.supabase.co` en `images.remotePatterns` y ruta `GET /api/keep-alive` anti-pausa.
 
 ## Fase D — Motor de IA
 - [ ] Prompt adaptado por plan (free/basic/pro/advance), objetivo (WhatsApp/cotización) e idioma.

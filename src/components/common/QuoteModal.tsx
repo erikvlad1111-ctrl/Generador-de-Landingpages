@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useState } from 'react';
-import { X, CheckCircle, Send, MessageCircle, Calendar, Users, Mail, User, Phone } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { X, CheckCircle, Send, MessageCircle, Calendar, Users, Mail, User, Phone, AlertCircle } from 'lucide-react';
 import { LandingData, LanguageType } from '@/types/landing';
 import { translateText } from '@/data/translations';
 import { sanitizeText } from '@/lib/sanitize';
+import { validateFormAntiSpam } from '@/lib/antiSpam';
 
 interface QuoteModalProps {
   isOpen: boolean;
@@ -145,6 +146,15 @@ export default function QuoteModal({ isOpen, onClose, landing, lang = 'es' }: Qu
   const [travelers, setTravelers] = useState('2');
   const [notes, setNotes] = useState('');
   const [botCheck, setBotCheck] = useState('');
+  const [spamError, setSpamError] = useState<string | null>(null);
+  const formLoadedAtRef = useRef<number>(Date.now());
+
+  useEffect(() => {
+    if (isOpen) {
+      formLoadedAtRef.current = Date.now();
+      setSpamError(null);
+    }
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -154,14 +164,46 @@ export default function QuoteModal({ isOpen, onClose, landing, lang = 'es' }: Qu
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (botCheck) {
+    setSpamError(null);
+
+    const security = validateFormAntiSpam({
+      honeypot: botCheck,
+      formLoadedAt: formLoadedAtRef.current,
+      actionKey: 'quote',
+    });
+
+    if (security.silentDrop) {
       setSubmitted(true);
       return;
     }
+
+    if (!security.allowed) {
+      setSpamError(security.error || 'Por seguridad, intenta de nuevo en unos segundos.');
+      return;
+    }
+
     const safeName = sanitizeText(name);
     const safeNotes = sanitizeText(notes);
     setName(safeName);
     setNotes(safeNotes);
+
+    fetch('/api/quote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        tour: landing.name,
+        slug: landing.slug,
+        name: safeName,
+        email,
+        phone,
+        date,
+        travelers,
+        notes: safeNotes,
+        honeypot: botCheck,
+        elapsedMs: Date.now() - formLoadedAtRef.current,
+      }),
+    }).catch(() => {});
+
     setSubmitted(true);
   };
 
@@ -225,6 +267,13 @@ export default function QuoteModal({ isOpen, onClose, landing, lang = 'es' }: Qu
                 {t.tourLabel}: <strong>{tourLocalizedName}</strong> · {t.rateLabel}: <strong>{landing.price || t.toConsult}</strong>
               </p>
             </div>
+
+            {spamError && (
+              <div className="mb-4 p-3 rounded-xl bg-red-50 text-red-700 text-xs font-medium border border-red-200 flex items-start gap-2">
+                <AlertCircle size={15} className="text-red-500 shrink-0 mt-0.5" />
+                <span>{spamError}</span>
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-4 text-left">
               {/* Campo Honeypot Anti-Bot (Invisible) */}

@@ -1,11 +1,26 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, Building2, Phone, Mail, ShieldCheck, Users, CheckCircle2, Save } from 'lucide-react';
+import { ArrowLeft, Building2, Phone, Mail, ShieldCheck, Users, CheckCircle2, Save, Lock } from 'lucide-react';
+import { getStoredUser } from '@/lib/auth';
 
 export default function SettingsPage() {
   const [saved, setSaved] = useState(false);
+  const [userRole, setUserRole] = useState<'admin' | 'employee'>(() => getStoredUser()?.role || 'admin');
+  const isAdmin = userRole === 'admin';
+
+  useEffect(() => {
+    const handleAuthChange = () => {
+      setUserRole(getStoredUser()?.role || 'admin');
+    };
+    window.addEventListener('cc-auth-changed', handleAuthChange);
+    window.addEventListener('focus', handleAuthChange);
+    return () => {
+      window.removeEventListener('cc-auth-changed', handleAuthChange);
+      window.removeEventListener('focus', handleAuthChange);
+    };
+  }, []);
   const [agencyName, setAgencyName] = useState('Cusco Creativos S.A.C.');
   const [ruc, setRuc] = useState('20608945123');
   const [centralWhatsapp, setCentralWhatsapp] = useState('+51984123456');
@@ -24,12 +39,14 @@ export default function SettingsPage() {
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isAdmin) return;
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
   };
 
   const handleAddGuide = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isAdmin) return;
     if (!newGuideName.trim()) return;
     setGuides([
       ...guides,
@@ -60,10 +77,19 @@ export default function SettingsPage() {
         </div>
       </div>
 
+      {!isAdmin && (
+        <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl flex items-center gap-3 text-blue-900 text-xs sm:text-sm">
+          <Lock size={18} className="text-blue-600 shrink-0" />
+          <span>
+            <strong>Modo Solo Lectura (Rol: Empleado):</strong> Puedes consultar los datos oficiales y el directorio de guías, pero solo el <strong>Administrador</strong> puede modificar la configuración global de la agencia.
+          </span>
+        </div>
+      )}
+
       {saved && (
-        <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-3 text-emerald-800 text-sm animate-fade-in">
-          <CheckCircle2 size={20} className="text-emerald-600 shrink-0" />
-          <span>¡Cambios de configuración guardados correctamente en la sesión demo!</span>
+        <div className="p-4 bg-blue-50 border border-blue-200 rounded-xl flex items-center gap-3 text-blue-900 text-sm animate-fade-in">
+          <CheckCircle2 size={20} className="text-blue-600 shrink-0" />
+          <span>¡Cambios de configuración guardados correctamente!</span>
         </div>
       )}
 
@@ -150,10 +176,15 @@ export default function SettingsPage() {
         <div className="pt-4 flex justify-end">
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20 flex items-center gap-2 text-sm cursor-pointer"
+            disabled={!isAdmin}
+            className={`font-semibold px-6 py-2.5 rounded-xl transition-all flex items-center gap-2 text-sm ${
+              isAdmin
+                ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md shadow-blue-600/20 cursor-pointer'
+                : 'bg-slate-200 text-slate-500 cursor-not-allowed'
+            }`}
           >
-            <Save size={16} />
-            Guardar Configuración
+            {isAdmin ? <Save size={16} /> : <Lock size={15} />}
+            <span>{isAdmin ? 'Guardar Configuración' : 'Solo Administrador'}</span>
           </button>
         </div>
       </form>

@@ -123,6 +123,7 @@ export function setStoredUser(user: UserSession | null): void {
     } else {
       localStorage.removeItem(AUTH_STORAGE_KEY);
     }
+    window.dispatchEvent(new CustomEvent('cc-auth-changed', { detail: user }));
   } catch (err) {
     console.error('Error saving user session', err);
   }

@@ -5,12 +5,13 @@ import Link from 'next/link';
 import { 
   FileText, Globe, CalendarDays, Sparkles, Languages, CheckCircle2,
   ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download,
-  Layers, Pin, LayoutTemplate, LayoutGrid, List, User, Tag,
-  ChevronLeft, ChevronRight, SlidersHorizontal, RotateCcw,
-  Camera, Crown, Mountain, Landmark, Compass, Zap
+  Layers, LayoutTemplate, LayoutGrid, List, User, Tag,
+  ChevronLeft, ChevronRight, RotateCcw,
+  Camera, Crown, Mountain, Landmark, Compass, Zap, Lock
 } from 'lucide-react';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, resetAllLandingsToDefault, LandingData } from '@/data/landingStore';
+import { getStoredUser } from '@/lib/auth';
 
 export default function DemoDashboard() {
   const [projects, setProjects] = useState<LandingData[]>(() => getStoredLandings());
@@ -21,6 +22,8 @@ export default function DemoDashboard() {
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
   const [selectedLandingForDeploy, setSelectedLandingForDeploy] = useState<LandingData | null>(null);
   const [resetDemosToast, setResetDemosToast] = useState(false);
+  const [userRole, setUserRole] = useState<'admin' | 'employee'>(() => getStoredUser()?.role || 'admin');
+  const isAdmin = userRole === 'admin';
 
   // Table scroll & column view controls
   const tableContainerRef = useRef<HTMLDivElement>(null);
@@ -58,9 +61,19 @@ export default function DemoDashboard() {
   };
 
   useEffect(() => {
-    const handleFocus = () => setProjects(getStoredLandings());
+    const handleFocus = () => {
+      setProjects(getStoredLandings());
+      setUserRole(getStoredUser()?.role || 'admin');
+    };
+    const handleAuthChange = () => {
+      setUserRole(getStoredUser()?.role || 'admin');
+    };
     window.addEventListener('focus', handleFocus);
-    return () => window.removeEventListener('focus', handleFocus);
+    window.addEventListener('cc-auth-changed', handleAuthChange);
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('cc-auth-changed', handleAuthChange);
+    };
   }, []);
 
   // Filtered projects
@@ -115,6 +128,10 @@ export default function DemoDashboard() {
   };
 
   const handleDelete = (id: string, name: string) => {
+    if (!isAdmin) {
+      alert('Acceso restringido: Solo el Administrador puede eliminar landings del sistema.');
+      return;
+    }
     if (confirm(`¿Estás seguro de eliminar el proyecto "${name}"?`)) {
       const updated = deleteLandingFromStorage(id);
       setProjects(updated);
@@ -122,6 +139,10 @@ export default function DemoDashboard() {
   };
 
   const handleResetAllDemos = () => {
+    if (!isAdmin) {
+      alert('Acceso restringido: Solo el Administrador puede restablecer las demos de fábrica.');
+      return;
+    }
     if (confirm('¿Deseas restablecer todas las landings y plantillas a sus datos oficiales de fábrica? Esto limpiará cualquier texto de prueba guardado en tu navegador.')) {
       const restored = resetAllLandingsToDefault();
       setProjects(restored);
@@ -207,11 +228,16 @@ export default function DemoDashboard() {
                 <button
                   type="button"
                   onClick={handleResetAllDemos}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700 text-xs font-semibold transition-all hover:scale-102 active:scale-98 cursor-pointer shadow-xs"
-                  title="Restablece las 6 plantillas a sus valores limpios oficiales de fábrica"
+                  disabled={!isAdmin}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all shadow-xs ${
+                    isAdmin
+                      ? 'bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border-slate-700 hover:scale-102 active:scale-98 cursor-pointer'
+                      : 'bg-slate-900/60 text-slate-500 border-slate-800 cursor-not-allowed'
+                  }`}
+                  title={isAdmin ? 'Restablece las 6 plantillas a sus valores limpios oficiales de fábrica' : 'Solo el Administrador puede restablecer las demos de fábrica'}
                 >
-                  <RotateCcw size={13} className="text-amber-400" />
-                  <span>Restablecer Demos</span>
+                  {isAdmin ? <RotateCcw size={13} className="text-blue-400" /> : <Lock size={12} className="text-slate-500" />}
+                  <span>{isAdmin ? 'Restablecer Demos' : 'Restablecer (Solo Admin)'}</span>
                 </button>
               </div>
               <span className="text-xs text-slate-300 font-medium">Abre cada diseño con todas sus bondades al máximo: 5 idiomas, cotizador VIP, tours secundarios y amenidades</span>
@@ -719,10 +745,15 @@ export default function DemoDashboard() {
 
                           <button
                             onClick={() => handleDelete(p.id, p.name)}
-                            className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-200 rounded-xl transition-colors text-xs cursor-pointer"
-                            title="Eliminar"
+                            disabled={!isAdmin}
+                            className={`p-2 rounded-xl transition-colors text-xs border ${
+                              isAdmin
+                                ? 'text-slate-400 hover:text-red-600 hover:bg-red-50 border-transparent hover:border-red-200 cursor-pointer'
+                                : 'text-slate-300 border-transparent cursor-not-allowed'
+                            }`}
+                            title={isAdmin ? 'Eliminar' : 'Solo el Administrador puede eliminar landings'}
                           >
-                            <Trash2 size={14} />
+                            {isAdmin ? <Trash2 size={14} /> : <Lock size={14} />}
                           </button>
                         </div>
                       </div>
@@ -1043,10 +1074,15 @@ export default function DemoDashboard() {
 
                                 <button
                                   onClick={() => handleDelete(p.id, p.name)}
-                                  className="w-7.5 h-7.5 rounded-xl bg-slate-100/90 hover:bg-red-50 text-slate-400 hover:text-red-600 border border-slate-200/80 flex items-center justify-center transition-all hover:scale-105 cursor-pointer"
-                                  title="Eliminar proyecto"
+                                  disabled={!isAdmin}
+                                  className={`w-7.5 h-7.5 rounded-xl border flex items-center justify-center transition-all ${
+                                    isAdmin
+                                      ? 'bg-slate-100/90 hover:bg-red-50 text-slate-400 hover:text-red-600 border-slate-200/80 hover:scale-105 cursor-pointer'
+                                      : 'bg-slate-50 text-slate-300 border-slate-200/50 cursor-not-allowed'
+                                  }`}
+                                  title={isAdmin ? 'Eliminar proyecto' : 'Solo el Administrador puede eliminar landings'}
                                 >
-                                  <Trash2 size={13} />
+                                  {isAdmin ? <Trash2 size={13} /> : <Lock size={13} />}
                                 </button>
                               </div>
                             </div>
