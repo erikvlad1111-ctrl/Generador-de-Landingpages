@@ -1,5 +1,6 @@
 import { LandingData, ObjectiveType, TemplateType, LanguageType, PlanTier, CatalogTourItem, FAQItem, TestimonialItem } from '@/types/landing';
 import { getSanitizedGuideAvatar } from '@/utils/guideAvatars';
+import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 export type { LandingData };
 
 export const INITIAL_LANDINGS: LandingData[] = [
@@ -933,6 +934,108 @@ export function getStoredLandings(): LandingData[] {
   }
 }
 
+async function upsertLandingToSupabase(landing: LandingData): Promise<void> {
+  if (!isSupabaseConfigured) return;
+  try {
+    const { data: userData } = await supabase.auth.getUser();
+    const userId = userData?.user?.id || null;
+
+    await supabase.from('landings').upsert(
+      {
+        slug: landing.slug,
+        name: landing.name,
+        template_code: landing.template,
+        tier: landing.tier || 'free',
+        language: landing.language || 'es',
+        languages: landing.languages && landing.languages.length > 0 ? landing.languages : [landing.language || 'es'],
+        status: landing.status || 'draft',
+        created_by: userId,
+        data: landing,
+      },
+      { onConflict: 'slug' }
+    );
+  } catch {
+    // Fallback silencioso a localStorage si Supabase aún no tiene las tablas creadas
+  }
+}
+
+export async function syncLandingsFromSupabase(): Promise<LandingData[]> {
+  const localList = getStoredLandings();
+  if (!isSupabaseConfigured || typeof window === 'undefined') {
+    return localList;
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('landings')
+      .select('slug, name, status, tier, language, languages, template_code, data')
+      .order('updated_at', { ascending: false });
+
+    if (error || !Array.isArray(data) || data.length === 0) {
+      return localList;
+    }
+
+    const remoteLandings: LandingData[] = data
+      .map((row: Record<string, any>): LandingData | null => {
+        if (row.data && typeof row.data === 'object' && row.data.slug) {
+          return {
+            ...(row.data as LandingData),
+            slug: String(row.slug || row.data.slug),
+            name: String(row.name || row.data.name),
+            status: (row.status === 'published' ? 'published' : 'draft') as 'published' | 'draft',
+            tier: (row.tier || row.data.tier || 'free') as PlanTier,
+          };
+        }
+        return null;
+      })
+      .filter((x): x is LandingData => x !== null);
+
+    if (remoteLandings.length === 0) return localList;
+
+    const mergedMap = new Map<string, LandingData>();
+    for (const item of remoteLandings) {
+      mergedMap.set(item.slug.toLowerCase(), item);
+    }
+    for (const localItem of localList) {
+      const key = localItem.slug.toLowerCase();
+      if (!mergedMap.has(key)) {
+        mergedMap.set(key, localItem);
+      }
+    }
+
+    const merged = Array.from(mergedMap.values());
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+    } catch {}
+    return merged;
+  } catch {
+    return localList;
+  }
+}
+
+export async function fetchLandingBySlugFromSupabase(slug: string): Promise<LandingData | null> {
+  if (!isSupabaseConfigured) return null;
+  try {
+    const { data, error } = await supabase
+      .from('landings')
+      .select('slug, name, status, tier, language, languages, template_code, data')
+      .ilike('slug', slug)
+      .maybeSingle();
+
+    if (error || !data || !data.data) return null;
+    const payload = data.data as LandingData;
+    return {
+      ...payload,
+      slug: String(data.slug || payload.slug || slug),
+      name: String(data.name || payload.name),
+      status: (data.status === 'published' ? 'published' : 'draft') as 'published' | 'draft',
+      tier: (data.tier || payload.tier || 'free') as PlanTier,
+    };
+  } catch {
+    return null;
+  }
+}
+
 export function saveLandingToStorage(landing: LandingData): void {
   if (typeof window === 'undefined') return;
   try {
@@ -953,6 +1056,7 @@ export function saveLandingToStorage(landing: LandingData): void {
       console.error('Fatal: localStorage quota exceeded even for single landing', fallbackErr);
     }
   }
+  void upsertLandingToSupabase(landing);
 }
 
 export function getLandingBySlug(slug: string): LandingData | undefined {
@@ -963,8 +1067,18 @@ export function getLandingBySlug(slug: string): LandingData | undefined {
 export function updateLandingStatus(id: string, status: 'published' | 'draft'): LandingData[] {
   if (typeof window === 'undefined') return INITIAL_LANDINGS;
   try {
-    const list = getStoredLandings().map(item => item.id === id ? { ...item, status } : item);
+    let targetLanding: LandingData | undefined;
+    const list = getStoredLandings().map(item => {
+      if (item.id === id) {
+        targetLanding = { ...item, status };
+        return targetLanding;
+      }
+      return item;
+    });
     localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    if (targetLanding) {
+      void upsertLandingToSupabase(targetLanding);
+    }
     return list;
   } catch {
     return getStoredLandings();
@@ -974,8 +1088,13 @@ export function updateLandingStatus(id: string, status: 'published' | 'draft'): 
 export function deleteLandingFromStorage(id: string): LandingData[] {
   if (typeof window === 'undefined') return INITIAL_LANDINGS;
   try {
-    const list = getStoredLandings().filter(item => item.id !== id);
+    const current = getStoredLandings();
+    const removed = current.find(item => item.id === id);
+    const list = current.filter(item => item.id !== id);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    if (removed && isSupabaseConfigured) {
+      void supabase.from('landings').delete().eq('slug', removed.slug);
+    }
     return list;
   } catch {
     return getStoredLandings();

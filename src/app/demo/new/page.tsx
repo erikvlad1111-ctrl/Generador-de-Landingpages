@@ -21,6 +21,7 @@ import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import CatalogToursEditorModal from '@/components/common/CatalogToursEditorModal';
 import { translateText } from '@/data/translations';
 import { OFFICIAL_PERUVIAN_GUIDE_PRESETS, PRESET_GUIDE_AVATARS, getSanitizedGuideAvatar } from '@/utils/guideAvatars';
+import { uploadImageToSupabaseStorage } from '@/lib/supabase';
 
 const DEFAULT_FAQS: FAQItem[] = [
   {
@@ -701,74 +702,133 @@ export default function NewLandingDemo() {
   const [magicToast, setMagicToast] = useState(false);
   const [isAutocompleting, setIsAutocompleting] = useState(false);
 
-  const handleMagicAiAutocomplete = () => {
+  const handleMagicAiAutocomplete = async () => {
     setIsAutocompleting(true);
-    setTimeout(() => {
-      const tourQuery = (name || destination || '').toLowerCase();
-      let matchedDest = destination || 'Machu Picchu & Cusco';
-      let matchedDesc = 'Una experiencia exclusiva diseñada para quienes valoran la autenticidad, la gastronomía andina y el acceso preferencial sin multitudes.';
-      let matchedDuration = duration || '4 Días / 3 Noches';
-      let matchedAltitude = altitude || '3,400 msnm';
-      let matchedDifficulty = difficulty || 'Moderada';
+    try {
+      const res = await fetch('/api/ai/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: name || 'Tour en Cusco',
+          destination,
+          price: price || '$150 USD',
+          duration,
+          difficulty,
+          altitude,
+          tier,
+          objective,
+          aiTone,
+          language,
+          companyName: companyName || 'Cusco Creativos Expeditions',
+          guideName: guideName || 'Guía Oficial DIRCETUR',
+        }),
+      });
 
-      if (tourQuery.includes('salkantay')) {
-        matchedDest = 'Machu Picchu & Cordillera Vilcabamba';
-        matchedAltitude = '4,630 msnm (Paso Salkantay)';
-        matchedDifficulty = 'Moderada - Alta';
-        matchedDuration = '5 Días / 4 Noches';
-        matchedDesc = 'Un trekking legendario de alta montaña cruzando glaciares sagrados, ceja de selva y plantaciones de café hasta la ciudadela inca.';
-      } else if (tourQuery.includes('humantay')) {
-        matchedDest = 'Laguna Humantay & Soraypampa';
-        matchedAltitude = '4,200 msnm';
-        matchedDifficulty = 'Moderada';
-        matchedDuration = 'Full Day';
-        matchedDesc = 'Caminata escénica hacia una de las lagunas turquesas más deslumbrantes de los Andes, rodeada de glaciares imponentes.';
-      } else if (tourQuery.includes('7 colores') || tourQuery.includes('vinicunca') || tourQuery.includes('rainbow')) {
-        matchedDest = 'Montaña de 7 Colores (Vinicunca)';
-        matchedAltitude = '5,036 msnm';
-        matchedDifficulty = 'Exigente / Alta Montaña';
-        matchedDuration = 'Full Day (04:30 - 17:00)';
-        matchedDesc = 'Asciende a uno de los paisajes geológicos más asombrosos del planeta con asistencia médica preventiva y paradas fotográficas exclusivas.';
-      } else if (tourQuery.includes('valle') || tourQuery.includes('maras') || tourQuery.includes('moray')) {
-        matchedDest = 'Valle Sagrado de los Incas';
-        matchedAltitude = '2,870 msnm';
-        matchedDifficulty = 'Fácil (Familiar / Sin esfuerzo)';
-        matchedDuration = 'Full Day Confort';
-        matchedDesc = 'Exploración relajada por las terrazas agrícolas de Moray, las salineras de Maras y las fortalezas megalíticas incas.';
-      } else if (tourQuery.includes('city') || tourQuery.includes('ruinas') || tourQuery.includes('sacsayhuaman')) {
-        matchedDest = 'Cusco Histórico & Sacsayhuamán';
-        matchedAltitude = '3,400 msnm';
-        matchedDifficulty = 'Fácil (Caminata urbana)';
-        matchedDuration = 'Media Jornada (4 Horas)';
-        matchedDesc = 'Inmersión histórica y arqueológica por los templos sagrados incas y calles coloniales acompañados de un historiador colegiado.';
+      if (res.ok) {
+        const payload = await res.json();
+        const aiData = payload?.data;
+        if (aiData) {
+          if (aiData.destination) setDestination(aiData.destination);
+          if (aiData.description) setDescription(aiData.description);
+          if (aiData.duration) setDuration(aiData.duration);
+          if (aiData.altitude) setAltitude(aiData.altitude);
+          if (aiData.difficulty) setDifficulty(aiData.difficulty);
+          if (aiData.heroTitle && !isHeroTitleCustomized) setHeroTitle(aiData.heroTitle);
+          if (aiData.heroSubtitle && !isHeroSubtitleCustomized) setHeroSubtitle(aiData.heroSubtitle);
+          if (aiData.heroBadge) setHeroBadge(aiData.heroBadge);
+          if (aiData.heroCta) setHeroCta(aiData.heroCta);
+          if (Array.isArray(aiData.includedServices) && aiData.includedServices.length > 0) {
+            setIncludedServices(aiData.includedServices);
+          }
+          if (Array.isArray(aiData.notIncluded) && aiData.notIncluded.length > 0) {
+            setNotIncluded(aiData.notIncluded);
+          }
+          if (Array.isArray(aiData.whatToBring) && aiData.whatToBring.length > 0) {
+            setWhatToBring(aiData.whatToBring);
+          }
+          if (Array.isArray(aiData.itinerary) && aiData.itinerary.length > 0) {
+            setItinerary(aiData.itinerary);
+          }
+          if (Array.isArray(aiData.faqs) && aiData.faqs.length > 0) {
+            setFaqs(aiData.faqs);
+          }
+          if (Array.isArray(aiData.testimonials) && aiData.testimonials.length > 0) {
+            setTestimonials(aiData.testimonials);
+          }
+          setIsAutocompleting(false);
+          setMagicToast(true);
+          setTimeout(() => setMagicToast(false), 3500);
+          return;
+        }
       }
+    } catch {
+      // Fallback local si el cliente está sin conexión
+    }
 
-      setDestination(matchedDest);
-      setDescription(matchedDesc);
-      setDuration(matchedDuration);
-      setAltitude(matchedAltitude);
-      setDifficulty(matchedDifficulty);
-      setItinerary([
-        { step: 'Fase 1', title: 'Recojo en Hotel & Traslado Escénico', desc: `Transporte privado climatizado con amenidades a bordo hacia la ruta de ${matchedDest}.` },
-        { step: 'Fase 2', title: 'Exploración Guiada & Tiempo para Fotografías', desc: `Recorrido personalizado guiado por ${guideName || 'especialista oficial'} con datos históricos y asistencia de altitud.` },
-        { step: 'Fase 3', title: 'Almuerzo Campestre & Retorno a Cusco', desc: 'Degustación de gastronomía andina y traslado de retorno seguro hacia tu alojamiento.' }
-      ]);
-      setFaqs([
-        { q: `¿Qué incluye el tour ${name || 'programado'}?`, a: 'Incluye transporte turístico privado, guiado oficial colegiado bilingüe, entradas oficiales y asistencia permanente con oxígeno.' },
-        { q: '¿Cómo prepararme para la altitud en esta ruta?', a: `Alcanzamos ${matchedAltitude}. Recomendamos una jornada previa de aclimatación, hidratación y mate de coca.` },
-        { q: '¿Cómo aseguro mi lugar y reserva?', a: 'Puedes confirmar tu reserva de forma inmediata a través de WhatsApp o mediante el formulario de cotización.' },
-        { q: '¿Qué sucede si hay mal tiempo?', a: 'Monitoreamos reportes meteorológicos y reprogramamos sin costo adicional para garantizar tu seguridad.' }
-      ]);
-      setTestimonials([
-        { name: 'Sarah & Mark Davis', origin: 'California, USA', rating: 5, comment: `Outstanding experience with ${guideName}! Superb organization, safe driving and breathtaking views.` },
-        { name: 'Alejandro y Carmen', origin: 'Madrid, España', rating: 5, comment: 'La mejor experiencia de nuestro viaje a Perú. Todo a tiempo, con mucha amabilidad y seguridad total.' },
-        { name: 'Sophie Laurent', origin: 'París, Francia', rating: 5, comment: 'Une journée magique. Guide très professionnel, matériel au top et des souvenirs plein la tête !' }
-      ]);
+    const tourQuery = (name || destination || '').toLowerCase();
+    let matchedDest = destination || 'Machu Picchu & Cusco';
+    let matchedDesc = 'Una experiencia exclusiva diseñada para quienes valoran la autenticidad, la gastronomía andina y el acceso preferencial sin multitudes.';
+    let matchedDuration = duration || '4 Días / 3 Noches';
+    let matchedAltitude = altitude || '3,400 msnm';
+    let matchedDifficulty = difficulty || 'Moderada';
 
-      setIsAutocompleting(false);
-      setMagicToast(true);
-      setTimeout(() => setMagicToast(false), 3500);
-    }, 600);
+    if (tourQuery.includes('salkantay')) {
+      matchedDest = 'Machu Picchu & Cordillera Vilcabamba';
+      matchedAltitude = '4,630 msnm (Paso Salkantay)';
+      matchedDifficulty = 'Moderada - Alta';
+      matchedDuration = '5 Días / 4 Noches';
+      matchedDesc = 'Un trekking legendario de alta montaña cruzando glaciares sagrados, ceja de selva y plantaciones de café hasta la ciudadela inca.';
+    } else if (tourQuery.includes('humantay')) {
+      matchedDest = 'Laguna Humantay & Soraypampa';
+      matchedAltitude = '4,200 msnm';
+      matchedDifficulty = 'Moderada';
+      matchedDuration = 'Full Day';
+      matchedDesc = 'Caminata escénica hacia una de las lagunas turquesas más deslumbrantes de los Andes, rodeada de glaciares imponentes.';
+    } else if (tourQuery.includes('7 colores') || tourQuery.includes('vinicunca') || tourQuery.includes('rainbow')) {
+      matchedDest = 'Montaña de 7 Colores (Vinicunca)';
+      matchedAltitude = '5,036 msnm';
+      matchedDifficulty = 'Exigente / Alta Montaña';
+      matchedDuration = 'Full Day (04:30 - 17:00)';
+      matchedDesc = 'Asciende a uno de los paisajes geológicos más asombrosos del planeta con asistencia médica preventiva y paradas fotográficas exclusivas.';
+    } else if (tourQuery.includes('valle') || tourQuery.includes('maras') || tourQuery.includes('moray')) {
+      matchedDest = 'Valle Sagrado de los Incas';
+      matchedAltitude = '2,870 msnm';
+      matchedDifficulty = 'Fácil (Familiar / Sin esfuerzo)';
+      matchedDuration = 'Full Day Confort';
+      matchedDesc = 'Exploración relajada por las terrazas agrícolas de Moray, las salineras de Maras y las fortalezas megalíticas incas.';
+    } else if (tourQuery.includes('city') || tourQuery.includes('ruinas') || tourQuery.includes('sacsayhuaman')) {
+      matchedDest = 'Cusco Histórico & Sacsayhuamán';
+      matchedAltitude = '3,400 msnm';
+      matchedDifficulty = 'Fácil (Caminata urbana)';
+      matchedDuration = 'Media Jornada (4 Horas)';
+      matchedDesc = 'Inmersión histórica y arqueológica por los templos sagrados incas y calles coloniales acompañados de un historiador colegiado.';
+    }
+
+    setDestination(matchedDest);
+    setDescription(matchedDesc);
+    setDuration(matchedDuration);
+    setAltitude(matchedAltitude);
+    setDifficulty(matchedDifficulty);
+    setItinerary([
+      { step: 'Fase 1', title: 'Recojo en Hotel & Traslado Escénico', desc: `Transporte privado climatizado con amenidades a bordo hacia la ruta de ${matchedDest}.` },
+      { step: 'Fase 2', title: 'Exploración Guiada & Tiempo para Fotografías', desc: `Recorrido personalizado guiado por ${guideName || 'especialista oficial'} con datos históricos y asistencia de altitud.` },
+      { step: 'Fase 3', title: 'Almuerzo Campestre & Retorno a Cusco', desc: 'Degustación de gastronomía andina y traslado de retorno seguro hacia tu alojamiento.' }
+    ]);
+    setFaqs([
+      { q: `¿Qué incluye el tour ${name || 'programado'}?`, a: 'Incluye transporte turístico privado, guiado oficial colegiado bilingüe, entradas oficiales y asistencia permanente con oxígeno.' },
+      { q: '¿Cómo prepararme para la altitud en esta ruta?', a: `Alcanzamos ${matchedAltitude}. Recomendamos una jornada previa de aclimatación, hidratación y mate de coca.` },
+      { q: '¿Cómo aseguro mi lugar y reserva?', a: 'Puedes confirmar tu reserva de forma inmediata a través de WhatsApp o mediante el formulario de cotización.' },
+      { q: '¿Qué sucede si hay mal tiempo?', a: 'Monitoreamos reportes meteorológicos y reprogramamos sin costo adicional para garantizar tu seguridad.' }
+    ]);
+    setTestimonials([
+      { name: 'Sarah & Mark Davis', origin: 'California, USA', rating: 5, comment: `Outstanding experience with ${guideName}! Superb organization, safe driving and breathtaking views.` },
+      { name: 'Alejandro y Carmen', origin: 'Madrid, España', rating: 5, comment: 'La mejor experiencia de nuestro viaje a Perú. Todo a tiempo, con mucha amabilidad y seguridad total.' },
+      { name: 'Sophie Laurent', origin: 'París, Francia', rating: 5, comment: 'Une journée magique. Guide très professionnel, matériel au top et des souvenirs plein la tête !' }
+    ]);
+
+    setIsAutocompleting(false);
+    setMagicToast(true);
+    setTimeout(() => setMagicToast(false), 3500);
   };
 
   // Handlers para FAQs
@@ -954,6 +1014,11 @@ export default function NewLandingDemo() {
           const isPng = file.type === 'image/png' || file.type === 'image/svg+xml';
           const compressed = canvas.toDataURL(isPng ? 'image/png' : 'image/webp', 0.85);
           setLogoUrl(compressed);
+          void uploadImageToSupabaseStorage(file, 'logos', compressed).then((publicUrl) => {
+            if (publicUrl && publicUrl.startsWith('http')) {
+              setLogoUrl(publicUrl);
+            }
+          });
         } else {
           setLogoUrl(result);
         }

@@ -7,11 +7,11 @@
 ---
 
 ## Fase A — Conectar Supabase (persistencia real)
-- [ ] Crear proyecto en Supabase y aplicar migraciones `00000`, `00001`, `00002`.
-- [ ] Crear bucket público `landing-images`.
+- [ ] Crear proyecto en Supabase y aplicar el script maestro `supabase/setup_completo.sql` (unifica `00000`, `00001`, `00002` y el bucket `landing-images`).
 - [ ] Configurar variables de entorno en `.env.local` y en Vercel (claves privadas sin `NEXT_PUBLIC_`).
-- [ ] Reemplazar `landingStore` por un servicio que guarde y lea `landings.data` (JSONB) sincronizando `slug`, `name`, `template_id`, `tier`, `status`, `language(s)`.
-- [ ] `/p/[slug]` lee desde Supabase (solo landings `published` para visitantes).
+- [x] Conectar `landingStore.ts` para guardar y leer `landings.data` (JSONB) en Supabase sincronizando `slug`, `name`, `template_code`, `tier`, `status`, `language(s)` con respaldo en `localStorage`.
+- [x] `/p/[slug]` lee desde Supabase (`fetchLandingBySlugFromSupabase`) además del caché local.
+- [x] Subida de logotipos/imágenes conectada al bucket `landing-images` (`uploadImageToSupabaseStorage`).
 
 ## Fase B — Login y roles
 - [x] Página `/login` con Supabase Auth, fallback híbrido interno seguro y registro público desactivado.
@@ -56,7 +56,7 @@
 
 ## Estrategia de Doble Versión Independiente (Empresa vs. Tesis)
 > Detalle completo en [`docs/plan_doble_version_empresa_y_tesis.md`](./plan_doble_version_empresa_y_tesis.md).
-- [ ] **1. Terminar el proyecto base al 100%:** Conectar motor IA completo (`/api/ai/generate` + `/demo/new`), sincronizar `landingStore.ts` con Supabase y generar script único `supabase/setup_completo.sql`.
+- [x] **1. Terminar el proyecto base al 100%:** Conectar motor IA completo (`/api/ai/generate` + `/demo/new`), sincronizar `landingStore.ts` con Supabase y generar script único `supabase/setup_completo.sql`.
 - [ ] **2. Versión Empresa (Desarrollo/Producción):** GitHub de la empresa + Supabase de la empresa + API OpenAI de la empresa + Hosting Vercel de la empresa.
 - [ ] **3. Versión Tesis (Sustentación Universitaria):**
   - [ ] Crear GitHub personal y subir copia del proyecto Next.js terminado.

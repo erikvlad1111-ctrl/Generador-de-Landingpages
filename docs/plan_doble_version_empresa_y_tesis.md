@@ -34,9 +34,9 @@ El código fuente de Next.js es **uno solo y 100% compatible con ambos entornos*
 ## 3. Orden de Trabajo Paso a Paso
 
 ### Fase 1: Terminar el proyecto base al 100% (Una sola vez)
-- [ ] **Paso 1.1:** Completar el motor de IA en `/api/ai/generate` (prompt completo por plan/objetivo/idioma + validación JSON + registro en `ai_generations` + motor de respaldo local).
-- [ ] **Paso 1.2:** Conectar `src/data/landingStore.ts` y `/p/[slug]` con Supabase PostgreSQL (`landings.data` JSONB) manteniendo fallback automático en `localStorage`.
-- [ ] **Paso 1.3:** Unificar las migraciones en un script maestro `supabase/setup_completo.sql` listo para ejecutar con un solo clic en cualquier cuenta de Supabase.
+- [x] **Paso 1.1:** Completar el motor de IA en `/api/ai/generate` (prompt completo por plan/objetivo/idioma + validación JSON + registro en `ai_generations` + motor de respaldo local).
+- [x] **Paso 1.2:** Conectar `src/data/landingStore.ts` y `/p/[slug]` con Supabase PostgreSQL (`landings.data` JSONB) manteniendo fallback automático en `localStorage`.
+- [x] **Paso 1.3:** Unificar las migraciones en un script maestro `supabase/setup_completo.sql` listo para ejecutar con un solo clic en cualquier cuenta de Supabase.
 
 ### Fase 2: Desplegar y asegurar la Versión Empresa
 - [ ] **Paso 2.1:** Subir el código final al repositorio GitHub de la empresa.
@@ -49,3 +49,4 @@ El código fuente de Next.js es **uno solo y 100% compatible con ambos entornos*
 - [ ] **Paso 3.3:** Configurar `OPENAI_API_KEY` (autorizada o propia) y las credenciales del Supabase personal en el **Vercel personal**.
 - [ ] **Paso 3.4:** Desplegar en el Vercel personal y obtener la URL pública de sustentación.
 - [ ] **Paso 3.5:** Probar el acceso completo desde otra laptop o ventana incógnita sin depender de ningún correo ni celular de la empresa.
+

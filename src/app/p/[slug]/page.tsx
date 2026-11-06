@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ArrowLeft, MessageCircle, Edit3, LayoutDashboard, Share2, Check, Download, X } from 'lucide-react';
 import TemplateRenderer from '@/templates/TemplateRenderer';
 import DeploymentModal from '@/components/common/DeploymentModal';
-import { getStoredLandings, INITIAL_LANDINGS, isTestJunk, LandingData } from '@/data/landingStore';
+import { getStoredLandings, INITIAL_LANDINGS, isTestJunk, fetchLandingBySlugFromSupabase, LandingData } from '@/data/landingStore';
 import { TemplateType, PlanTier } from '@/types/landing';
 
 function PublicLandingContent() {
@@ -146,7 +146,24 @@ function PublicLandingContent() {
   React.useEffect(() => {
     const resolved = resolveLandingData();
     if (resolved) setLanding(resolved);
-  }, [resolveLandingData]);
+
+    if (!isOfficialDemo && slug && !encodedSnapshot) {
+      void fetchLandingBySlugFromSupabase(slug).then((remoteLanding) => {
+        if (remoteLanding) {
+          const activeTier: PlanTier = (tierQuery && ['free', 'basic', 'pro', 'advance'].includes(tierQuery))
+            ? tierQuery
+            : (remoteLanding.tier || 'advance');
+          const isFreeOrBasic = activeTier === 'free' || activeTier === 'basic';
+          setLanding({
+            ...remoteLanding,
+            ...(templateQuery ? { template: templateQuery } : {}),
+            tier: activeTier,
+            ...(isFreeOrBasic ? { language: 'es' as const, languages: ['es' as const] } : {}),
+          });
+        }
+      });
+    }
+  }, [resolveLandingData, isOfficialDemo, slug, encodedSnapshot, tierQuery, templateQuery]);
 
   if (!landing) {
     return (

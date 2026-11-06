@@ -10,7 +10,7 @@ import {
   Camera, Crown, Mountain, Landmark, Compass, Zap, Lock
 } from 'lucide-react';
 import DeploymentModal from '@/components/common/DeploymentModal';
-import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, resetAllLandingsToDefault, LandingData } from '@/data/landingStore';
+import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, resetAllLandingsToDefault, syncLandingsFromSupabase, LandingData } from '@/data/landingStore';
 import { getStoredUser } from '@/lib/auth';
 
 export default function DemoDashboard() {
@@ -61,9 +61,16 @@ export default function DemoDashboard() {
   };
 
   useEffect(() => {
+    void syncLandingsFromSupabase().then((merged) => {
+      setProjects(merged);
+    });
+
     const handleFocus = () => {
       setProjects(getStoredLandings());
       setUserRole(getStoredUser()?.role || 'admin');
+      void syncLandingsFromSupabase().then((merged) => {
+        setProjects(merged);
+      });
     };
     const handleAuthChange = () => {
       setUserRole(getStoredUser()?.role || 'admin');
