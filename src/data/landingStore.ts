@@ -900,10 +900,12 @@ export function getStoredLandings(): LandingData[] {
       });
 
       for (const init of INITIAL_LANDINGS) {
-        const idx = parsed.findIndex(item => item.id === init.id);
+        const idx = parsed.findIndex(item => item.id === init.id || item.slug === init.slug);
         if (idx === -1) {
-          parsed.push(init);
-          updated = true;
+          if (!isSupabaseConfigured) {
+            parsed.push(init);
+            updated = true;
+          }
         } else {
           if (!parsed[idx].destination && init.destination) {
             parsed[idx].destination = init.destination;
@@ -971,7 +973,7 @@ export async function syncLandingsFromSupabase(): Promise<LandingData[]> {
       .select('slug, name, status, tier, language, languages, template_code, data')
       .order('updated_at', { ascending: false });
 
-    if (error || !Array.isArray(data) || data.length === 0) {
+    if (error || !Array.isArray(data)) {
       return localList;
     }
 
@@ -990,24 +992,12 @@ export async function syncLandingsFromSupabase(): Promise<LandingData[]> {
       })
       .filter((x): x is LandingData => x !== null);
 
-    if (remoteLandings.length === 0) return localList;
-
-    const mergedMap = new Map<string, LandingData>();
-    for (const item of remoteLandings) {
-      mergedMap.set(item.slug.toLowerCase(), item);
-    }
-    for (const localItem of localList) {
-      const key = localItem.slug.toLowerCase();
-      if (!mergedMap.has(key)) {
-        mergedMap.set(key, localItem);
-      }
-    }
-
-    const merged = Array.from(mergedMap.values());
+    // Cuando Supabase está activo y responde sin error, Supabase es la única fuente de verdad
+    // (evita mezclar pruebas antiguas que hayan quedado en el localStorage del navegador)
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(remoteLandings));
     } catch {}
-    return merged;
+    return remoteLandings;
   } catch {
     return localList;
   }
