@@ -7,9 +7,10 @@
 ---
 
 ## Fase A — Conectar Supabase (persistencia real)
-- [ ] Crear proyecto en Supabase y aplicar el script maestro `supabase/setup_completo.sql` (unifica `00000`, `00001`, `00002` y el bucket `landing-images`).
-- [ ] Configurar variables de entorno en `.env.local` y en Vercel (claves privadas sin `NEXT_PUBLIC_`).
-- [x] Conectar `landingStore.ts` para guardar y leer `landings.data` (JSONB) en Supabase sincronizando `slug`, `name`, `template_code`, `tier`, `status`, `language(s)` con respaldo en `localStorage`.
+- [x] Crear proyecto en Supabase (`ectxektxwthbzvexcrqu`) y aplicar el script maestro `supabase/setup_completo.sql` (unifica `00000`, `00001`, `00002` y el bucket `landing-images`).
+- [x] Crear los 2 usuarios oficiales en Supabase Auth (`admin@cuscocreativos.com` con rol `admin` y `empleado@cuscocreativos.com` con rol `employee`) y desactivar registro público (`disable_signup = true`).
+- [x] Configurar variables de entorno en `.env.local` (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `CRON_SECRET`).
+- [x] Conectar `landingStore.ts` para guardar y leer `landings.data` (JSONB) en Supabase sincronizando `slug`, `name`, `template_code`, `tier`, `status`, `language(s)` con respaldo en `localStorage` (7 landings iniciales pobladas en `public.landings`).
 - [x] `/p/[slug]` lee desde Supabase (`fetchLandingBySlugFromSupabase`) además del caché local.
 - [x] Subida de logotipos/imágenes conectada al bucket `landing-images` (`uploadImageToSupabaseStorage`).
 

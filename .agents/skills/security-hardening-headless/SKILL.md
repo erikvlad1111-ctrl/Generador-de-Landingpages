@@ -154,9 +154,9 @@ Este documento es la **referencia oficial de seguridad** para el despliegue y op
 - [x] **Formularios públicos:** Enviar tickets/cotizaciones por ruta de servidor (`POST /api/support` y `POST /api/quote`) con honeypot, time-gate (2.5s) y rate limit (3/10 min).
 - [x] **Git:** URL del remoto limpia sin tokens expuestos (`https://erikvlad1111-ctrl@github.com/erikvlad1111-ctrl/Generador-de-Landingpages.git`).
 
-### Pendiente al integrar Supabase en la nube (backend oficial):
-- [ ] **Supabase Auth (Dashboard):** Desactivar registro público (Dashboard → Authentication → Sign In / Providers → desmarcar "Allow new users to sign up") y crear los 2 usuarios del personal manualmente.
-- [ ] **Supabase RLS (SQL Editor):** Ejecutar y verificar políticas de las migraciones `00000`, `00001` y `00002` (lectura anónima solo de `published`).
+### Implementado en Supabase en la nube (`ectxektxwthbzvexcrqu`):
+- [x] **Supabase Auth (Dashboard / API):** Desactivado registro público (`disable_signup = true`) y creados los 2 usuarios del personal (`admin@cuscocreativos.com` y `empleado@cuscocreativos.com`) con sus perfiles en `public.profiles`.
+- [x] **Supabase RLS (SQL):** Ejecutadas y verificadas todas las tablas y políticas de `supabase/setup_completo.sql` (`00000`, `00001`, `00002`) y el bucket público `landing-images`.
 - [ ] **Cloudflare (opcional):** Configurar proxy DNS y activar Bot Fight Mode si hay dominio propio.
 
 > Nota: el código actual usa `X-Frame-Options: SAMEORIGIN` y `frame-ancestors 'self'` (no `DENY`/`'none'`) porque el editor muestra la landing embebida en un iframe del mismo origen.
