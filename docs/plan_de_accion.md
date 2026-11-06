@@ -9,7 +9,7 @@
 ## Fase A — Conectar Supabase (persistencia real)
 - [x] Crear proyecto en Supabase (`ectxektxwthbzvexcrqu`) y aplicar el script maestro `supabase/setup_completo.sql` (unifica `00000`, `00001`, `00002` y el bucket `landing-images`).
 - [x] Crear los 2 usuarios oficiales en Supabase Auth (`admin@cuscocreativos.com` con rol `admin` y `empleado@cuscocreativos.com` con rol `employee`) y desactivar registro público (`disable_signup = true`).
-- [x] Configurar variables de entorno en `.env.local` (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `CRON_SECRET`).
+- [x] Configurar variables de entorno en `.env.local` y en **Vercel** (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `CRON_SECRET`, `AI_MODEL`, `AI_MAX_OUTPUT_TOKENS`, `AI_RATE_LIMIT_PER_HOUR`).
 - [x] Conectar `landingStore.ts` para guardar y leer `landings.data` (JSONB) en Supabase sincronizando `slug`, `name`, `template_code`, `tier`, `status`, `language(s)` con respaldo en `localStorage` (7 landings iniciales pobladas en `public.landings`).
 - [x] `/p/[slug]` lee desde Supabase (`fetchLandingBySlugFromSupabase`) además del caché local.
 - [x] Subida de logotipos/imágenes conectada al bucket `landing-images` (`uploadImageToSupabaseStorage`).
@@ -36,7 +36,7 @@
 
 ## Fase E — Despliegue y operación
 - [x] **Keep-alive anti-pausa de Supabase Free:** ruta `/api/keep-alive` (consulta mínima, protegida con `CRON_SECRET`) + Vercel Cron configurado en `vercel.json`.
-- [ ] Deploy final en Vercel con variables de entorno de Supabase + prueba punta a punta en la nube.
+- [x] Deploy final en Vercel con variables de entorno de Supabase + prueba punta a punta en la nube.
 - [ ] Respaldo periódico de la base de datos (el plan Free no tiene backups automáticos).
 - [ ] Control de gasto de IA: saldo prepago y límite mensual en el panel del proveedor.
 - [ ] Evaluar paso a **Supabase Pro** cuando haya clientes reales (sin pausa + backups diarios).
@@ -47,7 +47,7 @@
 - [x] Panel de administración de tickets de soporte (`/demo/support`).
 - [x] Catálogo de 6 plantillas de alta conversión (`agency-portal`, `boho-nature`, `premium`, `adventure`, `cultural`, `emerald-explorer`).
 - [ ] CRUD independiente de Guías en base de datos (actualmente integrado dentro del editor de cada landing).
-- [ ] Conexión del Dashboard y `landingStore` a lectura/escritura en vivo con Supabase PostgreSQL.
+- [x] Conexión del Dashboard y `landingStore` a lectura/escritura en vivo con Supabase PostgreSQL.
 
 ## Cierre de tesis
 - [x] Pruebas del flujo completo y de restricciones por plan (`free`, `basic`, `pro`, `advance`) y vista móvil en PC y celular real.
