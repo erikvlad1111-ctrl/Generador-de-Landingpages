@@ -834,7 +834,11 @@ export const INITIAL_LANDINGS: LandingData[] = [
   }
 ];
 
-const STORAGE_KEY = 'cusco_creativos_landings_v9';
+export const DEFAULT_DASHBOARD_LANDINGS: LandingData[] = INITIAL_LANDINGS.filter(l =>
+  ['machu-picchu-vip', 'cusco-luxury-collection', 'salkantay-trek-5-dias'].includes(l.slug)
+);
+
+const STORAGE_KEY = 'cusco_creativos_landings_v10';
 
 export function isTestJunk(obj: any): boolean {
   if (!obj) return false;
@@ -843,36 +847,16 @@ export function isTestJunk(obj: any): boolean {
 }
 
 export function getStoredLandings(): LandingData[] {
-  if (typeof window === 'undefined') return INITIAL_LANDINGS;
+  if (typeof window === 'undefined') return DEFAULT_DASHBOARD_LANDINGS;
   try {
     const data = localStorage.getItem(STORAGE_KEY);
     if (!data) {
-      // Check if previous versions had custom landings
-      let migrated: LandingData[] = [...INITIAL_LANDINGS];
-      try {
-        const oldData = localStorage.getItem('cusco_creativos_landings_v8') ||
-                        localStorage.getItem('cusco_creativos_landings_v7') ||
-                        localStorage.getItem('cusco_creativos_landings_v6') ||
-                        localStorage.getItem('cusco_creativos_landings_v5') ||
-                        localStorage.getItem('cusco_creativos_landings_v4');
-        if (oldData) {
-          const oldList: LandingData[] = JSON.parse(oldData);
-          if (Array.isArray(oldList)) {
-            const initialIds = new Set(INITIAL_LANDINGS.map(l => l.id));
-            const initialSlugs = new Set(INITIAL_LANDINGS.map(l => (l.slug || '').toLowerCase()));
-            const customItems = oldList.filter(l => 
-              !initialIds.has(l.id) && 
-              !initialSlugs.has((l.slug || '').toLowerCase()) && 
-              !isTestJunk(l)
-            );
-            migrated = [...INITIAL_LANDINGS, ...customItems];
-          }
-        }
-      } catch {}
-      try { localStorage.removeItem('cusco_creativos_landings_v8'); } catch {}
-      try { localStorage.removeItem('cusco_creativos_landings_v7'); } catch {}
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated));
-      return migrated;
+      const initialSet: LandingData[] = [...DEFAULT_DASHBOARD_LANDINGS];
+      ['cusco_creativos_landings_v9', 'cusco_creativos_landings_v8', 'cusco_creativos_landings_v7', 'cusco_creativos_landings_v6', 'cusco_creativos_landings_v5', 'cusco_creativos_landings_v4'].forEach(k => {
+        try { localStorage.removeItem(k); } catch {}
+      });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(initialSet));
+      return initialSet;
     }
     let parsed: LandingData[] = JSON.parse(data);
     if (Array.isArray(parsed)) {
@@ -899,7 +883,7 @@ export function getStoredLandings(): LandingData[] {
         return item;
       });
 
-      for (const init of INITIAL_LANDINGS) {
+      for (const init of DEFAULT_DASHBOARD_LANDINGS) {
         const idx = parsed.findIndex(item => item.id === init.id || item.slug === init.slug);
         if (idx === -1) {
           if (!isSupabaseConfigured) {
@@ -930,9 +914,9 @@ export function getStoredLandings(): LandingData[] {
       }
       return parsed;
     }
-    return INITIAL_LANDINGS;
+    return DEFAULT_DASHBOARD_LANDINGS;
   } catch {
-    return INITIAL_LANDINGS;
+    return DEFAULT_DASHBOARD_LANDINGS;
   }
 }
 
@@ -1092,15 +1076,15 @@ export function deleteLandingFromStorage(id: string): LandingData[] {
 }
 
 export function resetAllLandingsToDefault(): LandingData[] {
-  if (typeof window === 'undefined') return INITIAL_LANDINGS;
+  if (typeof window === 'undefined') return DEFAULT_DASHBOARD_LANDINGS;
   try {
-    ['cusco_creativos_landings_v8', 'cusco_creativos_landings_v7', 'cusco_creativos_landings_v6', 'cusco_creativos_landings_v5', 'cusco_creativos_landings_v4'].forEach(k => {
+    ['cusco_creativos_landings_v9', 'cusco_creativos_landings_v8', 'cusco_creativos_landings_v7', 'cusco_creativos_landings_v6', 'cusco_creativos_landings_v5', 'cusco_creativos_landings_v4'].forEach(k => {
       try { localStorage.removeItem(k); } catch {}
     });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_LANDINGS));
-    return [...INITIAL_LANDINGS];
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(DEFAULT_DASHBOARD_LANDINGS));
+    return [...DEFAULT_DASHBOARD_LANDINGS];
   } catch {
-    return [...INITIAL_LANDINGS];
+    return [...DEFAULT_DASHBOARD_LANDINGS];
   }
 }
 
