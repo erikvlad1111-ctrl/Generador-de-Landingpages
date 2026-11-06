@@ -54,6 +54,17 @@
 - [ ] Manual de usuario, diagrama de arquitectura y capturas.
 - [ ] Validación con Jefatura al cierre de cada fase.
 
+## Estrategia de Doble Versión Independiente (Empresa vs. Tesis)
+> Detalle completo en [`docs/plan_doble_version_empresa_y_tesis.md`](./plan_doble_version_empresa_y_tesis.md).
+- [ ] **1. Terminar el proyecto base al 100%:** Conectar motor IA completo (`/api/ai/generate` + `/demo/new`), sincronizar `landingStore.ts` con Supabase y generar script único `supabase/setup_completo.sql`.
+- [ ] **2. Versión Empresa (Desarrollo/Producción):** GitHub de la empresa + Supabase de la empresa + API OpenAI de la empresa + Hosting Vercel de la empresa.
+- [ ] **3. Versión Tesis (Sustentación Universitaria):**
+  - [ ] Crear GitHub personal y subir copia del proyecto Next.js terminado.
+  - [ ] Crear Supabase personal y ejecutar el script SQL para migrar tablas, políticas RLS y plantillas.
+  - [ ] Configurar API de OpenAI (autorizada o propia + motor de respaldo local integrado).
+  - [ ] Desplegar en Vercel personal para obtener URL pública de sustentación.
+  - [ ] Probar desde otra laptop sin depender de computadora, correo ni celular de respaldo de la empresa.
+
 ## Opcional (si sobra tiempo)
 - [x] FAQ, itinerario y testimonios automáticos con IA.
 - [ ] Edición mediante instrucciones conversacionales a la IA.
