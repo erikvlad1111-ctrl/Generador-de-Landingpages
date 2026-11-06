@@ -131,16 +131,16 @@ export function setStoredUser(user: UserSession | null): void {
 // Cuentas internas autorizadas por Jefatura (fallback local/híbrido)
 const AUTHORIZED_INTERNAL_USERS: Record<
   string,
-  { password: string; role: 'admin' | 'employee'; name: string; id: string }
+  { passwords: string[]; role: 'admin' | 'employee'; name: string; id: string }
 > = {
   'admin@cuscocreativos.com': {
-    password: 'admin123',
+    passwords: ['CuscoCreativos2026!', 'admin123'],
     role: 'admin',
     name: 'Administrador General',
     id: 'cc-admin-01',
   },
   'empleado@cuscocreativos.com': {
-    password: 'cusco2026',
+    passwords: ['OperadorCusco2026!', 'cusco2026'],
     role: 'employee',
     name: 'Ejecutivo de Ventas & Tours',
     id: 'cc-emp-02',
@@ -262,7 +262,7 @@ export async function signInWithCredentials(
       // Si Supabase ya está conectado en .env pero el usuario aún no creó las 2 cuentas oficiales en Supabase Auth,
       // permite entrar con las cuentas oficiales autorizadas sin bloquear al equipo fuera del panel.
       const matchedInternal = AUTHORIZED_INTERNAL_USERS[trimmedEmail];
-      if (matchedInternal && matchedInternal.password === trimmedPass) {
+      if (matchedInternal && matchedInternal.passwords.includes(trimmedPass)) {
         resetFailedAttempts();
         const hybridUser: UserSession = {
           id: matchedInternal.id,
@@ -293,7 +293,7 @@ export async function signInWithCredentials(
   // Capa 3B: Autenticación Interna Controlada (Cuentas autorizadas por Jefatura)
   const matchedAccount = AUTHORIZED_INTERNAL_USERS[trimmedEmail];
 
-  if (matchedAccount && matchedAccount.password === trimmedPass) {
+  if (matchedAccount && matchedAccount.passwords.includes(trimmedPass)) {
     resetFailedAttempts();
     const demoUser: UserSession = {
       id: matchedAccount.id,

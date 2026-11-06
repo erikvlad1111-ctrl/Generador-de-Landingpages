@@ -31,7 +31,7 @@ export function LoginPortalView() {
   const nextUrl = searchParams.get('next') || '/demo';
 
   const [email, setEmail] = useState('admin@cuscocreativos.com');
-  const [password, setPassword] = useState('admin123');
+  const [password, setPassword] = useState('');
   const [selectedRole, setSelectedRole] = useState<'admin' | 'employee'>('admin');
   const [showPassword, setShowPassword] = useState(false);
   const [honeypot, setHoneypot] = useState('');
@@ -63,12 +63,11 @@ export function LoginPortalView() {
   const handleSelectRole = (role: 'admin' | 'employee') => {
     setSelectedRole(role);
     setError(null);
+    setPassword('');
     if (role === 'admin') {
       setEmail('admin@cuscocreativos.com');
-      setPassword('admin123');
     } else {
       setEmail('empleado@cuscocreativos.com');
-      setPassword('cusco2026');
     }
   };
 
@@ -204,7 +203,7 @@ export function LoginPortalView() {
                   Seleccionar Perfil
                 </span>
                 <span className="text-[10px] font-semibold text-blue-600">
-                  Autocompletado 1 clic
+                  Autocompletar correo
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200/70">
