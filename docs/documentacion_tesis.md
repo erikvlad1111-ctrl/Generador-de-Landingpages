@@ -243,3 +243,4 @@ Para la contrastación de hipótesis de la tesis (**reducción del tiempo de imp
 - El endpoint `/api/ai/generate` limita cada respuesta a `AI_MAX_OUTPUT_TOKENS=900` y aplica un tope de `AI_RATE_LIMIT_PER_HOUR=10` generaciones por hora por usuario.
 - Cada generación cuesta aproximadamente **\$0.0005 USD** (Con \$5 USD prepago se cubren más de **10,000 generaciones**).
 - Además, cada llamada queda auditada en la tabla `public.ai_generations` con el conteo exacto de tokens y costo en dólares.
+
