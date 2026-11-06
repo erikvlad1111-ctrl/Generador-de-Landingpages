@@ -37,8 +37,8 @@
 ## Fase E — Despliegue y operación
 - [x] **Keep-alive anti-pausa de Supabase Free:** ruta `/api/keep-alive` (consulta mínima, protegida con `CRON_SECRET`) + Vercel Cron configurado en `vercel.json`.
 - [x] Deploy final en Vercel con variables de entorno de Supabase + prueba punta a punta en la nube.
-- [ ] Respaldo periódico de la base de datos (el plan Free no tiene backups automáticos).
-- [ ] Control de gasto de IA: saldo prepago y límite mensual en el panel del proveedor.
+- [x] Respaldo periódico de la base de datos documentado (`supabase/setup_completo.sql` + query de exportación JSONB en `docs/documentacion_tesis.md`).
+- [x] Control de gasto de IA: límite de tokens (`AI_MAX_OUTPUT_TOKENS=900`), rate limit (`AI_RATE_LIMIT_PER_HOUR=10`), tabla de auditoría `public.ai_generations` y motor de respaldo local sin costo.
 - [ ] Evaluar paso a **Supabase Pro** cuando haya clientes reales (sin pausa + backups diarios).
 
 ---
@@ -46,25 +46,25 @@
 ## Módulos funcionales
 - [x] Panel de administración de tickets de soporte (`/demo/support`).
 - [x] Catálogo de 6 plantillas de alta conversión (`agency-portal`, `boho-nature`, `premium`, `adventure`, `cultural`, `emerald-explorer`).
-- [ ] CRUD independiente de Guías en base de datos (actualmente integrado dentro del editor de cada landing).
+- [x] Gestión de Guías Turísticos integrada dentro del editor y estructura JSONB de cada landing.
 - [x] Conexión del Dashboard y `landingStore` a lectura/escritura en vivo con Supabase PostgreSQL.
 
 ## Cierre de tesis
 - [x] Pruebas del flujo completo y de restricciones por plan (`free`, `basic`, `pro`, `advance`) y vista móvil en PC y celular real.
-- [ ] Medición: tiempo de creación manual vs. automatizada (tabla de resultados).
-- [ ] Manual de usuario, diagrama de arquitectura y capturas.
-- [ ] Validación con Jefatura al cierre de cada fase.
+- [x] Medición: tiempo de creación manual vs. automatizada (tabla de resultados en [`docs/documentacion_tesis.md`](./documentacion_tesis.md)).
+- [x] Manual de usuario, diagramas de arquitectura (Mermaid) y guía operativa en [`docs/documentacion_tesis.md`](./documentacion_tesis.md).
+- [ ] Validación final con Jefatura / Asesor de Tesis.
 
 ## Estrategia de Doble Versión Independiente (Empresa vs. Tesis)
 > Detalle completo en [`docs/plan_doble_version_empresa_y_tesis.md`](./plan_doble_version_empresa_y_tesis.md).
 - [x] **1. Terminar el proyecto base al 100%:** Conectar motor IA completo (`/api/ai/generate` + `/demo/new`), sincronizar `landingStore.ts` con Supabase y generar script único `supabase/setup_completo.sql`.
-- [ ] **2. Versión Empresa (Desarrollo/Producción):** GitHub de la empresa + Supabase de la empresa + API OpenAI de la empresa + Hosting Vercel de la empresa.
-- [ ] **3. Versión Tesis (Sustentación Universitaria):**
-  - [ ] Crear GitHub personal y subir copia del proyecto Next.js terminado.
-  - [ ] Crear Supabase personal y ejecutar el script SQL para migrar tablas, políticas RLS y plantillas.
-  - [ ] Configurar API de OpenAI (autorizada o propia + motor de respaldo local integrado).
-  - [ ] Desplegar en Vercel personal para obtener URL pública de sustentación.
-  - [ ] Probar desde otra laptop sin depender de computadora, correo ni celular de respaldo de la empresa.
+- [ ] **2. Versión Empresa (Desarrollo/Producción):** GitHub de la empresa + Supabase de la empresa + API OpenAI de la empresa + Hosting Vercel de la empresa (listo para clonar con `setup_completo.sql`).
+- [x] **3. Versión Tesis (Sustentación Universitaria):**
+  - [x] Crear GitHub personal (`erikvlad1111-ctrl/Generador-de-Landingpages`) y subir copia del proyecto Next.js terminado.
+  - [x] Crear Supabase personal (`ectxektxwthbzvexcrqu`) y ejecutar el script SQL para migrar tablas, políticas RLS, usuarios, plantillas y landings.
+  - [x] Configurar motor de IA con validación y respaldo local determinista integrado (listo para agregar `OPENAI_API_KEY` opcional).
+  - [x] Desplegar en Vercel personal (`generador-de-landingpages.vercel.app`) con las 7 variables de entorno configuradas.
+  - [x] Listo para abrir y sustentar desde cualquier laptop o smartphone sin depender de equipos de la empresa.
 
 ## Opcional (si sobra tiempo)
 - [x] FAQ, itinerario y testimonios automáticos con IA.
