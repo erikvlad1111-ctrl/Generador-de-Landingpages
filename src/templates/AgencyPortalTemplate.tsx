@@ -1067,10 +1067,10 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
         <div className="max-w-7xl mx-auto px-2.5 sm:px-6 h-14 sm:h-20 flex items-center justify-between gap-2 sm:gap-3">
           
           {/* Brand Logo & Name */}
-          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[420px] 2xl:max-w-[500px] shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[380px] md:max-w-[420px] shrink-0">
             {data?.logoUrl ? (
-              <div className="h-8 sm:h-11 max-w-[130px] sm:max-w-[170px] rounded-xl bg-white border border-stone-200/80 p-1 flex items-center justify-center shadow-md shadow-stone-200/50 shrink-0">
-                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
+              <div className="h-10 sm:h-12 md:h-14 max-w-[160px] sm:max-w-[200px] flex items-center justify-center shrink-0">
+                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
               </div>
             ) : (
               <div className="w-8 h-8 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-[#FF5500] to-[#FF8800] flex items-center justify-center text-white font-black shadow-md shadow-[#FF5500]/30 shrink-0">
@@ -2361,8 +2361,8 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
             <div className="lg:col-span-4 space-y-3.5">
               <div className="flex items-center gap-3">
                 {data?.logoUrl ? (
-                  <div className="h-10 max-w-[140px] rounded-2xl overflow-hidden bg-white p-1 border border-stone-700/60 flex items-center justify-center shadow-xs shrink-0">
-                    <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
+                  <div className="h-10 sm:h-12 max-w-[180px] flex items-center justify-center shrink-0">
+                    <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
                   </div>
                 ) : (
                   <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 shrink-0">

@@ -161,10 +161,10 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
         {/* Municipal / Heritage Navigation Bar */}
         <nav className="relative z-50 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3.5 sm:py-4 flex items-center justify-between border-b border-white/15 w-full min-w-0 gap-2">
           {/* Official Emblem / Coat of arms */}
-          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[420px] 2xl:max-w-[500px] shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[380px] md:max-w-[420px] shrink-0">
             {data.logoUrl ? (
-              <div className="h-9 sm:h-11 max-w-[130px] sm:max-w-[170px] rounded-xl overflow-hidden bg-white/95 p-1 flex items-center justify-center shadow-md shrink-0 border border-white/30">
-                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
+              <div className="h-10 sm:h-12 md:h-14 max-w-[160px] sm:max-w-[200px] flex items-center justify-center shrink-0">
+                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
               </div>
             ) : (
               <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-red-600/30 backdrop-blur-md border border-red-400/50 flex items-center justify-center text-red-200 shadow-md shrink-0 animate-soft-float">
@@ -1337,7 +1337,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           {/* Column 1: Emblem & Town Name */}
           <div className="md:col-span-3 flex items-center gap-3">
             {data.logoUrl ? (
-              <div className="h-11 max-w-[140px] rounded-xl overflow-hidden bg-white p-1 border border-stone-200 shadow-sm flex items-center justify-center shrink-0">
+              <div className="h-10 sm:h-12 max-w-[180px] flex items-center justify-center shrink-0">
                 <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
               </div>
             ) : (

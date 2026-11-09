@@ -466,14 +466,14 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex justify-between items-center gap-2 sm:gap-4 w-full min-w-0">
           
           {/* Brand Logo & Authority Badge con protección contra textos largos */}
-          <a href="#inicio" className="flex items-center gap-2.5 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[420px] 2xl:max-w-[500px] shrink-0 group">
+          <a href="#inicio" className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[380px] md:max-w-[420px] shrink-0 group">
             {data.logoUrl ? (
-              <div className="h-9 sm:h-11 max-w-[130px] sm:max-w-[170px] rounded-2xl overflow-hidden bg-white/95 border border-slate-200/80 p-1 flex items-center justify-center shadow-md shadow-slate-900/10 shrink-0 group-hover:scale-105 transition-transform">
-                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
+              <div className="h-10 sm:h-12 md:h-14 max-w-[160px] sm:max-w-[200px] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
               </div>
             ) : (
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-sm shadow-md shadow-slate-900/10 shrink-0 group-hover:scale-105 transition-transform">
-                <Mountain size={20} className="text-white" />
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center font-black text-sm shadow-md shadow-slate-900/10 shrink-0 group-hover:scale-105 transition-transform">
+                <Mountain size={22} className="text-white" />
               </div>
             )}
             <div className="flex flex-col min-w-0 justify-center">
@@ -2033,8 +2033,8 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
             <div className="lg:col-span-4 space-y-4">
               <div className="flex items-center gap-3">
                 {data.logoUrl ? (
-                  <div className="h-10 max-w-[140px] rounded-2xl overflow-hidden bg-white/95 p-1 flex items-center justify-center shadow-md shadow-blue-500/10 shrink-0">
-                    <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
+                  <div className="h-10 sm:h-12 max-w-[180px] flex items-center justify-center shrink-0">
+                    <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
                   </div>
                 ) : (
                   <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-blue-600 to-slate-900 text-white flex items-center justify-center shadow-md shadow-blue-500/10 shrink-0">

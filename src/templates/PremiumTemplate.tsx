@@ -427,10 +427,10 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
       {/* 2. ULTRA LUXURY TOP HEADER */}
       <header className="sticky top-0 w-full z-40 bg-[#0a080e]/95 backdrop-blur-xl border-b border-amber-500/20 transition-all shadow-[0_4px_30px_rgba(0,0,0,0.6)]">
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex justify-between items-center gap-2 sm:gap-4 w-full min-w-0">
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[420px] 2xl:max-w-[500px] shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[380px] md:max-w-[420px] shrink-0">
             {data.logoUrl ? (
-              <div className="h-8 sm:h-10 max-w-[130px] sm:max-w-[170px] rounded-xl overflow-hidden bg-white/95 p-1 border border-amber-400/50 flex items-center justify-center shrink-0 shadow-[0_0_18px_rgba(245,158,11,0.3)]">
-                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
+              <div className="h-10 sm:h-12 md:h-14 max-w-[160px] sm:max-w-[200px] flex items-center justify-center shrink-0">
+                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
               </div>
             ) : (
               <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400/30 via-amber-500/15 to-transparent border border-amber-400/50 flex items-center justify-center text-amber-300 shrink-0 shadow-[0_0_18px_rgba(245,158,11,0.3)]">
@@ -2012,8 +2012,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             <div className="lg:col-span-4 space-y-3.5">
               <div className="flex items-center gap-3">
                 {data.logoUrl ? (
-                  <div className="h-10 max-w-[140px] rounded-2xl overflow-hidden bg-white p-1 border border-amber-500/30 flex items-center justify-center shadow-md shrink-0">
-                    <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
+                  <div className="h-10 sm:h-12 max-w-[180px] flex items-center justify-center shrink-0">
+                    <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
                   </div>
                 ) : (
                   <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-amber-500/20 to-neutral-900 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md shrink-0">

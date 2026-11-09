@@ -928,10 +928,10 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-3 sm:gap-4">
           
           {/* Logo y Marca Responsivo (Optimizado para Desktop y Móvil) */}
-          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] xs:max-w-[calc(100vw-150px)] sm:max-w-[340px] md:max-w-[380px] lg:max-w-[320px] xl:max-w-[420px] 2xl:max-w-[500px] shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] xs:max-w-[calc(100vw-150px)] sm:max-w-[380px] md:max-w-[420px] shrink-0">
             {data.logoUrl ? (
-              <div className="h-9 sm:h-11 max-w-[130px] sm:max-w-[170px] rounded-xl overflow-hidden bg-white/95 p-1 flex items-center justify-center shadow-lg shadow-emerald-500/20 shrink-0">
-                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
+              <div className="h-10 sm:h-12 md:h-14 max-w-[160px] sm:max-w-[200px] flex items-center justify-center shrink-0">
+                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
               </div>
             ) : (
               <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-400 flex items-center justify-center text-[#02181f] shadow-lg shadow-emerald-500/30 shrink-0">
@@ -2529,8 +2529,8 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
             {data.logoUrl ? (
-              <div className="h-9 sm:h-10 max-w-[130px] rounded-xl overflow-hidden bg-white/95 p-1 flex items-center justify-center border border-emerald-400/40 shadow-xs shrink-0">
-                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain" />
+              <div className="h-10 sm:h-12 max-w-[180px] flex items-center justify-center shrink-0">
+                <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
               </div>
             ) : (
               <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
