@@ -10,8 +10,6 @@ import {
   ArrowRight,
   ShieldCheck,
   AlertCircle,
-  Eye,
-  EyeOff,
   Loader2,
   UserCheck,
   Briefcase,
@@ -33,7 +31,6 @@ export function LoginPortalView() {
   const [email, setEmail] = useState('admin@cuscocreativos.com');
   const [password, setPassword] = useState('');
   const [selectedRole, setSelectedRole] = useState<'admin' | 'employee'>('admin');
-  const [showPassword, setShowPassword] = useState(false);
   const [honeypot, setHoneypot] = useState('');
 
   const [loading, setLoading] = useState(false);
@@ -48,6 +45,7 @@ export function LoginPortalView() {
   useEffect(() => {
     setExistingUser(getStoredUser());
     setRateLimit(getRateLimitStatus());
+    setPassword('');
   }, []);
 
   useEffect(() => {
@@ -281,23 +279,15 @@ export function LoginPortalView() {
                 <div className="relative">
                   <Lock size={16} className="absolute left-3.5 top-3 text-slate-400" />
                   <input
-                    type={showPassword ? 'text' : 'password'}
+                    type="password"
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={loading || rateLimit.locked}
-                    className="w-full pl-10 pr-10 py-2.5 text-sm rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-500/15 outline-none transition-all disabled:bg-slate-100 text-slate-900"
+                    autoComplete="new-password"
+                    className="w-full pl-10 pr-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:border-blue-600 focus:ring-3 focus:ring-blue-500/15 outline-none transition-all disabled:bg-slate-100 text-slate-900"
                     placeholder="••••••••"
                   />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-2.5 text-slate-400 hover:text-blue-600 p-0.5 cursor-pointer transition-colors"
-                    tabIndex={-1}
-                    title={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-                  >
-                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-                  </button>
                 </div>
               </div>
 
