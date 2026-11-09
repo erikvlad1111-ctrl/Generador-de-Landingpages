@@ -926,7 +926,7 @@ async function upsertLandingToSupabase(landing: LandingData): Promise<void> {
     const { data: userData } = await supabase.auth.getUser();
     const userId = userData?.user?.id || null;
 
-    await supabase.from('landings').upsert(
+    const { error } = await supabase.from('landings').upsert(
       {
         slug: landing.slug,
         name: landing.name,
@@ -940,8 +940,11 @@ async function upsertLandingToSupabase(landing: LandingData): Promise<void> {
       },
       { onConflict: 'slug' }
     );
-  } catch {
-    // Fallback silencioso a localStorage si Supabase aún no tiene las tablas creadas
+    if (error) {
+      console.error('Error upserting landing to Supabase:', error);
+    }
+  } catch (err) {
+    console.error('Exception upserting landing to Supabase:', err);
   }
 }
 
