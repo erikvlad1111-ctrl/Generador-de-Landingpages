@@ -635,11 +635,18 @@ export default function DemoDashboard() {
                       <div className="space-y-3">
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex items-center gap-3 min-w-0">
-                            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 font-bold border border-blue-100 shadow-xs">
-                              {p.template === 'agency-portal' ? <Zap size={22} className="text-[#FF5500]" /> : p.template === 'adventure' ? <Mountain size={22} className="text-emerald-600" /> : p.template === 'premium' ? <Crown size={22} className="text-amber-500" /> : p.template === 'boho-nature' ? <Camera size={22} className="text-amber-600" /> : p.template === 'emerald-explorer' ? <Compass size={22} className="text-emerald-500" /> : <Landmark size={22} className="text-amber-700" />}
+                            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 font-bold border border-blue-100 shadow-xs overflow-hidden">
+                              {p.logoUrl ? (
+                                <img src={p.logoUrl} alt={p.companyName || p.name} className="w-full h-full object-contain p-1 rounded-xl" />
+                              ) : p.template === 'agency-portal' ? <Zap size={22} className="text-[#FF5500]" /> : p.template === 'adventure' ? <Mountain size={22} className="text-emerald-600" /> : p.template === 'premium' ? <Crown size={22} className="text-amber-500" /> : p.template === 'boho-nature' ? <Camera size={22} className="text-amber-600" /> : p.template === 'emerald-explorer' ? <Compass size={22} className="text-emerald-500" /> : <Landmark size={22} className="text-amber-700" />}
                             </div>
                             <div className="min-w-0">
                               <div className="flex items-center gap-1.5 flex-wrap">
+                                {p.companyName && (
+                                  <span className="text-[11px] font-black uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200/80 px-2 py-0.5 rounded-md truncate max-w-[170px]" title={p.companyName}>
+                                    🏢 {p.companyName}
+                                  </span>
+                                )}
                                 <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border ${
                                   (p.tier || 'advance') === 'advance'
                                     ? 'bg-purple-50 text-purple-700 border-purple-200'
@@ -909,11 +916,18 @@ export default function DemoDashboard() {
                           {/* Tour Name & Guide */}
                           <td className="px-4 py-3.5">
                             <div className="flex items-start gap-2.5">
-                              <div className="w-9 h-9 rounded-xl bg-slate-100/90 group-hover:bg-blue-50 text-slate-700 group-hover:text-blue-600 flex items-center justify-center shrink-0 border border-slate-200/80 group-hover:border-blue-200 transition-colors shadow-2xs mt-0.5">
-                                {p.template === 'agency-portal' ? <Zap size={16} className="text-[#FF5500]" /> : p.template === 'adventure' ? <Mountain size={16} className="text-emerald-600" /> : p.template === 'premium' ? <Crown size={16} className="text-amber-500" /> : p.template === 'boho-nature' ? <Camera size={16} className="text-amber-600" /> : p.template === 'emerald-explorer' ? <Compass size={16} className="text-emerald-500" /> : <Landmark size={16} className="text-amber-700" />}
+                              <div className="w-9 h-9 rounded-xl bg-slate-100/90 group-hover:bg-blue-50 text-slate-700 group-hover:text-blue-600 flex items-center justify-center shrink-0 border border-slate-200/80 group-hover:border-blue-200 transition-colors shadow-2xs mt-0.5 overflow-hidden">
+                                {p.logoUrl ? (
+                                  <img src={p.logoUrl} alt={p.companyName || p.name} className="w-full h-full object-contain p-0.5 rounded-lg" />
+                                ) : p.template === 'agency-portal' ? <Zap size={16} className="text-[#FF5500]" /> : p.template === 'adventure' ? <Mountain size={16} className="text-emerald-600" /> : p.template === 'premium' ? <Crown size={16} className="text-amber-500" /> : p.template === 'boho-nature' ? <Camera size={16} className="text-amber-600" /> : p.template === 'emerald-explorer' ? <Compass size={16} className="text-emerald-500" /> : <Landmark size={16} className="text-amber-700" />}
                               </div>
                               <div className="min-w-0 space-y-1 flex-1">
                                 <div className="flex items-center gap-1.5 flex-wrap">
+                                  {p.companyName && (
+                                    <span className="text-[10px] font-black uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200/80 px-1.5 py-0.5 rounded-md truncate max-w-[150px]" title={p.companyName}>
+                                      🏢 {p.companyName}
+                                    </span>
+                                  )}
                                   <Link 
                                     href={`/demo/preview?slug=${p.slug}&tier=advance`} 
                                     className="font-bold text-slate-900 group-hover:text-blue-600 transition-colors text-sm leading-snug line-clamp-1"
