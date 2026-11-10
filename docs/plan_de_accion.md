@@ -53,6 +53,8 @@
 - [x] Pruebas del flujo completo y de restricciones por plan (`free`, `basic`, `pro`, `advance`) y vista móvil en PC y celular real.
 - [x] Medición: tiempo de creación manual vs. automatizada (tabla de resultados en [`docs/documentacion_tesis.md`](./documentacion_tesis.md)).
 - [x] Manual de usuario, diagramas de arquitectura (Mermaid) y guía operativa en [`docs/documentacion_tesis.md`](./documentacion_tesis.md).
+- [x] Hoja de ruta ejecutada y registro detallado de todo lo implementado en [`docs/hoja_de_ruta_proyecto.md`](./hoja_de_ruta_proyecto.md).
+- [x] Proyecto base 100% completado, compilado con 0 errores y desplegado en la nube con Supabase y Vercel.
 - [ ] Validación final con Jefatura / Asesor de Tesis.
 
 ## Estrategia de Doble Versión Independiente (Empresa vs. Tesis)
