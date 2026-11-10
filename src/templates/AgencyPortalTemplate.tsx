@@ -1077,7 +1077,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
                 <Compass size={17} className="sm:w-6 sm:h-6" />
               </div>
             )}
-            <div className="flex flex-col justify-center min-w-0">
+            <div className="flex flex-col justify-center min-w-0 max-w-[150px] sm:max-w-[210px] lg:max-w-[180px] xl:max-w-[240px]">
               <span className="font-extrabold text-xs sm:text-base md:text-lg tracking-tight text-stone-900 leading-tight line-clamp-2 break-words" title={brandName}>
                 {brandName.toUpperCase()}
               </span>

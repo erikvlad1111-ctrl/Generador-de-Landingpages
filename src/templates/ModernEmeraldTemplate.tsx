@@ -938,13 +938,13 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
                 <Compass size={22} className="stroke-[2.5]" />
               </div>
             )}
-            <div className="min-w-0 flex flex-col justify-center">
+            <div className="min-w-0 flex flex-col justify-center max-w-[150px] sm:max-w-[210px] lg:max-w-[160px] xl:max-w-[220px]">
               <div className="flex items-center gap-1.5 min-w-0">
                 <span className="font-black text-[13px] sm:text-base lg:text-sm xl:text-base tracking-tight text-white leading-tight line-clamp-2 break-words" title={brandName}>
                   {brandName}
                 </span>
                 {(data.companyRuc || data.destination) && (
-                  <span className="text-emerald-300 font-medium text-[9px] sm:text-[10px] bg-emerald-500/20 px-1.5 py-0.5 rounded-full border border-emerald-400/40 shrink-0 whitespace-nowrap hidden 2xl:inline-flex">
+                  <span className="text-emerald-300 font-medium text-[9px] sm:text-[10px] bg-emerald-500/20 px-1.5 py-0.5 rounded-full border border-emerald-400/40 shrink-0 whitespace-nowrap hidden">
                     {data.companyRuc ? 'RUC' : (data.destination ? data.destination.split(',')[0] : 'Cusco')}
                   </span>
                 )}

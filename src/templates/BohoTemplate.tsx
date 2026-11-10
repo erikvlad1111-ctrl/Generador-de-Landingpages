@@ -410,7 +410,7 @@ export default function BohoTemplate({ data, viewMode = 'desktop' }: TemplatePro
                 <Camera size={18} />
               </div>
             )}
-            <div className="flex flex-col min-w-0 justify-center">
+            <div className="flex flex-col min-w-0 justify-center max-w-[150px] sm:max-w-[210px] lg:max-w-[180px] xl:max-w-[240px]">
               <span className="font-serif tracking-wider uppercase text-xs sm:text-base font-bold text-stone-800 leading-tight line-clamp-2 break-words" title={brandName}>
                 {brandName}
               </span>

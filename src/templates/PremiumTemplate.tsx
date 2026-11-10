@@ -437,7 +437,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
                 <Crown size={isMobile ? 16 : 20} className="text-amber-300 drop-shadow-[0_2px_8px_rgba(245,158,11,0.6)]" />
               </div>
             )}
-            <div className="flex flex-col min-w-0 justify-center">
+            <div className="flex flex-col min-w-0 justify-center max-w-[150px] sm:max-w-[210px] lg:max-w-[180px] xl:max-w-[240px]">
               <span 
                 style={{ fontFamily: FONT_CONFIG[luxuryFontVariant].titleFont }}
                 className="text-xs sm:text-sm md:text-base tracking-wider uppercase font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 leading-tight line-clamp-2 break-words"

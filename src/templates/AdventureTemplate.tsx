@@ -476,13 +476,13 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
                 <Mountain size={22} className="text-white" />
               </div>
             )}
-            <div className="flex flex-col min-w-0 justify-center">
+            <div className="flex flex-col min-w-0 justify-center max-w-[150px] sm:max-w-[210px] lg:max-w-[160px] xl:max-w-[220px]">
               <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
                 <span className="text-[13px] sm:text-base xl:text-lg font-black tracking-tight text-slate-900 leading-tight line-clamp-2 break-words" title={brandName}>
                   {brandName}
                 </span>
                 {(data.companyRuc || t.brand.badge) && (
-                  <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[9px] sm:text-[10px] font-black uppercase tracking-wider border border-blue-200/60 shrink-0 whitespace-nowrap hidden 2xl:inline-flex">
+                  <span className="inline-flex items-center px-1.5 sm:px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 text-[9px] sm:text-[10px] font-black uppercase tracking-wider border border-blue-200/60 shrink-0 whitespace-nowrap hidden">
                     {data.companyRuc ? 'RUC' : t.brand.badge}
                   </span>
                 )}

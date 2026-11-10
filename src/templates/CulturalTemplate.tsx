@@ -171,7 +171,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
                 <Landmark size={20} className="sm:w-[22px] sm:h-[22px]" />
               </div>
             )}
-            <div className="flex flex-col min-w-0 justify-center">
+            <div className="flex flex-col min-w-0 justify-center max-w-[150px] sm:max-w-[210px] lg:max-w-[180px] xl:max-w-[240px]">
               <span className="text-xs sm:text-sm font-black tracking-wider uppercase font-serif text-red-200 leading-tight line-clamp-2 break-words" title={brandName}>
                 {brandName.toUpperCase()}
               </span>
