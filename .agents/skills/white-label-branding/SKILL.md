@@ -305,3 +305,5 @@ Estos campos deben propagarse coherentemente en:
   1. En las 6 plantillas, el span de marca usa `leading-tight line-clamp-2 break-words` + `title={brandName}` (permite 2 líneas).
   2. Contenedor del logo en navbar: `h-10 sm:h-12 md:h-14 max-w-[110px] sm:max-w-[150px]`, sin borde/fondo/sombra; `<img>` con `object-contain rounded-lg`.
   3. En `/demo` (tabla y tarjetas) se muestra `logoUrl` real en lugar del ícono genérico y el `companyName` con ícono `Building2`.
+
+  4. **Corrección posterior (`f528447`):** `line-clamp-2` por sí solo NO fuerza 2 líneas si el contenedor puede crecer (era `max-w-[420px]`), y el texto largo empujaba el menú/CTA fuera de pantalla. Se agregó ancho máximo a la columna de texto de la marca: `max-w-[150px] sm:max-w-[210px] lg:max-w-[160px|180px] xl:max-w-[220px|240px]`, y se ocultó el badge "RUC" del navbar (Emerald y Adventure); el RUC sigue en el footer.
