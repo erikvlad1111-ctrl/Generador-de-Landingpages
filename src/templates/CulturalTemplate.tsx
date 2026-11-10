@@ -163,7 +163,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
           {/* Official Emblem / Coat of arms */}
           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[380px] md:max-w-[420px] shrink-0">
             {data.logoUrl ? (
-              <div className="h-10 sm:h-12 md:h-14 max-w-[160px] sm:max-w-[200px] flex items-center justify-center shrink-0">
+              <div className="h-10 sm:h-12 md:h-14 max-w-[110px] sm:max-w-[150px] flex items-center justify-center shrink-0">
                 <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
               </div>
             ) : (
@@ -172,7 +172,7 @@ export default function CulturalTemplate({ data, viewMode = 'desktop' }: Templat
               </div>
             )}
             <div className="flex flex-col min-w-0 justify-center">
-              <span className="block text-xs sm:text-sm font-black tracking-widest uppercase font-serif text-red-200 truncate leading-snug">
+              <span className="text-xs sm:text-sm font-black tracking-wider uppercase font-serif text-red-200 leading-tight line-clamp-2 break-words" title={brandName}>
                 {brandName.toUpperCase()}
               </span>
               <span className="text-[10px] sm:text-[11px] text-stone-300 tracking-wider font-sans block truncate leading-none mt-0.5 hidden xs:block">

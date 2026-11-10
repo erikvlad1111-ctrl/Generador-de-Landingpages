@@ -429,7 +429,7 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex justify-between items-center gap-2 sm:gap-4 w-full min-w-0">
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[380px] md:max-w-[420px] shrink-0">
             {data.logoUrl ? (
-              <div className="h-10 sm:h-12 md:h-14 max-w-[160px] sm:max-w-[200px] flex items-center justify-center shrink-0">
+              <div className="h-10 sm:h-12 md:h-14 max-w-[110px] sm:max-w-[150px] flex items-center justify-center shrink-0">
                 <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
               </div>
             ) : (
@@ -440,7 +440,8 @@ export default function PremiumTemplate({ data, viewMode = 'desktop' }: Template
             <div className="flex flex-col min-w-0 justify-center">
               <span 
                 style={{ fontFamily: FONT_CONFIG[luxuryFontVariant].titleFont }}
-                className="text-xs sm:text-sm md:text-base tracking-wider uppercase font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 leading-snug truncate block"
+                className="text-xs sm:text-sm md:text-base tracking-wider uppercase font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-200 to-amber-400 leading-tight line-clamp-2 break-words"
+                title={brandName}
               >
                 {brandName.toUpperCase()}
               </span>

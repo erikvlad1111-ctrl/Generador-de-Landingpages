@@ -468,7 +468,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
           {/* Brand Logo & Authority Badge con protección contra textos largos */}
           <a href="#inicio" className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[380px] md:max-w-[420px] shrink-0 group">
             {data.logoUrl ? (
-              <div className="h-10 sm:h-12 md:h-14 max-w-[160px] sm:max-w-[200px] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <div className="h-10 sm:h-12 md:h-14 max-w-[110px] sm:max-w-[150px] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                 <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
               </div>
             ) : (
@@ -478,7 +478,7 @@ export default function AdventureTemplate({ data, viewMode = 'desktop' }: Templa
             )}
             <div className="flex flex-col min-w-0 justify-center">
               <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
-                <span className="text-sm sm:text-base lg:text-base xl:text-lg font-black tracking-tight text-slate-900 leading-snug truncate block">
+                <span className="text-[13px] sm:text-base xl:text-lg font-black tracking-tight text-slate-900 leading-tight line-clamp-2 break-words" title={brandName}>
                   {brandName}
                 </span>
                 {(data.companyRuc || t.brand.badge) && (

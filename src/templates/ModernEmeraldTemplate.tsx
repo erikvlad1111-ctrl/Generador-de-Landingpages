@@ -930,7 +930,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
           {/* Logo y Marca Responsivo (Optimizado para Desktop y Móvil) */}
           <div className="flex items-center gap-2.5 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] xs:max-w-[calc(100vw-150px)] sm:max-w-[380px] md:max-w-[420px] shrink-0">
             {data.logoUrl ? (
-              <div className="h-10 sm:h-12 md:h-14 max-w-[160px] sm:max-w-[200px] flex items-center justify-center shrink-0">
+              <div className="h-10 sm:h-12 md:h-14 max-w-[110px] sm:max-w-[150px] flex items-center justify-center shrink-0">
                 <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
               </div>
             ) : (
@@ -940,7 +940,7 @@ export default function ModernEmeraldTemplate({ data = {}, isLive = false, viewM
             )}
             <div className="min-w-0 flex flex-col justify-center">
               <div className="flex items-center gap-1.5 min-w-0">
-                <span className="font-black text-sm sm:text-base lg:text-sm xl:text-base tracking-tight text-white truncate block leading-snug">
+                <span className="font-black text-[13px] sm:text-base lg:text-sm xl:text-base tracking-tight text-white leading-tight line-clamp-2 break-words" title={brandName}>
                   {brandName}
                 </span>
                 {(data.companyRuc || data.destination) && (

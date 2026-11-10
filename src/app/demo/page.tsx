@@ -7,7 +7,7 @@ import {
   ExternalLink, Eye, Search, Filter, Copy, Check, Trash2, ToggleLeft, ToggleRight, Download,
   Layers, LayoutTemplate, LayoutGrid, List, User, Tag,
   ChevronLeft, ChevronRight, RotateCcw,
-  Camera, Crown, Mountain, Landmark, Compass, Zap, Lock
+  Camera, Crown, Mountain, Landmark, Compass, Zap, Lock, Building2
 } from 'lucide-react';
 import DeploymentModal from '@/components/common/DeploymentModal';
 import { getStoredLandings, updateLandingStatus, deleteLandingFromStorage, resetAllLandingsToDefault, syncLandingsFromSupabase, LandingData } from '@/data/landingStore';
@@ -643,8 +643,9 @@ export default function DemoDashboard() {
                             <div className="min-w-0">
                               <div className="flex items-center gap-1.5 flex-wrap">
                                 {p.companyName && (
-                                  <span className="text-[11px] font-black uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200/80 px-2 py-0.5 rounded-md truncate max-w-[170px]" title={p.companyName}>
-                                    🏢 {p.companyName}
+                                  <span className="flex items-center gap-1 text-[11px] font-black uppercase tracking-wide text-blue-700 bg-blue-50 border border-blue-200/80 px-2 py-0.5 rounded-md max-w-[200px]" title={p.companyName}>
+                                    <Building2 size={11} className="shrink-0 text-blue-500" />
+                                    <span className="truncate">{p.companyName}</span>
                                   </span>
                                 )}
                                 <span className={`text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md border ${
@@ -922,12 +923,13 @@ export default function DemoDashboard() {
                                 ) : p.template === 'agency-portal' ? <Zap size={16} className="text-[#FF5500]" /> : p.template === 'adventure' ? <Mountain size={16} className="text-emerald-600" /> : p.template === 'premium' ? <Crown size={16} className="text-amber-500" /> : p.template === 'boho-nature' ? <Camera size={16} className="text-amber-600" /> : p.template === 'emerald-explorer' ? <Compass size={16} className="text-emerald-500" /> : <Landmark size={16} className="text-amber-700" />}
                               </div>
                               <div className="min-w-0 space-y-1 flex-1">
+                                {p.companyName && (
+                                  <span className="flex items-center gap-1 text-[11px] font-black uppercase tracking-wide text-blue-700 leading-tight line-clamp-1 break-words" title={p.companyName}>
+                                    <Building2 size={12} className="shrink-0 text-blue-500" />
+                                    <span className="truncate">{p.companyName}</span>
+                                  </span>
+                                )}
                                 <div className="flex items-center gap-1.5 flex-wrap">
-                                  {p.companyName && (
-                                    <span className="text-[10px] font-black uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200/80 px-1.5 py-0.5 rounded-md truncate max-w-[150px]" title={p.companyName}>
-                                      🏢 {p.companyName}
-                                    </span>
-                                  )}
                                   <Link 
                                     href={`/demo/preview?slug=${p.slug}&tier=advance`} 
                                     className="font-bold text-slate-900 group-hover:text-blue-600 transition-colors text-sm leading-snug line-clamp-1"

@@ -1069,7 +1069,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
           {/* Brand Logo & Name */}
           <div className="flex items-center gap-2 sm:gap-3 min-w-0 max-w-[calc(100vw-130px)] sm:max-w-[380px] md:max-w-[420px] shrink-0">
             {data?.logoUrl ? (
-              <div className="h-10 sm:h-12 md:h-14 max-w-[160px] sm:max-w-[200px] flex items-center justify-center shrink-0">
+              <div className="h-10 sm:h-12 md:h-14 max-w-[110px] sm:max-w-[150px] flex items-center justify-center shrink-0">
                 <img src={data.logoUrl} alt={brandName} className="h-full w-auto max-w-full object-contain rounded-lg" />
               </div>
             ) : (
@@ -1078,7 +1078,7 @@ export default function AgencyPortalTemplate({ data, isLive = false, viewMode = 
               </div>
             )}
             <div className="flex flex-col justify-center min-w-0">
-              <span className="font-extrabold text-xs sm:text-base md:text-lg tracking-tight text-stone-900 block leading-snug truncate">
+              <span className="font-extrabold text-xs sm:text-base md:text-lg tracking-tight text-stone-900 leading-tight line-clamp-2 break-words" title={brandName}>
                 {brandName.toUpperCase()}
               </span>
               <span className="text-[8px] sm:text-[10px] uppercase font-bold tracking-wider text-stone-500 block truncate leading-none mt-0.5 hidden xs:block">

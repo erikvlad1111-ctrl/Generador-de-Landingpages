@@ -202,7 +202,7 @@ export default function QuoteModal({ isOpen, onClose, landing, lang = 'es' }: Qu
         honeypot: botCheck,
         elapsedMs: Date.now() - formLoadedAtRef.current,
       }),
-    }).catch(() => {});
+    }).catch(() => { });
 
     setSubmitted(true);
   };
@@ -212,12 +212,12 @@ export default function QuoteModal({ isOpen, onClose, landing, lang = 'es' }: Qu
     currentLang === 'en'
       ? `Hello ${landing.guideName}, I have just requested an official quote for "${tourLocalizedName}" on behalf of ${name} (${travelers} travelers for date ${date || 'to be arranged'}).`
       : currentLang === 'pt'
-      ? `Olá ${landing.guideName}, acabei de solicitar um orçamento para "${tourLocalizedName}" em nome de ${name} (${travelers} pessoas para a data ${date || 'a combinar'}).`
-      : currentLang === 'fr'
-      ? `Bonjour ${landing.guideName}, je viens de demander un devis pour "${tourLocalizedName}" au nom de ${name} (${travelers} personnes pour la date ${date || 'à définir'}).`
-      : currentLang === 'it'
-      ? `Ciao ${landing.guideName}, ho appena richiesto un preventivo per "${tourLocalizedName}" a nome di ${name} (${travelers} persone per la data ${date || 'da definire'}).`
-      : `Hola ${landing.guideName}, acabo de solicitar una cotización web para "${tourLocalizedName}" a nombre de ${name} (${travelers} personas para la fecha ${date || 'por coordinar'}).`
+        ? `Olá ${landing.guideName}, acabei de solicitar um orçamento para "${tourLocalizedName}" em nome de ${name} (${travelers} pessoas para a data ${date || 'a combinar'}).`
+        : currentLang === 'fr'
+          ? `Bonjour ${landing.guideName}, je viens de demander un devis pour "${tourLocalizedName}" au nom de ${name} (${travelers} personnes pour la date ${date || 'à définir'}).`
+          : currentLang === 'it'
+            ? `Ciao ${landing.guideName}, ho appena richiesto un preventivo per "${tourLocalizedName}" a nome di ${name} (${travelers} persone per la data ${date || 'da definire'}).`
+            : `Hola ${landing.guideName}, acabo de solicitar una cotización web para "${tourLocalizedName}" a nombre de ${name} (${travelers} personas para la fecha ${date || 'por coordinar'}).`
   );
   const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodedMsg}`;
 
