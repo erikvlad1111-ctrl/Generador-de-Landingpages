@@ -292,3 +292,16 @@ Estos campos deben propagarse coherentemente en:
   3. Incorporar `cusco_creativos_landings_v8` en la cadena de migración de `getStoredLandings()` y en `resetAllLandingsToDefault()`.
   4. En `simulateAiGeneration()`, si el slug base coincide con una plantilla oficial de fábrica, anexar automáticamente un sufijo numérico único (`${rawBaseSlug}-${Date.now().toString().slice(-4)}`) para blindar la landing personalizada.
   5. En `src/utils/brandUtils.ts`, asegurar que `getCleanBrandName()` no recorte palabras clave legítimas del tour como "expediciones", "machu picchu" o "bitácora".
+
+
+---
+
+## Error: Nombre de empresa largo (3-4 palabras) se corta con "..." en la barra de navegación
+
+- **Síntoma:** En la cabecera de las plantillas, nombres como "Erik Expedition Travel Cusco" se ocultaban parcialmente (`...`). El logo se veía como "estampilla" pequeña con borde blanco.
+- **Causa raíz:** El `<span>` de `brandName` usaba `truncate` (1 sola línea) y el contenedor del logo reservaba hasta 200px de ancho, dejando poco espacio al texto. El logo además iba envuelto en una caja `bg-white border p-1 shadow` de solo `h-8`/`h-9`.
+- **Diagnóstico:** `git grep -n "brandName" src/templates/` y buscar `truncate` en el span del navbar.
+- **Solución aplicada (commits `c854035`, `419d2d8`):**
+  1. En las 6 plantillas, el span de marca usa `leading-tight line-clamp-2 break-words` + `title={brandName}` (permite 2 líneas).
+  2. Contenedor del logo en navbar: `h-10 sm:h-12 md:h-14 max-w-[110px] sm:max-w-[150px]`, sin borde/fondo/sombra; `<img>` con `object-contain rounded-lg`.
+  3. En `/demo` (tabla y tarjetas) se muestra `logoUrl` real en lugar del ícono genérico y el `companyName` con ícono `Building2`.
