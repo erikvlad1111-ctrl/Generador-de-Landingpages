@@ -22,3 +22,4 @@ La documentación activa del proyecto ha sido consolidada en **4 documentos prin
 Los borradores iniciales de trabajo creados durante las fases previas (especificaciones preliminares de septiembre y octubre, notas de fase y estudios de alternativas como WordPress Headless) se conservan intactos para fines de auditoría histórica en la carpeta:
 
 👉 **[`docs/archivo_historico/`](./archivo_historico/)**
+

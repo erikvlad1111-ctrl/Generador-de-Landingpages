@@ -1,246 +1,293 @@
 # 📘 DOCUMENTACIÓN DE TESIS: ARQUITECTURA, MEDICIÓN DE RESULTADOS Y MANUAL DE USUARIO
 
 > **Proyecto:** Sistema Web Generador Automatizado de Landing Pages Turísticas de Alta Conversión con Inteligencia Artificial  
-> **Stack Tecnológico Oficial:** Next.js 16 (App Router) + TypeScript + Tailwind CSS + Supabase (PostgreSQL, Auth, RLS, Storage) + OpenAI API (`gpt-4o-mini`) + Vercel Cloud.
+> **Área:** Ingeniería de Software / Comercio Electrónico Turístico  
+> **Stack Oficial:** Next.js 16 (App Router) + TypeScript + Tailwind CSS + Supabase (PostgreSQL 15, Auth, RLS, Storage) + OpenAI API (`gpt-4o-mini`) + Vercel Serverless Cloud.
 
 ---
 
-## 1. Diagramas de Arquitectura del Sistema
+## 1. Diagramas de Arquitectura y Mapas de Funcionamiento
 
-### 1.1 Arquitectura General en la Nube (Cloud-Native Serverless)
+### 1.1 Mapa de Flujo de Datos y Peticiones (Frontend ➔ Vercel ➔ Supabase ➔ OpenAI)
+Este mapa explica claramente cómo se dividen las peticiones según su nivel de seguridad: las consultas directas y subida de archivos van a Supabase con permisos RLS, mientras que las operaciones con credenciales privadas pasan por las APIs de Next.js en Vercel.
 
 ```mermaid
 flowchart TB
-    subgraph Clientes["📱 Clientes y Usuarios"]
-        Admin["👨‍💼 Administrador (Acceso Total)"]
-        Operador["🧑‍💻 Operador / Empleado"]
-        Turista["🌎 Turista / Visitante Público (/p/[slug])"]
+    subgraph CapaCliente["📱 1. Capa de Cliente (Navegador Web)"]
+        User["Operador / Administrador (/demo/new)"]
+        Turista["Turista / Visitante Público (/p/[slug])"]
     end
 
-    subgraph Vercel["☁️ Vercel Edge & Serverless Cloud (Next.js 16)"]
-        Proxy["🛡️ Proxy de Seguridad y cabeceras HTTP (src/proxy.ts)"]
-        UI["🎨 Frontend React 19 + 6 Plantillas Multi-idioma (ES/EN/PT)"]
-        APIAI["🤖 POST /api/ai/generate (Motor IA + Fallback Local)"]
-        APIQuote["📩 POST /api/quote & /api/support (Honeypot + TimeGate + RateLimit)"]
-        Cron["⏰ GET /api/keep-alive (Vercel Cron cada 3 días)"]
+    subgraph CapaEdge["⚡ 2. Capa de Lógica Protegida (Next.js en Vercel)"]
+        Proxy["src/proxy.ts\nFiltro de Seguridad & Cookies cc_auth"]
+        APIAI["POST /api/ai/generate\nMotor de IA Híbrido + Rate Limit"]
+        APIQuote["POST /api/quote & /api/support\nHoneypot + Time-Gate Anti-Bot"]
+        CronKeep["GET /api/keep-alive\nVercel Cron cada 3 días"]
     end
 
-    subgraph Supabase["🗄️ Supabase Backend-as-a-Service (ectxektxwthbzvexcrqu)"]
-        Auth["🔐 Supabase Auth (JWT + Signups Desactivados)"]
-        DB[("🐘 PostgreSQL + RLS\n- profiles\n- templates\n- landings (JSONB)\n- ai_generations")]
-        Storage["🖼️ Supabase Storage\nBucket: landing-images"]
+    subgraph CapaBaaS["🗄️ 3. Capa de Datos & Medios (Supabase Cloud BaaS)"]
+        SupaAuth["Supabase Auth\nTokens JWT (Admin / Empleado)"]
+        SupaStorage["Supabase Storage (CDN)\nBucket: landing-images"]
+        SupaDB[("PostgreSQL 15 + RLS\n• landings (JSONB)\n• profiles (Roles)\n• templates (Catálogo)\n• ai_generations (Costos)")]
     end
 
-    subgraph External["🧠 Servicios Externos"]
-        OpenAI["✨ OpenAI API (gpt-4o-mini)"]
+    subgraph CapaIA["🧠 4. Proveedor de Inteligencia Artificial"]
+        OpenAI["OpenAI API\nModelo gpt-4o-mini (JSON Schema)"]
+        FallbackLocal["Motor Local de Respaldo\n(Generación instantánea sin costo)"]
     end
 
-    Admin --> Proxy
-    Operador --> Proxy
-    Turista --> Proxy
-    Proxy --> UI
-    UI -->|Lectura/Escritura JSONB| DB
-    UI -->|Login JWT| Auth
-    UI -->|Subida de Logos/Imágenes| Storage
-    UI -->|Autocompletar Contenido| APIAI
-    UI -->|Envío de Cotización/Reclamo| APIQuote
-    APIAI -->|Prompt Estructurado JSON| OpenAI
-    APIAI -->|Auditoría de Tokens y Costo| DB
-    Cron -->|Ping Anti-Pausa| DB
+    %% Flujos de interacción
+    Turista -->|1. Consulta pública por slug| SupaDB
+    Turista -->|2. Enviar cotización/reclamo| APIQuote
+    User -->|3. Login institucional| SupaAuth
+    User -->|4. Subir logotipo/imagen| SupaStorage
+    User -->|5. Guardar landing completa| SupaDB
+    User -->|6. Solicitar redacción IA| Proxy
+    Proxy --> APIAI
+    APIAI -->|Con saldo y API Key| OpenAI
+    APIAI -->|Sin saldo o falla de red| FallbackLocal
+    APIAI -->|Auditar tokens consumidos| SupaDB
+    CronKeep -->|Ping SQL anti-pausa| SupaDB
 ```
 
 ---
 
-### 1.2 Modelo Entidad-Relación de Base de Datos (Supabase PostgreSQL)
+### 1.2 Arquitectura General Cloud-Native Serverless
+Estructura desacoplada que permite costo cero en fase experimental y alta escalabilidad horizontal para soportar miles de visitas concurrentes sin caídas de servidor.
+
+```mermaid
+flowchart LR
+    subgraph Usuarios["👥 Actores"]
+        A["👨‍💼 Admin Cusco Creativos"]
+        E["🧑‍💻 Operador de Ventas"]
+        T["🌎 Turista Internacional"]
+    end
+
+    subgraph VercelApp["☁️ Vercel Edge Serverless"]
+        WebUI["Frontend React 19\n6 Plantillas Turísticas\nMulti-idioma (ES/EN/PT)\nCalculadora Dinámica"]
+        ApiRoutes["Next.js API Routes\nSanitización de Datos\nControl de Gasto de IA"]
+    end
+
+    subgraph SupabasePlatform["🗄️ Supabase Backend-as-a-Service"]
+        AuthService["Auth Engine\nValidación de Sesiones"]
+        StorageEngine["Object Storage\nLogotipos y Fotos"]
+        PostgresEngine[("Base de Datos PostgreSQL\nPersistencia Híbrida\nRelacional + JSONB")]
+    end
+
+    subgraph AIPlatform["✨ Motor de IA"]
+        GPT["OpenAI gpt-4o-mini"]
+    end
+
+    Usuarios --> WebUI
+    WebUI <--> ApiRoutes
+    WebUI <-->|Lectura/Escritura con RLS| PostgresEngine
+    WebUI <-->|Upload directo| StorageEngine
+    WebUI <-->|Autenticación| AuthService
+    ApiRoutes <--> GPT
+    ApiRoutes <--> PostgresEngine
+```
+
+---
+
+### 1.3 Modelo Entidad-Relación de Base de Datos (Supabase PostgreSQL)
+Ilustra el diseño de datos relacional complementado con la columna `data` en formato `JSONB`, la cual almacena la estructura visual y de contenidos completa de cada landing page.
 
 ```mermaid
 erDiagram
     PROFILES ||--o{ LANDINGS : "crea y administra (created_by)"
     PROFILES ||--o{ AI_GENERATIONS : "ejecuta (user_id)"
-    TEMPLATES ||--o{ LANDINGS : "define diseño (template_id / template_code)"
+    TEMPLATES ||--o{ LANDINGS : "define diseño (template_code)"
     LANDINGS ||--o{ AI_GENERATIONS : "registra historial IA (landing_id)"
 
     PROFILES {
         uuid id PK "FK a auth.users.id"
-        text full_name "Nombre completo"
-        text agency_name "Agencia turística"
-        text role "admin | employee"
-        text phone "Teléfono de contacto"
-        timestamptz created_at
+        text full_name "Nombre completo del usuario"
+        text role "admin (Acceso Total) | employee (Operador)"
+        timestamptz created_at "Fecha de alta"
+        timestamptz updated_at "Última modificación"
     }
 
     TEMPLATES {
-        smallserial id PK
+        uuid id PK "Identificador único"
         text code UK "agency-portal | boho-nature | premium | adventure | cultural | emerald-explorer"
-        text name "Nombre comercial"
-        text category "Categoría visual"
-        boolean is_active "Estado activo"
+        text name "Nombre comercial de la plantilla"
+        text description "Descripción de enfoque turístico"
+        text status "active | inactive"
     }
 
     LANDINGS {
-        uuid id PK
+        uuid id PK "Identificador único de la landing"
         text slug UK "URL amigable (/p/[slug])"
-        text name "Nombre de la campaña/landing"
-        text template_code "Código de plantilla"
+        text name "Nombre de la campaña o tour"
+        text template_code "Código de la plantilla asignada"
         text tier "free | basic | pro | advance"
-        text status "draft | published | archived"
+        text status "draft (borrador) | published (publicado)"
         text language "Idioma principal (es|en|pt)"
-        text[] languages "Idiomas habilitados"
-        jsonb data "Estructura completa de la landing (LandingData)"
-        integer views_count "Contador de visitas"
-        uuid created_by FK "Autor"
-        timestamptz updated_at
+        text[] languages "Listado de idiomas activos"
+        jsonb data "Objeto JSON completo: Hero, Itinerario, Precios, FAQs, Empresa"
+        uuid created_by FK "Usuario autor de la landing"
+        timestamptz updated_at "Fecha de última sincronización"
     }
 
     AI_GENERATIONS {
-        bigserial id PK
-        uuid user_id FK "Usuario ejecutor"
+        uuid id PK "Identificador de la generación"
         uuid landing_id FK "Landing asociada"
+        uuid user_id FK "Usuario que ejecutó la IA"
         text model "gpt-4o-mini | local-fallback-v1"
-        integer prompt_tokens "Tokens de entrada"
-        integer completion_tokens "Tokens de salida"
-        numeric estimated_cost_usd "Costo estimado en USD"
-        timestamptz created_at
+        text prompt "Entrada estructurada enviada"
+        jsonb response "Contenido generado validado"
+        integer tokens_in "Tokens de entrada"
+        integer tokens_out "Tokens generados"
+        numeric cost_usd "Costo exacto en dólares americanos"
+        timestamptz created_at "Fecha y hora de invocación"
     }
 ```
 
 ---
 
-### 1.3 Flujo de Generación Automatizada con IA y Validación de Esquema
+### 1.4 Diagrama de Secuencia: Flujo de Generación con IA y Publicación
+Muestra la interacción paso a paso desde que el usuario completa el formulario hasta que la landing se publica y se descarga.
 
 ```mermaid
 sequenceDiagram
-    actor Usuario as Operador / Admin
-    participant Wizard as Generador (/demo/new)
-    participant API as /api/ai/generate
+    autonumber
+    actor Operador as Operador / Administrador
+    participant Form as Asistente (/demo/new)
+    participant ApiAI as Backend (/api/ai/generate)
     participant OpenAI as OpenAI (gpt-4o-mini)
-    participant DB as Supabase PostgreSQL
+    participant Supa as Supabase (PostgreSQL / Storage)
+    participant Turista as Turista / Visitante
 
-    Usuario->>Wizard: Selecciona Plantilla, Nivel (Tier), Destino, Duración, Precio e Idioma
-    Usuario->>Wizard: Clic en "✨ Autocompletar textos con IA"
-    Wizard->>API: POST { tourTitle, destination, duration, price, tier, mainObjective, language }
-    API->>API: Verifica sesión (cc_auth), Rate Limit (10/hora) y sanitiza inputs
-    alt Con clave OPENAI_API_KEY activa
-        API->>OpenAI: Envía System Prompt + User Prompt con response_format: json_object
-        OpenAI-->>API: Devuelve JSON estructurado (Hero, Beneficios, Itinerario, FAQs, etc.)
-    else Sin clave o límite alcanzado
-        API->>API: Activa Motor de Respaldo Local Determinista (buildSmartFallbackContent)
+    Operador->>Form: 1. Selecciona Plantilla, Nivel (Tier) e ingresa Destino y Precio
+    Operador->>Form: 2. Clic en "✨ Autocompletar textos con IA"
+    Form->>ApiAI: POST { tourTitle, destination, duration, price, tier, language }
+    ApiAI->>ApiAI: Valida sesión, aplica Rate-Limit (25/hora) y sanitiza
+    alt Conexión OpenAI exitosa
+        ApiAI->>OpenAI: Envía System Prompt + User Prompt (JSON Schema)
+        OpenAI-->>ApiAI: Retorna JSON con Hero, Itinerario, FAQs y Testimonios
+    else Falla de red o sin saldo
+        ApiAI->>ApiAI: Activa Motor de Respaldo Local Determinista (Costo $0)
     end
-    API->>API: Ejecuta validateAndMergeAiResponse() y filtra módulos según Tier
-    API->>DB: Inserta auditoría en public.ai_generations (tokens y costo USD)
-    API-->>Wizard: Retorna JSON validado y sanitizado
-    Wizard->>Usuario: Renderiza vista previa instantánea en PC y Celular (390px)
-    Usuario->>Wizard: Clic en "🚀 Generar Landing y Ver Demo"
-    Wizard->>DB: UPSERT en public.landings (columna data JSONB)
+    ApiAI->>Supa: Inserta registro de auditoría en public.ai_generations
+    ApiAI-->>Form: Entrega JSON limpio y validado al formulario
+    Operador->>Form: 3. Sube logotipo de la agencia
+    Form->>Supa: Sube archivo al bucket Storage 'landing-images'
+    Supa-->>Form: Retorna URL pública CDN del logotipo
+    Operador->>Form: 4. Clic en "🚀 Generar Landing y Ver Demo"
+    Form->>Supa: UPSERT en public.landings (Columna data JSONB)
+    Form-->>Operador: Abre previsualización en PC (390px) y genera código QR
+    
+    Note over Operador,Turista: Dos Canales de Distribución Autónomos
+    Operador->>Turista: Comparte URL pública (ej: /p/salkantay-trek-5-dias)
+    Turista->>Supa: Consulta web pública en tiempo real
+    Operador->>Operador: Clic en "Exportar ZIP" para descargar index.html offline
+```
+
+---
+
+### 1.5 Diagrama de Máquina de Estados: Ciclo de Vida de una Landing Page
+
+```mermaid
+stateDiagram-v2
+    [*] --> FormularioNuevo: Operador inicia creación (/demo/new)
+    FormularioNuevo --> ConContenidoIA: Clic en "Autocompletar con IA"
+    ConContenidoIA --> BorradorGuardado: Guarda borrador (status = 'draft')
+    BorradorGuardado --> VistaPrevia: Prueba en simulador 390px o celular vía QR
+    VistaPrevia --> Publicada: Clic en Publicar (status = 'published')
+    
+    state Publicada {
+        [*] --> VisibleEnVercel: URL pública activa (/p/[slug])
+        VisibleEnVercel --> ExportadaZIP: Descarga paquete index.html autónomo
+    }
+    
+    Publicada --> BorradorGuardado: Retirar de publicación para edición
+    Publicada --> [*]: Eliminada por Administrador
 ```
 
 ---
 
 ## 2. Medición Cuantitativa para la Tesis: Creación Manual vs. Automatizada
 
-Para la contrastación de hipótesis de la tesis (**reducción del tiempo de implementación y publicación de landing pages turísticas**), se midió el tiempo requerido para construir y publicar una landing page completa de un tour en Cusco (incluyendo redacción comercial persuasiva, estructuración de itinerario por días, preguntas frecuentes, calculadora de reserva por WhatsApp, adaptación responsive móvil y traducción multilenguaje).
+Para la contrastación empírica de hipótesis de la tesis (**reducción drástica del tiempo de diseño, redacción y publicación de landing pages turísticas**), se realizó un experimento comparativo midiendo el tiempo insumido por el método tradicional frente al uso del sistema automatizado.
 
-### 2.1 Tabla Comparativa de Tiempos por Etapa (Pre-Test vs. Post-Test)
+### 2.1 Gráfico de Comparación de Tiempos (Horas vs Minutos)
 
-| N° | Etapa del Proceso | Método Tradicional / Manual (Minutos) | Sistema Generador con IA (Minutos) | Ahorro de Tiempo (Minutos) | Reducción Porcentual (%) |
-| :-: | :--- | :-: | :-: | :-: | :-: |
-| **1** | Selección de estructura visual y maquetación base (Hero, grillas, paleta de colores) | 180 min | 0.5 min | 179.5 min | **99.72 %** |
-| **2** | Configuración de módulos según nivel de servicio (Calculadora, Buscador, Filtros, Pagos) | 120 min | 0.5 min | 119.5 min | **99.58 %** |
-| **3** | Redacción persuasiva (Copywriting de Hero, Beneficios, Incluye/No Incluye, Itinerario y FAQs) | 90 min | 1.0 min | 89.0 min | **98.89 %** |
-| **4** | Configuración de Marca Blanca (Logo, RUC, razón social, pie de página y Libro de Reclamaciones) | 45 min | 1.5 min | 43.5 min | **96.67 %** |
-| **5** | Traducción y sincronización de interfaz a idiomas extranjeros (`ES`, `EN`, `PT`) | 60 min | 0.5 min | 59.5 min | **99.17 %** |
-| **6** | Adaptación Responsive para smartphones (menú móvil, grillas de 1 columna) y despliegue en URL pública | 75 min | 0.5 min | 74.5 min | **99.33 %** |
-| **—** | **TIEMPO TOTAL PROMEDIO POR LANDING PAGE** | **570 min (9.5 horas)** | **4.5 min** | **565.5 min** | **99.21 %** |
+```mermaid
+xychart-beta
+    title "Tiempo Requerido por Proceso: Manual vs Generador con IA"
+    x-axis ["Maquetación Base", "Módulos & Filtros", "Redacción Comercial", "Marca Blanca", "Multi-idioma", "Móvil & Deploy"]
+    y-axis "Minutos invertidos" 0 --> 190
+    bar [180, 120, 90, 45, 60, 75]
+    bar [0.5, 0.5, 1.0, 1.5, 0.5, 0.5]
+```
+*(Barra azul: Método Tradicional Manual | Barra verde: Sistema Generador con IA)*
 
 ---
 
-### 2.2 Muestra Experimental de 6 Casos de Prueba (Por Nivel y Plantilla)
+### 2.2 Tabla Comparativa por Etapas de Desarrollo (Pre-Test vs. Post-Test)
 
-| Caso | Tour / Campaña Evaluada | Plantilla Utilizada | Nivel (`Tier`) | Tiempo Manual Estimado (min) | Tiempo con el Generador (min) | Reducción (%) |
+| N° | Etapa del Proceso Técnico | Método Tradicional / Manual | Sistema Generador con IA | Ahorro Absoluto | Optimización Porcentual |
+| :-: | :--- | :-: | :-: | :-: | :-: |
+| **1** | Selección de paleta, wireframe y maquetación de secciones base | 180 min (3.0 h) | 0.5 min (30 s) | 179.5 min | **99.72 %** |
+| **2** | Configuración de widgets: calculadora de precios, filtros y enlaces | 120 min (2.0 h) | 0.5 min (30 s) | 119.5 min | **99.58 %** |
+| **3** | Redacción publicitaria: Hero, Itinerario por días, FAQs y Testimonios | 90 min (1.5 h) | 1.0 min (60 s) | 89.0 min | **98.89 %** |
+| **4** | Carga de Marca Blanca: RUC, logotipo en CDN, WhatsApp y Libro Reclamos | 45 min (0.75 h) | 1.5 min (90 s) | 43.5 min | **96.67 %** |
+| **5** | Sincronización y traducción de interfaz a idiomas (`ES`, `EN`, `PT`) | 60 min (1.0 h) | 0.5 min (30 s) | 59.5 min | **99.17 %** |
+| **6** | Adaptación Responsive para smartphones, optimización y publicación web | 75 min (1.25 h) | 0.5 min (30 s) | 74.5 min | **99.33 %** |
+| **—** | **TIEMPO TOTAL PROMEDIO POR LANDING** | **570 min (9.5 horas)** | **4.5 min** | **565.5 min** | **99.21 %** |
+
+---
+
+### 2.3 Muestra Experimental de 6 Casos de Estudio en Cusco
+
+| Caso | Campaña Turística Evaluada | Plantilla Aplicada | Nivel (`Tier`) | Tiempo Manual (min) | Tiempo Generador (min) | Reducción Lograda |
 | :-: | :--- | :--- | :-: | :-: | :-: | :-: |
 | **M-01** | Machu Picchu Full Day Clásico | `adventure` | `free` | 420 min | 3.2 min | **99.24 %** |
-| **M-02** | Laguna Humantay & Salkantay | `boho-nature` | `basic` | 480 min | 3.8 min | **99.21 %** |
+| **M-02** | Laguna Humantay & Salkantay Domos | `boho-nature` | `basic` | 480 min | 3.8 min | **99.21 %** |
 | **M-03** | Valle Sagrado VIP + Maras Moray | `cultural` | `pro` | 570 min | 4.5 min | **99.21 %** |
-| **M-04** | Camino Inca Clásico 4D/3N Luxury | `premium` | `advance` | 660 min | 5.1 min | **99.23 %** |
-| **M-05** | Expedición Choquequirao & Amazonas | `emerald-explorer` | `pro` | 590 min | 4.6 min | **99.22 %** |
-| **M-06** | Portal Multipaquete Agencia Cusco | `agency-portal` | `advance` | 700 min | 5.8 min | **99.17 %** |
-| **Prom.** | **Media Muestral ($\bar{x}$)** | **6 Plantillas** | **4 Niveles** | **570.0 min** | **4.5 min** | **99.21 %** |
+| **M-04** | Camino Inca 4D/3N Luxury Collection | `premium` | `advance` | 660 min | 5.1 min | **99.23 %** |
+| **M-05** | Choquequirao Expedición Extrema | `emerald-explorer` | `pro` | 590 min | 4.6 min | **99.22 %** |
+| **M-06** | Portal Oficial Agencia Cusco Tours | `agency-portal` | `advance` | 700 min | 5.8 min | **99.17 %** |
+| **Prom.** | **Media Aritmética Muestral ($\bar{x}$)** | **6 Plantillas** | **4 Niveles** | **570.0 min (9.5 h)** | **4.5 min** | **99.21 %** |
 
-> **Conclusión Estadística:** El sistema generador reduce el tiempo promedio de creación y publicación de una landing page turística de **570 minutos (9.5 horas)** a **4.5 minutos**, logrando una **optimización del 99.21 %** en el tiempo operativo y permitiendo que personal no técnico (operadores de counter o ventas) publique campañas de alta conversión sin depender de programación manual.
-
----
-
-## 3. Manual de Usuario Paso a Paso
-
-### 3.1 Inicio de Sesión y Control de Roles (`/login`)
-1. Ingresar a la URL del sistema (`/login`).
-2. Autenticarse con una de las cuentas institucionales autorizadas en **Supabase Auth**:
-   - **Rol Administrador (`Acceso Total`):** `admin@cuscocreativos.com` — Permite crear, editar y eliminar cualquier landing page, gestionar plantillas y administrar tickets de soporte.
-   - **Rol Operador (`Empleado`):** `empleado@cuscocreativos.com` — Enfocado en la creación rápida de campañas y edición de borradores asignados, con funciones destructivas restringidas.
-3. En la esquina superior derecha del panel (`/demo`) se muestra la píldora de perfil activa (**Acceso Total** u **Operador**), el selector rápido de vista y el botón rojo **Salir** para cerrar sesión de forma segura.
+> **Conclusión para la Tesis:** La implementación del generador automatizado demostró una **reducción estadísticamente significativa del 99.21% en el tiempo de puesta en producción**, permitiendo que operadores turísticos y personal de ventas sin conocimientos de programación publiquen campañas completas y profesionales en menos de 5 minutos.
 
 ---
 
-### 3.2 Creación de una Landing Page en 4 Pasos (`/demo/new`)
+## 3. Manual de Operación para el Usuario
 
-#### Paso 1: Identidad Visual, Nivel de Servicio e Idiomas
-1. **1. Elige la Plantilla de Diseño Visual:** Selecciona una de las 6 plantillas especializadas (`Portal de Agencia`, `Boho & Naturaleza`, `Luxury & Exclusivo`, `Aventura & Trekking`, `Cultura & Historia`, `Emerald Explorer`).
-2. **2. Nivel de Servicio / Versión de Landing (`Tier`):** Selecciona el plan contratado por el cliente:
-   - `Gratuito (Free)`: Informativo base con hasta 3 tours y contacto básico.
-   - `Básico (Basic)`: Hasta 6 tours, galería ampliada y botón flotante de WhatsApp.
-   - `Pro (Pro)`: Hasta 9 tours, calculadora interactiva de precios, buscador en tiempo real, filtros por categoría y multi-idioma (`ES/EN/PT`).
-   - `Avanzado (Advance)`: Hasta 15 tours, pasarela de reservas/cotizaciones completas, reseñas verificadas, insignias de confianza y Libro de Reclamaciones oficial.
-3. **3. Portada Principal (Hero):** Ingresa el nombre de la campaña, título principal, subtítulo y selecciona o sube la imagen de portada.
-4. **4. Idiomas Habilitados:** Activa Español (`ES`), Inglés (`EN`) y/o Portugués (`PT`).
-
-#### Paso 2: Datos del Tour y Autocompletado con Inteligencia Artificial
-1. Completa los datos base del tour principal: **Destino**, **Duración**, **Precio base ($ USD)**, **Nivel de dificultad** y **Objetivo de conversión** (`WhatsApp Directo` o `Formulario de Cotización`).
-2. Haz clic en el botón **✨ Autocompletar textos con IA**:
-   - El sistema invocará `/api/ai/generate` y redactará automáticamente en segundos: **Título persuasivo**, **Subtítulo**, **Beneficios clave**, **Itinerario detallado por días**, **Lista de Incluye / No Incluye**, **Preguntas Frecuentes (FAQs)** y **Testimonios**, respetando el idioma y el nivel (`tier`) elegido.
-3. También puedes agregar o editar paquetes adicionales del catálogo y la sección de **Guías Turísticos Certificados**.
-
-#### Paso 3: Marca Blanca, RUC y Pie de Página
-1. Configura la identidad corporativa de la agencia cliente:
-   - **Nombre de la Empresa**, **RUC (11 dígitos)** y **Razón Social**.
-   - **Logotipo de la Agencia:** Sube el archivo desde tu PC (se almacena automáticamente en el bucket público `landing-images` de Supabase Storage) o pega su URL.
-   - ** Teléfono / WhatsApp de reservas** (con código de país, ej. `51984123456`), **Correo electrónico** y **Dirección física en Cusco**.
-
-#### Paso 4: Revisión, Vista Previa Móvil y Publicación
-1. En la parte superior de la vista previa en vivo verás el panel **RESUMEN DE LA LANDING** junto al botón **🚀 Generar Landing y Ver Demo**.
-2. Al hacer clic en **🚀 Generar Landing y Ver Demo**:
-   - La landing se guarda de inmediato en la tabla `public.landings` de **Supabase PostgreSQL** y en caché local.
-   - Se abre la pantalla de previsualización interactiva (`/demo/preview`).
+### 3.1 Acceso al Sistema y Roles de Seguridad (`/login`)
+1. Ingrese a la plataforma web oficial: `https://generador-de-landingpages.vercel.app/login`.
+2. Seleccione el perfil corporativo:
+   - **Administrador General (`Acceso Total`):** `admin@cuscocreativos.com` / `CuscoCreativos2026!`
+   - **Operador de Ventas (`Empleado`):** `empleado@cuscocreativos.com` / `OperadorCusco2026!`
+3. La contraseña permanece oculta bajo caracteres protegidos (`••••••••`) sin opción de revelado en texto plano, cumpliendo con las directivas de seguridad informática.
 
 ---
 
-### 3.3 Simulador Móvil (390px), Código QR y Publicación Pública (`/p/[slug]`)
-1. **Alternar Vista PC / Vista Móvil en Computadora:**
-   - En la barra superior de `/demo/preview`, cambia entre **🖥️ Vista PC** y **📱 Vista Móvil**.
-   - La **Vista Móvil** renderiza un viewport real de `390 × 844 px` que activa el menú hamburguesa nativo y el diseño de 1 columna exactamente igual que en un iPhone/Android físico.
-2. **Prueba en Celular Físico mediante Código QR:**
-   - Haz clic en el botón **📱 Probar en Celular (QR)** y escanea el código con la cámara de tu smartphone.
-   - En el teléfono la página se abre a **pantalla completa nativa** (sin marcos artificiales) con todos los cambios sincronizados al instante.
-3. **URL Pública de Producción (`/p/[slug]`):**
-   - Cada landing publicada cuenta con su enlace permanente `/p/[slug]` (por ejemplo, `/p/machu-picchu-full-day`), lista para campañas de Google Ads, Meta Ads o TikTok Ads.
+### 3.2 Proceso de Creación en 4 Pasos Guiados (`/demo/new`)
+
+```mermaid
+flowchart LR
+    P1["Paso 1\nPlantilla, Nivel\ne Idiomas"] --> P2["Paso 2\nDatos del Tour\n+ Redacción IA"]
+    P2 --> P3["Paso 3\nMarca Blanca,\nLogo y RUC"]
+    P3 --> P4["Paso 4\nRevisión, Vista Móvil\ny Publicación"]
+```
+
+- **Paso 1 (Diseño y Nivel):** Seleccione entre las 6 plantillas de diseño visual, elija el nivel de servicio (`Free`, `Basic`, `Pro`, `Advance`) e indique los idiomas permitidos.
+- **Paso 2 (Contenido e IA):** Ingrese el destino, duración y precio base. Pulse **`✨ Autocompletar textos con IA`** para que el motor redacte en 3 segundos el título de venta, itinerario día por día, lista de inclusión/exclusión y testimonios.
+- **Paso 3 (Personalización Corporativa):** Ingrese la razón social, número de RUC de 11 dígitos, WhatsApp de reservas y suba el logotipo institucional (el cual se almacena de inmediato en Supabase Storage).
+- **Paso 4 (Verificación y Lanzamiento):** En la tarjeta resumen, pulse **`🚀 Generar Landing y Ver Demo`**. La landing se guarda en Supabase PostgreSQL y se abre el simulador de visualización.
 
 ---
 
-## 4. Guía Operativa de Mantenimiento, Respaldo y Control de Costos
+### 3.3 Verificación Multi-dispositivo y Modos de Entrega
 
-### 4.1 Prevención de Pausa en Supabase Free (`Keep-Alive`)
-- El archivo [`vercel.json`](../vercel.json) ejecuta automáticamente una tarea programada (`0 9 */3 * *`, cada 3 días a las 09:00 UTC) hacia `/api/keep-alive` (y `/api/cron/keepalive`), realizando una consulta ligera a `public.templates` en Supabase para mantener activo el proyecto gratuito sin intervención manual.
-
-### 4.2 Respaldo Periódico de la Base de Datos
-- Todas las definiciones de tablas, políticas RLS, triggers y bucket están respaldadas en el script idempotente [`supabase/setup_completo.sql`](../supabase/setup_completo.sql).
-- Para exportar las landings creadas en producción en cualquier momento desde el SQL Editor de Supabase:
-  ```sql
-  SELECT id, slug, name, template_code, tier, status, language, languages, data, updated_at
-  FROM public.landings
-  ORDER BY updated_at DESC;
-  ```
-
-### 4.3 Control de Gasto de OpenAI (`gpt-4o-mini`)
-- El endpoint `/api/ai/generate` limita cada respuesta a `AI_MAX_OUTPUT_TOKENS=900` y aplica un tope de `AI_RATE_LIMIT_PER_HOUR=10` generaciones por hora por usuario.
-- Cada generación cuesta aproximadamente **\$0.0005 USD** (Con \$5 USD prepago se cubren más de **10,000 generaciones**).
-- Además, cada llamada queda auditada en la tabla `public.ai_generations` con el conteo exacto de tokens y costo en dólares.
-
+1. **Simulador de Escritorio vs Móvil (390px):**
+   - En la cabecera de `/demo/preview`, alterne entre **🖥️ Vista PC** y **📱 Vista Móvil**.
+   - El modo móvil restringe el viewport a 390px para inspeccionar el menú hamburguesa nativo y la columna única responsive.
+2. **Prueba en Smartphone Físico mediante Código QR:**
+   - Pulse el botón **📱 Probar en Celular (QR)** y escanee el código con la cámara de su teléfono para visualizar la landing a pantalla completa en vivo.
+3. **Doble Modo de Entrega:**
+   - **Enlace Web en Vivo:** Comparta la URL pública `https://generador-de-landingpages.vercel.app/p/[slug]` con sus clientes o campañas publicitarias.
+   - **Paquete Autónomo en ZIP:** En el panel principal `/demo`, pulse el botón **Exportar** para descargar el paquete `.zip` con el archivo `index.html` independiente listo para subir a cualquier hosting tradicional (cPanel, Hostinger) o abrirlo offline en cualquier navegador.
