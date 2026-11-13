@@ -1301,18 +1301,18 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* Botón Principal de Importación con IA */}
+          {/* Botón Principal de Generación con IA */}
           <div className="shrink-0">
             <button
               type="button"
               onClick={() => setIsDocModalOpen(true)}
               className="bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white px-5 sm:px-6 py-3 sm:py-3.5 rounded-2xl font-black text-xs sm:text-sm transition-all shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/35 hover:scale-102 active:scale-98 cursor-pointer flex items-center gap-2.5 shrink-0 border border-purple-400/30"
-              title="Carga un archivo Word (.docx), texto (.txt) o pega la cotización de tu empresa para que la IA rellene todo con información verídica"
+              title="Carga un archivo Word (.docx), texto (.txt) o pega la información de tu empresa/tour para generar tu landing con IA"
             >
               <div className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
                 <Sparkles size={16} className="text-amber-300" />
               </div>
-              <span className="tracking-tight">✨ Importar con IA (Word o Texto)</span>
+              <span className="tracking-tight">Generar con IA</span>
             </button>
           </div>
         </div>
@@ -1488,8 +1488,8 @@ export default function NewLandingDemo() {
                 onClick={() => setIsDocModalOpen(true)}
                 className="px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white transition-all shadow-md shadow-purple-500/20 hover:scale-102 active:scale-98 flex items-center gap-2 shrink-0 cursor-pointer self-start sm:self-auto"
               >
-                <FileText size={15} />
-                <span>Importar Word / Texto con IA</span>
+                <Sparkles size={15} className="text-amber-300" />
+                <span>Generar con IA</span>
               </button>
             </div>
 

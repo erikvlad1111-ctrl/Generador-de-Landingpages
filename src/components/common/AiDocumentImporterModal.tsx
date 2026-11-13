@@ -444,8 +444,8 @@ export function AiDocumentImporterModal({
             <Sparkles size={16} className={isProcessing ? 'animate-spin text-amber-300' : 'text-amber-300'} />
             <span>
               {isProcessing
-                ? 'Analizando y Rellenando con IA...'
-                : '🚀 Procesar y Rellenar Formulario con IA'}
+                ? 'Generando contenido con IA...'
+                : 'Generar con IA'}
             </span>
           </button>
         </div>
