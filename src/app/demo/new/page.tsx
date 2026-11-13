@@ -19,6 +19,8 @@ import { simulateAiGeneration, saveLandingToStorage } from '@/data/landingStore'
 import { SAMPLE_TOUR_IMAGES } from '@/data/sampleImages';
 import { DEFAULT_SECONDARY_CATALOG_TOURS } from '@/data/defaultCatalogTours';
 import CatalogToursEditorModal from '@/components/common/CatalogToursEditorModal';
+import { AiDocumentImporterModal } from '@/components/common/AiDocumentImporterModal';
+import { ParsedDocumentData } from '@/lib/ai/documentParser';
 import { translateText } from '@/data/translations';
 import { OFFICIAL_PERUVIAN_GUIDE_PRESETS, PRESET_GUIDE_AVATARS, getSanitizedGuideAvatar } from '@/utils/guideAvatars';
 import { uploadImageToSupabaseStorage } from '@/lib/supabase';
@@ -630,6 +632,7 @@ export default function NewLandingDemo() {
   const [tier, setTier] = useState<PlanTier>('advance');
   const [catalogTours, setCatalogTours] = useState<CatalogTourItem[]>(DEFAULT_SECONDARY_CATALOG_TOURS);
   const [isCatalogModalOpen, setIsCatalogModalOpen] = useState(false);
+  const [isDocModalOpen, setIsDocModalOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -829,6 +832,66 @@ export default function NewLandingDemo() {
     setIsAutocompleting(false);
     setMagicToast(true);
     setTimeout(() => setMagicToast(false), 3500);
+  };
+
+  const handleApplyDocumentData = (data: ParsedDocumentData) => {
+    // 1. Datos de Empresa (Marca Blanca)
+    if (data.companyName) setCompanyName(data.companyName);
+    if (data.companyRuc) setCompanyRuc(data.companyRuc);
+    if (data.companyEmail) setCompanyEmail(data.companyEmail);
+    if (data.whatsapp) setWhatsapp(data.whatsapp);
+    if (data.officeAddress) setOfficeAddress(data.officeAddress);
+    if (data.officeHours) setOfficeHours(data.officeHours);
+    if (data.companyTagline) setCompanyTagline(data.companyTagline);
+    if (data.guideName) setGuideName(data.guideName);
+    if (data.guideCert) setGuideCert(data.guideCert);
+
+    // 2. Datos del Tour
+    if (data.name) setName(data.name);
+    if (data.destination) setDestination(data.destination);
+    if (data.price) setPrice(data.price);
+    if (data.duration) setDuration(data.duration);
+    if (data.difficulty) setDifficulty(data.difficulty);
+    if (data.altitude) setAltitude(data.altitude);
+    if (data.description) setDescription(data.description);
+
+    // 3. Portada (Hero)
+    if (data.heroTitle) {
+      setHeroTitle(data.heroTitle);
+      setIsHeroTitleCustomized(true);
+    }
+    if (data.heroSubtitle) {
+      setHeroSubtitle(data.heroSubtitle);
+      setIsHeroSubtitleCustomized(true);
+    }
+    if (data.heroBadge) setHeroBadge(data.heroBadge);
+    if (data.heroCta) setHeroCta(data.heroCta);
+
+    // 4. Secciones de Contenido y Conversión
+    if (Array.isArray(data.itinerary) && data.itinerary.length > 0) {
+      setItinerary(data.itinerary);
+    }
+    if (Array.isArray(data.includedServices) && data.includedServices.length > 0) {
+      setIncludedServices(data.includedServices);
+    }
+    if (Array.isArray(data.notIncluded) && data.notIncluded.length > 0) {
+      setNotIncluded(data.notIncluded);
+    }
+    if (Array.isArray(data.whatToBring) && data.whatToBring.length > 0) {
+      setWhatToBring(data.whatToBring);
+    }
+    if (Array.isArray(data.faqs) && data.faqs.length > 0) {
+      setFaqs(data.faqs);
+    }
+    if (Array.isArray(data.testimonials) && data.testimonials.length > 0) {
+      setTestimonials(data.testimonials);
+    }
+    if (data.recommendedTemplate) {
+      setTemplate(data.recommendedTemplate);
+    }
+
+    setMagicToast(true);
+    setTimeout(() => setMagicToast(false), 4500);
   };
 
   // Handlers para FAQs
@@ -1238,17 +1301,29 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* Botón Asistente con IA */}
-          <button
-            type="button"
-            onClick={handleMagicAiAutocomplete}
-            disabled={isAutocompleting}
-            className="bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white px-4 sm:px-5 py-2.5 rounded-2xl font-bold text-xs transition-all shadow-md shadow-purple-500/20 hover:scale-102 active:scale-98 cursor-pointer flex items-center gap-2 shrink-0 disabled:opacity-75 disabled:cursor-not-allowed"
-            title="Analiza el tour actual y autocompleta descripción, itinerario, FAQs y testimonios con IA"
-          >
-            <Sparkles size={15} className={isAutocompleting ? "animate-spin text-amber-300" : "text-amber-300"} />
-            <span>{isAutocompleting ? 'Autocompletando...' : 'Autocompletar con IA'}</span>
-          </button>
+          {/* Botones Asistentes con IA */}
+          <div className="flex items-center gap-2 flex-wrap shrink-0">
+            <button
+              type="button"
+              onClick={() => setIsDocModalOpen(true)}
+              className="bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 hover:border-purple-300 px-3.5 sm:px-4 py-2.5 rounded-2xl font-black text-xs transition-all shadow-xs hover:scale-102 active:scale-98 cursor-pointer flex items-center gap-2 shrink-0"
+              title="Carga un archivo Word (.docx), texto (.txt) o pega la cotización de tu empresa para que la IA rellene todo"
+            >
+              <FileText size={15} className="text-purple-600" />
+              <span>Importar Word / Texto con IA</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={handleMagicAiAutocomplete}
+              disabled={isAutocompleting}
+              className="bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white px-4 sm:px-5 py-2.5 rounded-2xl font-bold text-xs transition-all shadow-md shadow-purple-500/20 hover:scale-102 active:scale-98 cursor-pointer flex items-center gap-2 shrink-0 disabled:opacity-75 disabled:cursor-not-allowed"
+              title="Analiza el tour actual y autocompleta descripción, itinerario, FAQs y testimonios con IA"
+            >
+              <Sparkles size={15} className={isAutocompleting ? "animate-spin text-amber-300" : "text-amber-300"} />
+              <span>{isAutocompleting ? 'Autocompletando...' : 'Autocompletar con IA'}</span>
+            </button>
+          </div>
         </div>
 
         {/* STEPPER DE NAVEGACIÓN UX INTERACTIVO (4 PESTAÑAS CLARAS) */}
@@ -1400,6 +1475,31 @@ export default function NewLandingDemo() {
                   </button>
                 ))}
               </div>
+            </div>
+
+            {/* Banner Asistente de Carga de Documento Word o Texto */}
+            <div className="bg-gradient-to-r from-purple-50 via-indigo-50 to-blue-50 border border-purple-200/80 p-3.5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <Sparkles size={16} className="text-amber-300" />
+                </div>
+                <div>
+                  <p className="text-xs font-black text-slate-800">
+                    ¿Tienes una cotización, Word (.docx) o texto de tu empresa?
+                  </p>
+                  <p className="text-[11px] text-slate-500">
+                    La IA extrae automáticamente nombre de empresa, RUC, WhatsApp, itinerario, tarifas e inclusiones.
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsDocModalOpen(true)}
+                className="px-3.5 py-1.5 rounded-xl text-xs font-black bg-purple-600 hover:bg-purple-700 text-white transition-all shadow-sm flex items-center gap-1.5 shrink-0 cursor-pointer self-start sm:self-auto"
+              >
+                <FileText size={13} />
+                <span>Importar Word / Texto con IA</span>
+              </button>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -4706,6 +4806,13 @@ export default function NewLandingDemo() {
         currentTours={catalogTours}
         onSave={(updated) => setCatalogTours(updated)}
         currentSignatureTourName={name}
+      />
+
+      {/* MODAL ASISTENTE DE IMPORTACIÓN CON IA (DOC WORD O TEXTO) */}
+      <AiDocumentImporterModal
+        isOpen={isDocModalOpen}
+        onClose={() => setIsDocModalOpen(false)}
+        onApply={handleApplyDocumentData}
       />
     </div>
   );
