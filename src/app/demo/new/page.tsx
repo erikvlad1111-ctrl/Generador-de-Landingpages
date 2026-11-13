@@ -9,7 +9,7 @@ import {
   Globe, DollarSign, Clock, User, Phone, 
   Check, Zap, Eye, CheckCircle2, MapPin,
   Shield, Award, Mountain, Users, Languages, CheckSquare, Square,
-  Plus, Trash2, XCircle, Backpack, ShieldCheck, Share2, Calendar, Search,
+  Plus, Trash2, XCircle, X, Backpack, ShieldCheck, Share2, Calendar, Search,
   Star, ArrowRight, Camera, Crown, ChevronDown, Layers, Navigation, Landmark,
   HelpCircle, MessageSquare, Quote, AlertCircle, Image as ImageIcon, SlidersHorizontal, ChevronUp, Copy,
   Upload, Mail, Ticket, Wine, Building2, Map, Heart
@@ -703,6 +703,7 @@ export default function NewLandingDemo() {
   // Selector de Modo: Express con IA vs Modo Completo Manual
   const [creationMode, setCreationMode] = useState<'express' | 'full'>('full');
   const [magicToast, setMagicToast] = useState(false);
+  const [showPostAiGuide, setShowPostAiGuide] = useState(false);
   const [isAutocompleting, setIsAutocompleting] = useState(false);
 
   const handleMagicAiAutocomplete = async () => {
@@ -890,6 +891,7 @@ export default function NewLandingDemo() {
       setTemplate(data.recommendedTemplate);
     }
 
+    setShowPostAiGuide(true);
     setMagicToast(true);
     setTimeout(() => setMagicToast(false), 4500);
   };
@@ -1406,6 +1408,163 @@ export default function NewLandingDemo() {
         </div>
       )}
 
+      {/* GUÍA / CHECKLIST POST-GENERACIÓN CON IA (HUMAN-IN-THE-LOOP) */}
+      {showPostAiGuide && (
+        <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-purple-950 text-white rounded-3xl p-6 sm:p-7 shadow-xl border border-purple-500/30 space-y-5 animate-in fade-in slide-in-from-top-4 duration-300 relative overflow-hidden">
+          {/* Luz ambiental decorativa */}
+          <div className="absolute -right-16 -top-16 w-60 h-60 bg-purple-500/20 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="flex items-start justify-between gap-4 relative z-10">
+            <div className="space-y-1">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/30 text-amber-300 text-[11px] font-black uppercase tracking-wider border border-purple-400/40">
+                <Sparkles size={13} className="text-amber-300" />
+                <span>¡Información Procesada con IA!</span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-black text-white tracking-tight">
+                Guía de Validación Rápida (3 Pasos Clave)
+              </h3>
+              <p className="text-xs sm:text-sm text-purple-200/90 max-w-2xl leading-relaxed">
+                La IA ya redactó los textos, estructuró el itinerario, las tarifas y las FAQs. Te recomendamos afinar estos 3 puntos de identidad visual antes de publicar tu landing:
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setShowPostAiGuide(false)}
+              className="text-purple-300 hover:text-white p-1.5 rounded-xl hover:bg-white/10 transition-colors cursor-pointer shrink-0"
+              title="Cerrar guía"
+            >
+              <X size={18} />
+            </button>
+          </div>
+
+          {/* 3 TARJETAS INTERACTIVAS DE VALIDACIÓN */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 relative z-10 text-xs">
+            
+            {/* Paso 1: Logo */}
+            <div className="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-4 flex flex-col justify-between space-y-3 hover:border-purple-400/50 transition-colors">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-purple-300">Paso 1 • Identidad</span>
+                  <span className={`text-[10px] font-black px-2 py-0.5 rounded-full ${
+                    logoUrl ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                  }`}>
+                    {logoUrl ? '✓ Logo Cargado' : 'Pendiente'}
+                  </span>
+                </div>
+                <h4 className="font-bold text-white flex items-center gap-1.5">
+                  <Building2 size={15} className="text-purple-300" /> Logotipo de la Empresa
+                </h4>
+                <p className="text-[11px] text-purple-200/80 leading-snug">
+                  {logoUrl 
+                    ? `Logo activo de ${companyName || 'tu agencia'}.` 
+                    : 'Sube tu logo oficial en PNG transparente para la cabecera y pie de página.'}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab('agency');
+                  setTimeout(() => {
+                    document.getElementById('section-company-logo')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+                className="w-full py-2 px-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <Upload size={13} />
+                <span>{logoUrl ? 'Cambiar Logotipo' : 'Subir Logotipo'}</span>
+              </button>
+            </div>
+
+            {/* Paso 2: Fotografías */}
+            <div className="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-4 flex flex-col justify-between space-y-3 hover:border-blue-400/50 transition-colors">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-blue-300">Paso 2 • Visual</span>
+                  <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    ✓ Asignada
+                  </span>
+                </div>
+                <h4 className="font-bold text-white flex items-center gap-1.5">
+                  <Camera size={15} className="text-blue-300" /> Portada & Galería
+                </h4>
+                <p className="text-[11px] text-purple-200/80 leading-snug">
+                  Foto principal asignada para {destination || 'el tour'}. Puedes cambiarla o agregar fotos a la galería.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab('design');
+                  setTimeout(() => {
+                    document.getElementById('section-hero-image')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }}
+                className="w-full py-2 px-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <Camera size={13} />
+                <span>Revisar Fotos</span>
+              </button>
+            </div>
+
+            {/* Paso 3: Contacto y Publicar */}
+            <div className="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl p-4 flex flex-col justify-between space-y-3 hover:border-emerald-400/50 transition-colors">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-300">Paso 3 • Reservas</span>
+                  <span className="text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                    ✓ Contacto
+                  </span>
+                </div>
+                <h4 className="font-bold text-white flex items-center gap-1.5">
+                  <MessageCircle size={15} className="text-emerald-300" /> WhatsApp & Tarifas
+                </h4>
+                <p className="text-[11px] text-purple-200/80 leading-snug">
+                  Tarifa: <strong className="text-amber-300">{price || '$150 USD'}</strong> • WA: <strong className="text-white">{whatsapp || 'No detectado'}</strong>
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setActiveTab('agency');
+                }}
+                className="w-full py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <MessageCircle size={13} />
+                <span>Verificar WhatsApp</span>
+              </button>
+            </div>
+
+          </div>
+
+          {/* BOTÓN RÁPIDO DE PUBLICACIÓN FINAL */}
+          <div className="pt-2 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative z-10">
+            <span className="text-[11px] text-purple-200/70">
+              💡 Puedes editar cualquier texto directamente en el formulario o ver los cambios en la previsualización del teléfono a la derecha.
+            </span>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setShowPostAiGuide(false)}
+                className="px-3 py-1.5 text-xs text-purple-300 hover:text-white transition-colors cursor-pointer"
+              >
+                Ocultar Guía
+              </button>
+              <button
+                type="button"
+                onClick={handleGenerate}
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs transition-all shadow-lg shadow-emerald-500/20 hover:scale-102 active:scale-98 cursor-pointer flex items-center gap-1.5"
+              >
+                <span>🚀 Todo Verificado, Publicar Landing</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* 2. MAIN WORKSPACE: FORM COLUMN (LEFT 7 COLS) + REALTIME PHONE MOCKUP (RIGHT 5 COLS) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
@@ -1787,7 +1946,7 @@ export default function NewLandingDemo() {
             </div>
 
             {/* Hero Image Selection */}
-            <div>
+            <div id="section-hero-image">
               <label className="block text-xs font-bold text-slate-700 mb-2">
                 Selecciona la Fotografía Principal:
               </label>
@@ -2142,7 +2301,7 @@ export default function NewLandingDemo() {
             </div>
 
             {/* Administrador de Logo con Subida de Archivo Local y URL */}
-            <div className="space-y-3 bg-white/80 border border-indigo-100 rounded-2xl p-4">
+            <div id="section-company-logo" className="space-y-3 bg-white/80 border border-indigo-100 rounded-2xl p-4">
               <div className="flex items-center justify-between">
                 <label className="block text-xs font-bold text-slate-800 flex items-center gap-1.5">
                   <ImageIcon size={13} className="text-slate-500" /> Logo de la Empresa (Subir Archivo o URL Web)
