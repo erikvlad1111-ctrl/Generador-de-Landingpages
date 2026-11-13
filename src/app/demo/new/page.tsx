@@ -1301,27 +1301,18 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-          {/* Botones Asistentes con IA */}
-          <div className="flex items-center gap-2 flex-wrap shrink-0">
+          {/* Botón Principal de Importación con IA */}
+          <div className="shrink-0">
             <button
               type="button"
               onClick={() => setIsDocModalOpen(true)}
-              className="bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 hover:border-purple-300 px-3.5 sm:px-4 py-2.5 rounded-2xl font-black text-xs transition-all shadow-xs hover:scale-102 active:scale-98 cursor-pointer flex items-center gap-2 shrink-0"
-              title="Carga un archivo Word (.docx), texto (.txt) o pega la cotización de tu empresa para que la IA rellene todo"
+              className="bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white px-5 sm:px-6 py-3 sm:py-3.5 rounded-2xl font-black text-xs sm:text-sm transition-all shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/35 hover:scale-102 active:scale-98 cursor-pointer flex items-center gap-2.5 shrink-0 border border-purple-400/30"
+              title="Carga un archivo Word (.docx), texto (.txt) o pega la cotización de tu empresa para que la IA rellene todo con información verídica"
             >
-              <FileText size={15} className="text-purple-600" />
-              <span>Importar Word / Texto con IA</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={handleMagicAiAutocomplete}
-              disabled={isAutocompleting}
-              className="bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white px-4 sm:px-5 py-2.5 rounded-2xl font-bold text-xs transition-all shadow-md shadow-purple-500/20 hover:scale-102 active:scale-98 cursor-pointer flex items-center gap-2 shrink-0 disabled:opacity-75 disabled:cursor-not-allowed"
-              title="Analiza el tour actual y autocompleta descripción, itinerario, FAQs y testimonios con IA"
-            >
-              <Sparkles size={15} className={isAutocompleting ? "animate-spin text-amber-300" : "text-amber-300"} />
-              <span>{isAutocompleting ? 'Autocompletando...' : 'Autocompletar con IA'}</span>
+              <div className="w-6 h-6 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
+                <Sparkles size={16} className="text-amber-300" />
+              </div>
+              <span className="tracking-tight">✨ Importar con IA (Word o Texto)</span>
             </button>
           </div>
         </div>
@@ -1495,9 +1486,9 @@ export default function NewLandingDemo() {
               <button
                 type="button"
                 onClick={() => setIsDocModalOpen(true)}
-                className="px-3.5 py-1.5 rounded-xl text-xs font-black bg-purple-600 hover:bg-purple-700 text-white transition-all shadow-sm flex items-center gap-1.5 shrink-0 cursor-pointer self-start sm:self-auto"
+                className="px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white transition-all shadow-md shadow-purple-500/20 hover:scale-102 active:scale-98 flex items-center gap-2 shrink-0 cursor-pointer self-start sm:self-auto"
               >
-                <FileText size={13} />
+                <FileText size={15} />
                 <span>Importar Word / Texto con IA</span>
               </button>
             </div>
