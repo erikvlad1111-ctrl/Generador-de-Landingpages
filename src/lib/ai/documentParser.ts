@@ -21,6 +21,8 @@ export interface ParsedDocumentData {
   altitude?: string;
   description?: string;
   recommendedTemplate?: 'agency-portal' | 'boho-nature' | 'premium' | 'adventure' | 'cultural' | 'emerald-explorer';
+  recommendedTier?: 'free' | 'basic' | 'pro' | 'advance';
+  recommendedObjective?: 'whatsapp' | 'quote' | 'both';
 
   // Contenido y Secciones
   heroTitle?: string;
@@ -423,6 +425,53 @@ export function parseDocumentTextLocally(
     result.recommendedTemplate = 'emerald-explorer';
   } else {
     result.recommendedTemplate = 'agency-portal';
+  }
+
+  // 21B. Determinación Automática de Secciones Necesarias (Tier) y Estrategia (Objetivo)
+  const wantsFastSimple =
+    fullContent.includes('solo whatsapp') ||
+    fullContent.includes('sin tanto texto') ||
+    fullContent.includes('página rápida') ||
+    fullContent.includes('pagina rapida') ||
+    fullContent.includes('sencilla') ||
+    fullContent.includes('económica') ||
+    fullContent.includes('economica');
+  const wantsQuote =
+    fullContent.includes('cotiz') ||
+    fullContent.includes('presupuesto') ||
+    fullContent.includes('a medida') ||
+    fullContent.includes('corporativ') ||
+    fullContent.includes('solicitud formal');
+  const wantsWhatsApp =
+    fullContent.includes('whatsapp') ||
+    fullContent.includes('wsp') ||
+    Boolean(result.whatsapp);
+
+  if (wantsQuote && wantsWhatsApp) {
+    result.recommendedObjective = 'both';
+  } else if (wantsQuote) {
+    result.recommendedObjective = 'quote';
+  } else {
+    result.recommendedObjective = 'whatsapp';
+  }
+
+  if (wantsFastSimple && !result.itinerary?.length) {
+    result.recommendedTier = 'free';
+  } else if (
+    (result.itinerary && result.itinerary.length >= 3) ||
+    (result.faqs && result.faqs.length >= 1) ||
+    fullContent.includes('lujo') ||
+    fullContent.includes('advance') ||
+    fullContent.includes('completo') ||
+    fullContent.includes('galer')
+  ) {
+    result.recommendedTier = 'advance';
+  } else if (result.itinerary && result.itinerary.length >= 1) {
+    result.recommendedTier = 'pro';
+  } else if (result.includedServices && result.includedServices.length >= 1) {
+    result.recommendedTier = 'basic';
+  } else {
+    result.recommendedTier = 'advance';
   }
 
   // 22. Títulos Persuasivos para Hero Section

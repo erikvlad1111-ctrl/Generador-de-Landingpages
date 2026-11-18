@@ -19,6 +19,8 @@ export interface AiGeneratedLandingPayload {
   guideName?: string;
   guideCert?: string;
   recommendedTemplate?: string;
+  recommendedTier?: 'free' | 'basic' | 'pro' | 'advance';
+  recommendedObjective?: 'whatsapp' | 'quote' | 'both';
 
   // Datos del Tour
   tourName?: string;
@@ -214,6 +216,8 @@ function buildLocalFallbackData(params: {
     guideName: effectiveGuide,
     guideCert: doc.guideCert,
     recommendedTemplate: doc.recommendedTemplate,
+    recommendedTier: doc.recommendedTier || (params.tier as 'free' | 'basic' | 'pro' | 'advance'),
+    recommendedObjective: doc.recommendedObjective || (params.objective as 'whatsapp' | 'quote' | 'both'),
     tourName: effectiveName,
     price: effectivePrice,
     destination: inferred.destination,
@@ -333,6 +337,12 @@ function validateAndMergeAiResponse(
     guideName: safeStr(rawAi.guideName, fallback.guideName),
     guideCert: safeStr(rawAi.guideCert, fallback.guideCert),
     recommendedTemplate: safeStr(rawAi.recommendedTemplate, fallback.recommendedTemplate),
+    recommendedTier: (['free', 'basic', 'pro', 'advance'].includes(String(rawAi.recommendedTier))
+      ? String(rawAi.recommendedTier)
+      : fallback.recommendedTier) as 'free' | 'basic' | 'pro' | 'advance' | undefined,
+    recommendedObjective: (['whatsapp', 'quote', 'both'].includes(String(rawAi.recommendedObjective))
+      ? String(rawAi.recommendedObjective)
+      : fallback.recommendedObjective) as 'whatsapp' | 'quote' | 'both' | undefined,
     tourName: safeStr(rawAi.tourName, fallback.tourName),
     price: safeStr(rawAi.price, fallback.price),
     destination: safeStr(rawAi.destination, fallback.destination),
@@ -475,9 +485,10 @@ export async function POST(request: NextRequest) {
 Tu tarea es analizar los datos y el documento proporcionado por el operador turístico y generar exclusivamente un objeto JSON válido para autocompletar la landing page de alta conversión.
 REGLAS ESTRICTAS:
 1. NUNCA devuelvas HTML, Markdown ni explicaciones fuera del JSON.
-2. Si se proporciona texto de documento, extrae rigurosamente los datos reales SIN inventar RUC, precios ni teléfonos distintos a los del documento.
-3. Adapta los textos al tono "${aiTone}", objetivo "${objective}" e idioma principal "${language}".
-4. Devuelve EXACTAMENTE este esquema JSON:
+2. Si se proporciona texto de documento o solicitud libre, extrae rigurosamente los datos reales SIN inventar RUC, precios ni teléfonos distintos a los del documento.
+3. Determina automáticamente la plantilla ("recommendedTemplate"), el nivel de secciones necesarias ("recommendedTier": "free" si pide algo rápido/sencillo solo WhatsApp, "basic" si es estándar sin itinerario complejo, "pro" si incluye itinerario y mochila, "advance" si es completo/lujo/multi-día con FAQs y galería) y la estrategia de conversión ("recommendedObjective": "whatsapp", "quote" o "both").
+4. Adapta los textos al tono "${aiTone}", objetivo e idioma principal "${language}".
+5. Devuelve EXACTAMENTE este esquema JSON:
 {
   "companyName": "string",
   "companyRuc": "string",
@@ -489,6 +500,8 @@ REGLAS ESTRICTAS:
   "guideName": "string",
   "guideCert": "string",
   "recommendedTemplate": "agency-portal | boho-nature | premium | adventure | cultural | emerald-explorer",
+  "recommendedTier": "free | basic | pro | advance",
+  "recommendedObjective": "whatsapp | quote | both",
   "tourName": "string",
   "price": "string",
   "destination": "string",

@@ -202,6 +202,8 @@ export function AiDocumentImporterModal({
             guideName: aiData.guideName || previewResult?.guideName,
             guideCert: aiData.guideCert || previewResult?.guideCert,
             recommendedTemplate: aiData.recommendedTemplate || previewResult?.recommendedTemplate,
+            recommendedTier: aiData.recommendedTier || previewResult?.recommendedTier,
+            recommendedObjective: aiData.recommendedObjective || previewResult?.recommendedObjective,
             name: aiData.tourName || aiData.heroTitle || previewResult?.name,
             destination: aiData.destination || previewResult?.destination,
             price: aiData.price || previewResult?.price,
@@ -388,15 +390,27 @@ export function AiDocumentImporterModal({
           {/* PREVIEW DE DATOS DETECTADOS EN TIEMPO REAL */}
           {previewResult && (
             <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 space-y-3">
-              <div className="flex items-center justify-between border-b border-slate-200/60 pb-2">
+              <div className="flex items-center justify-between border-b border-slate-200/60 pb-2 flex-wrap gap-1.5">
                 <span className="text-[11px] font-black uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
                   <CheckCircle2 size={14} className="text-emerald-600" /> Datos Detectados Automáticamente:
                 </span>
-                {previewResult.recommendedTemplate && (
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-purple-100 text-purple-700 flex items-center gap-1">
-                    <Layers size={11} /> Plantilla Sugerida: {previewResult.recommendedTemplate}
-                  </span>
-                )}
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {previewResult.recommendedTemplate && (
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-purple-100 text-purple-700 flex items-center gap-1">
+                      <Layers size={11} /> Diseño: {previewResult.recommendedTemplate}
+                    </span>
+                  )}
+                  {previewResult.recommendedTier && (
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-blue-100 text-blue-700 uppercase">
+                      Nivel: {previewResult.recommendedTier}
+                    </span>
+                  )}
+                  {previewResult.recommendedObjective && (
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-700 uppercase">
+                      Objetivo: {previewResult.recommendedObjective}
+                    </span>
+                  )}
+                </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">

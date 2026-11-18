@@ -890,6 +890,12 @@ export default function NewLandingDemo() {
     if (data.recommendedTemplate) {
       setTemplate(data.recommendedTemplate);
     }
+    if (data.recommendedTier) {
+      setTier(data.recommendedTier);
+    }
+    if (data.recommendedObjective) {
+      setObjective(data.recommendedObjective);
+    }
 
     setShowPostAiGuide(true);
     setMagicToast(true);
