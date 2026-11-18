@@ -389,6 +389,17 @@ async function logAiGenerationToSupabase(params: {
   }
 }
 
+export async function GET() {
+  const apiKey = process.env.OPENAI_API_KEY;
+  const isOpenAiReady = Boolean(apiKey && apiKey.startsWith('sk-') && apiKey.length > 15);
+  return NextResponse.json({
+    ok: true,
+    provider: isOpenAiReady ? 'openai' : 'local-engine',
+    model: isOpenAiReady ? (process.env.AI_MODEL || 'gpt-4o-mini') : 'local-intelligent-engine',
+    openaiConfigured: isOpenAiReady,
+  });
+}
+
 export async function POST(request: NextRequest) {
   // 1. Verificar sesión autenticada mediante cookie cc_auth
   const authCookie = request.cookies.get('cc_auth');
@@ -464,18 +475,47 @@ export async function POST(request: NextRequest) {
 Tu tarea es analizar los datos y el documento proporcionado por el operador turístico y generar exclusivamente un objeto JSON válido para autocompletar la landing page de alta conversión.
 REGLAS ESTRICTAS:
 1. NUNCA devuelvas HTML, Markdown ni explicaciones fuera del JSON.
-2. Si se proporciona texto de documento, extrae rigurosamente los datos reales:
-   - Datos de Empresa: companyName, companyRuc, companyEmail, whatsapp, officeAddress, officeHours, companyTagline, guideName, guideCert.
-   - Datos de Tour: tourName, destination, price, duration, difficulty, altitude.
-   - Secciones: heroBadge, heroTitle, heroSubtitle, heroCta, description, itinerary, includedServices, notIncluded, whatToBring, faqs, testimonials.
-   - Plantilla recomendada ("recommendedTemplate"): una de ["agency-portal", "boho-nature", "premium", "adventure", "cultural", "emerald-explorer"].
-3. Respeta el idioma principal "${language}".
-4. Formato JSON exacto requerido.`;
+2. Si se proporciona texto de documento, extrae rigurosamente los datos reales SIN inventar RUC, precios ni teléfonos distintos a los del documento.
+3. Adapta los textos al tono "${aiTone}", objetivo "${objective}" e idioma principal "${language}".
+4. Devuelve EXACTAMENTE este esquema JSON:
+{
+  "companyName": "string",
+  "companyRuc": "string",
+  "companyEmail": "string",
+  "whatsapp": "string (ej. +51 984 123 456)",
+  "officeAddress": "string",
+  "officeHours": "string",
+  "companyTagline": "string",
+  "guideName": "string",
+  "guideCert": "string",
+  "recommendedTemplate": "agency-portal | boho-nature | premium | adventure | cultural | emerald-explorer",
+  "tourName": "string",
+  "price": "string",
+  "destination": "string",
+  "altitude": "string (ej. 4,630 msnm)",
+  "difficulty": "string",
+  "duration": "string",
+  "heroBadge": "string",
+  "heroTitle": "string",
+  "heroSubtitle": "string",
+  "heroCta": "string",
+  "description": "string (2-3 oraciones persuasivas)",
+  "aboutTitle": "string",
+  "aboutContent": "string",
+  "featuresTitle": "string",
+  "featuresItems": ["Titulo Corto:Descripción detallada", "...4 items"],
+  "includedServices": ["string", "...items"],
+  "notIncluded": ["string", "...items"],
+  "whatToBring": ["string", "...items"],
+  "itinerary": [{"step": "Día 1", "title": "string", "desc": "string"}],
+  "faqs": [{"q": "string", "a": "string"}],
+  "testimonials": [{"name": "string", "origin": "Ciudad, País", "rating": 5, "comment": "string"}]
+}`;
 
       const userPrompt = `Analiza la siguiente información y genera el JSON estructurado:
-${documentText ? `--- CONTENIDO DEL DOCUMENTO / TEXTO CARGADO POR EL OPERADOR ---\n${documentText.slice(0, 4000)}\n--- FIN DEL DOCUMENTO ---` : ''}
+${documentText ? `--- CONTENIDO DEL DOCUMENTO / TEXTO CARGADO POR EL OPERADOR ---\n${documentText.slice(0, 8000)}\n--- FIN DEL DOCUMENTO ---` : ''}
 
-Parámetros base:
+Parámetros base (usa como respaldo si faltan en el documento):
 - Nombre: "${name}"
 - Destino sugerido: "${fallbackData.destination}"
 - Precio oficial: "${price}"
@@ -487,6 +527,7 @@ Parámetros base:
       try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
+          signal: AbortSignal.timeout(25000),
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${apiKey}`,

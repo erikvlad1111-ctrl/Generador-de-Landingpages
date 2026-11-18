@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Sparkles,
   UploadCloud,
@@ -106,8 +106,27 @@ export function AiDocumentImporterModal({
   const [isReadingFile, setIsReadingFile] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [previewResult, setPreviewResult] = useState<ParsedDocumentData | null>(null);
+  const [aiStatus, setAiStatus] = useState<{ openaiConfigured: boolean; model: string }>({
+    openaiConfigured: false,
+    model: 'local-intelligent-engine',
+  });
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    fetch('/api/ai/generate')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.ok) {
+          setAiStatus({
+            openaiConfigured: Boolean(data.openaiConfigured),
+            model: String(data.model || 'gpt-4o-mini'),
+          });
+        }
+      })
+      .catch(() => {});
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -229,12 +248,23 @@ export function AiDocumentImporterModal({
               <Sparkles size={20} className="text-amber-300" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <h3 className="text-base sm:text-lg font-black text-slate-900">
                   Importar y Rellenar con IA
                 </h3>
                 <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase tracking-wider">
                   Word (.docx) / Texto
+                </span>
+                <span
+                  className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${
+                    aiStatus.openaiConfigured
+                      ? 'bg-blue-100 text-blue-800 border-blue-200'
+                      : 'bg-indigo-100 text-indigo-800 border-indigo-200'
+                  }`}
+                >
+                  {aiStatus.openaiConfigured
+                    ? `✨ OpenAI ${aiStatus.model} Activo`
+                    : '🧠 Motor Local (Listo para OpenAI)'}
                 </span>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
