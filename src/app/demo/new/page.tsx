@@ -1560,27 +1560,18 @@ export default function NewLandingDemo() {
 
           </div>
 
-          {/* BOTÓN RÁPIDO DE PUBLICACIÓN FINAL */}
+          {/* PIE DE LA GUÍA */}
           <div className="pt-2 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative z-10">
-            <span className="text-[11px] text-purple-200/70">
-              💡 Puedes editar cualquier texto directamente en el formulario o ver los cambios en la previsualización del teléfono a la derecha.
+            <span className="text-[11px] text-purple-200/80">
+              💡 Cuando termines de revisar tu logo y fotos, presiona el botón verde <strong>"Publicar y Ver Landing Final"</strong>.
             </span>
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setShowPostAiGuide(false)}
-                className="px-3 py-1.5 text-xs text-purple-300 hover:text-white transition-colors cursor-pointer"
-              >
-                Ocultar Guía
-              </button>
-              <button
-                type="button"
-                onClick={handleGenerate}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-xs transition-all shadow-lg shadow-emerald-500/20 hover:scale-102 active:scale-98 cursor-pointer flex items-center gap-1.5"
-              >
-                <span>🚀 Todo Verificado, Publicar Landing</span>
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => setShowPostAiGuide(false)}
+              className="px-4 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs transition-colors cursor-pointer self-start sm:self-auto"
+            >
+              ✓ Entendido, Ocultar Guía
+            </button>
           </div>
         </div>
       )}
@@ -3602,10 +3593,10 @@ export default function NewLandingDemo() {
 
                     <button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-4 px-6 rounded-2xl font-black text-sm transition-all shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2.5 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
+                      className="w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white py-4 px-6 rounded-2xl font-black text-sm sm:text-base transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2.5 cursor-pointer hover:scale-[1.01] active:scale-[0.99] border border-emerald-400/30"
                     >
-                      <Sparkles size={18} />
-                      <span>🚀 Generar Landing y Ver Demo</span>
+                      <CheckCircle2 size={20} />
+                      <span>🚀 Publicar y Ver Landing Final</span>
                     </button>
                   </div>
 
@@ -3652,10 +3643,10 @@ export default function NewLandingDemo() {
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-4 px-6 rounded-2xl font-black text-sm transition-all shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2.5 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
+                  className="w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white py-4 px-6 rounded-2xl font-black text-sm sm:text-base transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2.5 cursor-pointer hover:scale-[1.01] active:scale-[0.99] border border-emerald-400/30"
                 >
-                  <Sparkles size={18} />
-                  <span>🚀 Generar Landing y Ver Demo</span>
+                  <CheckCircle2 size={20} />
+                  <span>🚀 Publicar y Ver Landing Final</span>
                 </button>
               </div>
 
@@ -3673,14 +3664,14 @@ export default function NewLandingDemo() {
 
         {/* Realtime Live Preview Column (Sticky on Desktop) */}
         <div className="lg:col-span-5 sticky top-6 space-y-4">
-          {/* Card de Resumen y Acción Rápida ARRIBA del Mockup (solo en el paso final: Paso 4) */}
-          {(activeTab === 'content' || showAllSteps) && (
-            <div className="bg-white rounded-3xl p-4 sm:p-5 border border-blue-200/80 shadow-lg shadow-blue-950/5 space-y-3 animate-in fade-in duration-300">
+          {/* Card de Resumen y Acción Rápida ARRIBA del Mockup (en Paso 4, modo continuo o tras generar con IA) */}
+          {(activeTab === 'content' || showAllSteps || showPostAiGuide) && (
+            <div className="bg-white rounded-3xl p-4 sm:p-5 border border-emerald-200/90 shadow-lg shadow-emerald-950/5 space-y-3 animate-in fade-in duration-300">
               <div className="flex items-center justify-between pb-2 border-b border-slate-100">
                 <span className="text-xs font-black text-slate-800 uppercase tracking-tight flex items-center gap-1.5">
-                  <Sparkles size={14} className="text-blue-600" /> Resumen de la Landing
+                  <CheckCircle2 size={15} className="text-emerald-600" /> Resumen de la Landing
                 </span>
-                <span className="text-[11px] font-bold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-200">
+                <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-200">
                   {price || '$350 USD'}
                 </span>
               </div>
@@ -3688,20 +3679,20 @@ export default function NewLandingDemo() {
               <div className="text-xs space-y-1">
                 <p className="font-bold text-slate-900 truncate text-sm">{name || 'Tour sin nombre'}</p>
                 <p className="text-[11px] text-slate-500 truncate flex items-center gap-1">
-                  <MapPin size={12} className="text-blue-500 shrink-0" />
+                  <MapPin size={12} className="text-emerald-600 shrink-0" />
                   <span>{destination || 'Cusco, Perú'}</span>
                   <span>•</span>
-                  <span className="font-semibold text-blue-600 uppercase">{template}</span>
+                  <span className="font-semibold text-emerald-700 uppercase">{template}</span>
                 </p>
               </div>
 
               <button
                 type="button"
                 onClick={handleGenerate}
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3.5 px-4 rounded-2xl font-black text-xs sm:text-sm transition-all shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99]"
+                className="w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white py-4 px-5 rounded-2xl font-black text-sm transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99] border border-emerald-400/30"
               >
-                <Sparkles size={16} />
-                <span>🚀 Generar Landing y Ver Demo</span>
+                <CheckCircle2 size={18} />
+                <span>🚀 Publicar y Ver Landing Final</span>
               </button>
             </div>
           )}
