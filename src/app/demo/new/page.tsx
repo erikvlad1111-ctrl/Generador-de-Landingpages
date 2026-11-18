@@ -899,7 +899,7 @@ export default function NewLandingDemo() {
 
     setShowPostAiGuide(true);
     setMagicToast(true);
-    setTimeout(() => setMagicToast(false), 4500);
+    setTimeout(() => setMagicToast(false), 9000);
   };
 
   // Handlers para FAQs
@@ -1403,14 +1403,28 @@ export default function NewLandingDemo() {
         </div>
       </div>
 
-      {/* Toast Flotante cuando la IA autocompleta el formulario */}
+      {/* Toast Flotante amigable cuando la IA prepara la landing */}
       {magicToast && (
-        <div className="fixed top-24 right-6 z-50 bg-gradient-to-r from-purple-700 to-indigo-700 text-white px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-in slide-in-from-top-3 duration-300 border border-purple-400/40">
-          <Sparkles size={20} className="text-amber-300 shrink-0" />
-          <div>
-            <p className="font-black text-xs">✨ ¡Formulario Autocompletado con IA con Éxito!</p>
-            <p className="text-[11px] text-purple-200">Se han redactado la descripción, itinerario por etapas, FAQs y testimonios para {destination}.</p>
+        <div className="fixed top-20 right-4 sm:right-6 z-50 max-w-md bg-gradient-to-r from-purple-700 via-indigo-700 to-blue-700 text-white px-6 py-4 rounded-3xl shadow-2xl flex items-start gap-3.5 animate-in slide-in-from-top-3 duration-300 border border-purple-300/40">
+          <div className="w-10 h-10 rounded-2xl bg-white/15 flex items-center justify-center shrink-0 mt-0.5">
+            <Sparkles size={22} className="text-amber-300" />
           </div>
+          <div className="flex-1 space-y-1">
+            <p className="font-black text-sm sm:text-base leading-tight">
+              ✨ ¡Tu Landing está Lista para Revisar!
+            </p>
+            <p className="text-xs text-purple-100 leading-relaxed">
+              La IA ya preparó los textos, el itinerario y las tarifas para <strong>{destination || 'tu tour'}</strong>. Revisa tu logo y fotos antes de publicar.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setMagicToast(false)}
+            className="text-purple-200 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors cursor-pointer shrink-0"
+            title="Cerrar aviso"
+          >
+            <X size={16} />
+          </button>
         </div>
       )}
 
