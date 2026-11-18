@@ -1590,13 +1590,15 @@ export default function NewLandingDemo() {
               </div>
 
               {/* PASO 1: SELECCIONA LA PLANTILLA DE DISEÑO & ESTILO VISUAL */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-4 ring-2 ring-blue-500/10">
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">1</span>
-                Elige la Plantilla de Diseño Visual
+                <span className="w-6 h-6 rounded-xl bg-purple-600 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  <Layers size={13} />
+                </span>
+                Plantilla de Diseño Visual (6 Diseños)
               </label>
-              <span className="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
+              <span className="text-[11px] font-semibold text-purple-700 bg-purple-50 px-2 py-0.5 rounded-md border border-purple-100">
                 Estructura & Estilo
               </span>
             </div>
@@ -1606,9 +1608,9 @@ export default function NewLandingDemo() {
             </p>
 
             {/* Presets Rápidos Opcionales */}
-            <div className="bg-slate-50/80 border border-slate-200/60 p-2.5 rounded-xl space-y-1.5">
-              <span className="text-[11px] font-bold text-slate-700 flex items-center gap-1.5">
-                <Sparkles size={13} className="text-blue-600" /> ¿Deseas autocompletar con un tour de ejemplo preconfigurado?
+            <div className="flex flex-wrap items-center justify-between gap-2 bg-slate-50 border border-slate-200/70 p-2.5 rounded-2xl">
+              <span className="text-[11px] font-bold text-slate-600 flex items-center gap-1.5">
+                <Sparkles size={13} className="text-blue-600" /> Tours de muestra:
               </span>
               <div className="flex items-center gap-1.5 flex-wrap">
                 {PRESET_TOURS.map(p => (
@@ -1619,37 +1621,12 @@ export default function NewLandingDemo() {
                       setTemplate(p.template);
                       handleApplyPreset(p);
                     }}
-                    className="px-2.5 py-1 rounded-lg text-[10px] font-bold bg-white hover:bg-blue-600 hover:text-white text-slate-700 border border-slate-200/80 hover:border-blue-600 transition-all cursor-pointer shadow-2xs"
+                    className="px-2.5 py-1 rounded-xl text-[10px] font-bold bg-white hover:bg-blue-600 hover:text-white text-slate-700 border border-slate-200 hover:border-blue-600 transition-all cursor-pointer shadow-2xs"
                   >
                     {p.label}
                   </button>
                 ))}
               </div>
-            </div>
-
-            {/* Banner Asistente de Carga de Documento Word o Texto */}
-            <div className="bg-gradient-to-r from-purple-50 via-indigo-50 to-blue-50 border border-purple-200/80 p-3.5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xs">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <Sparkles size={16} className="text-amber-300" />
-                </div>
-                <div>
-                  <p className="text-xs font-black text-slate-800">
-                    ¿Tienes una cotización, Word (.docx) o texto de tu empresa?
-                  </p>
-                  <p className="text-[11px] text-slate-500">
-                    La IA extrae automáticamente nombre de empresa, RUC, WhatsApp, itinerario, tarifas e inclusiones.
-                  </p>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => setIsDocModalOpen(true)}
-                className="px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white transition-all shadow-md shadow-purple-500/20 hover:scale-102 active:scale-98 flex items-center gap-2 shrink-0 cursor-pointer self-start sm:self-auto"
-              >
-                <Sparkles size={15} className="text-amber-300" />
-                <span>Generar con IA</span>
-              </button>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -1751,12 +1728,12 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-              {/* PASO 2: NIVEL DE SERVICIO / VERSIÓN DE LA LANDING (TIER) */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5 ring-2 ring-blue-500/10">
+              {/* SECCIÓN 1.2: NIVEL DE SERVICIO / VERSIÓN DE LA LANDING (TIER) */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">
-                  2
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  <Crown size={13} />
                 </span>
                 Nivel de Servicio / Versión de Landing (Tier)
               </label>
@@ -1856,14 +1833,18 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-              {/* PASO 3: FOTOGRAFÍA DE PORTADA & TÍTULO DEL HERO */}
+              {/* SECCIÓN 1.3: FOTOGRAFÍA DE PORTADA & TÍTULO DEL HERO */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">3</span>
+                <span className="w-6 h-6 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  <Camera size={13} />
+                </span>
                 Portada Principal (Hero Section) & Título H1
               </label>
-              <span className="text-[11px] font-semibold text-slate-400">Impacto visual y titular</span>
+              <span className="text-[11px] font-semibold text-indigo-700 bg-indigo-50 px-2.5 py-0.5 rounded-md border border-indigo-100">
+                Impacto Visual y Titular
+              </span>
             </div>
 
             {/* Titular del Hero */}
@@ -1998,12 +1979,14 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-              {/* PASO 4: ELEGIR IDIOMA DE LA LANDING (MULTI-SELECCIÓN) */}
+              {/* SECCIÓN 1.4: ELEGIR IDIOMA DE LA LANDING (MULTI-SELECCIÓN) */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-slate-100 gap-2">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">4</span>
-                Elegir Idiomas de la Landing
+                <span className="w-6 h-6 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  <Globe size={13} />
+                </span>
+                Idiomas Activos de la Landing
               </label>
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-extrabold text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-200/80 flex items-center gap-1.5">
@@ -2448,14 +2431,91 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-              {/* PASO 5: OBJETIVO Y ESTRATEGIA COMERCIAL */}
+          {/* SECCIÓN 2.2: CANALES DE CONTACTO DIRECTO & UBICACIÓN FÍSICA */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">5</span>
-                Objetivo Comercial & Enfoque de Conversión
+                <span className="w-6 h-6 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  <Phone size={13} />
+                </span>
+                Canales de Contacto Directo & Atención
               </label>
-              <span className="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">Define la Acción del Turista</span>
+              <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-100">
+                Reservas & Ubicación
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Phone size={14} className="text-emerald-600" /> WhatsApp Oficial de Reservas *
+                </label>
+                <input 
+                  type="text" 
+                  required
+                  value={whatsapp}
+                  onChange={(e) => setWhatsapp(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none font-mono font-bold text-slate-800 bg-white"
+                  placeholder="+51984112233"
+                />
+                <span className="text-[10px] text-slate-400 mt-1 block">
+                  Los turistas harán clic para iniciar chat directo con tu equipo.
+                </span>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Clock size={14} className="text-slate-500" /> Horario de Atención al Cliente
+                </label>
+                <input 
+                  type="text" 
+                  value={officeHours}
+                  onChange={(e) => setOfficeHours(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none font-medium bg-white"
+                  placeholder="Ej. Lunes a Domingo: 08:00 AM – 08:00 PM"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <MapPin size={14} className="text-rose-500" /> Dirección de Oficina en Cusco
+                </label>
+                <input 
+                  type="text" 
+                  value={officeAddress}
+                  onChange={(e) => setOfficeAddress(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none font-medium bg-white"
+                  placeholder="Ej. Portal de Panes N° 123, Plaza de Armas, Cusco"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                  <Globe size={14} className="text-blue-500" /> Enlace de Google Maps (Opcional)
+                </label>
+                <input 
+                  type="url" 
+                  value={mapsUrl}
+                  onChange={(e) => setMapsUrl(e.target.value)}
+                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-indigo-500 outline-none font-medium bg-white"
+                  placeholder="Ej. https://maps.app.goo.gl/..."
+                />
+              </div>
+            </div>
+          </div>
+
+              {/* SECCIÓN 2.3: OBJETIVO Y ESTRATEGIA COMERCIAL */}
+          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  <Zap size={13} />
+                </span>
+                Objetivo Comercial & Tono de Redacción
+              </label>
+              <span className="text-[11px] font-semibold text-blue-700 bg-blue-50 px-2.5 py-0.5 rounded-md border border-blue-100">Define la Acción del Turista</span>
             </div>
 
             {/* Objective Buttons */}
@@ -2589,28 +2649,6 @@ export default function NewLandingDemo() {
                 <span className="text-[10px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
                   Paso 3 de 4 • Penúltimo
                 </span>
-              </div>
-
-              {/* Presets Rápidos Opcionales */}
-              <div className="bg-slate-50/80 border border-slate-200/60 p-3.5 rounded-2xl space-y-2">
-                <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                  <Sparkles size={14} className="text-blue-600" /> ¿Deseas autocompletar con un tour de ejemplo preconfigurado?
-                </span>
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  {PRESET_TOURS.map(p => (
-                    <button
-                      key={p.id}
-                      type="button"
-                      onClick={() => {
-                        setTemplate(p.template);
-                        handleApplyPreset(p);
-                      }}
-                      className="px-3 py-1.5 rounded-xl text-[11px] font-bold bg-white hover:bg-blue-600 hover:text-white text-slate-700 border border-slate-200/80 hover:border-blue-600 transition-all cursor-pointer shadow-2xs"
-                    >
-                      {p.label}
-                    </button>
-                  ))}
-                </div>
               </div>
 
               {/* Ficha Técnica del Tour Principal */}
@@ -2898,14 +2936,18 @@ export default function NewLandingDemo() {
                 </span>
               </div>
 
-              {/* PASO 7: PERFIL DEL GUÍA TURÍSTICO & SERVICIOS INCLUIDOS */}
+              {/* SECCIÓN 4.1: PERFIL DEL GUÍA TURÍSTICO & SERVICIOS INCLUIDOS */}
               <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">7</span>
-                Perfil del Guía, Oficina Física & Servicios
+                <span className="w-6 h-6 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  <User size={13} />
+                </span>
+                Perfil del Guía Oficial & Servicios Incluidos
               </label>
-              <span className="text-[11px] font-semibold text-slate-400">Confianza, WhatsApp y Ubicación en Maps</span>
+              <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-100">
+                Confianza y Operación
+              </span>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -2937,33 +2979,17 @@ export default function NewLandingDemo() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Languages size={14} className="text-blue-500" /> Idiomas que domina el Guía
-                </label>
-                <input 
-                  type="text" 
-                  value={guideLanguages}
-                  onChange={(e) => setGuideLanguages(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
-                  placeholder="Ej. Español, Inglés fluido y Quechua"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Phone size={14} className="text-emerald-600" /> WhatsApp Oficial del Guía *
-                </label>
-                <input 
-                  type="text" 
-                  required
-                  value={whatsapp}
-                  onChange={(e) => setWhatsapp(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-mono font-bold text-slate-800"
-                  placeholder="+51984112233"
-                />
-              </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                <Languages size={14} className="text-blue-500" /> Idiomas que domina el Guía
+              </label>
+              <input 
+                type="text" 
+                value={guideLanguages}
+                onChange={(e) => setGuideLanguages(e.target.value)}
+                className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
+                placeholder="Ej. Español, Inglés fluido y Quechua"
+              />
             </div>
 
             {/* Foto o Avatar del Guía Oficial */}
@@ -3058,64 +3084,15 @@ export default function NewLandingDemo() {
               </div>
             </div>
 
-            {/* Ubicación de Oficina Física & Google Maps (Opcional) */}
-            <div className="pt-4 border-t border-slate-100 space-y-3">
-              <div className="flex items-center gap-2">
-                <MapPin size={16} className="text-[#FF5500]" />
-                <label className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-                  Oficina Física en Cusco & Enlace de Google Maps (Opcional):
-                </label>
-              </div>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-[11px] font-semibold text-slate-600 mb-1">
-                    Dirección Física:
-                  </label>
-                  <input 
-                    type="text" 
-                    value={officeAddress}
-                    onChange={(e) => setOfficeAddress(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
-                    placeholder="Ej. Portal de Panes N° 123, Plaza de Armas, Cusco"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-[11px] font-semibold text-slate-600 mb-1">
-                    Horario de Atención:
-                  </label>
-                  <input 
-                    type="text" 
-                    value={officeHours}
-                    onChange={(e) => setOfficeHours(e.target.value)}
-                    className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
-                    placeholder="Ej. Lunes a Domingo: 08:00 AM – 08:00 PM"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-600 mb-1 flex items-center justify-between">
-                  <span>Enlace de Google Maps (Opcional):</span>
-                  <span className="text-[10px] text-slate-400 font-normal">Si se deja vacío, se buscará automáticamente por tu dirección</span>
-                </label>
-                <input 
-                  type="url" 
-                  value={mapsUrl}
-                  onChange={(e) => setMapsUrl(e.target.value)}
-                  className="w-full border border-slate-300 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-blue-500 outline-none font-medium"
-                  placeholder="Ej. https://maps.app.goo.gl/... o https://maps.google.com/?q=..."
-                />
-              </div>
-            </div>
           </div>
 
-              {/* PASO 8: ITINERARIO DÍA A DÍA / HORAS */}
+              {/* SECCIÓN 4.2: ITINERARIO DÍA A DÍA / HORAS */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">8</span>
+                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  <Calendar size={13} />
+                </span>
                 Itinerario Detallado del Tour
               </label>
               <button
@@ -3178,11 +3155,13 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-              {/* PASO 9: TRANSPARENCIA & EQUIPAJE (QUÉ NO INCLUYE Y QUÉ LLEVAR) */}
+              {/* SECCIÓN 4.3: TRANSPARENCIA & EQUIPAJE (QUÉ NO INCLUYE Y QUÉ LLEVAR) */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-6">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">9</span>
+                <span className="w-6 h-6 rounded-xl bg-amber-600 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  <Backpack size={13} />
+                </span>
                 Exclusiones Claras & Checklist de Mochila
               </label>
               <span className="text-[11px] font-semibold text-slate-400">Reduce objeciones de clientes</span>
@@ -3271,11 +3250,13 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-              {/* PASO 10: DISTINTIVOS OFICIALES & SELLOS DE CONFIANZA */}
+              {/* SECCIÓN 4.4: DISTINTIVOS OFICIALES & SELLOS DE CONFIANZA */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">10</span>
+                <span className="w-6 h-6 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  <ShieldCheck size={13} />
+                </span>
                 Distintivos Oficiales & Sellos de Confianza
               </label>
               <span className="text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Seguridad para el Cliente</span>
@@ -3307,11 +3288,13 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-              {/* PASO 11: GALERÍA DE FOTOS SECUNDARIAS (HD CUSCO) */}
+              {/* SECCIÓN 4.5: GALERÍA DE FOTOS SECUNDARIAS (HD CUSCO) */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">11</span>
+                <span className="w-6 h-6 rounded-xl bg-indigo-600 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  <ImageIcon size={13} />
+                </span>
                 Galería de Fotos Secundarias del Tour
               </label>
               <span className="text-[11px] font-semibold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
@@ -3407,11 +3390,13 @@ export default function NewLandingDemo() {
             )}
           </div>
 
-              {/* PASO 12: PREGUNTAS FRECUENTES (FAQS) */}
+              {/* SECCIÓN 4.6: PREGUNTAS FRECUENTES (FAQS) */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-slate-100 gap-2">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">12</span>
+                <span className="w-6 h-6 rounded-xl bg-purple-600 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  <HelpCircle size={13} />
+                </span>
                 Preguntas Frecuentes (FAQs) del Tour
               </label>
               <div className="flex items-center gap-2">
@@ -3487,11 +3472,13 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-              {/* PASO 13: RESEÑAS & TESTIMONIOS DE VIAJEROS */}
+              {/* SECCIÓN 4.7: RESEÑAS & TESTIMONIOS DE VIAJEROS */}
           <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-2 border-b border-slate-100 gap-2">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
-                <span className="w-6 h-6 rounded-xl bg-blue-600 text-white flex items-center justify-center text-xs font-black shadow-sm">13</span>
+                <span className="w-6 h-6 rounded-xl bg-amber-500 text-white flex items-center justify-center text-xs font-black shadow-xs">
+                  <Star size={13} />
+                </span>
                 Reseñas & Testimonios de Turistas (Reviews)
               </label>
               <div className="flex items-center gap-2">
