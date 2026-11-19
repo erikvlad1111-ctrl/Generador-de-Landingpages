@@ -431,7 +431,7 @@ function getConfiguredAiProvider() {
   if (groqKey && groqKey.startsWith('gsk_') && groqKey.length > 15) {
     return {
       provider: 'groq' as const,
-      model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
+      model: process.env.GROQ_MODEL || 'openai/gpt-oss-120b',
       configured: true,
     };
   }
@@ -708,14 +708,14 @@ Parámetros base (usa como respaldo si faltan en el documento):
       }
     }
 
-    // 3D. Nivel 4: Groq API (100% gratis para desarrolladores, sin tarjeta - Llama 3.3 70B)
+    // 3D. Nivel 4: Groq API (100% gratis para desarrolladores, sin tarjeta - OpenAI GPT OSS 120B)
     const groqKey = process.env.GROQ_API_KEY;
     if (groqKey && groqKey.startsWith('gsk_') && groqKey.length > 15) {
       try {
         const res = await callOpenAiCompatible({
           endpoint: 'https://api.groq.com/openai/v1/chat/completions',
           key: groqKey,
-          model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
+          model: process.env.GROQ_MODEL || 'openai/gpt-oss-120b',
           source: 'groq',
         });
         if (res) return res;
