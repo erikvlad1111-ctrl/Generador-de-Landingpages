@@ -419,10 +419,19 @@ function getConfiguredAiProvider() {
   }
 
   const geminiKey = process.env.GEMINI_API_KEY;
-  if (geminiKey && geminiKey.startsWith('AIza') && geminiKey.length > 20) {
+  if (geminiKey && (geminiKey.startsWith('AIza') || geminiKey.startsWith('AQ.')) && geminiKey.length > 20) {
     return {
       provider: 'gemini' as const,
       model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+      configured: true,
+    };
+  }
+
+  const groqKey = process.env.GROQ_API_KEY;
+  if (groqKey && groqKey.startsWith('gsk_') && groqKey.length > 15) {
+    return {
+      provider: 'groq' as const,
+      model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
       configured: true,
     };
   }
@@ -573,7 +582,7 @@ Parámetros base (usa como respaldo si faltan en el documento):
       endpoint: string;
       key: string;
       model: string;
-      source: 'openai' | 'openrouter';
+      source: 'openai' | 'openrouter' | 'groq';
     }) => {
       const response = await fetch(cfg.endpoint, {
         method: 'POST',
@@ -648,9 +657,9 @@ Parámetros base (usa como respaldo si faltan en el documento):
       }
     }
 
-    // 3C. Nivel 3: Google Gemini API (si está configurada GEMINI_API_KEY)
+    // 3C. Nivel 3: Google Gemini API (si está configurada GEMINI_API_KEY - soporta AIza... y AQ...)
     const geminiKey = process.env.GEMINI_API_KEY;
-    if (geminiKey && geminiKey.startsWith('AIza') && geminiKey.length > 20) {
+    if (geminiKey && (geminiKey.startsWith('AIza') || geminiKey.startsWith('AQ.')) && geminiKey.length > 20) {
       const geminiModel = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
       try {
         const response = await fetch(
@@ -695,7 +704,23 @@ Parámetros base (usa como respaldo si faltan en el documento):
           }
         }
       } catch {
-        // Continuar al motor local si Gemini falla o excede cuota
+        // Continuar al siguiente proveedor si Gemini falla o excede cuota
+      }
+    }
+
+    // 3D. Nivel 4: Groq API (100% gratis para desarrolladores, sin tarjeta - Llama 3.3 70B)
+    const groqKey = process.env.GROQ_API_KEY;
+    if (groqKey && groqKey.startsWith('gsk_') && groqKey.length > 15) {
+      try {
+        const res = await callOpenAiCompatible({
+          endpoint: 'https://api.groq.com/openai/v1/chat/completions',
+          key: groqKey,
+          model: process.env.GROQ_MODEL || 'llama-3.3-70b-versatile',
+          source: 'groq',
+        });
+        if (res) return res;
+      } catch {
+        // Continuar al motor local si Groq falla
       }
     }
 

@@ -272,7 +272,9 @@ export function AiDocumentImporterModal({
                     ? `✨ OpenRouter ${aiStatus.model} Activo`
                     : aiStatus.provider === 'gemini'
                     ? `✨ Google ${aiStatus.model} Activo`
-                    : '🧠 Motor Local (Listo para Gemini / OpenAI)'}
+                    : aiStatus.provider === 'groq'
+                    ? `✨ Groq ${aiStatus.model} Activo`
+                    : '🧠 Motor Local (Listo para IA Externa)'}
                 </span>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">
