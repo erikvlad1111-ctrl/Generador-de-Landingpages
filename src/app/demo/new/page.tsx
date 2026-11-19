@@ -1569,6 +1569,10 @@ export default function NewLandingDemo() {
                 type="button"
                 onClick={() => {
                   setActiveTab('agency');
+                  setTimeout(() => {
+                    document.getElementById('section-whatsapp')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    document.getElementById('input-whatsapp')?.focus();
+                  }, 120);
                 }}
                 className="w-full py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
               >
@@ -2462,7 +2466,7 @@ export default function NewLandingDemo() {
           </div>
 
           {/* SECCIÓN 2.2: CANALES DE CONTACTO DIRECTO & UBICACIÓN FÍSICA */}
-          <div className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
+          <div id="section-whatsapp" className="bg-white rounded-3xl shadow-sm border border-slate-200/80 p-6 sm:p-7 space-y-5">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <label className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-2">
                 <span className="w-6 h-6 rounded-xl bg-emerald-600 text-white flex items-center justify-center text-xs font-black shadow-xs">
@@ -2477,10 +2481,24 @@ export default function NewLandingDemo() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
-                  <Phone size={14} className="text-emerald-600" /> WhatsApp Oficial de Reservas *
-                </label>
+                <div className="flex items-center justify-between mb-1.5 gap-2">
+                  <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                    <Phone size={14} className="text-emerald-600" /> WhatsApp Oficial de Reservas *
+                  </label>
+                  {whatsapp.replace(/\D/g, '').length >= 8 && (
+                    <a
+                      href={`https://wa.me/${whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(`Hola, quiero probar el enlace de reserva para ${name || 'el tour'}.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[10px] font-black text-emerald-700 hover:text-emerald-800 bg-emerald-50 hover:bg-emerald-100 px-2 py-0.5 rounded-md border border-emerald-200 transition-colors"
+                      title="Abrir chat real en WhatsApp Web / App para probar este número"
+                    >
+                      Probar Chat Real ↗
+                    </a>
+                  )}
+                </div>
                 <input 
+                  id="input-whatsapp"
                   type="text" 
                   required
                   value={whatsapp}
@@ -2489,7 +2507,7 @@ export default function NewLandingDemo() {
                   placeholder="+51984112233"
                 />
                 <span className="text-[10px] text-slate-400 mt-1 block">
-                  Los turistas harán clic para iniciar chat directo con tu equipo.
+                  En tu landing publicada abrirá el WhatsApp real (`wa.me`) con este número.
                 </span>
               </div>
 
