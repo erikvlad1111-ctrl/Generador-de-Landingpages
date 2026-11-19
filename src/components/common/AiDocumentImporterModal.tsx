@@ -223,8 +223,11 @@ export function AiDocumentImporterModal({
             whatToBring: Array.isArray(aiData.whatToBring) && aiData.whatToBring.length > 0 ? aiData.whatToBring : previewResult?.whatToBring,
             faqs: Array.isArray(aiData.faqs) && aiData.faqs.length > 0 ? aiData.faqs : previewResult?.faqs,
             testimonials: Array.isArray(aiData.testimonials) && aiData.testimonials.length > 0 ? aiData.testimonials : previewResult?.testimonials,
+            aiSource: String(payload.source || 'local-engine'),
+            aiModel: String(payload.model || 'local-intelligent-engine'),
           };
 
+          setIsProcessing(false);
           onApply(combined);
           onClose();
           return;
@@ -236,6 +239,8 @@ export function AiDocumentImporterModal({
 
     // 2. Parser inteligente local instantáneo (100% garantizado sin costo ni internet)
     const localResult = parseDocumentTextLocally(inputText);
+    localResult.aiSource = 'local-engine';
+    localResult.aiModel = 'local-intelligent-engine';
     onApply(localResult);
     setIsProcessing(false);
     onClose();

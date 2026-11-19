@@ -23,6 +23,8 @@ export interface ParsedDocumentData {
   recommendedTemplate?: 'agency-portal' | 'boho-nature' | 'premium' | 'adventure' | 'cultural' | 'emerald-explorer';
   recommendedTier?: 'free' | 'basic' | 'pro' | 'advance';
   recommendedObjective?: 'whatsapp' | 'quote' | 'both';
+  aiSource?: string;
+  aiModel?: string;
 
   // Contenido y Secciones
   heroTitle?: string;

@@ -519,7 +519,7 @@ export async function POST(request: NextRequest) {
       parsedDoc,
     });
 
-    const maxTokens = Math.min(Number(process.env.AI_MAX_OUTPUT_TOKENS || 2800), 3800);
+    const maxTokens = Math.min(Number(process.env.AI_MAX_OUTPUT_TOKENS || 3500), 4500);
 
     const systemPrompt = `Eres el motor experto de inteligencia artificial y copywriting turístico para la plataforma Cusco Creativos Web en Cusco, Perú.
 Tu tarea es analizar los datos y el documento proporcionado por el operador turístico y generar exclusivamente un objeto JSON válido para autocompletar la landing page de alta conversión.

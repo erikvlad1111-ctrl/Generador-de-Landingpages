@@ -704,6 +704,7 @@ export default function NewLandingDemo() {
   const [creationMode, setCreationMode] = useState<'express' | 'full'>('full');
   const [magicToast, setMagicToast] = useState(false);
   const [showPostAiGuide, setShowPostAiGuide] = useState(false);
+  const [lastAiEngine, setLastAiEngine] = useState<{ source: string; model: string } | null>(null);
   const [isAutocompleting, setIsAutocompleting] = useState(false);
 
   const handleMagicAiAutocomplete = async () => {
@@ -897,6 +898,10 @@ export default function NewLandingDemo() {
       setObjective(data.recommendedObjective);
     }
 
+    setLastAiEngine({
+      source: data.aiSource || 'local-engine',
+      model: data.aiModel || 'local-intelligent-engine',
+    });
     setShowPostAiGuide(true);
     setMagicToast(true);
     setTimeout(() => setMagicToast(false), 9000);
@@ -1416,6 +1421,11 @@ export default function NewLandingDemo() {
             <p className="text-xs text-purple-100 leading-relaxed">
               La IA ya preparó los textos, el itinerario y las tarifas para <strong>{destination || 'tu tour'}</strong>. Revisa tu logo y fotos antes de publicar.
             </p>
+            {lastAiEngine && (
+              <span className="inline-flex items-center gap-1.5 mt-1 px-2.5 py-0.5 rounded-full bg-white/15 text-amber-200 text-[10px] font-black uppercase tracking-wider border border-white/20">
+                ⚡ Generado con: {lastAiEngine.source === 'groq' ? `Groq (${lastAiEngine.model})` : lastAiEngine.source === 'openai' ? `OpenAI (${lastAiEngine.model})` : lastAiEngine.source === 'gemini' ? `Google Gemini (${lastAiEngine.model})` : lastAiEngine.source === 'openrouter' ? `OpenRouter (${lastAiEngine.model})` : 'Motor Local Inteligente'}
+              </span>
+            )}
           </div>
           <button
             type="button"
@@ -1436,9 +1446,18 @@ export default function NewLandingDemo() {
           
           <div className="flex items-start justify-between gap-4 relative z-10">
             <div className="space-y-1">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/30 text-amber-300 text-[11px] font-black uppercase tracking-wider border border-purple-400/40">
-                <Sparkles size={13} className="text-amber-300" />
-                <span>¡Información Procesada con IA!</span>
+              <div className="flex items-center gap-2 flex-wrap">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/30 text-amber-300 text-[11px] font-black uppercase tracking-wider border border-purple-400/40">
+                  <Sparkles size={13} className="text-amber-300" />
+                  <span>¡Información Procesada con IA!</span>
+                </div>
+                {lastAiEngine && (
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-[11px] font-black uppercase tracking-wider border border-emerald-400/40">
+                    <span>
+                      ⚡ Motor: {lastAiEngine.source === 'groq' ? `Groq (${lastAiEngine.model})` : lastAiEngine.source === 'openai' ? `OpenAI (${lastAiEngine.model})` : lastAiEngine.source === 'gemini' ? `Gemini (${lastAiEngine.model})` : lastAiEngine.source === 'openrouter' ? `OpenRouter (${lastAiEngine.model})` : 'Motor Local'}
+                    </span>
+                  </div>
+                )}
               </div>
               <h3 className="text-lg sm:text-xl font-black text-white tracking-tight">
                 Guía de Validación Rápida (3 Pasos Clave)
