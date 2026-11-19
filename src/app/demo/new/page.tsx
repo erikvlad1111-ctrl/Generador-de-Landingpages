@@ -3587,10 +3587,10 @@ export default function NewLandingDemo() {
             </div>
           </div>
 
-              {/* Tarjeta Final de Resumen y Generación al pie del Paso 4 */}
+              {/* Tarjeta Final de Resumen y Generación al pie del Paso 4 (solo móvil/tablet; en desktop está fija a la derecha) */}
               {!showAllSteps && (
                 <div className="space-y-4 pt-2">
-                  <div className="bg-white rounded-3xl p-5 sm:p-6 border border-blue-200 shadow-lg shadow-blue-950/5 space-y-4">
+                  <div className="lg:hidden bg-white rounded-3xl p-5 sm:p-6 border border-emerald-200 shadow-lg shadow-emerald-950/5 space-y-4">
                     <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                       <span className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
                         <Sparkles size={16} className="text-blue-600" /> Resumen de la Landing
@@ -3612,10 +3612,15 @@ export default function NewLandingDemo() {
 
                     <button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white py-4 px-6 rounded-2xl font-black text-sm sm:text-base transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2.5 cursor-pointer hover:scale-[1.01] active:scale-[0.99] border border-emerald-400/30"
+                      className="group relative overflow-hidden w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white py-4 px-6 rounded-2xl font-black text-sm sm:text-base transition-all duration-300 shadow-xl shadow-emerald-600/35 hover:shadow-2xl hover:shadow-emerald-500/45 ring-4 ring-emerald-400/25 hover:ring-emerald-400/50 flex items-center justify-center gap-2.5 cursor-pointer hover:scale-[1.02] active:scale-[0.98] border border-emerald-300/40"
                     >
-                      <CheckCircle2 size={20} />
-                      <span>🚀 Publicar y Ver Landing Final</span>
+                      <span className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+                      <span className="relative flex h-2.5 w-2.5">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
+                      </span>
+                      <span className="relative z-10">🚀 Publicar y Ver Landing Final</span>
+                      <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1 transition-transform" />
                     </button>
                   </div>
 
@@ -3637,15 +3642,15 @@ export default function NewLandingDemo() {
             </div>
           )}
 
-          {/* Tarjeta Final de Resumen y Generación si está en modo continuo */}
+          {/* Tarjeta Final de Resumen y Generación si está en modo continuo (solo móvil/tablet) */}
           {showAllSteps && (
             <div className="pt-2 space-y-4">
-              <div className="bg-white rounded-3xl p-5 sm:p-6 border border-blue-200 shadow-lg shadow-blue-950/5 space-y-4">
+              <div className="lg:hidden bg-white rounded-3xl p-5 sm:p-6 border border-emerald-200 shadow-lg shadow-emerald-950/5 space-y-4">
                 <div className="flex items-center justify-between pb-3 border-b border-slate-100">
                   <span className="text-xs sm:text-sm font-black text-slate-900 uppercase tracking-tight flex items-center gap-2">
-                    <Sparkles size={16} className="text-blue-600" /> Resumen de la Landing
+                    <Sparkles size={16} className="text-emerald-600" /> Resumen de la Landing
                   </span>
-                  <span className="text-xs font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded-lg border border-blue-200">
+                  <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-lg border border-emerald-200">
                     {price || '$350 USD'}
                   </span>
                 </div>
@@ -3653,19 +3658,24 @@ export default function NewLandingDemo() {
                 <div className="space-y-1">
                   <p className="font-black text-slate-900 text-base sm:text-lg">{name || 'Tour sin nombre'}</p>
                   <p className="text-xs text-slate-500 flex items-center gap-1.5 flex-wrap">
-                    <MapPin size={13} className="text-blue-600 shrink-0" />
+                    <MapPin size={13} className="text-emerald-600 shrink-0" />
                     <span>{destination || 'Cusco, Perú'}</span>
                     <span>•</span>
-                    <span className="font-bold text-blue-600 uppercase">{template}</span>
+                    <span className="font-bold text-emerald-700 uppercase">{template}</span>
                   </p>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white py-4 px-6 rounded-2xl font-black text-sm sm:text-base transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2.5 cursor-pointer hover:scale-[1.01] active:scale-[0.99] border border-emerald-400/30"
+                  className="group relative overflow-hidden w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white py-4 px-6 rounded-2xl font-black text-sm sm:text-base transition-all duration-300 shadow-xl shadow-emerald-600/35 hover:shadow-2xl hover:shadow-emerald-500/45 ring-4 ring-emerald-400/25 hover:ring-emerald-400/50 flex items-center justify-center gap-2.5 cursor-pointer hover:scale-[1.02] active:scale-[0.98] border border-emerald-300/40"
                 >
-                  <CheckCircle2 size={20} />
-                  <span>🚀 Publicar y Ver Landing Final</span>
+                  <span className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
+                  </span>
+                  <span className="relative z-10">🚀 Publicar y Ver Landing Final</span>
+                  <ArrowRight size={18} className="relative z-10 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
 
@@ -3683,38 +3693,41 @@ export default function NewLandingDemo() {
 
         {/* Realtime Live Preview Column (Sticky on Desktop) */}
         <div className="lg:col-span-5 sticky top-6 space-y-4">
-          {/* Card de Resumen y Acción Rápida ARRIBA del Mockup (en Paso 4, modo continuo o tras generar con IA) */}
-          {(activeTab === 'content' || showAllSteps || showPostAiGuide) && (
-            <div className="bg-white rounded-3xl p-4 sm:p-5 border border-emerald-200/90 shadow-lg shadow-emerald-950/5 space-y-3 animate-in fade-in duration-300">
-              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-                <span className="text-xs font-black text-slate-800 uppercase tracking-tight flex items-center gap-1.5">
-                  <CheckCircle2 size={15} className="text-emerald-600" /> Resumen de la Landing
-                </span>
-                <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-200">
-                  {price || '$350 USD'}
-                </span>
-              </div>
-
-              <div className="text-xs space-y-1">
-                <p className="font-bold text-slate-900 truncate text-sm">{name || 'Tour sin nombre'}</p>
-                <p className="text-[11px] text-slate-500 truncate flex items-center gap-1">
-                  <MapPin size={12} className="text-emerald-600 shrink-0" />
-                  <span>{destination || 'Cusco, Perú'}</span>
-                  <span>•</span>
-                  <span className="font-semibold text-emerald-700 uppercase">{template}</span>
-                </p>
-              </div>
-
-              <button
-                type="button"
-                onClick={handleGenerate}
-                className="w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white py-4 px-5 rounded-2xl font-black text-sm transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99] border border-emerald-400/30"
-              >
-                <CheckCircle2 size={18} />
-                <span>🚀 Publicar y Ver Landing Final</span>
-              </button>
+          {/* Card Única de Resumen y Publicación Fija a la Derecha */}
+          <div className="bg-white rounded-3xl p-4 sm:p-5 border border-emerald-200/90 shadow-lg shadow-emerald-950/5 space-y-3 animate-in fade-in duration-300">
+            <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+              <span className="text-xs font-black text-slate-800 uppercase tracking-tight flex items-center gap-1.5">
+                <CheckCircle2 size={15} className="text-emerald-600" /> Resumen de tu Landing
+              </span>
+              <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-200">
+                {price || '$350 USD'}
+              </span>
             </div>
-          )}
+
+            <div className="text-xs space-y-1">
+              <p className="font-bold text-slate-900 truncate text-sm">{name || 'Tour sin nombre'}</p>
+              <p className="text-[11px] text-slate-500 truncate flex items-center gap-1">
+                <MapPin size={12} className="text-emerald-600 shrink-0" />
+                <span>{destination || 'Cusco, Perú'}</span>
+                <span>•</span>
+                <span className="font-semibold text-emerald-700 uppercase">{template}</span>
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleGenerate}
+              className="group relative overflow-hidden w-full bg-gradient-to-r from-emerald-500 via-emerald-600 to-green-600 hover:from-emerald-400 hover:to-green-500 text-white py-4 px-5 rounded-2xl font-black text-sm transition-all duration-300 shadow-xl shadow-emerald-600/35 hover:shadow-2xl hover:shadow-emerald-500/45 ring-4 ring-emerald-400/25 hover:ring-emerald-400/50 flex items-center justify-center gap-2.5 cursor-pointer hover:scale-[1.02] active:scale-[0.98] border border-emerald-300/40"
+            >
+              <span className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/25 to-transparent" />
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white" />
+              </span>
+              <span className="relative z-10">🚀 Publicar y Ver Landing Final</span>
+              <ArrowRight size={17} className="relative z-10 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
 
           {/* Preview Bar Header */}
           <div className="flex items-center justify-between px-1">
