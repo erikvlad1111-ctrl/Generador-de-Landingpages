@@ -106,8 +106,9 @@ export function AiDocumentImporterModal({
   const [isReadingFile, setIsReadingFile] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [previewResult, setPreviewResult] = useState<ParsedDocumentData | null>(null);
-  const [aiStatus, setAiStatus] = useState<{ openaiConfigured: boolean; model: string }>({
-    openaiConfigured: false,
+  const [aiStatus, setAiStatus] = useState<{ aiConfigured: boolean; provider: string; model: string }>({
+    aiConfigured: false,
+    provider: 'local-engine',
     model: 'local-intelligent-engine',
   });
 
@@ -120,8 +121,9 @@ export function AiDocumentImporterModal({
       .then((data) => {
         if (data?.ok) {
           setAiStatus({
-            openaiConfigured: Boolean(data.openaiConfigured),
-            model: String(data.model || 'gpt-4o-mini'),
+            aiConfigured: Boolean(data.aiConfigured || data.openaiConfigured),
+            provider: String(data.provider || 'local-engine'),
+            model: String(data.model || 'local-intelligent-engine'),
           });
         }
       })
@@ -259,14 +261,18 @@ export function AiDocumentImporterModal({
                 </span>
                 <span
                   className={`px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${
-                    aiStatus.openaiConfigured
+                    aiStatus.aiConfigured
                       ? 'bg-blue-100 text-blue-800 border-blue-200'
                       : 'bg-indigo-100 text-indigo-800 border-indigo-200'
                   }`}
                 >
-                  {aiStatus.openaiConfigured
+                  {aiStatus.provider === 'openai'
                     ? `✨ OpenAI ${aiStatus.model} Activo`
-                    : '🧠 Motor Local (Listo para OpenAI)'}
+                    : aiStatus.provider === 'openrouter'
+                    ? `✨ OpenRouter ${aiStatus.model} Activo`
+                    : aiStatus.provider === 'gemini'
+                    ? `✨ Google ${aiStatus.model} Activo`
+                    : '🧠 Motor Local (Listo para Gemini / OpenAI)'}
                 </span>
               </div>
               <p className="text-xs text-slate-500 mt-0.5">

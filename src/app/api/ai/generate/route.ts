@@ -399,14 +399,49 @@ async function logAiGenerationToSupabase(params: {
   }
 }
 
+function getConfiguredAiProvider() {
+  const openaiKey = process.env.OPENAI_API_KEY;
+  if (openaiKey && openaiKey.startsWith('sk-') && openaiKey.length > 15) {
+    return {
+      provider: 'openai' as const,
+      model: process.env.AI_MODEL || 'gpt-4o-mini',
+      configured: true,
+    };
+  }
+
+  const openrouterKey = process.env.OPENROUTER_API_KEY;
+  if (openrouterKey && openrouterKey.startsWith('sk-or-') && openrouterKey.length > 15) {
+    return {
+      provider: 'openrouter' as const,
+      model: process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini',
+      configured: true,
+    };
+  }
+
+  const geminiKey = process.env.GEMINI_API_KEY;
+  if (geminiKey && geminiKey.startsWith('AIza') && geminiKey.length > 20) {
+    return {
+      provider: 'gemini' as const,
+      model: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+      configured: true,
+    };
+  }
+
+  return {
+    provider: 'local-engine' as const,
+    model: 'local-intelligent-engine',
+    configured: false,
+  };
+}
+
 export async function GET() {
-  const apiKey = process.env.OPENAI_API_KEY;
-  const isOpenAiReady = Boolean(apiKey && apiKey.startsWith('sk-') && apiKey.length > 15);
+  const status = getConfiguredAiProvider();
   return NextResponse.json({
     ok: true,
-    provider: isOpenAiReady ? 'openai' : 'local-engine',
-    model: isOpenAiReady ? (process.env.AI_MODEL || 'gpt-4o-mini') : 'local-intelligent-engine',
-    openaiConfigured: isOpenAiReady,
+    provider: status.provider,
+    model: status.model,
+    aiConfigured: status.configured,
+    openaiConfigured: status.provider === 'openai',
   });
 }
 
@@ -475,13 +510,9 @@ export async function POST(request: NextRequest) {
       parsedDoc,
     });
 
-    const apiKey = process.env.OPENAI_API_KEY;
-    const model = process.env.AI_MODEL || 'gpt-4o-mini';
     const maxTokens = Math.min(Number(process.env.AI_MAX_OUTPUT_TOKENS || 2800), 3800);
 
-    // 3. Si OPENAI_API_KEY está configurada, llamar a OpenAI
-    if (apiKey && apiKey.startsWith('sk-') && apiKey.length > 15) {
-      const systemPrompt = `Eres el motor experto de inteligencia artificial y copywriting turístico para la plataforma Cusco Creativos Web en Cusco, Perú.
+    const systemPrompt = `Eres el motor experto de inteligencia artificial y copywriting turístico para la plataforma Cusco Creativos Web en Cusco, Perú.
 Tu tarea es analizar los datos y el documento proporcionado por el operador turístico y generar exclusivamente un objeto JSON válido para autocompletar la landing page de alta conversión.
 REGLAS ESTRICTAS:
 1. NUNCA devuelvas HTML, Markdown ni explicaciones fuera del JSON.
@@ -525,7 +556,7 @@ REGLAS ESTRICTAS:
   "testimonials": [{"name": "string", "origin": "Ciudad, País", "rating": 5, "comment": "string"}]
 }`;
 
-      const userPrompt = `Analiza la siguiente información y genera el JSON estructurado:
+    const userPrompt = `Analiza la siguiente información y genera el JSON estructurado:
 ${documentText ? `--- CONTENIDO DEL DOCUMENTO / TEXTO CARGADO POR EL OPERADOR ---\n${documentText.slice(0, 8000)}\n--- FIN DEL DOCUMENTO ---` : ''}
 
 Parámetros base (usa como respaldo si faltan en el documento):
@@ -537,29 +568,112 @@ Parámetros base (usa como respaldo si faltan en el documento):
 - Plan: "${tier}"
 - Tono: "${aiTone}"`;
 
+    // Helper unificado para OpenAI y OpenRouter (mismo protocolo Chat Completions)
+    const callOpenAiCompatible = async (cfg: {
+      endpoint: string;
+      key: string;
+      model: string;
+      source: 'openai' | 'openrouter';
+    }) => {
+      const response = await fetch(cfg.endpoint, {
+        method: 'POST',
+        signal: AbortSignal.timeout(25000),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${cfg.key}`,
+        },
+        body: JSON.stringify({
+          model: cfg.model,
+          max_tokens: maxTokens,
+          temperature: 0.7,
+          response_format: { type: 'json_object' },
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt },
+          ],
+        }),
+      });
+      if (!response.ok) return null;
+      const result = await response.json();
+      const content = result.choices?.[0]?.message?.content;
+      if (!content) return null;
+      const parsed = JSON.parse(content) as Record<string, unknown>;
+      const validated = validateAndMergeAiResponse(parsed, fallbackData);
+
+      await logAiGenerationToSupabase({
+        prompt: userPrompt,
+        response: validated,
+        model: cfg.model,
+        tokensIn: result.usage?.prompt_tokens,
+        tokensOut: result.usage?.completion_tokens,
+      });
+
+      return NextResponse.json({
+        ok: true,
+        source: cfg.source,
+        model: cfg.model,
+        data: validated,
+      });
+    };
+
+    // 3A. Nivel 1: OpenAI directo (si está configurada OPENAI_API_KEY)
+    const openaiKey = process.env.OPENAI_API_KEY;
+    if (openaiKey && openaiKey.startsWith('sk-') && openaiKey.length > 15) {
       try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          signal: AbortSignal.timeout(25000),
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${apiKey}`,
-          },
-          body: JSON.stringify({
-            model,
-            max_tokens: maxTokens,
-            temperature: 0.7,
-            response_format: { type: 'json_object' },
-            messages: [
-              { role: 'system', content: systemPrompt },
-              { role: 'user', content: userPrompt },
-            ],
-          }),
+        const res = await callOpenAiCompatible({
+          endpoint: 'https://api.openai.com/v1/chat/completions',
+          key: openaiKey,
+          model: process.env.AI_MODEL || 'gpt-4o-mini',
+          source: 'openai',
         });
+        if (res) return res;
+      } catch {
+        // Continuar al siguiente proveedor en cascada
+      }
+    }
+
+    // 3B. Nivel 2: OpenRouter (si está configurada OPENROUTER_API_KEY)
+    const openrouterKey = process.env.OPENROUTER_API_KEY;
+    if (openrouterKey && openrouterKey.startsWith('sk-or-') && openrouterKey.length > 15) {
+      try {
+        const res = await callOpenAiCompatible({
+          endpoint: 'https://openrouter.ai/api/v1/chat/completions',
+          key: openrouterKey,
+          model: process.env.OPENROUTER_MODEL || 'openai/gpt-4o-mini',
+          source: 'openrouter',
+        });
+        if (res) return res;
+      } catch {
+        // Continuar al siguiente proveedor en cascada
+      }
+    }
+
+    // 3C. Nivel 3: Google Gemini API (si está configurada GEMINI_API_KEY)
+    const geminiKey = process.env.GEMINI_API_KEY;
+    if (geminiKey && geminiKey.startsWith('AIza') && geminiKey.length > 20) {
+      const geminiModel = process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+      try {
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${geminiModel}:generateContent?key=${geminiKey}`,
+          {
+            method: 'POST',
+            signal: AbortSignal.timeout(25000),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              systemInstruction: { parts: [{ text: systemPrompt }] },
+              contents: [{ role: 'user', parts: [{ text: userPrompt }] }],
+              generationConfig: {
+                responseMimeType: 'application/json',
+                temperature: 0.7,
+                maxOutputTokens: maxTokens,
+              },
+            }),
+          }
+        );
 
         if (response.ok) {
           const result = await response.json();
-          const content = result.choices?.[0]?.message?.content;
+          const content = result.candidates?.[0]?.content?.parts?.[0]?.text;
           if (content) {
             const parsed = JSON.parse(content) as Record<string, unknown>;
             const validated = validateAndMergeAiResponse(parsed, fallbackData);
@@ -567,21 +681,21 @@ Parámetros base (usa como respaldo si faltan en el documento):
             await logAiGenerationToSupabase({
               prompt: userPrompt,
               response: validated,
-              model,
-              tokensIn: result.usage?.prompt_tokens,
-              tokensOut: result.usage?.completion_tokens,
+              model: geminiModel,
+              tokensIn: result.usageMetadata?.promptTokenCount,
+              tokensOut: result.usageMetadata?.candidatesTokenCount,
             });
 
             return NextResponse.json({
               ok: true,
-              source: 'openai',
-              model,
+              source: 'gemini',
+              model: geminiModel,
               data: validated,
             });
           }
         }
       } catch {
-        // Fallback al motor local si OpenAI falla
+        // Continuar al motor local si Gemini falla o excede cuota
       }
     }
 
