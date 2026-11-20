@@ -74,10 +74,10 @@ const HD_CUSCO_PHOTOS = [
   { title: 'Terrazas de Moray', url: 'https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?q=80&w=1200&auto=format&fit=crop' },
   { title: 'Salineras de Maras', url: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1200&auto=format&fit=crop' },
   { title: 'Andenes de Pisac (Valle Sagrado)', url: 'https://images.unsplash.com/photo-1642193013187-941f5f7228f4?q=80&w=1200&auto=format&fit=crop' },
-  { title: 'Ollantaytambo Fortaleza Inca', url: 'https://plus.unsplash.com/premium_photo-1733353208945-7d659385587b?q=80&w=1200&auto=format&fit=crop' },
+  { title: 'Machu Picchu entre Neblina', url: 'https://plus.unsplash.com/premium_photo-1733353208945-7d659385587b?q=80&w=1200&auto=format&fit=crop' },
   { title: 'Valle Sagrado Panorámico', url: 'https://plus.unsplash.com/premium_photo-1697729872733-24e9e8186a47?q=80&w=1200&auto=format&fit=crop' },
   { title: 'Cusco Histórico', url: 'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?q=80&w=1200&auto=format&fit=crop' },
-  { title: 'Arequipa & Cañón del Colca', url: 'https://plus.unsplash.com/premium_photo-1694475446825-765b8f0af326?q=80&w=1200&auto=format&fit=crop' },
+  { title: 'Volcán Misti (Arequipa)', url: 'https://plus.unsplash.com/premium_photo-1694475446825-765b8f0af326?q=80&w=1200&auto=format&fit=crop' },
   { title: 'Viajero en Machu Picchu', url: '/images/travelers/traveler-machu-picchu.jpg' },
   { title: 'Viajero Laguna Humantay', url: '/images/travelers/traveler-humantay.jpg' },
   { title: 'Viajero Valle Sagrado', url: '/images/travelers/traveler-sacred-valley.jpg' }

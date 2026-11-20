@@ -57,19 +57,19 @@ export const SAMPLE_TOUR_IMAGES: GalleryImage[] = [
   {
     id: 'img-ollantaytambo',
     url: 'https://plus.unsplash.com/premium_photo-1733353208945-7d659385587b?q=80&w=1600&auto=format&fit=crop',
-    title: 'Parque Arqueológico de Ollantaytambo',
+    title: 'Machu Picchu entre Neblina Andina',
     category: 'cultural'
   },
   {
     id: 'img-sacred-andes',
     url: 'https://plus.unsplash.com/premium_photo-1697729872733-24e9e8186a47?q=80&w=1600&auto=format&fit=crop',
-    title: 'Paisaje Andino del Valle Sagrado (Cusco)',
+    title: 'Andenes Verdes del Valle Sagrado (Cusco)',
     category: 'trekking'
   },
   {
     id: 'img-arequipa-colca',
     url: 'https://plus.unsplash.com/premium_photo-1694475446825-765b8f0af326?q=80&w=1600&auto=format&fit=crop',
-    title: 'Arequipa & Cañón del Colca (Sur del Perú)',
+    title: 'Volcán Misti & Alpacas (Arequipa)',
     category: 'cultural'
   },
   {
