@@ -454,6 +454,25 @@ export async function GET() {
   });
 }
 
+/**
+ * Compacta espacios redundantes y, si el documento excede maxChars,
+ * conserva el inicio (empresa, tour, primeros días) y el final (tarifas, inclusiones, FAQs).
+ */
+function compactAndSliceDocument(rawText: string, maxChars = 10000): string {
+  const compacted = rawText
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\n{2,}/g, '\n')
+    .trim();
+
+  if (compacted.length <= maxChars) return compacted;
+
+  const headSize = Math.floor(maxChars * 0.65);
+  const tailSize = maxChars - headSize;
+  const head = compacted.slice(0, headSize).trim();
+  const tail = compacted.slice(-tailSize).trim();
+  return `${head}\n\n[... sección intermedia resumida por longitud del documento ...]\n\n${tail}`;
+}
+
 export async function POST(request: NextRequest) {
   // 1. Verificar sesión autenticada mediante cookie cc_auth
   const authCookie = request.cookies.get('cc_auth');
@@ -566,7 +585,7 @@ REGLAS ESTRICTAS:
 }`;
 
     const userPrompt = `Analiza la siguiente información y genera el JSON estructurado:
-${documentText ? `--- CONTENIDO DEL DOCUMENTO / TEXTO CARGADO POR EL OPERADOR ---\n${documentText.slice(0, 8000)}\n--- FIN DEL DOCUMENTO ---` : ''}
+${documentText ? `--- CONTENIDO DEL DOCUMENTO / TEXTO CARGADO POR EL OPERADOR ---\n${compactAndSliceDocument(documentText, 10000)}\n--- FIN DEL DOCUMENTO ---` : ''}
 
 Parámetros base (usa como respaldo si faltan en el documento):
 - Nombre: "${name}"
