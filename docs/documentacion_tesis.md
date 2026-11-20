@@ -2,25 +2,25 @@
 
 > **Proyecto:** Sistema Web Generador Automatizado de Landing Pages Turísticas de Alta Conversión con Inteligencia Artificial  
 > **Área:** Ingeniería de Software / Comercio Electrónico Turístico  
-> **Stack Oficial:** Next.js 16 (App Router) + TypeScript + Tailwind CSS + Supabase (PostgreSQL 15, Auth, RLS, Storage) + OpenAI API (`gpt-4o-mini`) + Vercel Serverless Cloud.
+> **Stack Oficial:** Next.js 16 (App Router) + TypeScript + Tailwind CSS + Supabase (PostgreSQL 15, Auth, RLS, Storage) + IA Multi-Proveedor en Cascada (Groq `openai/gpt-oss-120b`, OpenAI `gpt-4o-mini`, OpenRouter, Gemini & Motor Local) + Vercel Serverless Cloud.
 
 ---
 
 ## 1. Diagramas de Arquitectura y Mapas de Funcionamiento
 
-### 1.1 Mapa de Flujo de Datos y Peticiones (Frontend ➔ Vercel ➔ Supabase ➔ OpenAI)
+### 1.1 Mapa de Flujo de Datos y Peticiones (Frontend ➔ Vercel ➔ Supabase ➔ IA Multi-Proveedor)
 Este mapa explica claramente cómo se dividen las peticiones según su nivel de seguridad: las consultas directas y subida de archivos van a Supabase con permisos RLS, mientras que las operaciones con credenciales privadas pasan por las APIs de Next.js en Vercel.
 
 ```mermaid
 flowchart TB
     subgraph CapaCliente["📱 1. Capa de Cliente (Navegador Web)"]
-        User["Operador / Administrador (/demo/new)"]
+        User["Operador / Administrador (/demo/new)\nExtractor Word (.docx) + Texto Libre"]
         Turista["Turista / Visitante Público (/p/[slug])"]
     end
 
     subgraph CapaEdge["⚡ 2. Capa de Lógica Protegida (Next.js en Vercel)"]
         Proxy["src/proxy.ts\nFiltro de Seguridad & Cookies cc_auth"]
-        APIAI["POST /api/ai/generate\nMotor de IA Híbrido + Rate Limit"]
+        APIAI["POST /api/ai/generate\nCascada Multi-LLM + compactAndSliceDocument\n+ Rate Limit (35/h)"]
         APIQuote["POST /api/quote & /api/support\nHoneypot + Time-Gate Anti-Bot"]
         CronKeep["GET /api/keep-alive\nVercel Cron cada 3 días"]
     end
@@ -31,9 +31,9 @@ flowchart TB
         SupaDB[("PostgreSQL 15 + RLS\n• landings (JSONB)\n• profiles (Roles)\n• templates (Catálogo)\n• ai_generations (Costos)")]
     end
 
-    subgraph CapaIA["🧠 4. Proveedor de Inteligencia Artificial"]
-        OpenAI["OpenAI API\nModelo gpt-4o-mini (JSON Schema)"]
-        FallbackLocal["Motor Local de Respaldo\n(Generación instantánea sin costo)"]
+    subgraph CapaIA["🧠 4. Cascada de Inteligencia Artificial"]
+        CloudLLM["IA Generativa en la Nube\n1. OpenAI (gpt-4o-mini)\n2. OpenRouter\n3. Google Gemini\n4. Groq (openai/gpt-oss-120b)"]
+        FallbackLocal["Motor Local Heurístico (documentParser.ts)\n(Respaldo instantáneo 100% offline, costo $0)"]
     end
 
     %% Flujos de interacción
@@ -42,10 +42,10 @@ flowchart TB
     User -->|3. Login institucional| SupaAuth
     User -->|4. Subir logotipo/imagen| SupaStorage
     User -->|5. Guardar landing completa| SupaDB
-    User -->|6. Solicitar redacción IA| Proxy
+    User -->|6. Solicitar extracción y redacción IA| Proxy
     Proxy --> APIAI
-    APIAI -->|Con saldo y API Key| OpenAI
-    APIAI -->|Sin saldo o falla de red| FallbackLocal
+    APIAI -->|Proveedor activo disponible| CloudLLM
+    APIAI -->|Sin API Key, cuota o falla de red| FallbackLocal
     APIAI -->|Auditar tokens consumidos| SupaDB
     CronKeep -->|Ping SQL anti-pausa| SupaDB
 ```
@@ -64,8 +64,8 @@ flowchart LR
     end
 
     subgraph VercelApp["☁️ Vercel Edge Serverless"]
-        WebUI["Frontend React 19\n6 Plantillas Turísticas\nMulti-idioma (ES/EN/PT)\nCalculadora Dinámica"]
-        ApiRoutes["Next.js API Routes\nSanitización de Datos\nControl de Gasto de IA"]
+        WebUI["Frontend React 19\n6 Plantillas Turísticas\nExtractor Word (.docx) + Guía 3 Pasos\nMulti-idioma (ES/EN/PT/FR/IT)"]
+        ApiRoutes["Next.js API Routes\nSanitización + Cascada IA\nControl de Gasto y Rate Limit"]
     end
 
     subgraph SupabasePlatform["🗄️ Supabase Backend-as-a-Service"]
@@ -74,8 +74,8 @@ flowchart LR
         PostgresEngine[("Base de Datos PostgreSQL\nPersistencia Híbrida\nRelacional + JSONB")]
     end
 
-    subgraph AIPlatform["✨ Motor de IA"]
-        GPT["OpenAI gpt-4o-mini"]
+    subgraph AIPlatform["✨ Motor de IA en Cascada"]
+        GPT["Groq (gpt-oss-120b)\n/ OpenAI / Gemini + Fallback Local"]
     end
 
     Usuarios --> WebUI
@@ -145,8 +145,8 @@ erDiagram
 
 ---
 
-### 1.4 Diagrama de Secuencia: Flujo de Generación con IA y Publicación
-Muestra la interacción paso a paso desde que el usuario completa el formulario hasta que la landing se publica y se descarga.
+### 1.4 Diagrama de Secuencia: Flujo de Ingesta Word/Texto, IA y Publicación
+Muestra la interacción paso a paso desde que el usuario sube un documento Word (`.docx`) o pega texto libre hasta que valida visualmente (Human-in-the-Loop) y publica o descarga su landing.
 
 ```mermaid
 sequenceDiagram
@@ -154,32 +154,33 @@ sequenceDiagram
     actor Operador as Operador / Administrador
     participant Form as Asistente (/demo/new)
     participant ApiAI as Backend (/api/ai/generate)
-    participant OpenAI as OpenAI (gpt-4o-mini)
+    participant LLM as IA Cloud (Groq gpt-oss-120b / OpenAI / Gemini)
     participant Supa as Supabase (PostgreSQL / Storage)
     participant Turista as Turista / Visitante
 
-    Operador->>Form: 1. Selecciona Plantilla, Nivel (Tier) e ingresa Destino y Precio
-    Operador->>Form: 2. Clic en "✨ Autocompletar textos con IA"
-    Form->>ApiAI: POST { tourTitle, destination, duration, price, tier, language }
-    ApiAI->>ApiAI: Valida sesión, aplica Rate-Limit (25/hora) y sanitiza
-    alt Conexión OpenAI exitosa
-        ApiAI->>OpenAI: Envía System Prompt + User Prompt (JSON Schema)
-        OpenAI-->>ApiAI: Retorna JSON con Hero, Itinerario, FAQs y Testimonios
-    else Falla de red o sin saldo
-        ApiAI->>ApiAI: Activa Motor de Respaldo Local Determinista (Costo $0)
+    Operador->>Form: 1. Clic en "Generar con IA" y sube Word (.docx) o pega texto libre
+    Form->>Form: JSZip extrae word/document.xml localmente
+    Form->>ApiAI: POST { documentText }
+    ApiAI->>ApiAI: Valida sesión (cc_auth), Rate-Limit (35/h) y compactAndSliceDocument (10k chars)
+    alt Proveedor Cloud activo (OpenAI / OpenRouter / Gemini / Groq)
+        ApiAI->>LLM: Envía System Prompt + Esquema JSON Estricto
+        LLM-->>ApiAI: Retorna JSON con Datos Empresa, Tour, Plantilla, Tier, Objetivo, Itinerario y FAQs
+    else Sin API Key, cuota o falla de red
+        ApiAI->>ApiAI: Activa Motor Local Heurístico (parseDocumentTextLocally, costo $0)
     end
     ApiAI->>Supa: Inserta registro de auditoría en public.ai_generations
-    ApiAI-->>Form: Entrega JSON limpio y validado al formulario
-    Operador->>Form: 3. Sube logotipo de la agencia
+    ApiAI-->>Form: Entrega JSON validado + insignia del motor usado
+    Form-->>Operador: Muestra Guía de Validación de 3 Pasos (Logo, Fotos, WhatsApp)
+    Operador->>Form: 2. Sube logotipo oficial y verifica WhatsApp ("Probar Chat Real")
     Form->>Supa: Sube archivo al bucket Storage 'landing-images'
     Supa-->>Form: Retorna URL pública CDN del logotipo
-    Operador->>Form: 4. Clic en "🚀 Generar Landing y Ver Demo"
+    Operador->>Form: 3. Clic en "🚀 Publicar y Ver Landing Final"
     Form->>Supa: UPSERT en public.landings (Columna data JSONB)
-    Form-->>Operador: Abre previsualización en PC (390px) y genera código QR
+    Form-->>Operador: Abre previsualización PC/Móvil (390px) y genera código QR
     
     Note over Operador,Turista: Dos Canales de Distribución Autónomos
     Operador->>Turista: Comparte URL pública (ej: /p/salkantay-trek-5-dias)
-    Turista->>Supa: Consulta web pública en tiempo real
+    Turista->>Supa: Consulta web pública en tiempo real y contacta por WhatsApp (wa.me)
     Operador->>Operador: Clic en "Exportar ZIP" para descargar index.html offline
 ```
 
@@ -190,10 +191,11 @@ sequenceDiagram
 ```mermaid
 stateDiagram-v2
     [*] --> FormularioNuevo: Operador inicia creación (/demo/new)
-    FormularioNuevo --> ConContenidoIA: Clic en "Autocompletar con IA"
-    ConContenidoIA --> BorradorGuardado: Guarda borrador (status = 'draft')
+    FormularioNuevo --> ConContenidoIA: Sube Word/Texto y pulsa "Generar con IA"
+    ConContenidoIA --> ValidacionVisual: Guía de 3 Pasos (Logo, Fotos, WhatsApp)
+    ValidacionVisual --> BorradorGuardado: Guarda borrador (status = 'draft')
     BorradorGuardado --> VistaPrevia: Prueba en simulador 390px o celular vía QR
-    VistaPrevia --> Publicada: Clic en Publicar (status = 'published')
+    VistaPrevia --> Publicada: Clic en "Publicar y Ver Landing Final" (status = 'published')
     
     state Publicada {
         [*] --> VisibleEnVercel: URL pública activa (/p/[slug])
@@ -259,25 +261,28 @@ xychart-beta
 ### 3.1 Acceso al Sistema y Roles de Seguridad (`/login`)
 1. Ingrese a la plataforma web oficial: `https://generador-de-landingpages.vercel.app/login`.
 2. Seleccione el perfil corporativo:
-   - **Administrador General (`Acceso Total`):** `admin@cuscocreativos.com` / `CuscoCreativos2026!`
-   - **Operador de Ventas (`Empleado`):** `empleado@cuscocreativos.com` / `OperadorCusco2026!`
+   - **Administrador General (`Acceso Total`):** `admin@cuscocreativos.com` *(control completo de landings, marca blanca, planes, soporte y configuración)*
+   - **Operador de Ventas (`Empleado`):** `empleado@cuscocreativos.com` *(creación y publicación ágil de landings para campañas turísticas)*
 3. La contraseña permanece oculta bajo caracteres protegidos (`••••••••`) sin opción de revelado en texto plano, cumpliendo con las directivas de seguridad informática.
 
 ---
 
-### 3.2 Proceso de Creación en 4 Pasos Guiados (`/demo/new`)
+### 3.2 Proceso de Creación con IA y 4 Pestañas Organizadas (`/demo/new`)
 
 ```mermaid
 flowchart LR
-    P1["Paso 1\nPlantilla, Nivel\ne Idiomas"] --> P2["Paso 2\nDatos del Tour\n+ Redacción IA"]
-    P2 --> P3["Paso 3\nMarca Blanca,\nLogo y RUC"]
-    P3 --> P4["Paso 4\nRevisión, Vista Móvil\ny Publicación"]
+    IA["Generar con IA\n(Word .docx / Texto)"] --> P1["Paso 1\nDiseño, Portada\ne Idiomas"]
+    P1 --> P2["Paso 2\nTu Agencia, Logo,\nWhatsApp y Oficina"]
+    P2 --> P3["Paso 3\nDatos del Tour\ny Tarifas"]
+    P3 --> P4["Paso 4\nItinerario, Guía,\nFAQs y Reviews"]
 ```
 
-- **Paso 1 (Diseño y Nivel):** Seleccione entre las 6 plantillas de diseño visual, elija el nivel de servicio (`Free`, `Basic`, `Pro`, `Advance`) e indique los idiomas permitidos.
-- **Paso 2 (Contenido e IA):** Ingrese el destino, duración y precio base. Pulse **`✨ Autocompletar textos con IA`** para que el motor redacte en 3 segundos el título de venta, itinerario día por día, lista de inclusión/exclusión y testimonios.
-- **Paso 3 (Personalización Corporativa):** Ingrese la razón social, número de RUC de 11 dígitos, WhatsApp de reservas y suba el logotipo institucional (el cual se almacena de inmediato en Supabase Storage).
-- **Paso 4 (Verificación y Lanzamiento):** En la tarjeta resumen, pulse **`🚀 Generar Landing y Ver Demo`**. La landing se guarda en Supabase PostgreSQL y se abre el simulador de visualización.
+- **Asistente Inteligente (`Generar con IA`):** En la cabecera superior, pulse **`Generar con IA`**, suba un archivo **Word (`.docx`)** o pegue texto libre/cotización. El motor (`Groq openai/gpt-oss-120b` o respaldo local) extrae datos reales, determina plantilla/nivel/objetivo, rellena las 4 pestañas y muestra la **Guía de Validación Rápida de 3 Pasos** (*Human-in-the-Loop*).
+- **Paso 1 (Diseño & Portada):** Ajuste la plantilla visual (6 diseños), nivel de servicio (`Free`, `Basic`, `Pro`, `Advance`), fotografía principal e idiomas activos.
+- **Paso 2 (Tu Agencia & Marca):** Cargue su logotipo oficial (PNG/SVG en Supabase Storage), verifique RUC, correo, dirección en Cusco y pruebe su número oficial con el enlace **`Probar Chat Real ↗`**.
+- **Paso 3 (Datos del Tour):** Confirme nombre comercial, destino, tarifa, altitud, dificultad y catálogo complementario.
+- **Paso 4 (Itinerario & Ficha):** Revise el perfil del guía DIRCETUR, etapas del itinerario, servicios incluidos/no incluidos, equipamiento, FAQs y testimonios.
+- **Publicación Final:** Pulse el botón verde **`🚀 Publicar y Ver Landing Final`** en el panel lateral para guardar en Supabase PostgreSQL y abrir la vista previa.
 
 ---
 
