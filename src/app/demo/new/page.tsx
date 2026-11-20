@@ -68,11 +68,19 @@ const DEFAULT_TESTIMONIALS: TestimonialItem[] = [
 const HD_CUSCO_PHOTOS = [
   { title: 'Turista Aventura (Andes Trek)', url: '/images/hero-tourist-cusco.jpg' },
   { title: 'Machu Picchu Clásico', url: 'https://images.unsplash.com/photo-1526392060635-9d6019884377?q=80&w=1200&auto=format&fit=crop' },
+  { title: 'Llamas en Machu Picchu', url: 'https://images.unsplash.com/photo-1775195560603-82f5f990b835?q=80&w=1200&auto=format&fit=crop' },
   { title: 'Laguna Humantay', url: 'https://images.unsplash.com/photo-1589556264800-08ae9e129a8c?q=80&w=1200&auto=format&fit=crop' },
-  { title: 'Montaña 7 Colores', url: 'https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?q=80&w=1200&auto=format&fit=crop' },
+  { title: 'Montaña 7 Colores (Vinicunca)', url: '/images/travelers/traveler-vinicunca.jpg' },
+  { title: 'Terrazas de Moray', url: 'https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?q=80&w=1200&auto=format&fit=crop' },
   { title: 'Salineras de Maras', url: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1?q=80&w=1200&auto=format&fit=crop' },
-  { title: 'Valle Sagrado', url: 'https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1200&auto=format&fit=crop' },
-  { title: 'Cusco Histórico', url: 'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?q=80&w=1200&auto=format&fit=crop' }
+  { title: 'Andenes de Pisac (Valle Sagrado)', url: 'https://images.unsplash.com/photo-1642193013187-941f5f7228f4?q=80&w=1200&auto=format&fit=crop' },
+  { title: 'Ollantaytambo Fortaleza Inca', url: 'https://plus.unsplash.com/premium_photo-1733353208945-7d659385587b?q=80&w=1200&auto=format&fit=crop' },
+  { title: 'Valle Sagrado Panorámico', url: 'https://plus.unsplash.com/premium_photo-1697729872733-24e9e8186a47?q=80&w=1200&auto=format&fit=crop' },
+  { title: 'Cusco Histórico', url: 'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?q=80&w=1200&auto=format&fit=crop' },
+  { title: 'Arequipa & Cañón del Colca', url: 'https://plus.unsplash.com/premium_photo-1694475446825-765b8f0af326?q=80&w=1200&auto=format&fit=crop' },
+  { title: 'Viajero en Machu Picchu', url: '/images/travelers/traveler-machu-picchu.jpg' },
+  { title: 'Viajero Laguna Humantay', url: '/images/travelers/traveler-humantay.jpg' },
+  { title: 'Viajero Valle Sagrado', url: '/images/travelers/traveler-sacred-valley.jpg' }
 ];
 
 const AVAILABLE_TRUST_BADGES = [
@@ -2519,11 +2527,21 @@ export default function NewLandingDemo() {
                   value={whatsapp}
                   onChange={(e) => setWhatsapp(e.target.value)}
                   className="w-full border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 outline-none font-mono font-bold text-slate-800 bg-white"
-                  placeholder="+51984112233"
+                  placeholder="+51901670734"
                 />
-                <span className="text-[10px] text-slate-400 mt-1 block">
-                  En tu landing publicada abrirá el WhatsApp real (`wa.me`) con este número.
-                </span>
+                <div className="mt-2 flex flex-wrap items-center justify-between gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setWhatsapp('+51901670734')}
+                    className="inline-flex items-center gap-1.5 text-[11px] font-bold px-2.5 py-1 rounded-lg bg-gradient-to-r from-indigo-600 to-blue-600 text-white hover:from-indigo-700 hover:to-blue-700 shadow-xs transition-all cursor-pointer"
+                    title="Restaurar el número oficial de WhatsApp de Cusco Creativos (+51901670734)"
+                  >
+                    ✨ Usar WhatsApp Cusco Creativos (+51 901 670 734)
+                  </button>
+                  <span className="text-[10px] text-slate-400">
+                    Abrirá `wa.me` con este número.
+                  </span>
+                </div>
               </div>
 
               <div>

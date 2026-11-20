@@ -41,5 +41,53 @@ export const SAMPLE_TOUR_IMAGES: GalleryImage[] = [
     url: '/images/hero-tourist-cusco.jpg',
     title: 'Turista de Aventura Mirando hacia Arriba (Andes Trek)',
     category: 'trekking'
+  },
+  {
+    id: 'img-pisac-terraces',
+    url: 'https://images.unsplash.com/photo-1642193013187-941f5f7228f4?q=80&w=1600&auto=format&fit=crop',
+    title: 'Andenes y Fortaleza de Pisac (Valle Sagrado)',
+    category: 'cultural'
+  },
+  {
+    id: 'img-llamas-mp',
+    url: 'https://images.unsplash.com/photo-1775195560603-82f5f990b835?q=80&w=1600&auto=format&fit=crop',
+    title: 'Llamas en Machu Picchu al Amanecer',
+    category: 'luxury'
+  },
+  {
+    id: 'img-ollantaytambo',
+    url: 'https://plus.unsplash.com/premium_photo-1733353208945-7d659385587b?q=80&w=1600&auto=format&fit=crop',
+    title: 'Parque Arqueológico de Ollantaytambo',
+    category: 'cultural'
+  },
+  {
+    id: 'img-sacred-andes',
+    url: 'https://plus.unsplash.com/premium_photo-1697729872733-24e9e8186a47?q=80&w=1600&auto=format&fit=crop',
+    title: 'Paisaje Andino del Valle Sagrado (Cusco)',
+    category: 'trekking'
+  },
+  {
+    id: 'img-arequipa-colca',
+    url: 'https://plus.unsplash.com/premium_photo-1694475446825-765b8f0af326?q=80&w=1600&auto=format&fit=crop',
+    title: 'Arequipa & Cañón del Colca (Sur del Perú)',
+    category: 'cultural'
+  },
+  {
+    id: 'img-traveler-mp',
+    url: '/images/travelers/traveler-machu-picchu.jpg',
+    title: 'Viajero frente a Machu Picchu',
+    category: 'luxury'
+  },
+  {
+    id: 'img-traveler-humantay',
+    url: '/images/travelers/traveler-humantay.jpg',
+    title: 'Expedición Laguna Humantay',
+    category: 'trekking'
+  },
+  {
+    id: 'img-traveler-sacred-valley',
+    url: '/images/travelers/traveler-sacred-valley.jpg',
+    title: 'Ruta del Valle Sagrado de los Incas',
+    category: 'cultural'
   }
 ];
