@@ -603,7 +603,7 @@ export default function NewLandingDemo() {
   const [guideName, setGuideName] = useState('Raúl Quispe');
   const [guideCert, setGuideCert] = useState('Licenciado en Turismo DIRCETUR (10 años exp.)');
   const [guideLanguages, setGuideLanguages] = useState('Español, Inglés y Quechua');
-  const [whatsapp, setWhatsapp] = useState('+51984112233');
+  const [whatsapp, setWhatsapp] = useState('+51901670734');
   const [price, setPrice] = useState('$350 USD');
   const [duration, setDuration] = useState('5 Días / 4 Noches');
   const [difficulty, setDifficulty] = useState('Moderada - Alta');
@@ -677,11 +677,11 @@ export default function NewLandingDemo() {
   const [faqs, setFaqs] = useState<FAQItem[]>(DEFAULT_FAQS);
   const [testimonials, setTestimonials] = useState<TestimonialItem[]>(DEFAULT_TESTIMONIALS);
   const [showAdvancedCopy, setShowAdvancedCopy] = useState(true);
-  const [companyName, setCompanyName] = useState('Andean Horizon Expeditions');
+  const [companyName, setCompanyName] = useState('Cusco Creativos');
   const [logoUrl, setLogoUrl] = useState('');
-  const [companyRuc, setCompanyRuc] = useState('RUC 20608945231');
+  const [companyRuc, setCompanyRuc] = useState('RUC 20608396757');
   const [companyTagline, setCompanyTagline] = useState('Operador Oficial Autorizado DIRCETUR Cusco');
-  const [companyEmail, setCompanyEmail] = useState('reservas@andeanhorizon.com');
+  const [companyEmail, setCompanyEmail] = useState('hola@cuscocreativos.com');
   const [isCompanyCustomized, setIsCompanyCustomized] = useState(false);
   const [heroTitle, setHeroTitle] = useState('');
   const [heroSubtitle, setHeroSubtitle] = useState('');
@@ -2392,9 +2392,24 @@ export default function NewLandingDemo() {
                 />
               </div>
 
-              {/* Botones de sugerencias de logo */}
+              {/* Botones de sugerencias de logo y Marca Oficial */}
               <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-slate-100">
-                <span className="text-[11px] font-bold text-slate-400">Probar con logos de muestra:</span>
+                <span className="text-[11px] font-bold text-slate-400">Accesos rápidos:</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setCompanyName('Cusco Creativos');
+                    setCompanyRuc('RUC 20608396757');
+                    setWhatsapp('+51901670734');
+                    setCompanyEmail('hola@cuscocreativos.com');
+                    setLogoUrl('https://cuscocreativos.com/wp-content/themes/cusco-creativos/assets/images/logo.png');
+                    setIsCompanyCustomized(true);
+                  }}
+                  className="px-2.5 py-1 rounded-lg bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white text-[11px] font-black shadow-xs cursor-pointer transition-all"
+                  title="Aplica logo, nombre, RUC, WhatsApp y correo oficiales de Cusco Creativos"
+                >
+                  ✨ Usar Marca Cusco Creativos
+                </button>
                 <button
                   type="button"
                   onClick={() => {

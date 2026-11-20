@@ -21,10 +21,10 @@ export default function SettingsPage() {
       window.removeEventListener('focus', handleAuthChange);
     };
   }, []);
-  const [agencyName, setAgencyName] = useState('Cusco Creativos S.A.C.');
-  const [ruc, setRuc] = useState('20608945123');
-  const [centralWhatsapp, setCentralWhatsapp] = useState('+51984123456');
-  const [adminEmail, setAdminEmail] = useState('admin@cuscocreativos.com');
+  const [agencyName, setAgencyName] = useState('Cusco Creativos');
+  const [ruc, setRuc] = useState('20608396757');
+  const [centralWhatsapp, setCentralWhatsapp] = useState('+51901670734');
+  const [adminEmail, setAdminEmail] = useState('hola@cuscocreativos.com');
   const [address, setAddress] = useState('Calle Triunfo 392, Cercado Histórico, Cusco');
 
   const [guides, setGuides] = useState([
